@@ -1,0 +1,16 @@
+{
+  "name": "deliverystartup",
+  "version": "1.0.0",
+  "description": "delivery star up",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/jgurbano/deliverystartup.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/jgurbano/deliverystartup#readme"
+}
