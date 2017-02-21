@@ -1,0 +1,1 @@
+git config core.excludesfiles ./project_setup/.gitignore
