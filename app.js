@@ -12,6 +12,11 @@ webServer.use(bodyParser.json());
 webServer.use(bodyParser.urlencoded({ extended: true}));
 webServer.use(express.static(webpagePath));
 
+
+webServer.get('/', function(req, res){
+	res.redirect('/html/main.html');
+});
+
 webServer.listen(8080, function(){
 	console.log("Listening at localhost:8080");
 });
