@@ -3,28 +3,8 @@ var webServer = express();
 var path = require("path");
 var webpagePath = path.join(__dirname, "/public");
 var bodyParser = require("body-parser");
-var mysql = require("mysql");
+var db = require("./db.js");
 
-/* MySQL Connection */
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "delivery_user",
-  password: "ahmadtea"
-});
-
-con.connect(function(err){
-  if(err){
-    console.log('Error connecting to DB');
-    return;
-  }
-  console.log('Connection to DB established');
-});
-
-con.end(function(err) {
-  // The connection is terminated gracefully
-  // Ensures all previously enqueued queries are still
-  // before sending a COM_QUIT packet to the MySQL server.
-});
 
 
 /* Webpage is hosted at 8080 */
