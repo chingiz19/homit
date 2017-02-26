@@ -1,7 +1,7 @@
 
 body
 {
-    height: 10000px;
+    height: 2000px;
 }
 
 .brandname
@@ -10,18 +10,27 @@ body
     position: fixed;
     top: 0.5%;
     left: 5%;
-    font-size: 60px;
+    font-size: 15px;
     background-color: gainsboro;
-    font-family: Georgia ;
+    font-family: Georgia;
+    border: solid;
+    border-width: 2px;
+    border-color: darkgrey;
 }
 
 .login
 {
-    right: 11.5%;
+    right: 12%;
     position: fixed;
     top: 0.5%;
-    font-size: 60px;
+    font-size: 15px;
     background-color: gainsboro;
+    border-style: solid;
+    border-width: 2px;
+    border: solid;
+    border-width: 2px;
+    border-color: darkgrey;
+    font-family: Georgia;
 }
 
 .myaccount
@@ -29,15 +38,21 @@ body
     right: 5%;
     position: fixed;
     top: 0.5%;
-    font-size: 60px;
+    font-size: 15px;
     background-color: gainsboro;
+    border-style: solid;
+    border-width: 2px;
+    border: solid;
+    border-width: 2px;
+    border-color: darkgrey;
+    font-family: Georgia;
 }
 
 .sbar
 {
     width: 90%;
     box-sizing: border-box;
-    font-size: 90px;
+    font-size: 22.5px;
     position: fixed;
     top: 5.0%;
     left: 5%;
@@ -45,6 +60,10 @@ body
     background-image: url('searchicon.png');
     background-position: 10px 10px;
     background-repeat: no-repeat;
+    border-style: solid;
+    border-color: darkgrey;
+    border-width: 2px;
+    font-family: Georgia;
 }
 
 .special
@@ -53,8 +72,12 @@ body
     position: fixed;
     top: 12.5%;
     width:15%;
-    font-size: 90px;
+    font-size: 22.5px;
     background-color: gainsboro; 
+    border: solid;
+    border-width: 2px;
+    border-color: darkgrey;
+    font-family: Georgia;
 }
 
 .wines
@@ -63,8 +86,12 @@ body
     position: fixed;
     top: 12.5%;
     width:15%;
-    font-size: 90px;
+    font-size: 22.5px;
     background-color: gainsboro; 
+    border: solid;
+    border-width: 2px;
+    border-color: darkgrey;
+    font-family: Georgia;
 }
 
 .beers
@@ -73,8 +100,12 @@ body
     position: fixed;
     top: 12.5%;
     width:15%;
-    font-size: 90px;
+    font-size: 22.5px;
     background-color: gainsboro;  
+    border: solid;
+    border-width: 2px;
+    border-color: darkgrey;
+    font-family: Georgia;
 }
 
 .hardliq
@@ -83,8 +114,12 @@ body
     position: fixed;
     top: 12.5%;
     width:15%;
-    font-size: 90px;
-    background-color: gainsboro;  
+    font-size: 22.5px;
+    background-color: gainsboro; 
+    border: solid;
+    border-width: 2px;
+    border-color: darkgrey;
+    font-family: Georgia;
 }
 
 h1
@@ -93,7 +128,8 @@ h1
     position: fixed;
     top: 56%;
     width:30%;
-    font-size: 135px;
+    font-size: 33.75px;
+    font-family: Georgia;
 
 }
 
@@ -103,11 +139,13 @@ h1
     position: fixed;
     top: 70%;
     border-style: solid;
-    border-width: 10px;
+    border-color: darkgrey;
+    border-width: 2px;
     width: 25%;
     height: 30%;
-    font-size: 130px;
+    font-size: 32.5px;
     text-align: center; 
+    font-family: Georgia;
 }
 
 .box2
@@ -116,11 +154,13 @@ h1
     position: fixed;
     top: 70%;
     border-style: solid;
-    border-width: 10px;
+    border-color: darkgrey;
+    border-width: 2px;
     width: 25%;
     height: 30%;
-    font-size: 130px; 
+    font-size: 32.5px; 
     text-align: center; 
+    font-family: Georgia;
 }
 
 .box3
@@ -129,12 +169,14 @@ h1
     position: fixed;
     top: 70%;
     border-style: solid;
-    border-width: 10px;
+    border-color: darkgrey;
+    border-width: 2px;
     width: 25%;
     height: 30%;
-    font-size: 130px;
+    font-size: 32.5px;
     text-align: center; 
     vertical-align: 50%;
+    font-family: Georgia;
 }
 
 .box4
@@ -143,11 +185,13 @@ h1
     position: fixed;
     top: 110%;
     border-style: solid;
-    border-width: 10px;
+    border-color: darkgrey;
+    border-width: 2px;
     width: 25%;
     height: 30%;
-    font-size: 130px;
+    font-size: 32.5px;
     text-align: center; 
+    font-family: Georgia;
 }
 
 .box5
@@ -156,11 +200,13 @@ h1
     position: fixed;
     top: 110%;
     border-style: solid;
-    border-width: 10px;
+    border-color: darkgrey;
+    border-width: 2px;
     width: 25%;
     height: 30%;
-    font-size: 130px; 
+    font-size: 32.5px; 
     text-align: center; 
+    font-family: Georgia;
 }
 
 .box6
@@ -169,10 +215,11 @@ h1
     position: fixed;
     top: 110%;
     border-style: solid;
-    border-width: 10px;
+    border-color: darkgrey;
+    border-width: 2px;
     width: 25%;
     height: 30%;
-    font-size: 130px;
+    font-size: 32.5px;
     text-align: center; 
-    vertical-align: 50%;
+    font-family: Georgia;
 }
