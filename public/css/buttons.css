@@ -1,0 +1,83 @@
+
+.brandname
+{
+    text-align: left;
+    position: fixed;
+    top: 0.5%;
+    left: 5%;
+    font-size: 60px;
+    background-color: gainsboro;
+    font-family: Georgia ;
+}
+
+.login
+{
+    right: 11.5%;
+    position: fixed;
+    top: 0.5%;
+    font-size: 60px;
+    background-color: gainsboro;
+}
+
+.myaccount
+{
+    right: 5%;
+    position: fixed;
+    top: 0.5%;
+    font-size: 60px;
+    background-color: gainsboro;
+}
+
+.sbar
+{
+    width: 90%;
+    box-sizing: border-box;
+    font-size: 90px;
+    position: fixed;
+    top: 5.0%;
+    left: 5%;
+    background-color: gainsboro;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+}
+
+.special
+{
+    left: 5%;
+    position: fixed;
+    top: 12.5%;
+    width:15%;
+    font-size: 90px;
+    background-color: gainsboro; 
+}
+
+.wines
+{
+    left: 30%;
+    position: fixed;
+    top: 12.5%;
+    width:15%;
+    font-size: 90px;
+    background-color: gainsboro; 
+}
+
+.beers
+{
+    left: 55%;
+    position: fixed;
+    top: 12.5%;
+    width:15%;
+    font-size: 90px;
+    background-color: gainsboro;  
+}
+
+.hardliq
+{
+    right: 5%;
+    position: fixed;
+    top: 12.5%;
+    width:15%;
+    font-size: 90px;
+    background-color: gainsboro;  
+}
