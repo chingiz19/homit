@@ -1,4 +1,9 @@
 
+body
+{
+    height: 10000px;
+}
+
 .brandname
 {
     text-align: left;
@@ -80,4 +85,94 @@
     width:15%;
     font-size: 90px;
     background-color: gainsboro;  
+}
+
+h1
+{
+    left: 39.5%;
+    position: fixed;
+    top: 56%;
+    width:30%;
+    font-size: 135px;
+
+}
+
+.box1
+{
+    left: 5%;
+    position: fixed;
+    top: 70%;
+    border-style: solid;
+    border-width: 10px;
+    width: 25%;
+    height: 30%;
+    font-size: 130px;
+    text-align: center; 
+}
+
+.box2
+{
+    left: 37.5%;
+    position: fixed;
+    top: 70%;
+    border-style: solid;
+    border-width: 10px;
+    width: 25%;
+    height: 30%;
+    font-size: 130px; 
+    text-align: center; 
+}
+
+.box3
+{
+    right: 5%;
+    position: fixed;
+    top: 70%;
+    border-style: solid;
+    border-width: 10px;
+    width: 25%;
+    height: 30%;
+    font-size: 130px;
+    text-align: center; 
+    vertical-align: 50%;
+}
+
+.box4
+{
+    left: 5%;
+    position: fixed;
+    top: 110%;
+    border-style: solid;
+    border-width: 10px;
+    width: 25%;
+    height: 30%;
+    font-size: 130px;
+    text-align: center; 
+}
+
+.box5
+{
+    left: 37.5%;
+    position: fixed;
+    top: 110%;
+    border-style: solid;
+    border-width: 10px;
+    width: 25%;
+    height: 30%;
+    font-size: 130px; 
+    text-align: center; 
+}
+
+.box6
+{
+    right: 5%;
+    position: fixed;
+    top: 110%;
+    border-style: solid;
+    border-width: 10px;
+    width: 25%;
+    height: 30%;
+    font-size: 130px;
+    text-align: center; 
+    vertical-align: 50%;
 }
