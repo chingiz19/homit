@@ -14,10 +14,11 @@ webServer.use(express.static(webpagePath));
 webServer.set('view engine', 'ejs');
 
 /* Custom modules to use for proper routing */
+webServer.use("/api", require(path.join(__dirname, "/api_controllers/generic_controller")));
 webServer.use("/", require(path.join(__dirname, "/view_controllers/generic_controller")));
 //TODO: Add when we get api calls
 // webServer.use("/api/", require("path to api"));
 
 webServer.listen(8080, function(){
 	console.log("Listening at localhost:8080");
-});
+})
