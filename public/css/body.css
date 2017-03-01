@@ -1,143 +1,142 @@
 
 body
 {
-    height: 2000px;
+    height: 1400px;
+    min-width: 1000px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+.ln1
+{
+    position: fixed;
+    width: 90%;
+    height: 95px;
+    left: 5%;
+    border: 1px solid blue;
+    background-color: lightblue;
+    box-sizing: border-box;
+    z-index: 301;
+    top: 0.5%;
 }
 
 .brandname
 {
-    text-align: left;
-    position: fixed;
-    top: 0.5%;
-    left: 5%;
+    position: relative;
+    top: 0.2%;
+    left: 0%;
+    width: 14%;
     font-size: 15px;
     background-color: gainsboro;
     font-family: Georgia;
-    border: solid;
-    border-width: 2px;
-    border-color: darkgrey;
+    border: 1px solid darkgrey;
 }
 
 .login
 {
-    right: 12%;
-    position: fixed;
-    top: 0.5%;
+    position: relative;
+    top: 0%;
+    left: 65%;
+    width: 10%;
     font-size: 15px;
     background-color: gainsboro;
-    border-style: solid;
-    border-width: 2px;
-    border: solid;
-    border-width: 2px;
-    border-color: darkgrey;
     font-family: Georgia;
+    border: 1px solid darkgrey;
 }
 
 .myaccount
 {
-    right: 5%;
-    position: fixed;
-    top: 0.5%;
+    position: relative;
+    top: 0%;
+    left: 65.35%;
+    width: 10%;
     font-size: 15px;
     background-color: gainsboro;
-    border-style: solid;
-    border-width: 2px;
-    border: solid;
-    border-width: 2px;
-    border-color: darkgrey;
     font-family: Georgia;
+    border: 1px solid darkgrey;
 }
 
 .sbar
 {
-    width: 90%;
-    box-sizing: border-box;
-    font-size: 22.5px;
-    position: fixed;
-    top: 5.0%;
-    left: 5%;
+    position: relative;
+    top: 34%;
+    left: 0%;
+    font-size: 22px;
     background-color: gainsboro;
+    font-family: Georgia;
+    border: 1px solid darkgrey;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    
     background-image: url('searchicon.png');
     background-position: 10px 10px;
-    background-repeat: no-repeat;
-    border-style: solid;
-    border-color: darkgrey;
-    border-width: 2px;
-    font-family: Georgia;
+    background-repeat: no-repeat;   
 }
 
 .special
 {
+    position: relative;
+    top: 8%;
     left: 5%;
-    position: fixed;
-    top: 12.5%;
-    width:15%;
     font-size: 22.5px;
-    background-color: gainsboro; 
-    border: solid;
-    border-width: 2px;
-    border-color: darkgrey;
+    background-color: gainsboro;
     font-family: Georgia;
+    border: 1px solid darkgrey;
+    width:15%;
 }
 
 .wines
 {
-    left: 30%;
-    position: fixed;
-    top: 12.5%;
-    width:15%;
+    position: relative;
+    top: 8%;
+    left: 15%;
     font-size: 22.5px;
     background-color: gainsboro; 
-    border: solid;
-    border-width: 2px;
-    border-color: darkgrey;
     font-family: Georgia;
+    border: 1px solid darkgrey;
+    width: 15%;
 }
 
 .beers
 {
-    left: 55%;
-    position: fixed;
-    top: 12.5%;
-    width:15%;
+    position: relative;
+    top: 8%;
+    left: 25%;
     font-size: 22.5px;
-    background-color: gainsboro;  
-    border: solid;
-    border-width: 2px;
-    border-color: darkgrey;
+    background-color: gainsboro; 
     font-family: Georgia;
+    border: 1px solid darkgrey;
+    width:15%;
+    
 }
 
 .hardliq
-{
-    right: 5%;
-    position: fixed;
-    top: 12.5%;
-    width:15%;
+{  
+    position: relative;
+    top: 8%;
+    left:34.2%;
     font-size: 22.5px;
     background-color: gainsboro; 
-    border: solid;
-    border-width: 2px;
-    border-color: darkgrey;
     font-family: Georgia;
+    border: 1px solid darkgrey;
+    width:15%;
 }
 
 h1
 {
     left: 39.5%;
-    position: fixed;
-    top: 56%;
+    position: absolute;
+    top: 55%;
     width:30%;
     font-size: 33.75px;
     font-family: Georgia;
-
 }
 
 .box1
 {
-    left: 5%;
-    position: fixed;
+    position: absolute;
     top: 70%;
+    left: 5%;
     border-style: solid;
     border-color: darkgrey;
     border-width: 2px;
@@ -150,9 +149,9 @@ h1
 
 .box2
 {
-    left: 37.5%;
-    position: fixed;
+    position: absolute;
     top: 70%;
+    left: 37.5%;
     border-style: solid;
     border-color: darkgrey;
     border-width: 2px;
@@ -165,9 +164,9 @@ h1
 
 .box3
 {
-    right: 5%;
-    position: fixed;
+    position: absolute;
     top: 70%;
+    right: 5%;
     border-style: solid;
     border-color: darkgrey;
     border-width: 2px;
@@ -175,15 +174,14 @@ h1
     height: 30%;
     font-size: 32.5px;
     text-align: center; 
-    vertical-align: 50%;
     font-family: Georgia;
 }
 
 .box4
 {
-    left: 5%;
-    position: fixed;
+    position: absolute;
     top: 110%;
+    left: 5%;
     border-style: solid;
     border-color: darkgrey;
     border-width: 2px;
@@ -196,9 +194,9 @@ h1
 
 .box5
 {
-    left: 37.5%;
-    position: fixed;
+    position: absolute;
     top: 110%;
+    left: 37.5%;
     border-style: solid;
     border-color: darkgrey;
     border-width: 2px;
@@ -211,9 +209,9 @@ h1
 
 .box6
 {
-    right: 5%;
-    position: fixed;
+    position: absolute;
     top: 110%;
+    right: 5%;
     border-style: solid;
     border-color: darkgrey;
     border-width: 2px;
