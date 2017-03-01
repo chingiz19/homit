@@ -68,7 +68,7 @@ body
     box-sizing: border-box;
     display: flex;
     
-    background-image: url('searchicon.png');
+    /*background-image: url('searchicon.png');*/
     background-position: 10px 10px;
     background-repeat: no-repeat;   
 }
@@ -124,7 +124,7 @@ body
 
 h1
 {
-    left: 37%;
+    left: 39.5%;
     position: absolute;
     top: 55%;
     width:30%;
