@@ -13,14 +13,6 @@ webServer.use(bodyParser.urlencoded({ extended: true}));
 webServer.use(express.static(webpagePath));
 webServer.set('view engine', 'ejs');
 
-webServer.use( function(req, res, next){
-	if (req.url.includes('resources')){
-		res.sendHtml = false;
-	} else {
-		res.sendHtml = true;
-	}
-	next();
-});
 /* Custom modules to use for proper routing */
 webServer.use("/api", require(path.join(__dirname, "/api_controllers/generic_controller")));
 webServer.use("/", require(path.join(__dirname, "/view_controllers/generic_controller")));
