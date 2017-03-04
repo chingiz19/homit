@@ -28,10 +28,4 @@ router.use(function(req, res, next){
 	res.send(html);
 });
 
-router.use(function(err, req, res, next){
-	console.log("-- > Something went wrong while rendering");
-	console.log("-- > " + req.path);
-	next();
-});
-
 module.exports = router;
