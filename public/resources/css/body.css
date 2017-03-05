@@ -43,6 +43,11 @@ body
     border: 1px solid darkgrey;
 }
 
+.login:hover
+{
+    background-color:yellow;
+}
+
 .myaccount
 {
     position: relative;
@@ -220,4 +225,14 @@ h1
     font-size: 32.5px;
     text-align: center; 
     font-family: Georgia;
+}
+
+a:link
+{
+    //
+}
+
+a:hover
+{
+
 }
