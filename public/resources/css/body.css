@@ -1,223 +1,132 @@
-
 body
 {
-    height: 1400px;
-    min-width: 1000px;
+    height: 250%;
+    min-width: 800px;
     overflow-x: scroll;
     overflow-y: scroll;
 }
-.ln1
+
+.headbox
 {
     position: fixed;
-    width: 90%;
-    height: 95px;
-    left: 5%;
-    border: 1px solid blue;
-    background-color: lightblue;
-    box-sizing: border-box;
-    z-index: 301;
-    top: 0.5%;
+    width: 90%; height: 80px;
+    top: 0.5%; left: 5%;
+    border: 1px solid darkgray;
+    z-index: 1;
+}
+
+.navbar_a
+{
+    display: flex;
+    display: -webkit-flex;
+    align-items: baseline;
+    font-family: Georgia;
+    white-space: nowrap;
+    top: 0%;
 }
 
 .brandname
 {
     position: relative;
-    top: 0.2%;
     left: 0%;
-    width: 14%;
-    font-size: 15px;
-    background-color: gainsboro;
-    font-family: Georgia;
+    width: 14%; 
     border: 1px solid darkgrey;
+    background-color: gainsboro; 
 }
 
 .login
 {
     position: relative;
-    top: 0%;
-    left: 65%;
-    width: 10%;
-    font-size: 15px;
-    background-color: gainsboro;
-    font-family: Georgia;
+    right: 0%;
+    width: 14%;
     border: 1px solid darkgrey;
+    background-color: gainsboro;
 }
 
-.myaccount
+.myacc
 {
     position: relative;
-    top: 0%;
-    left: 65.35%;
-    width: 10%;
-    font-size: 15px;
-    background-color: gainsboro;
-    font-family: Georgia;
+    right: 0;
+    width: 14%;
     border: 1px solid darkgrey;
+    background-color: gainsboro;
 }
 
-.sbar
+.search-form
 {
-    position: relative;
-    top: 34%;
-    left: 0%;
-    font-size: 22px;
-    background-color: gainsboro;
-    font-family: Georgia;
-    border: 1px solid darkgrey;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
+    flex-grow: 20;
+    min-width: 30px;
     
-    /*background-image: url('searchicon.png');*/
-    background-position: 10px 10px;
-    background-repeat: no-repeat;   
+}
+
+.search-box
+{   
+    position: relative;
+    left: 0.5%;
+    height: 34%;
+    width: 99%;
+    background-color: lightgrey;
+    overflow-x: scroll;
+}
+
+.navbar_b
+{
+    align-items: baseline;
+    font-family: Georgia;
+    bottom: 0%;
+    display: flex;
 }
 
 .special
 {
     position: relative;
-    top: 8%;
-    left: 5%;
-    font-size: 22.5px;
-    background-color: gainsboro;
-    font-family: Georgia;
+    float: left;
     border: 1px solid darkgrey;
-    width:15%;
+    background-color: gainsboro; 
+    width: 22%;
+    font-size: 150%;
 }
 
-.wines
+.wines 
 {
     position: relative;
-    top: 8%;
-    left: 15%;
-    font-size: 22.5px;
-    background-color: gainsboro; 
-    font-family: Georgia;
+    float: left;
+    margin-left: 4%;
     border: 1px solid darkgrey;
-    width: 15%;
+    background-color: gainsboro; 
+    width: 22%; 
+    font-size: 150%;
 }
 
-.beers
+.beers 
 {
     position: relative;
-    top: 8%;
-    left: 25%;
-    font-size: 22.5px;
-    background-color: gainsboro; 
-    font-family: Georgia;
+    float: left;
+    margin-left: 4%;
     border: 1px solid darkgrey;
-    width:15%;
-    
+    background-color: gainsboro; 
+    width: 22%; 
+    font-size: 150%;
 }
 
-.hardliq
-{  
+.spirits 
+{
     position: relative;
-    top: 8%;
-    left:34.2%;
-    font-size: 22.5px;
-    background-color: gainsboro; 
-    font-family: Georgia;
+    float: left;
+    margin-left: 4%;
     border: 1px solid darkgrey;
-    width:15%;
+    background-color: gainsboro; 
+    width: 22%; 
+    font-size: 150%;
 }
 
 h1
 {
-    left: 39.5%;
     position: absolute;
-    top: 55%;
-    width:30%;
+    margin-left: 41%; 
+    top: 60%;
+    font-size: 50%;
     font-size: 33.75px;
     font-family: Georgia;
-}
-
-.box1
-{
-    position: absolute;
-    top: 70%;
-    left: 5%;
-    border-style: solid;
-    border-color: darkgrey;
-    border-width: 2px;
-    width: 25%;
-    height: 30%;
-    font-size: 32.5px;
-    text-align: center; 
-    font-family: Georgia;
-}
-
-.box2
-{
-    position: absolute;
-    top: 70%;
-    left: 37.5%;
-    border-style: solid;
-    border-color: darkgrey;
-    border-width: 2px;
-    width: 25%;
-    height: 30%;
-    font-size: 32.5px; 
-    text-align: center; 
-    font-family: Georgia;
-}
-
-.box3
-{
-    position: absolute;
-    top: 70%;
-    right: 5%;
-    border-style: solid;
-    border-color: darkgrey;
-    border-width: 2px;
-    width: 25%;
-    height: 30%;
-    font-size: 32.5px;
-    text-align: center; 
-    font-family: Georgia;
-}
-
-.box4
-{
-    position: absolute;
-    top: 110%;
-    left: 5%;
-    border-style: solid;
-    border-color: darkgrey;
-    border-width: 2px;
-    width: 25%;
-    height: 30%;
-    font-size: 32.5px;
-    text-align: center; 
-    font-family: Georgia;
-}
-
-.box5
-{
-    position: absolute;
-    top: 110%;
-    left: 37.5%;
-    border-style: solid;
-    border-color: darkgrey;
-    border-width: 2px;
-    width: 25%;
-    height: 30%;
-    font-size: 32.5px; 
-    text-align: center; 
-    font-family: Georgia;
-}
-
-.box6
-{
-    position: absolute;
-    top: 110%;
-    right: 5%;
-    border-style: solid;
-    border-color: darkgrey;
-    border-width: 2px;
-    width: 25%;
-    height: 30%;
-    font-size: 32.5px;
-    text-align: center; 
-    font-family: Georgia;
+    white-space: nowrap;
 }
