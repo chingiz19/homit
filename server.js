@@ -29,7 +29,9 @@ webServer.use(function(req, res, next){
 });
 
 webServer.use(function(err, req, res, next){
-	var message = "-- > " + req.path + "\n";
+	var message = "<date>" + new Date().toLocaleString() + "</date>\n";
+	message += "\t<error path>\n\t\t" + req.path + "\n\t</error path>\n";
+	message += "\t<error message>" + err.message + "\n\t</error message>\n\n";
 	fileSystem.writeFile(errorLog, message, {encoding: 'utf-8', flag: 'a'}, 
 	function(err){
 		if (err){
@@ -37,7 +39,8 @@ webServer.use(function(err, req, res, next){
 		}
 	});
 	console.log("[ERROR] For more information, please visit .logs/error_log file");
-	res.status(404).send("Path not found: " + req.path);
+	//res.status(404).send("Path not found: " + req.path);
+	res.status(err.status || 500).send("<h1>Path Not Found</h1><h2>" + req.path + "</h2>");
 });
 
 webServer.listen(8080, function(){
