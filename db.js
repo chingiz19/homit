@@ -18,18 +18,17 @@ mysql.createConnection({
 });
 
 var runQuery = function(query, args){
-  console.log("in the runquery");
-  con.query(query);
-  return "success";
-  //   con.query('INSERT INTO '+tableName+' SET ?', data, function(err, res){
-  //   zurna = res.insertId;
-  //   console.log(res.insertId);
-  // });
+  return con.query(query, args);
 };
 
 var insertQuery = function(table, data) {
   var tableName = table;
   return con.query('INSERT INTO '+tableName+' SET ?', data);
+};
+
+var selectQuery = function(table, data) {
+  var tableName = table;
+  return con.query('SELECT * FROM '+tableName+' WHERE ?', data);
 };
 
 var end = function(){
@@ -39,7 +38,8 @@ var end = function(){
         // before sending a COM_QUIT packet to the MySQL server.
         console.log("ended DB connection");
     });
-}
+};
 
 module.exports.runQuery = runQuery;
 module.exports.insertQuery = insertQuery;
+module.exports.selectQuery = selectQuery;
