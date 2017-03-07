@@ -30,9 +30,30 @@ router.post('/signup', function(req, res, next) {
     }
 });
 
-// router.get('/signin', function(req, res, next){
-//     res.send("in the get wines");
-// });
+router.get('/signin', function(req, res, next){
+    var email = req.query.email ? req.query.email : undefined;
+    var password = req.query.password ? req.query.password : undefined;
+    // double checking, this should be done on client-side as well through required field
+    if (!email || !password){
+        res.status(404).json({
+            success: "false",
+            error: "Missing email/password"
+        });
+
+        var query = "Select ..."; //TODO: insert query
+        var args = [email, password];
+
+        db.runQuery(query, args).then(function(result){
+            //PSEUDOCODE
+            // if good then 
+            //      create token
+            //      send back success, and assign session/token
+            // else
+            //      return not successful password/email
+        });
+        
+    }
+});
 
 // router.get('/reset', function(req, res, next){
 //     res.send("in the get wines");
