@@ -1,9 +1,11 @@
 var express = require('express');
+var session = require("express-session");
 var webServer = express();
 var path = require("path");
 var webpagePath = path.join(__dirname, "/public");
 var bodyParser = require("body-parser");
 var db = require("./db.js");
+const secretKey = "secretSession";
 
 var fileSystem = require("fs");
 var errorLog = ".logs/error_log";
@@ -13,6 +15,12 @@ if (!fileSystem.existsSync('.logs')){
 }
 
 /* Webpage is hosted at 8080 */
+webServer.use(session({
+	secret: secretKey,
+	resave: false,
+	saveUninitialized: true
+}));
+
 webServer.use(bodyParser.json());
 webServer.use(bodyParser.urlencoded({ extended: true}));
 webServer.use(express.static(webpagePath));

@@ -33,8 +33,8 @@ router.post('/signup', function(req, res, next) {
                         last_name: data['last_name'],
                         phone_number: data['phone_number']
                     };
-                    var token = tokenAPI.createToken(dbResult.insertId);
-                    var response = {success: 'true', user: user, token: token};
+                    req.session.user = user;
+                    var response = {success: 'true', user: user};
                     res.send(response);
                 });
             } else {
@@ -72,8 +72,8 @@ router.get('/signin', function(req, res, next){
                             last_name: exists['last_name'],
                             phone_number: exists['phone_number']
                         };
-                        var token = tokenAPI.createToken(exists['id']);
-                        var response = {success: 'true', user: user, token: token};
+                        req.session.user = user;
+                        var response = {success: 'true', user: user};
                         res.send(response);
                     }
                 });
@@ -82,9 +82,66 @@ router.get('/signin', function(req, res, next){
     }
 });
 
-// router.get('/reset', function(req, res, next){
-//     res.send("in the get wines");
-// });
+router.post('/forgotpassword', function(req, res, next){
+    var email = req.query.email;
+    userExists(email).then(function(exists){
+        if (!exists) {
+            var response = {success: 'false', error: 'user does not exist'};
+            res.status(403);
+            res.send(response);
+        } else {
+            var token = tokenAPI.createToken(exists['id']);
+            //TODO implement send email
+            // var link = "localhost:8080" + "/resetpassword?email=" + email + "&token=" + token;
+            // send this links
+            var response = {success: 'true', email: email};
+            res.send(response);
+        }
+    });
+});
+
+router.post('/resetpassword', function(req, res, next){
+    var email = req.query.email;
+    var token = req.query.token;
+    var newpassword = req.query.newpassword;
+    userExists(email).then(function(exists){
+        if (!exists) {
+            var response = {success: 'false', error: 'user does not exist'};
+            res.status(403);
+            res.send(response);
+        } else {
+            tokenValid = tokenAPI.validateToken(exists['id'], token);
+            console.log(tokenValid);
+            if (tokenValid == true) {
+                tokenAPI.destroyToken(token);
+                bcrypt.hash(newpassword, saltRounds).then(function(hash) {
+                    var users_customers = "users_customers";
+                    var data = [
+                        {password: hash},
+                        {id: exists['id']}];
+                    db.updateQuery(users_customers, data).then(function(updated){
+                        var response = {success: 'true'};
+                        res.send(response);
+                    });                
+                });
+            } else if (tokenValid == 'expired'){
+                var response = {success: 'false', error: 'expired token'};
+                res.send(response);
+            } else {
+                var response = {success: 'false'};
+                res.status(403);
+                res.send(response);
+            }
+        }
+    });
+});
+
+router.post('/signout', function(req, res, next){
+    var userid = req.query.userid;
+    req.session.destroy();
+    var response = {success: 'true'};
+    res.send(response);
+});
 
 var userExists = function(email) {
     var users_customers = "users_customers";

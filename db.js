@@ -31,6 +31,11 @@ var selectQuery = function(table, data) {
   return con.query('SELECT * FROM '+tableName+' WHERE ?', data);
 };
 
+var updateQuery = function(table, data) {
+  var tableName = table;
+  return con.query('UPDATE '+tableName+' SET ? WHERE ?', data);
+};
+
 var end = function(){
     con.end(function(err) {
         // The connection is terminated gracefully
@@ -43,3 +48,4 @@ var end = function(){
 module.exports.runQuery = runQuery;
 module.exports.insertQuery = insertQuery;
 module.exports.selectQuery = selectQuery;
+module.exports.updateQuery = updateQuery;

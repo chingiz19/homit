@@ -15,12 +15,17 @@ var validateToken = function(userId, token) {
         var decoded = jwt.verify(token, secretKey);
         return true;
     } catch(err) {
-        //TODO: If expired, sign in, if wrong, send error
-        return false;
+        if (err == jwt.TokenExpiredError) {
+            return "expired";
+        } else {
+            console.log(err);
+            return "wrong";
+        }
     }
 };
 
 var destroyToken = function(token) {
+    //TODO: impement
     console.log("token destory");
 };
 
