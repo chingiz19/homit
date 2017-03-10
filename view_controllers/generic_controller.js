@@ -5,6 +5,16 @@ var ejs = require("EJS");
 var headerEjs = fileSystem.readFileSync('public/partial/header.ejs', 'utf-8');
 var footerEjs = fileSystem.readFileSync('public/partial/footer.ejs', 'utf-8');
 
+var sendFile;
+
+router.use(function(req, res, next){
+	sendFile = true;
+	if(req.path.split('/').length > 2){
+		sendFile = false;
+	}
+	next();
+});
+
 router.route('/')
 	.get(function(req, res, next){
 		res.redirect(req.originalUrl + 'main');
@@ -22,6 +32,9 @@ router.get('/main', function(req, res, next){
  * Middleware to append header and footer
  */
 router.use(function(req, res, next){
+	if (!sendFile){
+		next();
+	}
 	var header = ejs.render(headerEjs, res.headerOptions);
 	var footer = ejs.render(footerEjs, res.footerOptions);
 	var html = header + res.body + footer;
