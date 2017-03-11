@@ -4,6 +4,9 @@ var tokenAPI = require("../token.js");
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+router.use(global.checkAuth);
+
+
 router.post('/signup', function(req, res, next) {
     // var fname = req.body.fname; // might use this tecnhique later
     var fname = req.query.fname;
