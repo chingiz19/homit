@@ -12,10 +12,17 @@
     </div>
     <div id="sign_modal" class="s_modal">
       <div class="in_modal">
-        <div>
-          <label for="email">Email</label>
-          <input type="text" id="email" name="Email" placeholder="Email address..">
-        </div>
+        <div> 
+          <div>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="Email" placeholder="Email address..">
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input type="text" id="password" name="Password" placeholder="Your password..">
+          </div>
+          <input type="submit" id="signin" value="Sign in">  
+        </div>  
         <div>
           <label for="fname">First Name</label>
           <input type="text" id="fname" name="fname" placeholder="Your name..">
@@ -24,7 +31,7 @@
           <label for="lname">Last Name</label>
           <input type="text" id="lname" name="lname" placeholder="Your last name..">
         </div>
-          <input type="submit" id="submit" value="Sabmit">
+          <input type="submit" id="signup" value="Sign up">
         </div>
       <span class="close">&times;</span>
     </div>
@@ -37,21 +44,5 @@
 </div>
 <div><h1>The Week Specials</h1></div>
 
-<script>
-  var modal = document.getElementById('sign_modal');
-  var buttn = document.getElementById("sign");
-  var span=document.getElementsByClassName("close")[0];
-
-  buttn.onclick=function () {
-      modal.style.display="block";
-  }
-  span.onclick=function(){
-      modal.style.display="close";
-  }
-  window.onclick=function(event){
-      if(event.target==modal){
-        modal.style.display="none";
-      }
-  }
-</script>
+<script src="/resources/controllers/header.js"></script>
 <script src="/resources/controllers/main.js"></script>
