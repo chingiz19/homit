@@ -7,6 +7,20 @@ const saltRounds = 10;
 router.use(global.checkAuth);
 
 
+router.get('/userexists', function(req, res, next){
+    var email = req.query.email;
+    userExists(email).then(function(exists){
+        if (!exists) {
+            var response = {success: 'false', error: 'user does not exist'};
+            res.send(response);
+        } else {
+            var response = {success: 'true', error: 'user exists'};
+            res.send(response);
+        }
+    });
+});
+
+
 router.post('/signup', function(req, res, next) {
     // var fname = req.body.fname; // might use this tecnhique later
     var fname = req.query.fname;
