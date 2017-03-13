@@ -28,6 +28,14 @@ router.get('/main', function(req, res, next){
 	next();
 });
 
+router.get('/catalog', function(req, res, next){
+	var body = fileSystem.readFileSync("public/view/catalog.html", 'utf-8');
+	res.headerOptions = {title: "Catalog"};
+	res.footerOptions = null;
+	res.body = body;
+	next();
+});
+
 /**
  * Middleware to append header and footer
  */
