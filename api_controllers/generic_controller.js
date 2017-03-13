@@ -8,5 +8,6 @@ global.checkAuth = function(req,res,next){
 };
 
 router.use("/authentication", require(path.join(__dirname, "./authentication")));
+router.use("/catalog", require(path.join(__dirname, "./catalog")));
 
 module.exports = router;

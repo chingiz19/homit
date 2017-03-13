@@ -4,20 +4,27 @@ var tokenAPI = require("../token.js");
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-router.use(global.checkAuth);
+// router.use(global.checkAuth);
 
 
 router.get('/userexists', function(req, res, next){
     var email = req.query.email;
-    userExists(email).then(function(exists){
-        if (!exists) {
-            var response = {success: 'false', error: 'user does not exist'};
-            res.send(response);
-        } else {
-            var response = {success: 'true', error: 'user exists'};
-            res.send(response);
-        }
-    });
+    if (!email){
+        res.status(403).json({
+            success: "false",
+            error: "missing email"
+        });
+    } else {
+        userExists(email).then(function(exists){
+            if (!exists) {
+                var response = {success: 'false', error: 'user does not exist'};
+                res.send(response);
+            } else {
+                var response = {success: 'true', error: 'user exists'};
+                res.send(response);
+            }
+        });
+    }
 });
 
 
@@ -30,36 +37,49 @@ router.post('/signup', function(req, res, next) {
     var password = req.query.password;
     var phone = req.query.phone;
 
-    bcrypt.hash(password, saltRounds).then(function(hash) {
-        var data = {
-            user_email: email,
-            first_name: fname,
-            last_name: lname,
-            password: hash,
-            phone_number: phone
-        };
-        // check if the user already exists
-        userExists(email).then(function(exists){
-            if (!exists) {
-                var users_customers = "users_customers";
-                db.insertQuery(users_customers, data).then(function(dbResult){
-                    var user = {
-                        id: dbResult.insertId,
-                        user_email: data['user_email'],
-                        first_name: data['first_name'],
-                        last_name: data['last_name'],
-                        phone_number: data['phone_number']
-                    };
-                    req.session.user = user;
-                    var response = {success: 'true', user: user};
-                    res.send(response);
-                });
-            } else {
-                var response = {success: 'false', error: 'duplicate email'};
-                res.send(response);
-            }
+    if (!fname || !lname || !email || !dob || !password || !phone) {
+        res.status(403).json({
+            success: "false",
+            error: "missing one or more fields"
         });
-    });
+    } else {
+        bcrypt.hash(password, saltRounds).then(function(hash) {
+            var data = {
+                user_email: email,
+                first_name: fname,
+                last_name: lname,
+                password: hash,
+                phone_number: phone
+            };
+            // check if the user already exists
+            userExists(email).then(function(exists) {
+                if (!exists) {
+                    var users_customers = "users_customers";
+                    db.insertQuery(users_customers, data).then(function(dbResult) {
+                        var user = {
+                            id: dbResult.insertId,
+                            user_email: data['user_email'],
+                            first_name: data['first_name'],
+                            last_name: data['last_name'],
+                            phone_number: data['phone_number']
+                        };
+                        req.session.user = user;
+                        var response = {
+                            success: 'true',
+                            user: user
+                        };
+                        res.send(response);
+                    });
+                } else {
+                    var response = {
+                        success: 'false',
+                        error: 'duplicate email'
+                    };
+                    res.send(response);
+                }
+            });
+        });
+    }
 });
 
 router.get('/signin', function(req, res, next){
@@ -69,7 +89,7 @@ router.get('/signin', function(req, res, next){
     if (!email || !password){
         res.status(403).json({
             success: "false",
-            error: "Missing email/password"
+            error: "missing field"
         });
     } else {
         userExists(email).then(function(exists){
@@ -100,21 +120,28 @@ router.get('/signin', function(req, res, next){
 });
 
 router.post('/forgotpassword', function(req, res, next){
-    var email = req.query.email;
-    userExists(email).then(function(exists){
-        if (!exists) {
-            var response = {success: 'false', error: 'user does not exist'};
-            res.status(403);
-            res.send(response);
-        } else {
-            var token = tokenAPI.createToken(exists['id']);
-            //TODO implement send email
-            // var link = "localhost:8080" + "/resetpassword?email=" + email + "&token=" + token;
-            // send this links
-            var response = {success: 'true', email: email};
-            res.send(response);
-        }
-    });
+    var email = req.query.email;    
+    if (!email){
+        res.status(403).json({
+            success: "false",
+            error: "missing email"
+        });
+    } else {
+        userExists(email).then(function(exists){
+            if (!exists) {
+                var response = {success: 'false', error: 'user does not exist'};
+                res.status(403);
+                res.send(response);
+            } else {
+                var token = tokenAPI.createToken(exists['id']);
+                //TODO implement send email
+                // var link = "localhost:8080" + "/resetpassword?email=" + email + "&token=" + token;
+                // send this links
+                var response = {success: 'true', email: email};
+                res.send(response);
+            }
+        });
+    }
 });
 
 router.post('/resetpassword', function(req, res, next){
