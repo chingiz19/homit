@@ -1,54 +1,87 @@
 <html ng-app="mainModule">
-    <head>
-        <title> <%= title %> </title>
+<head>
+    <title> <%= title %> </title>
         
-        <link href="/resources/library/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/resources/library/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/resources/library/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/library/css/bootstrap-theme.min.css" rel="stylesheet">
 
-            <div class="headbox">
-                <div class="navbar_a">
+        <div class="headbox">
+            <div class="navbar_a">
                 <button class="brandname">Delivery</button>
                 <form class="search-form">
                     <input type="text" class="search-box" placeholder="Search">
                 </form>
-                <button id="sign" class="login">Sign</button>
-                <!--<button class="myacc">My Account</button>-->
-                </div>
-                <div id="sign_modal" class="s_modal" ng-controller="LoginController">
-                <div class="in_modal">
+                <button id="sign" class="bttn-sign">Sign</button>
+            </div>
+
+            <div id="next-sign_modal" class="modal" ng-controller="LoginController">
+                <div class="sign_modal">
                     <div> 
-                    <div>
-                        <label for="email">Email</label>
-                        <input type="text" ng-model="signin.email" id="email" name="Email" placeholder="Email address..">
-                    </div>
-                    <div>
-                        <label for="password">Password</label>
-                        <input type="text" ng-model="signin.password" id="password" name="Password" placeholder="Your password..">
-                    </div>
-                    <input ng-click="signInClicked()" type="submit" id="signin" value="Sign in">  
-                    </div>  
-                    <div>
-                    <label for="fname">First Name</label>
-                    <input type="text" id="fname" name="fname" placeholder="Your name..">
-                    </div>
-                    <div>
-                    <label for="lname">Last Name</label>
-                    <input type="text" id="lname" name="lname" placeholder="Your last name..">
-                    </div>
-                    <input type="submit" id="signup" value="Sign up">
-                    </div>
-                <span class="close">&times;</span>
+                        <div>
+                            <label for="email">Email</label>
+                            <input type="email" ng-disabled="signEmail" ng-model="sign.email" id="email" name="Email" placeholder="Email address..">
+                        </div>
+                        <div ng-hide="signEmail || ifsignUpTrue"><input ng-click="signClicked()" type="submit" id="sign_next" value="Next"></div>
+                        
+                        <!--Email False go for sign Up or Next again-->
+                        <div ng-show="ifcheckedEmailFalse && !ifsignUpTrue"><input ng-click="gotosingUpClicked()" type="submit" id="gotoSignup" value="Sign Up"></div>
+
+                        <!--go for Sign In-->
+                        <div ng-show="signEmail">
+                            <div>
+                                <label for="password">Password</label>
+                                <input type="password" ng-model="signin.password" id="password" name="Password" placeholder="Your password..">
+                            </div>
+                            <div><input ng-click="signInClicked()" type="submit" id="signin_next" value="Sign In"></div>
+                        </div>
+
+                        <!--go for Sign UP-->
+                        <div ng-show="ifsignUpTrue">
+                            <div>
+                                <label for="fname">First Name</label>
+                                <input type="text" ng-model="signup.fname" id="fname" name="fname" placeholder="Your name..">
+                            </div>
+                            <div>
+                                <label for="lname">Last Name</label>
+                                <input type="text" ng-model="signup.lname" id="lname" name="lname" placeholder="Your last name..">
+                            </div>
+                            <div>
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" ng-model="signup.phone" id="phone" name="Phone" placeholder="(403)397-7020">
+                            </div>
+                            <div>    
+                                <label for="password">Password</label>
+                                <input type="password" ng-model="signup.password" id="password" name="Password" placeholder="Your password..">
+                            </div>
+                            <div>    
+                                <label for="password">Password</label>
+                                <input type="password" ng-model="signup.PasswordCheck" id="passwordCheck" name="Password" placeholder="Your password..">
+                            </div>
+                            <div ng-show="reeneteredPasswordFalse" class="wrongP2">Please re-enter Passwords</div>
+                            <div>    
+                                <label for="dob">Birthday</label>
+                                <input type="date" ng-model="signup.dob" id="dob" name="dob" placeholder="Your password..">
+                            </div>
+                            <input ng-click="signUpClicked()" type="submit" id="signup_next" value="Sign Up">
+                        </div>
+                    </div> 
                 </div>
-                <div>
+                <span class="close">&times;</span>
+            </div>
+
+
+            
+
+            <div>
                 <button class="special">Special</button>
                 <button class="Wines">Wines</button>
                 <button class="beers">Beers</button>
                 <button class="spirits">Spirits</button>
-                </div>
             </div>
+        </div>
 
-        <script src="/resources/library/js/angular.min.js"></script>
-        <script src="/resources/controllers/header.js"></script>
+    <script src="/resources/library/js/angular.min.js"></script>
+    <script src="/resources/controllers/header.js"></script>
 
 </head>
 <body>
