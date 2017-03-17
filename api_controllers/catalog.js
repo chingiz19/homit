@@ -3,13 +3,15 @@ var db = require("../db.js");
 
 
 router.get('/beers', function(req, res, next){
-    var response = {
-        success: 'true',
-        types: "all types",
-        brands: "all brands",
-        beers: "all beers with details"
-    };
-    res.send(response);
+    getAllBeerTypes.then(function(types){
+        var response = {
+            success: 'true',
+            types: types,
+            brands: "brands",
+            beers: "all beers with details"
+        };
+        res.send(response);
+    });
 });
 
 router.get('/wines', function(req, res, next){
@@ -22,5 +24,35 @@ router.get('/wines', function(req, res, next){
     };
     res.send(response);
 });
+
+var categories = {
+  Beers: 1,
+  Wines: 2,
+  Spirits: 3,
+  Others: 4
+};
+
+
+var getAllBeerTypes = function() {
+    return getTypes(categories.Beers);
+};
+
+var getAllWinesTypes = function() {
+    return getTypes(categories.Wines);
+};
+
+var getTypes = function(category_id) {
+    var types = "catalog_types";
+    var data = {category_id: category_id};
+    var result = [];
+    return db.selectQuery(types, data).then(function(dbResult) {
+        // for (i = 0; i < dbResult.length; i++) { 
+        //     result = dbResult[i];
+        // }
+        // console.log("result is " + result);
+        // return result;
+    });
+};
+
 
 module.exports = router;
