@@ -3,7 +3,7 @@ var db = require("../db.js");
 
 
 router.get('/beers', function(req, res, next){
-    getAllBeerTypes.then(function(types){
+    getAllBeerTypes().then(function(types){
         var response = {
             success: 'true',
             types: types,
@@ -34,7 +34,9 @@ var categories = {
 
 
 var getAllBeerTypes = function() {
-    return getTypes(categories.Beers);
+    return getTypes(categories.Beers).then(function(beers) {
+        return beers;
+    });
 };
 
 var getAllWinesTypes = function() {
@@ -46,11 +48,10 @@ var getTypes = function(category_id) {
     var data = {category_id: category_id};
     var result = [];
     return db.selectQuery(types, data).then(function(dbResult) {
-        // for (i = 0; i < dbResult.length; i++) { 
-        //     result = dbResult[i];
-        // }
-        // console.log("result is " + result);
-        // return result;
+        for (i = 0; i < dbResult.length; i++) { 
+            result[i] = dbResult[i].name;
+        }
+        return result;
     });
 };
 
