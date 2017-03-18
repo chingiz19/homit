@@ -4,14 +4,19 @@ var db = require("../db.js");
 
 router.get('/beers', function(req, res, next){
     getAllBeerTypes().then(function(types){
-        var response = {
-            success: 'true',
-            types: types,
-            brands: "brands",
-            pacakgings: "pacakgings",
-            beers: "all beers with details"
-        };
-        res.send(response);
+        getAllBeers().then(function(beers) {
+            var brands = getAllBrands(beers);
+            var packagings = getAllPackagings(beers);
+            var response = {
+                success: 'true',
+                types: types,
+                brands: brands,
+                pacakgings: packagings,
+                beers: beers
+            };
+            res.send(response);
+        });
+
     });
 });
 
@@ -58,27 +63,54 @@ var getTypes = function(category_id) {
     });
 };
 
-// SELECT 
-// w.id AS id, 
-// w.product_id AS "Product Id",
-// w.price AS price,
-// w.quantity AS quantity,
-// pa.name AS packaging,
-// pr.product_brand AS brand,
-// pr.product_name AS name,
-// pr.product_description AS description,
-// t.name AS type,
-// c.name AS category
-// FROM catalog_warehouse AS w,
-// catalog_packagings AS pa,
-// catalog_products AS pr,
-// catalog_types AS t,
-// catalog_categories AS c
-// WHERE 1=1
-// AND w.packaging_id = pa.id
-// AND w.product_id = pr.id
-// AND pr.type_id = t.id
-// AND t.category_id = c.id
+var getAllBeers = function() {
+    return getAllProducts(categories.Beers).then(function(beers) {
+        return beers;
+    });
+};
+
+var getAllWines = function() {
+    return getAllProducts(categories.Wines).then(function(wines) {
+        return wines;
+    });
+};
+
+var getAllProducts = function(category_id) {
+    var sqlQuery = `SELECT w.id AS warehouse_id, w.product_id AS product_id, t.name AS type, 
+    pr.product_brand AS brand, pr.product_name AS name, 
+    pr.product_description AS description, w.price AS price, 
+    w.quantity AS quantity, pa.name AS packaging, c.name AS category
+    FROM catalog_warehouse AS w, catalog_packagings AS pa,
+    catalog_products AS pr, catalog_types AS t,
+    catalog_categories AS c
+    WHERE w.packaging_id = pa.id AND w.product_id = pr.id
+    AND pr.type_id = t.id AND t.category_id = c.id AND ?`
+    var data = {"c.id": category_id};
+    return db.runQuery(sqlQuery, data).then(function(dbResult) {
+        console.log(dbResult);
+        return dbResult;
+    })
+};
+
+var getAllBrands = function (products) {
+    var result = [];
+    for (i = 0; i < products.length; i++) {
+        if (!result.includes(products[i].brand)) {
+            result.push(products[i].brand);
+        }
+    }
+    return result;
+};
+
+var getAllPackagings = function (products) {
+    var result = [];
+    for (i = 0; i < products.length; i++) {
+        if (!result.includes(products[i].packaging)) {
+            result.push(products[i].packaging);
+        }
+    }
+    return result;
+};
 
 
 module.exports = router;
