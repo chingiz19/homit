@@ -1,19 +1,5 @@
 var router = require("express").Router();
 var fileSystem = require("fs");
-var ejs = require("EJS");
-
-var headerEjs = fileSystem.readFileSync('public/partial/header.ejs', 'utf-8');
-var footerEjs = fileSystem.readFileSync('public/partial/footer.ejs', 'utf-8');
-
-var sendFile;
-
-router.use(function(req, res, next){
-	sendFile = true;
-	if(req.path.split('/').length > 2){
-		sendFile = false;
-	}
-	next();
-});
 
 router.route('/')
 	.get(function(req, res, next){
@@ -21,32 +7,11 @@ router.route('/')
 	});
 
 router.get('/main', function(req, res, next){
-	var body = fileSystem.readFileSync("public/view/main.html", 'utf-8');
-	res.headerOptions = {title: "Main Page"};
-	res.footerOptions = null;
-	res.body = body;
-	next();
+	res.render("main.ejs", {title: "Main"});
 });
 
 router.get('/catalog', function(req, res, next){
-	var body = fileSystem.readFileSync("public/view/catalog.html", 'utf-8');
-	res.headerOptions = {title: "Catalog"};
-	res.footerOptions = null;
-	res.body = body;
-	next();
-});
-
-/**
- * Middleware to append header and footer
- */
-router.use(function(req, res, next){
-	if (!sendFile){
-		next();
-	}
-	var header = ejs.render(headerEjs, res.headerOptions);
-	var footer = ejs.render(footerEjs, res.footerOptions);
-	var html = header + res.body + footer;
-	res.send(html);
+	res.render("catalog.ejs", {title: "Catalog"});
 });
 
 module.exports = router;
