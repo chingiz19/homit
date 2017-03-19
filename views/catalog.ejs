@@ -1,4 +1,11 @@
-<link href="/resources/css/catalog.css" rel="stylesheet">
+<html ng-app="mainModule">
+<head>
+    <%- include('partial/header', {title: title}); %>
+
+    <link href="/resources/css/catalog.css" rel="stylesheet">
+</head>
+
+<body>
 <div ng-controller="catalogController">
 
     <div class="tab-content" id="whole_tab" class="container-fluid" ng-switch on="selection">
@@ -74,3 +81,5 @@
 
 </div>
 <script src="/resources/controllers/catalog.js"></script>
+</body>
+</html>
