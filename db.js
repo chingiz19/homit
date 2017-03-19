@@ -17,8 +17,8 @@ mysql.createConnection({
   }
 });
 
-var runQuery = function(query, args){
-  return con.query(query, args);
+var runQuery = function(query, data) {
+  return con.query(query, data);
 };
 
 var insertQuery = function(table, data) {
