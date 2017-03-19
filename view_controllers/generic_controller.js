@@ -14,4 +14,8 @@ router.get('/catalog', function(req, res, next){
 	res.render("catalog.ejs", {title: "Catalog"});
 });
 
+router.get('/myaccount', function(req, res, next){
+	res.render("myaccount.ejs", {title: "My Acount"});
+});
+
 module.exports = router;
