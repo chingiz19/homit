@@ -19,10 +19,27 @@
         <div id="beers_tab" ng-switch-when="Beers">
             <!--other two divisions go here-->
             <div id="beers_navigation">
-                Categories <br/>
+
+                <!--*****************************************-->
+                <h1> Select your type</h1>
                 <ul>
-                    <li>Example category 1</li>
+                    <li ng-repeat="type in types"> <input type='checkbox' ng-click=""> {{type}} </li>
                 </ul>
+                <h2> Select your packing
+                    <h2>
+                        <ul>
+                            <li ng-repeat="packing in packings"> <input type='checkbox' ng-click=""> {{packing}} </li>
+                        </ul>
+                        <label>Choose your brand from list
+<input list="brands"/></label>
+                        <datalist>
+  <option ng-repeat="product in products" value={{product}} ng-click="">
+</datalist>
+
+
+
+
+                        <!--********************************************-->
             </div>
 
 
