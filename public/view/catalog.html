@@ -1,6 +1,59 @@
 <link href="/resources/css/catalog.css" rel="stylesheet">
 <div ng-controller="catalogController">
-    <h1>Catalog</h1>
-</div>
 
+    <div class="tab-content" id="whole_tab" class="container-fluid" ng-switch on="selection">
+
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div id="mini_nav">
+                <!--This will be buttons and linked to function-->
+                <nav class="navbar navbar-inverse">
+                    <button role="presentation" ng-click="selection= 'Beers'">Beers</button>
+                    <button role="presentation" ng-click="selection= 'Wines' ">Wines</button>
+                    <button role="presentation" ng-click="selection= 'Spirits'">Spirits</button>
+                    <button role="presentation" ng-click="selection= 'Others'">Others</button>
+                </nav>
+            </div>
+        </nav>
+
+        <div id="beers_tab" ng-switch-when="Beers">
+            <!--other two divisions go here-->
+            <div id="beers_navigation">
+                Categories <br/>
+                <ul>
+                    <li>Example category 1</li>
+                </ul>
+            </div>
+
+
+            <div id="beers_resultsarea">
+                <h1> Search results displayed here</h1>
+            </div>
+
+        </div>
+
+
+        <div id="wines_tab" ng-switch-when="Wines">
+            <!--\\other two divisions go here-->
+            <h1>Wines section</h1>
+        </div>
+
+        <div id="spirits_tab" ng-switch-when="Spirits">
+            <!--\\other two divisions go here-->
+            <h1>Spirits section</h1>
+        </div>
+
+        <div id="others_tab" ng-switch-when="Others">
+            <!--\\other two divisions go here-->
+            <h1> Others section</h1>
+        </div>
+
+    </div>
+
+
+
+
+
+
+</div>
 <script src="/resources/controllers/catalog.js"></script>
