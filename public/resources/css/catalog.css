@@ -1,24 +1,33 @@
-#whole_tab {
+#beers_tab {
     width: 100%;
     margin-top: 8%;
 }
 
-#beers_navigation {
-    padding: 10%;
-    float: left;
+.beers_navigation {
+    padding: 1%;
     width: 20%;
-    height: 70%;
+    height: 100%;
     background-color: cadetblue;
     border-right-style: solid 2px;
     border-style: solid 0.5px;
     margin: 1%;
-    text-align: center;
+    text-align: left;
+    position: fixed;
+    float: left;
 }
 
-#beers_resultsarea {
-    padding: 5%;
-    width: 79%;
-    float: left;
+.beers_resultsarea {
+    width: 77%;
+    height: auto;
     background-color: lightgreen;
     text-align: center;
+    margin: 1% 0.5% 0% 21%;
+    float: left;
+}
+
+.result_container {
+    float: left;
+    margin: 0.7%;
+    padding: .1%;
+    width: 23%;
 }
