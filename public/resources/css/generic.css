@@ -6,3 +6,7 @@
 .genericError{
     border-color: red;
 }
+
+.genericError:focus{
+    border-color: red;
+}

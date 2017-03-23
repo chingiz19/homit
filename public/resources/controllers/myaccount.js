@@ -2,6 +2,7 @@ app.controller("myaccountController", ["$scope", function($scope){
     $scope.newPassword = "";
     $scope.confirmPassword = "";
     $scope.showError = false;
+    $scope.enablePasswordChange = false;
     $scope.matchPassword = function(){
         var nPass = $("#nPassword");
         var cPass = $("#cPassword");
@@ -12,9 +13,11 @@ app.controller("myaccountController", ["$scope", function($scope){
             if ($scope.newPassword != $scope.confirmPassword){
                 cPass.addClass(errorClass);
                 $scope.showError = true;
+                $scope.enablePasswordChange = false;
             } else {
                 cPass.removeClass(errorClass);
                 $scope.showError = false;
+                $scope.enablePasswordChange = true;
             }
         } else {
             cPass.removeClass(errorClass);
