@@ -1,4 +1,4 @@
-    <title> <%= title %> </title>
+<title> <%= title %> </title>
         
     <link href="/resources/library/css/bootstrap.min.css" rel="stylesheet">
     <link href="/resources/library/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -7,21 +7,22 @@
 
             <div class="headbox">
                 <div class="navbar_a">
-                <button class="brandname">Delivery</button>
-                <form class="search-form">
-                    <input type="text" class="search-box" placeholder="Search">
-                </form>
-                <button id="sign" class="bttn-sign">Sign</button>
-            </div>
+                    <button class="brandname hdr-button1">Delivery</button>
+                    <form class="search-form">
+                        <input type="text" class="search-box" placeholder=" Search Delivery in here...">
+                        <input id="hdr-clear" class="hdr-clear" type="submit" value="Clear">
+                    </form>
+                    <button id="sign" class="bttn-sign hdr-button1">Sign</button>
+                </div>
 
             <div id="next-sign_modal" class="modal" ng-controller="LoginController">
                 <div class="sign_modal">
                     <div> 
                         <div>
-                            <label for="email">Email</label>
-                            <input type="email" ng-disabled="signEmail" ng-model="sign.email" id="email" name="Email" placeholder="Email address..">
+                            <label for="email" ></label>
+                            <input type="email" class="inputbox" ng-disabled="signEmail" ng-model="sign.email" id="email" name="Email" placeholder="Email address..">
                         </div>
-                        <div ng-hide="signEmail || ifsignUpTrue"><input ng-click="signClicked()" type="submit" id="sign_next" value="Next"></div>
+                        <div ng-hide="signEmail || ifsignUpTrue"><input ng-click="signClicked()" class="signbutton" type="submit" id="sign_next" value="Next"></div>
                         
                         <!--Email False go for sign Up or Next again-->
                         <div ng-show="ifcheckedEmailFalse && !ifsignUpTrue"><input ng-click="gotosingUpClicked()" type="submit" id="gotoSignup" value="Sign Up"></div>
@@ -73,10 +74,10 @@
             
 
             <div>
-                <button class="special">Special</button>
-                <button class="Wines">Wines</button>
-                <button class="beers">Beers</button>
-                <button class="spirits">Spirits</button>
+                <button class="hdr-special hdr-button2">Special</button>
+                <button class="hdr-wines hdr-button2">Wines</button>
+                <button class="hdr-beers hdr-button2">Beers</button>
+                <button class="hdr-spirits hdr-button2">Spirits</button>
             </div>
         </div>
 
