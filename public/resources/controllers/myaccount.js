@@ -30,7 +30,7 @@ app.controller("myaccountController", ["$scope", function($scope){
             return false;
         }
 
-        if ($scope.showError && $scope.passwordSectionForm.$valid){
+        if (!$scope.showError && $scope.passwordSectionForm.$valid){
             return true;
         }
 
