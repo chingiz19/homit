@@ -3,16 +3,16 @@ var db = require("../db.js");
 
 
 router.get('/beers', function(req, res, next){
-    getAllBeerTypes().then(function(types){
-        getAllBeers().then(function(beers) {
-            var brands = getAllBrands(beers);
-            var packagings = getAllPackagings(beers);
+    getAllBeerTypes().then(function(subcategories){
+        getAllBeers().then(function(products) {
+            var brands = getAllBrands(products);
+            var packagings = getAllPackagings(products);
             var response = {
                 success: 'true',
-                types: types,
+                subcategories: subcategories,
                 brands: brands,
                 pacakgings: packagings,
-                beers: beers
+                products: products
             };
             res.send(response);
         });
@@ -21,14 +21,54 @@ router.get('/beers', function(req, res, next){
 });
 
 router.get('/wines', function(req, res, next){
-    var response = {
-        success: 'true',
-        subcategories: "all sub categories",        
-        types: "all types",
-        brands: "all brands",
-        wines: "all wines with details"
-    };
-    res.send(response);
+    getAllWineTypes().then(function(subcategories){
+        getAllWines().then(function(products) {
+            var brands = getAllBrands(products);
+            var packagings = getAllPackagings(products);
+            var response = {
+                success: 'true',
+                subcategories: subcategories,
+                brands: brands,
+                pacakgings: packagings,
+                products: products
+            };
+            res.send(response);
+        });
+    });
+});
+
+router.get('/spirits', function(req, res, next){
+    getAllSpiritTypes().then(function(subcategories){
+        getAllSpirits().then(function(products) {
+            var brands = getAllBrands(products);
+            var packagings = getAllPackagings(products);
+            var response = {
+                success: 'true',
+                subcategories: subcategories,
+                brands: brands,
+                pacakgings: packagings,
+                products: products
+            };
+            res.send(response);
+        });
+    });
+});
+
+router.get('/others', function(req, res, next){
+    getAllOtherTypes().then(function(subcategories){
+        getAllOthers().then(function(products) {
+            var brands = getAllBrands(products);
+            var packagings = getAllPackagings(products);
+            var response = {
+                success: 'true',
+                subcategories: subcategories,
+                brands: brands,
+                pacakgings: packagings,
+                products: products
+            };
+            res.send(response);
+        });
+    });
 });
 
 var categories = {
@@ -38,26 +78,63 @@ var categories = {
   Others: 4
 };
 
-
 var getAllBeerTypes = function() {
     return getTypes(categories.Beers).then(function(beers) {
         return beers;
     });
 };
 
-var getAllWinesTypes = function() {
+var getAllWineTypes = function() {
     return getTypes(categories.Wines).then(function(wines) {
         return wines;
     });
 };
 
+var getAllSpiritTypes = function() {
+    return getTypes(categories.Spirits).then(function(spirits) {
+        return spirits;
+    });
+};
+
+var getAllOtherTypes = function() {
+    return getTypes(categories.Others).then(function(others) {
+        return others;
+    });
+};
+
 var getTypes = function(category_id) {
-    var types = "catalog_types";
-    var data = {category_id: category_id};
+    var sqlQuery = `SELECT s.name AS subcategory, t.name AS type FROM catalog_categories AS c,
+        catalog_subcategories AS s, catalog_types AS t
+        WHERE s.category_id = c.id AND t.subcategory_id = s.id AND ?
+        ORDER BY subcategory`;
     var result = [];
-    return db.selectQuery(types, data).then(function(dbResult) {
-        for (i = 0; i < dbResult.length; i++) { 
-            result.push(dbResult[i].name);
+    var data = {"c.id": category_id};
+    var prev_s;
+    var tmp_types = [];
+    return db.runQuery(sqlQuery, data).then(function(dbResult) {
+        for (i = 0; i < dbResult.length; i++) {
+            var canPush = false;
+            if (i==0) {
+                prev_s = dbResult[i].subcategory;
+                tmp_types.push(dbResult[i].type);
+            } else {
+                if (dbResult[i].subcategory == prev_s) {
+                    tmp_types.push(dbResult[i].type);
+                } else {
+                    canPush = true;
+                }
+            }
+
+            if (canPush || i == dbResult.length-1) {
+                var tmp = {
+                    subcategory_name: prev_s,
+                    types: tmp_types
+                };
+                prev_s = dbResult[i].subcategory;
+                tmp_types = [];
+                tmp_types.push(dbResult[i].type);
+                result.push(tmp);
+            }
         }
         return result;
     });
@@ -75,21 +152,30 @@ var getAllWines = function() {
     });
 };
 
+var getAllSpirits = function() {
+    return getAllProducts(categories.Spirits).then(function(spirits) {
+        return spirits;
+    });
+};
+
+var getAllOthers = function() {
+    return getAllProducts(categories.Others).then(function(others) {
+        return others;
+    });
+};
+
 var getAllProducts = function(category_id) {
-    var sqlQuery = `SELECT w.id AS warehouse_id, w.product_id AS product_id, t.name AS type, 
-    pr.product_brand AS brand, pr.product_name AS name, 
-    pr.product_description AS description, w.price AS price, 
-    w.quantity AS quantity, pa.name AS packaging, c.name AS category
-    FROM catalog_warehouse AS w, catalog_packagings AS pa,
-    catalog_products AS pr, catalog_types AS t,
-    catalog_categories AS c
-    WHERE w.packaging_id = pa.id AND w.product_id = pr.id
-    AND pr.type_id = t.id AND t.category_id = c.id AND ?`
+    var sqlQuery = `SELECT w.id AS warehouse_id, w.product_id AS product_id, s.name AS subcategory, 
+        t.name AS type, pr.product_brand AS brand, pr.product_name AS name, pr.product_description AS description,
+        w.price AS price, w.quantity AS quantity, pa.name AS packaging, c.name AS category
+        FROM catalog_warehouse AS w, catalog_packagings AS pa, catalog_products AS pr, catalog_types AS t,
+        catalog_subcategories AS s, catalog_categories AS c
+        WHERE w.packaging_id = pa.id AND w.product_id = pr.id AND pr.type_id = t.id
+        AND t.subcategory_id = s.id AND s.category_id = c.id AND ?`;
     var data = {"c.id": category_id};
     return db.runQuery(sqlQuery, data).then(function(dbResult) {
-        console.log(dbResult);
         return dbResult;
-    })
+    });
 };
 
 var getAllBrands = function (products) {
