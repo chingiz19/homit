@@ -113,7 +113,6 @@ var getTypes = function(category_id) {
     var tmp_types = [];
     return db.runQuery(sqlQuery, data).then(function(dbResult) {
         for (i = 0; i < dbResult.length; i++) {
-            console.log("DB Result is: " + dbResult);
             var canPush = false;
             if (i==0) {
                 prev_s = dbResult[i].subcategory;
