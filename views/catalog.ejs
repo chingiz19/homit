@@ -33,27 +33,27 @@
                     </ul>
                     <p> Select your packing </p>
                     <ul style="list-style: none;">
-                        <li ng-repeat="packing in packings"> <input type='checkbox' ng-click=""> {{packing}} </li>
+                        <li ng-repeat="packing in packings"> <input type='checkbox' ng-click="addtofilter(packing)"> {{packing}} </li>
                     </ul>
-                    <label>Choose your brand from list <input list="brands"/></label>
-                    <datalist id="brands">
-                         <option ng-repeat="product in products" value={{product.brand}} ng-click="">
-                    </datalist>
-
+                    <label>Choose your brand from list </label>
+                    <select>
+                        <option ng-repeat="product in products">{{product.brand}} 
+                        </select>
+                    <div><span><p> check 'isinfilter' function here --></p> <input type="text" ng-model="check"> <button ng-click="isinfilter(check)">check </span> </div>
                 </div>
 
 
 
                 <div class="beers_resultsarea">
 
-                    <!--*****************************************-->
+                    <!--*****   search area section   *******-->
 
-                    <div class="result_container" ng-repeat="product in products">
-                        <div>
+                    <div class="result_container" ng-repeat="product in products" ng-init="var l=isinfilter(product.type) var p=isinfilter(product.packing)">
+                        <div ng-if="l && p">
                             <img src={{product.url}} alt="Avatar" class="result_image">
                             <div class="catalog_middle">
                                 <span> {{product.brand}} {{product.type}} {{product.packing}} {{product.price}} </br>
-                                <button class="btn-primary" ng-click=""> Add to cart </button></span>
+                                <button class="btn-primary" ng-click=""> Add to cart </span>
                             </div>
 
                         </div>
