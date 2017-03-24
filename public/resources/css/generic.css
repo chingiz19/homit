@@ -1,0 +1,12 @@
+.full-width{
+    width: 100%;
+    min-width: 100%;
+}
+
+.genericError{
+    border-color: red;
+}
+
+.genericError:focus{
+    border-color: red;
+}

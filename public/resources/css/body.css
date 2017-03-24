@@ -1,9 +1,23 @@
 body
 {
-    height: 100%;
+    height: 250%;
     min-width: 800px;
     overflow-x: scroll;
     overflow-y: scroll;
+}
+
+.hdr-button1 {
+    font-family: tahoma;
+    border: 1px solid gainsboro;
+    border-radius: 3.2px;
+    background-color: #f7f8f8 ;
+}
+
+.hdr-button2 {
+    font-family: tahoma;
+    border: 1px solid gainsboro;
+    border-radius: 3.2px;
+    background-color: #f5f5f5 ;
 }
 
 .headbox
@@ -18,9 +32,8 @@ body
 .navbar_a
 {
     display: flex;
-    display: -webkit-flex;
+    /*display: -webkit-flex;*/
     align-items: baseline;
-    font-family: Georgia;
     white-space: nowrap;
     top: 0%;
 }
@@ -30,8 +43,7 @@ body
     position: relative;
     left: 0%;
     width: 14%; 
-    border: 1px solid darkgrey;
-    background-color: gainsboro; 
+    min-width: 65px;
 }
 
 .bttn-sign
@@ -39,8 +51,6 @@ body
     position: relative;
     right: 0%;
     width: 14%;
-    border: 1px solid darkgrey;
-    background-color: gainsboro;
 }
 
 .myacc
@@ -54,19 +64,32 @@ body
 
 .search-form
 {
-    flex-grow: 20;
-    min-width: 30px;
+    min-width: 100px;
+    flex-basis: auto;
+    flex-grow: 1;
     
 }
 
 .search-box
 {   
     position: relative;
+    font-family: tahoma;
     left: 0.5%;
     height: 34%;
-    width: 99%;
-    background-color: lightgrey;
+    width: 93%;
+    border: 1px solid gainsboro;
+    border-radius: 3.2px 0 0 3.2px;
     overflow-x: scroll;
+}
+
+.hdr-clear
+{
+    font-family: tahoma;
+    width: 6.1%;
+    min-width: 35px;
+    border: 1px solid gainsboro;
+    border-radius: 0 3.2px 3.2px 0;
+    background-color: #f7f8f8 ; 
 }
 
 .navbar_b
@@ -77,45 +100,37 @@ body
     display: flex;
 }
 
-.special
+.hdr-special
 {
     position: relative;
     float: left;
-    border: 1px solid darkgrey;
-    background-color: gainsboro; 
     width: 22%;
     font-size: 150%;
 }
 
-.wines 
+.hdr-wines 
 {
     position: relative;
     float: left;
     margin-left: 4%;
-    border: 1px solid darkgrey;
-    background-color: gainsboro; 
     width: 22%; 
     font-size: 150%;
 }
 
-.beers 
+.hdr-beers 
 {
     position: relative;
     float: left;
     margin-left: 4%;
-    border: 1px solid darkgrey;
-    background-color: gainsboro; 
     width: 22%; 
     font-size: 150%;
 }
 
-.spirits 
+.hdr-spirits 
 {
     position: relative;
     float: left;
     margin-left: 4%;
-    border: 1px solid darkgrey;
-    background-color: gainsboro; 
     width: 22%; 
     font-size: 150%;
 }
@@ -140,18 +155,33 @@ h1
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(211,211,211,0.4)
+    background-color: rgba(0,0,0,0.4)
 }
 
 .sign_modal
 {
-    background-color: snow;
+    background-color: white;
     margin: 15% auto;
     border: 1px solid #888;
-    border-radius: 15px;
-    width: 30%;
-    height: 40%;
+    border-radius: 8px;
+    width: 450px;
+    height: 180px;
     padding: 30px;
+    align-content: center;
+}
+
+.inputbox
+{
+    font-family: tahoma;
+    width: 250px;
+    height: 29px;
+}
+
+.signbutton
+{
+    font-family: tahoma;
+    width: 250px;
+    height: 29px;
 }
 
 .wrongP2
