@@ -85,12 +85,12 @@ app.controller("LoginController", function($scope, $http) {
                 method: 'POST',
                 url: '/api/authentication/signup',
                 params: {
-                        email: $scope.sign.email,
-                        fname: $scope.signup.fname,
-                        lname: $scope.signup.lname,
-                        phone: $scope.signup.phone,
-                        password: $scope.signup.PasswordCheck,
-                        dob: $scope.signup.dob,
+                        email: $scope.emailSignUp,
+                        fname: $scope.fNameSignUp,
+                        lname: $scope.lNameSignUp,
+                        phone: $scope.phoneSignUp,
+                        password: $scope.passwordCheckSignUp,
+                        dob: $scope.dobSignUp,
                     }
                 }).then(function successCallback(response) {
                     if (response.data["success"] === "true") {
