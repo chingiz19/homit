@@ -11,7 +11,7 @@ router.get('/beers', function(req, res, next){
                 success: 'true',
                 subcategories: subcategories,
                 brands: brands,
-                pacakgings: packagings,
+                packagings: packagings,
                 products: products
             };
             res.send(response);
@@ -29,7 +29,7 @@ router.get('/wines', function(req, res, next){
                 success: 'true',
                 subcategories: subcategories,
                 brands: brands,
-                pacakgings: packagings,
+                packagings: packagings,
                 products: products
             };
             res.send(response);
@@ -46,7 +46,7 @@ router.get('/spirits', function(req, res, next){
                 success: 'true',
                 subcategories: subcategories,
                 brands: brands,
-                pacakgings: packagings,
+                packagings: packagings,
                 products: products
             };
             res.send(response);
@@ -63,7 +63,7 @@ router.get('/others', function(req, res, next){
                 success: 'true',
                 subcategories: subcategories,
                 brands: brands,
-                pacakgings: packagings,
+                packagings: packagings,
                 products: products
             };
             res.send(response);

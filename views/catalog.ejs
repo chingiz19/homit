@@ -1,96 +1,81 @@
 <html ng-app="mainModule">
-
-<head>
-    <%- include('partial/header', {title: title}); %>
-
-        <link href="/resources/css/catalog.css" rel="stylesheet">
-</head>
-
-<body>
-    <div ng-controller="catalogController">
-
-        <div class="tab-content" id="whole_tab" class="container-fluid" ng-switch on="selection">
-
-
+   <head>
+      <%- include('partial/header', {title: title}); %>
+      <link href="/resources/css/catalog.css" rel="stylesheet">
+   </head>
+   <body>
+      <div ng-controller="catalogController">
+         <div class="tab-content" id="whole_tab" class="container-fluid" ng-switch on="selection">
             <nav class="navbar navbar-default navbar-fixed-top">
-                <div id="mini_nav">
-                    <!--Buttons linked to divs (tabs)-->
-                    <nav class="navbar navbar-inverse">
-                        <button role="presentation" ng-click="selection= 'Beers'">Beers</button>
-                        <button role="presentation" ng-click="selection= 'Wines' ">Wines</button>
-                        <button role="presentation" ng-click="selection= 'Spirits'">Spirits</button>
-                        <button role="presentation" ng-click="selection= 'Others'">Others</button>
-                    </nav>
-                </div>
+               <div id="mini_nav">
+                  <!--Buttons linked to divs (tabs)-->
+                  <nav class="navbar navbar-inverse">
+                     <button role="presentation" ng-click="selection= 'Beers'">Beers</button>
+                     <button role="presentation" ng-click="selection= 'Wines' ">Wines</button>
+                     <button role="presentation" ng-click="selection= 'Spirits'">Spirits</button>
+                     <button role="presentation" ng-click="selection= 'Others'">Others</button>
+                  </nav>
+               </div>
             </nav>
-
             <div id="beers_tab" ng-switch-when="Beers">
-                <!--other two divisions go here-->
-                <div class="beers_navigation">
-                    <p> Select your type</p>
-                    <ul style="list-style: none;">
-                        <li ng-repeat="type in types"> <input type='checkbox' ng-click="addtofilter(type)"> {{type}} </li>
-                    </ul>
-                    <p> Select your packing </p>
-                    <ul style="list-style: none;">
-                        <li ng-repeat="packing in packings"> <input type='checkbox' ng-click=""> {{packing}} </li>
-                    </ul>
-                    <label>Choose your brand from list <input list="brands"/></label>
-                    <datalist id="brands">
-                         <option ng-repeat="product in products" value={{product.brand}} ng-click="">
-                    </datalist>
+               <!--other two divisions go here-->
+               <div class="beers_navigation">
+                  <p> Select your type</p>
+                  <ul style="list-style: none;">
+                      <div id="subcategory" ng-repeat="subcategory in subcategories">
+                        {{subcategory.subcategory_name}}
+                        <li ng-repeat="type in subcategory.types"> <input type='checkbox' ng-click="checkTypes(type)">
+                            {{type}} 
+                        </li>
+                      </div>
 
-                </div>
-
-
-
-                <div class="beers_resultsarea">
-
-                    <!--*****************************************-->
-
-                    <div class="result_container" ng-repeat="product in products">
-                        <div>
-                            <img src={{product.url}} alt="Avatar" class="result_image">
-                            <div class="catalog_middle">
-                                <span> {{product.brand}} {{product.type}} {{product.packing}} {{product.price}} </br>
-                                <button class="btn-primary" ng-click=""> Add to cart </button></span>
-                            </div>
-
+                  </ul>
+                  <p> Select your packing </p>
+                  <ul style="list-style: none;">
+                     <li ng-repeat="packing in packings"> <input type='checkbox' ng-click="checkPackings(packing)"> {{packing}} </li>
+                  </ul>
+                  <label>Choose your brand from list </label>
+                  <select>
+                     <option ng-repeat="product in products">{{product.brand}} 
+                  </select>
+                  <div>
+                     <span>
+                        <p> check 'isinfilter' function here --></p>
+                        <input type="text" ng-model="check"> <button ng-click="isInSelectedTypes(check)">check 
+                     </span>
+                  </div>
+               </div>
+               <div class="beers_resultsarea">
+                  <!--*****   search area section   *******-->
+                  <div class="result_container" ng-repeat="product in products" ng-init="var l=isinfilter(product.type) var p=isinfilter(product.packing)">
+                     <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging)">
+                        <img src={{product.url}} alt="Avatar" class="result_image">
+                        <div class="catalog_middle">
+                           <span> Brand: {{product.brand}}
+                               Type: {{product.type}}
+                               Packing: {{product.packaging}}
+                               Price: {{product.price}} </br>
+                           <button class="btn-primary" ng-click=""> Add to cart </span>
                         </div>
-                    </div>
-
-                    <!--***********************************************-->
-
-                </div>
-
-
+                     </div>
+                  </div>
+                  <!--***********************************************-->
+               </div>
             </div>
-
-
             <div id="wines_tab" ng-switch-when="Wines">
-                <!--\\other two divisions go here-->
-                <h1>Wines section</h1>
+               <!--\\other two divisions go here-->
+               <h1>Wines section</h1>
             </div>
-
             <div id="spirits_tab" ng-switch-when="Spirits">
-                <!--\\other two divisions go here-->
-                <h1>Spirits section</h1>
+               <!--\\other two divisions go here-->
+               <h1>Spirits section</h1>
             </div>
-
             <div id="others_tab" ng-switch-when="Others">
-                <!--\\other two divisions go here-->
-                <h1> Others section</h1>
+               <!--\\other two divisions go here-->
+               <h1> Others section</h1>
             </div>
-
-        </div>
-
-
-
-
-
-
-    </div>
-    <script src="/resources/controllers/catalog.js"></script>
-</body>
-
+         </div>
+      </div>
+      <script src="/resources/controllers/catalog.js"></script>
+   </body>
 </html>
