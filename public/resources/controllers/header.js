@@ -4,6 +4,7 @@ app.controller("LoginController", function($scope, $http) {
     console.log("in the Log in controller");
 
     $scope.signEmail=false;
+    $scope.signEmailCorrect=false;
     $scope.ifcheckedEmailFalse=false;
     $scope.ifsignUpTrue=false;
     $scope.reeneteredPasswordFalse=false;
@@ -29,22 +30,24 @@ app.controller("LoginController", function($scope, $http) {
     }
 
 //Check Email
-    $scope.signClicked = function() {
+    $scope.nextClicked = function() {
     $http({
         method: 'GET',
         url: '/api/authentication/userexists',
         params: {
-                email: $scope.sign.email,
+                email: $scope.emailSign,
             }
         }).then(function successCallback(response) {
             if (response.data["success"] === "true") {
                 console.log("100% SUCCESS");
                 $scope.signEmail=true;
+                $scope.signEmailCorrect=true;
                 $scope.ifcheckedEmailFalse=false;
             } else {
                 console.log("DEYIL");
-                $scope.signEmail=false;
+                $scope.signEmail=true;
                 $scope.ifcheckedEmailFalse=true;
+                $scope.signEmailCorrect=false;
             }
         }, function errorCallback(response) {
             console.log("ERROR");
@@ -61,8 +64,8 @@ app.controller("LoginController", function($scope, $http) {
         method: 'GET',
         url: '/api/authentication/signin',
         params: {
-                email: $scope.sign.email,
-                password: $scope.signin.password,
+                email: $scope.emailSign,
+                password: $scope.passwordSignIn,
             }
         }).then(function successCallback(response) {
             if (response.data["success"] === "true") {
