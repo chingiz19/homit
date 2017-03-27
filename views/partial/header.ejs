@@ -1,99 +1,96 @@
 <title> <%= title %> </title>
-        
-    <link href="/resources/library/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/resources/library/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="/resources/library/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/library/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="/resources/css/body.css" rel="stylesheet">
+<link href="/resources/css/generic.css" rel="stylesheet">
 
-        <link href="/resources/css/body.css" rel="stylesheet">
-        <link href="/resources/css/generic.css" rel="stylesheet">
+<div class="headbox">
+   
+   <div class="navbar_a" ng-controller="LogoSearchController">
+      <button class="brandname hdr-button1">Delivery</button>
+      <form class="search-form">
+         <input type="text" class="search-box" placeholder=" Search Delivery in here...">
+         <input id="hdr-clear" class="hdr-clear" type="submit" value="Clear">
+      </form>
+      <button id="sign" class="bttn-sign hdr-button1">Sign</button>
+   </div>
 
-            <div class="headbox">
-                <div class="navbar_a">
-                    <button class="brandname hdr-button1">Delivery</button>
-                    <form class="search-form">
-                        <input type="text" class="search-box" placeholder=" Search Delivery in here...">
-                        <input id="hdr-clear" class="hdr-clear" type="submit" value="Clear">
-                    </form>
-                    <button id="sign" class="bttn-sign hdr-button1">Sign</button>
-                </div>
-            <div id="next-sign_modal" class="modal" ng-controller="LoginController">
+   <div id="next-sign_modal" class="modal" ng-controller="LoginController">
+      <!--Sign Email-->
+      <div class="sign_modal" ng-hide="signEmail">
+         <div>
+            <label for="email" ></label>
+            <input type="email" class="emailNext inputBox" ng-model="emailSign" id="email" name="Email" placeholder="Email address...">
+         </div>
+         <div><input ng-click="nextClicked()" class="submitBtn nextToInBtn" type="submit" id="nextSign" value="Next"></div>
+      </div>
+      <!--Email False go for sign Up or Next again-->
+      <div ng-show="ifcheckedEmailFalse && !ifsignUpTrue" class="sign_modal sign2_modal">
+         <div>
+            <label for="email" ></label>
+            <input type="email" class="inputBox emailNext2" ng-model="emailSign" id="email" name="Email" placeholder="Email address...">
+         </div>
+         <input ng-click="nextClicked()" class="submitBtn nextToIn2Btn" type="submit" id="nextSign2" value="Sign In">
+         <input ng-click="gotosingUpClicked()" class="submitBtn goToUpBtn"  type="submit" id="gotoSignup" value="Sign Up">
+      </div>
+      <!--Sign In-->
+      <div ng-show="signEmailCorrect" class="sign_modal signIn_modal">
+         <div>
+            <label for="email" ></label>
+            <input type="email" class="inputBox emailNext2" ng-model="emailSign"  ng-disabled="emailSign" id="email" name="Email" placeholder="Email address...">
+         </div>
+         <div>
+            <label for="password"></label>
+            <input type="password" ng-model="passwordSignIn" class="inputBox midInputBox" id="password" name="Password" placeholder="Your password..">
+         </div>
+         <div><input ng-click="signInClicked()" class="submitBtn signInBtn" type="submit" id="signin_next" value="Sign In"></div>
+      </div>
+      <!--Sign UP-->
+      <div ng-show="ifsignUpTrue" class="sign_modal signUp_modal">
+         <div>
+            <label for="email" ></label>
+            <input type="email" class="inputBox midInputBox" ng-model="emailSignUp" id="email" name="Email" placeholder="Email address...">
+         </div>
+         <div>
+            <label for="fname"></label>
+            <input type="text" class="inputBox midInputBox" ng-model="fNameSignUp" id="fname" name="fname" placeholder="Your name...">
+         </div>
+         <div>
+            <label for="lname"></label>
+            <input type="text" class="inputBox midInputBox" ng-model="lNameSignUp" id="lname" name="lname" placeholder="Your last name...">
+         </div>
+         <div>
+            <label for="phone"></label>
+            <input type="tel" class="inputBox midInputBox" ng-model="phoneSignUp" id="phone" name="Phone" placeholder="(403)397-....">
+         </div>
+         <div>    
+            <label for="password"></label>
+            <input type="password" class="inputBox midInputBox" ng-model="passwordSignUp" id="password" name="Password" placeholder="Your password...">
+         </div>
+         <div>    
+            <label for="password"></label>
+            <input type="password" class="inputBox midInputBox" ng-model="passwordCheckSignUp" id="passwordCheck" name="Password" placeholder="Your password...">
+         </div>
+         <div ng-show="reeneteredPasswordFalse" class="inputBox wrongP2 midInputBox" placeholder="Re-eneter Password..." ></div>
+         <div>    
+            <label for="dob"></label>
+            <input type="date" class="inputBox midInputBox dobSignUp" ng-model="dobSignUp" id="dob" name="dob" placeholder="Your password...">
+         </div>
+         <input ng-click="signUpClicked()" class="submitBtn signUpBtn" type="submit" id="signup_next" value="Sign Up">
+      </div>
+      <span class="close">&times;</span>
+   </div>
 
-                <!--Sign Email-->
-                <div class="sign_modal" ng-hide="signEmail">
-                    <div>
-                        <label for="email" ></label>
-                        <input type="email" class="emailNext inputBox" ng-model="emailSign" id="email" name="Email" placeholder="Email address...">
-                    </div>
-                    <div><input ng-click="nextClicked()" class="submitBtn nextToInBtn" type="submit" id="nextSign" value="Next"></div>
-                </div>
-                
-                <!--Email False go for sign Up or Next again-->
-                <div ng-show="ifcheckedEmailFalse && !ifsignUpTrue" class="sign_modal sign2_modal">   
-                    <div>
-                        <label for="email" ></label>
-                        <input type="email" class="inputBox emailNext2" ng-model="emailSign" id="email" name="Email" placeholder="Email address...">
-                    </div>
-                    <input ng-click="nextClicked()" class="submitBtn nextToIn2Btn" type="submit" id="nextSign2" value="Sign In">
-                    <input ng-click="gotosingUpClicked()" class="submitBtn goToUpBtn"  type="submit" id="gotoSignup" value="Sign Up">
-                </div>
+   <div ng-controller="NavigationController">
+      <button class="hdr-special hdr-button2">Special</button>
+      <button class="hdr-wines hdr-button2">Wines</button>
+      <button class="hdr-beers hdr-button2">Beers</button>
+      <button class="hdr-spirits hdr-button2">Spirits</button>
+   </div>
 
-                <!--Sign In-->
-                <div ng-show="signEmailCorrect" class="sign_modal signIn_modal">
-                    <div>
-                        <label for="email" ></label>
-                        <input type="email" class="inputBox emailNext2" ng-model="emailSign"  ng-disabled="emailSign" id="email" name="Email" placeholder="Email address...">
-                    </div>
-                    <div>
-                        <label for="password"></label>
-                        <input type="password" ng-model="passwordSignIn" class="inputBox midInputBox" id="password" name="Password" placeholder="Your password..">
-                    </div>
-                    <div><input ng-click="signInClicked()" class="submitBtn signInBtn" type="submit" id="signin_next" value="Sign In"></div>
-                </div>
+</div>
 
-                <!--Sign UP-->
-                <div ng-show="ifsignUpTrue" class="sign_modal signUp_modal">
-                    <div>
-                        <label for="email" ></label>
-                        <input type="email" class="inputBox midInputBox" ng-model="emailSignUp" id="email" name="Email" placeholder="Email address...">
-                    </div>
-                    <div>
-                        <label for="fname"></label>
-                        <input type="text" class="inputBox midInputBox" ng-model="fNameSignUp" id="fname" name="fname" placeholder="Your name...">
-                    </div>
-                    <div>
-                        <label for="lname"></label>
-                        <input type="text" class="inputBox midInputBox" ng-model="lNameSignUp" id="lname" name="lname" placeholder="Your last name...">
-                    </div>
-                    <div>
-                        <label for="phone"></label>
-                        <input type="tel" class="inputBox midInputBox" ng-model="phoneSignUp" id="phone" name="Phone" placeholder="(403)397-....">
-                    </div>
-                    <div>    
-                        <label for="password"></label>
-                        <input type="password" class="inputBox midInputBox" ng-model="passwordSignUp" id="password" name="Password" placeholder="Your password...">
-                    </div>
-                    <div>    
-                        <label for="password"></label>
-                        <input type="password" class="inputBox midInputBox" ng-model="passwordCheckSignUp" id="passwordCheck" name="Password" placeholder="Your password...">
-                    </div>
-                    <div ng-show="reeneteredPasswordFalse" class="inputBox wrongP2 midInputBox" placeholder="Re-eneter Password..." ></div>
-                    <div>    
-                        <label for="dob"></label>
-                        <input type="date" class="inputBox midInputBox dobSignUp" ng-model="dobSignUp" id="dob" name="dob" placeholder="Your password...">
-                    </div>
-                    <input ng-click="signUpClicked()" class="submitBtn signUpBtn" type="submit" id="signup_next" value="Sign Up">
-                </div>
-                <span class="close">&times;</span>
-            </div>
-            
-            <div>
-                <button class="hdr-special hdr-button2">Special</button>
-                <button class="hdr-wines hdr-button2">Wines</button>
-                <button class="hdr-beers hdr-button2">Beers</button>
-                <button class="hdr-spirits hdr-button2">Spirits</button>
-            </div>
-        </div>
-
-    <script src="/resources/library/js/angular.min.js"></script>
-    <script src="/resources/library/js/jquery.min.js"></script>
-    <script src="/resources/library/js/bootstrap.min.js"></script>
-    <script src="/resources/controllers/header.js"></script>
+<script src="/resources/library/js/angular.min.js"></script>
+<script src="/resources/library/js/jquery.min.js"></script>
+<script src="/resources/library/js/bootstrap.min.js"></script>
+<script src="/resources/controllers/header.js"></script>
