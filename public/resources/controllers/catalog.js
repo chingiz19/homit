@@ -7,7 +7,7 @@ app.controller("catalogController", function($scope, $http) {
     }
     // Get initial list of products
     $scope.products;
-    $scope.subcategories;
+    $scope.subcategories = [];
     $scope.packings;
     $scope.brands;
     $http({
@@ -19,6 +19,8 @@ app.controller("catalogController", function($scope, $http) {
             $scope.subcategories = response.data['subcategories'];
             $scope.packings = response.data['packagings'];
             $scope.brands = response.data['brands'];
+
+            $scope.userSelectedSubcategories = $scope.subcategories[0]['subcategory_name'];
         } else {
 
         }
@@ -26,18 +28,14 @@ app.controller("catalogController", function($scope, $http) {
 
     });
 
-    $scope.userSelectedSubcategories = [];
+    
     $scope.userSelectedTypes = [];
     $scope.userSelectedBrands = [];
     $scope.userSelectedPackings = [];
 
     $scope.checkSubcategories = function(subcategory) {
-        if (!$scope.userSelectedSubcategories.includes(subcategory)) {
-            $scope.userSelectedSubcategories.push(subcategory);
-        } else {
-            $scope.userSelectedSubcategories.splice($scope.userSelectedSubcategories.indexOf(subcategory), 1);
-        }
-        console.log("userSelectedSubcategories list is: " + $scope.userSelectedSubcategories);
+        userSelectedSubcategories = subcategory;
+        console.log("userSelectedSubcategories is: " + $scope.userSelectedSubcategories);
     };
 
     $scope.checkTypes = function(type) {
@@ -68,20 +66,15 @@ app.controller("catalogController", function($scope, $http) {
     };
 
     $scope.isInSelectedSubcategories = function(subcategory) {
-        if ($scope.userSelectedSubcategories.length === 0) {
+        if ($scope.userSelectedSubcategories === subcategory) {
             return true;
         } else {
-            if ($scope.userSelectedSubcategories.includes(subcategory)) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
     };
 
     $scope.isInSelectedTypes= function(type) {
         if ($scope.userSelectedTypes.length === 0) {
-            console.log("truee");
             return true;
         } else {
             if ($scope.userSelectedTypes.includes(type)) {
