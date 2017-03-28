@@ -167,7 +167,7 @@ var getAllOthers = function() {
 var getAllProducts = function(category_id) {
     var sqlQuery = `SELECT w.id AS warehouse_id, w.product_id AS product_id, s.name AS subcategory, 
         t.name AS type, pr.product_brand AS brand, pr.product_name AS name, pr.product_description AS description,
-        w.price AS price, w.quantity AS quantity, pa.name AS packaging, c.name AS category
+        pr.product_image AS image, w.price AS price, w.quantity AS quantity, pa.name AS packaging, c.name AS category
         FROM catalog_warehouse AS w, catalog_packagings AS pa, catalog_products AS pr, catalog_types AS t,
         catalog_subcategories AS s, catalog_categories AS c
         WHERE w.packaging_id = pa.id AND w.product_id = pr.id AND pr.type_id = t.id

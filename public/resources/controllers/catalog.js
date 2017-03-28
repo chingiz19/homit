@@ -5,6 +5,12 @@ app.controller("catalogController", function($scope, $http) {
     if ($scope.selection == "Beers") {
         $scope.productUrl = '/api/catalog/beers';
     }
+    // User selected variables
+    $scope.userSelectedSubcategories;
+    $scope.userSelectedTypes = [];
+    $scope.userSelectedBrands = [];
+    $scope.userSelectedPackings = [];
+
     // Get initial list of products
     $scope.products;
     $scope.subcategories = [];
@@ -27,16 +33,13 @@ app.controller("catalogController", function($scope, $http) {
     }, function errorCallback(response) {
 
     });
-
     
-    $scope.userSelectedTypes = [];
-    $scope.userSelectedBrands = [];
-    $scope.userSelectedPackings = [];
 
-    $scope.checkSubcategories = function(subcategory) {
-        userSelectedSubcategories = subcategory;
-        console.log("userSelectedSubcategories is: " + $scope.userSelectedSubcategories);
-    };
+    // we don't need this - ZZ 
+    // $scope.checkSubcategories = function(subcategory) {
+    //     userSelectedSubcategories = subcategory;
+    //     console.log("userSelectedSubcategories is: " + $scope.userSelectedSubcategories);
+    // };
 
     $scope.checkTypes = function(type) {
         if (!$scope.userSelectedTypes.includes(type)) {
