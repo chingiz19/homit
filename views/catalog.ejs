@@ -3,27 +3,20 @@
       <%- include('partial/header', {title: title}); %>
       <link href="/resources/css/catalog.css" rel="stylesheet">
    </head>
+
    <body>
       <div ng-controller="catalogController">
          <div class="tab-content" id="whole_tab" class="container-fluid" ng-switch on="selection">
-            <nav class="navbar navbar-default navbar-fixed-top">
-               <div id="mini_nav">
-                  <!--Buttons linked to divs (tabs)-->
-                  <nav class="navbar navbar-inverse">
-                     <button role="presentation" ng-click="selection= 'Beers'">Beers</button>
-                     <button role="presentation" ng-click="selection= 'Wines' ">Wines</button>
-                     <button role="presentation" ng-click="selection= 'Spirits'">Spirits</button>
-                     <button role="presentation" ng-click="selection= 'Others'">Others</button>
-                  </nav>
-               </div>
-            </nav>
             <div id="beers_tab" ng-switch-when="Beers">
                <!--other two divisions go here-->
                <div class="beers_navigation">
                   <p> Select your type</p>
                   <ul style="list-style: none;">
                       <div id="subcategory" ng-repeat="subcategory in subcategories">
-                        {{subcategory.subcategory_name}}
+                          <label>
+                            <input type="radio" ng-click="checkSubcategories(subcategory.subcategory_name)">
+                            {{subcategory.subcategory_name}}
+                        </label>
                         <li ng-repeat="type in subcategory.types"> <input type='checkbox' ng-click="checkTypes(type)">
                             {{type}} 
                         </li>
