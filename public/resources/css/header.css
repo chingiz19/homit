@@ -1,11 +1,3 @@
-body
-{
-    height: 250%;
-    min-width: 800px;
-    overflow-x: scroll;
-    overflow-y: scroll;
-}
-
 .hdr-button1 {
     font-family: tahoma;
     border: 1px solid gainsboro;
@@ -32,7 +24,6 @@ body
 .navbar_a
 {
     display: flex;
-    /*display: -webkit-flex;*/
     align-items: baseline;
     white-space: nowrap;
     top: 0%;
@@ -133,17 +124,6 @@ body
     margin-left: 4%;
     width: 22%; 
     font-size: 150%;
-}
-
-h1
-{
-    position: absolute;
-    margin-left: 41%; 
-    top: 60%;
-    font-size: 50%;
-    font-size: 33.75px;
-    font-family: Georgia;
-    white-space: nowrap;
 }
 
 .modal
@@ -265,3 +245,4 @@ h1
     border-color: #9ecaed;
     box-shadow: 0 0 10px #9ecaed;
 }
+

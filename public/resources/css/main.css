@@ -1,0 +1,17 @@
+body
+{
+    height: 250%;
+    min-width: 800px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+/*.weekSpecials
+{
+    position: absolute;
+    margin-left: 39%; 
+    top: 100%;
+    font-size: 33.75px;
+    font-family: tahoma;
+    white-space: nowrap;
+}*/
