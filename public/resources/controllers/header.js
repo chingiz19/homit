@@ -82,7 +82,7 @@ app.controller("LoginController", function($scope, $http) {
 
     //Sign Up
     $scope.signUpClicked = function() {
-        if ($scope.signup.password == $scope.signup.PasswordCheck) {
+        if ($scope.passwordSignUp == $scope.passwordCheckSignUp) {
             $http({
                 method: 'POST',
                 url: '/api/authentication/signup',
