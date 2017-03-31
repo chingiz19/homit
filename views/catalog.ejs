@@ -5,51 +5,16 @@
    </head>
 
    <body>
-      <div ng-controller="catalogController">
-         <div class="tab-content" id="whole_tab" class="container-fluid" ng-switch on="selection">
-            <div id="beers_tab" ng-switch-when="Beers">
-                
-               <!--other two divisions go here-->
-               <div class="beers_navigation">
-                  <p> Select your type</p>
-                  <ul style="list-style: none;">
-                      <div id="subcategory" ng-repeat="subcategory in subcategories">
-                          <label>
-                            <input type="radio" ng-model="userSelectedSubcategories" ng-value="userSelectedSubcategories">
-                            {{subcategory.subcategory_name}}
-                        </label>
-                        <li ng-repeat="type in subcategory.types"> <input type='checkbox' ng-click="checkTypes(type)">
-                            {{type}} 
-                        </li>
-                      </div>
-
-                  </ul>
-                  <p> Select your packing </p>
-                  <ul style="list-style: none;">
-                     <li ng-repeat="packing in packings"> <input type='checkbox' ng-click="checkPackings(packing)"> {{packing}} </li>
-                  </ul>
-                  <label>Choose your brand from list </label>
-                      <li ng-repeat="brand in brands"> <input type='checkbox' ng-click="checkBrands(brand)"> {{brand}} </li>
-               </div>
-
-               <div class="beers_resultsarea">
-                  <div ng-repeat="product in products">
-                     <div class="result_container" ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)">
-                        <img ng-src={{product.image}} alt="Avatar" class="result_image" width="100" height="150">
-                        <div class="catalog_middle">
-                           <span> Brand: {{product.brand}}
-                               Type: {{product.type}}
-                               Packing: {{product.packaging}}
-                               Price: {{product.price}} </span>
-                           <button class="btn-primary" ng-click=""> Add to cart </button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-            </div>
-         </div>
-      </div>
+       <div class="container-fluid col-md-4 catalogBox" >
+        <div class="subCat">Variants</div>
+           <ul class="nav nav-pills nav-stacked"> 
+               <li><a href="#">Red</a></li>
+               <li><a href="#">White</a></li>
+               <li><a href="#">Fruit</a></li>
+           </ul>
+       </div>
+       <div class="container-fluid col-md-8 catalogBox">
+       </div>
       <script src="/resources/controllers/catalog.js"></script>
    </body>
 </html>

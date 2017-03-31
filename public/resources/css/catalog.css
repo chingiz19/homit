@@ -31,3 +31,15 @@
     padding: .1%;
     width: 23%;
 }
+
+.catalogBox
+{   
+    border: solid 1.5px lightgrey;
+    top: 10vh;
+}
+
+.subCat
+{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+}
