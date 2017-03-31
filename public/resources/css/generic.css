@@ -3,6 +3,10 @@
     min-width: 100%;
 }
 
+.nav-pills{
+    font-size: 20px;
+}
+
 .genericError{
     border-color: red;
 }
