@@ -8,6 +8,7 @@
       <div ng-controller="catalogController">
          <div class="tab-content" id="whole_tab" class="container-fluid" ng-switch on="selection">
             <div id="beers_tab" ng-switch-when="Beers">
+                
                <!--other two divisions go here-->
                <div class="beers_navigation">
                   <p> Select your type</p>
@@ -32,7 +33,6 @@
                </div>
 
                <div class="beers_resultsarea">
-                  <!--*****   search area section   *******-->
                   <div ng-repeat="product in products">
                      <div class="result_container" ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)">
                         <img ng-src={{product.image}} alt="Avatar" class="result_image" width="100" height="150">
@@ -40,25 +40,13 @@
                            <span> Brand: {{product.brand}}
                                Type: {{product.type}}
                                Packing: {{product.packaging}}
-                               Price: {{product.price}} </br>
-                           <button class="btn-primary" ng-click=""> Add to cart </span>
+                               Price: {{product.price}} </span>
+                           <button class="btn-primary" ng-click=""> Add to cart </button>
                         </div>
                      </div>
                   </div>
-                  <!--***********************************************-->
                </div>
-            </div>
-            <div id="wines_tab" ng-switch-when="Wines">
-               <!--\\other two divisions go here-->
-               <h1>Wines section</h1>
-            </div>
-            <div id="spirits_tab" ng-switch-when="Spirits">
-               <!--\\other two divisions go here-->
-               <h1>Spirits section</h1>
-            </div>
-            <div id="others_tab" ng-switch-when="Others">
-               <!--\\other two divisions go here-->
-               <h1> Others section</h1>
+
             </div>
          </div>
       </div>
