@@ -14,3 +14,18 @@
 .genericError:focus{
     border-color: red;
 }
+
+.brand-input{
+    border: none;
+    border-bottom: 1px;
+    border-bottom-color: #eee;
+    border-bottom-style: solid;
+}
+
+.brand-input:focus{
+    border: none;
+    border-bottom: 2px;
+    border-bottom-color: #eee;
+    border-bottom-style: solid;
+    outline: none;
+}

@@ -246,3 +246,6 @@
     box-shadow: 0 0 10px #9ecaed;
 }
 
+.modal-backdrop{
+    position: relative !important;
+}
