@@ -5,6 +5,12 @@ app.controller("LogoSearchController", function($scope, $http) {
 });
 
 app.controller("LoginController", function($scope, $http, $sce) {
+    var _nextState = "next",
+        _signinState = "signin",
+        _signupState = "signup";
+
+    var _currentButtonState;
+
     var login = this;
     login.reset = function(){
         login.modalTitle = "Sign...";
@@ -12,12 +18,50 @@ app.controller("LoginController", function($scope, $http, $sce) {
         login.goToSignIn = false;
         login.goToSignUp = false;
         login.error = false;
+        _currentButtonState = _nextState;
+
+        login.email = "";
+        login.password = "";
+        login.fname = "";
+        login.lname = "";
+        login.phone = "";
+        login.npassword = "";
+        login.cpassword = "";
+        login.dob = "";
     }
 
     login.reset();
 
     //check Email -> either go to sign in, or prompt sign up
-    login.checkStage = function(){
+    login.checkState = function(){
+        switch (_currentButtonState){
+            case _nextState: _checkEmail(); break
+            case _signinState: _signIn(); break;
+            case _signupState: _signUp(); break;
+            default: login.email = "error occured@checkStage";
+        }
+    }
+
+    // Used to show sign in form
+    login.goToLogInForm = function(){
+        login.error = false;
+        login.goToSignIn = true;
+        login.modalTitle = "Sign in";
+        login.mainButtonText = "Sign in";
+        _currentButtonState = _signinState;
+    }
+
+    // Used to show sign up form
+    login.goToSignUpForm = function(){
+        login.error = false;
+        login.goToSignUp = true;
+        login.modalTitle = "Sign up";
+        login.mainButtonText = "Sign up";
+        _currentButtonState = _signupState;
+    }
+
+    // Check email 
+    var _checkEmail = function() {
         $http({
             method: 'GET',
             url: '/api/authentication/userexists',
@@ -26,110 +70,63 @@ app.controller("LoginController", function($scope, $http, $sce) {
             }
         }).then(function successCallback(response) {
             if (response.data["success"] === "true") {
-                _goToLogIn();
+                login.goToLogInForm();
             } else {
                 login.error = true;
             }
         }, function errorCallback(response) {
             console.log("ERROR");
         });
+    };
+
+    //Sign In 
+    var _signIn = function() {
+        $http({
+            method: 'GET',
+            url: '/api/authentication/signin',
+            params: {
+                email: login.email,
+                password: login.password,
+            }
+        }).then(function successCallback(response) {
+            if (response.data["success"] === "true") {
+                alert("Login");
+            } else {
+                alert("No login");
+            }
+        }, function errorCallback(response) {
+            console.log("ERROR");
+        });
     }
 
-    $('#loginModal').on('hidden.bs.modal', function () {
-        login.reset();
-    });
-
-    var _goToLogInForm = function(){
-        login.goToSignIn = true;
-        login.modalTitle = "Sign in";
-        login.mainButtonText = "Sign in";
+    //Sign Up
+    var _signUp = function() {
+        if ($scope.passwordSignUp == $scope.passwordCheckSignUp) {
+            $http({
+                method: 'POST',
+                url: '/api/authentication/signup',
+                params: {
+                    email: login.email,
+                    fname: login.fname,
+                    lname: login.lname,
+                    phone: login.phone,
+                    password: login.npasssword,
+                    dob: login.dob,
+                }
+            }).then(function successCallback(response) {
+                if (response.data["success"] === "true") {
+                    console.log("100% SUCCESS");
+                } else {
+                    console.log("DEYIL");
+                }
+            }, function errorCallback(response) {
+                console.log("ERROR");
+            });
+            $scope.reeneteredPasswordFalse = false;
+        } else {
+            $scope.reeneteredPasswordFalse = true;
+        }
     }
-
-    login.goToSignUpForm = function(){
-        login.goToSignUp = true;
-        login.modalTitle = "Sign up";
-        login.mainButtonText = "Sign up";
-    }
-
-    // $scope.signEmail = false;
-    // $scope.signEmailCorrect = false;
-    // $scope.ifcheckedEmailFalse = false;
-    // $scope.ifsignUpTrue = false;
-    // $scope.reeneteredPasswordFalse = false;
-
-    // //Sign Modal
-    // var next_modal = document.getElementById('next-sign_modal');
-    // var buttn = document.getElementById("sign");
-    // var span = document.getElementsByClassName("close")[0];
-
-    // buttn.onclick = function() {
-    //     console.log("signin button clicked");
-    //     next_modal.style.display = "block";
-    // }
-
-    // span.onclick = function() {
-    //     console.log("closed");
-    //     next_modal.style.display = "close";
-    // }
-    // window.onclick = function(event) {
-    //     if (event.target == next_modal) {
-    //         next_modal.style.display = "none";
-    //     }
-    // }
-
-    // $scope.gotosingUpClicked = function() {
-    //     $scope.ifsignUpTrue = true;
-    // }
-
-    // //Sign In
-    // $scope.signInClicked = function() {
-    //     $http({
-    //         method: 'GET',
-    //         url: '/api/authentication/signin',
-    //         params: {
-    //             email: $scope.emailSign,
-    //             password: $scope.passwordSignIn,
-    //         }
-    //     }).then(function successCallback(response) {
-    //         if (response.data["success"] === "true") {
-    //             console.log("100% SUCCESS");
-    //         } else {
-    //             console.log("DEYIL");
-    //         }
-    //     }, function errorCallback(response) {
-    //         console.log("ERROR");
-    //     });
-    // }
-
-    // //Sign Up
-    // $scope.signUpClicked = function() {
-    //     if ($scope.passwordSignUp == $scope.passwordCheckSignUp) {
-    //         $http({
-    //             method: 'POST',
-    //             url: '/api/authentication/signup',
-    //             params: {
-    //                 email: $scope.emailSignUp,
-    //                 fname: $scope.fNameSignUp,
-    //                 lname: $scope.lNameSignUp,
-    //                 phone: $scope.phoneSignUp,
-    //                 password: $scope.passwordCheckSignUp,
-    //                 dob: $scope.dobSignUp,
-    //             }
-    //         }).then(function successCallback(response) {
-    //             if (response.data["success"] === "true") {
-    //                 console.log("100% SUCCESS");
-    //             } else {
-    //                 console.log("DEYIL");
-    //             }
-    //         }, function errorCallback(response) {
-    //             console.log("ERROR");
-    //         });
-    //         $scope.reeneteredPasswordFalse = false;
-    //     } else {
-    //         $scope.reeneteredPasswordFalse = true;
-    //     }
-    // }
-
 });
 
 app.controller("NavigationController", function($scope, $http) {
