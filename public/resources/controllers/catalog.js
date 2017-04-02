@@ -14,6 +14,7 @@ app.controller("catalogController", function($scope, $http) {
     // Get initial list of products
     $scope.products;
     $scope.subcategories = [];
+    $scope.availableTypes = [];
     $scope.packings;
     $scope.brands;
     $http({
@@ -27,6 +28,7 @@ app.controller("catalogController", function($scope, $http) {
             $scope.brands = response.data['brands'];
 
             $scope.userSelectedSubcategories = $scope.subcategories[0]['subcategory_name'];
+            $scope.availableTypes = $scope.subcategories[0]['types'];      
         } else {
 
         }
@@ -35,11 +37,10 @@ app.controller("catalogController", function($scope, $http) {
     });
     
 
-    // we don't need this - ZZ 
-    // $scope.checkSubcategories = function(subcategory) {
-    //     userSelectedSubcategories = subcategory;
-    //     console.log("userSelectedSubcategories is: " + $scope.userSelectedSubcategories);
-    // };
+    $scope.checkSubcategories = function(subcategory) {
+        userSelectedSubcategories = subcategory;
+        console.log("userSelectedSubcategories is: " + $scope.userSelectedSubcategories);
+    };
 
     $scope.checkTypes = function(type) {
         if (!$scope.userSelectedTypes.includes(type)) {
