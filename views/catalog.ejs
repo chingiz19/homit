@@ -5,14 +5,26 @@
    </head>
 
    <body>
-       <div class="container">
+       <div class="container" ng-controller="catalogController">
        <div class="col-md-3 catalogBox" >
-        <div class="sizeStage11">Variants</div>
-           <ul class="nav nav-pills nav-stacked sizeStage12" ng-repeat="subcategory in subcategories"> 
-               <li class="active" ng-show="userSelectedSubcategories == subcategory"><a href="#">{{subcategory}}</a></li>
-               <li ng-show="userSelectedSubcategories == subcategory"><a href="#">Red</a></li>
-               <!--<li><a href="#">White</a></li>
-               <li><a href="#">Fruit</a></li>-->
+           <div class="sizeStage11">Variants</div>
+           <ul class="nav nav-pills nav-stacked sizeStage12">
+               <li class="active"><a href="#">Red</a></li>
+               <li><a href="#">White</a></li>
+               <li><a href="#">Fruit</a></li>
+           </ul>
+
+           <div class="sizeStage21">Types</div>
+           <ul class="nav nav-pills nav-stacked sizeStage22">
+               <li><a href="#">Merlot</a></li>
+               <li><a href="#">Shiraz</a></li>
+           </ul>
+
+           <div class="sizeStage31">Brands</div>
+           <ul class="nav nav-pills nav-stacked sizeStage32">
+               <li><a href="#">Bringer</a></li>
+               <li><a href="#">la Crema</a></li>
+               <li><a href="#">Bogle</a></li>
            </ul>
        </div>
        <div class="col-md-9 catalogBox">
