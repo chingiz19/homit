@@ -1,4 +1,4 @@
-#beers_tab {
+/*#beers_tab {
     width: 100%;
     margin-top: 8%;
 }
@@ -30,7 +30,7 @@
     margin: 0.7%;
     padding: .1%;
     width: 23%;
-}
+}*/
 
 .catalogBox
 {   
@@ -38,8 +38,14 @@
     top: 10vh;
 }
 
-.subCat
+.sizeStage11
 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
+}
+
+.sizeStage12
+{
+    font-size: 14px;
+
 }
