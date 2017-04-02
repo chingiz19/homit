@@ -4,6 +4,14 @@ app.controller("catalogController", function($scope, $http) {
     $scope.productUrl;
     if ($scope.selection == "Beers") {
         $scope.productUrl = '/api/catalog/beers';
+    } else if ($scope.selection == "Wines") {
+        $scope.productUrl = '/api/catalog/wines';
+    } else if ($scope.selection == "Spirits") {
+        $scope.productUrl = '/api/catalog/spirits';
+    } else if ($scope.selection == "Others") {
+        $scope.productUrl = '/api/catalog/others';
+    } else {
+        $scope.productUrl = '/api/catalog/notfound';
     }
     // User selected variables
     $scope.userSelectedSubcategories;
