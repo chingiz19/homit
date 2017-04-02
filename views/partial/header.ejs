@@ -36,10 +36,10 @@
 
 <div class="container">
     <ul class="nav nav-pills nav-justified nav-pills">
-        <li role="presentation" class="active"><a href="#">Beers</a></li>
-        <li role="presentation"><a href="#">Wines</a></li>
-        <li role="presentation"><a href="#">Spirits</a></li>
-        <li role="presentation"><a href="#">Others</a></li>
+        <li id="beersTab" role="presentation"><a href="/catalog?product=beers">Beers</a></li>
+        <li id="winesTab" role="presentation"><a href="/catalog?product=wines">Wines</a></li>
+        <li id="spiritsTab" role="presentation"><a href="/catalog?product=spirits">Spirits</a></li>
+        <li id="othersTab" role="presentation"><a href="/catalog?product=others">Others</a></li>
     </ul>
 </div>
 
@@ -110,3 +110,11 @@
 <script src="/resources/library/js/jquery.min.js"></script>
 <script src="/resources/library/js/bootstrap.min.js"></script>
 <script src="/resources/controllers/header.js"></script>
+
+<script>
+    $(document).ready(function(){
+        if ("#<%=tabId%>" != "#"){
+            $("#<%=tabId%>").addClass("active");
+        }
+    });
+</script>
