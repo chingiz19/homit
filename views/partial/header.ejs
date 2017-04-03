@@ -22,9 +22,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
-                            <button class="btn btn-default">
-                                I want my Booze!
-                                <!--<span class="glyphicon glyphicon-search"></span>-->
+                            <button type="button" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span> Search
                             </button>
                         </span>
                     </div>
@@ -53,7 +52,7 @@
         </div>
         
         <div class="modal-body">
-            <div ng-show="login.error">Couldn't find account assocciated to email below. Would you 
+            <div class="alert alert-warning" role="alert" ng-show="login.error"><strong>Login doesn't exist.</strong><br>Would you 
                 like to <a ng-click='login.goToSignUpForm();' style="cursor: pointer;">sign up?</a>
             </div>
             <div class="form-group">
