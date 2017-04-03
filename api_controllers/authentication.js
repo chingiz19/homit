@@ -30,14 +30,14 @@ router.get('/userexists', function(req, res, next){
 
 router.post('/signup', function(req, res, next) {
     // var fname = req.body.fname; // might use this tecnhique later
-    var fname = req.query.fname;
-    var lname = req.query.lname;
-    var email = req.query.email;
-    var dob = req.query.dob;
-    var password = req.query.password;
-    var phone = req.query.phone;
+    var fname = req.body.fname;
+    var lname = req.body.lname;
+    var email = req.body.email;
+    var dob = req.body.dob;
+    var password = req.body.password;
+    var phone = req.body.phone;
 
-    if (!fname || !lname || !email || !dob || !password || !phone) {
+    if (!(fname && lname && email && dob && password && phone)) {
         res.status(403).json({
             success: "false",
             error: "missing one or more fields"
@@ -65,8 +65,7 @@ router.post('/signup', function(req, res, next) {
                         };
                         req.session.user = user;
                         var response = {
-                            success: 'true',
-                            user: user
+                            success: 'true'
                         };
                         res.send(response);
                     });
@@ -92,25 +91,19 @@ router.get('/signin', function(req, res, next){
             error: "missing field"
         });
     } else {
-        userExists(email).then(function(exists){
-            if (!exists) {
+        userExists(email).then(function(user){
+            if (!user) {
                 var response = {success: 'false', error: 'user does not exist'};
                 res.send(response);
             } else {
-                bcrypt.compare(password, exists['password']).then(function(match) {
+                bcrypt.compare(password, user['password']).then(function(match) {
                     if (!match) {
                         var response = {success: 'false', error: 'wrong password'};
                         res.send(response);
                     } else {
-                        var user = {
-                            id: exists['id'],
-                            user_email: exists['user_email'],
-                            first_name: exists['first_name'],
-                            last_name: exists['last_name'],
-                            phone_number: exists['phone_number']
-                        };
+                        delete user["password"];
                         req.session.user = user;
-                        var response = {success: 'true', user: user};
+                        var response = {success: 'true'};
                         res.send(response);
                     }
                 });
@@ -180,11 +173,11 @@ router.post('/resetpassword', function(req, res, next){
     });
 });
 
-router.post('/signout', function(req, res, next){
-    var userid = req.query.userid;
+router.get('/signout', function(req, res, next){
     req.session.destroy();
     var response = {success: 'true'};
-    res.send(response);
+    //res.send(response);
+    res.redirect("/main");
 });
 
 var userExists = function(email) {

@@ -18,7 +18,8 @@ if (!fileSystem.existsSync('.logs')){
 webServer.use(session({
 	secret: secretKey,
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: true,
+	cookie: {maxAge: 5 * 60 * 1000} // 5 mins
 }));
 
 webServer.use(bodyParser.json());
@@ -48,7 +49,8 @@ webServer.use(function(err, req, res, next){
 	});
 	console.log("[ERROR] For more information, please visit .logs/error_log file");
 	//res.status(404).send("Path not found: " + req.path);
-	res.status(err.status || 500).send("<h1>Path Not Found</h1><h2>" + req.path + "</h2>");
+	res.status(err.status || 500).send("<h1>Path Not Found</h1><h2>" + req.path + "</h2><h3> Status:" + 
+	err.status || 500 + "</h3>");
 });
 
 webServer.listen(8080, function(){

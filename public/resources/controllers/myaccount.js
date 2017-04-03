@@ -1,4 +1,4 @@
-app.controller("myaccountController", ["$scope", function($scope){
+app.controller("myaccountController", ["$scope", "$http", function($scope, $http){
     
     /* Info Section */
     //TODO: init with http call when page is loaded
@@ -49,5 +49,13 @@ app.controller("myaccountController", ["$scope", function($scope){
         } else {
             $scope.showError = false;
         }
+    }
+
+    $scope.singout = function(){
+        $http.post({
+            url: "/api/singout"
+        }).then(function(success){
+            
+        });
     }
 }]);

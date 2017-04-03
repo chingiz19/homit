@@ -1,5 +1,4 @@
 var router = require("express").Router();
-var fileSystem = require("fs");
 
 router.route('/')
 	.get(function(req, res, next){
@@ -16,8 +15,6 @@ router.get('/catalog', function(req, res, next){
 	res.render("catalog.ejs", {title: "Catalog", tabId: tabId});
 });
 
-router.get('/myaccount', function(req, res, next){
-	res.render("myaccount.ejs", {title: "My Acount", tabId: ""});
-});
+router.use(require("./viewAuth_controller.js"));
 
 module.exports = router;

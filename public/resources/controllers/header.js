@@ -101,31 +101,29 @@ app.controller("LoginController", function($scope, $http, $sce) {
 
     //Sign Up
     var _signUp = function() {
-        if ($scope.passwordSignUp == $scope.passwordCheckSignUp) {
-            $http({
-                method: 'POST',
-                url: '/api/authentication/signup',
-                params: {
-                    email: login.email,
-                    fname: login.fname,
-                    lname: login.lname,
-                    phone: login.phone,
-                    password: login.npasssword,
-                    dob: login.dob,
-                }
-            }).then(function successCallback(response) {
-                if (response.data["success"] === "true") {
-                    console.log("100% SUCCESS");
-                } else {
-                    console.log("DEYIL");
-                }
-            }, function errorCallback(response) {
-                console.log("ERROR");
-            });
-            $scope.reeneteredPasswordFalse = false;
-        } else {
-            $scope.reeneteredPasswordFalse = true;
-        }
+        //TODO: find out why this is not working without reassignment
+        login.npassword = login.npassword;
+        var password = login.npassword;
+        $http({
+            method: 'POST',
+            url: '/api/authentication/signup',
+            data: {
+                password: password,
+                email: login.email,
+                fname: login.fname,
+                lname: login.lname,
+                phone: login.phone,
+                dob: login.dob
+            }
+        }).then(function successCallback(response) {
+            if (response.data["success"] === "true") {
+                console.log("100% SUCCESS");
+            } else {
+                console.log("DEYIL");
+            }
+        }, function errorCallback(response) {
+            console.log("ERROR");
+        });
     }
 });
 
