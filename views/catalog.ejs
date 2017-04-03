@@ -3,33 +3,38 @@
       <%- include('partial/header', {title: title, product: tabId}); %>
       <link href="/resources/css/catalog.css" rel="stylesheet">
    </head>
-
    <body>
-       <div class="container" ng-controller="catalogController">
-       <div class="col-md-3 catalogBox" >
-           <div class="sizeStage11">Variants</div>
-           <ul class="nav nav-pills nav-stacked sizeStage12">
-               <li class="active"><a href="#">Red</a></li>
-               <li><a href="#">White</a></li>
-               <li><a href="#">Fruit</a></li>
-           </ul>
-
-           <div class="sizeStage21">Types</div>
-           <ul class="nav nav-pills nav-stacked sizeStage22">
-               <li><a href="#">Merlot</a></li>
-               <li><a href="#">Shiraz</a></li>
-           </ul>
-
-           <div class="sizeStage31">Brands</div>
-           <ul class="nav nav-pills nav-stacked sizeStage32">
-               <li><a href="#">Bringer</a></li>
-               <li><a href="#">la Crema</a></li>
-               <li><a href="#">Bogle</a></li>
-           </ul>
-       </div>
-       <div class="col-md-9 catalogBox">
-       </div>
-       </div>
+      <div class="container" ng-controller="catalogController">
+         <div class="col-md-3 catalogBox" >
+            <div class="sizeStage11">Variants</div>
+            <ul class="nav nav-pills nav-stacked sizeStage12" ng-repeat="subcategory in subcategories">
+               <li class="active" ng-show="subcategory.subcategory_name==userSelectedSubcategories" ng-click="checkSubcategories(subcategory.subcategory_name)"><a href="">{{subcategory.subcategory_name}}</a></li>
+               <li ng-hide="subcategory.subcategory_name==userSelectedSubcategories" ng-click="checkSubcategories(subcategory.subcategory_name)"><a href="">{{subcategory.subcategory_name}}</a></li>
+            </ul>
+            <div class="btn-group">
+               <div class="sizeStage21">Types</div>
+               <ul ng-repeat="type in availableTypes">
+                  <li>
+                     <label>
+                     <input type="checkbox" autocomplete="off" ng-click="checkTypes(type)">
+                     <span>{{type}}</span>
+                     </label>
+                  </li>
+               </ul>
+               <div class="sizeStage31">Brands</div>
+               <ul ng-repeat="brand in brands">
+                  <li>
+                     <label>
+                     <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
+                     <span>{{brand}}</span>
+                     </label>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="col-md-9 catalogBox">
+         </div>
+      </div>
       <script src="/resources/controllers/catalog.js"></script>
    </body>
 </html>
