@@ -14,7 +14,8 @@ router.use(function(req, res, next){
 });
 
 router.get('/myaccount', function(req, res, next){
-	res.render("myaccount.ejs", {title: "My Acount", tabId: ""});
+    req.options.ejs["title"] = "My Account";
+	res.render("myaccount.ejs", req.options.ejs);
 });
 
 module.exports = router;

@@ -1,10 +1,10 @@
-var app = angular.module('mainModule', []);
+var app = angular.module('mainModule', ["ngRoute"]);
 
 app.controller("LogoSearchController", function($scope, $http) {
 
 });
 
-app.controller("LoginController", function($scope, $http, $sce) {
+app.controller("LoginController", function($scope, $http, $sce, $route) {
     var _nextState = "next",
         _signinState = "signin",
         _signupState = "signup";
@@ -90,7 +90,7 @@ app.controller("LoginController", function($scope, $http, $sce) {
             }
         }).then(function successCallback(response) {
             if (response.data["success"] === "true") {
-                alert("Login");
+                window.location.reload();
             } else {
                 alert("No login");
             }
