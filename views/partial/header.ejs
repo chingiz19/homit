@@ -56,8 +56,11 @@
         </div>
         
         <div class="modal-body">
-            <div class="alert alert-warning" role="alert" ng-show="login.error"><strong>Login doesn't exist.</strong><br>Would you 
+            <div class="alert alert-warning" role="alert" ng-show="login.error == 1"><strong>Login doesn't exist.</strong><br>Would you 
                 like to <a ng-click='login.goToSignUpForm();' style="cursor: pointer;">sign up?</a>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-show="login.error == 2"><strong>Incorrect password</strong><br> 
+               <a ng-click='login.goToForgotPasswordForm();' style="cursor: pointer;">forgot password?</a>
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-default" ng-click="login.reset();" ng-show ="login.goToSignUp || login.goToSignIn">
@@ -66,7 +69,7 @@
                 </button>
             </div>
             <form>
-                <div class="form-group">
+                <div class="form-group" ng-hide="login.goToForgotPassword">
                     <input name="email" type="email" ng-model="login.email" class="form-control" ng-disabled="login.goToSignUp || login.goToSignIn" placeholder="Email" required/>
                 </div>
 
@@ -96,6 +99,12 @@
                         <input name="dob" ng-model="login.dob" type="date" class="form-control" placeholder="Date of Birth" required/>    
                     </div>
                 </div>
+
+                <!-- Forgot password form -->
+                <div name="forgotPasswordForm" class="form-group" ng-if="login.goToForgotPassword">
+                    <input name="email" type="email" ng-model="login.forgotPasswordEmail" class="form-control" placeholder="Email" required/>  
+                </div>
+
                 <button class="btn btn-success full-width" ng-click="login.checkState();">{{login.mainButtonText}}</button>
             </form>
 

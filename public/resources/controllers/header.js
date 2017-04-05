@@ -7,7 +7,8 @@ app.controller("LogoSearchController", function($scope, $http) {
 app.controller("LoginController", function($scope, $http, $sce, $route) {
     var _nextState = "next",
         _signinState = "signin",
-        _signupState = "signup";
+        _signupState = "signup",
+        _forgotPasswordState = "forgotPassword";
 
     var _currentButtonState;
 
@@ -17,7 +18,8 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
         login.mainButtonText = "Next";
         login.goToSignIn = false;
         login.goToSignUp = false;
-        login.error = false;
+        login.goToForgotPassword = false;
+        login.error = 0;
         _currentButtonState = _nextState;
 
         login.email = "";
@@ -28,6 +30,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
         login.npassword = "";
         login.cpassword = "";
         login.dob = "";
+        login.forgotPasswordEmail = "";
     }
 
     login.reset();
@@ -38,13 +41,14 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
             case _nextState: _checkEmail(); break
             case _signinState: _signIn(); break;
             case _signupState: _signUp(); break;
+            case _forgotPasswordState: _forgotPassword(); break;
             default: login.email = "error occured@checkStage";
         }
     }
 
     // Used to show sign in form
     login.goToLogInForm = function(){
-        login.error = false;
+        login.reset();
         login.goToSignIn = true;
         login.modalTitle = "Sign in";
         login.mainButtonText = "Sign in";
@@ -53,11 +57,20 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
 
     // Used to show sign up form
     login.goToSignUpForm = function(){
-        login.error = false;
+        login.reset();
         login.goToSignUp = true;
         login.modalTitle = "Sign up";
         login.mainButtonText = "Sign up";
         _currentButtonState = _signupState;
+    }
+
+    // Used to show forgot password form
+    login.goToForgotPasswordForm = function(){
+        login.reset();
+        login.goToForgotPassword = true;
+        login.modalTitle = "Forgot password";
+        login.mainButtonText = "Reset";
+        _currentButtonState = _forgotPasswordState;
     }
 
     // Check email 
@@ -72,7 +85,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
             if (response.data["success"] === "true") {
                 login.goToLogInForm();
             } else {
-                login.error = true;
+                login.error = 1;
             }
         }, function errorCallback(response) {
             console.log("ERROR");
@@ -92,7 +105,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
             if (response.data["success"] === "true") {
                 window.location.reload();
             } else {
-                alert("No login");
+                login.error = 2;
             }
         }, function errorCallback(response) {
             console.log("ERROR");
@@ -123,6 +136,24 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
             }
         }, function errorCallback(response) {
             console.log("ERROR");
+        });
+    }
+
+    var _forgotPassword = function(){
+    $http({
+            method: 'POST',
+            url: '/api/authentication/resetpassword',
+            data: {
+                email: login.forgotPasswordEmail
+            }
+        }).then(function successCallback(response) {
+            if (response.data["success"] === "true") {
+                console.log("password reset");
+            } else {
+                console.log("password not reset");
+            }
+        }, function errorCallback(response) {
+            console.log("ERROR in password reset");
         });
     }
 });
