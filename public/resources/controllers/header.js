@@ -4,7 +4,25 @@ app.controller("LogoSearchController", function($scope, $http) {
 
 });
 
-app.controller("LoginController", function($scope, $http, $sce, $route) {
+app.controller("notificationController", function($scope, $sce) {
+    var notification = this;
+
+    notification.reset = function(){
+        notification.type = "";
+        notification.message = "";
+        notification.show = false;
+    }
+
+    $scope.$on("addNotification", function(event, args){
+        notification.type = args.type;
+        notification.message = args.message;
+        notification.show = true;
+    })
+
+    notification.reset();
+});
+
+app.controller("LoginController", function($scope, $http, $sce, $route, $rootScope) {
     var _nextState = "next",
         _signinState = "signin",
         _signupState = "signup",
@@ -48,7 +66,9 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
 
     // Used to show sign in form
     login.goToLogInForm = function(){
+        var e = login.email;
         login.reset();
+        login.email = e;
         login.goToSignIn = true;
         login.modalTitle = "Sign in";
         login.mainButtonText = "Sign in";
@@ -60,7 +80,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
         login.reset();
         login.goToSignUp = true;
         login.modalTitle = "Sign up";
-        login.mainButtonText = "Sign up";
+        login.mainBut7tonText = "Sign up";
         _currentButtonState = _signupState;
     }
 
@@ -82,7 +102,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
                 email: login.email,
             }
         }).then(function successCallback(response) {
-            if (response.data["success"] === "true") {
+            if (!response.data["error"]) {
                 login.goToLogInForm();
             } else {
                 login.error = 1;
@@ -102,8 +122,12 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
                 password: login.password,
             }
         }).then(function successCallback(response) {
-            if (response.data["success"] === "true") {
-                window.location.reload();
+            if (!response.data["error"]) {
+                login.hideModal();
+                $rootScope.$broadcast("addNotification", {type: "alert-success", message: response.data["ui_message"]});
+                setTimeout(function(){
+                    window.location.reload();
+                }, 2500);
             } else {
                 login.error = 2;
             }
@@ -129,7 +153,8 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
                 dob: login.dob
             }
         }).then(function successCallback(response) {
-            if (response.data["success"] === "true") {
+            $rootScope.$broadcast("addNotification", {type: "alert-success", message: response.data["ui_message"]});
+            if (!response.data["error"]) {
                 console.log("100% SUCCESS");
             } else {
                 console.log("DEYIL");
@@ -155,6 +180,10 @@ app.controller("LoginController", function($scope, $http, $sce, $route) {
         }, function errorCallback(response) {
             console.log("ERROR in password reset");
         });
+    }
+
+    login.hideModal = function(){
+        $('#loginModal').modal('hide');
     }
 });
 

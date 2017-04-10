@@ -11,17 +11,25 @@ router.get('/userexists', function(req, res, next){
     var email = req.query.email;
     if (!email){
         res.status(403).json({
-            success: "false",
-            error: "missing email"
+            error: {
+                "code": "U000",
+                "dev_message": "Missing params",
+                "required_params": ["email"]
+            }
         });
     } else {
         userExists(email).then(function(exists){
             if (!exists) {
-                var response = {success: 'false', error: 'user does not exist'};
-                res.send(response);
+                res.json({
+                    error: {
+                        "code": "A001",
+                        "ui_message": "User doesn't exist"
+                    }
+                });
             } else {
-                var response = {success: 'true', error: 'user exists'};
-                res.send(response);
+                res.json({
+                    status: "success"
+                });
             }
         });
     }
@@ -39,8 +47,10 @@ router.post('/signup', function(req, res, next) {
 
     if (!(fname && lname && email && dob && password && phone)) {
         res.status(403).json({
-            success: "false",
-            error: "missing one or more fields"
+            "error": {
+                "code": "U000",
+                "dev_message": "Missing params"
+            }
         });
     } else {
         bcrypt.hash(password, saltRounds).then(function(hash) {
@@ -64,17 +74,18 @@ router.post('/signup', function(req, res, next) {
                             phone_number: data['phone_number']
                         };
                         req.session.user = user;
-                        var response = {
-                            success: 'true'
-                        };
-                        res.send(response);
+                        res.json({
+                            status: "success",
+                            ui_message: "Successfully signed up. You will receive an email with confirmation"
+                        });
                     });
                 } else {
-                    var response = {
-                        success: 'false',
-                        error: 'duplicate email'
-                    };
-                    res.send(response);
+                    res.json({
+                        error: {
+                            code: "A002",
+                            "ui_message": "User already exists"
+                        }
+                    });
                 }
             });
         });
@@ -87,24 +98,32 @@ router.get('/signin', function(req, res, next){
     // double checking, this should be done on client-side as well through required field
     if (!email || !password){
         res.status(403).json({
-            success: "false",
-            error: "missing field"
+            "error": {
+                "code": "U000",
+                "dev_message": "Missing params"
+            }
         });
     } else {
         userExists(email).then(function(user){
+            var errResponse = {
+                error: {
+                    code: "A003",
+                    ui_message: "Invalid email, or password"
+                }
+            }; 
             if (!user) {
-                var response = {success: 'false', error: 'user does not exist'};
-                res.send(response);
+                res.json(errResponse);
             } else {
                 bcrypt.compare(password, user['password']).then(function(match) {
                     if (!match) {
-                        var response = {success: 'false', error: 'wrong password'};
-                        res.send(response);
+                        res.json(errResponse);
                     } else {
                         delete user["password"];
                         req.session.user = user;
-                        var response = {success: 'true'};
-                        res.send(response);
+                        res.json({
+                            status: "success",
+                            ui_message: "Successfully signed in"
+                        });
                     }
                 });
             }
@@ -116,68 +135,82 @@ router.post('/forgotpassword', function(req, res, next){
     var email = req.query.email;    
     if (!email){
         res.status(403).json({
-            success: "false",
-            error: "missing email"
+            "error": {
+                "code": "U000",
+                "dev_message": "Missing params"
+            }
         });
     } else {
         userExists(email).then(function(exists){
             if (!exists) {
-                var response = {success: 'false', error: 'user does not exist'};
-                res.status(403);
-                res.send(response);
+                res.json({
+                    error: {
+                        code: "A001",
+                        ui_message: "User doesn't exist"
+                    }
+                });
             } else {
                 var token = tokenAPI.createToken(exists['id']);
                 //TODO implement send email
                 // var link = "localhost:8080" + "/resetpassword?email=" + email + "&token=" + token;
                 // send this links
-                var response = {success: 'true', email: email};
-                res.send(response);
+                res.json({
+                    status: "success",
+                    ui_message: "Email with reset instructions has been sent"
+                });
             }
         });
     }
 });
 
 router.post('/resetpassword', function(req, res, next){
-    var email = req.query.email;
     var token = req.query.token;
+    var oldpassword = req.query.oldpassword;
     var newpassword = req.query.newpassword;
-    userExists(email).then(function(exists){
-        if (!exists) {
-            var response = {success: 'false', error: 'user does not exist'};
-            res.status(403);
-            res.send(response);
-        } else {
-            tokenValid = tokenAPI.validateToken(exists['id'], token);
-            console.log(tokenValid);
-            if (tokenValid == true) {
-                tokenAPI.destroyToken(token);
-                bcrypt.hash(newpassword, saltRounds).then(function(hash) {
-                    var users_customers = "users_customers";
-                    var data = [
-                        {password: hash},
-                        {id: exists['id']}];
-                    db.updateQuery(users_customers, data).then(function(updated){
-                        var response = {success: 'true'};
-                        res.send(response);
-                    });                
-                });
-            } else if (tokenValid == 'expired'){
-                var response = {success: 'false', error: 'expired token'};
-                res.send(response);
-            } else {
-                var response = {success: 'false'};
-                res.status(403);
-                res.send(response);
-            }
-        }
-    });
+
+    if (!token){
+
+    } else {
+        
+    }
+    // userExists(email).then(function(exists){
+    //     if (!exists) {
+    //         var response = {success: 'false', error: 'user does not exist'};
+    //         res.status(403);
+    //         res.send(response);
+    //     } else {
+    //         tokenValid = tokenAPI.validateToken(exists['id'], token);
+    //         console.log(tokenValid);
+    //         if (tokenValid == true) {
+    //             tokenAPI.destroyToken(token);
+    //             bcrypt.hash(newpassword, saltRounds).then(function(hash) {
+    //                 var users_customers = "users_customers";
+    //                 var data = [
+    //                     {password: hash},
+    //                     {id: exists['id']}];
+    //                 db.updateQuery(users_customers, data).then(function(updated){
+    //                     var response = {success: 'true'};
+    //                     res.send(response);
+    //                 });                
+    //             });
+    //         } else if (tokenValid == 'expired'){
+    //             var response = {success: 'false', error: 'expired token'};
+    //             res.send(response);
+    //         } else {
+    //             var response = {success: 'false'};
+    //             res.status(403);
+    //             res.send(response);
+    //         }
+    //     }
+    // });
 });
 
 router.get('/signout', function(req, res, next){
     req.session.destroy();
-    var response = {success: 'true'};
-    //res.send(response);
-    res.redirect("/main");
+    res.json({
+        status: "success",
+        ui_message: "Successfully signed out"
+    });
 });
 
 var userExists = function(email) {

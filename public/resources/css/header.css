@@ -249,3 +249,10 @@
 .modal-backdrop{
     position: relative !important;
 }
+
+.notifications {
+    position: fixed;
+    width: 20%;
+    right: 0;
+    bottom: 0;
+}

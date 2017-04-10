@@ -46,6 +46,13 @@
     </ul>
 </div>
 
+<div class="notifications text-center" ng-controller="notificationController as notification">
+    <div class="alert alert-dismissable" ng-class="notification.type" ng-if="notification.show">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{notification.message}}
+    </div>
+</div>
+
 
 <!-- Modal for log in/sign up -->
 <div id='loginModal' class="modal fade" tabindex="-1" role="dialog" ng-controller="LoginController as login">
