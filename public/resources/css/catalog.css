@@ -34,8 +34,12 @@
 
 .catalogBox
 {   
-    border: solid 1.5px lightgrey;
-    top: 10vh;
+    top: 18vh;
+}
+
+.catalogBox2
+{   
+    top: 5vh;
 }
 
 .sizeStage11
