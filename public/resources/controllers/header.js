@@ -102,7 +102,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
                 email: login.email,
             }
         }).then(function successCallback(response) {
-            if (!response.data["error"]) {
+            if (!response.data["exists"]) {
                 login.goToLogInForm();
             } else {
                 login.error = 1;

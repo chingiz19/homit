@@ -21,14 +21,13 @@ router.get('/userexists', function(req, res, next){
         userExists(email).then(function(exists){
             if (!exists) {
                 res.json({
-                    error: {
-                        "code": "A001",
-                        "ui_message": "User doesn't exist"
-                    }
+                    status: "success",
+                    exists: "false"
                 });
             } else {
                 res.json({
-                    status: "success"
+                    status: "success",
+                    exists: "true"
                 });
             }
         });
