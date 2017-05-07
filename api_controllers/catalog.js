@@ -1,6 +1,15 @@
 var router = require("express").Router();
 var db = require("../db.js");
 
+/**
+ * List of categories with their ids
+ */
+var categories = {
+  Beers: 1,
+  Wines: 2,
+  Spirits: 3,
+  Others: 4
+};
 
 router.get('/beers', function(req, res, next){
     getAllBeerTypes().then(function(subcategories){
@@ -70,13 +79,6 @@ router.get('/others', function(req, res, next){
         });
     });
 });
-
-var categories = {
-  Beers: 1,
-  Wines: 2,
-  Spirits: 3,
-  Others: 4
-};
 
 /**
  * Gets all types for beers
