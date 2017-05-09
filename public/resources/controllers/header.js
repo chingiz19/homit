@@ -1,4 +1,10 @@
-var app = angular.module('mainModule', ["ngRoute"]);
+var app = angular.module('mainModule', ["ngRoute"])
+    .config(function($locationProvider) {
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
+    });
 
 app.controller("LogoSearchController", function($scope, $http) {
 
@@ -188,5 +194,4 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
 });
 
 app.controller("NavigationController", function($scope, $http) {
-
 });

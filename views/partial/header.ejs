@@ -7,15 +7,15 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/main">Delivery Start Up</a>
+            <a class="navbar-brand" href="/main" target="_self">Delivery Start Up</a>
         </div>
 
         <div class="collapse navbar-collapse">
             <div class="navbar-text navbar-right dropdown" ng-if="<%=isSignedIn%>">  
                 <a href="#" class="navbar-link" data-toggle="dropdown">Welcome, <%= username %>  <span class="glyphicon glyphicon-chevron-down"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="/myaccount">My Account</a></li>
-                    <li><a href="/api/authentication/signout">Log out</a></li>
+                    <li><a href="/myaccount" target="_self">My Account</a></li>
+                    <li><a href="/api/authentication/signout" target="_self">Log out</a></li>
                 </ul>
             </div>
 
@@ -37,12 +37,12 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="container" ng-controller="NavigationController as nav">
     <ul class="nav nav-pills nav-justified nav-pills">
-        <li id="beersTab" role="presentation"><a href="/catalog?product=beers">Beers</a></li>
-        <li id="winesTab" role="presentation"><a href="/catalog?product=wines">Wines</a></li>
-        <li id="spiritsTab" role="presentation"><a href="/catalog?product=spirits">Spirits</a></li>
-        <li id="othersTab" role="presentation"><a href="/catalog?product=others">Others</a></li>
+        <li id="beersTab" role="presentation"><a href="/catalog?product=beers" target="_self">Beers</a></li>
+        <li id="winesTab" role="presentation"><a href="/catalog?product=wines" target="_self">Wines</a></li>
+        <li id="spiritsTab" role="presentation"><a href="/catalog?product=spirits" target="_self">Spirits</a></li>
+        <li id="othersTab" role="presentation"><a href="/catalog?product=others" target="_self">Others</a></li>
     </ul>
 </div>
 
