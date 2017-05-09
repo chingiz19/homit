@@ -4,82 +4,49 @@
         <link href="/resources/css/catalog.css" rel="stylesheet">
     </head>
 <body>
-    <div class="container" ng-controller="catalogController">
-        <div class="col-md-3" >
-            <div class="affix catalogBox">
-                <div class="sizeStage11">Variants</div>
-                <ul class="nav nav-pills nav-stacked sizeStage12" ng-repeat="subcategory in subcategories">
-                    <li class="active" ng-show="subcategory.subcategory_name==userSelectedSubcategories" ng-click="checkSubcategories(subcategory.subcategory_name)"><a href="">{{subcategory.subcategory_name}}</a></li>
-                    <li ng-hide="subcategory.subcategory_name==userSelectedSubcategories" ng-click="checkSubcategories(subcategory.subcategory_name)"><a href="">{{subcategory.subcategory_name}}</a></li>
-                </ul>
-                <div class="btn-group">
-                    <div class="sizeStage21">Types</div>
-                    <ul ng-repeat="type in availableTypes">
-                        <li>
-                            <label>
-                                <input type="checkbox" autocomplete="off" ng-click="checkTypes(type)">
-                                <span>{{type}}</span>
-                            </label>
-                        </li>
+    <div class="box">
+        <div class="container" ng-controller="catalogController">
+            <div class="col-md-3" >
+                <div class="affix catalogBox">
+                    <div class="sizeStage11">Variants</div>
+                    <ul class="nav nav-pills nav-stacked sizeStage12" ng-repeat="subcategory in subcategories">
+                        <li class="active" ng-show="subcategory.subcategory_name==userSelectedSubcategories" ng-click="checkSubcategories(subcategory.subcategory_name)"><a href="">{{subcategory.subcategory_name}}</a></li>
+                        <li ng-hide="subcategory.subcategory_name==userSelectedSubcategories" ng-click="checkSubcategories(subcategory.subcategory_name)"><a href="">{{subcategory.subcategory_name}}</a></li>
                     </ul>
-                    <div class="sizeStage31">Brands</div>
-                    <ul ng-repeat="brand in brands">
-                        <li>
-                            <label>
-                                <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
-                                <span>{{brand}}</span>
-                            </label>
-                        </li>
-                    </ul>
+                    <div class="btn-group">
+                        <div class="sizeStage21">Types</div>
+                        <ul ng-repeat="type in availableTypes">
+                            <li>
+                                <label>
+                                    <input type="checkbox" autocomplete="off" ng-click="checkTypes(type)">
+                                    <span>{{type}}</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="sizeStage31">Brands</div>
+                        <ul ng-repeat="brand in brands">
+                            <li>
+                                <label>
+                                    <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
+                                    <span>{{brand}}</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="sizeStage31">Size</div>
+                        <ul ng-repeat="packing in packings">
+                            <li>
+                                <label>
+                                    <input type="checkbox" autocomplete="off" ng-click="checkPackings(packing)">
+                                    <span>{{packing}}</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-9 catalogBox2">
-            <div ng-repeat="product in products">
-                <div class="col-md-3">
-                    <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)">
-                        <ul>
-                            <li><img ng-src={{product.image}} width="75" height="112.5"></li>
-                            <span> 
-                                <li>Brand: {{product.brand}}</li>
-                                <li>Type: {{product.type}}</li>
-                                <li>Packing: {{product.packaging}}</li>
-                                <li>Price: {{product.price}}</li>
-                            </span>
-                        </ul>
-                        <button class="btn-primary" ng-click=""> Add to cart </button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)">
-                        <ul>
-                            <li><img ng-src={{product.image}} width="75" height="112.5"></li>
-                            <span> 
-                                <li>Brand: {{product.brand}}</li>
-                                <li>Type: {{product.type}}</li>
-                                <li>Packing: {{product.packaging}}</li>
-                                <li>Price: {{product.price}}</li>
-                            </span>
-                        </ul>
-                        <button class="btn-primary" ng-click=""> Add to cart </button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)">
-                        <ul>
-                            <li><img ng-src={{product.image}} width="75" height="112.5"></li>
-                            <span> 
-                                <li>Brand: {{product.brand}}</li>
-                                <li>Type: {{product.type}}</li>
-                                <li>Packing: {{product.packaging}}</li>
-                                <li>Price: {{product.price}}</li>
-                            </span>
-                        </ul>
-                        <button class="btn-primary" ng-click=""> Add to cart </button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)">
+            <div class="col-md-9">
+                <div ng-repeat="product in products">
+                    <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)" class="col-md-3">
                         <ul>
                             <li><img ng-src={{product.image}} width="75" height="112.5"></li>
                             <span> 
