@@ -28,3 +28,12 @@
 ul {
  list-style-type: none;
  }
+
+ .brandBox
+ {
+     height: 240px;
+     width: 270px;
+     float: left;
+     overflow-y: scroll;
+     border: solid 2px transparent;
+ }
