@@ -1,18 +1,20 @@
-app.controller("catalogController", function($scope, $http) {
-    $scope.selection = "Beers";
-    // Determine product URL
-    $scope.productUrl;
-    if ($scope.selection == "Beers") {
+app.controller("catalogController", function($scope, $http, $location) {
+
+$scope.selection = $location.search().product;
+
+// Determine product URL
+$scope.productUrl;
+    if ($scope.selection == "beers") {
         $scope.productUrl = '/api/catalog/beers';
-    } else if ($scope.selection == "Wines") {
+    } else if ($scope.selection == "wines") {
         $scope.productUrl = '/api/catalog/wines';
-    } else if ($scope.selection == "Spirits") {
+    } else if ($scope.selection == "spirits") {
         $scope.productUrl = '/api/catalog/spirits';
-    } else if ($scope.selection == "Others") {
+    } else if ($scope.selection == "others") {
         $scope.productUrl = '/api/catalog/others';
     } else {
         $scope.productUrl = '/api/catalog/notfound';
-    }
+    }        
     // User selected variables
     $scope.userSelectedSubcategories;
     $scope.userSelectedTypes = [];
