@@ -55,11 +55,23 @@ $scope.productUrl;
     }, function errorCallback(response) {
 
     });
-    
+
+    function getElementIdByName(subcategory) {
+        var result = -1;
+        for (i=0; i<$scope.subcategories.length; i++) {
+            if ($scope.subcategories[i]['subcategory_name'] == subcategory) {
+                result = i;
+                break;
+            }
+        }
+        return result;
+    }
 
     $scope.checkSubcategories = function(subcategory) {
-        userSelectedSubcategories = subcategory;
-        console.log("userSelectedSubcategories is: " + $scope.userSelectedSubcategories);
+        $scope.userSelectedSubcategories = subcategory;
+        var i = getElementIdByName(subcategory);
+        $scope.availableTypes = $scope.subcategories[i]['types'];
+        console.log("available types is: " + $scope.availableTypes);
     };
 
     $scope.checkTypes = function(type) {

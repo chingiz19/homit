@@ -67,11 +67,11 @@
                         <div class="affix catalogBox">
                             <div class="btn-group">
                                 <div class="sizeStage21">Variants</div>
-                                <ul ng-repeat="variant in availableTypes">
+                                <ul ng-repeat="variant in subcategories">
                                     <li>
                                     <label>
-                                        <input type="checkbox" autocomplete="off" ng-click="checkTypes(type)">
-                                        <span>{{variant}}</span>
+                                        <input type="checkbox" autocomplete="off" ng-click="checkSubcategories(variant.subcategory_name)">
+                                        <span>{{variant.subcategory_name}}</span>
                                     </label>
                                     </li>
                                 </ul>
@@ -111,7 +111,7 @@
                     </div>
                     <div class="col-md-9">
                         <div ng-repeat="product in products">
-                            <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)" class="col-md-3">
+                            <div ng-show="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)" class="col-md-3">
                                 <ul>
                                     <li><img ng-src={{product.image}} width="75" height="112.5"></li>
                                     <span> 
