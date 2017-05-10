@@ -4,8 +4,9 @@
         <link href="/resources/css/catalog.css" rel="stylesheet">
     </head>
         <body class="ng-cloak">
-            <div class="box">
-                <div class="container" ng-controller="catalogController">
+            <div class="box" >
+<!--Beers - Catalog-->
+                <div class="container" ng-controller="catalogController" ng-show="isBeers">
                     <div class="col-md-3" >
                         <div class="affix catalogBox">
                             <div class="btn-group">
@@ -53,9 +54,74 @@
                                         <li>Type: {{product.type}}</li>
                                         <li>Packing: {{product.packaging}}</li>
                                         <li>Price: {{product.price}}</li>
+                                        <li><button class="btn-primary" ng-click=""> Add to cart </button></li>
                                     </span>
                                 </ul>
-                                <button class="btn-primary" ng-click=""> Add to cart </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--Wines - Catalog-->
+                <div class="container" ng-controller="catalogController" ng-show="isWines">
+                    <div class="col-md-3" >
+                        <div class="affix catalogBox">
+                            <div class="btn-group">
+                                <div class="sizeStage21">Variants</div>
+                                <ul ng-repeat="variant in availableTypes">
+                                    <li>
+                                    <label>
+                                        <input type="checkbox" autocomplete="off" ng-click="checkTypes(type)">
+                                        <span>{{variant}}</span>
+                                    </label>
+                                    </li>
+                                </ul>
+                                <div class="sizeStage21">Sweetness</div>
+                                    <ul ng-repeat="type in availableTypes">
+                                        <li>
+                                        <label>
+                                            <input type="checkbox" autocomplete="off" ng-click="checkTypes(type)">
+                                            <span>{{type}}</span>
+                                        </label>
+                                        </li>
+                                    </ul>
+                                <div class="btn-group">
+                                    <div class="sizeStage31">Brands</div>
+                                    <div class="brandBox">
+                                        <ul ng-repeat="brand in brands">
+                                            <li>
+                                                <label>
+                                                    <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
+                                                    <span>{{brand}}</span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="sizeStage31">Size</div>
+                                    <ul ng-repeat="packing in packings">
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" autocomplete="off" ng-click="checkPackings(packing)">
+                                                <span>{{packing}}</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div ng-repeat="product in products">
+                            <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)" class="col-md-3">
+                                <ul>
+                                    <li><img ng-src={{product.image}} width="75" height="112.5"></li>
+                                    <span> 
+                                        <li>Brand: {{product.brand}}</li>
+                                        <li>Type: {{product.type}}</li>
+                                        <li>Packing: {{product.packaging}}</li>
+                                        <li>Price: {{product.price}}</li>
+                                        <li><button class="btn-primary" ng-click=""> Add to cart </button></li>
+                                    </span>
+                                </ul>
                             </div>
                         </div>
                     </div>

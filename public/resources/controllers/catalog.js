@@ -2,16 +2,26 @@ app.controller("catalogController", function($scope, $http, $location) {
 
 $scope.selection = $location.search().product;
 
+$scope.isBeers = false;
+$scope.isWines= false;
+$scope.isSpirits= false;
+$scope.isOthers= false;
+
+
 // Determine product URL
 $scope.productUrl;
     if ($scope.selection == "beers") {
         $scope.productUrl = '/api/catalog/beers';
+        $scope.isBeers = true;
     } else if ($scope.selection == "wines") {
         $scope.productUrl = '/api/catalog/wines';
+        $scope.isWines=true;
     } else if ($scope.selection == "spirits") {
         $scope.productUrl = '/api/catalog/spirits';
+        $scope.isSpirits=true;
     } else if ($scope.selection == "others") {
         $scope.productUrl = '/api/catalog/others';
+        $scope.isOthers=true;
     } else {
         $scope.productUrl = '/api/catalog/notfound';
     }        
