@@ -64,15 +64,12 @@
 <!--Wines - Catalog-->
                 <div class="container" ng-controller="catalogController" ng-show="isWines">
                     <div class="col-md-3" >
-                        <div class="affix catalogBox">
+                        <div class="affix">`
                             <div class="btn-group">
-                                <div class="sizeStage21">Variants</div>
-                                <ul ng-repeat="variant in subcategories">
-                                    <li>
-                                    <label>
-                                        <input type="checkbox" autocomplete="off" ng-click="checkSubcategories(variant.subcategory_name)">
-                                        <span>{{variant.subcategory_name}}</span>
-                                    </label>
+                                <!--<div class="sizeStage21">Variants</div>-->
+                                <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
+                                    <li role="presentation">
+                                        <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
                                     </li>
                                 </ul>
                                 <div class="sizeStage21">Sweetness</div>
