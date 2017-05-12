@@ -123,7 +123,7 @@ var getTypes = function(category_id) {
     var sqlQuery = `SELECT s.name AS subcategory, t.name AS type FROM catalog_categories AS c,
         catalog_subcategories AS s, catalog_types AS t
         WHERE s.category_id = c.id AND t.subcategory_id = s.id AND ?
-        ORDER BY subcategory`;
+        ORDER BY subcategory, t.name`;
     var result = [];
     var data = {"c.id": category_id};
     var prev_s;
