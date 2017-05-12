@@ -68,7 +68,7 @@
                             <div class="btn-group">
                                 <!--<div class="sizeStage21">Variants</div>-->
                                 <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
-                                    <li role="presentation">
+                                    <li role="presentation" ng-click="subcat.value = $index" ng-class="{active:subcat.value == $index}">
                                         <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
                                     </li>
                                 </ul>

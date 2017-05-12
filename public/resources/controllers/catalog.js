@@ -7,6 +7,8 @@ $scope.isWines= false;
 $scope.isSpirits= false;
 $scope.isOthers= false;
 
+$scope.subcat = {value: -1};
+
 
 // Determine product URL
 $scope.productUrl;
