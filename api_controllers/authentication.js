@@ -22,12 +22,12 @@ router.get('/userexists', function(req, res, next){
             if (!exists) {
                 res.json({
                     status: "success",
-                    exists: "false"
+                    exists: false
                 });
             } else {
                 res.json({
                     status: "success",
-                    exists: "true"
+                    exists: true
                 });
             }
         });
@@ -45,7 +45,7 @@ router.post('/signup', function(req, res, next) {
     var phone = req.body.phone;
 
     if (!(fname && lname && email && dob && password && phone)) {
-        res.status(403).json({
+        res.status(400).json({
             "error": {
                 "code": "U000",
                 "dev_message": "Missing params"
