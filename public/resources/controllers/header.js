@@ -23,6 +23,9 @@ app.controller("notificationController", function($scope, $sce) {
         notification.type = args.type;
         notification.message = args.message;
         notification.show = true;
+        setTimeout(function(){
+            window.location.reload();
+        }, 2500);
     })
 
     notification.reset();
@@ -83,7 +86,9 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
 
     // Used to show sign up form
     login.goToSignUpForm = function(){
+        var tmp_email = login.email;
         login.reset();
+        login.email = tmp_email;
         login.goToSignUp = true;
         login.modalTitle = "Sign up";
         login.mainBut7tonText = "Sign up";
@@ -108,7 +113,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
                 email: login.email,
             }
         }).then(function successCallback(response) {
-            if (!response.data["exists"]) {
+            if (response.data["exists"]) {
                 login.goToLogInForm();
             } else {
                 login.error = 1;
@@ -159,11 +164,12 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
                 dob: login.dob
             }
         }).then(function successCallback(response) {
-            $rootScope.$broadcast("addNotification", {type: "alert-success", message: response.data["ui_message"]});
             if (!response.data["error"]) {
-                console.log("100% SUCCESS");
+                login.hideModal();
+                login.reset();
+                $rootScope.$broadcast("addNotification", {type: "alert-success", message: response.data["ui_message"]});
             } else {
-                console.log("DEYIL");
+                $rootScope.$broadcast("addNotification", {type: "alert-error", message: response.data["error"].ui_message});
             }
         }, function errorCallback(response) {
             console.log("ERROR");

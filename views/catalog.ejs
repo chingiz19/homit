@@ -22,7 +22,7 @@
                                 <div class="btn-group">
                                     <div class="sizeStage4">Brands</div>
                                     <div class="brandBox">
-                                    <ul ng-repeat="brand in brands">
+                                    <ul ng-repeat="brand in availableBrands">
                                         <li>
                                             <label>
                                                 <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
@@ -66,8 +66,8 @@
                     <div class="col-md-3" >
                         <div class="affix">`
                             <div class="btn-group">
-                                <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked sizeStage2">
-                                    <li role="presentation" ng-click="subcat.value = $index" ng-class="{active:subcat.value == $index}">
+                                <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
+                                    <li role="presentation" ng-class="{active:isInSelectedSubcategories(variant.subcategory_name)}">
                                         <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
                                     </li>
                                 </ul>
@@ -83,7 +83,7 @@
                                 <div class="btn-group">
                                     <div class="sizeStage4">Brands</div>
                                     <div class="brandBox">
-                                        <ul ng-repeat="brand in brands">
+                                        <ul ng-repeat="brand in availableBrands">
                                             <li>
                                                 <label>
                                                     <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
