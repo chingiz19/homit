@@ -10,7 +10,7 @@
                     <div class="col-md-3" >
                         <div class="affix catalogBox">
                             <div class="btn-group">
-                                <div class="sizeStage21">Types</div>
+                                <div class="sizeStage3">Types</div>
                                     <ul ng-repeat="type in availableTypes">
                                         <li>
                                         <label>
@@ -20,7 +20,7 @@
                                         </li>
                                     </ul>
                                 <div class="btn-group">
-                                    <div class="sizeStage31">Brands</div>
+                                    <div class="sizeStage4">Brands</div>
                                     <div class="brandBox">
                                     <ul ng-repeat="brand in brands">
                                         <li>
@@ -31,7 +31,7 @@
                                         </li>
                                     </ul>
                                     </div>
-                                    <div class="sizeStage31">Size</div>
+                                    <div class="sizeStage5">Size</div>
                                     <ul ng-repeat="packing in packings">
                                         <li>
                                             <label>
@@ -66,13 +66,12 @@
                     <div class="col-md-3" >
                         <div class="affix">`
                             <div class="btn-group">
-                                <!--<div class="sizeStage21">Variants</div>-->
-                                <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
+                                <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked sizeStage2">
                                     <li role="presentation" ng-click="subcat.value = $index" ng-class="{active:subcat.value == $index}">
                                         <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
                                     </li>
                                 </ul>
-                                <div class="sizeStage21">Sweetness</div>
+                                <div class="sizeStage3">Sweetness</div>
                                     <ul ng-repeat="type in availableTypes">
                                         <li>
                                         <label>
@@ -82,7 +81,7 @@
                                         </li>
                                     </ul>
                                 <div class="btn-group">
-                                    <div class="sizeStage31">Brands</div>
+                                    <div class="sizeStage4">Brands</div>
                                     <div class="brandBox">
                                         <ul ng-repeat="brand in brands">
                                             <li>
@@ -93,7 +92,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="sizeStage31">Size</div>
+                                    <div class="sizeStage5">Size</div>
                                     <ul ng-repeat="packing in packings">
                                         <li>
                                             <label>
