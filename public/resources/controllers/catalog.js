@@ -37,8 +37,8 @@ $scope.productUrl;
     $scope.products;
     $scope.subcategories = [];
     $scope.availableTypes = [];
+    $scope.availableBrands = [];    
     $scope.packings;
-    $scope.brands;
     $http({
         method: 'GET',
         url: $scope.productUrl
@@ -47,10 +47,10 @@ $scope.productUrl;
             $scope.products = response.data['products'];
             $scope.subcategories = response.data['subcategories'];
             $scope.packings = response.data['packagings'];
-            $scope.brands = response.data['brands'];
 
             $scope.userSelectedSubcategories = $scope.subcategories[0]['subcategory_name'];
-            $scope.availableTypes = $scope.subcategories[0]['types'];      
+            $scope.availableTypes = $scope.subcategories[0]['types'];
+            $scope.availableBrands = $scope.subcategories[0]['brands'];      
         } else {
 
         }
@@ -73,7 +73,9 @@ $scope.productUrl;
         $scope.userSelectedSubcategories = subcategory;
         var i = getElementIdByName(subcategory);
         $scope.availableTypes = $scope.subcategories[i]['types'];
-        console.log("available types is: " + $scope.availableTypes);
+        $scope.userSelectedTypes = [];
+        $scope.availableBrands = $scope.subcategories[i]['brands'];
+        $scope.userSelectedBrands = [];
     };
 
     $scope.checkTypes = function(type) {
@@ -82,7 +84,6 @@ $scope.productUrl;
         } else {
             $scope.userSelectedTypes.splice($scope.userSelectedTypes.indexOf(type), 1);
         }
-        console.log("userSelectedTypes list is: " + $scope.userSelectedTypes);
     };
 
     $scope.checkBrands = function(brand) {
@@ -91,7 +92,6 @@ $scope.productUrl;
         } else {
             $scope.userSelectedBrands.splice($scope.userSelectedBrands.indexOf(brand), 1);
         }
-        console.log("userSelectedBrands list is: " + $scope.userSelectedBrands);
     };
 
     $scope.checkPackings = function(packing) {
@@ -100,7 +100,6 @@ $scope.productUrl;
         } else {
             $scope.userSelectedPackings.splice($scope.userSelectedPackings.indexOf(packing), 1);
         }
-        console.log("userSelectedPackings list is: " + $scope.userSelectedPackings);
     };
 
     $scope.isInSelectedSubcategories = function(subcategory) {

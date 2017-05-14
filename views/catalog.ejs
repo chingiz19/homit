@@ -22,7 +22,7 @@
                                 <div class="btn-group">
                                     <div class="sizeStage31">Brands</div>
                                     <div class="brandBox">
-                                    <ul ng-repeat="brand in brands">
+                                    <ul ng-repeat="brand in availableBrands">
                                         <li>
                                             <label>
                                                 <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
@@ -68,7 +68,7 @@
                             <div class="btn-group">
                                 <!--<div class="sizeStage21">Variants</div>-->
                                 <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
-                                    <li role="presentation" ng-click="subcat.value = $index" ng-class="{active:subcat.value == $index}">
+                                    <li role="presentation" ng-class="{active:isInSelectedSubcategories(variant.subcategory_name)}">
                                         <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
                                     </li>
                                 </ul>
@@ -84,7 +84,7 @@
                                 <div class="btn-group">
                                     <div class="sizeStage31">Brands</div>
                                     <div class="brandBox">
-                                        <ul ng-repeat="brand in brands">
+                                        <ul ng-repeat="brand in availableBrands">
                                             <li>
                                                 <label>
                                                     <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
