@@ -12,32 +12,27 @@ var categories = {
 };
 
 router.get('/beers', function(req, res, next){
-    getAllBeerTypes().then(function(subcategories){
-        getAllBeers().then(function(products) {
-            var brands = getAllBrands(products);
+    getAllBeers().then(function(products) {
+        getAllBeerTypes(products).then(function(subcategories){
             var packagings = getAllPackagings(products);
             var response = {
                 success: 'true',
                 subcategories: subcategories,
-                brands: brands,
                 packagings: packagings,
                 products: products
             };
             res.send(response);
         });
-
     });
 });
 
 router.get('/wines', function(req, res, next){
-    getAllWineTypes().then(function(subcategories){
-        getAllWines().then(function(products) {
-            var brands = getAllBrands(products);
+    getAllWines().then(function(products) {
+        getAllWineTypes(products).then(function(subcategories){
             var packagings = getAllPackagings(products);
             var response = {
                 success: 'true',
                 subcategories: subcategories,
-                brands: brands,
                 packagings: packagings,
                 products: products
             };
@@ -47,14 +42,12 @@ router.get('/wines', function(req, res, next){
 });
 
 router.get('/spirits', function(req, res, next){
-    getAllSpiritTypes().then(function(subcategories){
-        getAllSpirits().then(function(products) {
-            var brands = getAllBrands(products);
+    getAllSpirits().then(function(products) {
+        getAllSpiritTypes(products).then(function(subcategories){            
             var packagings = getAllPackagings(products);
             var response = {
                 success: 'true',
                 subcategories: subcategories,
-                brands: brands,
                 packagings: packagings,
                 products: products
             };
@@ -64,14 +57,12 @@ router.get('/spirits', function(req, res, next){
 });
 
 router.get('/others', function(req, res, next){
-    getAllOtherTypes().then(function(subcategories){
-        getAllOthers().then(function(products) {
-            var brands = getAllBrands(products);
+    getAllOthers().then(function(products) {
+        getAllOtherTypes(products).then(function(subcategories){            
             var packagings = getAllPackagings(products);
             var response = {
                 success: 'true',
                 subcategories: subcategories,
-                brands: brands,
                 packagings: packagings,
                 products: products
             };
@@ -83,8 +74,8 @@ router.get('/others', function(req, res, next){
 /**
  * Gets all types for beers
  */
-var getAllBeerTypes = function() {
-    return getTypes(categories.Beers).then(function(beers) {
+var getAllBeerTypes = function(products) {
+    return getTypes(categories.Beers, products).then(function(beers) {
         return beers;
     });
 };
@@ -92,8 +83,8 @@ var getAllBeerTypes = function() {
 /**
  * Gets all types for wines
  */
-var getAllWineTypes = function() {
-    return getTypes(categories.Wines).then(function(wines) {
+var getAllWineTypes = function(products) {
+    return getTypes(categories.Wines, products).then(function(wines) {
         return wines;
     });
 };
@@ -101,8 +92,8 @@ var getAllWineTypes = function() {
 /**
  * Gets all types for spirits
  */
-var getAllSpiritTypes = function() {
-    return getTypes(categories.Spirits).then(function(spirits) {
+var getAllSpiritTypes = function(products) {
+    return getTypes(categories.Spirits, products).then(function(spirits) {
         return spirits;
     });
 };
@@ -110,8 +101,8 @@ var getAllSpiritTypes = function() {
 /**
  * Gets all types for others
  */
-var getAllOtherTypes = function() {
-    return getTypes(categories.Others).then(function(others) {
+var getAllOtherTypes = function(products) {
+    return getTypes(categories.Others, products).then(function(others) {
         return others;
     });
 };
@@ -119,7 +110,7 @@ var getAllOtherTypes = function() {
 /**
  * Get all types based for the category provided
  */
-var getTypes = function(category_id) {
+var getTypes = function(category_id, products) {
     var sqlQuery = `SELECT s.name AS subcategory, t.name AS type FROM catalog_categories AS c,
         catalog_subcategories AS s, catalog_types AS t
         WHERE s.category_id = c.id AND t.subcategory_id = s.id AND ?
@@ -128,6 +119,7 @@ var getTypes = function(category_id) {
     var data = {"c.id": category_id};
     var prev_s;
     var tmp_types = [];
+    var tmp_brands = [];
     return db.runQuery(sqlQuery, data).then(function(dbResult) {
         for (i = 0; i < dbResult.length; i++) {
             var canPush = false;
@@ -143,9 +135,11 @@ var getTypes = function(category_id) {
             }
 
             if (canPush || i == dbResult.length-1) {
+                tmp_brands = getAllBrandsBySubcategory(prev_s, products);
                 var tmp = {
                     subcategory_name: prev_s,
-                    types: tmp_types
+                    types: tmp_types,
+                    brands: tmp_brands
                 };
                 prev_s = dbResult[i].subcategory;
                 tmp_types = [];
@@ -213,8 +207,12 @@ var getAllProducts = function(category_id) {
 /**
  * Gets all brands for the products provided
  */
-var getAllBrands = function (products) {
+var getAllBrands = function (products, subcategories) {
     var result = [];
+    var tmp_brands = [];
+    for (i = 0; i < subcategories.length; i++) {
+
+    }
     for (i = 0; i < products.length; i++) {
         if (!result.includes(products[i].brand)) {
             result.push(products[i].brand);
@@ -228,13 +226,32 @@ var getAllBrands = function (products) {
  */
 var getAllPackagings = function (products) {
     var result = [];
-    for (i = 0; i < products.length; i++) {
-        if (!result.includes(products[i].packaging)) {
-            result.push(products[i].packaging);
+    if (typeof products != 'undefined') {
+        for (i = 0; i < products.length; i++) {
+            if (!result.includes(products[i].packaging)) {
+                result.push(products[i].packaging);
+            }
         }
     }
     return result.sort(sortAlphaNum);
 };
+
+/**
+ * Returns all available brands by provided subcateory
+ */
+var getAllBrandsBySubcategory = function (subcategory, products) {
+    var result = [];
+    if (typeof products != 'undefined') {
+        for (j = 0; j < products.length; j++) {
+            if (products[j].subcategory == subcategory) {
+                if (!result.includes(products[j].brand)) {
+                    result.push(products[j].brand);
+                }
+            }
+        }
+    }
+    return result.sort();
+}
 
 /**
  * Custom function to do alphanumeric sort
