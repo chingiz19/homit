@@ -86,7 +86,7 @@
                                         <ul ng-repeat="brand in availableBrands">
                                             <li>
                                                 <label>
-                                                    <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
+                                                    <input type="checkbox" ng-checked="isBrandCheckboxChecked(brand)" autocomplete="off" ng-click="checkBrands(brand)">
                                                     <span>{{brand}}</span>
                                                 </label>
                                             </li>
