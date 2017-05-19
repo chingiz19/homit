@@ -7,9 +7,6 @@ $scope.isWines= false;
 $scope.isSpirits= false;
 $scope.isOthers= false;
 
-$scope.subcat = {value: -1};
-
-
 // Determine product URL
 $scope.productUrl;
     if ($scope.selection == "beers") {
@@ -148,4 +145,14 @@ $scope.productUrl;
         }
     };
 
+    $scope.isBrandsCheckboxSelected = function() {
+        if ($scope.userSelectedBrands.includes(brand)) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
 });
+
+

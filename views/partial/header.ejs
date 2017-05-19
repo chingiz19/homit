@@ -10,7 +10,7 @@
             <a class="navbar-brand" href="/main" target="_self">Delivery Start Up</a>
         </div>
 
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse cartIcon">
             <div class="navbar-text navbar-right dropdown" ng-if="<%=isSignedIn%>">  
                 <a href="#" class="navbar-link" data-toggle="dropdown">Welcome, <%= username %>  <span class="glyphicon glyphicon-chevron-down"></span></a>
                 <ul class="dropdown-menu">
@@ -20,6 +20,17 @@
             </div>
 
             <button class="btn btn-default navbar-btn navbar-right" ng-if="!<%=isSignedIn%>" data-toggle="modal" data-target="#loginModal">Sign in/up</button>
+            <a href="#" id="da" onmouseover="mouseOn()" onmouseout="mouseOut()" class="btn btn-default navbar-btn navbar-right glyphicon glyphicon-shopping-cart cartIcon"></a>     
+
+<script>  
+function mouseOn() {
+    document.getElementById("da").style.color = "red";
+}
+
+function mouseOut() {
+    document.getElementById("da").style.color = "black";
+}
+</script>            
 
            <form class="navbar-form navbar-right" role="search">
                 <div class="form-group">
@@ -33,6 +44,7 @@
                     </div>
                 </div>    
             </form>
+            
         </div>
     </div>
 </nav>
@@ -138,3 +150,9 @@
         }
     });
 </script>
+
+
+
+
+
+            

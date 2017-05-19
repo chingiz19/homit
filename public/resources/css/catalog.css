@@ -34,10 +34,18 @@ ul {
 
  .brandBox
  {
-     height: 240px;
-     width: 270px;
+     height: 30vh;
+     width: 200px;
      float: left;
      overflow-y: scroll;
      border: solid 2px transparent;
  }
  
+ .catalogOptionBox
+ {
+     height: 80vh;
+     width: 270px;
+     float: left;
+     overflow-y: scroll;
+     border: solid 2px transparent;
+ }

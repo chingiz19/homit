@@ -8,38 +8,43 @@
 <!--Beers - Catalog-->
                 <div class="container" ng-controller="catalogController" ng-show="isBeers">
                     <div class="col-md-3" >
-                        <div class="affix catalogBox">
-                            <div class="btn-group">
-                                <div class="sizeStage3">Types</div>
-                                    <ul ng-repeat="type in availableTypes">
-                                        <li>
-                                        <label>
-                                            <input type="checkbox" autocomplete="off" ng-click="checkTypes(type)">
-                                            <span>{{type}}</span>
-                                        </label>
-                                        </li>
-                                    </ul>
+                        <div class="sideBox">
+                            <div class="affix catalogOptionBox">
                                 <div class="btn-group">
-                                    <div class="sizeStage4">Brands</div>
-                                    <div class="brandBox">
-                                    <ul ng-repeat="brand in availableBrands">
-                                        <li>
-                                            <label>
-                                                <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
-                                                <span>{{brand}}</span>
-                                            </label>
-                                        </li>
-                                    </ul>
+                                    <div class="sizeStage3">Types</div>
+                                        <ul ng-repeat="type in availableTypes">
+                                            <li>
+                                                <form>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" ng-click="checkTypes(type)">{{type}}
+                                                    </label>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    <div class="btn-group">
+                                        <div class="sizeStage4">Brands</div>
+                                        <div class="brandBox">
+                                            <ul ng-repeat="brand in availableBrands">
+                                                <li>
+                                                    <form>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" ng-click="checkBrands(brand)">{{brand}}
+                                                        </label>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="sizeStage5">Size</div>
+                                        <ul ng-repeat="packing in packings">
+                                            <li>
+                                                <form>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" ng-click="checkPackings(packing)">{{packing}}
+                                                    </label>
+                                                </form>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="sizeStage5">Size</div>
-                                    <ul ng-repeat="packing in packings">
-                                        <li>
-                                            <label>
-                                                <input type="checkbox" autocomplete="off" ng-click="checkPackings(packing)">
-                                                <span>{{packing}}</span>
-                                            </label>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -64,20 +69,21 @@
 <!--Wines - Catalog-->
                 <div class="container" ng-controller="catalogController" ng-show="isWines">
                     <div class="col-md-3" >
-                        <div class="affix">`
+                        <div class="affix catalogOptionBox">
                             <div class="btn-group">
                                 <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
                                     <li role="presentation" ng-class="{active:isInSelectedSubcategories(variant.subcategory_name)}">
                                         <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
                                     </li>
                                 </ul>
-                                <div class="sizeStage3">Sweetness</div>
+                                <div class="sizeStage3" >Types</div>
                                     <ul ng-repeat="type in availableTypes">
                                         <li>
-                                        <label>
-                                            <input type="checkbox" autocomplete="off" ng-click="checkTypes(type)">
-                                            <span>{{type}}</span>
-                                        </label>
+                                            <form>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" id="types" ng-click="checkTypes(type)" >{{type}}
+                                                </label>
+                                            </form>
                                         </li>
                                     </ul>
                                 <div class="btn-group">
@@ -85,20 +91,21 @@
                                     <div class="brandBox">
                                         <ul ng-repeat="brand in availableBrands">
                                             <li>
-                                                <label>
-                                                    <input type="checkbox" autocomplete="off" ng-click="checkBrands(brand)">
-                                                    <span>{{brand}}</span>
-                                                </label>
+                                                <form>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" ng-click="checkBrands(brand)">{{brand}}
+                                                    </label>
+                                                </form>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="sizeStage5">Size</div>
                                     <ul ng-repeat="packing in packings">
                                         <li>
-                                            <label>
-                                                <input type="checkbox" autocomplete="off" ng-click="checkPackings(packing)">
-                                                <span>{{packing}}</span>
-                                            </label>
+                                            <form>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" ng-click="checkPackings(packing)">{{packing}}
+                                                </label>
+                                            </form>
                                         </li>
                                     </ul>
                                 </div>
