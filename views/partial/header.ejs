@@ -95,6 +95,7 @@ function mouseOut() {
                 <!-- Sign in form -->
                 <div name="signInForm" class="form-group" ng-if="login.goToSignIn">
                     <input name="password" type="password" ng-model="login.password" class="form-control" placeholder="Password" required/>  
+                    <a href="#" class="center" ng-click="login.goToForgotPasswordForm()">Forgot Password?</a>
                 </div>
 
                 <!-- Sign up form -->
@@ -121,7 +122,7 @@ function mouseOut() {
 
                 <!-- Forgot password form -->
                 <div name="forgotPasswordForm" class="form-group" ng-if="login.goToForgotPassword">
-                    <input name="email" type="email" ng-model="login.forgotPasswordEmail" class="form-control" placeholder="Email" required/>  
+                    <input name="resetEmail" type="email" ng-model="login.forgotPasswordEmail" class="form-control" placeholder="Email" novalidate required/>  
                 </div>
 
                 <button class="btn btn-success full-width" ng-click="login.checkState();">{{login.mainButtonText}}</button>

@@ -67,6 +67,9 @@ $scope.productUrl;
     }
 
     $scope.checkSubcategories = function(subcategory) {
+        if (subcategory == $scope.userSelectedSubcategories){
+            return;
+        }
         $scope.userSelectedSubcategories = subcategory;
         var i = getElementIdByName(subcategory);
         $scope.availableTypes = $scope.subcategories[i]['types'];
@@ -145,14 +148,11 @@ $scope.productUrl;
         }
     };
 
-    $scope.isBrandsCheckboxSelected = function() {
+    $scope.isBrandCheckboxChecked = function(brand) {
         if ($scope.userSelectedBrands.includes(brand)) {
             return true;
         } else {
             return false;
         }
     };
-
 });
-
-
