@@ -92,7 +92,7 @@
                                         <ul ng-repeat="brand in availableBrands">
                                             <li>
                                                 <form>
-                                                    <label>
+                                                    <label class="checkbox">
                                                         <input type="checkbox" ng-checked="isBrandCheckboxChecked(brand)" autocomplete="off" ng-click="checkBrands(brand)">
                                                         <span>{{brand}}</span>
                                                     </label>
@@ -100,6 +100,7 @@
                                             </li>
                                         </ul>
                                     </div>
+                                    <div class="sizeStage5">Size</div>
                                     <ul ng-repeat="packing in packings">
                                         <li>
                                             <form>
