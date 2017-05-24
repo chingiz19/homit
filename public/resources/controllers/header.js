@@ -201,3 +201,27 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
 
 app.controller("NavigationController", function($scope, $http) {
 });
+
+//Cart Box Pop Up
+function mouseOn() {
+    document.getElementById("cart").style.color = "red";
+}
+
+function mouseOut() {
+    document.getElementById("cart").style.color = "black";
+}
+
+var timeHovered=null;
+var el=document.getElementById("cart");
+
+el.addEventListener('mouseover',function(){
+    timeHovered=window.setTimeout(function(){
+        $(".cartBox").addClass("active");
+    },500);
+});
+
+el.addEventListener('mouseleave',function()
+{
+    window.clearTimeout(timeHovered);
+    $(".cartBox").removeClass("active");
+});

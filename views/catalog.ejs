@@ -12,15 +12,15 @@
                             <div class="affix catalogOptionBox">
                                 <div class="btn-group">
                                     <div class="sizeStage3">Types</div>
-                                        <ul ng-repeat="type in availableTypes">
-                                            <li>
-                                                <form>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" ng-click="checkTypes(type)">{{type}}
-                                                    </label>
-                                                </form>
-                                            </li>
-                                        </ul>
+                                    <ul ng-repeat="type in availableTypes">
+                                        <li>
+                                            <form>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" ng-click="checkTypes(type)">{{type}}
+                                                </label>
+                                            </form>
+                                        </li>
+                                    </ul>
                                     <div class="btn-group">
                                         <div class="sizeStage4">Brands</div>
                                         <div class="brandBox">
@@ -66,6 +66,8 @@
                         </div>
                     </div>
                 </div>
+
+
 <!--Wines - Catalog-->
                 <div class="container" ng-controller="catalogController" ng-show="isWines">
                     <div class="col-md-3" >
