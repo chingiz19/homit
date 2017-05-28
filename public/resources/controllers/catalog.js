@@ -155,4 +155,12 @@ $scope.productUrl;
             return false;
         }
     };
+
+    $scope.addToCart = function() {
+        console.log("add to cart in catalog.js");
+        $rootScope.$broadcast("addNotification", {type: "alert-success", message: "It works!!!"});
+    };
+
 });
+
+    

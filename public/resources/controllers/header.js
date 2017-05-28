@@ -225,3 +225,6 @@ el.addEventListener('mouseleave',function()
     window.clearTimeout(timeHovered);
     $(".cartBox").removeClass("active");
 });
+
+//Add to Cart
+
