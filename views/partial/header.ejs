@@ -18,7 +18,29 @@
                 </ul>
             </div>
             <button class="btn btn-default navbar-btn navbar-right" ng-if="!<%=isSignedIn%>" data-toggle="modal" data-target="#loginModal">Sign in/up</button>
-            <a id="cart" onmouseover="mouseOn()" onmouseout="mouseOut()" class="btn btn-default navbar-btn navbar-right glyphicon glyphicon-shopping-cart cartIcon"><div class="cartBox">CartBox</div></a>            
+<!--Cart Dropdown Box-->
+            <div ng-controller="cartController">
+                <a id="cart" onmouseover="mouseOn()" onmouseout="mouseOut()" class="btn btn-default navbar-btn navbar-right glyphicon glyphicon-shopping-cart cartIcon">
+                    <div class="cartBox">
+                        <div ng-repeat="product in userCart">
+                            <ul class="cartBoxUl">
+                                <li><img ng-src={{product.image}} width="50" height="70"></li>
+                            </ul>
+                            <ul class="cartBoxUl">
+                                <span class="cartBoxText"> 
+                                    <li>Brand: {{product.brand}}</li>
+                                    <li>Type: {{product.type}}</li>
+                                    <li>Packing: {{product.packaging}}</li>
+                                    <li>Price: {{product.price}}</li>
+                                    <li><button class="btn-primary" ng-click="">Remove</button></li>
+                                </span>
+                            </ul>
+                        </div>
+                    </div>
+                </a> 
+                <div class="cartNotificationNumber">{{userCart.length}}</div>
+            </div>
+            
             <form class="navbar-form navbar-right" role="search">
                 <div class="form-group">
                     <div class="input-group">

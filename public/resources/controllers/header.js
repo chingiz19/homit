@@ -214,7 +214,7 @@ function mouseOut() {
 var timeHovered=null;
 var el=document.getElementById("cart");
 
-el.addEventListener('mouseover',function(){
+el.addEventListener('mouseenter',function(){
     timeHovered=window.setTimeout(function(){
         $(".cartBox").addClass("active");
     },500);
@@ -226,5 +226,10 @@ el.addEventListener('mouseleave',function()
     $(".cartBox").removeClass("active");
 });
 
-//Add to Cart
-
+//AddToCart Controller
+app.controller("cartController", function($scope, $sce) {
+    $scope.userCart = [];
+    $scope.$on("addToCart", function(event, args){
+        $scope.userCart.push(args.addedProduct);
+    })
+});

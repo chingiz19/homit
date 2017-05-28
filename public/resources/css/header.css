@@ -13,5 +13,24 @@
     background-color: white;
     z-index: 10;
     display:none;
+    overflow-y: scroll;
 }
 .cartBox.active {display:block;}
+
+.cartNotificationNumber{
+    position: absolute;
+    top: 0px; right: 130px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: ghostwhite;
+    border: solid 2px red;  border-radius: 3px;
+    background-color: red;
+}
+.cartBoxUl {
+    display: inline-block;
+    align-content: center;
+  
+}
+.cartBoxText{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 10px;
+}
