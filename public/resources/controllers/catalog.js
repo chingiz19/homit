@@ -1,4 +1,4 @@
-app.controller("catalogController", function($scope, $http, $location) {
+app.controller("catalogController", function($scope, $http, $location, $rootScope) {
 
 $scope.selection = $location.search().product;
 
@@ -154,5 +154,10 @@ $scope.productUrl;
         } else {
             return false;
         }
+    };
+
+    $scope.addToCart = function() {
+        console.log("add to cart in catalog.js");
+        $rootScope.$broadcast("addNotification", {type: "alert-success", message: "It works!!!"});
     };
 });
