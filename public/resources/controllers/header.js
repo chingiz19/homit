@@ -228,16 +228,25 @@ el.addEventListener('mouseleave',function()
 
 //AddToCart Controller
 app.controller("cartController", function($scope, $sce,$rootScope) {
-    $scope.userCart = [];
+    $scope.userCart = {};
+    $scope.numberOfItemsInCart = 0;
     $scope.$on("addToCart", function(event, args){
-        $scope.userCart.push(args.addedProduct);
-        $rootScope.$broadcast("selectedItems", {selectedItems: $scope.userCart});
+        if ($scope.userCart.hasOwnProperty(args.addedProduct.warehouse_id)){
+            var tmp = $scope.userCart[args.addedProduct.warehouse_id]["quantity"];
+            tmp++;
+            if (tmp >= 10) tmp = 10;
+            $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = tmp;
+        } else {
+            $scope.userCart[args.addedProduct.warehouse_id] = args.addedProduct;
+            $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = 1;
+            $scope.numberOfItemsInCart++;
+        }
     })
 
-    $scope.removeFromCart=function(product){
-        if($scope.userCart.includes(product)){
-            $scope.userCart.splice($scope.userCart.indexOf(product), 1);
-            $rootScope.$broadcast("selectedItems", {selectedItems: $scope.userCart});
+    $scope.removeFromCart = function(product){
+        if($scope.userCart.hasOwnProperty(product.warehouse_id)){
+            delete $scope.userCart[product.warehouse_id];
+             $scope.numberOfItemsInCart--;
         }
     }
 

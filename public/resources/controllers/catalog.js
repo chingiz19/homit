@@ -159,22 +159,7 @@ $scope.productUrl;
     $scope.addToCart = function(product) {
         $rootScope.$broadcast("addToCart", {addedProduct: product});
     };
-
-    $scope.$on("selectedItems", function(event, args){
-        console.log(args.selectedItems);
-
-        $scope.disableItem=false;
-
-        $scope.disableSelectedItem=function(product){
-        if(args.selectedItems.includes(product)){
-            $scope.disableItem=true;
-        }
-    }
-    })
-
  
-
-
 });
 
     

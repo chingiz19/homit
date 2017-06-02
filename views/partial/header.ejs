@@ -31,13 +31,14 @@
                                 <span class="cartBoxText"> 
                                     <li>{{product.brand}}</li>
                                     <li>{{product.packaging}}</li>
-                                    <li>{{product.price}} CAD</li>
+                                    <li>{{product.price*producst.quantity}} CAD</li>
+                                    <li>#{{product.quantity}}</li>
                                 </span>
                             </ul>
                         </div>
                     </div>
                 </a> 
-                <div class="cartNotificationNumber">{{userCart.length}}</div>
+                <div class="cartNotificationNumber">{{numberOfItemsInCart}}</div>
             </div>
             
             <form class="navbar-form navbar-right" role="search">
