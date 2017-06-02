@@ -222,14 +222,25 @@ el.addEventListener('mouseenter',function(){
 
 el.addEventListener('mouseleave',function()
 {
-    window.clearTimeout(timeHovered);
+        window.clearTimeout(timeHovered);
     $(".cartBox").removeClass("active");
 });
 
 //AddToCart Controller
-app.controller("cartController", function($scope, $sce) {
+app.controller("cartController", function($scope, $sce,$rootScope) {
     $scope.userCart = [];
     $scope.$on("addToCart", function(event, args){
         $scope.userCart.push(args.addedProduct);
+        $rootScope.$broadcast("selectedItems", {selectedItems: $scope.userCart});
     })
+
+    $scope.removeFromCart=function(product){
+        if($scope.userCart.includes(product)){
+            $scope.userCart.splice($scope.userCart.indexOf(product), 1);
+            $rootScope.$broadcast("selectedItems", {selectedItems: $scope.userCart});
+        }
+    }
+
 });
+
+

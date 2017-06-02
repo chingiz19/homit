@@ -1,3 +1,4 @@
+li {list-style-type: none;}
 .cartIcon
 {   
     top: -0.5px ;
@@ -6,7 +7,7 @@
 .cartBox
 {
     position: absolute;
-    top: 34px; right: 0px;
+    top: 34px; right: -10px;
     color: black;
     height: 300px; width: 260px;
     border: solid 2px #D5D5D5;  border-radius: 5px;
@@ -21,9 +22,8 @@
     position: absolute;
     top: 0px; right: 130px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: ghostwhite;
+    color: ghostwhite; background-color: red;
     border: solid 2px red;  border-radius: 3px;
-    background-color: red;
 }
 .cartBoxUl {
     display: inline-block;
@@ -32,5 +32,10 @@
 }
 .cartBoxText{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 10px;
+    font-size: 12px;
+}
+.cartBoxRemoveBtn{
+    background-color: red; color: ghostwhite;
+    font-weight: bold;
+    border-radius: 15px; border: 15px;
 }

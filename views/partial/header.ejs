@@ -23,16 +23,15 @@
                 <a id="cart" onmouseover="mouseOn()" onmouseout="mouseOut()" class="btn btn-default navbar-btn navbar-right glyphicon glyphicon-shopping-cart cartIcon">
                     <div class="cartBox">
                         <div ng-repeat="product in userCart">
+                            <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product)"></button></li>
                             <ul class="cartBoxUl">
-                                <li><img ng-src={{product.image}} width="50" height="70"></li>
+                                <li><img ng-src={{product.image}} width="60" height="85"></li>
                             </ul>
                             <ul class="cartBoxUl">
                                 <span class="cartBoxText"> 
-                                    <li>Brand: {{product.brand}}</li>
-                                    <li>Type: {{product.type}}</li>
-                                    <li>Packing: {{product.packaging}}</li>
-                                    <li>Price: {{product.price}}</li>
-                                    <li><button class="btn-primary" ng-click="">Remove</button></li>
+                                    <li>{{product.brand}}</li>
+                                    <li>{{product.packaging}}</li>
+                                    <li>{{product.price}} CAD</li>
                                 </span>
                             </ul>
                         </div>
