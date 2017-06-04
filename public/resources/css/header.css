@@ -9,7 +9,7 @@ li {list-style-type: none;}
     position: absolute;
     top: 34px; right: -10px;
     color: black;
-    height: 300px; width: 260px;
+    height: 300px; width: 300px;
     border: solid 2px #D5D5D5;  border-radius: 5px;
     background-color: white;
     z-index: 10;
@@ -38,4 +38,10 @@ li {list-style-type: none;}
     background-color: red; color: ghostwhite;
     font-weight: bold;
     border-radius: 15px; border: 15px;
+}
+.plusMinusItem
+{
+    font-weight: bold;
+    border-radius: 15px; border: 15px;
+    top:15px; left:-10px;
 }

@@ -22,8 +22,18 @@
             <div ng-controller="cartController">
                 <a id="cart" onmouseover="mouseOn()" onmouseout="mouseOut()" class="btn btn-default navbar-btn navbar-right glyphicon glyphicon-shopping-cart cartIcon">
                     <div class="cartBox">
+                        <div>    
+                            Total: {{totalAmount}}C$
+                           <button class="btn btn-default btn-sm" href="#"> Check Out</button>
+                        </div>
                         <div ng-repeat="product in userCart">
                             <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product)"></button></li>
+                            <ul class="cartBoxUl">
+                                <span class="cartBoxText"> 
+                                    <li><button class="glyphicon glyphicon-plus-sign plusMinusItem" ng-click="plusItem(product)"></button></li>
+                                    <li><button class="glyphicon glyphicon-minus-sign plusMinusItem" ng-click="minusItem(product)"></button></li>
+                                </span>
+                            </ul>
                             <ul class="cartBoxUl">
                                 <li><img ng-src={{product.image}} width="60" height="85"></li>
                             </ul>
@@ -31,11 +41,12 @@
                                 <span class="cartBoxText"> 
                                     <li>{{product.brand}}</li>
                                     <li>{{product.packaging}}</li>
-                                    <li>{{product.price*producst.quantity}} CAD</li>
+                                    <li>{{product.price}} CAD</li>
                                     <li>#{{product.quantity}}</li>
                                 </span>
                             </ul>
                         </div>
+                        <button class="btn btn-default btn-sm" ng-click="clearCart()">Clear Cart</button>
                     </div>
                 </a> 
                 <div class="cartNotificationNumber">{{numberOfItemsInCart}}</div>

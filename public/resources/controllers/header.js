@@ -230,23 +230,58 @@ el.addEventListener('mouseleave',function()
 app.controller("cartController", function($scope, $sce,$rootScope) {
     $scope.userCart = {};
     $scope.numberOfItemsInCart = 0;
+    $scope.totalAmount=0;
     $scope.$on("addToCart", function(event, args){
         if ($scope.userCart.hasOwnProperty(args.addedProduct.warehouse_id)){
             var tmp = $scope.userCart[args.addedProduct.warehouse_id]["quantity"];
             tmp++;
             if (tmp >= 10) tmp = 10;
             $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = tmp;
+            $scope.numberOfItemsInCart++;
+            $scope.totalAmount=$scope.totalAmount+args.addedProduct.price;
         } else {
             $scope.userCart[args.addedProduct.warehouse_id] = args.addedProduct;
             $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = 1;
             $scope.numberOfItemsInCart++;
+            $scope.totalAmount=$scope.totalAmount+args.addedProduct.price;
         }
     })
+    $scope.plusItem=function (product){
+            if ($scope.userCart.hasOwnProperty(product.warehouse_id)){
+            var tmp = $scope.userCart[product.warehouse_id]["quantity"];
+            tmp++;
+            if (tmp >= 10) tmp = 10;
+            $scope.userCart[product.warehouse_id]["quantity"] = tmp;
+            $scope.numberOfItemsInCart++;
+            $scope.totalAmount=$scope.totalAmount+product.price;
+        } 
+    }
+
+    $scope.minusItem=function (product){
+            if ($scope.userCart.hasOwnProperty(product.warehouse_id) && $scope.userCart[product.warehouse_id]["quantity"]>=1){
+                console.log("catdi");
+            var tmp = $scope.userCart[product.warehouse_id]["quantity"];
+            tmp--;
+            if (tmp <0) tmp = 0;
+            $scope.userCart[product.warehouse_id]["quantity"] = tmp;
+            $scope.numberOfItemsInCart--;
+            if ($scope.numberOfItemsInCart <0) $scope.numberOfItemsInCart = 0;
+            $scope.totalAmount=$scope.totalAmount-product.price;
+            if ($scope.totalAmount <0) $scope.totalAmount = 0;
+        } 
+    }
+
+    $scope.clearCart=function(){
+            $scope.userCart = {};
+            $scope.numberOfItemsInCart = 0;
+            $scope.totalAmount=0;
+    }
 
     $scope.removeFromCart = function(product){
         if($scope.userCart.hasOwnProperty(product.warehouse_id)){
             delete $scope.userCart[product.warehouse_id];
              $scope.numberOfItemsInCart--;
+             $scope.totalAmount=$scope.totalAmount-product.price*product.quantity;
         }
     }
 
