@@ -38,6 +38,11 @@ router.get('/catalog', function(req, res, next){
 	res.render("catalog.ejs", req.options.ejs);
 });
 
+router.get("/checkout", function(req, res, next){
+	req.options.ejs["title"] = "Checkout";
+	res.render("checkout.ejs", req.options.ejs);
+});
+
 router.use(require("./viewAuth_controller.js"));
 
 module.exports = router;
