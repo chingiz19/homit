@@ -4,7 +4,7 @@
 <link href="/resources/css/header.css" rel="stylesheet">
 <link href="/resources/css/generic.css" rel="stylesheet">
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/main" target="_self">Delivery Start Up</a>
@@ -66,16 +66,16 @@
             </form>
         </div>
     </div>
-</nav>
 
-<div class="container" ng-controller="NavigationController as nav">
-    <ul class="nav nav-pills nav-justified nav-pills">
-        <li id="beersTab" role="presentation"><a href="/catalog?product=beers" target="_self">Beers</a></li>
-        <li id="winesTab" role="presentation"><a href="/catalog?product=wines" target="_self">Wines</a></li>
-        <li id="spiritsTab" role="presentation"><a href="/catalog?product=spirits" target="_self">Spirits</a></li>
-        <li id="othersTab" role="presentation"><a href="/catalog?product=others" target="_self">Others</a></li>
-    </ul>
-</div>
+    <div class="container" ng-controller="NavigationController as nav">
+        <ul class="nav nav-pills nav-justified nav-pills">
+            <li id="beersTab" role="presentation"><a href="/catalog?product=beers" target="_self">Beers</a></li>
+            <li id="winesTab" role="presentation"><a href="/catalog?product=wines" target="_self">Wines</a></li>
+            <li id="spiritsTab" role="presentation"><a href="/catalog?product=spirits" target="_self">Spirits</a></li>
+            <li id="othersTab" role="presentation"><a href="/catalog?product=others" target="_self">Others</a></li>
+        </ul>
+    </div>
+</nav>
 
 <div class="notifications text-center" ng-controller="notificationController as notification">
     <div class="alert alert-dismissable" ng-class="notification.type" ng-if="notification.show">
@@ -168,6 +168,13 @@
         if ("#<%=tabId%>" != "#"){
             $("#<%=tabId%>").addClass("active");
         }
+
+        $(window).resize(function(){
+            var navHeight = $(".navbar").height();
+            $(document.body).css("margin-top", navHeight);
+        });
+
+        $(window).resize();
     });
 </script>
 
