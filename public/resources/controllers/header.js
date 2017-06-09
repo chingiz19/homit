@@ -301,13 +301,14 @@ app.controller("cartController", function($scope, $sce,$rootScope,$http) {
 
     $scope.prepareItemForDB=function(warehouse_id, itemQuantity,action){
         $scope.addItemToUserDB={};
-        $scope.addItemToUserDB[warehouse_id]={"warehouse_id": warehouse_id};
-        $scope.addItemToUserDB[warehouse_id]["quantity"]=itemQuantity;
-        $scope.addItemToUserDB[warehouse_id]["action"]=action;
+        $scope.addItemToUserDB["warehouse_id"] = warehouse_id;
+        $scope.addItemToUserDB["quantity"] = itemQuantity;
+        $scope.addItemToUserDB["action"] = action;
 
-        console.log($scope.addItemToUserDB[warehouse_id]);
-        console.log($scope.addItemToUserDB[warehouse_id]["quantity"]);
-        console.log($scope.addItemToUserDB[warehouse_id]["action"]);
+        // console.log($scope.addItemToUserDB[warehouse_id]);
+        // console.log($scope.addItemToUserDB[warehouse_id]["quantity"]);
+        // console.log($scope.addItemToUserDB[warehouse_id]["action"]);
+
 
         $http({
             method: 'POST',
@@ -315,7 +316,7 @@ app.controller("cartController", function($scope, $sce,$rootScope,$http) {
             data: {
                 warehouse_id: $scope.addItemToUserDB["warehouse_id"],
                 quantity: $scope.addItemToUserDB["quantity"],
-                action: $scope.addItemToUserDB["action"],
+                action: $scope.addItemToUserDB["action"]
             }
         }).then(function successCallback(response) {
             if (!response.data["error"]) {

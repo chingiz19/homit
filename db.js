@@ -31,6 +31,11 @@ var selectQuery = function(table, data) {
   return con.query('SELECT * FROM '+tableName+' WHERE ?', data);
 };
 
+var selectQuery2 = function(table, data) {
+  var tableName = table;
+  return con.query('SELECT * FROM '+tableName+' WHERE ? AND ?', data);
+};
+
 var selectAll = function(table) {
   return con.query('SELECT * FROM '+table);
 };
@@ -52,5 +57,6 @@ var end = function(){
 module.exports.runQuery = runQuery;
 module.exports.insertQuery = insertQuery;
 module.exports.selectQuery = selectQuery;
+module.exports.selectQuery2 = selectQuery2;
 module.exports.updateQuery = updateQuery;
 module.exports.selectAll = selectAll;
