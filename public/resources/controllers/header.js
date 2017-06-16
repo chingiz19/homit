@@ -1,29 +1,29 @@
 var app = angular.module('mainModule', ["ngRoute"])
-    .config(function($locationProvider) {
+    .config(function ($locationProvider) {
         $locationProvider.html5Mode({
             enabled: true,
             requireBase: false
         });
     });
 
-app.controller("LogoSearchController", function($scope, $http) {
+app.controller("LogoSearchController", function ($scope, $http) {
 
 });
 
-app.controller("notificationController", function($scope, $sce) {
+app.controller("notificationController", function ($scope, $sce) {
     var notification = this;
 
-    notification.reset = function(){
+    notification.reset = function () {
         notification.type = "";
         notification.message = "";
         notification.show = false;
     }
 
-    $scope.$on("addNotification", function(event, args){
+    $scope.$on("addNotification", function (event, args) {
         notification.type = args.type;
         notification.message = args.message;
         notification.show = true;
-        setTimeout(function(){
+        setTimeout(function () {
             window.location.reload();
         }, 2500);
     })
@@ -31,7 +31,7 @@ app.controller("notificationController", function($scope, $sce) {
     notification.reset();
 });
 
-app.controller("LoginController", function($scope, $http, $sce, $route, $rootScope) {
+app.controller("LoginController", function ($scope, $http, $sce, $route, $rootScope) {
     var _nextState = "next",
         _signinState = "signin",
         _signupState = "signup",
@@ -40,7 +40,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
     var _currentButtonState;
 
     var login = this;
-    login.reset = function(){
+    login.reset = function () {
         login.modalTitle = "Sign...";
         login.mainButtonText = "Next";
         login.goToSignIn = false;
@@ -63,8 +63,8 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
     login.reset();
 
     //check Email -> either go to sign in, or prompt sign up
-    login.checkState = function(){
-        switch (_currentButtonState){
+    login.checkState = function () {
+        switch (_currentButtonState) {
             case _nextState: _checkEmail(); break
             case _signinState: _signIn(); break;
             case _signupState: _signUp(); break;
@@ -74,7 +74,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
     }
 
     // Used to show sign in form
-    login.goToLogInForm = function(){
+    login.goToLogInForm = function () {
         var e = login.email;
         login.reset();
         login.email = e;
@@ -85,7 +85,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
     }
 
     // Used to show sign up form
-    login.goToSignUpForm = function(){
+    login.goToSignUpForm = function () {
         var tmp_email = login.email;
         login.reset();
         login.email = tmp_email;
@@ -96,7 +96,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
     }
 
     // Used to show forgot password form
-    login.goToForgotPasswordForm = function(){
+    login.goToForgotPasswordForm = function () {
         login.reset();
         login.goToForgotPassword = true;
         login.modalTitle = "Forgot password";
@@ -105,7 +105,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
     }
 
     // Check email 
-    var _checkEmail = function() {
+    var _checkEmail = function () {
         $http({
             method: 'GET',
             url: '/api/authentication/userexists',
@@ -124,7 +124,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
     };
 
     //Sign In 
-    var _signIn = function() {
+    var _signIn = function () {
         $http({
             method: 'GET',
             url: '/api/authentication/signin',
@@ -135,8 +135,8 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
         }).then(function successCallback(response) {
             if (!response.data["error"]) {
                 login.hideModal();
-                $rootScope.$broadcast("addNotification", {type: "alert-success", message: response.data["ui_message"]});
-                setTimeout(function(){
+                $rootScope.$broadcast("addNotification", { type: "alert-success", message: response.data["ui_message"] });
+                setTimeout(function () {
                     window.location.reload();
                 }, 2500);
             } else {
@@ -148,7 +148,7 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
     }
 
     //Sign Up
-    var _signUp = function() {
+    var _signUp = function () {
         //TODO: find out why this is not working without reassignment
         login.npassword = login.npassword;
         var password = login.npassword;
@@ -167,17 +167,17 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
             if (!response.data["error"]) {
                 login.hideModal();
                 login.reset();
-                $rootScope.$broadcast("addNotification", {type: "alert-success", message: response.data["ui_message"]});
+                $rootScope.$broadcast("addNotification", { type: "alert-success", message: response.data["ui_message"] });
             } else {
-                $rootScope.$broadcast("addNotification", {type: "alert-error", message: response.data["error"].ui_message});
+                $rootScope.$broadcast("addNotification", { type: "alert-error", message: response.data["error"].ui_message });
             }
         }, function errorCallback(response) {
             console.log("ERROR");
         });
     }
 
-    var _forgotPassword = function(){
-    $http({
+    var _forgotPassword = function () {
+        $http({
             method: 'POST',
             url: '/api/authentication/resetpassword',
             data: {
@@ -194,12 +194,12 @@ app.controller("LoginController", function($scope, $http, $sce, $route, $rootSco
         });
     }
 
-    login.hideModal = function(){
+    login.hideModal = function () {
         $('#loginModal').modal('hide');
     }
 });
 
-app.controller("NavigationController", function($scope, $http) {
+app.controller("NavigationController", function ($scope, $http) {
 });
 
 //Cart Box Pop Up
@@ -211,104 +211,109 @@ function mouseOut() {
     document.getElementById("cart").style.color = "black";
 }
 
-var timeHovered=null;
-var el=document.getElementById("cart");
+var timeHovered = null;
+var el = document.getElementById("cart");
 
-el.addEventListener('mouseenter',function(){
-    timeHovered=window.setTimeout(function(){
+el.addEventListener('mouseenter', function () {
+    timeHovered = window.setTimeout(function () {
         $(".cartBox").addClass("active");
-    },500);
+    }, 500);
 });
 
-el.addEventListener('mouseleave',function()
-{
-        window.clearTimeout(timeHovered);
+el.addEventListener('mouseleave', function () {
+    window.clearTimeout(timeHovered);
     $(".cartBox").removeClass("active");
 });
 
 //AddToCart Controller
 
-app.controller("cartController", function($scope, $sce,$rootScope,$http) {
+app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
     $scope.userCart = {};
     $scope.numberOfItemsInCart = 0;
-    $scope.totalAmount=0;
-    $scope.$on("addToCart", function(event, args){
+    $scope.totalAmount = 0;
+    $scope.$on("addToCart", function (event, args) {
         var tmp = 1;
-        var action=1;
-        if ($scope.userCart.hasOwnProperty(args.addedProduct.warehouse_id)){
+        var action = true;
+        if ($scope.userCart.hasOwnProperty(args.addedProduct.warehouse_id)) {
             tmp = $scope.userCart[args.addedProduct.warehouse_id]["quantity"];
             tmp++;
             if (tmp >= 10) tmp = 10;
             $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = tmp;
             $scope.numberOfItemsInCart++;
-            $scope.totalAmount=$scope.totalAmount+args.addedProduct.price;
+            $scope.totalAmount = $scope.totalAmount + args.addedProduct.price;
         } else {
             $scope.userCart[args.addedProduct.warehouse_id] = args.addedProduct;
             $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = tmp;
             $scope.numberOfItemsInCart++;
-            $scope.totalAmount=$scope.totalAmount+args.addedProduct.price;
+            $scope.totalAmount = $scope.totalAmount + args.addedProduct.price;
         }
-        $scope.prepareItemForDB(args.addedProduct.warehouse_id,tmp,action);
+        $scope.prepareItemForDB(args.addedProduct.warehouse_id, tmp, action);
     })
 
-    $scope.plusItem=function (product){
-            var tmp=1;
-            var action=1;
-            if ($scope.userCart.hasOwnProperty(product.warehouse_id)){
+    $scope.plusItem = function (product) {
+        var tmp = 1;
+        var action = true;
+        if ($scope.userCart.hasOwnProperty(product.warehouse_id)) {
             tmp = $scope.userCart[product.warehouse_id]["quantity"];
             tmp++;
             if (tmp >= 10) tmp = 10;
             $scope.userCart[product.warehouse_id]["quantity"] = tmp;
             $scope.numberOfItemsInCart++;
-            $scope.totalAmount=$scope.totalAmount+product.price;
+            $scope.totalAmount = $scope.totalAmount + product.price;
         }
-         $scope.prepareItemForDB(product.warehouse_id,tmp,action);
+        $scope.prepareItemForDB(product.warehouse_id, tmp, action);
     }
 
-    $scope.minusItem=function (product){
-            var tmp=1;
-            var action=1;
-            if ($scope.userCart.hasOwnProperty(product.warehouse_id) && $scope.userCart[product.warehouse_id]["quantity"]>=1){
+    $scope.minusItem = function (product) {
+        var tmp = 1;
+        var action = true;
+        if ($scope.userCart.hasOwnProperty(product.warehouse_id) && $scope.userCart[product.warehouse_id]["quantity"] >= 1) {
             tmp = $scope.userCart[product.warehouse_id]["quantity"];
             tmp--;
-            if (tmp <0) tmp = 0;
+            if (tmp < 0) tmp = 0;
             $scope.userCart[product.warehouse_id]["quantity"] = tmp;
             $scope.numberOfItemsInCart--;
-            if ($scope.numberOfItemsInCart <0) $scope.numberOfItemsInCart = 0;
-            $scope.totalAmount=$scope.totalAmount-product.price;
-            if ($scope.totalAmount <0) $scope.totalAmount = 0;
-        } 
-        $scope.prepareItemForDB(product.warehouse_id,tmp,action);
+            if ($scope.numberOfItemsInCart < 0) $scope.numberOfItemsInCart = 0;
+            $scope.totalAmount = $scope.totalAmount - product.price;
+            if ($scope.totalAmount < 0) $scope.totalAmount = 0;
+        }
+        $scope.prepareItemForDB(product.warehouse_id, tmp, action);
     }
 
-    $scope.clearCart=function(product){
-            $scope.userCart = {};
-            $scope.numberOfItemsInCart = 0;
-            $scope.totalAmount=0;
-            var action=0;
-            $scope.prepareItemForDB(numberOfItemsInCart,numberOfItemsInCart,action);
+    $scope.clearCart = function (product) {
+        $scope.userCart = {};
+        $scope.numberOfItemsInCart = 0;
+        $scope.totalAmount = 0;
+
+        $http({
+            method: 'POST',
+            url: '/api/cart/clear',
+        }).then(function successCallback(response) {
+            if (!response.data["error"]) {
+                console.log("Cart Clear!");
+            } else {
+                console.log("NOT Cleared!");
+            }
+        }, function errorCallback(response) {
+            console.log("ERROR");
+        });
     }
 
-    $scope.removeFromCart = function(product){
-        if($scope.userCart.hasOwnProperty(product.warehouse_id)){
+    $scope.removeFromCart = function (product) {
+        if ($scope.userCart.hasOwnProperty(product.warehouse_id)) {
             delete $scope.userCart[product.warehouse_id];
-            $scope.numberOfItemsInCart=$scope.numberOfItemsInCart-product.quantity;
-            $scope.totalAmount=$scope.totalAmount-product.price*product.quantity;
-            var action=-1;
-            $scope.prepareItemForDB(product.warehouse_id,tmp,action);
+            $scope.numberOfItemsInCart = $scope.numberOfItemsInCart - product.quantity;
+            $scope.totalAmount = $scope.totalAmount - product.price * product.quantity;
+            var action = false;
+            $scope.prepareItemForDB(product.warehouse_id, tmp, action);
         }
     }
 
-    $scope.prepareItemForDB=function(warehouse_id, itemQuantity,action){
-        $scope.addItemToUserDB={};
+    $scope.prepareItemForDB = function (warehouse_id, itemQuantity, action) {
+        $scope.addItemToUserDB = {};
         $scope.addItemToUserDB["warehouse_id"] = warehouse_id;
         $scope.addItemToUserDB["quantity"] = itemQuantity;
         $scope.addItemToUserDB["action"] = action;
-
-        // console.log($scope.addItemToUserDB[warehouse_id]);
-        // console.log($scope.addItemToUserDB[warehouse_id]["quantity"]);
-        // console.log($scope.addItemToUserDB[warehouse_id]["action"]);
-
 
         $http({
             method: 'POST',
@@ -320,16 +325,13 @@ app.controller("cartController", function($scope, $sce,$rootScope,$http) {
             }
         }).then(function successCallback(response) {
             if (!response.data["error"]) {
-                console.log("Qaqa getdi geldi");
+                console.log("Sent to User DB");
             } else {
-                console.log("Sohbet osturub");
+                console.log("Item wasn't posted to User DB");
             }
         }, function errorCallback(response) {
             console.log("ERROR");
         });
     }
-
-       
-       
 
 });

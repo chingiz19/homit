@@ -21,6 +21,8 @@
 <!--Cart Dropdown Box-->
             <div ng-controller="cartController">
                 <a id="cart" onmouseover="mouseOn()" onmouseout="mouseOut()" class="btn btn-default navbar-btn navbar-right glyphicon glyphicon-shopping-cart cartIcon">
+                    <span class="cartNotificationNumber">{{numberOfItemsInCart}}</span>
+                    
                     <div class="cartBox">
                         <div>    
                             Total: {{totalAmount}}C$
@@ -49,7 +51,6 @@
                         <button class="btn btn-default btn-sm" ng-click="clearCart()">Clear Cart</button>
                     </div>
                 </a> 
-                <div class="cartNotificationNumber">{{numberOfItemsInCart}}</div>
             </div>
             
             <form class="navbar-form navbar-right" role="search">

@@ -7,7 +7,7 @@
             <div class="container">
 <!--Beers - Catalog-->
                 <div ng-controller="catalogController" ng-show="isBeers">
-                    <div class="col-md-3" >
+                    <div class="col-md-3 box" >
                         <div class="sideBox">
                             <div class="affix catalogOptionBox">
                                 <div class="btn-group">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-9 box">
                         <div ng-repeat="product in products">
                             <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)" class="col-md-3">
                                 <ul>
@@ -68,7 +68,7 @@
                 </div>
 <!--Wines - Catalog-->
                 <div class="container" ng-controller="catalogController" ng-show="isWines">
-                    <div class="col-md-3" >
+                    <div class="col-md-3 box" >
                         <div class="affix catalogOptionBox">
                             <div class="btn-group">
                                 <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-9 box">
                         <div ng-repeat="product in products">
                             <div ng-show="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)" class="col-md-3">
                                 <ul>

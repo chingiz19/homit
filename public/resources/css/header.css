@@ -2,7 +2,10 @@ li {list-style-type: none;}
 .cartIcon
 {   
     top: -0.5px ;
-    margin-right: 1em !important;
+    height: 35px;
+    padding-right: 5px; padding-left: 10px; margin-right: 1em !important;
+    font-size: 16px;    
+    display: flex; align-items: center;
 }
 .cartBox
 {
@@ -17,11 +20,10 @@ li {list-style-type: none;}
     overflow-y: scroll;
 }
 .cartBox.active {display:block;}
-
 .cartNotificationNumber{
-    position: absolute;
-    top: 0px; right: 130px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    top: -19.5px; right: -3px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 12px;
     color: ghostwhite; background-color: red;
     border: solid 2px red;  border-radius: 3px;
 }

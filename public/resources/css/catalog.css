@@ -1,7 +1,6 @@
 .box
 {
-    position: relative;
-    margin-top: 2.5%;
+    margin-top: 5px;
 }
 
 .sizeStage2
@@ -34,18 +33,17 @@ ul {
 
  .brandBox
  {
-     height: 30vh;
-     width: 200px;
+     height: 30vh; width: 200px;
      float: left;
-     overflow-y: scroll;
      border: solid 2px transparent;
+     overflow-y: scroll;
+     
  }
  
  .catalogOptionBox
  {
-     height: 80vh;
-     width: 270px;
+     height: 80vh; width: 270px;
      float: left;
-     overflow-y: scroll;
      border: solid 2px transparent;
+     overflow-y: scroll;
  }
