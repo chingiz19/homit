@@ -47,19 +47,31 @@ router.post('/addtocart', function(req, res, next){
 });
 
 router.post('/clear', function(req, res, next){
-    var user_id = req.session.user.id;
-    clearCart(user_id).then(function(result) {
-        var isSuccess;
-        if (result!=false) {
-            isSuccess = true;
-        } else {
-            isSuccess = false;
-        }
-    });
-    var response = {
-        success: isSuccess
-    };
-    res.send(response);
+    var user_id = req.session.user.id;    
+    if (user_id == null) {
+        var response = {
+            success: isSuccess
+        };
+        res.json({
+            error: {
+                code: "C001",
+                "ui_message": "User is not signed in"
+            }
+        });
+    } else {
+        clearCart(user_id).then(function(result) {
+            var isSuccess;
+            if (result!=false) {
+                isSuccess = true;
+            } else {
+                isSuccess = false;
+            }
+        });
+        var response = {
+            success: isSuccess
+        };
+        res.send(response);
+    }
 });
 
 
