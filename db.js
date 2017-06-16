@@ -45,6 +45,11 @@ var updateQuery = function(table, data) {
   return con.query('UPDATE '+tableName+' SET ? WHERE ?', data);
 };
 
+var deleteQuery = function(table, data) {
+  var tableName = table;
+  return con.query('DELETE FROM '+tableName+' WHERE ?', data);
+};
+
 var end = function(){
     con.end(function(err) {
         // The connection is terminated gracefully
@@ -60,3 +65,4 @@ module.exports.selectQuery = selectQuery;
 module.exports.selectQuery2 = selectQuery2;
 module.exports.updateQuery = updateQuery;
 module.exports.selectAll = selectAll;
+module.exports.deleteQuery = deleteQuery;
