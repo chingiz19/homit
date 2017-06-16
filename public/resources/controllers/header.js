@@ -6,6 +6,7 @@ var app = angular.module('mainModule', ["ngRoute"])
         });
     });
 
+
 app.controller("LogoSearchController", function ($scope, $http) {
 
 });
@@ -32,6 +33,8 @@ app.controller("notificationController", function ($scope, $sce) {
 });
 
 app.controller("LoginController", function ($scope, $http, $sce, $route, $rootScope) {
+    $rootScope.isSigned = false; 
+    
     var _nextState = "next",
         _signinState = "signin",
         _signupState = "signup",
@@ -139,6 +142,9 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 setTimeout(function () {
                     window.location.reload();
                 }, 2500);
+
+                $rootScope.isSigned = true;
+                console.log("user logged in" + $rootScope.isSigned);
             } else {
                 login.error = 2;
             }
@@ -231,6 +237,31 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
     $scope.userCart = {};
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
+
+    console.log("in the cartController");
+
+
+    // Create global variable to make userSigned=true
+    // if (1==1) {
+    //     console.log("geldi 1==1");
+
+    //     $http({
+    //             method: 'GET',
+    //             url: 'api/cart/usercart'
+    //         }).then(function successCallback(response) {
+    //             if (response.data['success'] === true) {
+    //                 console.log(response.data['cart']); 
+
+    //             } else {
+
+    //             }
+    //         }, function errorCallback(response) {
+
+    //         });
+
+    // }
+
+
     $scope.$on("addToCart", function (event, args) {
         var tmp = 1;
         var action = true;

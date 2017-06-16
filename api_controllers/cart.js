@@ -10,7 +10,7 @@ router.get('/usercart', function (req, res, next) {
             }
         });
     } else {
-        var user_id = req.query.user_id;
+        var user_id = req.session.user.id;
         getUserCart(user_id).then(function (cart) {
             var response = {
                 success: true,
@@ -177,7 +177,6 @@ var clearCart = function (user_id) {
         user_id: user_id
     };
     db.deleteQuery(user_cart_info, data).then(function (removed) {
-        console.log("removoed");
     });
 };
 
