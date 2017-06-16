@@ -289,6 +289,7 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
             method: 'POST',
             url: '/api/cart/clear',
         }).then(function successCallback(response) {
+            console.log(response);            
             if (!response.data["error"]) {
                 console.log("Cart Clear!");
             } else {
@@ -324,6 +325,7 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
                 action: $scope.addItemToUserDB["action"]
             }
         }).then(function successCallback(response) {
+            console.log(response);
             if (!response.data["error"]) {
                 console.log("Sent to User DB");
             } else {

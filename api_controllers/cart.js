@@ -10,47 +10,54 @@ router.get('/usercart', function(req, res, next){
 });
 
 router.post('/addtocart', function(req, res, next){
-    var user_id = req.session.user.id;
     var warehouse_id = req.body.warehouse_id;
     var quantity = req.body.quantity;
     var action = req.body.action;
 
-    if (action == false) {
-        removeProductToCart(user_id, warehouse_id, quantity).then(function(result) {
-            var isSuccess;
-            if (result!=false) {
-                isSuccess = true;
-            } else {
-                isSuccess = false;
+    if (!req.session.user) {
+        res.json({
+            error: {
+                code: "C001",
+                "ui_message": "User is not signed in"
             }
-
-            var response = {
-                success: isSuccess
-            };
-            res.send(response);
         });
     } else {
-        addProductToCart(user_id, warehouse_id, quantity).then(function(result) {
-            var isSuccess;
-            if (result!=false) {
-                isSuccess = true;
-            } else {
-                isSuccess = false;
-            }
+        var user_id = req.session.user.id;        
+        if (action == false) {
+            removeProductToCart(user_id, warehouse_id, quantity).then(function(result) {
+                var isSuccess;
+                if (result!=false) {
+                    isSuccess = true;
+                } else {
+                    isSuccess = false;
+                }
 
-            var response = {
-                success: isSuccess
-            };
-            res.send(response);
-        });
+                var response = {
+                    success: isSuccess
+                };
+                res.send(response);
+            });
+        } else {
+            addProductToCart(user_id, warehouse_id, quantity).then(function(result) {
+                var isSuccess;
+                if (result!=false) {
+                    isSuccess = true;
+                } else {
+                    isSuccess = false;
+                }
+
+                var response = {
+                    success: isSuccess
+                };
+                res.send(response);
+            });
+        }
     }
+
 });
 
 router.post('/clear', function(req, res, next){
-    if (req.session.user == null) {
-        var response = {
-            success: isSuccess
-        };
+    if (!req.session.user) {
         res.json({
             error: {
                 code: "C001",
@@ -72,6 +79,7 @@ router.post('/clear', function(req, res, next){
         };
         res.send(response);
     }
+
 });
 
 
