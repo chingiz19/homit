@@ -47,8 +47,7 @@ router.post('/addtocart', function(req, res, next){
 });
 
 router.post('/clear', function(req, res, next){
-    var user_id = req.session.user.id;    
-    if (user_id == null) {
+    if (req.session.user == null) {
         var response = {
             success: isSuccess
         };
@@ -59,6 +58,7 @@ router.post('/clear', function(req, res, next){
             }
         });
     } else {
+        var user_id = req.session.user.id;            
         clearCart(user_id).then(function(result) {
             var isSuccess;
             if (result!=false) {
