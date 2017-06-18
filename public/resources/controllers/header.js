@@ -136,15 +136,13 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 password: login.password,
             }
         }).then(function successCallback(response) {
+            $scope.trueFalse=false;
             if (!response.data["error"]) {
                 login.hideModal();
                 $rootScope.$broadcast("addNotification", { type: "alert-success", message: response.data["ui_message"] });
                 setTimeout(function () {
                     window.location.reload();
                 }, 2500);
-
-                $rootScope.isSigned = true;
-                console.log("user logged in" + $rootScope.isSigned);
             } else {
                 login.error = 2;
             }
@@ -238,29 +236,20 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
 
-    console.log("in the cartController");
 
-
-    // Create global variable to make userSigned=true
-    // if (1==1) {
-    //     console.log("geldi 1==1");
-
-    //     $http({
-    //             method: 'GET',
-    //             url: 'api/cart/usercart'
-    //         }).then(function successCallback(response) {
-    //             if (response.data['success'] === true) {
-    //                 console.log(response.data['cart']); 
-
-    //             } else {
-
-    //             }
-    //         }, function errorCallback(response) {
-
-    //         });
-
-    // }
-
+    $http({
+        method: 'GET',
+        url: 'api/cart/usercart'
+    }).then(function successCallback(response) {
+        if (response.data['success'] === true) {
+            console.log(response.data['cart']);
+        } else {
+            console.log("user is not signed or cart is empty");
+        }
+    }, function errorCallback(response) {
+        console.log("error");
+        console.log(response);
+    });
 
     $scope.$on("addToCart", function (event, args) {
         var tmp = 1;
