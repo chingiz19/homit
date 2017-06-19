@@ -50,6 +50,11 @@ var deleteQuery = function(table, data) {
   return con.query('DELETE FROM '+tableName+' WHERE ?', data);
 };
 
+var deleteQuery2 = function(table, data) {
+  var tableName = table;
+  return con.query('DELETE FROM '+tableName+' WHERE ? AND ?', data);
+};
+
 var end = function(){
     con.end(function(err) {
         // The connection is terminated gracefully

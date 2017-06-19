@@ -236,15 +236,19 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
 
-
     $http({
         method: 'GET',
         url: 'api/cart/usercart'
     }).then(function successCallback(response) {
         if (response.data['success'] === true) {
-            console.log(response.data['cart']);
+            $scope.userCart = response.data['cart'];
+            for(var a in $scope.userCart){
+                $scope.tempTotalAmount=$scope.userCart[a]['quantity']*$scope.userCart[a]['price'];
+                $scope.totalAmount=$scope.totalAmount+$scope.tempTotalAmount;
+                $scope.tempNumberOfItemsInCart=$scope.userCart[a]['quantity'];
+                $scope.numberOfItemsInCart=$scope.numberOfItemsInCart+$scope.tempNumberOfItemsInCart;
+            }
         } else {
-            console.log("user is not signed or cart is empty");
         }
     }, function errorCallback(response) {
         console.log("error");
@@ -253,51 +257,54 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
 
     $scope.$on("addToCart", function (event, args) {
         var tmp = 1;
-        var action = true;
         if ($scope.userCart.hasOwnProperty(args.addedProduct.warehouse_id)) {
             tmp = $scope.userCart[args.addedProduct.warehouse_id]["quantity"];
             tmp++;
             if (tmp >= 10) tmp = 10;
-            $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = tmp;
-            $scope.numberOfItemsInCart++;
-            $scope.totalAmount = $scope.totalAmount + args.addedProduct.price;
+            else {
+                $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = tmp;
+                $scope.numberOfItemsInCart++;
+                $scope.totalAmount = $scope.totalAmount + args.addedProduct.price;
+            }
         } else {
             $scope.userCart[args.addedProduct.warehouse_id] = args.addedProduct;
             $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = tmp;
             $scope.numberOfItemsInCart++;
             $scope.totalAmount = $scope.totalAmount + args.addedProduct.price;
         }
-        $scope.prepareItemForDB(args.addedProduct.warehouse_id, tmp, action);
+        $scope.prepareItemForDB(args.addedProduct.warehouse_id, tmp);
     })
 
     $scope.plusItem = function (product) {
         var tmp = 1;
-        var action = true;
         if ($scope.userCart.hasOwnProperty(product.warehouse_id)) {
             tmp = $scope.userCart[product.warehouse_id]["quantity"];
             tmp++;
             if (tmp >= 10) tmp = 10;
-            $scope.userCart[product.warehouse_id]["quantity"] = tmp;
-            $scope.numberOfItemsInCart++;
-            $scope.totalAmount = $scope.totalAmount + product.price;
+            else {
+                $scope.userCart[product.warehouse_id]["quantity"] = tmp;
+                $scope.numberOfItemsInCart++;
+                $scope.totalAmount = $scope.totalAmount + product.price;
+            }
         }
-        $scope.prepareItemForDB(product.warehouse_id, tmp, action);
+        $scope.prepareItemForDB(product.warehouse_id, tmp);
     }
 
     $scope.minusItem = function (product) {
         var tmp = 1;
-        var action = true;
         if ($scope.userCart.hasOwnProperty(product.warehouse_id) && $scope.userCart[product.warehouse_id]["quantity"] >= 1) {
             tmp = $scope.userCart[product.warehouse_id]["quantity"];
             tmp--;
-            if (tmp < 0) tmp = 0;
-            $scope.userCart[product.warehouse_id]["quantity"] = tmp;
-            $scope.numberOfItemsInCart--;
-            if ($scope.numberOfItemsInCart < 0) $scope.numberOfItemsInCart = 0;
-            $scope.totalAmount = $scope.totalAmount - product.price;
-            if ($scope.totalAmount < 0) $scope.totalAmount = 0;
+            if (tmp < 1) tmp = 1;
+            else {
+                $scope.userCart[product.warehouse_id]["quantity"] = tmp;
+                $scope.numberOfItemsInCart--;
+                if ($scope.numberOfItemsInCart < 0) $scope.numberOfItemsInCart = 0;
+                $scope.totalAmount = $scope.totalAmount - product.price;
+                if ($scope.totalAmount < 0) $scope.totalAmount = 0;
+            }
         }
-        $scope.prepareItemForDB(product.warehouse_id, tmp, action);
+        $scope.prepareItemForDB(product.warehouse_id, tmp);
     }
 
     $scope.clearCart = function (product) {
@@ -309,11 +316,8 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
             method: 'POST',
             url: '/api/cart/clear',
         }).then(function successCallback(response) {
-            console.log(response);            
             if (!response.data["error"]) {
-                console.log("Cart Clear!");
             } else {
-                console.log("NOT Cleared!");
             }
         }, function errorCallback(response) {
             console.log("ERROR");
@@ -322,11 +326,11 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
 
     $scope.removeFromCart = function (product) {
         if ($scope.userCart.hasOwnProperty(product.warehouse_id)) {
+            var tmp = 0;
             delete $scope.userCart[product.warehouse_id];
             $scope.numberOfItemsInCart = $scope.numberOfItemsInCart - product.quantity;
             $scope.totalAmount = $scope.totalAmount - product.price * product.quantity;
-            var action = false;
-            $scope.prepareItemForDB(product.warehouse_id, tmp, action);
+            $scope.prepareItemForDB(product.warehouse_id, tmp);
         }
     }
 
@@ -338,22 +342,31 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
 
         $http({
             method: 'POST',
-            url: '/api/cart/addtocart',
+            url: '/api/cart/modifyitem',
             data: {
                 warehouse_id: $scope.addItemToUserDB["warehouse_id"],
                 quantity: $scope.addItemToUserDB["quantity"],
-                action: $scope.addItemToUserDB["action"]
             }
         }).then(function successCallback(response) {
-            console.log(response);
             if (!response.data["error"]) {
-                console.log("Sent to User DB");
             } else {
-                console.log("Item wasn't posted to User DB");
             }
         }, function errorCallback(response) {
             console.log("ERROR");
         });
-    }
 
+        $http({
+            method: 'GET',
+            url: 'api/cart/usercart'
+        }).then(function successCallback(response) {
+            if (response.data['success'] === true) {
+                $scope.userCart = response.data['cart'];
+            } else {
+            }
+        }, function errorCallback(response) {
+            console.log("error");
+            console.log(response);
+        });
+
+    }
 });

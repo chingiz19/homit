@@ -12,19 +12,20 @@ router.get('/usercart', function (req, res, next) {
     } else {
         var user_id = req.session.user.id;
         getUserCart(user_id).then(function (cart) {
+            var objectCart = convertArrayToObject(cart);
             var response = {
                 success: true,
-                cart: cart
+                cart: objectCart
             }
             res.send(response);
         });
     }
 });
 
-router.post('/addtocart', function (req, res, next) {
+router.post('/modifyitem', function (req, res, next) {
     var warehouse_id = req.body.warehouse_id;
     var quantity = req.body.quantity;
-    var action = req.body.action;
+    // var action = req.body.action;
 
     if (!req.session.user) {
         res.json({
@@ -34,36 +35,18 @@ router.post('/addtocart', function (req, res, next) {
             }
         });
     } else {
+        console.log("modifying cart");
         var user_id = req.session.user.id;
-        if (action == false) {
-            removeProductToCart(user_id, warehouse_id, quantity).then(function (result) {
-                var isSuccess;
-                if (result != false) {
-                    isSuccess = true;
-                } else {
-                    isSuccess = false;
-                }
-
-                var response = {
-                    success: isSuccess
-                };
-                res.send(response);
-            });
-        } else {
-            addProductToCart(user_id, warehouse_id, quantity).then(function (result) {
-                var isSuccess;
-                if (result != false) {
-                    isSuccess = true;
-                } else {
-                    isSuccess = false;
-                }
-
-                var response = {
-                    success: isSuccess
-                };
-                res.send(response);
-            });
-        }
+        modifyProductInCart(user_id, warehouse_id, quantity).then(function (result) {
+            var isSuccess = false;
+            if (result != false) {
+                isSuccess = true;
+            }
+            var response = {
+                success: isSuccess
+            };
+            res.send(response);
+        });
     }
 
 });
@@ -79,17 +62,16 @@ router.post('/clear', function (req, res, next) {
     } else {
         var user_id = req.session.user.id;
         clearCart(user_id).then(function (result) {
-            var isSuccess;
+            var isSuccess = false;
             if (result != false) {
                 isSuccess = true;
-            } else {
-                isSuccess = false;
             }
+            var response = {
+                success: isSuccess
+            };
+            res.send(response);
         });
-        var response = {
-            success: isSuccess
-        };
-        res.send(response);
+
     }
 
 });
@@ -117,6 +99,52 @@ var getCartProduct = function (user_id, warehouse_id) {
 
 
 /**
+ * 
+ */
+var modifyProductInCart = function (user_id, warehouse_id, quantity) {
+    var user_cart_info = "user_cart_info";
+    if (quantity == 0) {
+        return getCartProduct(user_id, warehouse_id).then(function (cart) {
+            if (cart['id'] > 0) {
+                var data1 = {
+                    user_id: user_id
+                };
+                var data2 = {
+                    warehouse_id: warehouse_id
+                };
+                db.deleteQuery(user_cart_info, [data1, data2]).then(function (removed) {
+                    console.log(removed);
+                });
+            }
+        });
+    } else {
+        return getCartProduct(user_id, warehouse_id).then(function (cart) {
+            if (cart['id'] > 0) {
+                var data = {
+                    quantity: quantity
+                };
+                var key = {
+                    id: cart['id']
+                };
+                db.updateQuery(user_cart_info, [data, key]).then(function (updated) {
+                    return updated.id;
+                });
+            } else {
+                var data = {
+                    user_id: user_id,
+                    warehouse_id: warehouse_id,
+                    quantity: quantity
+                };
+                db.insertQuery(user_cart_info, data).then(function (inserted) {
+                    return inserted.id;
+                });
+            }
+        });
+    }
+
+};
+
+/**
  * Adds product to database
  */
 var addProductToCart = function (user_id, warehouse_id, quantity) {
@@ -124,7 +152,8 @@ var addProductToCart = function (user_id, warehouse_id, quantity) {
     return getCartProduct(user_id, warehouse_id).then(function (cart) {
         if (cart['id'] > 0) {
             var data = {
-                quantity: cart['quantity'] + quantity,
+                // quantity: cart['quantity'] + quantity,
+                quantity: quantity
             };
             var key = {
                 id: cart['id']
@@ -154,7 +183,8 @@ var removeProductToCart = function (user_id, warehouse_id, quantity) {
     return getCartProduct(user_id, warehouse_id).then(function (cart) {
         if (cart['id'] > 0) {
             var data = {
-                quantity: cart['quantity'] - quantity,
+                // quantity: cart['quantity'] - quantity,
+                quantity: quantity
             };
             var key = {
                 id: cart['id']
@@ -176,7 +206,8 @@ var clearCart = function (user_id) {
     var data = {
         user_id: user_id
     };
-    db.deleteQuery(user_cart_info, data).then(function (removed) {
+    return db.deleteQuery(user_cart_info, data).then(function (removed) {
+        return removed;
     });
 };
 
@@ -184,7 +215,7 @@ var clearCart = function (user_id) {
  * Get users cart
  */
 var getUserCart = function (user_id) {
-    var sqlQuery = `SELECT uc.user_id AS user_id, w.id AS warehouse_id, uc.quantity AS cart_quantity, w.product_id AS product_id, s.name AS subcategory, 
+    var sqlQuery = `SELECT uc.user_id AS user_id, w.id AS warehouse_id, uc.quantity AS quantity, w.product_id AS product_id, s.name AS subcategory, 
             t.name AS type, pr.product_brand AS brand, pr.product_name AS name, pr.product_description AS description,
             pr.product_image AS image, w.price AS price, w.quantity AS warehouse_quantity, pa.name AS packaging, c.name AS category
             FROM catalog_warehouse AS w, catalog_packagings AS pa, catalog_products AS pr, catalog_types AS t,
@@ -196,6 +227,18 @@ var getUserCart = function (user_id) {
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
         return dbResult;
     });
+};
+
+var convertArrayToObject = function (initialArray) {
+    console.log("in covnvert");
+    var result = {};
+    var element;
+    for (i = 0; i < initialArray.length; i++) {
+        element = initialArray[i];
+        result[element['warehouse_id']] = element;
+    }
+    console.log(result);
+    return result;
 };
 
 module.exports = router;

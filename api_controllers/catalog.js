@@ -210,9 +210,9 @@ var getAllProducts = function(category_id) {
 var getAllBrands = function (products, subcategories) {
     var result = [];
     var tmp_brands = [];
-    for (i = 0; i < subcategories.length; i++) {
+    // for (i = 0; i < subcategories.length; i++) {
 
-    }
+    // }
     for (i = 0; i < products.length; i++) {
         if (!result.includes(products[i].brand)) {
             result.push(products[i].brand);
