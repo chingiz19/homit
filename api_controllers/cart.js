@@ -25,7 +25,6 @@ router.get('/usercart', function (req, res, next) {
 router.post('/modifyitem', function (req, res, next) {
     var warehouse_id = req.body.warehouse_id;
     var quantity = req.body.quantity;
-    // var action = req.body.action;
 
     if (!req.session.user) {
         res.json({
@@ -35,7 +34,6 @@ router.post('/modifyitem', function (req, res, next) {
             }
         });
     } else {
-        console.log("modifying cart");
         var user_id = req.session.user.id;
         modifyProductInCart(user_id, warehouse_id, quantity).then(function (result) {
             var isSuccess = false;
@@ -99,21 +97,17 @@ var getCartProduct = function (user_id, warehouse_id) {
 
 
 /**
- * 
+ * Modifying products in cart
  */
 var modifyProductInCart = function (user_id, warehouse_id, quantity) {
     var user_cart_info = "user_cart_info";
     if (quantity == 0) {
         return getCartProduct(user_id, warehouse_id).then(function (cart) {
             if (cart['id'] > 0) {
-                var data1 = {
-                    user_id: user_id
+                var data = {
+                    id: cart['id']
                 };
-                var data2 = {
-                    warehouse_id: warehouse_id
-                };
-                db.deleteQuery(user_cart_info, [data1, data2]).then(function (removed) {
-                    console.log(removed);
+                db.deleteQuery(user_cart_info, data).then(function (removed) {
                 });
             }
         });
@@ -142,60 +136,6 @@ var modifyProductInCart = function (user_id, warehouse_id, quantity) {
         });
     }
 
-};
-
-/**
- * Adds product to database
- */
-var addProductToCart = function (user_id, warehouse_id, quantity) {
-    var user_cart_info = "user_cart_info";
-    return getCartProduct(user_id, warehouse_id).then(function (cart) {
-        if (cart['id'] > 0) {
-            var data = {
-                // quantity: cart['quantity'] + quantity,
-                quantity: quantity
-            };
-            var key = {
-                id: cart['id']
-            };
-            db.updateQuery(user_cart_info, [data, key]).then(function (updated) {
-                return updated.id;
-            });
-        } else {
-            var data = {
-                user_id: user_id,
-                warehouse_id: warehouse_id,
-                quantity: quantity
-            };
-            db.insertQuery(user_cart_info, data).then(function (inserted) {
-                return inserted.id;
-            });
-        }
-    });
-};
-
-
-/**
- * Removes product to database
- */
-var removeProductToCart = function (user_id, warehouse_id, quantity) {
-    var user_cart_info = "user_cart_info";
-    return getCartProduct(user_id, warehouse_id).then(function (cart) {
-        if (cart['id'] > 0) {
-            var data = {
-                // quantity: cart['quantity'] - quantity,
-                quantity: quantity
-            };
-            var key = {
-                id: cart['id']
-            };
-            db.updateQuery(user_cart_info, [data, key]).then(function (updated) {
-                return updated.id;
-            });
-        } else {
-            return false;
-        }
-    });
 };
 
 /**
@@ -230,14 +170,12 @@ var getUserCart = function (user_id) {
 };
 
 var convertArrayToObject = function (initialArray) {
-    console.log("in covnvert");
     var result = {};
     var element;
     for (i = 0; i < initialArray.length; i++) {
         element = initialArray[i];
         result[element['warehouse_id']] = element;
     }
-    console.log(result);
     return result;
 };
 
