@@ -3,6 +3,8 @@
     <link href="/resources/css/checkout.css" rel="stylesheet">
     <link href="/resources/library/css/bootstrap.min.css" rel="stylesheet">
     <link href="/resources/library/css/bootstrap-theme.min.css" rel="stylesheet">
+    <%- include('partial/imports')%>
+    <%- include('partial/header', {title: title}); %>
 </head>
 <body class="ng-cloak">
     <div ng-controller="checkoutController">
@@ -43,7 +45,6 @@
         </div>
     </div>
     <script src="/resources/controllers/checkout.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
     <script src="/resources/library/js/jquery.min.js"></script>
     <script src="/resources/library/js/bootstrap.min.js"></script>
