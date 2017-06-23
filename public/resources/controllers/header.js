@@ -1,12 +1,3 @@
-var app = angular.module('mainModule', ["ngRoute"])
-    .config(function ($locationProvider) {
-        $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
-        });
-    });
-
-
 app.controller("LogoSearchController", function ($scope, $http) {
 
 });
