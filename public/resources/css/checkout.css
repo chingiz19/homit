@@ -5,6 +5,16 @@
     margin-top: 55px;
     border:solid 2px black;
 }
+
+ul {list-style-type: none;}
+li {list-style-type: none;}
+
+.checkOutItemsUl {
+    display: inline-block;
+    align-content: center;
+    
+}
+
 .cartItemUl {
     display: inline-block;
     align-content: center;
