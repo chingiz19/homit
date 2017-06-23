@@ -221,7 +221,7 @@ var el = document.getElementById("cart");
 el.addEventListener('mouseenter', function () {
     timeHovered = window.setTimeout(function () {
         $(".cartBox").addClass("active");
-    }, 500);
+    }, 550);
 });
 
 el.addEventListener('mouseleave', function () {

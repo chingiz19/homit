@@ -3,7 +3,6 @@
 <link href="/resources/library/css/bootstrap-theme.min.css" rel="stylesheet">
 <link href="/resources/css/header.css" rel="stylesheet">
 <link href="/resources/css/generic.css" rel="stylesheet">
-
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -22,11 +21,10 @@
             <div ng-controller="cartController">
                 <a id="cart" onmouseover="mouseOn()" onmouseout="mouseOut()" class="btn btn-default navbar-btn navbar-right glyphicon glyphicon-shopping-cart cartIcon">
                     <span class="cartNotificationNumber">{{numberOfItemsInCart}}</span>
-                    
                     <div class="cartBox">
                         <div>    
                             Total: {{totalAmount}}C$
-                           <button class="btn btn-default btn-sm" href="#"> Check Out</button>
+                            <button onclick="location.href='/checkout'"  class="btn btn-default btn-sm">Pay Now</button>
                         </div>
                         <div ng-repeat="product in userCart">
                             <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product)"></button></li>
@@ -52,7 +50,6 @@
                     </div>
                 </a> 
             </div>
-            
             <form class="navbar-form navbar-right" role="search">
                 <div class="form-group">
                     <div class="input-group">
@@ -67,7 +64,6 @@
             </form>
         </div>
     </div>
-
     <div class="container" ng-controller="NavigationController as nav">
         <ul class="nav nav-pills nav-justified nav-pills">
             <li id="beersTab" role="presentation"><a href="/catalog?product=beers" target="_self">Beers</a></li>
@@ -77,14 +73,12 @@
         </ul>
     </div>
 </nav>
-
 <div class="notifications text-center" ng-controller="notificationController as notification">
     <div class="alert alert-dismissable" ng-class="notification.type" ng-if="notification.show">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         {{notification.message}}
     </div>
 </div>
-
 
 <!-- Modal for log in/sign up -->
 <div id='loginModal' class="modal fade" tabindex="-1" role="dialog" ng-controller="LoginController as login">
@@ -93,7 +87,6 @@
         <div class="modal-header">
             <h3>{{login.modalTitle}}</h3>
         </div>
-        
         <div class="modal-body">
             <div class="alert alert-warning" role="alert" ng-show="login.error == 1"><strong>Login doesn't exist.</strong><br>Would you 
                 like to <a ng-click='login.goToSignUpForm();' style="cursor: pointer;">sign up?</a>
@@ -144,20 +137,15 @@
                 <div name="forgotPasswordForm" class="form-group" ng-if="login.goToForgotPassword">
                     <input name="resetEmail" type="email" ng-model="login.forgotPasswordEmail" class="form-control" placeholder="Email" novalidate required/>  
                 </div>
-
                 <button class="btn btn-success full-width" ng-click="login.checkState();">{{login.mainButtonText}}</button>
             </form>
-
-
         </div>
-
         <div class="modal-footer">
             <button class="btn btn-primary" data-dismiss="modal">Close</button>
         </div>
     </div>
   </div>
 </div>
-
 <script src="/resources/library/js/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 <script src="/resources/library/js/jquery.min.js"></script>
