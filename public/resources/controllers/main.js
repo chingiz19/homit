@@ -1,6 +1,4 @@
-// var app = angular.module('mainModule', []);
-
-app.controller("mainController", function($scope, $http) {
+ app.controller("mainController", function($scope, $http) {
     console.log("in the main controller");
     $scope.a = "burdaki a";
     $scope.allProducts = "asasas";

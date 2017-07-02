@@ -1,4 +1,5 @@
-app.controller("catalogController", function($scope, $http, $location, $rootScope) {
+app.controller("catalogController", ["$location", "$scope", "$cookies", "$http", "$rootScope", 
+    function($location, $scope, $cookies, $http, $rootScope) {
 
 $scope.selection = $location.search().product;
 
@@ -160,6 +161,6 @@ $scope.productUrl;
         $rootScope.$broadcast("addToCart", {addedProduct: product});
     };
  
-});
+}]);
 
     

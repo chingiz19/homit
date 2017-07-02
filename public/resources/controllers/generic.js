@@ -1,4 +1,4 @@
-var app = angular.module('mainModule', ["ngRoute"])
+var app = angular.module('mainModule', ["ngRoute", "ngCookies"])
     .config(function ($locationProvider) {
         $locationProvider.html5Mode({
             enabled: true,

@@ -5,6 +5,8 @@ var path = require("path");
 var webpagePath = path.join(__dirname, "/public");
 var bodyParser = require("body-parser");
 var db = require("./db.js");
+var cookies = require("cookies");
+var cookieParser = require("cookie-parser");
 const secretKey = "secretSession";
 
 var fileSystem = require("fs");
@@ -19,10 +21,12 @@ webServer.use(session({
 	secret: secretKey,
 	resave: false,
 	saveUninitialized: true,
+	httpOnly: false,
 	cookie: {maxAge: 5 * 60 * 1000} // 5 mins
 }));
 
 webServer.use(bodyParser.json());
+webServer.use(cookieParser());
 webServer.use(bodyParser.urlencoded({ extended: true}));
 webServer.use(express.static(webpagePath));
 webServer.set('view engine', 'ejs');

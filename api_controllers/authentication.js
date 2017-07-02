@@ -73,6 +73,10 @@ router.post('/signup', function(req, res, next) {
                             phone_number: data['phone_number']
                         };
                         req.session.user = user;
+                        req.cookies.user = user;
+
+                        console.log("Cookies: "+ req.cookies);
+
                         res.json({
                             status: "success",
                             ui_message: "Successfully signed up. You will receive an email with confirmation"
@@ -118,7 +122,10 @@ router.get('/signin', function(req, res, next){
                         res.json(errResponse);
                     } else {
                         delete user["password"];
+                        //TODO
                         req.session.user = user;
+                        res.cookie('user', user);
+
                         res.json({
                             status: "success",
                             ui_message: "Successfully signed in"
