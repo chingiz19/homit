@@ -5,38 +5,42 @@
 </head>
 <body class="ng-cloak">
     <div ng-controller="checkoutController">
-       <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/main" target="_self">Delivery Start Up</a>
                 </div>
-                <div class="navbar-right navbar-brand checkOut">Payment</div>
+                <div class="navbar-right navbar-brand checkOut">Payment: {{totalAmount}}C$</div>
             </div>
         </nav>
         <div class="container">
-            <div class="col-md-5 col-md-offset-1 mainContainer">
-                User First Name
-            </div>
-            <div class="col-md-5 mainContainer">
-                <div ng-repeat="product in userCart">
-                    <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product)"></button></li>
-                    <ul class="checkOutItemsUl">
-                        <span class="cartBoxText"> 
-                            <li><button class="glyphicon glyphicon-plus-sign plusMinusItem" ng-click="plusItem(product)"></button></li>
-                            <li><button class="glyphicon glyphicon-minus-sign plusMinusItem" ng-click="minusItem(product)"></button></li>
-                        </span>
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1 userInfoArea">
+                    <ul class="userPic">User Pic</ul>
+                    <ul>    
                     </ul>
-                    <ul class="checkOutItemsUl">
-                        <li><img ng-src={{product.image}} width="60" height="85"></li>
-                    </ul>
-                    <ul class="checkOutItemsUl">
-                        <span class="cartBoxText"> 
-                            <li>{{product.brand}}</li>
-                            <li>{{product.packaging}}</li>
-                            <li>{{product.price}} CAD</li>
-                            <li>#{{product.quantity}}</li>
-                        </span>
-                    </ul>
+                </div>
+                <div class="col-md-5 cartItemsArea">
+                    <div ng-repeat="product in userCart">
+                        <li><button class="btn btn-xs itemRemoveBtn glyphicon glyphicon-remove-circle removeBtn" ng-click="removeFromCart(product)"></button></li>
+                        <ul class="plusMinusBox">
+                            <span class="cartBoxText"> 
+                                <li><button class="glyphicon glyphicon-plus-sign plusMinusItem" ng-click="plusItem(product)"></button></li>
+                                <li><button class="glyphicon glyphicon-minus-sign plusMinusItem" ng-click="minusItem(product)"></button></li>
+                            </span>
+                        </ul>
+                        <ul class="itemImageBox">
+                            <li><img ng-src={{product.image}} width="70" height="100"></li>
+                        </ul>
+                        <ul class="cartItemTextBox">
+                            <span class=""> 
+                                <li>{{product.brand}}</li>
+                                <li>{{product.packaging}}</li>
+                                <li>{{product.price}} CAD</li>
+                                <li>#{{product.quantity}}</li>
+                            </span>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

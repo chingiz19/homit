@@ -134,6 +134,8 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 setTimeout(function () {
                     window.location.reload();
                 }, 2500);
+
+                
             } else {
                 login.error = 2;
             }

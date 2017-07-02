@@ -9,7 +9,7 @@
         </div>
         <div class="collapse navbar-collapse cartIcon">
             <div class="navbar-text navbar-right dropdown" ng-if="<%=isSignedIn%>">  
-                <a href="#" class="navbar-link" data-toggle="dropdown">Welcome, <%= username %>  <span class="glyphicon glyphicon-chevron-down"></span></a>
+                <a href="#" class="navbar-link" data-toggle="dropdown">Welcome <%= username %>  <span class="glyphicon glyphicon-chevron-down"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="/myaccount" target="_self">My Account</a></li>
                     <li><a href="/api/authentication/signout" target="_self">Log out</a></li>

@@ -95,7 +95,7 @@ router.post('/signup', function(req, res, next) {
     }
 });
 
-router.get('/signin', function(req, res, next){
+router.get('/signin', function(req, res, next) {
     var email = req.query.email ? req.query.email : undefined;
     var password = req.query.password ? req.query.password : undefined;
     // double checking, this should be done on client-side as well through required field
