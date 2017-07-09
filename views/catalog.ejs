@@ -6,22 +6,30 @@
     </head>
         <body class="ng-cloak">
             <div class="container">
-<!--Beers - Catalog-->
-                <div ng-controller="catalogController" ng-show="isBeers">
+                <div ng-controller="catalogController">
                     <div class="col-md-3 box" >
                         <div class="sideBox">
                             <div class="affix catalogOptionBox">
                                 <div class="btn-group">
-                                    <div class="sizeStage3">Types</div>
-                                    <ul ng-repeat="type in availableTypes">
-                                        <li>
-                                            <form>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" ng-click="checkTypes(type)">{{type}}
-                                                </label>
-                                            </form>
-                                        </li>
-                                    </ul>
+                                    <span ng-show="isBeers">
+                                        <div class="sizeStage3">Types</div>
+                                        <ul ng-repeat="type in availableTypes">
+                                            <li>
+                                                <form>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" ng-click="checkTypes(type)">{{type}}
+                                                    </label>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </span>
+                                    <span ng-show="isWines">
+                                        <ul ng-show="isWines" ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
+                                            <li role="presentation" ng-class="{active:isInSelectedSubcategories(variant.subcategory_name)}">
+                                                <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
+                                            </li>
+                                        </ul>
+                                    </span>
                                     <div class="btn-group">
                                         <div class="sizeStage4">Brands</div>
                                         <div class="brandBox">
@@ -46,71 +54,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-9 box">
-                        <div ng-repeat="product in products">
-                            <div ng-show="isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)" class="col-md-3">
-                                <ul>
-                                    <li><img ng-src={{product.image}} width="75" height="112.5"></li>
-                                    <span> 
-                                        <li>Brand: {{product.brand}}</li>
-                                        <li>Type: {{product.type}}</li>
-                                        <li>Packing: {{product.packaging}}</li>
-                                        <li>Price: {{product.price}}</li>
-                                        <li><button class="btn-primary" ng-click="addToCart(product)"> Add to cart </button></li>
-                                    </span>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-<!--Wines - Catalog-->
-                <div class="container" ng-controller="catalogController" ng-show="isWines">
-                    <div class="col-md-3 box" >
-                        <div class="affix catalogOptionBox">
-                            <div class="btn-group">
-                                <ul ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
-                                    <li role="presentation" ng-class="{active:isInSelectedSubcategories(variant.subcategory_name)}">
-                                        <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
-                                    </li>
-                                </ul>
-                                <div class="sizeStage3" >Types</div>
-                                    <ul ng-repeat="type in availableTypes">
-                                        <li>
-                                            <form>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" id="types" ng-click="checkTypes(type)" >{{type}}
-                                                </label>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                <div class="btn-group">
-                                    <div class="sizeStage4">Brands</div>
-                                    <div class="brandBox">
-                                        <ul ng-repeat="brand in availableBrands">
-                                            <li>
-                                                <form>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" ng-checked="isBrandCheckboxChecked(brand)" autocomplete="off" ng-click="checkBrands(brand)">
-                                                        <span>{{brand}}</span>
-                                                    </label>
-                                                </form>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="sizeStage5">Size</div>
-                                    <ul ng-repeat="packing in packings">
-                                        <li>
-                                            <form>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" ng-click="checkPackings(packing)">{{packing}}
-                                                </label>
-                                            </form>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
