@@ -5,7 +5,7 @@
 }
 
 .sideMenu {
-    height: 40%;
+    max-height: 60vh;
     min-height: 400px;
     width: 15%;
     min-width: 300px;
