@@ -7,7 +7,7 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/main" target="_self">Delivery Start Up</a>
         </div>
-        <div class="collapse navbar-collapse cartIcon">
+        <div class="collapse navbar-collapse">
             <div class="navbar-text navbar-right dropdown" ng-if="<%=isSignedIn%>">  
                 <a href="#" class="navbar-link" data-toggle="dropdown">Welcome <%= username %>  <span class="glyphicon glyphicon-chevron-down"></span></a>
                 <ul class="dropdown-menu">
@@ -16,39 +16,6 @@
                 </ul>
             </div>
             <button class="btn btn-default navbar-btn navbar-right" ng-if="!<%=isSignedIn%>" data-toggle="modal" data-target="#loginModal">Sign in/up</button>
-<!--Cart Dropdown Box-->
-            <div ng-controller="cartController">
-                <a id="cart" onmouseover="mouseOn()" onmouseout="mouseOut()" class="btn btn-default navbar-btn navbar-right glyphicon glyphicon-shopping-cart cartIcon">
-                    <span class="cartNotificationNumber">{{numberOfItemsInCart}}</span>
-                    <div class="cartBox">
-                        <div>    
-                            Total: {{totalAmount}}C$
-                            <button onclick="location.href='/checkout'"  class="btn btn-default btn-sm">Pay Now</button>
-                        </div>
-                        <div ng-repeat="product in userCart">
-                            <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product)"></button></li>
-                            <ul class="cartBoxUl">
-                                <span class="cartBoxText"> 
-                                    <li><button class="glyphicon glyphicon-plus-sign plusMinusItem" ng-click="plusItem(product)"></button></li>
-                                    <li><button class="glyphicon glyphicon-minus-sign plusMinusItem" ng-click="minusItem(product)"></button></li>
-                                </span>
-                            </ul>
-                            <ul class="cartBoxUl">
-                                <li><img ng-src={{product.image}} width="60" height="85"></li>
-                            </ul>
-                            <ul class="cartBoxUl">
-                                <span class="cartBoxText"> 
-                                    <li>{{product.brand}}</li>
-                                    <li>{{product.packaging}}</li>
-                                    <li>{{product.price}} CAD</li>
-                                    <li>#{{product.quantity}}</li>
-                                </span>
-                            </ul>
-                        </div>
-                        <button class="btn btn-default btn-sm" ng-click="clearCart()">Clear Cart</button>
-                    </div>
-                </a> 
-            </div>
             <form class="navbar-form navbar-right" role="search">
                 <div class="form-group">
                     <div class="input-group">

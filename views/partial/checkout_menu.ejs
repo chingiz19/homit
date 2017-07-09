@@ -1,0 +1,41 @@
+<link href="/resources/css/checkout_menu.css" rel="stylesheet">
+
+
+<div ng-controller="cartController" class="entireSideMenu pull-right">
+    <div id="cart" class="glyphicon glyphicon-shopping-cart sideMenuIcon pull-left">
+        <span class="cartNotificationNumber">{{numberOfItemsInCart}}</span>
+    </div>
+    <div class="sideMenu ">
+        <div>    
+            <div class="col-xs-12" style="margin-bottom: 10px; margin-top:5px;">
+                <button onclick="location.href='/checkout'"  class="btn btn-default col-xs-12 checkout-btn">Checkout</button>
+            </div>
+            <div  class="col-xs-12 label-text" style="margin-bottom: 10px;">
+                Total: <span class="pull-right">{{totalAmount}}C$</span>
+            </div>
+        </div>
+        <div ng-repeat="product in userCart">
+            <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product)"></button></li>
+            <ul class="cartBoxUl">
+                <span class="cartBoxText"> 
+                    <li><button class="glyphicon glyphicon-plus-sign plusMinusItem" ng-click="plusItem(product)"></button></li>
+                    <li><button class="glyphicon glyphicon-minus-sign plusMinusItem" ng-click="minusItem(product)"></button></li>
+                </span>
+            </ul>
+            <ul class="cartBoxUl">
+                <li><img ng-src={{product.image}} width="60" height="85"></li>
+            </ul>
+            <ul class="cartBoxUl">
+                <span class="cartBoxText"> 
+                    <li>{{product.brand}}</li>
+                    <li>{{product.packaging}}</li>
+                    <li>{{product.price}} CAD</li>
+                    <li>#{{product.quantity}}</li>
+                </span>
+            </ul>
+        </div>
+        <button class="btn btn-default btn-sm" ng-click="clearCart()">Clear Cart</button>
+    </div>
+</div>
+
+<script src="/resources/controllers/checkout_menu.js"></script>
