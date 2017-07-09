@@ -9,6 +9,9 @@ var cookies = require("cookies");
 var cookieParser = require("cookie-parser");
 const secretKey = "secretSession";
 
+global.cookieParser = cookieParser;
+global.cookies = cookies;
+
 var fileSystem = require("fs");
 var errorLog = ".logs/error_log";
 

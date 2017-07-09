@@ -1,8 +1,9 @@
-app.controller("checkoutController", function($scope, $http, $location, $rootScope) {
+app.controller("checkoutController", function($scope, $http, $location, $rootScope, $cookies) {
 
     $scope.userCart = {};
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
+    $scope.userInfo = JSON.parse( $cookies.get("user").replace("j:", ""));
 
     $http({
         method: 'GET',

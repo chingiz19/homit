@@ -213,10 +213,8 @@ router.post('/resetpassword', function(req, res, next){
 
 router.get('/signout', function(req, res, next){
     req.session.destroy();
-    res.json({
-        status: "success",
-        ui_message: "Successfully signed out"
-    });
+    res.clearCookie('user');
+    res.redirect("/");
 });
 
 var userExists = function(email) {
