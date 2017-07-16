@@ -1,0 +1,10 @@
+<!--<link href="/resources/css/checkout_menu.css" rel="stylesheet">-->
+
+<div class="notifications text-center" ng-controller="notificationController as notification">
+    <div class="alert alert-dismissable" ng-class="notification.type" ng-if="notification.show">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{notification.message}}
+    </div>
+</div>
+
+<script src="/resources/controllers/notification.js"></script>
