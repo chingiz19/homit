@@ -5,7 +5,7 @@
 }
 
 .sideMenu {
-    max-height: 60vh;
+    max-height: 40vh;
     min-height: 400px;
     width: 15%;
     min-width: 300px;
@@ -79,3 +79,5 @@ li {list-style-type: none;}
     border-radius: 15px; border: 15px;
     top:15px; left:-10px;
 }
+
+

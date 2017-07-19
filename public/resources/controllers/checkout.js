@@ -4,6 +4,7 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
     $scope.userInfo = JSON.parse( $cookies.get("user").replace("j:", ""));
+    $scope.orderer = {};
 
     $http({
         method: 'GET',
@@ -126,4 +127,27 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
     }
 
 
+
+
+$scope.PaimentProcessed=function(){
+
+    if ($scope.userInfo){
+        $scope.customer=[
+            {fname:$scope.userInfo.first_name},
+            {lname:$scope.userInfo.last_name},
+            {pnumber:$scope.userInfo.phone_number},
+            {eaddress:$scope.userInfo.user_email},
+            {daddress:$scope.orderer.newDeliveryAddress}
+        ];
+    }
+    else{
+        $scope.customer=[
+            {fname:$scope.orderer.first_name},
+            {lname:$scope.orderer.last_name},
+            {pnumber:$scope.orderer.phone_number},
+            {eaddress:$scope.orderer.user_email},
+            {daddress:$scope.orderer.DeliveryAddress}
+        ];
+    }
+    };
 });

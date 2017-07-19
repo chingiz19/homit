@@ -19,12 +19,6 @@
 ul {list-style-type: none;}
 li {list-style-type: none;}
 
-.cartItemUl {
-    display: inline-block;
-    align-content: center;
-  
-}
-
 .itemImageBox{
     position: relative;
     left: 70px;
@@ -57,13 +51,58 @@ li {list-style-type: none;}
 }
 
 .userPic{
-    margin-top: 50px;
-    width: 100px; height: 100px;
+    position: relative;
+    margin-top: 30px;
+    width: 135px; height: 135px;
+    left: 38%;
     border:solid 2px black;
+}
+
+.userInfoUL{
+    
+}
+
+.userInfoLI{
+    display: block;
+    height: 28px;
+    line-height: 32px;
+    font-size: 11px;
+    color: rgb(169,169,169);
+}
+
+.userInfoLiDB{
+    display: block;
+    margin-right: 3%;
+    border-width: 0 0 1px; border-style: solid; border-color: rgb(169,169,169);
+    font-size: 16.5px;
+}
+
+.userInput{
+    display: block;
+    margin-right: 3%;
+    border-width: 0 0 1px; border-style: solid; border-color: rgb(169,169,169);
+    background-color: rgb(254,254,254);
+    font-size: 16.5px;
+    width: 97%;
+}
+input::-webkit-input-placeholder {
+    color:rgb(169,169,169) !important;
 }
 
 .itemRemoveBtn{
     background-color: red; color: ghostwhite;
     font-weight: bold;
     border-radius: 15px; border: 15px;
+}
+
+.addressNavBar{
+    top: 6px; left: 26%;
+    width: 200px;
+    font-size: 16.5px;
+    text-align: center;
+}
+
+.payNowBtn{
+    position: relative;
+    top: 25px; left: 40%;
 }

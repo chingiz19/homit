@@ -212,9 +212,9 @@ router.post('/resetpassword', function(req, res, next){
 });
 
 router.get('/signout', function(req, res, next){
-    req.session.destroy();
-    res.clearCookie('user');
-    res.redirect("/");
+    req.session.destroy(function(err){
+        res.redirect("/");
+    });
 });
 
 var userExists = function(email) {
