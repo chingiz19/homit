@@ -2,15 +2,14 @@ var router = require("express").Router();
 var path = require("path");
 
 global.checkAuth = function(req,res,next){
-    console.log("in the check auuth");
+    if (!req.session.user) res.status(400).send("Not allowed");
     next();
-    // else res.send("not lgge in")
 };
 
 router.use("/authentication", require(path.join(__dirname, "./authentication")));
 router.use("/catalog", require(path.join(__dirname, "./catalog")));
 router.use("/myaccount", require(path.join(__dirname, "./myaccount")));
 router.use("/cart", require(path.join(__dirname, "./cart")));
-router.use("/admin", require(path.join(__dirname, "./admin")));
+router.use("/orders", require(path.join(__dirname, "./orders")));
 
 module.exports = router;

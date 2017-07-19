@@ -49,5 +49,6 @@ router.get("/admin", function(req, res, next){
 });
 
 router.use(require("./viewAuth_controller.js"));
+router.use(require("./adminAuth_controller.js"));
 
 module.exports = router;

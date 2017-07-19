@@ -224,7 +224,12 @@ var userExists = function(email) {
         if (dbResult.length>0) {
             return dbResult[0];
         } else {
-            return false;
+            return db.selectQuery('esl_users', data).then(function(results){
+                if (results.length > 0) 
+                    return results[0];
+                else 
+                    return false;
+            });
         }
     });
 };
