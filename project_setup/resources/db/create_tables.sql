@@ -38,7 +38,7 @@ CREATE TABLE catalog_types (
 	subcategory_id INT NOT NULL, 
 	
 	PRIMARY KEY (id), 
-	CONSTRAINT `k_types_subcategory_id FOREIGN KEY (subcategory_id) REFERENCES catalog_subcategories(id) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT k_types_subcategory_id FOREIGN KEY (subcategory_id) REFERENCES catalog_subcategories(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE catalog_packagings ( 
