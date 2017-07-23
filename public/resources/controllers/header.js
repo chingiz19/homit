@@ -175,5 +175,22 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
     }
 });
 
-app.controller("NavigationController", function ($scope, $http) {
+app.controller("NavigationController", function ($scope, $http, $cookies, $window) {
+        $scope.logout = function(){
+            $http({
+                method: 'POST',
+                url: '/api/authentication/signout'
+            }).then(function successCallback(response) {
+                if (response.data["success"]) {
+                    //delete cookie
+                    $cookies.remove("user");
+                    $window.location.href = "/";
+                } else {
+                    // TODO: error handling
+                    console.log("password not reset");
+                }
+            }, function errorCallback(response) {
+                console.log("ERROR in password reset");
+            });
+    }
 });

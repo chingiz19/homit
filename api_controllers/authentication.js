@@ -211,9 +211,13 @@ router.post('/resetpassword', function(req, res, next){
     // });
 });
 
-router.get('/signout', function(req, res, next){
+router.post('/signout', function(req, res, next){
     req.session.destroy(function(err){
-        res.redirect("/");
+        if (err){
+            res.status(400).send({});
+        } else {
+            res.status(200).send({"success": true});
+        }
     });
 });
 
