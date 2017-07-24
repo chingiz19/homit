@@ -213,9 +213,9 @@ router.post('/resetpassword', function(req, res, next){
 router.post('/signout', function(req, res, next){
     req.session.destroy(function(err){
         if (err){
-            res.status(400).send({});
+            res.status(400).send({"success": false, "ui_message": "Could not sign out, please try again"});
         } else {
-            res.status(200).send({"success": true});
+            res.status(200).send({"success": true, "ui_message": "Successfully logged out"});
         }
     });
 });
