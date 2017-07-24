@@ -4,7 +4,6 @@ var webServer = express();
 var path = require("path");
 var webpagePath = path.join(__dirname, "/public");
 var bodyParser = require("body-parser");
-var db = require("./db.js");
 var cookies = require("cookies");
 var cookieParser = require("cookie-parser");
 const secretKey = "secretSession";

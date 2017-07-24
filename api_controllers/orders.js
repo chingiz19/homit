@@ -1,5 +1,4 @@
 var router = require("express").Router();
-var db = require("../db.js");
 
 router.get('/getorder', function(req, res, next){
     //check logged in user in esl_database
