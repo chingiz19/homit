@@ -89,6 +89,12 @@ input::-webkit-input-placeholder {
     color:rgb(169,169,169) !important;
 }
 
+input:focus{
+    border-color: #0080ff;
+    box-shadow: inset 0 0 4px #eff0f1, 0 0 3px rgba(80,149,255,0.5);
+    outline: 0;
+}
+
 .itemRemoveBtn{
     background-color: red; color: ghostwhite;
     font-weight: bold;
@@ -105,4 +111,13 @@ input::-webkit-input-placeholder {
 .payNowBtn{
     position: relative;
     top: 25px; left: 40%;
+}
+
+.receiptBox{
+    width:100%;
+    line-height: 1.28;
+    border-width: 0 0 1px; border-style: solid; border-color: rgb(169,169,169);
+    text-align: center;
+    font-size: 15px; color: rgb(169,169,169);
+    font-family: "FF Clan";
 }
