@@ -11,6 +11,21 @@ CREATE TABLE users_customers (
 	last_name VARCHAR(225) NOT NULL, 
 	password VARCHAR(225) NOT NULL, 
 	phone_number VARCHAR(10) NOT NULL, 
+	address1 VARCHAR(225),
+	address2 VARCHAR(225),
+	address3 VARCHAR(225)
+	
+	PRIMARY KEY (id), 
+	UNIQUE (user_email)
+) ENGINE = InnoDB;
+
+CREATE TABLE tmp_users ( 
+	id INT NOT NULL AUTO_INCREMENT, 
+	user_email VARCHAR(225) NOT NULL, 
+	first_name VARCHAR(225) NOT NULL, 
+	last_name VARCHAR(225) NOT NULL, 
+	password VARCHAR(225) NOT NULL, 
+	phone_number VARCHAR(10) NOT NULL, 
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
@@ -86,3 +101,29 @@ CREATE TABLE user_cart_info (
 	UNIQUE (user_id, warehouse_id), 
 	CONSTRAINT fk_cart_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
+
+
+CREATE TABLE order_cart_info ( 
+	id INT NOT NULL AUTO_INCREMENT, 
+	warehouse_id VARCHAR(255) NOT NULL, 
+	quantity VARCHAR(255) NOT NULL, 
+	
+	PRIMARY KEY (id) 
+) ENGINE = InnoDB;
+
+CREATE TABLE orders (
+	id int PRIMARY KEY,
+	user_info int,
+	tmp_user_info int,
+	card_info int NOT NULL,
+	driver_info int,
+	date_received timestamp NOT NULL,
+	date_delivered timestamp,
+	status varchar(255) NOT NULL,
+	delivery_address varchar(255) NOT NULL,
+	store_address varchar(255),
+	
+	FOREIGN KEY (user_info) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (tmp_user_info) REFERENCES tmp_users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (card_info) REFERENCES order_cart_info(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
