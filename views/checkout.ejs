@@ -10,48 +10,57 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/main" target="_self">Delivery Start Up</a>
                 </div>
-                <div class="navbar-right navbar-brand checkOut">Payment: {{totalAmount}}C$</div>
+                <div class="navbar-right navbar-brand checkOut">Cart: {{totalAmount}}C$</div>
             </div>
         </nav>
         <div class="container">
             <div class="row">
                 <div class="col-md-5 col-md-offset-1 userInfoArea">
                     <ul class="userPic">User Pic</ul>
-                    <div ng-if="userInfo">
+                    <div>
                         <ul class="userInfoUL"> 
-                            <!--<li class="userInfoLI">First Name</li>
-                            <li class="userInfoLiDB">{{userInfo.first_name}}</li>-->
-
                             <li class="userInfoLI">First Name</li>
                             <md-input-container>
-                                <input type="text" ng-model="orderer.first_name" class="userInput" ng-disabled="userInfo.first_name" placeholder={{userInfo.first_name}}>
+                                <input ng-if="userInfo" type="text" class="userInput" ng-disabled="userInfo.first_name" placeholder={{userInfo.first_name}}>
+                                <input ng-hide="userInfo" type="text" class="userInput" ng-model="orderer.first_name" placeholder=...>
                             </md-input-container>
                             <li class="userInfoLI">Last Name</li>
                             <md-input-container>
-                                <input type="text" ng-model="orderer.last_name" class="userInput" ng-disabled="userInfo.last_name" placeholder={{userInfo.last_name}}>
+                                <input ng-if="userInfo" type="text" class="userInput" ng-disabled="userInfo.last_name" placeholder={{userInfo.last_name}}>
+                                <input ng-hide="userInfo" type="text" class="userInput" ng-model="orderer.last_name" placeholder=...>
                             </md-input-container>
                             <li class="userInfoLI">Phone Number</li>
                             <md-input-container>
-                                <input type="text" ng-model="orderer.phone_number" class="userInput" ng-disabled="userInfo.phone_number" placeholder={{userInfo.phone_number}}>
+                                <input ng-if="userInfo" type="text" class="userInput" ng-disabled="userInfo.phone_number" placeholder={{userInfo.phone_number}}>
+                                <input ng-hide="userInfo" type="text" class="userInput" ng-model="orderer.phone_number" placeholder=...>
                             </md-input-container>
                             <li class="userInfoLI">Email Address</li>
                             <md-input-container>
-                                <input type="text" ng-model="orderer.email" class="userInput" ng-disabled="userInfo.user_email" placeholder={{userInfo.user_email}}>
+                                <input ng-if="userInfo" type="text" class="userInput" ng-disabled="userInfo.user_email" placeholder={{userInfo.user_email}}>
+                                <input ng-hide="userInfo" type="text" class="userInput" ng-model="orderer.email" placeholder=...>
                             </md-input-container>
-                            <ul class="nav nav-pills nav-stacked">
+
+                            <ul class="nav nav-pills nav-stacked" ng-if="userInfo">
                                 <li class="active addressNavBar"><a ng-click="address1Clicked" href="#">Address 1</a></li>
                                 <li class="addressNavBar"><a ng-click="address2Clicked" href="#">Address 2</a></li>
                                 <li class="addressNavBar"><a ng-click="address3Clicked" href="#">Address 3</a></li>
                             </ul>
                             <li class="userInfoLI">Delivery Address</li>
                             <md-input-container>
-                                <input type="text" ng-model="orderer.DeliveryAddress" class="userInput" placeholder="#706 10 Brentwood common road NW">
+                                <input ng-if="userInfo" class="userInput" type="text" placeholder="#706 10 Brentwood common road NW">
+                                <input ng-hide="userInfo" class="userInput" type="text" ng-model="orderer.DeliveryAddress" placeholder=...>
                             </md-input-container>
                             <li class="payNowBtn"><button type="submit" class="btn btn-success" ng-click="PaimentProcessed(orderer)">Pay Now</button></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-5 cartItemsArea">
+                    <div class="receiptBox">
+                        <div>Cart: {{totalAmount}}C$</div>
+                        <div>Delivery Fee: {{delFee}}C$</div>
+                        <div>GST: {{GST}}C$</div>
+                        <div>Total: {{receipt}}C$</div>
+                    </div>
                     <div ng-repeat="product in userCart">
                         <li><button class="btn btn-xs itemRemoveBtn glyphicon glyphicon-remove-circle removeBtn" ng-click="removeFromCart(product)"></button></li>
                         <ul class="plusMinusBox">

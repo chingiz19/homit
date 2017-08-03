@@ -3,6 +3,9 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
     $scope.userCart = {};
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
+    $scope.delFee=3.99;
+    $scope.GST=0;
+    $scope.receipt=0;
     $scope.userInfo = JSON.parse( $cookies.get("user").replace("j:", ""));
     $scope.orderer = {};
 
@@ -18,6 +21,9 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
                 $scope.tempNumberOfItemsInCart = $scope.userCart[a]['quantity'];
                 $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.tempNumberOfItemsInCart;
             }
+            // Calculation For receipt
+            $scope.GST=(($scope.totalAmount+$scope.delFee)*0.05).toFixed(2);
+            $scope.receipt=(($scope.totalAmount+$scope.delFee)*1.05).toFixed(2);
         } else {
         }
     }, function errorCallback(response) {
@@ -123,11 +129,11 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
             }
         }, function errorCallback(response) {
             console.log("ERROR");
-        });
+        });     
+        // Calculation For receipt
+        $scope.GST=(($scope.totalAmount+$scope.delFee)*0.05).toFixed(2);
+        $scope.receipt=(($scope.totalAmount+$scope.delFee)*1.05).toFixed(2);
     }
-
-
-
 
 $scope.PaimentProcessed=function(){
 
@@ -149,5 +155,9 @@ $scope.PaimentProcessed=function(){
             {daddress:$scope.orderer.DeliveryAddress}
         ];
     }
-    };
+};
+
+    if(1==1){
+    }
+
 });

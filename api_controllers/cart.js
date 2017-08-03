@@ -1,5 +1,4 @@
 var router = require("express").Router();
-var db = require("../db.js");
 
 router.get('/usercart', function (req, res, next) {
     if (!req.session.user) {

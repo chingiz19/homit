@@ -2,17 +2,17 @@
 
 <link href="/resources/css/header.css" rel="stylesheet">
 <link href="/resources/css/generic.css" rel="stylesheet">
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" ng-controller="NavigationController">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/main" target="_self">Delivery Start Up</a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse ng-cloak">
             <div class="navbar-text navbar-right dropdown" ng-if="<%=isSignedIn%>">  
                 <a href="#" class="navbar-link" data-toggle="dropdown">Welcome <%= username %>  <span class="glyphicon glyphicon-chevron-down"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="/myaccount" target="_self">My Account</a></li>
-                    <li><a href="/api/authentication/signout" target="_self">Log out</a></li>
+                    <li><a href="#" target="_self" ng-click="logout()">Log out</a></li>
                 </ul>
             </div>
             <button class="btn btn-default navbar-btn navbar-right" ng-if="!<%=isSignedIn%>" data-toggle="modal" data-target="#loginModal">Sign in/up</button>
@@ -30,7 +30,7 @@
             </form>
         </div>
     </div>
-    <div class="container" ng-controller="NavigationController as nav">
+    <div class="container">
         <ul class="nav nav-pills nav-justified nav-pills">
             <li id="beersTab" role="presentation"><a href="/catalog?product=beers" target="_self">Beers</a></li>
             <li id="winesTab" role="presentation"><a href="/catalog?product=wines" target="_self">Wines</a></li>

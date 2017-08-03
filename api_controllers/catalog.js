@@ -1,5 +1,4 @@
 var router = require("express").Router();
-var db = require("../db.js");
 
 /**
  * List of categories with their ids

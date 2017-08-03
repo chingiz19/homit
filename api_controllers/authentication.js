@@ -1,5 +1,4 @@
 var router = require("express").Router();
-var db = require("../db.js");
 var tokenAPI = require("../token.js");
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -211,9 +210,13 @@ router.post('/resetpassword', function(req, res, next){
     // });
 });
 
-router.get('/signout', function(req, res, next){
+router.post('/signout', function(req, res, next){
     req.session.destroy(function(err){
-        res.redirect("/");
+        if (err){
+            res.status(400).send({"success": false, "ui_message": "Could not sign out, please try again"});
+        } else {
+            res.status(200).send({"success": true, "ui_message": "Successfully logged out"});
+        }
     });
 });
 

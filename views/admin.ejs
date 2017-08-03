@@ -8,6 +8,26 @@
         <div class="container">
             <div ng-controller="adminController">
                 <h1>Welcome to admin page</h1>
+                <div class="well row" ng-repeat="order in orders">
+                    <div class="col-md-5">
+                        <label>{{ order.user.first_name + " " + order.user.last_name }}</label><br>
+                        <label>{{ order.user.phone_number }}</label><br>
+                        <label>{{ order.user.email }}</label><br>
+                        <label>{{ order.delivery_address }}</label><br>
+                        <label>{{ order.store_address }}</label><br>
+                    </div>
+
+                    <div class="col-md-5" style="max-height: 150px; overflow-y:scroll;">
+                        <div ng-repeat="cart in order.cart">
+                            <label>{{ cart.brand }} {{ cart.name }} - {{cart.packaging}} (x{{ cart.quantity }}): {{ cart.price }}$</label><br>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>Order# {{ order.order_id }}</label><br>
+                        <label>Total: {{ order.cart | totalPrice }}$</label><br>
+                    </div>
+                </div>
             </div>
         </div>
         <script src="/resources/controllers/admin.js"></script>

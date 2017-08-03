@@ -12,8 +12,16 @@ app.controller("notificationController", function ($scope, $sce) {
         notification.message = args.message;
         notification.show = true;
         setTimeout(function () {
-            window.location.reload();
-        }, 2500);
+            if (!args.reload){
+                notification.show = false;
+                $(".close").click();
+            } else {
+                if (args.href)
+                    window.location.href = args.href;
+                else
+                    window.location.reload();
+            }
+        }, 1200);
     })
 
     notification.reset();
