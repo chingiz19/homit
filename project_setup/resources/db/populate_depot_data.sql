@@ -82,30 +82,59 @@ INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (53,'No
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (54,'Water',18);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (55,'Energy Drinks',18);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (56,'Extras',18);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (57,'Red Blend',3);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (58,'White Blend',2);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (59,'Sake',17);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (60,'Ice Wine',2);
 
 
 /* Insert packaging types */
-INSERT INTO `delivery_db`.`catalog_containers` (id, type_name) VALUES (1,'Bottle');
-INSERT INTO `delivery_db`.`catalog_containers` (id, type_name) VALUES (2,'Can');
-INSERT INTO `delivery_db`.`catalog_containers` (id, type_name) VALUES (3,'Keg');
+INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (1,'Bottle');
+INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (2,'Can');
+INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (3,'Keg');
+INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (4,'Box');
 
 /* Insert packaging volumes */
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (1,'250 ml');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (2,'330 ml');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (3,'355 ml');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (4,'375 ml');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (5,'473 ml');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (6,'500 ml');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (7,'750 ml');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (8,'1 L');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (9,'1.5 L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (1,'250ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (2,'330ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (3,'355ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (4,'375ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (5,'473ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (6,'500ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (7,'750ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (8,'1L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (9,'1.5L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (10,'None');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (11,'Regular');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (12,'Tall');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (13,'650ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (14,'450ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (15,'1.14L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (16,'1.75L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (17,'2L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (18,'5L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (19,'32oz');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (20,'80oz');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (21,'3L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (22,'1.75L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (23,'1.14L');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (24,'5.95lb');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (25,'7.5oz');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (26,'64oz');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (27,'20oz');
+
 
 /* Insert packagings */
 INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (1,'Single');
 INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (2,'4 Pack');
 INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (3,'6 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (4,'8 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (5,'12 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (6,'18 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (7,'24 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (8,'30 Pack');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (4,'4 Pack Tall');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (5,'6 Pack Tall');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (6,'8 Pack');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (7,'12 Pack');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (8,'18 Pack');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (9,'24 Pack');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (10,'30 Pack');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (11,'15 Pack');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (12,'36 Pack');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (13,'48 Pack');

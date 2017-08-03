@@ -13,7 +13,7 @@ CREATE TABLE users_customers (
 	phone_number VARCHAR(10) NOT NULL, 
 	address1 VARCHAR(225),
 	address2 VARCHAR(225),
-	address3 VARCHAR(225)
+	address3 VARCHAR(225),
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
