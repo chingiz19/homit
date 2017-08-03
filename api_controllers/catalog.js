@@ -13,13 +13,12 @@ var categories = {
 
 router.get('/beers', function(req, res, next){
     getAllBeers().then(function(products) {
+        var formattedProducts = getFormattedProducts(products);
         getAllBeerTypes(products).then(function(subcategories){
-            var packagings = getAllPackagings(products);
             var response = {
                 success: 'true',
                 subcategories: subcategories,
-                packagings: packagings,
-                products: products
+                products: formattedProducts
             };
             res.send(response);
         });
@@ -191,14 +190,21 @@ var getAllOthers = function() {
  * Return all products based on the category provided
  */
 var getAllProducts = function(category_id) {
-    var sqlQuery = `SELECT w.id AS warehouse_id, w.product_id AS product_id, s.name AS subcategory, 
-        t.name AS type, pr.product_brand AS brand, pr.product_name AS name, pr.product_description AS description,
-        pr.product_image AS image, w.price AS price, w.quantity AS quantity, pa.name AS packaging, c.name AS category
-        FROM catalog_warehouse AS w, catalog_packagings AS pa, catalog_products AS pr, catalog_types AS t,
-        catalog_subcategories AS s, catalog_categories AS c
-        WHERE w.packaging_id = pa.id AND w.product_id = pr.id AND pr.type_id = t.id
-        AND t.subcategory_id = s.id AND s.category_id = c.id AND ?`;
-    var data = {"c.id": category_id};
+    var sqlQuery = `SELECT depot.id AS depot_id, depot.product_id AS product_id,
+        listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
+        listing.product_brand AS brand, listing.product_name AS name,
+        listing.product_description AS description, product.product_image AS image,
+        depot.price AS price, depot.quantity AS quantity, packaging.name AS packaging,
+        container.name AS container, volume.volume_name AS volume, category.name AS category
+        FROM catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
+        catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
+        catalog_containers AS container, catalog_packagings AS packaging, catalog_packaging_volumes AS volume
+        WHERE depot.product_id = product.id AND product.listing_id = listing.id
+        AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+        AND container.id = product.container_id AND packaging.id = depot.packaging_id
+        AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND ?
+        ORDER BY listing_id, product_id, depot_id`;
+    var data = {"category.id": category_id};
     return db.runQuery(sqlQuery, data).then(function(dbResult) {
         return dbResult;
     });
@@ -251,6 +257,96 @@ var getAllBrandsBySubcategory = function (subcategory, products) {
         }
     }
     return result.sort();
+}
+
+/**
+ * 
+ */
+var getFormattedProducts = function (products) {
+
+    /*
+        {
+            "depot_id": 2,
+            "product_id": 2,
+            "listing_id": 1002,
+            "subcategory": "Beers",
+            "type": "Wheat beer",
+            "brand": "Kronenburg",
+            "name": "Blanc",
+            "description": null,
+            "image": "b_1002.jpeg",
+            "price": 17.99,
+            "quantity": 0,
+            "packaging": "6 Pack",
+            "container": "Bottle",
+            "volume": "330 ml",
+            "category": "Beers"
+        }
+    */
+
+    var result = [];
+
+    var tmpDepotIds = [];
+    var tmpPackagings = [];
+    var tmpVolumes = [];
+    var tmpPricing = [];
+
+    var prevProduct;
+
+    for (i=0; i<products.length; i++) {
+        var canPush = false;
+        if (i==0) {
+            prevProduct = products[i].product_id;
+            tmpDepotIds.push(products[i].depot_id);
+            tmpPackagings.push(products[i].packaging);
+            tmpVolumes.push(products[i].volume);
+            tmpPricing.push(products[i].price);
+        } else {
+            if (products[i].product_id == prevProduct) {
+                tmpDepotIds.push(products[i].depot_id);
+                tmpPackagings.push(products[i].packaging);
+                tmpVolumes.push(products[i].volume);
+                tmpPricing.push(products[i].price);                
+            } else {
+                canPush = true;
+            }
+        }
+
+        if (canPush || i == products.length-1) {
+            // build tmp product
+            var tmpProduct = {
+                product_id: products[i].product_id,
+                depot_ids: tmpDepotIds,
+                listing_id: products[i].listing_id,
+                subcategory: products[i].subcategory,
+                type: products[i].type,
+                brand: products[i].brand,
+                name: products[i].name,
+                description: products[i].description,
+                image: products[i].image,
+                price: products[i].price,
+                quantity: products[i].quantity,
+                packagings: tmpPackagings,
+                container: products[i].container,
+                volumes: tmpVolumes,
+                pricing: tmpPricing,
+                category: products[i].category
+            };
+            // reset tmps
+            tmpDepotIds = [];
+            tmpPackagings = [];
+            tmpVolumes = [];
+            tmpPricing = [];
+            prevProduct = products[i].product_id;
+            tmpDepotIds.push(products[i].depot_id);
+            tmpPackagings.push(products[i].packaging);
+            tmpVolumes.push(products[i].volume);
+            tmpPricing.push(products[i].price);
+
+            result.push(tmpProduct);
+        }
+    }
+    return result;
 }
 
 /**
