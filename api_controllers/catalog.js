@@ -262,27 +262,6 @@ var getAllBrandsBySubcategory = function (subcategory, products) {
  * 
  */
 var getFormattedProducts = function (products) {
-
-    /*
-        {
-            "depot_id": 2,
-            "product_id": 2,
-            "listing_id": 1002,
-            "subcategory": "Beers",
-            "type": "Wheat beer",
-            "brand": "Kronenburg",
-            "name": "Blanc",
-            "description": null,
-            "image": "b_1002.jpeg",
-            "price": 17.99,
-            "quantity": 0,
-            "packaging": "6 Pack",
-            "container": "Bottle",
-            "volume": "330 ml",
-            "category": "Beers"
-        }
-    */
-
     var result = [];
 
     var tmpDepotIds = [];
@@ -292,8 +271,11 @@ var getFormattedProducts = function (products) {
 
     var prevProduct;
 
+    var imageLocation;
+
     for (i=0; i<products.length; i++) {
         var canPush = false;
+        imageLocation = "/resources/images/products/"+products[i].category.toLowerCase()+"/";
         if (i==0) {
             prevProduct = products[i].product_id;
             tmpDepotIds.push(products[i].depot_id);
@@ -322,8 +304,7 @@ var getFormattedProducts = function (products) {
                 brand: products[i].brand,
                 name: products[i].name,
                 description: products[i].description,
-                image: products[i].image,
-                price: products[i].price,
+                image: imageLocation+products[i].image,
                 quantity: products[i].quantity,
                 packagings: tmpPackagings,
                 container: products[i].container,

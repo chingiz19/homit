@@ -47,3 +47,7 @@ ul {
      border: solid 2px transparent;
      overflow-y: scroll;
  }
+
+.prdVal{
+    font-size: 10px;
+}

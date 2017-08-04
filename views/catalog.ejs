@@ -49,7 +49,7 @@
                                             <li>
                                                 <form>
                                                     <label class="checkbox">
-                                                        <input type="checkbox" ng-click="checkPackings(packing)">{{packing}}
+                                                        <input type="checkbox" ng-click="checkPackings(packing)">{{packagings}}
                                                     </label>
                                                 </form>
                                             </li>
@@ -61,14 +61,14 @@
                     </div>
                     <div class="col-md-9 box">
                         <div ng-repeat="product in products">
-                            <div ng-show="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedPackings(product.packaging) && isInSelectedBrands(product.brand)" class="col-md-3">
+                            <div ng-show="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedBrands(product.brand)" class="col-md-3 ">
                                 <ul>
-                                    <li><img ng-src={{product.image}} width="75" height="112.5"></li>
+                                    <li><img ng-src={{product.image}} width="250" height="250"></li>
                                     <span> 
-                                        <li>Brand: {{product.brand}}</li>
-                                        <li>Type: {{product.type}}</li>
-                                        <li>Packing: {{product.packaging}}</li>
-                                        <li>Price: {{product.price}}</li>
+                                        <li>{{product.brand}} </li>
+                                        <li>{{product.type}}</li>
+                                        <!--<li>{{product.packagings}}</li>
+                                        <li>{{product.pricing}}</li>-->
                                         <li><button class="btn-primary" ng-click="addToCart(product)"> Add to cart </button></li>
                                     </span>
                                 </ul>
