@@ -11,6 +11,7 @@
             <div class="well well-lg">
                 <ul class="nav nav-pills nav-stacked">
                 <li><a href="#infoSection" data-toggle="tab">Info</a></li>
+                <li><a href="#orderSection" data-toggle="tab">Order history</a></li>
                 <li><a href="#passwordSection" data-toggle="tab">Change password</a></li>
                 <li class="pull-right"><button ng-click="signout();"><strong>Log out</strong></button></li>
                 </ul>
@@ -22,15 +23,24 @@
             <div class="well well-lg">
                 <div class="tab-content">
                     <div id="welcomeTab" class="tab-pane active text-center">
-                        <h2>Welcome, developer(fname)</h2>
+                        <h2>Welcome, {{ firstname + lastname }}</h2>
                     </div>
                     
                      <div id="infoSection" class="tab-pane" style="padding: 30px;">
-                        <form name="infoSectionForm">
-                            <input class="form-control" name="input-fname" ng-model="firstname" placeholder="First name"><br>
-                            <input class="form-control" name="input-lname" ng-model="lastname" placeholder="Last name"><br>
-                            <button class="btn btn-primary pull-right disabled" ng-class="{disabled:registerChanges()}">Change</button>
+                        <form name="infoSectionForm" class=".form-horizontal">
+                            <input class="form-control" name="input-fname" ng-model="user.first_name" placeholder="First name">
+                            <input class="form-control" name="input-lname" ng-model="user.last_name" placeholder="Last name">
+                            <input class="form-control" name="input-email" ng-model="user.user_email" placeholder="Email">
+                            <input class="form-control" name="input-phone" ng-model="user.phone_number" placeholder="Phone">
+                            <input class="form-control" name="input-addr1" ng-model="user.address1" placeholder="Address 1">
+                            <input class="form-control" name="input-addr2" ng-model="user.address2" placeholder="Address 2">
+                            <input class="form-control" name="input-addr3" ng-model="user.address3" placeholder="Address 3">
+                            <button class="btn btn-primary pull-right" ng-click="updateUserInfo()">Update</button>
                         </form>
+                    </div>
+
+                    <div id="orderSection" class="tab-pane" style="padding: 30px;">
+                        <h1>Orders</h1>
                     </div>
 
                     <div id="passwordSection" class="tab-pane text-center" style="padding: 30px;">
