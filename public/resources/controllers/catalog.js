@@ -43,6 +43,11 @@ $scope.productUrl;
     }).then(function successCallback(response) {
         if (response.data['success'] === "true") {
             $scope.products = response.data['products'];
+            $scope.products.forEach(function(product){
+                // i represent pack count, j represent size
+                product["i"] = 0;
+                product["j"]=0;
+            })
             $scope.subcategories = response.data['subcategories'];
             $scope.packings = response.data['packagings'];
 
@@ -160,7 +165,85 @@ $scope.productUrl;
     $scope.addToCart = function(product) {
         $rootScope.$broadcast("addToCart", {addedProduct: product});
     };
- 
+
+    $scope.plusChangePack=function(product){
+        $scope.i=product.i;
+        $scope.loopOFF=true;
+        $scope.arrayLen=product.packagings.length;
+        while (product.volumes[$scope.i+1]!=product.volumes[$scope.i] && $scope.i<=$scope.arrayLen-2){
+            $scope.i=$scope.i+1;
+            $scope.loopOFF=false;
+        }
+        if($scope.loopOFF==false && product.volumes[product.i]!=product.volumes[$scope.i]){
+            $scope.i=product.i;
+        }
+        if($scope.i<=$scope.arrayLen-1 && $scope.loopOFF && product.volumes[$scope.i]==product.volumes[$scope.i+1]){
+            $scope.i=$scope.i+1;
+        }
+        product.i=$scope.i;
+    }
+
+    $scope.minusChangePack=function(product){
+        $scope.i=product.i;
+        $scope.loopOFF=true;
+        $scope.arrayLen=product.packagings.length;
+        while (product.volumes[$scope.i-1]!=product.volumes[$scope.i] && $scope.i>0){
+            $scope.i=$scope.i-1;
+            $scope.loopOFF=false;
+        }
+        if($scope.loopOFF==false && product.volumes[product.i]!=product.volumes[$scope.i]){
+            $scope.i=product.i;
+        }
+        if($scope.i<=$scope.arrayLen-1 && $scope.loopOFF && product.volumes[$scope.i]==product.volumes[$scope.i-1]){
+            $scope.i=$scope.i-1;
+        }
+            product.i=$scope.i;
+    }
+    
+    $scope.plusChangeVolume=function(product){
+        $scope.i=product.j;
+        $scope.loopOFF=true;
+        $scope.arrayLen=product.packagings.length;
+        while (product.volumes[$scope.i+1]==product.volumes[$scope.i] && $scope.i<=$scope.arrayLen-2){
+            $scope.i=$scope.i+1;
+            $scope.loopOFF=false;
+        }
+        if($scope.loopOFF==false && product.volumes[product.i]==""){
+            $scope.i=$scope.arrayLen-1;
+        }
+        if($scope.i<=$scope.arrayLen-1 && product.volumes[$scope.i]!=product.volumes[$scope.i+1] && $scope.i<=$scope.arrayLen-2){
+            $scope.i=$scope.i+1;
+        }
+        if(product.volumes[$scope.i]!=product.volumes[product.j]){
+            product.j=$scope.i;
+            product.i=$scope.i;
+        }
+    }
+
+   $scope.minusChangeVolume=function(product){
+        $scope.i=product.j;
+        $scope.loopOFF=true;
+        $scope.arrayLen=product.packagings.length;
+        while (product.volumes[$scope.i-1]==product.volumes[$scope.i] && $scope.i>0){
+            $scope.i=$scope.i-1;
+            $scope.loopOFF=false;
+        }
+        if($scope.loopOFF==false && product.volumes[product.i]==""){
+            $scope.i=0;
+        }
+        if($scope.loopOFF==false && product.volumes[$scope.i]==product.volumes[product.j]){
+            $scope.i=product.j;
+        }
+        if($scope.i<=$scope.arrayLen-1 && product.volumes[$scope.i]!=product.volumes[$scope.i-1] && $scope.i>0){
+            $scope.i=$scope.i-1;
+        }
+        if(product.volumes[$scope.i]!=product.volumes[product.j]){
+            product.j=$scope.i;
+            product.i=$scope.i;
+        }
+    }
+
+    
 }]);
 
     

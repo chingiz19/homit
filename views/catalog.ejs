@@ -13,7 +13,7 @@
                             <div class="affix catalogOptionBox">
                                 <div class="btn-group">
                                     <span ng-show="isBeers">
-                                        <div class="sizeStage3">Types</div>
+                                        <div class="sizeStage">Types</div>
                                         <ul ng-repeat="type in availableTypes">
                                             <li>
                                                 <form>
@@ -32,7 +32,7 @@
                                         </ul>
                                     </span>
                                     <div class="btn-group">
-                                        <div class="sizeStage4">Brands</div>
+                                        <div class="sizeStage">Brands</div>
                                         <div class="brandBox">
                                             <ul ng-repeat="brand in availableBrands">
                                                 <li>
@@ -44,7 +44,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="sizeStage5">Size</div>
+                                        <div class="sizeStage">Size</div>
                                         <ul ng-repeat="packing in packings">
                                             <li>
                                                 <form>
@@ -61,17 +61,28 @@
                     </div>
                     <div class="col-md-9 box">
                         <div ng-repeat="product in products">
-                            <div ng-show="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedBrands(product.brand)" class="col-md-3 ">
-                                <ul>
-                                    <li><img ng-src={{product.image}} width="250" height="250"></li>
-                                    <span> 
-                                        <li>{{product.brand}} </li>
-                                        <li>{{product.type}}</li>
-                                        <!--<li>{{product.packagings}}</li>
-                                        <li>{{product.pricing}}</li>-->
-                                        <li><button class="btn-primary" ng-click="addToCart(product)"> Add to cart </button></li>
-                                    </span>
-                                </ul>
+                            <div ng-show="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedBrands(product.brand)" class="col-md-4 ">
+                                <div class="itemBox">
+                                    <ul>
+                                    <li><img ng-src={{product.image}} width="225" height="225"></li>
+                                        <span> 
+                                            <div class="packAndSize">
+                                                <li class="pack">X{{product.packagings[product.i]}}</li>
+                                                <li class="size">{{product.volumes[product.j]}}</li>
+                                            </div>
+                                            <li>{{product.pricing[product.i]}}C$</li>
+                                            <li>{{product.brand}} </li>
+                                            <li>{{product.type}}</li>
+                                        </span>
+                                    </ul>
+                                    <div>
+                                        <button class="btn-primary" ng-click="addToCart(product)"> Add to cart </button>
+                                        <button ng-click="plusChangePack(product)" class="glyphicon glyphicon-chevron-up plusPack"></button>
+                                        <button ng-click="minusChangeVolume(product)" class="glyphicon glyphicon-chevron-left minusSize"></button>
+                                        <button ng-click="plusChangeVolume(product)" class="glyphicon glyphicon-chevron-right plusSize"></button>
+                                        <button ng-click="minusChangePack(product)" class="glyphicon glyphicon-chevron-down minusPack"></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

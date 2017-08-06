@@ -1,37 +1,7 @@
-.box
-{
-    margin-top: 5px;
-}
+.box{margin-top: 5px;}
+ul {list-style-type: none;}
 
-.sizeStage2
-{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 18px;
-}
-
-.sizeStage3
-{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 17px;
-}
-
-.sizeStage4
-{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 16px;
-}
-
-.sizeStage5
-{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 15px;
-}
-
-ul {
- list-style-type: none;
- }
-
- .brandBox
+  .brandBox
  {
      height: 30vh; width: 200px;
      float: left;
@@ -39,8 +9,8 @@ ul {
      overflow-y: scroll;
      
  }
- 
- .catalogOptionBox
+
+  .catalogOptionBox
  {
      height: 80vh; width: 270px;
      float: left;
@@ -48,6 +18,80 @@ ul {
      overflow-y: scroll;
  }
 
-.prdVal{
-    font-size: 10px;
+ .sizeStage
+{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+}
+
+.col-md-4{
+    padding:0;
+}
+
+.itemBox{
+    position: relative;
+    border: solid 2px;
+    width: 100%;
+}
+
+.plusPack{
+    position: relative;
+    top: -341px; left: 113px;
+    padding: 1px 6px 3px 6px;
+    background-color: ghostwhite;
+    border: solid lightgrey 2px; border-radius:  25px 25px 0 0;
+    height: 18px;width: 28px;
+    color: 	#A9A9A9;
+}
+.plusPack:focus{outline:0;}
+
+.minusPack{
+    position: relative;
+    top: -284px; left: 38px;
+    padding: 0px 6px 0px 6px;
+    background-color: ghostwhite; 
+    border: solid lightgrey 2px; border-radius:  0 0 25px 25px ;
+    height: 18px;width: 28px;
+    color: 	#A9A9A9;
+}
+.minusPack:focus{outline:0;}
+
+.plusSize{
+    position: relative;
+    top: -314px; left: 93px;
+    padding: 2px 6px 3px 0px;
+    background-color: ghostwhite; 
+    border: solid lightgrey 2px; border-radius: 0 25px 25px 0;
+    height: 28px; width: 18px;
+    color: 	#A9A9A9;
+}
+.plusSize:focus{outline:0;}
+
+.minusSize{
+    position: relative;
+    top: -314px; left: 57px;
+    padding: 2px 3px 2px 2px;
+    background-color: ghostwhite;
+    border: solid lightgrey 2px;border-radius: 25px 0 0 25px;
+    height: 28px;width: 18px;
+    color: 	#A9A9A9;
+}
+.minusSize:focus{outline:0;}
+
+.packAndSize{
+    position: relative;
+    top: -207px; left: 155px;
+    padding-top: 5px;
+    background-color: white;
+    border: solid lightgrey 2px; border-radius: 15px; width: 45px; height: 45px;
+    text-align: center;
+    line-height: 15px;
+}
+.pack{
+    font-family: OpenSans-Subset, sans-serif; font-weight: bold; font-size: 16px;
+    color: orangered;
+}
+.size{
+    font-family: OpenSans-Subset, sans-serif; font-weight: bold; font-size: 12px;
+    color: #484d55;
 }

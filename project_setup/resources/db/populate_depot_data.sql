@@ -122,19 +122,21 @@ INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (24
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (25,'7.5oz');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (26,'64oz');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (27,'20oz');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (28,'440ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (29,'340ml');
 
 
 /* Insert packagings */
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (1,'Single');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (2,'4 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (3,'6 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (4,'4 Pack Tall');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (5,'6 Pack Tall');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (6,'8 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (7,'12 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (8,'18 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (9,'24 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (10,'30 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (11,'15 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (12,'36 Pack');
-INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (13,'48 Pack');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (1,'1');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (2,'4');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (3,'6');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (4,'4 Tall');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (5,'6 Tall');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (6,'8');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (7,'12');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (8,'18');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (9,'24');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (10,'30');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (11,'15');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (12,'36');
+INSERT INTO `delivery_db`.`catalog_packagings`(id,name) VALUES (13,'48');
