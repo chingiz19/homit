@@ -5,6 +5,32 @@ const saltRounds = 10;
 
 // router.use(global.checkAuth);
 
+router.post('/updateUserInfo', function(req, res, next){
+    var user = req.body;
+    var userId = user.id;
+    delete user["id"];
+
+    var query = `UPDATE users_customers
+                 SET ?
+                 WHERE id=` + userId ;
+
+
+    db.runQuery(query, user).then(function(data){
+        query =  `SELECT id, user_email, first_name, last_name, phone_number, address1, address2, address3
+                 FROM users_customers
+                 WHERE id=` + userId;
+        db.runQuery(query).then(function(userinfo){
+            req.session.user = userinfo[0];
+            // req.cookies.user = userinfo[0];
+            res.send({
+                "success": true,
+                "ui_message": "Successfully updated",
+                "user": userinfo[0]
+            });
+        });
+    });
+});
+
 router.post('/resetpassword', function(req, res, next){
     var email = req.query.email;
     var token = req.query.token;

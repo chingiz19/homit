@@ -26,13 +26,12 @@ router.get('/beers', function(req, res, next){
 
 router.get('/wines', function(req, res, next){
     getAllWines().then(function(products) {
+        var formattedProducts = getFormattedProducts(products);        
         getAllWineTypes(products).then(function(subcategories){
-            var packagings = getAllPackagings(products);
             var response = {
                 success: 'true',
                 subcategories: subcategories,
-                packagings: packagings,
-                products: products
+                products: formattedProducts
             };
             res.send(response);
         });
@@ -41,13 +40,12 @@ router.get('/wines', function(req, res, next){
 
 router.get('/spirits', function(req, res, next){
     getAllSpirits().then(function(products) {
+        var formattedProducts = getFormattedProducts(products);        
         getAllSpiritTypes(products).then(function(subcategories){            
-            var packagings = getAllPackagings(products);
             var response = {
                 success: 'true',
                 subcategories: subcategories,
-                packagings: packagings,
-                products: products
+                products: formattedProducts
             };
             res.send(response);
         });
@@ -56,13 +54,12 @@ router.get('/spirits', function(req, res, next){
 
 router.get('/others', function(req, res, next){
     getAllOthers().then(function(products) {
+        var formattedProducts = getFormattedProducts(products);        
         getAllOtherTypes(products).then(function(subcategories){            
-            var packagings = getAllPackagings(products);
             var response = {
                 success: 'true',
                 subcategories: subcategories,
-                packagings: packagings,
-                products: products
+                products: formattedProducts
             };
             res.send(response);
         });

@@ -41,11 +41,23 @@ router.get('/getorder', function(req, res, next){
                     order_id: result.id
                 };
                 var warehouse = result.warehouse_id.split(",");
-                var warehouse_query = `SELECT p.product_brand, p.product_name, 
-                                            packing.name as product_packaging, 
-                                            w.price 
-                                        FROM catalog_warehouse as w, catalog_products as p, catalog_packagings as packing
-                                        WHERE(w.id=` + warehouse.join(" or w.id=") + `) and w.product_id=p.id and w.packaging_id=packing.id`;
+                var warehouse_query =  `SELECT 	depot.price,
+                                                listing.product_name, listing.product_brand, listing.product_description, listing.product_country,
+                                                packaging.name as pname,
+                                                volumes.volume_name as vname,
+                                                subcategory.name as sname,
+                                                types.name as tname
+                                        FROM catalog_depot as depot, catalog_products as product, 
+                                                catalog_packagings as packaging, catalog_listings as listing, catalog_packaging_volumes as volumes,
+                                                catalog_types as types, catalog_subcategories as subcategory
+                                        WHERE 	(w.id=` + warehouse.join(" or w.id=") + `) and 
+                                                depot.product_id=product.id and depot.packaging_id=packaging.id and 
+                                                depot.packaging_volume_id=volumes.id and 
+                                                product.listing_id=listing.id and 
+                                                listing.type_id=types.id and
+                                                subcategory.id=types.subcategory_id`;
+
+
                 queriesToRun.push(db.runQuery(warehouse_query));
                 quantitiesPerUser.push(result.quantity.split(","));
                 individualUsers.push(obj);

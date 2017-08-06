@@ -24,7 +24,10 @@ webServer.use(session({
 	resave: false,
 	saveUninitialized: true,
 	httpOnly: false,
-	cookie: {maxAge: 5 * 60 * 1000} // 5 mins
+	cookie: {
+		expires: new Date(Date.now() + (60 * 60 *1000)),
+		maxAge: 60 * 60 * 1000  // 1 hour
+	}
 }));
 
 webServer.use(bodyParser.json());
