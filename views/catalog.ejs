@@ -31,6 +31,20 @@
                                             </li>
                                         </ul>
                                     </span>
+                                    <span ng-show="isSpirits">
+                                        <ul ng-show="isSpirits" ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
+                                            <li role="presentation" ng-class="{active:isInSelectedSubcategories(variant.subcategory_name)}">
+                                                <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
+                                            </li>
+                                        </ul>
+                                    </span>
+                                    <span ng-show="isOthers">
+                                        <ul ng-show="isOthers" ng-repeat="variant in subcategories" class="nav nav-pills nav-stacked">
+                                            <li role="presentation" ng-class="{active:isInSelectedSubcategories(variant.subcategory_name)}">
+                                                <a href="#" ng-click="checkSubcategories(variant.subcategory_name)">{{variant.subcategory_name}}</a>
+                                            </li>
+                                        </ul>
+                                    </span>
                                     <div class="btn-group">
                                         <div class="sizeStage">Brands</div>
                                         <div class="brandBox">

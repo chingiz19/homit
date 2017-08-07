@@ -16,13 +16,15 @@ INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (8
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (9,'Gin',3);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (10,'Rum',3);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (11,'Tequila',3);
-INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (12,'Liquers',4);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (12,'Liquers',3);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (13,'Ice tea',4);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (14,'Pop',4);
-INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (15,'Infused wine',4);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (15,'Infused wine',3);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (16,'Juices',4);
-INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (17,'None',2);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (17,'Miscellaneous',2);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (18,'Others',4);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (19,'Others',1);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (20,'Miscellaneous',3);
 
 
 /* Insert types */
@@ -78,7 +80,7 @@ INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (49,'Nu
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (50,'Wheat beer',1);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (51,'Syrah',2);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (52,'Chianti',3);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (53,'None',17);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (53,'Miscellaneous',17);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (54,'Water',18);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (55,'Energy Drinks',18);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (56,'Extras',18);
@@ -86,6 +88,8 @@ INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (57,'Re
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (58,'White Blend',2);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (59,'Sake',17);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (60,'Ice Wine',2);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (61,'Others',1);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (62,'Miscellaneous',20);
 
 
 /* Insert packaging types */
@@ -114,7 +118,7 @@ INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (16
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (17,'2L');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (18,'5L');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (19,'32oz');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (20,'80oz');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (20,'8oz');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (21,'3L');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (22,'1.75L');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (23,'1.14L');
@@ -123,7 +127,7 @@ INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (25
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (26,'64oz');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (27,'20oz');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (28,'440ml');
-INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (29,'340ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (29,'341ml');
 
 
 /* Insert packagings */
