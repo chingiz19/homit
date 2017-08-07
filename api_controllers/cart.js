@@ -17,6 +17,7 @@ router.get('/usercart', function (req, res, next) {
                 cart: objectCart
             }
             res.send(response);
+            console.log(respnse);
         });
     }
 });

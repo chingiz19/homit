@@ -24,54 +24,55 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
 
     $scope.$on("addToCart", function (event, args) {
         var tmp = 1;
-        if ($scope.userCart.hasOwnProperty(args.addedProduct.warehouse_id)) {
-            tmp = $scope.userCart[args.addedProduct.warehouse_id]["quantity"];
+        if ($scope.userCart.hasOwnProperty(args.addedProduct.depot_ids)) {
+            tmp = $scope.userCart[args.addedProduct.depot_ids]["quantity"];
             tmp++;
             if (tmp >= 10) tmp = 10;
             else {
-                $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = tmp;
+                $scope.userCart[args.addedProduct.depot_ids]["quantity"] = tmp;
                 $scope.numberOfItemsInCart++;
-                $scope.totalAmount = $scope.totalAmount + args.addedProduct.price;
+                $scope.totalAmount = $scope.totalAmount + args.addedProduct.pricing[args.addedProduct.i];
             }
         } else {
-            $scope.userCart[args.addedProduct.warehouse_id] = args.addedProduct;
-            $scope.userCart[args.addedProduct.warehouse_id]["quantity"] = tmp;
+            $scope.userCart[args.addedProduct.depot_ids] = args.addedProduct;
+            $scope.userCart[args.addedProduct.depot_ids]["quantity"] = tmp;
             $scope.numberOfItemsInCart++;
-            $scope.totalAmount = $scope.totalAmount + args.addedProduct.price;
+            $scope.totalAmount = $scope.totalAmount + args.addedProduct.pricing[args.addedProduct.i];
         }
-        $scope.prepareItemForDB(args.addedProduct.warehouse_id, tmp);
+        $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
     })
 
     $scope.plusItem = function (product) {
         var tmp = 1;
-        if ($scope.userCart.hasOwnProperty(product.warehouse_id)) {
-            tmp = $scope.userCart[product.warehouse_id]["quantity"];
+        if ($scope.userCart.hasOwnProperty(product.depot_ids)) {
+            tmp = $scope.userCart[product.depot_ids]["quantity"];
             tmp++;
             if (tmp >= 10) tmp = 10;
             else {
-                $scope.userCart[product.warehouse_id]["quantity"] = tmp;
+                $scope.userCart[product.depot_ids]["quantity"] = tmp;
                 $scope.numberOfItemsInCart++;
-                $scope.totalAmount = $scope.totalAmount + product.price;
+                $scope.totalAmount = $scope.totalAmount + product.pricing[product.i];
             }
         }
-        $scope.prepareItemForDB(product.warehouse_id, tmp);
+        
+        $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
     }
 
     $scope.minusItem = function (product) {
         var tmp = 1;
-        if ($scope.userCart.hasOwnProperty(product.warehouse_id) && $scope.userCart[product.warehouse_id]["quantity"] >= 1) {
-            tmp = $scope.userCart[product.warehouse_id]["quantity"];
+        if ($scope.userCart.hasOwnProperty(product.depot_ids) && $scope.userCart[product.depot_ids]["quantity"] >= 1) {
+            tmp = $scope.userCart[product.depot_ids]["quantity"];
             tmp--;
             if (tmp < 1) tmp = 1;
             else {
-                $scope.userCart[product.warehouse_id]["quantity"] = tmp;
+                $scope.userCart[product.depot_ids]["quantity"] = tmp;
                 $scope.numberOfItemsInCart--;
                 if ($scope.numberOfItemsInCart < 0) $scope.numberOfItemsInCart = 0;
-                $scope.totalAmount = $scope.totalAmount - product.price;
+                $scope.totalAmount = $scope.totalAmount - product.pricing[product.i];
                 if ($scope.totalAmount < 0) $scope.totalAmount = 0;
             }
         }
-        $scope.prepareItemForDB(product.warehouse_id, tmp);
+        $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
     }
 
     $scope.clearCart = function (product) {
@@ -92,18 +93,18 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
     }
 
     $scope.removeFromCart = function (product) {
-        if ($scope.userCart.hasOwnProperty(product.warehouse_id)) {
+        if ($scope.userCart.hasOwnProperty(product.depot_ids)) {
             var tmp = 0;
-            delete $scope.userCart[product.warehouse_id];
+            delete $scope.userCart[product.depot_ids];
             $scope.numberOfItemsInCart = $scope.numberOfItemsInCart - product.quantity;
-            $scope.totalAmount = $scope.totalAmount - product.price * product.quantity;
-            $scope.prepareItemForDB(product.warehouse_id, tmp);
+            $scope.totalAmount = $scope.totalAmount - product.pricing[product.i] * product.quantity;
+            $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
         }
     }
 
-    $scope.prepareItemForDB = function (warehouse_id, itemQuantity, action) {
+    $scope.prepareItemForDB = function (depot_ids, itemQuantity, action) {
         $scope.addItemToUserDB = {};
-        $scope.addItemToUserDB["warehouse_id"] = warehouse_id;
+        $scope.addItemToUserDB["depot_ids"] = depot_ids;
         $scope.addItemToUserDB["quantity"] = itemQuantity;
         $scope.addItemToUserDB["action"] = action;
 
@@ -111,7 +112,7 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
             method: 'POST',
             url: '/api/cart/modifyitem',
             data: {
-                warehouse_id: $scope.addItemToUserDB["warehouse_id"],
+                warehouse_id: $scope.addItemToUserDB["depot_ids"],
                 quantity: $scope.addItemToUserDB["quantity"],
             }
         }).then(function successCallback(response) {

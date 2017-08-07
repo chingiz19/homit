@@ -21,6 +21,7 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
                 $scope.tempNumberOfItemsInCart = $scope.userCart[a]['quantity'];
                 $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.tempNumberOfItemsInCart;
             }
+            console.log($scope.userCart);
             // Calculation For receipt
             $scope.GST=(($scope.totalAmount+$scope.delFee)*0.05).toFixed(2);
             $scope.receipt=(($scope.totalAmount+$scope.delFee)*1.05).toFixed(2);
@@ -48,7 +49,7 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
             $scope.numberOfItemsInCart++;
             $scope.totalAmount = $scope.totalAmount + args.addedProduct.price;
         }
-        $scope.prepareItemForDB(args.addedProduct.warehouse_id, tmp);
+        $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
     })
 
     $scope.plusItem = function (product) {
@@ -63,7 +64,7 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
                 $scope.totalAmount = $scope.totalAmount + product.price;
             }
         }
-        $scope.prepareItemForDB(product.warehouse_id, tmp);
+        $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
     }
 
     $scope.minusItem = function (product) {
@@ -80,7 +81,7 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
                 if ($scope.totalAmount < 0) $scope.totalAmount = 0;
             }
         }
-        $scope.prepareItemForDB(product.warehouse_id, tmp);
+        $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i]d, tmp);
     }
 
     $scope.clearCart = function (product) {
@@ -106,7 +107,7 @@ app.controller("checkoutController", function($scope, $http, $location, $rootSco
             delete $scope.userCart[product.warehouse_id];
             $scope.numberOfItemsInCart = $scope.numberOfItemsInCart - product.quantity;
             $scope.totalAmount = $scope.totalAmount - product.price * product.quantity;
-            $scope.prepareItemForDB(product.warehouse_id, tmp);
+            $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
         }
     }
 
@@ -156,8 +157,5 @@ $scope.PaimentProcessed=function(){
         ];
     }
 };
-
-    if(1==1){
-    }
 
 });

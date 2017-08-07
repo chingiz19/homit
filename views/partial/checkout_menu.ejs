@@ -28,8 +28,9 @@
             <ul class="cartBoxUl">
                 <span class="cartBoxText"> 
                     <li>{{product.brand}}</li>
-                    <li>{{product.packaging}}</li>
-                    <li>{{product.price}} CAD</li>
+                    <li>X{{product.packagings[product.i]}}</li>
+                    <li>{{product.volumes[product.j]}}</li>
+                    <li>{{product.pricing[product.i]}}C$ CAD</li>
                     <li>#{{product.quantity}}</li>
                 </span>
             </ul>
