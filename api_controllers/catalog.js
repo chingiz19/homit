@@ -256,7 +256,7 @@ var getAllBrandsBySubcategory = function (subcategory, products) {
 }
 
 /**
- * 
+ * Return products for front-end
  */
 var getFormattedProducts = function (products) {
     var tmpResult = {};
@@ -264,9 +264,9 @@ var getFormattedProducts = function (products) {
     for (var i=0; i < products.length; i++){
         var product = products[i];
         var imageLocation = "/resources/images/products/"+product.category.toLowerCase()+"/";
-        if (tmpResult.hasOwnProperty(product.listing_id)){
+        if (tmpResult.hasOwnProperty(product.product_id)){
             // Add to product variant
-            tmpResult[product.listing_id].product_variants.push({
+            tmpResult[product.product_id].product_variants.push({
                 "depot_id": product.depot_id,
                 "packaging": product.packaging,
                 "volume": product.volume,
@@ -274,7 +274,7 @@ var getFormattedProducts = function (products) {
             });
         } else {
             // Add to tmpResult
-            tmpResult[product.listing_id] = {
+            tmpResult[product.product_id] = {
                 product_id: products[i].product_id,
                 listing_id: products[i].listing_id,
                 subcategory: products[i].subcategory,
