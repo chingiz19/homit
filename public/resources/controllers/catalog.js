@@ -162,42 +162,29 @@ $scope.productUrl;
         }
     };
 
-    $scope.addToCart = function(product) {
-        $rootScope.$broadcast("addToCart", {addedProduct: product});
+    $scope.addToCart = function(product, i) {
+        var p = jQuery.extend(true, {}, product);
+        p.variant_i = i;
+        $rootScope.$broadcast("addToCart", {
+            addedProduct: p
+        });
     };
 
     $scope.plusChangePack=function(product){
-        $scope.i=product.i;
-        $scope.loopOFF=true;
-        $scope.arrayLen=product.packagings.length;
-        while (product.volumes[$scope.i+1]!=product.volumes[$scope.i] && $scope.i<=$scope.arrayLen-2){
-            $scope.i=$scope.i+1;
-            $scope.loopOFF=false;
-        }
-        if($scope.loopOFF==false && product.volumes[product.i]!=product.volumes[$scope.i]){
-            $scope.i=product.i;
-        }
-        if($scope.i<=$scope.arrayLen-1 && $scope.loopOFF && product.volumes[$scope.i]==product.volumes[$scope.i+1]){
-            $scope.i=$scope.i+1;
-        }
-        product.i=$scope.i;
+        var i=product.variant_i;
+        var len = product.product_variants.length;
+        i++;
+        if (i >= len) i = len - 1;
+        product.variant_i = i;
+        
     }
 
     $scope.minusChangePack=function(product){
-        $scope.i=product.i;
-        $scope.loopOFF=true;
-        $scope.arrayLen=product.packagings.length;
-        while (product.volumes[$scope.i-1]!=product.volumes[$scope.i] && $scope.i>0){
-            $scope.i=$scope.i-1;
-            $scope.loopOFF=false;
-        }
-        if($scope.loopOFF==false && product.volumes[product.i]!=product.volumes[$scope.i]){
-            $scope.i=product.i;
-        }
-        if($scope.i<=$scope.arrayLen-1 && $scope.loopOFF && product.volumes[$scope.i]==product.volumes[$scope.i-1]){
-            $scope.i=$scope.i-1;
-        }
-            product.i=$scope.i;
+        var i=product.variant_i;
+        var len = product.product_variants.length;
+        i--;
+        if (i < 0) i = 0;
+        product.variant_i = i;
     }
     
     $scope.plusChangeVolume=function(product){

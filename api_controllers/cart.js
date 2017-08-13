@@ -11,20 +11,21 @@ router.get('/usercart', function (req, res, next) {
     } else {
         var user_id = req.session.user.id;
         getUserCart(user_id).then(function (cart) {
-            var objectCart = convertArrayToObject(cart);
+            var objectCart = cart;
             var response = {
                 success: true,
                 cart: objectCart
             }
             res.send(response);
-            console.log(respnse);
+            console.log(response);
         });
     }
 });
 
 router.post('/modifyitem', function (req, res, next) {
-    var warehouse_id = req.body.warehouse_id;
+    var depot_id = req.body.depot_id;
     var quantity = req.body.quantity;
+    var variant_i = req.body.variant_i;
 
     if (!req.session.user) {
         res.json({
@@ -35,7 +36,7 @@ router.post('/modifyitem', function (req, res, next) {
         });
     } else {
         var user_id = req.session.user.id;
-        modifyProductInCart(user_id, warehouse_id, quantity).then(function (result) {
+        modifyProductInCart(user_id, depot_id, quantity, variant_i).then(function (result) {
             var isSuccess = false;
             if (result != false) {
                 isSuccess = true;
@@ -76,15 +77,15 @@ router.post('/clear', function (req, res, next) {
 
 
 /**
- * Return quantity based on the user id, warehouse id provided
+ * Return quantity based on the user id, depot id provided
  */
-var getCartProduct = function (user_id, warehouse_id) {
+var getCartProduct = function (user_id, depot_id) {
     var user_cart_info = "user_cart_info";
     var data1 = {
         user_id: user_id
     };
     var data2 = {
-        warehouse_id: warehouse_id
+        depot_id: depot_id
     };
     return db.selectQuery2(user_cart_info, [data1, data2]).then(function (dbResult) {
         if (dbResult.length > 0) {
@@ -99,10 +100,10 @@ var getCartProduct = function (user_id, warehouse_id) {
 /**
  * Modifying products in cart
  */
-var modifyProductInCart = function (user_id, warehouse_id, quantity) {
+var modifyProductInCart = function (user_id, depot_id, quantity, variant_i) {
     var user_cart_info = "user_cart_info";
     if (quantity == 0) {
-        return getCartProduct(user_id, warehouse_id).then(function (cart) {
+        return getCartProduct(user_id, depot_id).then(function (cart) {
             if (cart['id'] > 0) {
                 var data = {
                     id: cart['id']
@@ -112,10 +113,11 @@ var modifyProductInCart = function (user_id, warehouse_id, quantity) {
             }
         });
     } else {
-        return getCartProduct(user_id, warehouse_id).then(function (cart) {
+        return getCartProduct(user_id, depot_id).then(function (cart) {
             if (cart['id'] > 0) {
                 var data = {
-                    quantity: quantity
+                    quantity: quantity,
+                    variant_i: variant_i
                 };
                 var key = {
                     id: cart['id']
@@ -126,8 +128,9 @@ var modifyProductInCart = function (user_id, warehouse_id, quantity) {
             } else {
                 var data = {
                     user_id: user_id,
-                    warehouse_id: warehouse_id,
-                    quantity: quantity
+                    depot_id: depot_id,
+                    quantity: quantity,
+                    variant_i: variant_i
                 };
                 db.insertQuery(user_cart_info, data).then(function (inserted) {
                     return inserted.id;
@@ -155,17 +158,29 @@ var clearCart = function (user_id) {
  * Get users cart
  */
 var getUserCart = function (user_id) {
-    var sqlQuery = `SELECT uc.user_id AS user_id, w.id AS warehouse_id, uc.quantity AS quantity, w.product_id AS product_id, s.name AS subcategory, 
-            t.name AS type, pr.product_brand AS brand, pr.product_name AS name, pr.product_description AS description,
-            pr.product_image AS image, w.price AS price, w.quantity AS warehouse_quantity, pa.name AS packaging, c.name AS category
-            FROM catalog_warehouse AS w, catalog_packagings AS pa, catalog_products AS pr, catalog_types AS t,
-            catalog_subcategories AS s, catalog_categories AS c, user_cart_info uc
-            WHERE w.packaging_id = pa.id AND w.product_id = pr.id AND pr.type_id = t.id
-            AND t.subcategory_id = s.id AND s.category_id = c.id AND w.id = uc.warehouse_id
-            AND ?`;
-    var data = { "uc.user_id": user_id };
+    var sqlQuery = `SELECT 
+                        usercart.user_id AS user_id, usercart.quantity AS quantity, usercart.variant_i AS variant_i,
+                        depot.id AS depot_id, depot.product_id AS product_id,
+                        listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
+                        listing.product_brand AS brand, listing.product_name AS name,
+                        listing.product_description AS description, product.product_image AS image,
+                        depot.price AS price, depot.quantity AS quantity, packaging.name AS packaging,
+                        container.name AS container, volume.volume_name AS volume, category.name AS category
+                    FROM 
+                        catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
+                        catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
+                        catalog_containers AS container, catalog_packagings AS packaging, catalog_packaging_volumes AS volume,
+                        user_cart_info AS usercart
+                    WHERE 
+                        depot.product_id = product.id AND product.listing_id = listing.id AND depot.id = usercart.depot_id
+                        AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+                        AND container.id = product.container_id AND packaging.id = depot.packaging_id
+                        AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND ?
+                    ORDER BY 
+                        listing_id, product_id, depot_id`;
+    var data = { "usercart.user_id": user_id };
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
-        return dbResult;
+        return getFormattedProducts(dbResult);
     });
 };
 
@@ -174,9 +189,129 @@ var convertArrayToObject = function (initialArray) {
     var element;
     for (i = 0; i < initialArray.length; i++) {
         element = initialArray[i];
-        result[element['warehouse_id']] = element;
+        result[element['depot_id']] = element;
     }
-    return result;
+    return getFormattedProducts(initialArray);
 };
+
+// /**
+//  * 
+//  */
+// var getFormattedProducts = function (products) {
+//     var result = [];
+
+//     var tmpDepotIds = [];
+//     var tmpPackagings = [];
+//     var tmpVolumes = [];
+//     var tmpPricing = [];
+
+//     var prevProduct;
+
+//     var imageLocation;
+
+//     for (i=0; i<products.length; i++) {
+//         var canPush = false;
+//         imageLocation = "/resources/images/products/"+products[i].category.toLowerCase()+"/";
+//         if (i==0) {
+//             prevProduct = products[i].product_id;
+//             tmpDepotIds.push(products[i].depot_id);
+//             tmpPackagings.push(products[i].packaging);
+//             tmpVolumes.push(products[i].volume);
+//             tmpPricing.push(products[i].price);
+//         } else {
+//             if (products[i].product_id == prevProduct) {
+//                 tmpDepotIds.push(products[i].depot_id);
+//                 tmpPackagings.push(products[i].packaging);
+//                 tmpVolumes.push(products[i].volume);
+//                 tmpPricing.push(products[i].price);                
+//             } else {
+//                 canPush = true;
+//             }
+//         }
+
+//         if (canPush || i == products.length-1) {
+//             // build tmp product
+//             var tmpProduct = {
+//                 product_id: products[i].product_id,
+//                 depot_ids: tmpDepotIds,
+//                 listing_id: products[i].listing_id,
+//                 subcategory: products[i].subcategory,
+//                 type: products[i].type,
+//                 brand: products[i].brand,
+//                 name: products[i].name,
+//                 description: products[i].description,
+//                 image: imageLocation+products[i].image,
+//                 quantity: products[i].quantity,
+//                 packagings: tmpPackagings,
+//                 container: products[i].container,
+//                 volumes: tmpVolumes,
+//                 pricing: tmpPricing,
+//                 category: products[i].category
+//             };
+//             // reset tmps
+//             tmpDepotIds = [];
+//             tmpPackagings = [];
+//             tmpVolumes = [];
+//             tmpPricing = [];
+//             prevProduct = products[i].product_id;
+//             tmpDepotIds.push(products[i].depot_id);
+//             tmpPackagings.push(products[i].packaging);
+//             tmpVolumes.push(products[i].volume);
+//             tmpPricing.push(products[i].price);
+
+//             result.push(tmpProduct);
+//         }
+//     }
+//     return result;
+// }
+
+var getFormattedProducts = function (products) {
+    var tmpResult = {};
+
+    for (var i=0; i < products.length; i++){
+        var product = products[i];
+        var imageLocation = "/resources/images/products/"+product.category.toLowerCase()+"/";
+        if (tmpResult.hasOwnProperty(product.listing_id)){
+            // Add to product variant
+            tmpResult[product.listing_id].product_variants.push({
+                "depot_id": product.depot_id,
+                "packaging": product.packaging,
+                "volume": product.volume,
+                "price": product.price
+            });
+        } else {
+            // Add to tmpResult
+            tmpResult[product.listing_id] = {
+                product_id: products[i].product_id,
+                listing_id: products[i].listing_id,
+                subcategory: products[i].subcategory,
+                type: products[i].type,
+                brand: products[i].brand,
+                name: products[i].name,
+                i: products[i].variant_i,
+                description: products[i].description,
+                image: imageLocation+products[i].image,
+                quantity: products[i].quantity,
+                container: products[i].container,
+                category: products[i].category,
+                product_variants: [{
+                    "depot_id": product.depot_id,
+                    "packaging": product.packaging,
+                    "volume": product.volume,
+                    "price": product.price
+                }]
+            };
+        }
+    };
+
+    // convert object of objects to array of objects
+    var results = [];
+    for (var r in tmpResult){
+        if (tmpResult.hasOwnProperty(r)){
+            results.push(tmpResult[r]);
+        }
+    };
+    return results;
+}
 
 module.exports = router;

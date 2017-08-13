@@ -72,7 +72,7 @@ router.post('/signup', function(req, res, next) {
                             phone_number: data['phone_number']
                         };
                         req.session.user = user;
-                        req.cookies.user = user;
+                        // req.cookies.user = user;
 
                         console.log("Cookies: "+ req.cookies);
 

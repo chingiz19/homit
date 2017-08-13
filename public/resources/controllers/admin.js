@@ -22,6 +22,6 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
     }).then(function successCallback(response) {
         $scope.orders = response.data;
     }, function errorCallback(response) {
-
+        console.error("error");
     });
 }]);

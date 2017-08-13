@@ -259,42 +259,23 @@ var getAllBrandsBySubcategory = function (subcategory, products) {
  * 
  */
 var getFormattedProducts = function (products) {
-    var result = [];
+    var tmpResult = {};
 
-    var tmpDepotIds = [];
-    var tmpPackagings = [];
-    var tmpVolumes = [];
-    var tmpPricing = [];
-
-    var prevProduct;
-
-    var imageLocation;
-
-    for (i=0; i<products.length; i++) {
-        var canPush = false;
-        imageLocation = "/resources/images/products/"+products[i].category.toLowerCase()+"/";
-        if (i==0) {
-            prevProduct = products[i].product_id;
-            tmpDepotIds.push(products[i].depot_id);
-            tmpPackagings.push(products[i].packaging);
-            tmpVolumes.push(products[i].volume);
-            tmpPricing.push(products[i].price);
+    for (var i=0; i < products.length; i++){
+        var product = products[i];
+        var imageLocation = "/resources/images/products/"+product.category.toLowerCase()+"/";
+        if (tmpResult.hasOwnProperty(product.listing_id)){
+            // Add to product variant
+            tmpResult[product.listing_id].product_variants.push({
+                "depot_id": product.depot_id,
+                "packaging": product.packaging,
+                "volume": product.volume,
+                "price": product.price
+            });
         } else {
-            if (products[i].product_id == prevProduct) {
-                tmpDepotIds.push(products[i].depot_id);
-                tmpPackagings.push(products[i].packaging);
-                tmpVolumes.push(products[i].volume);
-                tmpPricing.push(products[i].price);                
-            } else {
-                canPush = true;
-            }
-        }
-
-        if (canPush || i == products.length-1) {
-            // build tmp product
-            var tmpProduct = {
+            // Add to tmpResult
+            tmpResult[product.listing_id] = {
                 product_id: products[i].product_id,
-                depot_ids: tmpDepotIds,
                 listing_id: products[i].listing_id,
                 subcategory: products[i].subcategory,
                 type: products[i].type,
@@ -303,27 +284,26 @@ var getFormattedProducts = function (products) {
                 description: products[i].description,
                 image: imageLocation+products[i].image,
                 quantity: products[i].quantity,
-                packagings: tmpPackagings,
                 container: products[i].container,
-                volumes: tmpVolumes,
-                pricing: tmpPricing,
-                category: products[i].category
+                category: products[i].category,
+                product_variants: [{
+                    "depot_id": product.depot_id,
+                    "packaging": product.packaging,
+                    "volume": product.volume,
+                    "price": product.price
+                }]
             };
-            // reset tmps
-            tmpDepotIds = [];
-            tmpPackagings = [];
-            tmpVolumes = [];
-            tmpPricing = [];
-            prevProduct = products[i].product_id;
-            tmpDepotIds.push(products[i].depot_id);
-            tmpPackagings.push(products[i].packaging);
-            tmpVolumes.push(products[i].volume);
-            tmpPricing.push(products[i].price);
-
-            result.push(tmpProduct);
         }
-    }
-    return result;
+    };
+
+    // convert object of objects to array of objects
+    var results = [];
+    for (var r in tmpResult){
+        if (tmpResult.hasOwnProperty(r)){
+            results.push(tmpResult[r]);
+        }
+    };
+    return results;
 }
 
 /**

@@ -50,7 +50,7 @@ router.get('/getorder', function(req, res, next){
                                         FROM catalog_depot as depot, catalog_products as product, 
                                                 catalog_packagings as packaging, catalog_listings as listing, catalog_packaging_volumes as volumes,
                                                 catalog_types as types, catalog_subcategories as subcategory
-                                        WHERE 	(w.id=` + warehouse.join(" or w.id=") + `) and 
+                                        WHERE 	(depot.id=` + warehouse.join(" or depot.id=") + `) and 
                                                 depot.product_id=product.id and depot.packaging_id=packaging.id and 
                                                 depot.packaging_volume_id=volumes.id and 
                                                 product.listing_id=listing.id and 

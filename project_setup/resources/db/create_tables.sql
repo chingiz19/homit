@@ -118,18 +118,19 @@ CREATE TABLE catalog_depot (
 CREATE TABLE user_cart_info ( 
 	id INT NOT NULL AUTO_INCREMENT, 
 	user_id INT NOT NULL, 
-	warehouse_id INT NOT NULL, 
-	quantity INT NOT NULL, 
+	depot_id INT NOT NULL, 
+	quantity INT NOT NULL,
+	variant_i INT NOT NULL,
 	
 	PRIMARY KEY (id), 
-	UNIQUE (user_id, warehouse_id), 
+	UNIQUE (user_id, depot_id), 
 	CONSTRAINT fk_cart_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 
 CREATE TABLE order_cart_info ( 
 	id INT NOT NULL AUTO_INCREMENT, 
-	warehouse_id VARCHAR(255) NOT NULL, 
+	depot_id VARCHAR(255) NOT NULL, 
 	quantity VARCHAR(255) NOT NULL, 
 	
 	PRIMARY KEY (id) 

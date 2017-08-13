@@ -1,5 +1,6 @@
-app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
-    $scope.userCart = {};
+app.controller("cartController", function ($scope, $sce, $rootScope, $http, advancedStorage) {
+
+    $scope.userCart = advancedStorage.getUserCart() || {};
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
 
@@ -24,55 +25,55 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
 
     $scope.$on("addToCart", function (event, args) {
         var tmp = 1;
-        if ($scope.userCart.hasOwnProperty(args.addedProduct.depot_ids)) {
-            tmp = $scope.userCart[args.addedProduct.depot_ids]["quantity"];
+        if ($scope.userCart.hasOwnProperty(args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id)) {
+            tmp = $scope.userCart[args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id]["quantity"];
             tmp++;
             if (tmp >= 10) tmp = 10;
             else {
-                $scope.userCart[args.addedProduct.depot_ids]["quantity"] = tmp;
+                $scope.userCart[args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id]["quantity"] = tmp;
                 $scope.numberOfItemsInCart++;
-                $scope.totalAmount = $scope.totalAmount + args.addedProduct.pricing[args.addedProduct.i];
+                $scope.totalAmount = $scope.totalAmount + args.addedProduct.product_variants[args.addedProduct.variant_i].price;
             }
         } else {
-            $scope.userCart[args.addedProduct.depot_ids] = args.addedProduct;
-            $scope.userCart[args.addedProduct.depot_ids]["quantity"] = tmp;
+            $scope.userCart[args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id] = args.addedProduct;
+            $scope.userCart[args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id]["quantity"] = tmp;
             $scope.numberOfItemsInCart++;
-            $scope.totalAmount = $scope.totalAmount + args.addedProduct.pricing[args.addedProduct.i];
+            $scope.totalAmount = $scope.totalAmount + args.addedProduct.product_variants[args.addedProduct.variant_i].price;
         }
-        $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
+        $scope.prepareItemForDB(args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id, tmp, args.addedProduct.variant_i);
     })
 
     $scope.plusItem = function (product) {
         var tmp = 1;
-        if ($scope.userCart.hasOwnProperty(product.depot_ids)) {
-            tmp = $scope.userCart[product.depot_ids]["quantity"];
+        if ($scope.userCart.hasOwnProperty(product.product_variants[product.variant_i].depot_id)) {
+            tmp = $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"];
             tmp++;
             if (tmp >= 10) tmp = 10;
             else {
-                $scope.userCart[product.depot_ids]["quantity"] = tmp;
+                $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"] = tmp;
                 $scope.numberOfItemsInCart++;
-                $scope.totalAmount = $scope.totalAmount + product.pricing[product.i];
+                $scope.totalAmount = $scope.totalAmount + product.product_variants[product.variant_i].price;
             }
         }
-        
-        $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
+        $scope.prepareItemForDB(product.product_variants[product.variant_i].depot_id, tmp, product.variant_i);
     }
 
     $scope.minusItem = function (product) {
         var tmp = 1;
-        if ($scope.userCart.hasOwnProperty(product.depot_ids) && $scope.userCart[product.depot_ids]["quantity"] >= 1) {
-            tmp = $scope.userCart[product.depot_ids]["quantity"];
+        if ($scope.userCart.hasOwnProperty(product.product_variants[product.variant_i].depot_id) && $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"] >= 1) {
+            tmp = $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"];
             tmp--;
             if (tmp < 1) tmp = 1;
             else {
-                $scope.userCart[product.depot_ids]["quantity"] = tmp;
+                $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"] = tmp;
                 $scope.numberOfItemsInCart--;
                 if ($scope.numberOfItemsInCart < 0) $scope.numberOfItemsInCart = 0;
-                $scope.totalAmount = $scope.totalAmount - product.pricing[product.i];
-                if ($scope.totalAmount < 0) $scope.totalAmount = 0;
+                $scope.totalAmount = $scope.totalAmount - product.product_variants[product.variant_i].price;
+                if ($scope.totalAmount < 1) $scope.totalAmount = 0;
             }
         }
-        $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
+
+        $scope.prepareItemForDB(product.product_variants[product.variant_i].depot_id, tmp, product.variant_i);
     }
 
     $scope.clearCart = function (product) {
@@ -93,27 +94,30 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
     }
 
     $scope.removeFromCart = function (product) {
-        if ($scope.userCart.hasOwnProperty(product.depot_ids)) {
+        if ($scope.userCart.hasOwnProperty(product.product_variants[product.variant_i].depot_id)) {
             var tmp = 0;
-            delete $scope.userCart[product.depot_ids];
+            delete $scope.userCart[product.product_variants[product.variant_i].depot_id];
             $scope.numberOfItemsInCart = $scope.numberOfItemsInCart - product.quantity;
-            $scope.totalAmount = $scope.totalAmount - product.pricing[product.i] * product.quantity;
-            $scope.prepareItemForDB(args.addedProduct.depot_ids[args.addedProduct.i], tmp);
+            $scope.totalAmount = $scope.totalAmount - product.product_variants[product.variant_i].price * product.quantity;
+            if ($scope.totalAmount < 1) $scope.totalAmount = 0;
+            $scope.prepareItemForDB(product.product_variants[product.variant_i].depot_id, tmp, product.variant_i);
         }
     }
 
-    $scope.prepareItemForDB = function (depot_ids, itemQuantity, action) {
+    $scope.prepareItemForDB = function (depot_id, itemQuantity, variant_i, action) {
         $scope.addItemToUserDB = {};
-        $scope.addItemToUserDB["depot_ids"] = depot_ids;
+        $scope.addItemToUserDB["depot_id"] = depot_id;
         $scope.addItemToUserDB["quantity"] = itemQuantity;
+        $scope.addItemToUserDB["variant_i"] = variant_i;
         $scope.addItemToUserDB["action"] = action;
 
         $http({
             method: 'POST',
             url: '/api/cart/modifyitem',
             data: {
-                warehouse_id: $scope.addItemToUserDB["depot_ids"],
+                depot_id: $scope.addItemToUserDB["depot_id"],
                 quantity: $scope.addItemToUserDB["quantity"],
+                variant_i: $scope.addItemToUserDB["variant_i"]
             }
         }).then(function successCallback(response) {
             if (!response.data["error"]) {
@@ -123,18 +127,18 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http) {
             console.log("ERROR");
         });
 
-        $http({
-            method: 'GET',
-            url: 'api/cart/usercart'
-        }).then(function successCallback(response) {
-            if (response.data['success'] === true) {
-                $scope.userCart = response.data['cart'];
-            } else {
-            }
-        }, function errorCallback(response) {
-            console.log("error");
-            console.log(response);
-        });
+        // $http({
+        //     method: 'GET',
+        //     url: 'api/cart/usercart'
+        // }).then(function successCallback(response) {
+        //     if (response.data['success'] === true) {
+        //         $scope.userCart = response.data['cart'];
+        //     } else {
+        //     }
+        // }, function errorCallback(response) {
+        //     console.log("error");
+        //     console.log(response);
+        // });
 
     }
 });

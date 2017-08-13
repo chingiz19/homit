@@ -15,11 +15,11 @@
             </div>
         </div>
         <div ng-repeat="product in userCart">
-            <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product)"></button></li>
+            <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product, v_index)"></button></li>
             <ul class="cartBoxUl">
                 <span class="cartBoxText"> 
-                    <li><button class="glyphicon glyphicon-plus-sign plusMinusItem" ng-click="plusItem(product)"></button></li>
-                    <li><button class="glyphicon glyphicon-minus-sign plusMinusItem" ng-click="minusItem(product)"></button></li>
+                    <li><button class="glyphicon glyphicon-plus-sign plusMinusItem" ng-click="plusItem(product, v_index)"></button></li>
+                    <li><button class="glyphicon glyphicon-minus-sign plusMinusItem" ng-click="minusItem(product, v_index)"></button></li>
                 </span>
             </ul>
             <ul class="cartBoxUl">
@@ -28,9 +28,9 @@
             <ul class="cartBoxUl">
                 <span class="cartBoxText"> 
                     <li>{{product.brand}}</li>
-                    <li>X{{product.packagings[product.i]}}</li>
-                    <li>{{product.volumes[product.j]}}</li>
-                    <li>{{product.pricing[product.i]}}C$ CAD</li>
+                    <li>X{{product.product_variant[product.variant_i].packaging}}</li>
+                    <li>{{product.product_variant[product.variant_i].volume}}</li>
+                    <li>{{product.product_variant[product.variant_i].price}}C$ CAD</li>
                     <li>#{{product.quantity}}</li>
                 </span>
             </ul>
