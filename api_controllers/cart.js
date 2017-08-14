@@ -201,7 +201,7 @@ var getFormattedProducts = function (products) {
         var product = products[i];
         var imageLocation = "/resources/images/products/"+product.category.toLowerCase()+"/";
         // Add to tmpResult
-        tmpResult[product.product_id] = {
+        tmpResult[product.depot_id] = {
             depot_id: product.depot_id,
             packaging: product.packaging,
             volume: product.volume,
