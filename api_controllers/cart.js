@@ -194,15 +194,23 @@ var convertArrayToObject = function (initialArray) {
     return getFormattedProducts(initialArray);
 };
 
-
 var getFormattedProducts = function (products) {
     var tmpResult = {};
 
-    for (var i=0; i < products.length; i++) {
+    for (var i=0; i < products.length; i++){
         var product = products[i];
         var imageLocation = "/resources/images/products/"+product.category.toLowerCase()+"/";
-
-        tmpResult[product.product_id] = {
+        if (tmpResult.hasOwnProperty(product.product_id)){
+            // Add to product variant
+            tmpResult[product.product_id].product_variants.push({
+                "depot_id": product.depot_id,
+                "packaging": product.packaging,
+                "volume": product.volume,
+                "price": product.price
+            });
+        } else {
+            // Add to tmpResult
+            tmpResult[product.product_id] = {
                 product_id: products[i].product_id,
                 listing_id: products[i].listing_id,
                 subcategory: products[i].subcategory,
@@ -215,22 +223,24 @@ var getFormattedProducts = function (products) {
                 quantity: products[i].quantity,
                 container: products[i].container,
                 category: products[i].category,
-                depot_id: product.depot_id,
-                packaging: product.packaging,
-                volume: product.volume,
-                price: product.price,
-                product_variants: ""
-        };
-
-        // convert object of objects to array of objects
-        var results = [];
-        for (var r in tmpResult){
-            if (tmpResult.hasOwnProperty(r)){
-                results.push(tmpResult[r]);
-            }
-        };
-        return results;
+                product_variants: [{
+                    "depot_id": product.depot_id,
+                    "packaging": product.packaging,
+                    "volume": product.volume,
+                    "price": product.price
+                }]
+            };
+        }
     };
+
+    // convert object of objects to array of objects
+    var results = [];
+    for (var r in tmpResult){
+        if (tmpResult.hasOwnProperty(r)){
+            results.push(tmpResult[r]);
+        }
+    };
+    return results;
 }
 
 module.exports = router;
