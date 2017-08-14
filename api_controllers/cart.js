@@ -164,7 +164,7 @@ var getUserCart = function (user_id) {
                         listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
                         listing.product_brand AS brand, listing.product_name AS name,
                         listing.product_description AS description, product.product_image AS image,
-                        depot.price AS price, depot.quantity AS quantity, packaging.name AS packaging,
+                        depot.price AS price, depot.quantity AS depot_quantity, packaging.name AS packaging,
                         container.name AS container, volume.volume_name AS volume, category.name AS category
                     FROM 
                         catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
@@ -200,38 +200,26 @@ var getFormattedProducts = function (products) {
     for (var i=0; i < products.length; i++){
         var product = products[i];
         var imageLocation = "/resources/images/products/"+product.category.toLowerCase()+"/";
-        if (tmpResult.hasOwnProperty(product.product_id)){
-            // Add to product variant
-            tmpResult[product.product_id].product_variants.push({
-                "depot_id": product.depot_id,
-                "packaging": product.packaging,
-                "volume": product.volume,
-                "price": product.price
-            });
-        } else {
-            // Add to tmpResult
-            tmpResult[product.product_id] = {
-                product_id: products[i].product_id,
-                listing_id: products[i].listing_id,
-                subcategory: products[i].subcategory,
-                type: products[i].type,
-                brand: products[i].brand,
-                name: products[i].name,
-                i: products[i].variant_i,
-                description: products[i].description,
-                image: imageLocation+products[i].image,
-                quantity: products[i].quantity,
-                container: products[i].container,
-                category: products[i].category,
-                product_variants: [{
-                    "depot_id": product.depot_id,
-                    "packaging": product.packaging,
-                    "volume": product.volume,
-                    "price": product.price
-                }]
-            };
-        }
-    };
+        // Add to tmpResult
+        tmpResult[product.product_id] = {
+            depot_id: product.depot_id,
+            packaging: product.packaging,
+            volume: product.volume,
+            price: product.price,
+            product_id: products[i].product_id,
+            listing_id: products[i].listing_id,
+            subcategory: products[i].subcategory,
+            type: products[i].type,
+            brand: products[i].brand,
+            name: products[i].name,
+            description: products[i].description,
+            image: imageLocation+products[i].image,
+            quantity: products[i].quantity,
+            container: products[i].container,
+            category: products[i].category,
+            product_variants: ""
+        };
+    }
 
     // convert object of objects to array of objects
     var results = [];
