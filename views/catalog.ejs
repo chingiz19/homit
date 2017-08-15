@@ -69,11 +69,7 @@
                                 <div class="itemBox">
                                     <ul>
                                     <li><img ng-src={{product.image}} width="225" height="225"></li>
-                                        <span> 
-                                            <!--<div class="packAndSize">
-                                                <li class="pack">X{{product_variant.packaging}}</li>
-                                                <li class="size">{{product_variant.volume}}</li>
-                                            </div>-->
+                                        <!--<span> 
                                             <select ng-model="product.selectedVolume" ng-change="product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0]">
                                                 <option ng-repeat="volume in product.product_variants.all_volumes" value="{{volume}}">{{ volume }}</option>
                                             </select>
@@ -83,14 +79,34 @@
                                             <li>{{product.product_variants[product.selectedVolume][product.selectedPack].price}}C$</li>
                                             <li>{{product.brand}} </li>
                                             <li>{{product.type}}</li>
+                                        </span>-->
+
+                                        <span> 
+                                            <div>
+                                                <ul>
+                                                    <li style="display:inline"><button ng-click="previousVolume(product)" class="addBtn glyphicon glyphicon-chevron-left"></button></li>
+                                                    <li style="display:inline" class="nHighltdVol">{{product.product_variants.all_volumes[product.volumeI-1]}}</li>
+                                                    <li style="display:inline" class="highltdVol">{{product.product_variants.all_volumes[product.volumeI]}}</li>
+                                                    <li style="display:inline" class="nHighltdVol">{{product.product_variants.all_volumes[product.volumeI+1]}}</li>
+                                                    <li style="display:inline"><button ng-click="nextVolume(product)" class="addBtn glyphicon glyphicon-chevron-right"></button></li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <ul>
+                                                    <li style="display:inline"><button ng-click="previousPack(product)" class="addBtn glyphicon glyphicon-chevron-left"></button></li>
+                                                    <li style="display:inline" class="nHighltdPack">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ-1]}}</li>
+                                                    <li style="display:inline" class="highltdPack">X{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]}}</li>
+                                                    <li style="display:inline" class="nHighltdPack">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ+1]}}</li>
+                                                    <li style="display:inline"><button ng-click="nextPack(product)" class="addBtn glyphicon glyphicon-chevron-right"></button></li>
+                                                </ul>
+                                            </div>
+                                            <li class="brand">{{product.brand}} </li>
+                                            <li class="price">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</li>
+                                            <!--<li>{{product.name}}</li>-->
                                         </span>
                                     </ul>
                                     <div>
                                         <button class="btn-primary" ng-click="addToCart(product, v_index)"> Add to cart </button>
-                                        <!--<button ng-click="plusChangePack(product)" class="glyphicon glyphicon-chevron-up plusPack"></button>
-                                        <button ng-click="minusChangeVolume(product)" class="glyphicon glyphicon-chevron-left minusSize"></button>
-                                        <button ng-click="plusChangeVolume(product)" class="glyphicon glyphicon-chevron-right plusSize"></button>
-                                        <button ng-click="minusChangePack(product)" class="glyphicon glyphicon-chevron-down minusPack"></button>-->
                                     </div>
                                 </div>
                             </div>

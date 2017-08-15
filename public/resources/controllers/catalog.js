@@ -46,6 +46,8 @@ $scope.productUrl;
             $scope.products.forEach(function(product){
                 product.selectedVolume = product.product_variants.all_volumes[0];
                 product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
+                product.volumeI=0;
+                product.packJ=0;
                 
             })
             $scope.subcategories = response.data['subcategories'];
@@ -170,6 +172,42 @@ $scope.productUrl;
         });
     };
     
+    $scope.nextVolume=function(product){
+        $scope.numberOfVolumes=product.product_variants.all_volumes.length;
+        $scope.volumeI=product.volumeI;
+        if(product.volumeI<$scope.numberOfVolumes-1){
+            $scope.volumeI=$scope.volumeI+1;
+        }
+        product.volumeI=$scope.volumeI;
+        product.packJ=0;
+    }
+
+    $scope.previousVolume=function(product){
+        $scope.volumeI=product.volumeI;
+        if($scope.volumeI>0){
+            $scope.volumeI=$scope.volumeI-1;
+        }
+        product.volumeI=$scope.volumeI;
+        product.packJ=0;
+    }
+
+    $scope.nextPack=function(product){
+        $scope.numberOfPacks=product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings.length;
+        $scope.packJ=product.packJ;
+        if(product.packJ<$scope.numberOfPacks-1){
+            $scope.packJ=$scope.packJ+1;
+        }
+        product.packJ=$scope.packJ;
+    }
+
+    $scope.previousPack=function(product){
+        $scope.packJ=product.packJ;
+        if($scope.packJ>0){
+            $scope.packJ=$scope.packJ-1;
+        }
+        product.packJ=$scope.packJ;
+    }
+
 }]);
 
     
