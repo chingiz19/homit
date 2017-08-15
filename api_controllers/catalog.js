@@ -263,15 +263,26 @@ var getFormattedProducts = function (products) {
 
     for (var i=0; i < products.length; i++){
         var product = products[i];
+        var p_package = product.packaging;
+        var p_volume = product.volume;
         var imageLocation = "/resources/images/products/"+product.category.toLowerCase()+"/";
+
         if (tmpResult.hasOwnProperty(product.product_id)){
             // Add to product variant
-            tmpResult[product.product_id].product_variants.push({
-                "depot_id": product.depot_id,
-                "packaging": product.packaging,
-                "volume": product.volume,
-                "price": product.price
-            });
+            if (tmpResult[product.product_id].product_variants.hasOwnProperty(p_volume)){
+                    tmpResult[product.product_id].product_variants[p_volume][p_package] = {
+                        "depot_id": product.depot_id,
+                        "price": product.price
+                    }
+            } else{
+                tmpResult[product.product_id].product_variants[p_volume] = {
+                    all_packagings: []
+                };
+                tmpResult[product.product_id].product_variants[p_volume][p_package] = {
+                    "depot_id": product.depot_id,
+                    "price": product.price
+                }
+            }
         } else {
             // Add to tmpResult
             tmpResult[product.product_id] = {
@@ -286,14 +297,23 @@ var getFormattedProducts = function (products) {
                 quantity: products[i].quantity,
                 container: products[i].container,
                 category: products[i].category,
-                product_variants: [{
-                    "depot_id": product.depot_id,
-                    "packaging": product.packaging,
-                    "volume": product.volume,
-                    "price": product.price
-                }]
+                product_variants: {
+                    all_volumes: []
+                },
             };
+            tmpResult[product.product_id].product_variants[p_volume] = {
+                all_packagings: []
+            };
+            tmpResult[product.product_id].product_variants[p_volume][p_package] = {
+                "depot_id": product.depot_id,
+                "price": product.price
+            }
         }
+
+        if (!tmpResult[product.product_id].product_variants.all_volumes.includes(p_volume)) 
+            tmpResult[product.product_id].product_variants.all_volumes.push(p_volume);
+        if (!tmpResult[product.product_id].product_variants[p_volume].all_packagings.includes(p_package)) 
+            tmpResult[product.product_id].product_variants[p_volume].all_packagings.push(p_package);
     };
 
     // convert object of objects to array of objects

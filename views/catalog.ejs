@@ -65,28 +65,32 @@
                     </div>
                     <div class="col-md-9 box">
                         <div ng-repeat="product in products">
-                            <div ng-repeat="product_variant in product.product_variants" ng-init="v_index = $index">
-                                <div ng-show="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedBrands(product.brand)" class="col-md-4 ">
-                                    <div class="itemBox">
-                                        <ul>
-                                        <li><img ng-src={{product.image}} width="225" height="225"></li>
-                                            <span> 
-                                                <div class="packAndSize">
-                                                    <li class="pack">X{{product_variant.packaging}}</li>
-                                                    <li class="size">{{product_variant.volume}}</li>
-                                                </div>
-                                                <li>{{product_variant.price}}C$</li>
-                                                <li>{{product.brand}} </li>
-                                                <li>{{product.type}}</li>
-                                            </span>
-                                        </ul>
-                                        <div>
-                                            <button class="btn-primary" ng-click="addToCart(product, v_index)"> Add to cart </button>
-                                            <!--<button ng-click="plusChangePack(product)" class="glyphicon glyphicon-chevron-up plusPack"></button>
-                                            <button ng-click="minusChangeVolume(product)" class="glyphicon glyphicon-chevron-left minusSize"></button>
-                                            <button ng-click="plusChangeVolume(product)" class="glyphicon glyphicon-chevron-right plusSize"></button>
-                                            <button ng-click="minusChangePack(product)" class="glyphicon glyphicon-chevron-down minusPack"></button>-->
-                                        </div>
+                            <div ng-show="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedBrands(product.brand)" class="col-md-4 ">
+                                <div class="itemBox">
+                                    <ul>
+                                    <li><img ng-src={{product.image}} width="225" height="225"></li>
+                                        <span> 
+                                            <!--<div class="packAndSize">
+                                                <li class="pack">X{{product_variant.packaging}}</li>
+                                                <li class="size">{{product_variant.volume}}</li>
+                                            </div>-->
+                                            <select ng-model="product.selectedVolume" ng-change="product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0]">
+                                                <option ng-repeat="volume in product.product_variants.all_volumes" value="{{volume}}">{{ volume }}</option>
+                                            </select>
+                                            <select ng-model="product.selectedPack">
+                                                <option ng-repeat="pack in product.product_variants[product.selectedVolume].all_packagings" value="{{pack}}">{{ pack }}</option>
+                                            </select>
+                                            <li>{{product.product_variants[product.selectedVolume][product.selectedPack].price}}C$</li>
+                                            <li>{{product.brand}} </li>
+                                            <li>{{product.type}}</li>
+                                        </span>
+                                    </ul>
+                                    <div>
+                                        <button class="btn-primary" ng-click="addToCart(product, v_index)"> Add to cart </button>
+                                        <!--<button ng-click="plusChangePack(product)" class="glyphicon glyphicon-chevron-up plusPack"></button>
+                                        <button ng-click="minusChangeVolume(product)" class="glyphicon glyphicon-chevron-left minusSize"></button>
+                                        <button ng-click="plusChangeVolume(product)" class="glyphicon glyphicon-chevron-right plusSize"></button>
+                                        <button ng-click="minusChangePack(product)" class="glyphicon glyphicon-chevron-down minusPack"></button>-->
                                     </div>
                                 </div>
                             </div>

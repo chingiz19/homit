@@ -44,9 +44,9 @@ $scope.productUrl;
         if (response.data['success'] === "true") {
             $scope.products = response.data['products'];
             $scope.products.forEach(function(product){
-                // i represent pack count, j represent size
-                product["i"] = 0;
-                product["j"]=0;
+                product.selectedVolume = product.product_variants.all_volumes[0];
+                product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
+                
             })
             $scope.subcategories = response.data['subcategories'];
             $scope.packings = response.data['packagings'];
