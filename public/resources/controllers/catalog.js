@@ -164,12 +164,27 @@ $scope.productUrl;
         }
     };
 
-    $scope.addToCart = function(product, i) {
+    $scope.addToCart = function(product) {
         var p = jQuery.extend(true, {}, product);
-        p.variant_i = i;
-        $rootScope.$broadcast("addToCart", {
-            addedProduct: p
-        });
+        
+        //prepare product for cart
+        p.volume = p.selectedVolume;
+        p.packaging = p.selectedPack;
+        p.price = p.product_variants[p.volume][p.packaging].price;
+        p.depot_id = p.product_variants[p.volume][p.packaging].depot_id;
+
+        delete p["description"];
+        delete p["listing_id"];
+        delete p["product_id"];
+        delete p["product_variants"];
+        delete p["subcategory"];
+        delete p["type"];
+        delete p["selectedVolume"];
+        delete p["selectedPack"];
+        delete p["category"];
+        delete p["container"];
+
+        $rootScope.$broadcast("addToCart", p);
     };
     
     $scope.nextVolume=function(product){
@@ -179,7 +194,9 @@ $scope.productUrl;
             $scope.volumeI=$scope.volumeI+1;
         }
         product.volumeI=$scope.volumeI;
+        product.selectedVolume = product.product_variants.all_volumes[$scope.numberOfVolumes];
         product.packJ=0;
+        product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
     }
 
     $scope.previousVolume=function(product){
@@ -188,7 +205,9 @@ $scope.productUrl;
             $scope.volumeI=$scope.volumeI-1;
         }
         product.volumeI=$scope.volumeI;
+        product.selectedVolume = product.product_variants.all_volumes[$scope.numberOfVolumes];
         product.packJ=0;
+        product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
     }
 
     $scope.nextPack=function(product){
@@ -198,6 +217,7 @@ $scope.productUrl;
             $scope.packJ=$scope.packJ+1;
         }
         product.packJ=$scope.packJ;
+        product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[product.packJ];
     }
 
     $scope.previousPack=function(product){
@@ -206,6 +226,7 @@ $scope.productUrl;
             $scope.packJ=$scope.packJ-1;
         }
         product.packJ=$scope.packJ;
+        product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[product.packJ];
     }
 
 }]);

@@ -25,7 +25,6 @@ router.get('/usercart', function (req, res, next) {
 router.post('/modifyitem', function (req, res, next) {
     var depot_id = req.body.depot_id;
     var quantity = req.body.quantity;
-    var variant_i = req.body.variant_i;
 
     if (!req.session.user) {
         res.json({
@@ -36,7 +35,7 @@ router.post('/modifyitem', function (req, res, next) {
         });
     } else {
         var user_id = req.session.user.id;
-        modifyProductInCart(user_id, depot_id, quantity, variant_i).then(function (result) {
+        modifyProductInCart(user_id, depot_id, quantity).then(function (result) {
             var isSuccess = false;
             if (result != false) {
                 isSuccess = true;
@@ -100,7 +99,7 @@ var getCartProduct = function (user_id, depot_id) {
 /**
  * Modifying products in cart
  */
-var modifyProductInCart = function (user_id, depot_id, quantity, variant_i) {
+var modifyProductInCart = function (user_id, depot_id, quantity) {
     var user_cart_info = "user_cart_info";
     if (quantity == 0) {
         return getCartProduct(user_id, depot_id).then(function (cart) {
@@ -116,8 +115,7 @@ var modifyProductInCart = function (user_id, depot_id, quantity, variant_i) {
         return getCartProduct(user_id, depot_id).then(function (cart) {
             if (cart['id'] > 0) {
                 var data = {
-                    quantity: quantity,
-                    variant_i: variant_i
+                    quantity: quantity
                 };
                 var key = {
                     id: cart['id']
@@ -129,8 +127,7 @@ var modifyProductInCart = function (user_id, depot_id, quantity, variant_i) {
                 var data = {
                     user_id: user_id,
                     depot_id: depot_id,
-                    quantity: quantity,
-                    variant_i: variant_i
+                    quantity: quantity
                 };
                 db.insertQuery(user_cart_info, data).then(function (inserted) {
                     return inserted.id;
@@ -159,13 +156,12 @@ var clearCart = function (user_id) {
  */
 var getUserCart = function (user_id) {
     var sqlQuery = `SELECT 
-                        usercart.user_id AS user_id, usercart.quantity AS quantity, usercart.variant_i AS variant_i,
-                        depot.id AS depot_id, depot.product_id AS product_id,
-                        listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
+                        usercart.user_id AS user_id, usercart.quantity AS quantity,
+                        depot.id AS depot_id,
                         listing.product_brand AS brand, listing.product_name AS name,
-                        listing.product_description AS description, product.product_image AS image,
+                        product.product_image AS image, category.name AS category,
                         depot.price AS price, depot.quantity AS depot_quantity, packaging.name AS packaging,
-                        container.name AS container, volume.volume_name AS volume, category.name AS category
+                        volume.volume_name AS volume
                     FROM 
                         catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
                         catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
@@ -177,7 +173,7 @@ var getUserCart = function (user_id) {
                         AND container.id = product.container_id AND packaging.id = depot.packaging_id
                         AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND ?
                     ORDER BY 
-                        listing_id, product_id, depot_id`;
+                        depot_id`;
     var data = { "usercart.user_id": user_id };
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
         return getFormattedProducts(dbResult);
@@ -206,29 +202,15 @@ var getFormattedProducts = function (products) {
             packaging: product.packaging,
             volume: product.volume,
             price: product.price,
-            product_id: products[i].product_id,
-            listing_id: products[i].listing_id,
-            subcategory: products[i].subcategory,
-            type: products[i].type,
             brand: products[i].brand,
             name: products[i].name,
-            description: products[i].description,
             image: imageLocation+products[i].image,
             quantity: products[i].quantity,
-            container: products[i].container,
-            category: products[i].category,
-            product_variants: ""
         };
     }
 
     // convert object of objects to array of objects
-    var results = [];
-    for (var r in tmpResult){
-        if (tmpResult.hasOwnProperty(r)){
-            results.push(tmpResult[r]);
-        }
-    };
-    return results;
+    return tmpResult;
 }
 
 module.exports = router;

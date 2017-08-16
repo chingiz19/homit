@@ -12,7 +12,7 @@
                 Total: <span class="pull-right">{{totalAmount}}C$</span>
             </div>
         </div>
-        <div ng-repeat="product in userCart">
+        <div ng-repeat="product in userCart track by product.depot_id">
             <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product, v_index)"></button></li>
             <ul class="cartBoxUl">
                 <span class="cartBoxText"> 
@@ -25,11 +25,12 @@
             </ul>
             <ul class="cartBoxUl">
                 <span class="cartBoxText"> 
-                    <li>{{product.brand}}</li>
-                    <li>X{{product.product_variant[product.variant_i].packaging}}</li>
-                    <li>{{product.product_variant[product.variant_i].volume}}</li>
-                    <li>{{product.product_variant[product.variant_i].price}}C$ CAD</li>
-                    <li>#{{product.quantity}}</li>
+                    <li><i>{{ product.brand }}</i></li>
+                    <li>{{ product.name }}</li>
+                    <li>X{{ product.packaging }}</li>
+                    <li>{{ product.volume }}</li>
+                    <li>{{ product.price }}C$ CAD</li>
+                    <li>#{{ product.quantity }}</li>
                 </span>
             </ul>
         </div>

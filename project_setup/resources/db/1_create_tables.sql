@@ -120,7 +120,6 @@ CREATE TABLE user_cart_info (
 	user_id INT NOT NULL, 
 	depot_id INT NOT NULL, 
 	quantity INT NOT NULL,
-	variant_i INT NOT NULL,
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_id, depot_id), 

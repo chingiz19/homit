@@ -9,71 +9,91 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http, adva
         url: 'api/cart/usercart'
     }).then(function successCallback(response) {
         if (response.data['success'] === true) {
-            $scope.userCart = response.data['cart'];
-            for(var a in $scope.userCart){
-                $scope.tempTotalAmount=$scope.userCart[a]['quantity']*$scope.userCart[a]['price'];
-                $scope.totalAmount=$scope.totalAmount+$scope.tempTotalAmount;
-                $scope.tempNumberOfItemsInCart=$scope.userCart[a]['quantity'];
-                $scope.numberOfItemsInCart=$scope.numberOfItemsInCart+$scope.tempNumberOfItemsInCart;
+            if (Object.entries($scope.userCart).length == 0){
+                $scope.userCart = response.data['cart'];
+            } else {
+                advancedStorage.setUserCart({});
+                var remoteCart = Object.entries(response.data['cart']);
+                for (var i=0; i < remoteCart.length; i++){
+                    var item = remoteCart[i];
+                    var depot_id = item[0];
+                    if ($scope.userCart.hasOwnProperty(depot_id)){
+                        // add to quantity, not exceeding 10
+                        var tmpQuantity = $scope.userCart[depot_id].quantity;
+                        tmpQuantity += item[1].quantity;
+                        
+                        if (tmpQuantity >= 10) tmpQuantity = 10;
+
+                        $scope.userCart[depot_id].quantity = tmpQuantity;
+                    } else {
+                        $scope.userCart[depot_id] = item[1];
+                    }
+                }
             }
-        } else {
+        }
+
+        for(var a in $scope.userCart){
+            $scope.totalAmount = $scope.totalAmount + ($scope.userCart[a]['quantity'] * $scope.userCart[a]['price']);
+            $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[a]['quantity'];
+            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
+            $scope.prepareItemForDB(a, $scope.userCart[a].quantity);
         }
     }, function errorCallback(response) {
+        $scope.userCart = advancedStorage.getUserCart($scope);
         console.log("error");
         console.log(response);
     });
 
-    $scope.$on("addToCart", function (event, args) {
-        var tmp = 1;
-        if ($scope.userCart.hasOwnProperty(args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id)) {
-            tmp = $scope.userCart[args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id]["quantity"];
-            tmp++;
-            if (tmp >= 10) tmp = 10;
-            else {
-                $scope.userCart[args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id]["quantity"] = tmp;
-                $scope.numberOfItemsInCart++;
-                $scope.totalAmount = $scope.totalAmount + args.addedProduct.product_variants[args.addedProduct.variant_i].price;
-            }
-        } else {
-            $scope.userCart[args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id] = args.addedProduct;
-            $scope.userCart[args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id]["quantity"] = tmp;
+    $scope.$on("addToCart", function (event, product) {
+        var tmpQuantity = 1;
+        if ($scope.userCart.hasOwnProperty(product.depot_id)) {
+            tmpQuantity = $scope.userCart[product.depot_id]["quantity"];
+            tmpQuantity++;
+
+            if (tmpQuantity >= 10) tmpQuantity = 10;
+
+            $scope.userCart[product.depot_id]["quantity"] = tmpQuantity;
             $scope.numberOfItemsInCart++;
-            $scope.totalAmount = $scope.totalAmount + args.addedProduct.product_variants[args.addedProduct.variant_i].price;
+            $scope.totalAmount = $scope.totalAmount + product.price;
+            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
+        } else {
+            $scope.userCart[product.depot_id] = product;
+            $scope.userCart[product.depot_id]["quantity"] = tmpQuantity;
+            $scope.numberOfItemsInCart++;
+            $scope.totalAmount = $scope.totalAmount + product.price;
+            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
         }
-        $scope.prepareItemForDB(args.addedProduct.product_variants[args.addedProduct.variant_i].depot_id, tmp, args.addedProduct.variant_i);
+        $scope.prepareItemForDB(product.depot_id,  $scope.userCart[product.depot_id].quantity);
     })
 
     $scope.plusItem = function (product) {
-        var tmp = 1;
-        if ($scope.userCart.hasOwnProperty(product.product_variants[product.variant_i].depot_id)) {
-            tmp = $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"];
-            tmp++;
-            if (tmp >= 10) tmp = 10;
-            else {
-                $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"] = tmp;
-                $scope.numberOfItemsInCart++;
-                $scope.totalAmount = $scope.totalAmount + product.product_variants[product.variant_i].price;
-            }
+        var tmpQuantity = 1;
+        if ($scope.userCart.hasOwnProperty(product.depot_id) && $scope.userCart[product.depot_id]["quantity"] < 10) {
+            tmpQuantity = $scope.userCart[product.depot_id]["quantity"];
+            tmpQuantity++;
+            
+            $scope.userCart[product.depot_id]["quantity"] = tmpQuantity;
+            $scope.numberOfItemsInCart++;
+            $scope.totalAmount = $scope.totalAmount + product.price;
+            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
         }
-        $scope.prepareItemForDB(product.product_variants[product.variant_i].depot_id, tmp, product.variant_i);
+        $scope.prepareItemForDB(product.depot_id, $scope.userCart[product.depot_id].quantity);
     }
 
     $scope.minusItem = function (product) {
-        var tmp = 1;
-        if ($scope.userCart.hasOwnProperty(product.product_variants[product.variant_i].depot_id) && $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"] >= 1) {
-            tmp = $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"];
-            tmp--;
-            if (tmp < 1) tmp = 1;
-            else {
-                $scope.userCart[product.product_variants[product.variant_i].depot_id]["quantity"] = tmp;
-                $scope.numberOfItemsInCart--;
-                if ($scope.numberOfItemsInCart < 0) $scope.numberOfItemsInCart = 0;
-                $scope.totalAmount = $scope.totalAmount - product.product_variants[product.variant_i].price;
-                if ($scope.totalAmount < 1) $scope.totalAmount = 0;
-            }
+        var tmpQuantity = 1;
+        if ($scope.userCart.hasOwnProperty(product.depot_id) && $scope.userCart[product.depot_id]["quantity"] > 1) {
+            tmpQuantity = $scope.userCart[product.depot_id]["quantity"];
+            tmpQuantity--;
+
+            $scope.userCart[product.depot_id]["quantity"] = tmpQuantity;
+            $scope.numberOfItemsInCart--;
+
+            $scope.totalAmount = $scope.totalAmount - product.price;
+            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
         }
 
-        $scope.prepareItemForDB(product.product_variants[product.variant_i].depot_id, tmp, product.variant_i);
+        $scope.prepareItemForDB(product.depot_id, $scope.userCart[product.depot_id].quantity);
     }
 
     $scope.clearCart = function (product) {
@@ -85,8 +105,8 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http, adva
             method: 'POST',
             url: '/api/cart/clear',
         }).then(function successCallback(response) {
-            if (!response.data["error"]) {
-            } else {
+            if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
+                advancedStorage.setUserCart($scope.userCart);
             }
         }, function errorCallback(response) {
             console.log("ERROR");
@@ -94,21 +114,19 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http, adva
     }
 
     $scope.removeFromCart = function (product) {
-        if ($scope.userCart.hasOwnProperty(product.product_variants[product.variant_i].depot_id)) {
-            var tmp = 0;
-            delete $scope.userCart[product.product_variants[product.variant_i].depot_id];
+        if ($scope.userCart.hasOwnProperty(product.depot_id)) {
+            delete $scope.userCart[product.depot_id];
             $scope.numberOfItemsInCart = $scope.numberOfItemsInCart - product.quantity;
-            $scope.totalAmount = $scope.totalAmount - product.product_variants[product.variant_i].price * product.quantity;
-            if ($scope.totalAmount < 1) $scope.totalAmount = 0;
-            $scope.prepareItemForDB(product.product_variants[product.variant_i].depot_id, tmp, product.variant_i);
+            $scope.totalAmount = $scope.totalAmount - (product.price * product.quantity);
+            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
+            $scope.prepareItemForDB(product.depot_id, 0);
         }
     }
 
-    $scope.prepareItemForDB = function (depot_id, itemQuantity, variant_i, action) {
+    $scope.prepareItemForDB = function (depot_id, itemQuantity, action) {
         $scope.addItemToUserDB = {};
         $scope.addItemToUserDB["depot_id"] = depot_id;
         $scope.addItemToUserDB["quantity"] = itemQuantity;
-        $scope.addItemToUserDB["variant_i"] = variant_i;
         $scope.addItemToUserDB["action"] = action;
 
         $http({
@@ -116,12 +134,11 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http, adva
             url: '/api/cart/modifyitem',
             data: {
                 depot_id: $scope.addItemToUserDB["depot_id"],
-                quantity: $scope.addItemToUserDB["quantity"],
-                variant_i: $scope.addItemToUserDB["variant_i"]
+                quantity: $scope.addItemToUserDB["quantity"]
             }
         }).then(function successCallback(response) {
-            if (!response.data["error"]) {
-            } else {
+            if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
+                advancedStorage.setUserCart($scope.userCart);
             }
         }, function errorCallback(response) {
             console.log("ERROR");
