@@ -194,7 +194,7 @@ $scope.productUrl;
             $scope.volumeI=$scope.volumeI+1;
         }
         product.volumeI=$scope.volumeI;
-        product.selectedVolume = product.product_variants.all_volumes[$scope.numberOfVolumes];
+        product.selectedVolume = product.product_variants.all_volumes[product.volumeI];
         product.packJ=0;
         product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
     }
@@ -205,7 +205,7 @@ $scope.productUrl;
             $scope.volumeI=$scope.volumeI-1;
         }
         product.volumeI=$scope.volumeI;
-        product.selectedVolume = product.product_variants.all_volumes[$scope.numberOfVolumes];
+        product.selectedVolume = product.product_variants.all_volumes[product.volumeI];
         product.packJ=0;
         product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
     }

@@ -50,7 +50,7 @@
                                 <input ng-if="userInfo" class="userInput" type="text" placeholder="#706 10 Brentwood common road NW">
                                 <input ng-hide="userInfo" class="userInput" type="text" ng-model="orderer.DeliveryAddress" placeholder=...>
                             </md-input-container>
-                            <li class="payNowBtn"><button type="submit" class="btn btn-success" ng-click="PaimentProcessed(orderer)">Pay Now</button></li>
+                            <li class="HomeItBtn"><button type="submit" class="btn btn-success" ng-click="PaimentProcessed(orderer)">Home It</button></li>
                         </ul>
                     </div>
                 </div>
@@ -70,14 +70,15 @@
                             </span>
                         </ul>
                         <ul class="itemImageBox">
-                            <li><img ng-src={{product.image}} width="70" height="100"></li>
+                            <li><img ng-src={{product.image}} width="125" height="125"></li>
                         </ul>
                         <ul class="cartItemTextBox">
                             <span class=""> 
-                                <li>{{product.brand}}</li>
-                                <li>X{{product.packagings[product.i]}}</li>
-                                <li>{{product.volumes[product.j]}}</li>
-                                <li>{{product.pricing[product.i]}}C$ CAD</li>
+                                <li><i>{{product.brand}}</i></li>
+                                <li>{{product.name}}</li>
+                                <li>X{{product.packaging}}</li>
+                                <li>{{product.volume}}</li>
+                                <li>{{product.price}}C$</li>
                                 <li>#{{product.quantity}}</li>
                             </span>
                         </ul>

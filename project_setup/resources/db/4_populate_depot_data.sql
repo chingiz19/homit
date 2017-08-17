@@ -8,8 +8,8 @@ INSERT INTO `delivery_db`.`catalog_categories` (id,name) VALUES (4,'Others');
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (1,'Beers',1);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (2,'White',2);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (3,'Red',2);
-INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (4,'Sparkling wine',2);
-INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (5,'Fortified wine',2);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (4,'Sparkling Wine',2);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (5,'Fortified Wine',2);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (6,'Whiskey',3);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (7,'Vodka',3);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (8,'Brandy',3);
@@ -19,12 +19,13 @@ INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (1
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (12,'Liquers',3);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (13,'Ice tea',4);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (14,'Pop',4);
-INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (15,'Infused wine',3);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (15,'Infused Wine',2);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (16,'Juices',4);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (17,'Miscellaneous',2);
-INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (18,'Others',4);
-INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (19,'Others',1);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (18,'Miscellaneous',4);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (19,'Miscellaneous',1);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (20,'Miscellaneous',3);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (21,'Snack Mix',4);
 
 
 /* Insert types */
@@ -34,28 +35,28 @@ INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (3,'Bel
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (4,'Pilsner',1);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (5,'IPA',1);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (6,'Cider',1);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (7,'Fruit beer',1);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (7,'Fruit Beer',1);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (8,'Moscato',2);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (9,'Sauvignon blanc',2);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (9,'Sauvignon Blanc',2);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (10,'Riesling',2);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (11,'Pinot Grigio',2);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (12,'Chardonnay',2);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (13,'Cabernet Sauvignon',3);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (14,'Malbec',3);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (15,'Merlot',3);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (16,'Pinot noir',3);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (16,'Pinot Noir',3);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (17,'Shiraz',3);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (18,'Zinfandel',3);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (19,'Prosecco',4);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (19,'Prosecco ',4);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (20,'Rose',4);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (21,'Champagne',4);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (22,'Port wine',5);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (22,'Port Wine ',5);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (23,'Sherry',5);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (24,'Vermouth',5);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (25,'Palomino',5);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (26,'Bourbon',6);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (27,'Scotch',6);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (28,'Single malt',6);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (28,'Single Malt',6);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (29,'Blended',6);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (30,'Irish',6);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (31,'Rye',6);
@@ -66,37 +67,41 @@ INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (35,'Co
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (36,'Gin',9);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (37,'Rum',10);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (38,'Tequila',11);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (39,'Ice tea',13);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (39,'Ice Tea',13);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (40,'Pop',14);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (41,'Infused wine',15);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (41,'Infused Wine',15);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (42,'Juices',16);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (43,'Tia Maria',12);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (44,'Irish cream',12);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (43,'Tia Maria ',12);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (44,'Irish Cream',12);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (45,'Tequila Rose',12);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (46,'Cream Liquors',12);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (47,'Fruit Liquors',12);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (48,'Herbal Liquors',12);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (49,'Nut Flavored liquor',12);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (50,'Wheat beer',1);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (50,'Wheat Beer',1);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (51,'Syrah',2);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (52,'Chianti',3);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (53,'Miscellaneous',17);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (54,'Water',18);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (55,'Energy Drinks',18);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (55,'Energy Drink',18);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (56,'Extras',18);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (57,'Red Blend',3);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (58,'White Blend',2);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (59,'Sake',17);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (60,'Ice Wine',2);
-INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (61,'Others',1);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (61,'Others',18);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (62,'Miscellaneous',20);
-
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (63,'Chips',21);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (64,'Popcorn',21);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (65,'Cheese Mix',21);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (66,'Miscellaneous',19);
 
 /* Insert packaging types */
 INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (1,'Bottle');
 INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (2,'Can');
 INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (3,'Keg');
 INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (4,'Box');
+INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (5,'Pack');
 
 /* Insert packaging volumes */
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (1,'250ml');
@@ -128,6 +133,12 @@ INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (26
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (27,'20oz');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (28,'440ml');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (29,'341ml');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (30,'156g');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (31,'310g');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (32,'255g');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (33,'300g');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (34,'180g');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (35,'200g');
 
 
 /* Insert packagings */

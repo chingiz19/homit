@@ -21,7 +21,8 @@ li {list-style-type: none;}
 
 .itemImageBox{
     position: relative;
-    left: 70px;
+    top:10%; left: 3em;
+    line-height: 12em;
     width: 86px;height: 86px;
     display: inline-block;
     align-content: center;
@@ -47,6 +48,7 @@ li {list-style-type: none;}
 
 .removeBtn{
     position: relative;
+    top: 1em;
     left: 270px;
 }
 
@@ -108,7 +110,7 @@ input:focus{
     text-align: center;
 }
 
-.payNowBtn{
+.HomeItBtn{
     position: relative;
     top: 25px; left: 40%;
 }
