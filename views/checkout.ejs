@@ -75,9 +75,9 @@
                         <ul class="cartItemTextBox">
                             <span class=""> 
                                 <li>{{product.brand}}</li>
-                                <li>X{{product.packagings[product.i]}}</li>
-                                <li>{{product.volumes[product.j]}}</li>
-                                <li>{{product.pricing[product.i]}}C$ CAD</li>
+                                <li>X{{product.packaging}}</li>
+                                <li>{{product.volume}}</li>
+                                <li>{{product.price}}C$ CAD</li>
                                 <li>#{{product.quantity}}</li>
                             </span>
                         </ul>
@@ -86,6 +86,9 @@
             </div>
         </div>
     </div>
+    <script src="/resources/services/advancedStorage.js"></script>
+    <script src="/resources/services/cartService.js"></script>
+
     <script src="/resources/controllers/checkout.js"></script>
 </body>
 </html>

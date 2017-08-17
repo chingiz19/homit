@@ -1,48 +1,32 @@
-app.controller("cartController", function ($scope, $sce, $rootScope, $http, advancedStorage) {
+app.controller("cartController", 
+function ($scope, $sce, $rootScope, $http, advancedStorage, cartService) {
 
     $scope.userCart = advancedStorage.getUserCart() || {};
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
 
-    $http({
-        method: 'GET',
-        url: 'api/cart/usercart'
-    }).then(function successCallback(response) {
-        if (response.data['success'] === true) {
-            if (Object.entries($scope.userCart).length == 0){
-                $scope.userCart = response.data['cart'];
-            } else {
-                advancedStorage.setUserCart({});
-                var remoteCart = Object.entries(response.data['cart']);
-                for (var i=0; i < remoteCart.length; i++){
-                    var item = remoteCart[i];
-                    var depot_id = item[0];
-                    if ($scope.userCart.hasOwnProperty(depot_id)){
-                        // add to quantity, not exceeding 10
-                        var tmpQuantity = $scope.userCart[depot_id].quantity;
-                        tmpQuantity += item[1].quantity;
-                        
-                        if (tmpQuantity >= 10) tmpQuantity = 10;
-
-                        $scope.userCart[depot_id].quantity = tmpQuantity;
+   cartService.getCart()
+        .then(function successCallback(response) {
+                if (response.data['success'] === true) {
+                    if (Object.entries($scope.userCart).length == 0){
+                        $scope.userCart = response.data['cart'];
                     } else {
-                        $scope.userCart[depot_id] = item[1];
+                        advancedStorage.setUserCart({});
+                        $scope.userCart = cartService.mergeCarts($scope.userCart, response.data['cart']);
                     }
                 }
-            }
-        }
 
-        for(var a in $scope.userCart){
-            $scope.totalAmount = $scope.totalAmount + ($scope.userCart[a]['quantity'] * $scope.userCart[a]['price']);
-            $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[a]['quantity'];
-            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
-            $scope.prepareItemForDB(a, $scope.userCart[a].quantity);
-        }
-    }, function errorCallback(response) {
-        $scope.userCart = advancedStorage.getUserCart($scope);
-        console.log("error");
-        console.log(response);
-    });
+                for(var a in $scope.userCart){
+                    $scope.totalAmount = $scope.totalAmount + ($scope.userCart[a]['quantity'] * $scope.userCart[a]['price']);
+                    $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[a]['quantity'];
+                    $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
+                    $scope.prepareItemForDB(a, $scope.userCart[a].quantity);
+                }
+            }, function errorCallback(response) {
+                $scope.userCart = advancedStorage.getUserCart($scope);
+                console.log("error");
+                console.log(response);
+            });
 
     $scope.$on("addToCart", function (event, product) {
         var tmpQuantity = 1;
@@ -101,16 +85,14 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http, adva
         $scope.numberOfItemsInCart = 0;
         $scope.totalAmount = 0;
 
-        $http({
-            method: 'POST',
-            url: '/api/cart/clear',
-        }).then(function successCallback(response) {
-            if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
-                advancedStorage.setUserCart($scope.userCart);
-            }
-        }, function errorCallback(response) {
-            console.log("ERROR");
-        });
+        cartService.clearCart()
+            .then(function successCallback(response) {
+                if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
+                    advancedStorage.setUserCart($scope.userCart);
+                }
+            }, function errorCallback(response) {
+                console.log("ERROR");
+            });
     }
 
     $scope.removeFromCart = function (product) {
@@ -124,39 +106,14 @@ app.controller("cartController", function ($scope, $sce, $rootScope, $http, adva
     }
 
     $scope.prepareItemForDB = function (depot_id, itemQuantity, action) {
-        $scope.addItemToUserDB = {};
-        $scope.addItemToUserDB["depot_id"] = depot_id;
-        $scope.addItemToUserDB["quantity"] = itemQuantity;
-        $scope.addItemToUserDB["action"] = action;
-
-        $http({
-            method: 'POST',
-            url: '/api/cart/modifyitem',
-            data: {
-                depot_id: $scope.addItemToUserDB["depot_id"],
-                quantity: $scope.addItemToUserDB["quantity"]
-            }
-        }).then(function successCallback(response) {
-            if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
-                advancedStorage.setUserCart($scope.userCart);
-            }
-        }, function errorCallback(response) {
-            console.log("ERROR");
-        });
-
-        // $http({
-        //     method: 'GET',
-        //     url: 'api/cart/usercart'
-        // }).then(function successCallback(response) {
-        //     if (response.data['success'] === true) {
-        //         $scope.userCart = response.data['cart'];
-        //     } else {
-        //     }
-        // }, function errorCallback(response) {
-        //     console.log("error");
-        //     console.log(response);
-        // });
-
+        cartService.modifyCartItem(depot_id, itemQuantity)
+            .then(function successCallback(response) {
+                if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
+                    advancedStorage.setUserCart($scope.userCart);
+                }
+            }, function errorCallback(response) {
+                console.log("ERROR");
+            });
     }
 });
 
