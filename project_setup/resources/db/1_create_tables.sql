@@ -19,7 +19,7 @@ CREATE TABLE users_customers (
 	UNIQUE (user_email)
 ) ENGINE = InnoDB;
 
-CREATE TABLE tmp_users ( 
+CREATE TABLE users_customers_guest ( 
 	id INT NOT NULL AUTO_INCREMENT, 
 	user_email VARCHAR(225) NOT NULL, 
 	first_name VARCHAR(225) NOT NULL, 
@@ -29,6 +29,17 @@ CREATE TABLE tmp_users (
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
+) ENGINE = InnoDB;
+
+CREATE TABLE users_customers_all (
+	id INT NOT NULL AUTO_INCREMENT,
+	user_id INT,
+	guest_user_id INT,
+
+	PRIMARY KEY (id),
+	CONSTRAINT fk_users_customers_all_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_users_customers_all_guest_user_id FOREIGN KEY (guest_user_id) REFERENCES users_customers_guest(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_users_customers_all_check_null CHECK (user_id IS NOT NULL OR guest_user_id IS NOT NULL)
 ) ENGINE = InnoDB;
 
 CREATE TABLE catalog_categories ( 
@@ -127,27 +138,27 @@ CREATE TABLE user_cart_info (
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE order_cart_info ( 
-	id INT NOT NULL AUTO_INCREMENT, 
-	depot_id VARCHAR(255) NOT NULL, 
-	quantity VARCHAR(255) NOT NULL, 
+CREATE TABLE orders_info (
+	id INT NOT NULL AUTO_INCREMENT,
+	user_id INT NOT NULL,
+	date_received TIMESTAMP NOT NULL,
+	date_delivered TIMESTAMP,
+	delivery_address VARCHAR(225) NOT NULL,
+	store_address VARCHAR(225),
+	order_status VARCHAR(225) NOT NULL,
+	driver_id INT,
 	
-	PRIMARY KEY (id) 
-) ENGINE = InnoDB;
-
-CREATE TABLE orders (
-	id int PRIMARY KEY,
-	user_info int,
-	tmp_user_info int,
-	card_info int NOT NULL,
-	driver_info int,
-	date_received timestamp NOT NULL,
-	date_delivered timestamp,
-	status varchar(255) NOT NULL,
-	delivery_address varchar(255) NOT NULL,
-	store_address varchar(255),
-	
-	FOREIGN KEY (user_info) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (tmp_user_info) REFERENCES tmp_users(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (card_info) REFERENCES order_cart_info(id) ON DELETE CASCADE ON UPDATE CASCADE
+	PRIMARY KEY (id),
+	CONSTRAINT fk_orders_info_user_id FOREIGN KEY (user_id) REFERENCES users_customers_all(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
+CREATE TABLE orders_cart_info ( 
+	id INT NOT NULL AUTO_INCREMENT, 
+	depot_id VARCHAR(225) NOT NULL, 
+	quantity VARCHAR(225) NOT NULL,
+	order_id INT NOT NULL,
+	
+	PRIMARY KEY (id),
+	CONSTRAINT fk_orders_cart_info_order_id FOREIGN KEY (order_id) REFERENCES orders_info(id) ON DELETE CASCADE ON UPDATE CASCADE	
+) ENGINE = InnoDB;
