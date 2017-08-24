@@ -40,72 +40,8 @@
     </div>
 </nav>
 
-<!-- Modal for log in/sign up -->
-<div id='loginModal' class="modal fade" tabindex="-1" role="dialog" ng-controller="LoginController as login">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>{{login.modalTitle}}</h3>
-        </div>
-        <div class="modal-body">
-            <div class="alert alert-warning" role="alert" ng-show="login.error == 1"><strong>Login doesn't exist.</strong><br>Would you 
-                like to <a ng-click='login.goToSignUpForm();' style="cursor: pointer;">sign up?</a>
-            </div>
-            <div class="alert alert-danger" role="alert" ng-show="login.error == 2"><strong>Incorrect password</strong><br> 
-               <a ng-click='login.goToForgotPasswordForm();' style="cursor: pointer;">forgot password?</a>
-            </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-default" ng-click="login.reset();" ng-show ="login.goToSignUp || login.goToSignIn">
-                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                    Back
-                </button>
-            </div>
-            <form>
-                <div class="form-group" ng-hide="login.goToForgotPassword">
-                    <input name="email" type="email" ng-model="login.email" class="form-control" ng-disabled="login.goToSignUp || login.goToSignIn" placeholder="Email" required/>
-                </div>
+<%- include('signup')%>
 
-                <!-- Sign in form -->
-                <div name="signInForm" class="form-group" ng-if="login.goToSignIn">
-                    <input name="password" type="password" ng-model="login.password" class="form-control" placeholder="Password" required/>  
-                    <a href="#" class="center" ng-click="login.goToForgotPasswordForm()">Forgot Password?</a>
-                </div>
-
-                <!-- Sign up form -->
-                <div name="signUpForm" ng-if="login.goToSignUp">
-                    <div class="form-group">
-                        <input name="firstname" ng-model="login.fname" class="form-control" placeholder="First name" required/>  
-                    </div>
-                    <div class="form-group">
-                        <input name="firstname" ng-model="login.lname" class="form-control" placeholder="Last name" required/>  
-                    </div>
-                    <div class="form-group">
-                        <input name="phone" ng-model="login.phone" class="form-control" placeholder="Phone" required/>
-                    </div>
-                    <div class="form-group">
-                        <input name="newPassword" ng-model="login.npassword" class="form-control" type="password" placeholder="Password" required/>    
-                    </div>
-                    <div class="form-group">
-                        <input name="confirmPassword" ng-model="login.cpassword" class="form-control" type="password" placeholder="Confirm password" required/>    
-                    </div>
-                    <div class="form-group">
-                        <input name="dob" ng-model="login.dob" type="date" class="form-control" placeholder="Date of Birth" required/>    
-                    </div>
-                </div>
-
-                <!-- Forgot password form -->
-                <div name="forgotPasswordForm" class="form-group" ng-if="login.goToForgotPassword">
-                    <input name="resetEmail" type="email" ng-model="login.forgotPasswordEmail" class="form-control" placeholder="Email" novalidate required/>  
-                </div>
-                <button class="btn btn-success full-width" ng-click="login.checkState();">{{login.mainButtonText}}</button>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-    </div>
-  </div>
-</div>
 <script src="/resources/controllers/header.js"></script>
 
 <script>

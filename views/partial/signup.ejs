@@ -1,0 +1,113 @@
+<style>
+    .md-select-menu-container {
+           z-index: 99999 !important;
+       }
+</style>
+
+<!-- Modal for log in/sign up -->
+<div id='loginModal' class="modal fade" tabindex="-1" role="dialog" ng-controller="LoginController as login">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+            <section layout="row" layout-wrap>
+                <button  class="btn btn-sm btn-default" ng-click="login.reset();" 
+                        ng-show ="login.goToSignUp || login.goToSignIn || login.goToForgotPassword">
+                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                </button>
+                <h4>{{login.modalTitle}}</h4>
+            </section>
+        </div>
+        <div class="modal-body">
+            <form name="loginSignupForm">
+                <!-- Universal Email -->
+                <md-input-container class="md-block">
+                    <label>Email</label>
+                    <input required name="email" type="email" ng-model="login.email"/>
+                    <div ng-messages="loginSignupForm.email.$error">
+                        <div ng-message="required">This is required!</div>
+                    </div>
+                </md-input-container>
+
+                 <!-- First name -->
+                <md-input-container class="md-block" ng-if="login.goToSignUp">
+                    <label>First name</label>
+                    <input name="firstname" type="text" ng-model="login.fname" required/>
+                </md-input-container>
+
+                <!-- Last name -->
+                <md-input-container class="md-block" ng-if="login.goToSignUp">
+                    <label>Last name</label>
+                    <input name="lastname" type="text" ng-model="login.lname" required/>
+                </md-input-container>
+
+                <!-- Password -->
+                <md-input-container class="md-block" ng-if="login.goToSignIn">
+                    <label>Password</label>
+                    <input name="password" type="password" ng-model="login.password" required/>
+                </md-input-container>
+
+                <!-- Confirm Password -->
+                <md-input-container class="md-block" ng-if="login.goToSignUp">
+                    <label>Confirm Password</label>
+                    <input name="cpassword" type="password" ng-model="login.cpassword" required/>
+                </md-input-container>
+
+                <div layout="row" layout-align="space-between" ng-if="login.goToSignUp">
+                    <!-- Date of birth -->
+                    <md-input-container>
+                        <label>Day</label>
+                        <md-select ng-model="birth_day">
+                            <md-option ng-value="1">1</md-option>
+                            <md-option ng-value="2">2</md-option>
+                            <md-option ng-value="3">3</md-option>
+                            <md-option ng-value="4">4</md-option>
+                            <md-option ng-value="5">5</md-option>
+                            <md-option ng-value="6">6</md-option>
+                            <md-option ng-value="7">7</md-option>
+                            <md-option ng-value="8">8</md-option>
+                            <md-option ng-value="9">9</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <!--Date of birth -->
+                    <md-input-container>
+                        <label>Month</label>
+                        <md-select ng-model="birth_month">
+                            <md-option ng-value="1">January</md-option>
+                            <md-option ng-value="2">February</md-option>
+                            <md-option ng-value="3">March</md-option>
+                            <md-option ng-value="4">April</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <!--Date of birth -->
+                    <md-input-container >
+                        <label>Year</label>
+                        <md-select ng-model="birth_year">
+                            <md-option ng-value="2014">2014</md-option>
+                            <md-option ng-value="2015">2015</md-option>
+                            <md-option ng-value="2016">2016</md-option>
+                            <md-option ng-value="2017">2017</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                
+                <!-- Forgot password -->
+                <div layout="column" layout-align="start">
+                        <md-button class="md-primary" ng-click="login.goToForgotPasswordForm()" ng-if="login.goToSignIn">
+                            Forgot Password</md-button>
+                </div>
+
+                <!-- Main Button -->
+                <div layout="column" layout-align="start">
+                    <md-button class="md-raised md-primary" ng-click="login.checkState();">{{login.mainButtonText}}</md-button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script src="/resources/controllers/signup.js"></script>
