@@ -26,7 +26,8 @@ INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (1
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (19,'Miscellaneous',1);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (20,'Miscellaneous',3);
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (21,'Snack Mix',4);
-
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (22,'Meat Mix',4);
+INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (23,'Nut Mix',4);
 
 /* Insert types */
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (1,'Ale',1);
@@ -95,6 +96,8 @@ INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (63,'Ch
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (64,'Popcorn',21);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (65,'Cheese Mix',21);
 INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (66,'Miscellaneous',19);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (67,'Meat Mix',22);
+INSERT INTO `delivery_db`.`catalog_types`(id,name,subcategory_id) VALUES (68,'Nut Mix',21);
 
 /* Insert packaging types */
 INSERT INTO `delivery_db`.`catalog_containers` (id, name) VALUES (1,'Bottle');
@@ -139,6 +142,9 @@ INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (32
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (33,'300g');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (34,'180g');
 INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (35,'200g');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (36,'80g');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (37,'75g');
+INSERT INTO `delivery_db`.`catalog_packaging_volumes`(id,volume_name) VALUES (38,'550g');
 
 
 /* Insert packagings */
