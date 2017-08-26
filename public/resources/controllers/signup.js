@@ -10,21 +10,21 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
 
     var login = this;
     login.reset = function () {
-        login.modalTitle = "Sign...";
+        login.modalTitle = "";
         login.mainButtonText = "Next";
         login.goToSignIn = false;
         login.goToSignUp = false;
         login.goToForgotPassword = false;
+        login.isLoading = false;
         login.signUpErrorAction = "Sign up?";
         login.passwordErrorAction = "Forgot password?";
+        login.loadingMessage = "";
         _currentButtonState = _nextState;
 
         login.email = "";
         login.password = "";
         login.fname = "";
         login.lname = "";
-        login.phone = "";
-        login.cpassword = ""; // confirm password
         login.dob = "";
     }
 
@@ -33,23 +33,28 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
     login.showToast = function(message, action){
         var toast = $mdToast.simple()
                 .textContent(message)
-                .action(action)
                 .highlightAction(true)
                 .highlightClass("md-accent")
-                .parent($("#loginModal"))
+                .toastClass("toast-white")
+                .parent($("notification"))
                 .position('top right');
 
-        $mdToast.show(toast).then(function(response){
-            if (response === 'ok'){
-                if (action == login.signUpErrorAction){
-                    login.goToSignUpForm();
-                } else if (action == login.passwordErrorAction){
-                    login.goToForgotPasswordForm();
-                } else {
-                    console.error("ERROR");
+        if (action) {
+            toast.action(action);
+            $mdToast.show(toast).then(function(response){
+                if (response === 'ok'){
+                    if (action == login.signUpErrorAction){
+                        login.goToSignUpForm();
+                    } else if (action == login.passwordErrorAction){
+                        login.goToForgotPasswordForm();
+                    } else {
+                        console.error("ERROR");
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            $mdToast.show(toast);
+        }
     };
 
     //check Email -> either go to sign in, or prompt sign up
@@ -123,21 +128,24 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 password: login.password,
             }
         }).then(function successCallback(response) {
-            $scope.trueFalse=false;
             if (!response.data["error"]) {
-                login.hideModal();
-                $rootScope.$broadcast("addNotification", { type: "alert-success", message: response.data["ui_message"], reload: true });
+                setLoading("Signing in...");
                 setTimeout(function () {
                     window.location.reload();
-                }, 2500);
-
-                
+                }, 4000);
             } else {
-                login.showToast("Incorrect password", login.passwordErrorAction);
+                login.showToast(response.data["error"].ui_message, login.passwordErrorAction);
             }
         }, function errorCallback(response) {
             console.log("ERROR");
         });
+    }
+
+    var setLoading = function(message){
+        login.reset();
+        login.modalTitle = "";
+        login.loadingMessage = message;
+        login.isLoading = true;
     }
 
     //Sign Up
@@ -153,16 +161,16 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 email: login.email,
                 fname: login.fname,
                 lname: login.lname,
-                phone: login.phone,
                 dob: login.dob
             }
         }).then(function successCallback(response) {
             if (!response.data["error"]) {
-                login.hideModal();
-                login.reset();
-                $rootScope.$broadcast("addNotification", { type: "alert-success", message: response.data["ui_message"], reload: true });
+                setLoading("Signing in...");
+                setTimeout(function () {
+                    window.location.reload();
+                }, 4000);
             } else {
-                $rootScope.$broadcast("addNotification", { type: "alert-error", message: response.data["error"].ui_message });
+                login.showToast(response.data["error"].ui_message);
             }
         }, function errorCallback(response) {
             console.log("ERROR");

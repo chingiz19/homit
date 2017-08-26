@@ -1,0 +1,13 @@
+.md-select-menu-container {
+    z-index: 99999 !important;
+}
+
+md-toast.toast-white .md-toast-content {
+    background-color: white;
+    color: #3f51b5;
+    width: 400px;
+}
+
+.login-modal{
+    width: 400px;
+}
