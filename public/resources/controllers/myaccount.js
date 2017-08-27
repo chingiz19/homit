@@ -1,10 +1,47 @@
 app.controller("myaccountController", ["$scope", "$http", "$cookies", "$rootScope", 
 function($scope, $http, $cookies, $rootScope){
 
-    var myaccount = this;    
+    var myaccount = this;   
+
+    myaccount.birth_date = {}; 
+    myaccount.init = function(){
+        var arr_years = [];
+        var arr_days_31, arr_days_30, arr_days_29, arr_days_28 = [];
+        for (var i = 1950; i < 2000; i++){
+            arr_years.push(i);    
+        }   
+
+        for (var i = 1; i < 29; i++){
+            arr_days_28.push(i);
+        }
+
+        arr_days_29 = arr_days_28.concat([29]);
+        arr_days_30 = arr_days_29.concat([30]);
+        arr_days_31 = arr_days_30.concat([31]);
+
+        myaccount.birth_date = {
+            "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            "years": arr_years,
+            "days": {
+                "January": arr_days_31,
+                "February": arr_days_28,
+                "March": arr_days_31,
+                "April": arr_days_30,
+                "May": arr_days_31,
+                "June": arr_days_30,
+                "July": arr_days_31,
+                "August": arr_days_31,
+                "September": arr_days_30,
+                "October": arr_days_31,
+                "November": arr_days_30,
+                "December": arr_days_31
+            }
+        }
+    }
     /* Info Section */
     // $scope.user = JSON.parse( $cookies.get("user").replace("j:", ""));  
 
+    // Dummy orders info
     myaccount.orders  = [
         {
             id: "#142",
@@ -26,17 +63,15 @@ function($scope, $http, $cookies, $rootScope){
         last_name: "Hi"
     }
 
-    myaccount.editButtonLabel = "Edit";
-
     myaccount.isOrderHistoryShown = false;
 
     myaccount.editButton = function(){
         myaccount.edit = !myaccount.edit;
-        if (myaccount.edit){
-            myaccount.editButtonLabel = "Done";
-        } else {
-            myaccount.editButtonLabel = "Edit";
-        }
+    }
+
+    myaccount.cancelEdit = function(){
+        //TODO: set user info to default
+        myaccount.edit = false;
     }
     
     myaccount.updateUserInfo = function(){
@@ -63,4 +98,6 @@ function($scope, $http, $cookies, $rootScope){
                 console.log("ERROR in password reset");
             });
     }
+
+    myaccount.init();
 }]);

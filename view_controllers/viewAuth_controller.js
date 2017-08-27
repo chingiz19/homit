@@ -5,11 +5,12 @@ router.use(function(req, res, next){
     if (req.session && req.session.user){
         next();
     } else {
-        err = {
-            status: 401,
-            message: "Not Authorized"
-        };
-        next(err);
+        // err = {
+        //     status: 401,
+        //     message: "Not Authorized"
+        // };
+        // next(err);
+        res.redirect('/');
     }
 });
 
