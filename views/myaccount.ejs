@@ -5,149 +5,184 @@
 </head>
 <body ng-controller="myaccountController as myaccount" class="ng-cloak">
     <!-- main part -->
-    <div class="container" layout="row" layout-align="space-between start">
-        <div flex="40" style="margin-top: 10px;" layout="column" layout-align="center center">
-            <md-content style="background-color: transparent;">
-            <img height="200px" width="200px">            
-            
-            <md-divider style="margin: 2em;"></md-divider>
-            
-            <div class="text-center">
-                <a><h4>Profile Info</h4></a>
-                <a><h4>Change password</h4></a>
-            </div>
-            </md-content>
-        </div>
-        <div flex="60" layout="column" style="margin-top: 10px;">
-            <div layout="row" layout-align="end center">
-                <md-button class="md-raised"  ng-if="!myaccount.edit" ng-click="myaccount.editButton();">Edit</md-button>
-            </div>
-
-            <div layout="row" layout-align="space-between center">
+    <div id="mainPart">
+        <div class="container" layout="row" layout-align="space-between start">
+            <div flex="40" style="margin-top: 10px;" layout="column" layout-align="center center">
+                <md-content style="background-color: transparent;">
+                <img height="200px" width="200px">            
                 
-                <!-- First name -->
-                <md-input-container class="md-block" flex="45">
-                    <label>First Name</label>
-                    <input name="fname" type="text" ng-model="myaccount.user.first_name" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
-                </md-input-container>
-
-                <!-- Last name -->
-                <md-input-container class="md-block" flex="45">
-                    <label>Last Name</label>
-                    <input name="lname" type="text" ng-model="myaccount.user.last_name" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
-                </md-input-container>
-            </div>
-
-            <div layout="row" layout-align="space-between center">
-                <!-- Email -->
-                <md-input-container class="md-block" flex="100">
-                    <label>Email</label>
-                    <input name="email" type="email" ng-model="myaccount.user.email" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
-                </md-input-container>
-            </div>
-
-            <div layout="row" layout-align="space-between center">
-                <!-- Phone number -->
-                <md-input-container class="md-block" flex="100">
-                    <label>Phone</label>
-                    <input name="phone" type="text" ng-model="myaccount.user.phone_number" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
-                </md-input-container>
-            </div>
-
-            <!-- Date of birth -->
-            <div layout="row" layout-align="space-between">
-                    <!--Year -->
-                    <md-input-container flex="30">
-                        <label>Year</label>
-                        <md-select ng-model="myaccount.user.birth_year" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
-                            <md-option ng-repeat="year in myaccount.birth_date.years" ng-value="year">{{ year }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <!--Month -->
-                    <md-input-container flex="30">
-                        <label>Month</label>
-                        <md-select ng-model="myaccount.user.birth_month" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
-                            <md-option ng-repeat="month in myaccount.birth_date.months" ng-value="month">{{ month }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <!-- Day -->
-                    <md-input-container flex="30">
-                        <label>Day</label>
-                        <md-select ng-model="myaccount.user.birth_day" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
-                            <md-option ng-repeat="day in myaccount.birth_date.days[myaccount.user.birth_month]" ng-value="day">{{ day }}</md-option>
-                        </md-select>
-                    </md-input-container>
+                <md-divider style="margin: 2em;"></md-divider>
+                
+                <div class="text-center">
+                    <a ng-click="myaccount.selectedView = 0" style="cursor: pointer"><h4>Profile Info</h4></a>
+                    <a ng-click="myaccount.selectedView = 1" style="cursor: pointer"><h4>Change password</h4></a>
                 </div>
+                </md-content>
+            </div>
+            <div flex="60" layout="column" style="margin-top: 10px;">
+                <!-- Profile Info -->
+                <div ng-show="myaccount.selectedView == 0">
+                    <div layout="row" layout-align="end center">
+                        <md-button class="md-raised"  ng-if="!myaccount.edit" ng-click="myaccount.editButton();">Edit</md-button>
+                    </div>
 
-                <div>
-                    <!-- Address -->
-                    <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true">
-                        <md-tab label="Address 1">
-                            <md-tab-body>
-                                <div layout="row" layout-align="center center">
-                                    <md-input-container class="md-block" flex="80">
-                                        <label>Nickname (Optional)</label>
-                                        <input name="address" type="text" ng-model="myaccount.user.address1_nickname" ng-disabled="!myaccount.edit"/>
-                                    </md-input-container>
-                                </div>
+                    <div layout="row" layout-align="space-between center">
+                        
+                        <!-- First name -->
+                        <md-input-container class="md-block" flex="45">
+                            <label>First Name</label>
+                            <input name="fname" type="text" ng-model="myaccount.user.first_name" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
+                        </md-input-container>
 
-                                <div layout="row" layout-align="center center">
-                                    <md-input-container class="md-block" flex="80">
-                                        <label>Address</label>
-                                        <input name="address" type="text" ng-model="myaccount.user.address1" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
-                                    </md-input-container>
-                                </div>
-                            </md-tab-body>
-                        </md-tab>
-                        <md-tab label="Address 2" ng-disabled="!myaccount.edit">
-                            <md-tab-body>
-                               <div layout="row" layout-align="center center">
-                                    <md-input-container class="md-block" flex="80">
-                                        <label>Nickname (Optional)</label>
-                                        <input name="address" type="text" ng-model="myaccount.user.address2_nickname" ng-disabled="!myaccount.edit"/>
-                                    </md-input-container>
-                                </div>
+                        <!-- Last name -->
+                        <md-input-container class="md-block" flex="45">
+                            <label>Last Name</label>
+                            <input name="lname" type="text" ng-model="myaccount.user.last_name" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
+                        </md-input-container>
+                    </div>
 
-                                <div layout="row" layout-align="center center">
-                                    <md-input-container class="md-block" flex="80">
-                                        <label>Address</label>
-                                        <input name="address" type="text" ng-model="myaccount.user.address2" ng-disabled="!myaccount.edit"/>
-                                    </md-input-container>
-                                </div>
-                            </md-tab-body>
-                        </md-tab>
-                        <md-tab label="Address 3" ng-disabled="!myaccount.edit">
-                            <md-tab-body>
-                                <div layout="row" layout-align="center center">
-                                    <md-input-container class="md-block" flex="80">
-                                        <label>Nickname (Optional)</label>
-                                        <input name="address" type="text" ng-model="myaccount.user.address3_nickname" ng-disabled="!myaccount.edit"/>
-                                    </md-input-container>
-                                </div>
+                    <div layout="row" layout-align="space-between center">
+                        <!-- Email -->
+                        <md-input-container class="md-block" flex="100">
+                            <label>Email</label>
+                            <input name="email" type="email" ng-model="myaccount.user.email" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
+                        </md-input-container>
+                    </div>
 
-                                <div layout="row" layout-align="center center">
-                                    <md-input-container class="md-block" flex="80">
-                                        <label>Address</label>
-                                        <input name="address" type="text" ng-model="myaccount.user.address3" ng-disabled="!myaccount.edit"/>
-                                    </md-input-container>
-                                </div>
-                            </md-tab-body>
-                        </md-tab>
-                    </md-tabs>
-                    
-                </div>
+                    <div layout="row" layout-align="space-between center">
+                        <!-- Phone number -->
+                        <md-input-container class="md-block" flex="100">
+                            <label>Phone</label>
+                            <input name="phone" type="text" ng-model="myaccount.user.phone_number" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
+                        </md-input-container>
+                    </div>
 
-                <!--<div layout="column" layout-align="center">-->
-                    <!-- Reset password -->
-                    <!--<md-button class="md-raised">Reset password</md-button>
-                </div>-->
+                    <!-- Date of birth -->
+                    <div layout="row" layout-align="space-between">
+                            <!--Year -->
+                            <md-input-container flex="30">
+                                <label>Year</label>
+                                <md-select ng-model="myaccount.user.birth_year" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
+                                    <md-option ng-repeat="year in myaccount.birth_date.years" ng-value="year">{{ year }}</md-option>
+                                </md-select>
+                            </md-input-container>
 
-                <div layout="row" layout-align="space-between center" ng-if="myaccount.edit">
-                    <!-- Update button -->
-                    <md-button class="md-raised" ng-click="myaccount.cancelEdit()" flex="45">Cancel</md-button>
-                    <md-button class="md-raised md-primary" ng-click="myaccount.updateUserInfo()" flex="45">Update</md-button>
+                            <!--Month -->
+                            <md-input-container flex="30">
+                                <label>Month</label>
+                                <md-select ng-model="myaccount.user.birth_month" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
+                                    <md-option ng-repeat="month in myaccount.birth_date.months" ng-value="month">{{ month }}</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <!-- Day -->
+                            <md-input-container flex="30">
+                                <label>Day</label>
+                                <md-select ng-model="myaccount.user.birth_day" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
+                                    <md-option ng-repeat="day in myaccount.birth_date.days[myaccount.user.birth_month]" ng-value="day">{{ day }}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div>
+                            <!-- Address -->
+                            <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true">
+                                <md-tab label="Address 1">
+                                    <md-tab-body>
+                                        <div layout="row" layout-align="center center">
+                                            <md-input-container class="md-block" flex="80">
+                                                <label>Nickname (Optional)</label>
+                                                <input name="address" type="text" ng-model="myaccount.user.address1_nickname" ng-disabled="!myaccount.edit"/>
+                                            </md-input-container>
+                                        </div>
+
+                                        <div layout="row" layout-align="center center">
+                                            <md-input-container class="md-block" flex="80">
+                                                <label>Address</label>
+                                                <input name="address" type="text" ng-model="myaccount.user.address1" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
+                                            </md-input-container>
+                                        </div>
+                                    </md-tab-body>
+                                </md-tab>
+                                <md-tab label="Address 2" ng-disabled="!myaccount.edit">
+                                    <md-tab-body>
+                                    <div layout="row" layout-align="center center">
+                                            <md-input-container class="md-block" flex="80">
+                                                <label>Nickname (Optional)</label>
+                                                <input name="address" type="text" ng-model="myaccount.user.address2_nickname" ng-disabled="!myaccount.edit"/>
+                                            </md-input-container>
+                                        </div>
+
+                                        <div layout="row" layout-align="center center">
+                                            <md-input-container class="md-block" flex="80">
+                                                <label>Address</label>
+                                                <input name="address" type="text" ng-model="myaccount.user.address2" ng-disabled="!myaccount.edit"/>
+                                            </md-input-container>
+                                        </div>
+                                    </md-tab-body>
+                                </md-tab>
+                                <md-tab label="Address 3" ng-disabled="!myaccount.edit">
+                                    <md-tab-body>
+                                        <div layout="row" layout-align="center center">
+                                            <md-input-container class="md-block" flex="80">
+                                                <label>Nickname (Optional)</label>
+                                                <input name="address" type="text" ng-model="myaccount.user.address3_nickname" ng-disabled="!myaccount.edit"/>
+                                            </md-input-container>
+                                        </div>
+
+                                        <div layout="row" layout-align="center center">
+                                            <md-input-container class="md-block" flex="80">
+                                                <label>Address</label>
+                                                <input name="address" type="text" ng-model="myaccount.user.address3" ng-disabled="!myaccount.edit"/>
+                                            </md-input-container>
+                                        </div>
+                                    </md-tab-body>
+                                </md-tab>
+                            </md-tabs>
+                            
+                        </div>
+
+                        <!--<div layout="column" layout-align="center">-->
+                            <!-- Reset password -->
+                            <!--<md-button class="md-raised">Reset password</md-button>
+                        </div>-->
+
+                        <div layout="row" layout-align="space-between center" ng-if="myaccount.edit">
+                            <!-- Update button -->
+                            <md-button class="md-raised" ng-click="myaccount.cancelEdit()" flex="45">Cancel</md-button>
+                            <md-button class="md-raised md-primary" ng-click="myaccount.updateUserInfo()" flex="45">Update</md-button>
+                        </div>
+                    </div>
+
+                    <!-- Change password -->
+                    <div ng-show="myaccount.selectedView == 1">
+                        <form ng-submit="myaccount.changePassword()">
+                            <!-- Current password -->
+                            <md-input-container class="md-block" flex="100">
+                                <label>Current password</label>
+                                <input name="password" type="password" ng-model="myaccount.password" required/>
+                            </md-input-container>
+
+                            <!-- New password -->
+                            <md-input-container class="md-block" flex="100">
+                                <label>New password</label>
+                                <input name="npassword" type="password" ng-change="myaccount.checkPassword()" ng-model="myaccount.new_password" required/>
+                            </md-input-container>
+
+                            <!-- Confirm password -->
+                            <md-input-container class="md-block" flex="100" ng-class="{'md-input-invalid': myaccount.passwordError}" >
+                                <label>Confirm password</label>
+                                <input name="cpassword" type="password" 
+                                            ng-change="myaccount.checkPassword()" 
+                                            ng-model="myaccount.confirm_password" required/>
+                            </md-input-container>
+                        
+                            <!-- Change password button -->
+                            <div layout="row" layout-align="center center">
+                                <md-button type="submit" class="md-raised md-primary">Change password</md-button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

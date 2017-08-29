@@ -1,7 +1,10 @@
-app.controller("myaccountController", ["$scope", "$http", "$cookies", "$rootScope", 
-function($scope, $http, $cookies, $rootScope){
+app.controller("myaccountController", ["$scope", "$http", "$cookies", "$rootScope", "$mdToast",
+function($scope, $http, $cookies, $rootScope, $mdToast){
 
     var myaccount = this;   
+
+    myaccount.selectedView = 0;
+    myaccount.passwordError = false;
 
     myaccount.birth_date = {}; 
     myaccount.init = function(){
@@ -97,6 +100,55 @@ function($scope, $http, $cookies, $rootScope){
                 $rootScope.$broadcast("addNotification", { type: "alert-danger", message: m});
                 console.log("ERROR in password reset");
             });
+    }
+
+     showToast = function(message, action){
+        var toast = $mdToast.simple()
+                .textContent(message)
+                .highlightAction(true)
+                .action(action)
+                .highlightClass("md-accent")
+                .parent($("#mainPart"))
+                .position('top right');
+       
+        if (action) {
+            toast.action(action);
+            $mdToast.show(toast).then(function(response){
+                if (response === 'ok'){
+                    $mdToast.hide(toast);
+                }
+            })
+        } else {
+            $mdToast.show(toast);
+        }
+    };
+
+    myaccount.checkPassword = function(){
+        myaccount.passwordError = (myaccount.new_password != myaccount.confirm_password);
+    }
+
+    myaccount.changePassword = function(){
+        if (myaccount.passwordError){
+            showToast("Password did not match", "Close");
+            return;
+        }
+
+        $http({
+            method: 'POST',
+            url: '/api/myaccount/resetpassword',
+            data: {
+                current_password: myaccount.password,
+                new_password: myaccount.new_password
+            }
+        }).then(function successCallback(response) {
+            if (response.data["success"] === "true") {
+                console.log("password reset");
+            } else {
+                console.log("password not reset");
+            }
+        }, function errorCallback(response) {
+            console.log("ERROR in password reset");
+        });
     }
 
     myaccount.init();
