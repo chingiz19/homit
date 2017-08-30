@@ -141,7 +141,7 @@ CREATE TABLE user_cart_info (
 CREATE TABLE orders_info (
 	id INT NOT NULL AUTO_INCREMENT,
 	user_id INT NOT NULL,
-	date_received TIMESTAMP NOT NULL,
+	date_received TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	date_delivered TIMESTAMP,
 	delivery_address VARCHAR(225) NOT NULL,
 	store_address VARCHAR(225),
