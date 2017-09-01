@@ -61,7 +61,7 @@ router.post('/placeorder', function(req, res, next) {
         });
     } else {
         getSignedUserAllId(req.session.user.id).then(function(resultId) {
-            insertOrders(resultId, address, products).then(function(success){
+            insertOrders(resultId.user_id, address, products).then(function(success){
                 clearCart(req.session.user.id).then(function(cartCleared) {
                     if (success) {
                         var response = {
