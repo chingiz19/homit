@@ -132,7 +132,7 @@ function($scope, $http, $location, $rootScope, $cookies, advancedStorage, cartSe
             var item={};
             item.depot_id=key;
             item.quantity=value.quantity;
-            userOrder.push({item});
+            userOrder.push(item);
         }
 
         if($scope.isUserSigned){
