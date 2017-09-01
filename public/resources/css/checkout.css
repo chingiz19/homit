@@ -1,18 +1,22 @@
-.checkOut{
-    color: lightgrey !important;
+/*General Input format*/
+.inpt1{
+    margin-bottom: 0px;
 }
+
 .userInfoArea{
     background-color: rgb(254,254,254);
     margin-top: 55px;
     border:solid 2px black;
-    height: 93%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .cartItemsArea{
     background-color: rgb(254,254,254);
     margin-top: 55px;
     border:solid 2px black;
-    height: 93%;
+    height: 100%;
     overflow-y: scroll;
 }
 
@@ -56,45 +60,15 @@ li {list-style-type: none;}
     position: relative;
     margin-top: 30px;
     width: 135px; height: 135px;
-    left: 38%;
-    border:solid 2px black;
+    left: 35%;
+    background-color: whitesmoke;
+    border: whitesmoke; border-radius: 8px; 
 }
 
-.userInfoUL{
-    
-}
-
-.userInfoLI{
-    display: block;
-    height: 28px;
-    line-height: 32px;
-    font-size: 11px;
-    color: rgb(169,169,169);
-}
-
-.userInfoLiDB{
-    display: block;
-    margin-right: 3%;
-    border-width: 0 0 1px; border-style: solid; border-color: rgb(169,169,169);
-    font-size: 16.5px;
-}
-
-.userInput{
-    display: block;
-    margin-right: 3%;
-    border-width: 0 0 1px; border-style: solid; border-color: rgb(169,169,169);
-    background-color: rgb(254,254,254);
-    font-size: 16.5px;
-    width: 97%;
-}
-input::-webkit-input-placeholder {
-    color:rgb(169,169,169) !important;
-}
-
-input:focus{
-    border-color: #0080ff;
-    box-shadow: inset 0 0 4px #eff0f1, 0 0 3px rgba(80,149,255,0.5);
-    outline: 0;
+.flName{
+    position: relative;
+    display: inline-block;
+    flex: 40%;
 }
 
 .itemRemoveBtn{
@@ -122,4 +96,43 @@ input:focus{
     text-align: center;
     font-size: 15px; color: rgb(169,169,169);
     font-family: "FF Clan";
+}
+
+/*Card Info Container*/
+.cardContainer{
+    padding:0 0 0 2px;
+}
+
+/*glyphicon for extension Box*/
+.glypExtBox
+{   
+    margin:0px 2px 0px 2px;
+    background-color: white !important;
+    min-width: 1px !important; min-height: 1px !important; 
+    height: 25px !important; width:25px !important; 
+    box-shadow: none !important;
+}
+/*glyphicon Sign*/
+.glypExtSign{
+    font-size: 13px;
+    color: rgb(63,81,181);
+}
+/*Extension Box Title*/
+.extBoxTtl{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+}
+/*Extension Box Input format*/
+.extInput{
+    margin-bottom: 0px;
+}
+/*Address tab */
+.adTb{
+    min-height: 150px !important;
+    
+}
+md-tabs-wrapper{
+    border-width: 0px 0px 0px !important;
 }

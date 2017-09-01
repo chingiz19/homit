@@ -14,11 +14,12 @@ var orders_cart_info = "orders_cart_info";
 var orders_info = "orders_info";
 
 router.post('/placeorder', function(req, res, next) {
-    var email = req.body.email;    
-    var fname = req.body.fname;
-    var lname = req.body.lname;
-    var phone = req.body.phone;
-    var address = req.body.address;
+    //TODO: Add support for Date of Birth (body.dob)
+    var email = req.body.userInfo.email;    
+    var fname = req.body.userInfo.fname;
+    var lname = req.body.userInfo.lname;
+    var phone = req.body.userInfo.phone;
+    var address = req.body.userInfo.address;
 
     var products = req.body.products;
 

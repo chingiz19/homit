@@ -9,14 +9,20 @@ function($scope, $http, $location, $rootScope, $cookies, advancedStorage, cartSe
     $scope.GST=0;
     $scope.receipt=0;
     $scope.userInfo = {};
+    $scope.isUserSigned;
     $scope.orderer = {};
 
     $scope.init = function(){
         try{
             $scope.userInfo = JSON.parse( $cookies.get("user").replace("j:", ""));
+            $scope.isUserSigned = true;
         }catch(e){
-            $scope.userInfo = {};
+            $scope.userInfo = {
+            };
+            $scope.isUserSigned = false;
         }
+
+        $scope.selectedAddress = 1;
     }
 
      cartService.getCart()
@@ -116,29 +122,55 @@ function($scope, $http, $location, $rootScope, $cookies, advancedStorage, cartSe
         $scope.GST=(($scope.totalAmount+$scope.delFee)*0.05).toFixed(2);
         $scope.receipt=(($scope.totalAmount+$scope.delFee)*1.05).toFixed(2);
     }
+    $scope.init();
+    $scope.userInfo.cardIsShown=false;
 
-$scope.PaimentProcessed=function(){
+    $scope.HomeIt=function(){
+        var userOrder=[];
+        var userInfoToSend = {};
+        for(var[key,value] of Object.entries($scope.userCart)){
+            var item={};
+            item.depot_id=key;
+            item.quantity=value.quantity;
+            userOrder.push({item});
+        }
 
-    if ($scope.userInfo){
-        $scope.customer=[
-            {fname:$scope.userInfo.first_name},
-            {lname:$scope.userInfo.last_name},
-            {pnumber:$scope.userInfo.phone_number},
-            {eaddress:$scope.userInfo.user_email},
-            {daddress:$scope.orderer.newDeliveryAddress}
-        ];
+        if($scope.isUserSigned){
+            userInfoToSend.email=$scope.userInfo.user_email;
+            userInfoToSend.address=$scope.userInfo["address" + $scope.selectedAddress];
+        }
+        else{
+            userInfoToSend.fname=$scope.userInfo.first_name;
+            userInfoToSend.lname=$scope.userInfo.last_name;
+            userInfoToSend.email=$scope.userInfo.email;
+            userInfoToSend.address=$scope.userInfo.address;
+            userInfoToSend.phone=$scope.userInfo.phone_number;
+            userInfoToSend.dob=$scope.userInfo.dob;
+        }
+
+        $http({
+                method: 'POST',
+                url: '/api/checkout/placeorder',
+                data: {
+                    userInfo: userInfoToSend,
+                    products: userOrder
+                }
+            }).then(function successCallback(response) {
+                if (response.data["success"]) {
+                    $rootScope.$broadcast("addNotification", { 
+                        type: "alert-success", 
+                        message: response.data["ui_message"]
+                    });
+                } else {
+                    $rootScope.$broadcast("addNotification", { 
+                        type: "alert-danger", 
+                        message: response.data["ui_message"]
+                    });
+                }
+            }, function errorCallback(response) {
+                var m = response.data["ui_message"] || "Something went wrong while processing your order, please try again";
+                $rootScope.$broadcast("addNotification", { type: "alert-danger", message: m});
+                console.log("ERROR in order processing");
+            });
     }
-    else{
-        $scope.customer=[
-            {fname:$scope.orderer.first_name},
-            {lname:$scope.orderer.last_name},
-            {pnumber:$scope.orderer.phone_number},
-            {eaddress:$scope.orderer.user_email},
-            {daddress:$scope.orderer.DeliveryAddress}
-        ];
-    }
-};
-
-$scope.init();
-
 });
