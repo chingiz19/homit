@@ -1,36 +1,118 @@
-.box{margin-top: 5px;}
-ul {list-style-type: none;}
+/*Column-1 consists of Types, Brands, Subcategories etc
+Columns-2,3,4 consist of items and items' info*/
+
+body{
+    background-color: rgb(249, 249, 249);
+}
+
+/*Adjust width of column-1 and columns-2,3,4 as widows width changes*/
+@media(min-width: 768px){
+    .col1{
+        width: 176px;
+    }
+}
+
+@media(min-width: 992px){
+    .col1{
+        width: 231px;
+    }
+}
+
+@media(min-width: 1200px){
+    .col1{
+        width: 281px;
+    }
+}
+
+@media(max-width: 750px){
+    .col24{
+        position: relative;
+        left: 180px !important;
+    }
+}
+
+@media(min-width: 768px){
+    .col24{
+        width: 528px;
+    }
+}
+
+@media(min-width: 992px){
+    .col24{
+        width: 693px;
+    }
+}
+@media(min-width: 1200px){
+    .col24{
+        width: 843px;
+    }
+}
+/*Customize the scrollbar to IOS version*/
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0,0,0,0);
+  -webkit-border-radius: 100px;
+}
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+ 
+::-webkit-scrollbar-thumb:vertical {
+  background: rgba(0,0,0,0.5);
+  -webkit-border-radius: 100px;
+  background-clip: padding-box;
+  border: 2px solid rgba(0, 0, 0, 0);
+  min-height: 10px;
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0,0,0,0.61);
+  -webkit-border-radius: 100px;
+}
+
+/*Represent column-1*/
+/*TODO overflow-y doesn't work when page shrinked in y direction*/
+.col1{
+    position: fixed;
+    margin-top: 10px;
+    height: 85vh;
+    min-width: 180px;
+    background-color: white;
+    border: lightgray solid 1px; border-radius: 5px; 
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+ /*Represents whole container of items */
+ .col24{
+     position: relative;
+     left: 25%;
+     margin-top: 10px; margin-left: 10px;
+     flex-grow: 2;
+     flex-shrink: 2;
+ }
 
   .brandBox
  {
-     height: 30vh; width: 200px;
-     float: left;
-     border: solid 2px transparent;
+     height: 30vh; width: 105%;
+     margin-left: 2px;
+     border-radius: 5px;
+     background-color: rgb(254,254,254);
      overflow-y: scroll;
- }
-
-  .catalogOptionBox
- {
-     height: 80vh; width: 270px;
-     float: left;
-     border: solid 2px transparent;
-     overflow-y: scroll;
+     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
  }
 
  .sizeStage
 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 2px;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px;
-}
-
-.col-md-4{
-    padding:0;
 }
 
 .itemBox{
     position: relative;
-    border: solid 2px;
-    width: 100%;
+    min-width: 50px;
+    margin: 0 3px 6px 3px;
+    border: lightgray solid 1px; border-radius: 5px; background-color: white;
 }
 
 .addBtn{
@@ -51,7 +133,6 @@ ul {list-style-type: none;}
     color: darkgray;
     font-size: 11px; font-weight: bold;
     letter-spacing: 0.025em;
-    -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 
@@ -70,6 +151,7 @@ ul {list-style-type: none;}
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
+
 .brand{
     color: #101010;
     font-size: 16px; font-weight: bold;
@@ -85,3 +167,4 @@ ul {list-style-type: none;}
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
+
