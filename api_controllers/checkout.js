@@ -95,14 +95,22 @@ router.post('/placeorder', function(req, res, next) {
  */
 var insertOrders = function(user_id, delivery_address, products) {
     return insertOrdersInfo(user_id, delivery_address).then(function(orderId) {
+        var depot_ids = "";
+        var quantities = "";
         for (var i=0; i < products.length; i++){
-            insertCartInfo(orderId, products[i].depot_id, products[i].quantity).then(function(cartInfoResult) {
-                if (!cartInfoResult) {
-                    return false;
-                }
-            });
+            depot_ids += products[i].depot_id + ",";
+            quantities += products[i].quantity + ",";
         }
-        return true;
+
+        depot_ids = depot_ids.substr(0, depot_ids.length - 1);
+        quantities = quantities.substr(0, quantities.length - 1);
+        return insertCartInfo(orderId, depot_ids, quantities).then(function(cartInfoResult) {
+            if (!cartInfoResult) {
+                return false;
+            } else {
+                return true;   
+            }
+        });
     });
 };
 
@@ -137,7 +145,8 @@ var insertCartInfo = function(orderId, depotId, quantity) {
 var insertOrdersInfo = function(user_id, delivery_address) {
     var data = {
         user_id: user_id,
-        delivery_address: delivery_address
+        delivery_address: delivery_address,
+        order_status: "Order Placed"
     };
     return db.insertQuery(orders_info, data).then(function(dbResult) {
         return dbResult.insertId;

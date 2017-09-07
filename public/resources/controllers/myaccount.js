@@ -40,25 +40,24 @@ function($scope, $http, $cookies, $rootScope, $mdToast){
                 "December": arr_days_31
             }
         }
+
+        $http({
+                method: 'GET',
+                url: '/api/orders/getUserOrder'
+            }).then(function successCallback(response) {
+                if (response.data["success"]) {
+                    myaccount.orders = response.data["orders"];
+                } else {
+                    console.log("error");
+                }
+            }, function errorCallback(response) {
+                var m = response.data["ui_message"] || "Something went wrong while loading orders";
+                $rootScope.$broadcast("addNotification", { type: "alert-danger", message: m});
+                console.log("ERROR in password reset");
+            });
     }
     /* Info Section */
-    // $scope.user = JSON.parse( $cookies.get("user").replace("j:", ""));  
-
-    // Dummy orders info
-    myaccount.orders  = [
-        {
-            id: "#142",
-            delivery_address: "Chaihda 123123",
-            stire_address: "store add 123",
-            price: "14.5"
-        },
-        {
-            id: "#154",
-            delivery_address: "Cha 56",
-            stire_address: "store add 123",
-            price: "26"
-        }
-    ]
+    // $scope.user = JSON.parse( $cookies.get("user").replace("j:", "")); 
 
     myaccount.edit = false;
     myaccount.user = {
@@ -149,6 +148,14 @@ function($scope, $http, $cookies, $rootScope, $mdToast){
         }, function errorCallback(response) {
             console.log("ERROR in password reset");
         });
+    }
+
+    myaccount.getTotalPriceForOrder = function(order) {
+        var total = 0;
+        for (var i=0; i < order.cart.length; i++){
+            total += parseFloat(order.cart[i].price);
+        }
+        return total;
     }
 
     myaccount.init();

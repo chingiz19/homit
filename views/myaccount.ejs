@@ -189,6 +189,7 @@
 
         <md-divider style="margin: 2em;"></md-divider>
 
+        <!-- Order History table -->
         <div class="container">
             <div layout="row" layout-align="start center">
                 <h3>Orders history</h3>
@@ -205,16 +206,36 @@
                     <thead>
                         <th>Order #</th>
                         <th>Delivery Address</th>
-                        <th>Store Address </th>
+                        <th>Status</th>
                         <th>Price</th>
-                        <th>Cart</th>
+                        <th></th>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="order in myaccount.orders">
-                            <td>{{order.id}}</td>
+                        <tr ng-repeat-start="order in myaccount.orders">
+                            <td>{{order.order_id}}</td>
                             <td>{{order.delivery_address}}</td>
-                            <td>{{order.store_address}}</td>
-                            <td>{{order.price | currency:'C$':2}}</td>
+                            <td>{{order.status}}</td>
+                            <td>{{myaccount.getTotalPriceForOrder(order) | currency:'C$':2}}</td>
+                            <td ng-click="order.moreInfoShown = !order.moreInfoShown"><span class="glyphicon" ng-class="{'glyphicon-chevron-down': !order.moreInfoShown,
+                                            'glyphicon-chevron-up': order.moreInfoShown}" 
+                                    aria-hidden="true">
+                                </span>
+                            </td>
+                        </tr>
+                        <tr ng-repeat-end ng-show="order.moreInfoShown" class="well">
+                            <td colspan=2>
+                                <p>Date received: {{order.date_received}}</p>
+                                <p>Date delivered: {{order.date_delivered}}</p>
+                            </td>
+                            <td colspan="3">
+                                <ul ng-repeat="cartItem in order.cart">
+                                    <li> {{cartItem.name}} </li>
+                                    <li> {{cartItem.brand}} </li>
+                                    <li> {{cartItem.volume}} </li>
+                                    <li> {{cartItem.quantity}} </li>
+                                    <li> {{cartItem.price}}</li>
+                                </ul>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
