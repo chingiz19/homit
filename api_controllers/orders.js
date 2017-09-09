@@ -20,7 +20,7 @@ router.get('/getorder', function(req, res, next){
                             cart.warehouse_id, cart.quantity
                     FROM tmp_users as tuser, orders AS o, order_cart_info as cart
                     WHERE tuser.id=o.tmp_user_info AND cart.id=o.card_info;`;
-
+                    
         db.runQuery(query, []).then(function(results){
             var individualUsers = [];
             var queriesToRun = [];

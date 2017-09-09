@@ -1,5 +1,5 @@
 var router = require("express").Router();
-var db = require("../db.js");
+var db = global.db;
 
 router.use(function(req, res, next){
     //check logged in user in esl_database

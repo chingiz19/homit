@@ -1,5 +1,5 @@
 var router = require("express").Router();
-var tokenAPI = require("../token.js");
+//var tokenAPI = require("../token.js");
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 

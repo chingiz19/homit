@@ -2,7 +2,7 @@ var router = require("express").Router();
 var path = require("path");
 
 // Global variables 
-global.db = require("../db.js");
+global.db = global.modelFactory.initializeDatabase();
 global.checkAuth = function(req,res,next){
     if (!req.session.user) res.status(400).send("Not allowed");
     next();
