@@ -1,16 +1,18 @@
 app.controller("checkoutController", 
-function($scope, $http, $location, $rootScope, $cookies, advancedStorage, cartService) {
+function($scope, $http, $location, $rootScope, $cookies, $timeout, $mdSidenav, $log, advancedStorage, cartService) {
 
     $scope.localCartName = "bizim_userCart";
     $scope.userCart = advancedStorage.getUserCart() || {};
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
-    $scope.delFee=3.99;
+    $scope.delFee=4.99;
     $scope.GST=0;
     $scope.receipt=0;
     $scope.userInfo = {};
     $scope.isUserSigned;
     $scope.orderer = {};
+
+    $scope.toggleRight = buildDelayedToggler('right');
 
     $scope.init = function(){
         try{
@@ -173,4 +175,35 @@ function($scope, $http, $location, $rootScope, $cookies, advancedStorage, cartSe
                 console.log("ERROR in order processing");
             });
     }
+
+// Checkout Page right-SideNav functionality
+    function debounce(func, wait, context) {
+      var timer;
+      return function debounced() {
+        var context = $scope,
+            args = Array.prototype.slice.call(arguments);
+        $timeout.cancel(timer);
+        timer = $timeout(function() {
+          timer = undefined;
+          func.apply(context, args);
+        }, wait || 10);
+      };
+    }
+    function buildDelayedToggler(navID) {
+        return debounce(function() {
+        // Component lookup should always be available since we are not using `ng-if`
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      }, 200);
+    }
+    $scope.close = function () {
+      // Component lookup should always be available since we are not using `ng-if`
+      $mdSidenav('right').close()
+        .then(function () {
+          $log.debug("close RIGHT is done");
+        });
+    };
 });
