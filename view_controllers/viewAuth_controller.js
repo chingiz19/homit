@@ -1,20 +1,6 @@
 var router = require("express").Router();
 
-
-router.use(function(req, res, next){
-    if (req.session && req.session.user){
-        next();
-    } else {
-        // err = {
-        //     status: 401,
-        //     message: "Not Authorized"
-        // };
-        // next(err);
-        res.redirect('/');
-    }
-});
-
-router.get('/myaccount', function(req, res, next){
+router.get('/myaccount', auth.validate({redirect: true}), function(req, res, next){
     req.options.ejs["title"] = "My Account";
 	res.render("myaccount.ejs", req.options.ejs);
 });

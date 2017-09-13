@@ -122,9 +122,7 @@ router.get('/signin', function(req, res, next) {
                     } else {
                         delete user["password"];
                         //TODO
-                        req.session.user = user;
-                        res.cookie('user', user);
-
+                        auth.sign(req, res, user);
                         res.json({
                             status: "success",
                             ui_message: "Successfully signed in"
@@ -211,6 +209,15 @@ router.post('/resetpassword', function(req, res, next){
 });
 
 router.post('/signout', function(req, res, next){
+    if (!req.session){
+        res.status(200).json({
+            status: "success",
+            ui_message: "Successfully logged out"
+        });
+        return;
+    }
+    
+    auth.clear(res);
     req.session.destroy(function(err){
         if (err){
             res.status(400).send({"success": false, "ui_message": "Could not sign out, please try again"});
@@ -223,11 +230,11 @@ router.post('/signout', function(req, res, next){
 var userExists = function(email) {
     var users_customers = "users_customers";
     var data = {user_email: email};
-    return db.selectQuery(users_customers, data).then(function(dbResult) {
+    return db.selectAllWithCondition(users_customers, data).then(function(dbResult) {
         if (dbResult.length>0) {
             return dbResult[0];
         } else {
-            return db.selectQuery('esl_users', data).then(function(results){
+            return db.selectAllWithCondition('esl_users', data).then(function(results){
                 if (results.length > 0) 
                     return results[0];
                 else 

@@ -13,9 +13,9 @@ router.use(function(req,res,next){
 						isSignedIn: false, 
 						username: ""
 					};
-	if (req.session && req.session.user){
+	if (req.session && req.cookies.user){
 		req.options.ejs["isSignedIn"] = true;
-		req.options.ejs["username"] = req.session.user.first_name;
+		req.options.ejs["username"] = req.cookies.user.first_name;
 	}
 	next();
 });

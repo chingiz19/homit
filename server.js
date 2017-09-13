@@ -1,6 +1,8 @@
 /* Global variables */
 global.express = require('express');
+global.secretKey = "secretSession";
 global.modelFactory = require("./model-factory");
+global.auth = require("./models/authentication");
 
 /* Variables */
 var session = require("express-session");
@@ -10,7 +12,6 @@ var webpagePath = path.join(__dirname, "/public");
 var bodyParser = require("body-parser");
 var cookies = require("cookies");
 var cookieParser = require("cookie-parser");
-const secretKey = "secretSession";
 
 /* Server Middleware */
 webServer.use(session({
@@ -25,7 +26,7 @@ webServer.use(session({
 }));
 
 webServer.use(bodyParser.json());
-webServer.use(cookieParser());
+webServer.use(cookieParser(secretKey));
 webServer.use(bodyParser.urlencoded({ extended: true}));
 webServer.use(express.static(webpagePath));
 webServer.set('view engine', 'ejs');

@@ -3,12 +3,13 @@
  * @copyright Homit
  */
 
-var Users               = require("./models/Users");
-var Orders              = require("./models/Orders");
-var Cart                = require("./models/Cart");
-var Catalog             = require("./models/Catalog");
+var Users               = require("./models/users");
+var Orders              = require("./models/orders");
+var Cart                = require("./models/cart");
+var Catalog             = require("./models/catalog");
 var ServerErrorHandler  = require("./models/server-error-handler");
-var Database            = require("./models/Database");
+var Database            = require("./models/database");
+var Auth                = require("./models/authentication");
 
 
 /**
@@ -38,6 +39,10 @@ class modelFactory {
 
     static initializeDatabase(){
         return Database;
+    }
+
+    static initializeAuthentication(){
+        return Auth;
     }
 }
 
