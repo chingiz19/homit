@@ -12,6 +12,15 @@ var webpagePath = path.join(__dirname, "/public");
 var bodyParser = require("body-parser");
 var cookies = require("cookies");
 var cookieParser = require("cookie-parser");
+var https = require("https");
+var fs = require('fs');
+
+/* SLL options */
+var sslOptions = {
+	key: fs.readFileSync('./ssl/server.enc.key'),
+   	cert: fs.readFileSync('./ssl/server.crt'),
+	passphrase: 'test'
+}
 
 /* Server Middleware */
 webServer.use(session({
@@ -31,6 +40,14 @@ webServer.use(bodyParser.urlencoded({ extended: true}));
 webServer.use(express.static(webpagePath));
 webServer.set('view engine', 'ejs');
 
+/* Redirect all HTTP to HTTPS */
+webServer.all('*', function(req, res, next){
+  if(req.secure){
+    return next();
+  };
+  res.redirect('https://' + req.hostname + req.url); // express 4.x
+});
+
 /* Custom modules to use for proper routing */
 webServer.use("/api", require(path.join(__dirname, "/api_controllers/generic_controller")));
 webServer.use("/", require(path.join(__dirname, "/view_controllers/generic_controller")));
@@ -39,5 +56,9 @@ webServer.use(modelFactory.initializeServerErrorHandler());
 
 /* Start web server */
 webServer.listen(8080, function(){
-	console.log("Listening at localhost:8080");
-})
+	console.log("Listening at http://localhost:8080");
+});
+
+https.createServer(sslOptions, webServer).listen(443, function(){
+	console.log("Listening at https://localhost:443");
+});
