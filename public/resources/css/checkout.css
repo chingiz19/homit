@@ -1,138 +1,435 @@
-/*General Input format*/
-.inpt1{
-    margin-bottom: 0px;
+/*Column-1 consists of User Info
+Columns-2 consist of items and items' info*/
+@media(min-width: 495px){
+    .col1{
+        width: 475px !important;
+    }
+}
+@media(max-width: 494px){
+    .col1{
+        width: 400px;
+    }
+}
+@media(min-width: 1200px){
+   md-sidenav{
+        max-width: 475px !important;
+    } 
+}
+@media(max-width: 1280px){
+    .receiptB1{
+        position: fixed;
+        border-width: 0 0 1px 0 !important;
+        /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
+        transform: translateZ(0);-webkit-transform: translateZ(0);
+        z-index: 5;
+    }
+    .glyClsBtn{
+        margin-right: auto !important;
+    }
+    .summerLnP2{
+        display: flex;
+        margin-right: 31%;
+    }
+   
+    md-sidenav{
+        overflow-y: hidden;
+    }
+    .userPic{
+        margin-top: 0 !important;
+    }
+     md-sidenav md-content{
+        overflow-y: scroll;
+        height: 100%;
+    }
 }
 
-.userInfoArea{
-    background-color: rgb(254,254,254);
-    margin-top: 55px;
-    border:solid 2px black;
-    height: 100%;
+/*Customize the scrollbar to IOS version*/
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0,0,0,0);
+  -webkit-border-radius: 100px;
+}
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+ 
+::-webkit-scrollbar-thumb:vertical {
+  background: rgba(0,0,0,0.5);
+  -webkit-border-radius: 100px;
+  background-clip: padding-box;
+  border: 2px solid rgba(0, 0, 0, 0);
+  min-height: 10px;
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0,0,0,0.61);
+  -webkit-border-radius: 100px;
+}
+
+body{
+    background-color: rgb(249, 249, 249);
+    letter-spacing: 0.01em;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    list-style-type: none;
+}
+label{
+    font-weight: 400 !important;
+}
+md-content{
+    padding: 0 !important;
+}
+navbar{
+    min-width: 400px !important; max-height: 1em !important;
+}
+/*Checkout Information column*/
+.col1{
+    height: 93%;
+    margin-top: 53px;
+    background-color: rgb(255,255,255);
+    border: rgb(233,233,233) solid 1px; border-radius: 5px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
-
-.cartItemsArea{
-    background-color: rgb(254,254,254);
-    margin-top: 55px;
-    border:solid 2px black;
-    height: 100%;
-    overflow-y: scroll;
+.col1ChevRgt{
+    display: flex; 
+    justify-content: flex-end;
 }
-
-ul {list-style-type: none;}
-li {list-style-type: none;}
-
-.itemImageBox{
-    position: relative;
-    top:10%; left: 3em;
-    line-height: 12em;
-    width: 86px;height: 86px;
-    display: inline-block;
-    align-content: center;
-}
-
-.plusMinusBox{
-    position: relative;
-    left: 70px; top: 15px;
-    width: 86px;height: 86px;
-    display: inline-block;
-    align-content: center;
-}
-
-.cartItemTextBox{
-    position: relative;
-    width: 86px;height: 86px;
-    top: 25px; left: 90px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 12px;
-    display: inline-block;
-    align-content: center;
-}
-
-.removeBtn{
-    position: relative;
-    top: 1em;
-    left: 270px;
-}
-
 .userPic{
-    position: relative;
-    margin-top: 30px;
-    width: 135px; height: 135px;
-    left: 35%;
-    background-color: whitesmoke;
-    border: whitesmoke; border-radius: 8px; 
+    display: flex;
+    justify-content: center; 
+    margin-top: 2.5em;
 }
-
+/*SideNav open Glyphicon*/
+.glypOpnSN
+{   
+    margin:0px 2px 0px 2px;
+    background-color: white !important;
+    min-width: 1px !important; min-height: 1px !important; 
+    height: 2.5em!important; width:75px !important; 
+    box-shadow: none !important;
+}
+/*glyphicon Sign*/
+.glypOpnSNsgn{
+    font-size: 14px;
+    color: rgb(63,81,181);
+}
+/*General Input format*/
+.bigClass{
+    margin-bottom: 0px;
+}
+.inptLbl{
+    margin-bottom: 0px;
+}
 .flName{
     position: relative;
     display: inline-block;
     flex: 40%;
 }
-
-.itemRemoveBtn{
-    background-color: red; color: ghostwhite;
-    font-weight: bold;
-    border-radius: 15px; border: 15px;
-}
-
 .addressNavBar{
     top: 6px; left: 26%;
     width: 200px;
     font-size: 16.5px;
     text-align: center;
 }
-
+md-tabs-wrapper{
+    border-width: 0px 0px 0px !important;
+}
+.adTb{
+    min-height: 150px !important;
+}
 .HomeItBtn{
     position: relative;
     top: 25px; left: 40%;
 }
-
-.receiptBox{
-    width:100%;
-    line-height: 1.28;
-    border-width: 0 0 1px; border-style: solid; border-color: rgb(169,169,169);
-    text-align: center;
-    font-size: 15px; color: rgb(169,169,169);
-    font-family: "FF Clan";
-}
-
 /*Card Info Container*/
 .cardContainer{
     padding:0 0 0 2px;
 }
-
-/*glyphicon for extension Box*/
-.glypExtBox
-{   
-    margin:0px 2px 0px 2px;
-    background-color: white !important;
-    min-width: 1px !important; min-height: 1px !important; 
-    height: 25px !important; width:25px !important; 
-    box-shadow: none !important;
-}
-/*glyphicon Sign*/
-.glypExtSign{
-    font-size: 13px;
-    color: rgb(63,81,181);
-}
 /*Extension Box Title*/
 .extBoxTtl{
+    position: relative;
+    left: 12%;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 13px;
     font-weight: 700;
     color: #333;
 }
+/*Glyphicon for Card Info extension Box*/
+.glypOpnCI
+{   
+    position: relative;
+    left: 12%;
+    margin:0px 2px 0px 2px;
+    background-color: white !important;
+    min-width: 1px !important; min-height: 1px !important; 
+    height: 50px; width: 50px !important; 
+    box-shadow: none !important;
+}
+/*glyphicon Sign*/
+.glypOpnCIsgn{
+    font-size: 13px;
+    color: rgb(63,81,181);
+}
 /*Extension Box Input format*/
 .extInput{
     margin-bottom: 0px;
 }
-/*Address tab */
-.adTb{
-    min-height: 150px !important;
-    
+
+/*Order Summary/Column 2/SideNav*/
+.mdSideNavL1{
+    width: 100%; height: 93%;
+    margin-top: 53px; 
+    border: rgb(233,233,233) solid 1px ;border-radius: 5px; 
+    box-shadow: none;
 }
-md-tabs-wrapper{
-    border-width: 0px 0px 0px !important;
+.glyClsBtn{
+    margin: 0; padding: 0;
+}
+.glyClsBtnSgn{
+    color: rgb(254,254,254);
+    font-size: 14px;
+}
+/*Reciept box consists of combination of receiptB1 to receiptB3*/
+.receiptB1{
+    position: fixed;
+    width: 100%;
+    padding: 0px;
+    background-color: rgb(255,255,255);
+    border: 1px solid rgb(233,233,233);
+    z-index: 1;
+}
+.receiptB1b{
+    margin-top: 10px;
+}
+.receiptB2{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+.receiptB2a{
+    padding-left: 50px;
+    margin-bottom: 0;
+    width: 150px; line-height: 1.3;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 15px; color: rgb(105,105,105);
+    border-bottom: 1px solid rgb(195,195,195);
+    border-top-left-radius: 5px;
+}
+.receiptB2b{
+    padding-left: 40px;
+    margin-bottom: 0;
+    width: 150px; line-height: 1.3;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 15px; color: rgb(105,105,105);
+    border-bottom: 1px solid rgb(195,195,195);
+    border-top-right-radius: 5px; 
+}
+.receiptB3{
+    line-height: 1.3;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 15px; color: rgb(105,105,105);
+}
+.receiptB3a{
+    width: 150px;
+    padding-top: 5px; padding-bottom: 5px; padding-left: 50px;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 16px; color: rgb(95,95,95);
+    font-weight: bold;
+    background-color: rgb(224,234,248);
+    border-bottom-left-radius: 5px;
+}
+.receiptB3b{
+    width: 150px;
+    padding-top: 5px; padding-bottom: 5px; padding-left: 40px;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 16px; color: rgb(95,95,95);
+    font-weight: bold;
+    background-color: rgb(224,234,248);
+    border-bottom-right-radius: 5px;
+}
+/*Order Summary line part 1 and 2*/
+.summerLnP1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5em;
+    background-color: rgba(31,77,148,1);
+    border-radius: 5px 5px 0 0;
+}
+.summerLnP2{
+    display: flex;
+    letter-spacing: 0.02em;
+    font-size: 19px; font-weight: bold;
+    color: rgb(255,255,255);
+}
+/*Order Summary - cart item list */
+.cartBItems1{
+    position: relative; 
+    top: 140px; 
+    padding: 0;
+    background-color: rgb(255,255,255);
+    padding-bottom: 20px;
+}
+.cartBItems2A{
+    display: flex; 
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 3em;
+}
+.cartBItems2B1{
+    display: flex; 
+    justify-content: flex-end;
+}
+.cartBItems2B2{
+    width: 125px !important; height: 125px !important;
+    margin: 0; padding: 0;
+    display: flex; 
+    justify-content: center;
+}
+.cartBItems2B2 img{
+    width: 100%; height: auto;
+}
+.cartBItems2C{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 3em;
+    text-align: center;
+}
+.cartBItems2C2{
+    margin: 0; padding: 0;
+}
+
+/*Order Summaty Buttons*/
+.orBtnSz{
+    font-size: 25px;
+}
+.plusItem{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.minusItem{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.itemRemoveBtn{
+    background-color: rgb(255,255,255); color: red;
+    font-size: 20px;
+}
+
+
+
+/*Mobile screens*/
+@media screen and (max-device-width: 480px) {
+    .mdSideNavL1{
+        max-width: 800px !important;
+        width: 60% !important; height: 96% !important;
+    }
+    .col1{
+        width: 100% !important; height: 96% !important;
+        line-height: 1.6em;
+        font-size: 150% !important;
+    }
+    /*Extension Box Title*/
+    .extBoxTtl{
+        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+    }
+    /*glyphicon Sign*/
+    .glypOpnCIsgn{
+        font-size: 19px;
+        color: rgb(63,81,181);
+    }
+    /*SideNav open Glyphicon*/
+    .glypOpnSN
+    {   
+        height: 3em!important; width:85px !important; 
+        z-index: 4;
+    }
+    /*glyphicon Sign*/
+    .glypOpnSNsgn{
+        font-size: 19px;
+    }
+
+    /*Order Summary line part 1 and 2*/
+    .summerLnP1{
+        height: 3.5em;
+    }
+    .summerLnP2{
+        font-size: 26px;
+    }
+    .glyClsBtnSgn{
+        font-size: 20px;
+    }
+    .receiptB2a{
+        padding-left: 65px;
+        width: 200px; line-height: 1.6;
+        font-size: 19px;
+    }
+    .receiptB2b{
+        padding-left: 55px;
+        width: 200px; line-height: 1.6;
+        font-size: 19px;
+    }
+    .receiptB3a{
+        padding-left: 65px;
+        width: 200px;
+        font-size: 20px;
+    }
+    .receiptB3b{
+        padding-left: 55px;
+        width: 200px;
+        font-size: 20px;
+    }
+    /*Order Summary - cart item list */
+    .cartBItems1{
+        position: relative; 
+        top: 195px; 
+    }
+    /*Cart items Image*/
+    .cartBItems2B2{
+        width: 175px !important; height: 175px !important;
+        margin: 0; padding: 0;
+        display: flex; 
+        justify-content: center;
+    }
+    .cartBItems2B2 img{
+        width: 100%; height: auto;
+    }
+    .cartBItems2C2{
+        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+        font-size: 18px;
+        color: rgb(95,95,95);
+        letter-spacing: 0.02em;
+    }
+    .btn{
+        font-size: 25px;
+    }
+    /*Order Summaty Buttons*/
+    .orBtnSz{
+        font-size: 30px;
+    }
+    /*md-input Modification*/
+    .md-input-has-value.bigClass > input {
+        font-size: 30px;
+    }
+    .bigClass{
+        margin-top: 30px;
+    }
+    .inptLbl{
+        margin-bottom: 0px; 
+    }
+    /*Modification to Card Info Security Code input line*/
+    .inptLblSC1{
+        bottom: 56px !important; 
+    }
+    .inptLblSC2{
+        /*max-height: 50px;*/
+        height: 37px !important;
+        padding-top: 0 !important; padding-bottom: 0 !important;
+    }
 }

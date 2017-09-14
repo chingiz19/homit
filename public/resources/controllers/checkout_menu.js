@@ -1,5 +1,5 @@
 app.controller("cartController", 
-function ($scope, $sce, $rootScope, $http, advancedStorage, cartService) {
+function ($scope, $sce, $rootScope, $http, advancedStorage, cartService,$timeout, $mdSidenav, $log) {
 
     $scope.userCart = advancedStorage.getUserCart() || {};
     $scope.numberOfItemsInCart = 0;
@@ -115,8 +115,42 @@ function ($scope, $sce, $rootScope, $http, advancedStorage, cartService) {
                 console.log("ERROR");
             });
     }
+    
+    // USer Cart right-SideNav functionality
+    // Start
+    $scope.toggleRight = buildToggler('right');
+    $scope.isOpenRight = function(){
+      return $mdSidenav('right').isOpen();
+    };
+    function debounce(func, wait, context) {
+      var timer;
+      return function debounced() {
+        var context = $scope,
+            args = Array.prototype.slice.call(arguments);
+        $timeout.cancel(timer);
+        timer = $timeout(function() {
+          timer = undefined;
+          func.apply(context, args);
+        }, wait || 10);
+      };
+    }
+    function buildToggler(navID) {
+      return function() {
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      };
+    }
+    $scope.close = function () {
+      $mdSidenav('right').close()
+        .then(function () {
+          $log.debug("close RIGHT is done");
+        });
+    };
+    // End
+
+
 });
 
-$("#cart").click(function(){
-    $(".sideMenu").toggleClass("show");
-})

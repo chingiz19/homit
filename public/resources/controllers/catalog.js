@@ -123,10 +123,8 @@ $scope.productUrl;
             return true;
         } else {
             if ($scope.userSelectedTypes.includes(type)) {
-                console.log("in the list");
                 return true;
             } else {
-                console.log("NOT IN THE LIST");
                 return false;
             }
         }

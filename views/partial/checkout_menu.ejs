@@ -1,41 +1,76 @@
 <link href="/resources/css/checkout_menu.css" rel="stylesheet">
-<div ng-controller="cartController" class="entireSideMenu pull-right">
-    <div id="cart" class="glyphicon glyphicon-shopping-cart sideMenuIcon pull-left">
-        <span class="cartNotificationNumber">{{numberOfItemsInCart}}</span>
+<div ng-controller="cartController">
+    <div class="cart1 pull-right">
+        <md-button id="cart" ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-fab md-primary cart2a">
+            <img ng-src="{{'/resources/images/Cart_Icon.jpeg'}}"  width="35" height="35"/>
+        </md-button>
+        <div class="cartNotificationNumber cart2b">{{numberOfItemsInCart}}</div>
     </div>
-    <div class="sideMenu">
-        <div>    
-            <div class="col-xs-12" style="margin-bottom: 10px; margin-top:5px;">
-                <button onclick="location.href='/checkout'"  class="btn btn-default col-xs-12 checkout-btn">Checkout</button>
+    <md-sidenav class="md-sidenav-right md-whiteframe-4dp mdSideNavL1" md-component-id="right"> 
+        <md-content class="mdSideNavL2">
+            <div class="sdNavFB1">
+                <div class="sdNavFB2">
+                    <md-button ng-click="close()" aria-label="HideSideNav" class="glyClsBtn" >
+                        <span class="glyphicon glyphicon-chevron-left glyClsBtnSgn"></span>
+                        <img ng-src="{{'/resources/images/Cart_Icon.jpeg'}}"  width="25" height="25"/>
+                    </md-button>
+                    <md-button onclick="location.href='/checkout'" class="md-primary chckOut" >Check Out</md-button>
+                </div>
+                <div layout="row" layout-align="center">
+                    <div class="sdNavFB3">
+                        <ul class="sdNavFB3a">
+                            <li>Cart Total:</li>
+                        </ul>
+                    </div>
+                    <div class="sdNavFB3">
+                        <ul class="sdNavFB3b">
+                            <li>C${{totalAmount}}</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div  class="col-xs-12 label-text" style="margin-bottom: 10px;">
-                Total: <span class="pull-right">{{totalAmount}}C$</span>
+            <!--Order Summary - Cart Items-->
+            <div ng-repeat="product in userCart" class="cartBItems1">
+                <div layout="row" layout-align="center">
+                    <div class="cartBItems2A" flex="30">
+                        <ul>
+                            <li>
+                                <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
+                                    <span class="glyphicon glyphicon-plus-sign orBtnSz"></span>
+                                </md-button>
+                            </li>
+                            <li>
+                                <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
+                                    <span class="glyphicon glyphicon-minus-sign orBtnSz"></span>
+                                </md-button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div flex="35" layout="column" >
+                        <li class="cartBItems2B1">
+                            <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)" class="itemRemoveBtn1">
+                                <span class="glyphicon glyphicon-remove-sign itemRemoveBtn2"></span>
+                            </md-button>
+                        </li>
+                        <ul class="container cartBItems2B2">
+                            <li><img ng-src={{product.image}}></li>
+                        </ul>
+                    </div>
+                    <div class="cartBItems2C" flex="35">
+                        <ul class="cartBItems2C2">
+                            <li>{{product.brand}} {{product.name}}</li>
+                            <li>X{{product.packaging}}</li>
+                            <li>{{product.volume}}</li>
+                            <li>{{product.price}}C$</li>
+                            <li>#{{product.quantity}}</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div ng-repeat="product in userCart track by product.depot_id">
-            <li><button class="btn btn-xs cartBoxRemoveBtn glyphicon glyphicon-remove-circle" ng-click="removeFromCart(product, v_index)"></button></li>
-            <ul class="cartBoxUl">
-                <span class="cartBoxText"> 
-                    <li><button class="glyphicon glyphicon-plus-sign plusMinusItem" ng-click="plusItem(product, v_index)"></button></li>
-                    <li><button class="glyphicon glyphicon-minus-sign plusMinusItem" ng-click="minusItem(product, v_index)"></button></li>
-                </span>
-            </ul>
-            <ul class="cartBoxUl">
-                <li><img ng-src={{product.image}} width="60" height="85"></li>
-            </ul>
-            <ul class="cartBoxUl">
-                <span class="cartBoxText"> 
-                    <li><i>{{ product.brand }}</i></li>
-                    <li>{{ product.name }}</li>
-                    <li>X{{ product.packaging }}</li>
-                    <li>{{ product.volume }}</li>
-                    <li>{{ product.price }}C$ CAD</li>
-                    <li>#{{ product.quantity }}</li>
-                </span>
-            </ul>
-        </div>
-        <button class="btn btn-default btn-sm" ng-click="clearCart()">Clear Cart</button>
-    </div>
+            <div class="clrCart">
+                <md-button class="md-raised"  ng-click="clearCart()"> Clear Cart </md-button>
+            </div>
+        </md-content>
+    </md-sidenav>
 </div>
-
 <script src="/resources/controllers/checkout_menu.js"></script>
