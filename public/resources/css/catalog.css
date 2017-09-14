@@ -84,12 +84,12 @@ body{
  /*Represents whole container of items */
  .col24{
      position: relative;
+     display: flex; align-content: flex-start;
      left: 25%;
      margin-top: 10px; margin-left: 10px;
      flex-grow: 2;
      flex-shrink: 2;
  }
-
   .brandBox
  {
      height: 30vh; width: 105%;
@@ -99,7 +99,6 @@ body{
      overflow-y: scroll;
      font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
  }
-
  .sizeStage
 {
     margin-left: 1px;
@@ -186,3 +185,12 @@ body{
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 
+@media screen and (max-device-width: 480px) {
+    .col1{
+        margin-top: 20px;
+        /*width: 50%;*/
+    }
+    .col24{
+        margin-top: 20px;
+    }
+}

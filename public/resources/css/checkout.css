@@ -31,7 +31,7 @@ Columns-2 consist of items and items' info*/
         margin-right: 31%;
     }
    
-    .mdSideNavL1{
+    md-sidenav{
         overflow-y: hidden;
     }
     .userPic{
@@ -268,7 +268,7 @@ md-tabs-wrapper{
 /*Order Summary - cart item list */
 .cartBItems1{
     position: relative; 
-    top: 150px; 
+    top: 140px; 
     padding: 0;
     background-color: rgb(255,255,255);
     padding-bottom: 20px;

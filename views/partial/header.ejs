@@ -2,7 +2,8 @@
 
 <link href="/resources/css/header.css" rel="stylesheet">
 <link href="/resources/css/generic.css" rel="stylesheet">
-<nav class="navbar navbar-default navbar-fixed-top" ng-controller="NavigationController">
+<!--Web Version-->
+<nav class="navbar navbar-default navbar-fixed-top wVer" ng-controller="NavigationController">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/main" target="_self">Delivery Start Up</a>
@@ -40,6 +41,58 @@
     </div>
 </nav>
 
+
+
+
+<!--Mobile Version-->
+<nav class="navbar navbar-default navbar-fixed-top mVer" ng-controller="NavigationController" style="height: 110px;">
+    <div class="container-fluid" layout="row" style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; height: 100%; margin-left: 40px;">
+            <a class="navbar-brand" href="/main" target="_self" style="padding: 0; display: flex; align-items: center; "><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="90" height="90" /></a>
+        </div>
+        <div style="display: flex; margin-left: auto;">
+            <div style="display: flex;  align-items: center;">
+            <form class="navbar-form " role="search">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control"  style="height: 55px; width: 250px; font-size: 25px;" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <md-button type="button" class="btn btn-primary" style="height: 55px;margin:0 ;padding: 0; background-color: rgb(42,81,145);">
+                                <md-icon class="srchIcon" style="width: 50px; height: 50px; margin:0 ;padding: 0;" md-svg-icon="/resources/images/search_Icon.svg"></md-icon>
+                            </md-button>
+                        </span>
+                    </div>
+                </div>    
+            </form>
+            </div>
+        <div class="btn-group" role="group" style="margin: 0; margin-top: 5px; padding: 0; height: 100px !important; display: flex; align-content: center;">
+                <md-button id="btnGroupDrop1" type="button" class="" style="margin:0; padding: 0; " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <md-icon style="width: 100px; height: 100px; margin:0; padding: 0;" md-svg-icon="/resources/images/list_Icon.svg"></md-icon>
+                </md-button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <li style="font-size: 30px;" id="beersTab" role="presentation"><a href="/catalog?product=beers" target="_self">Beers</a></li>
+                    <li style="font-size: 30px;" id="winesTab" role="presentation"><a href="/catalog?product=wines" target="_self">Wines</a></li>
+                    <li style="font-size: 30px;" id="spiritsTab" role="presentation"><a href="/catalog?product=spirits" target="_self">Spirits</a></li>
+                    <li style="font-size: 30px;" id="othersTab" role="presentation"><a href="/catalog?product=others" target="_self">Others</a></li>
+                </div>
+            </div>
+
+                <md-button class="btn btn-default navbar-btn" ng-if="!<%=isSignedIn%>" data-toggle="modal" data-target="#loginModal"><md-icon style="width: 100px; height: 100px; margin:0; padding: 0;" md-svg-icon="/resources/images/account_Icon.svg"></md-icon></md-button>
+                <div class="navbar-right dropdown" ng-if="<%=isSignedIn%>">  
+                    <a href="#" class="navbar-link" data-toggle="dropdown">
+                        <md-button id="btnGroupDrop1" type="button" class="" style="padding-top: 5px; padding-bottom: 5px; margin-top: 0; height: 100px !important;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <md-icon style="width: 100px; height: 100px;" md-svg-icon="/resources/images/account_Icon.svg"></md-icon>
+                        </md-button>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/myaccount" target="_self">My Account</a></li>
+                        <li><a href="#" target="_self" ng-click="logout()">Log out</a></li>
+                    </ul>
+                </div>
+            </div>
+        
+    </div>
+</nav>
 <%- include('signup')%>
 
 <script src="/resources/controllers/header.js"></script>
