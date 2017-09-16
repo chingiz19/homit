@@ -45,7 +45,12 @@ webServer.all('*', function(req, res, next){
   if(req.secure){
     return next();
   };
-  res.redirect('https://' + req.hostname + req.url); // express 4.x
+
+  if (req.query.mobile){
+	  return next();
+  } else {
+  	res.redirect('https://' + req.hostname + req.url); // express 4.x
+  }
 });
 
 /* Custom modules to use for proper routing */
