@@ -1,45 +1,14 @@
-app.controller("myaccountController", ["$scope", "$http", "$cookies", "$rootScope", "$mdToast",
-function($scope, $http, $cookies, $rootScope, $mdToast){
+app.controller("myaccountController", ["$scope", "$http", "$cookies", "$rootScope", "$mdToast", "date",
+function($scope, $http, $cookies, $rootScope, $mdToast, date){
 
     var myaccount = this;   
-
-    myaccount.selectedView = 0;
-    myaccount.passwordError = false;
-
-    myaccount.birth_date = {}; 
     myaccount.init = function(){
-        var arr_years = [];
-        var arr_days_31, arr_days_30, arr_days_29, arr_days_28 = [];
-        for (var i = 1950; i < 2000; i++){
-            arr_years.push(i);    
-        }   
-
-        for (var i = 1; i < 29; i++){
-            arr_days_28.push(i);
-        }
-
-        arr_days_29 = arr_days_28.concat([29]);
-        arr_days_30 = arr_days_29.concat([30]);
-        arr_days_31 = arr_days_30.concat([31]);
-
-        myaccount.birth_date = {
-            "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-            "years": arr_years,
-            "days": {
-                "January": arr_days_31,
-                "February": arr_days_28,
-                "March": arr_days_31,
-                "April": arr_days_30,
-                "May": arr_days_31,
-                "June": arr_days_30,
-                "July": arr_days_31,
-                "August": arr_days_31,
-                "September": arr_days_30,
-                "October": arr_days_31,
-                "November": arr_days_30,
-                "December": arr_days_31
-            }
-        }
+        myaccount.user = {};
+        myaccount.edit = false;
+        myaccount.isOrderHistoryShown = false;
+        myaccount.date = date;
+        myaccount.selectedView = 0;
+        myaccount.passwordError = false;
 
         $http({
                 method: 'GET',
@@ -59,13 +28,6 @@ function($scope, $http, $cookies, $rootScope, $mdToast){
     /* Info Section */
     // $scope.user = JSON.parse( $cookies.get("user").replace("j:", "")); 
 
-    myaccount.edit = false;
-    myaccount.user = {
-        "first_name": "Hello",
-        last_name: "Hi"
-    }
-
-    myaccount.isOrderHistoryShown = false;
 
     myaccount.editButton = function(){
         myaccount.edit = !myaccount.edit;
@@ -101,7 +63,7 @@ function($scope, $http, $cookies, $rootScope, $mdToast){
             });
     }
 
-     showToast = function(message, action){
+     var showToast = function(message, action){
         var toast = $mdToast.simple()
                 .textContent(message)
                 .highlightAction(true)

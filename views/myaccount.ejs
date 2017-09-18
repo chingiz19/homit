@@ -63,7 +63,7 @@
                             <md-input-container flex="30">
                                 <label>Year</label>
                                 <md-select ng-model="myaccount.user.birth_year" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
-                                    <md-option ng-repeat="year in myaccount.birth_date.years" ng-value="year">{{ year }}</md-option>
+                                    <md-option ng-repeat="year in myaccount.date.getYears()" ng-value="year">{{ year }}</md-option>
                                 </md-select>
                             </md-input-container>
 
@@ -71,7 +71,7 @@
                             <md-input-container flex="30">
                                 <label>Month</label>
                                 <md-select ng-model="myaccount.user.birth_month" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
-                                    <md-option ng-repeat="month in myaccount.birth_date.months" ng-value="month">{{ month }}</md-option>
+                                    <md-option ng-repeat="month in myaccount.date.getMonths()" ng-value="month">{{ month }}</md-option>
                                 </md-select>
                             </md-input-container>
 
@@ -79,7 +79,7 @@
                             <md-input-container flex="30">
                                 <label>Day</label>
                                 <md-select ng-model="myaccount.user.birth_day" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
-                                    <md-option ng-repeat="day in myaccount.birth_date.days[myaccount.user.birth_month]" ng-value="day">{{ day }}</md-option>
+                                    <md-option ng-repeat="day in myaccount.date.getDays(myaccount.user.birth_month, myaccount.user.birth_year)" ng-value="day">{{ day }}</md-option>
                                 </md-select>
                             </md-input-container>
                         </div>
@@ -241,6 +241,7 @@
                 </table>
             </div>
         </div>
+    <script src="/resources/services/date.js"></script>
     <script src="/resources/controllers/myaccount.js"></script>
 </body>
 </html>
