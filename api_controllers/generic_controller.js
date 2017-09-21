@@ -3,10 +3,6 @@ var path = require("path");
 
 // Global variables 
 global.db = global.modelFactory.initializeDatabase();
-global.checkAuth = function(req,res,next){
-    if (!req.session.user) res.status(400).send("Not allowed");
-    next();
-};
 
 router.use("/authentication", require(path.join(__dirname, "./authentication")));
 router.use("/catalog", require(path.join(__dirname, "./catalog")));
