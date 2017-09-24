@@ -30,14 +30,6 @@ router.get('/main', function(req, res, next){
 	res.render("main.ejs", req.options.ejs);
 });
 
-router.get('/catalog', function(req, res, next){
-	var product = req.query.product ? req.query.product : "beers";
-	var tabId = product + "Tab";
-	req.options.ejs["title"] = "Catalog";
-	req.options.ejs["tabId"] = tabId;
-	res.render("catalog.ejs", req.options.ejs);
-});
-
 router.get("/checkout", function(req, res, next){
 	req.options.ejs["title"] = "Checkout";
 	res.render("checkout.ejs", req.options.ejs);
@@ -48,6 +40,7 @@ router.get("/admin", function(req, res, next){
 	res.render("admin.ejs", req.options.ejs);
 });
 
+router.use("/catalog/", require("./catalogView.js"));
 router.use(require("./viewAuth_controller.js"));
 router.use(require("./adminAuth_controller.js"));
 

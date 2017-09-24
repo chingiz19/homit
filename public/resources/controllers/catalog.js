@@ -1,7 +1,7 @@
 app.controller("catalogController", ["$location", "$scope", "$cookies", "$http", "$rootScope", 
     function($location, $scope, $cookies, $http, $rootScope) {
 
-$scope.selection = $location.search().product;
+$scope.selection = $location.path();
 
 $scope.isBeers = false;
 $scope.isWines= false;
@@ -10,16 +10,16 @@ $scope.isOthers= false;
 
 // Determine product URL
 $scope.productUrl;
-    if ($scope.selection == "beers") {
+    if ($scope.selection == "/catalog/liquor/beers") {
         $scope.productUrl = '/api/catalog/beers';
         $scope.isBeers = true;
-    } else if ($scope.selection == "wines") {
+    } else if ($scope.selection == "/catalog/liquor/wines") {
         $scope.productUrl = '/api/catalog/wines';
         $scope.isWines=true;
-    } else if ($scope.selection == "spirits") {
+    } else if ($scope.selection == "/catalog/liquor/spirits") {
         $scope.productUrl = '/api/catalog/spirits';
         $scope.isSpirits=true;
-    } else if ($scope.selection == "others") {
+    } else if ($scope.selection == "/catalog/snacks") {
         $scope.productUrl = '/api/catalog/others';
         $scope.isOthers=true;
     } else {

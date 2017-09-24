@@ -19,7 +19,7 @@ app.service('cartService', ["$http",function($http){
     
     var _getCart = function(){
         //TODO: return response directly
-        return  $http.get('api/cart/usercart');
+        return  $http.get('/api/cart/usercart');
     }
 
     var _mergeCarts = function(lCart, rCart){
