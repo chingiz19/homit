@@ -29,3 +29,9 @@
     border-bottom-style: solid;
     outline: none;
 }
+
+.box-borders-default{
+    border: lightgray solid 1px;
+    border-radius: 5px;
+    background-color: white;
+}

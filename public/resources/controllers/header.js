@@ -3,6 +3,9 @@ app.controller("LogoSearchController", function ($scope, $http) {
 });
 
 app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope,$timeout, $mdSidenav, $log) {
+        $scope.init = function(){
+            $scope.showDashboard = false;
+        }
         $scope.logout = function(){
             $http({
                 method: 'POST',
@@ -71,4 +74,6 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     this.emptySubcategories=function(){
         $rootScope.$broadcast("emptySubcategories");
     }
+    
+    $scope.init();
 });
