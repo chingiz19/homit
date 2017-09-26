@@ -90,7 +90,7 @@
     </div>
 </nav>-->
 
-<nav layout="column" ng-cloak>
+<nav layout="column" ng-controller="NavigationController" ng-cloak>
     <md-toolbar class="homit-header-bigscreen">
       <div class="md-toolbar-tools header">
 
@@ -100,7 +100,7 @@
             <input>
         </md-input-container>
         <div style="display: flex; justify-content: flex-end;">
-            <md-button class="header-dashboard">
+            <md-button class="header-dashboard" ng-click="showDashboard = !showDashboard" ng-class="{'button-press-feel': showDashboard}">
                 <ng-md-icon icon="dashboard" class="header-icon" size="48"></ng-md-icon>
             </md-button>
             <md-button class="md-raised header-button">Sign In </md-button>
@@ -117,7 +117,7 @@
             <input>
         </md-input-container>
         <div style="display: flex; justify-content: flex-end;">
-            <md-button class="header-dashboard">
+            <md-button class="header-dashboard" ng-click="showDashboard = !showDashboard" ng-class="{'button-press-feel': showDashboard}">
                 <ng-md-icon icon="dashboard" class="header-icon" size="30"></ng-md-icon>
             </md-button>
             <md-button class="header-button">
@@ -128,7 +128,21 @@
     </md-toolbar>
 
     <!-- Dashboard -->
-    <div>
+    <div class="dashboard dashboard-dimensions box-borders-default" ng-show="showDashboard">
+        <ul layout="row" layout-align="space-around center" style="list-style: none; padding-left: 0px; width: 100%; padding-top: 10px;">
+            <li flex="45" style="max-height: 300px;" class="text-center" ng-click="">
+                <div style="background-color: #2dd204">
+                    <ng-md-icon icon="credit-card" style="fill: #6f7574" size="48">
+                </div>
+                <label>Snacks</label>
+            </li>
+            <li flex="45" style="max-height: 300px;" class="text-center">
+                <div style="background-color: #2dd204">
+                    <ng-md-icon icon="work" style="fill: #6f7574" size="48">
+                </div>
+                <label>Liqour</label>
+            </li>
+        </ul>
     </div>
 </nav>
 

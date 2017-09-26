@@ -31,7 +31,18 @@
      display: none;
     }
 
- .homit-header-smallscreen{
+.button-press-feel{
+    border: 1px inset;
+}
+
+.dashboard{
+    position: absolute;
+    top: 80px;
+    display: flex;
+    z-index: 9999;
+}
+
+    .homit-header-smallscreen{
         display: none;
     }
 
@@ -58,6 +69,14 @@
 
     .header-button {
         flex-basis: 20%;
+    }
+
+    .dashboard-dimensions {
+        right: 1em;
+        max-width: 400px;
+        min-width: 400px;
+        max-height: 300px;
+        min-height: 300px;
     }
 }
 
@@ -333,6 +352,13 @@
         flex-basis: 10%;
         min-width: 35%;
     }
-    
-}
 
+    .dashboard-dimensions {
+        right: 10px;
+        left: 10px;
+        max-width: 100%;
+        min-width: 100%;
+        max-height: 100vh;
+        min-height: 100vh;
+    }
+}
