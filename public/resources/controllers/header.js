@@ -1,6 +1,4 @@
-app.controller("LogoSearchController", function ($scope, $http) {
-
-});
+app.controller("LogoSearchController", function ($scope, $http) {});
 
 app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope,$timeout, $mdSidenav, $log) {
         $scope.init = function(){
@@ -74,6 +72,5 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     this.emptySubcategories=function(){
         $rootScope.$broadcast("emptySubcategories");
     }
-    
     $scope.init();
 });
