@@ -1,18 +1,18 @@
 <link href="/resources/css/checkout_menu.css" rel="stylesheet">
 <div ng-controller="cartController">
     <div class="cart1 pull-right">
-        <md-button id="cart" ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-fab md-primary cart2a">
-            <img ng-src="{{'/resources/images/Cart_Icon.jpeg'}}"  width="35" height="35"/>
+        <md-button id="cart" ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-fab md-primary cart2a" aria-label="toggleRightCart">
+            <div class="container cart2aa"><img ng-src="{{'/resources/images/cart_Icon.svg'}}"/></div>
         </md-button>
         <div class="cartNotificationNumber cart2b">{{numberOfItemsInCart}}</div>
     </div>
-    <md-sidenav class="md-sidenav-right md-whiteframe-4dp mdSideNavL1" md-component-id="right"> 
-        <md-content class="mdSideNavL2">
+    <md-sidenav class="md-sidenav-right md-whiteframe-4dp mdSideNavR1" md-component-id="right"> 
+        <md-content class="mdSideNavR2">
             <div class="sdNavFB1">
                 <div class="sdNavFB2">
-                    <md-button ng-click="close()" aria-label="HideSideNav" class="glyClsBtn" >
+                    <md-button ng-click="close()" aria-label="HideSideNav" class="ClsBtn" >
                         <span class="glyphicon glyphicon-chevron-left glyClsBtnSgn"></span>
-                        <img ng-src="{{'/resources/images/Cart_Icon.jpeg'}}"  width="25" height="25"/>
+                        <img class="ClsBtnCart" ng-src="{{'/resources/images/cart_Icon.svg'}}"/>
                     </md-button>
                     <md-button onclick="location.href='/checkout'" class="md-primary chckOut" >Check Out</md-button>
                 </div>
@@ -36,12 +36,12 @@
                         <ul>
                             <li>
                                 <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
-                                    <span class="glyphicon glyphicon-plus-sign orBtnSz"></span>
+                                    <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
                                 </md-button>
                             </li>
                             <li>
                                 <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
-                                    <span class="glyphicon glyphicon-minus-sign orBtnSz"></span>
+                                    <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
                                 </md-button>
                             </li>
                         </ul>
@@ -49,12 +49,10 @@
                     <div flex="35" layout="column" >
                         <li class="cartBItems2B1">
                             <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)" class="itemRemoveBtn1">
-                                <span class="glyphicon glyphicon-remove-sign itemRemoveBtn2"></span>
+                                <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
                             </md-button>
                         </li>
-                        <ul class="container cartBItems2B2">
-                            <li><img ng-src={{product.image}}></li>
-                        </ul>
+                        <li><img class="cartBItems2B2" ng-src={{product.image}}></li>
                     </div>
                     <div class="cartBItems2C" flex="35">
                         <ul class="cartBItems2C2">
@@ -68,7 +66,7 @@
                 </div>
             </div>
             <div class="clrCart">
-                <md-button class="md-raised"  ng-click="clearCart()"> Clear Cart </md-button>
+                <md-button class="md-raised clrCartbtn"  ng-click="clearCart()"> Clear Cart </md-button>
             </div>
         </md-content>
     </md-sidenav>

@@ -5,76 +5,78 @@ body{
     background-color: rgb(249, 249, 249);
 }
 
-/*Adjust width of column-1 and columns-2,3,4 as widows width changes*/
-@media(min-width: 768px){
-    .col1{
-        width: 176px;
-    }
-}
-
-@media(min-width: 992px){
-    .col1{
-        width: 231px;
-    }
-}
-
-@media(min-width: 1200px){
+/*Adjust width col1 and col24 when 2 and 3 columns of items left*/
+/*Start*/
+@media (min-width: 1200px){
     .col1{
         width: 281px;
     }
 }
+@media (max-width: 1199px) and (min-width: 993px){
+    .col1{
+        width: 231px;
+    }
+}
+@media (max-width: 992px) and (min-width: 768px){
+    .col1{
+        width: 176px;
+    }   
+}
+/*End*/
 
-@media(max-width: 750px){
+/*Adjust width col1 and col24 when 1 column of items left*/
+/*Start*/
+@media (max-width: 767px) and (min-width: 700px) {
+    .col1{
+        left: 15%;
+    }
+    .col24{
+        left: 45% !important;
+    }
+    .flex-80, .layout-row>.flex-80{
+        max-width: 60%;
+    }
+}
+@media (max-width: 699px) and (min-width: 600px) {
+    .col1{
+        left: 10%;
+    }
+    .col24{
+        left: 45% !important;
+    }
+     .flex-80, .layout-row>.flex-80{
+        max-width: 285px;
+    }
+}
+@media (max-width: 599px) and (min-width: 520px) {
+    .col1{
+        left: 1%;
+    }
+    .col24{
+        left: 40% !important;
+    }
+     .flex-80, .layout-row>.flex-80{
+        max-width: 285px;
+    }
+}
+@media(max-width: 519px){
+    .col1{
+        display: none;
+    }
     .col24{
         position: relative;
-        left: 180px !important;
+        left: 12.5% !important;
+        margin: 0;
     }
 }
+/*End*/
 
-@media(min-width: 768px){
-    .col24{
-        width: 528px;
-    }
-}
-
-@media(min-width: 992px){
-    .col24{
-        width: 693px;
-    }
-}
-@media(min-width: 1200px){
-    .col24{
-        width: 843px;
-    }
-}
-/*Customize the scrollbar to IOS version*/
-::-webkit-scrollbar {
-  width: 10px;
-  background-color: rgba(0,0,0,0);
-  -webkit-border-radius: 100px;
-}
-::-webkit-scrollbar:hover {
-  background-color: rgba(0, 0, 0, 0.09);
-}
- 
-::-webkit-scrollbar-thumb:vertical {
-  background: rgba(0,0,0,0.5);
-  -webkit-border-radius: 100px;
-  background-clip: padding-box;
-  border: 2px solid rgba(0, 0, 0, 0);
-  min-height: 10px;
-}
-::-webkit-scrollbar-thumb:vertical:active {
-  background: rgba(0,0,0,0.61);
-  -webkit-border-radius: 100px;
-}
 
 /*Represent column-1*/
 /*TODO overflow-y doesn't work when page shrinked in y direction*/
 .col1{
     position: fixed;
     margin-top: 10px;
-    height: 85vh;
     min-width: 180px;
     background-color: white;
     border: lightgray solid 1px; border-radius: 5px; 
@@ -91,8 +93,9 @@ body{
      flex-shrink: 2;
  }
   .brandBox
- {
-     height: 30vh; width: 105%;
+ {  
+     overflow-x: scroll;
+     height: 25vh; width: 105%;
      margin-left: 1px;
      border-radius: 5px;
      background-color: rgb(254,254,254);
@@ -100,33 +103,134 @@ body{
      font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
  }
  .sizeStage
-{
+{   
+    position: relative;
+    left: 10px;
+    margin: 10px 0 20px 0;
+    color: rgba(0,0,0,0.69);
+    font-size: 24px;
+    font-weight: 600;
     margin-left: 1px;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 16px;
 }
-
-.itemBox{
+/*Subcategories CSS*/
+.SubcategoryName{
+    color: rgba(0,0,0,0.4);
+    margin-bottom: 10px;
+    font-size: 20px; 
+}
+/*Brand Search Box*/
+.srchBx{
+    position: relative; 
+    bottom: 0px; 
+    width: 100%; min-width: 180px; 
+    display: flex; 
+    align-items: center; justify-content: center;
+}
+.srchBxA{
+    width: 70%; margin-bottom: 0px;
+}
+.srchBxAA{
+    margin-bottom: 0; 
+    font-weight: 350 !important; font-size: 14px;
+    color: rgba(0,0,0,0.22) !important;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+}
+.srchBxAB{
+    font-size: 14px;
+    color: rgba(0,0,0,0.82) !important;
+    font-weight: 500;
+    border-bottom: rgba(0,0,0,0.12) solid 1px !important;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+}
+.srchBxAAA{
+    width: 20px; height: 20px;
+}
+.srchBxB{
+    bottom: 3px; right: 2px;
+    min-width: 30px; min-height: 30px;
+    height: 30px; 
+    margin: 0;
+    border-bottom: rgba(0,0,0,0.12) solid 1px; border-radius: 0; 
+}
+.srchBxBA{
+    width: 25px; height: 25px;
+}
+.itemBoxL1{
     position: relative;
     min-width: 50px;
     margin: 0 3px 6px 3px;
     border: lightgray solid 1px; border-radius: 5px; background-color: white;
 }
+.itemBoxL2{
+    padding: 0 20px 0 20px;
+}
 
 /*Item Pack and Volume change*/
+.pvChangeBtnA{
+    margin: 0; padding: 0; 
+    min-width: 20px; width: 25px; 
+    min-height: 20px; height: 20px;
+    z-index: 10;
+}
+.pvChangeBtnAA{
+    width: 20px; height: 20px;
+}
+.pvChangeBtn{
+    width: 100%; height: auto;
+}
 .pvChange1{
     display: flex; 
     justify-content: flex-end;
 }
-.pvChange2{
+.pvChange1A{
     display: flex;
     flex-direction: column;
     justify-content: center; align-items: center;
-    height: 3em; width: 120px;
+    height: 3em; 
 }
-.pvChange3{
+.pvChange1AAA{
+    position: absolute; 
+    left: 155px; top: 4;
+}
+.pvChange1AAB{
+    position: absolute; 
+    right: 30px; top: 4;
+}
+.pvChange1AABA{
     display: flex; 
-    align-items: baseline;
+    justify-content: center; align-items: baseline; 
+    width: 80px;
+}
+.pvChange1AAC{
+    position: absolute; 
+    right: 15px; top: 4;
+}
+.pvChange1ABA{
+    position: absolute; 
+    left: 155px; top: 22px;
+}
+.pvChange1ABB{
+    position: absolute; 
+    right: 30px;
+}
+.pvChange1ABBA{
+    display: flex; 
+    justify-content: center; align-items: baseline; 
+    width: 80px;
+}
+.pvChange1ABC{
+    position: absolute; 
+    right: 15px; top: 22px;
+}
+
+.itmPic{
+    width: 225px !important; height: 225px !important;
+    margin: 0; padding: 0;
+    margin-left: 8px;
+}
+.itmPic img{
+    width: 100%; height: auto;
 }
 .addBtn{
     color:gray;
@@ -143,8 +247,8 @@ body{
 }
 
 .nHighltdVol{
-    color: darkgray;
-    font-size: 11px; font-weight: bold;
+    color: rgba(120,120,120,0.4);
+    font-size: 9px; font-weight: bold;
     letter-spacing: 0.025em;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
@@ -158,7 +262,7 @@ body{
 }
 
 .nHighltdPack{
-    color: darkgray;
+    color: rgba(120,120,120,0.4);
     font-size: 11px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
@@ -184,13 +288,140 @@ body{
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
+.addToCrtBtn{
+    width: 94%;
+}
 
-@media screen and (max-device-width: 480px) {
+@media screen and (min-device-width: 600px){
+    .typesSdNB1{
+        display: none;
+    }
+}
+
+@media screen and (max-device-width: 600px) {
+    body{
+        margin-top: 145px !important;
+    }
+    .col01{
+        margin:0; padding: o;
+        width: 100%;
+    }
     .col1{
-        margin-top: 20px;
-        /*width: 50%;*/
+        display: none;
     }
     .col24{
-        margin-top: 20px;
+        display: flex; justify-content: center;
+        left: 0px;
+        min-width: 900px ;
+        width: 100%;
+        }
+    .itemBoxL1{
+        position: relative;
+        width: 400px;
+        min-height: 520px;
     }
+    .itemBoxL2{
+        padding: 0 20px 0 20px;
+    }
+    
+    /*item Price and Brand*/
+    .brand{
+        height: 3em; width: 360px;
+        font-size: 26px;
+    }
+    .price{
+        font-size: 23px;
+    }
+    /*Item Picture*/
+    .itmPic{
+        display: flex;
+        justify-content: center;
+        width: 300px !important; height: 300px !important;
+        margin-left: 40px;
+    }
+    .itmPic img{
+        width: 100%; height: auto;
+    }
+    /*Add to Cart button*/
+    .addToCrtBtn{
+        width: 96%;
+        margin-left: 2%; 
+        height: 2.5em;
+        font-size: 24px; font-weight: 700;
+        letter-spacing: 0.025em;
+        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    }
+    /*Type and Brand font*/
+    .sizeStage{
+        margin-left: 5%;
+        font-size: 45px; font-weight: bold;
+        letter-spacing: 0.025em;
+        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    }
+    /*Type SideNav bar*/
+    .typesSdNB1{
+        position: fixed;
+        text-align: center;
+        right: 5px;
+        z-index: 2;
+    }
+    
+}
+
+/*Customize the scrollbar to IOS version*/
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0,0,0,0);
+  -webkit-border-radius: 100px;
+}
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+::-webkit-scrollbar-thumb:vertical {
+  background: rgba(0,0,0,0.5);
+  -webkit-border-radius: 100px;
+  background-clip: padding-box;
+  border: 2px solid rgba(0, 0, 0, 0);
+  min-height: 10px;
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0,0,0,0.61);
+  -webkit-border-radius: 100px;
+}
+
+/*When Subcategory selected, change style*/
+/*Changes default border color*/
+md-radio-button .md-off{
+    border-color: rgba(0,0,0,0.4);
+}
+/*Chenages font color/size of selected Categories*/
+md-radio-group .SubcategoryName.ng-scope.md-checked{
+    font-weight: 600;
+    font-size: 21px;
+    color: rgba(0,0,0,0.55);
+    background-color: rgba(0,0,0, 0.05);
+}
+/*Chenages font color/size of Select All button*/
+md-radio-group .SubcategoryName.md-checked{
+    font-weight: 600;
+    font-size: 21px;
+    color: rgba(0,0,0,0.55);
+    background-color: rgba(0,0,0, 0.05);
+}
+/*Margein-left for radio-button container*/
+md-radio-group .md-container.md-ink-ripple{
+    margin-left: 15px;
+}
+/*Change default radio-button colors*/
+md-radio-button:focus {
+    outline: none;
+}
+md-radio-button .md-on {
+    background-color: rgba(63,222,17,0.77);
+}
+md-radio-button.md-checked .md-off {
+    border-color: rgba(63,222,17,0.77);
+}
+md-radio-button .md-label{
+    padding-left: 20px;
 }

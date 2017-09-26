@@ -1517,6 +1517,7 @@ INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_v
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1188,1137,1,22,63.5);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1189,1138,1,7,30);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1190,1138,1,23,42.5);
+INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1191,1138,1,22,60.5);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1192,1139,1,7,50);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1193,1140,1,7,29);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1194,1140,1,23,37.5);
@@ -1556,11 +1557,11 @@ INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_v
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1528,1521,1,20,1.99);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1529,1522,1,27,1.29);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1530,1523,1,5,4.99);
-INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1531,1524,4,1,8.97);
-INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1532,1524,8,1,16.99);
+INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1531,1524,2,1,8.97);
+INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1532,1524,6,1,16.99);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1533,1525,1,14,1.99);
-INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1534,1526,4,1,8.97);
-INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1535,1526,8,1,16.99);
+INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1534,1526,2,1,8.97);
+INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1535,1526,6,1,16.99);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1536,1527,1,24,3.29);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1537,1528,1,30,2.99);
 INSERT INTO `delivery_db`.`catalog_depot`(id,product_id,packaging_id,packaging_volume_id,price) VALUES (1538,1529,1,30,2.99);

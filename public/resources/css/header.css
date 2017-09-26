@@ -1,15 +1,253 @@
-@media screen and (min-device-width: 480px) {
+ md-backdrop.md-opaque {
+    background-color: rgba(33,33,33,0.7);
+}
+@media screen and (min-device-width: 600px) {
  .mVer{
      display: none;
     }
 }
 
-@media screen and (max-device-width: 480px) {
+@media screen and (max-device-width: 600px) {
+    /*Disables Header web version */
     .wVer{
         display: none;
     }
-    
+    /*Header*/
+    .mVerHedL1{
+        max-width: 1150px;
+        height: 150px;
+    }
+    .mVerHedL2{
+        display: flex; align-items: center;
+    }
+    .mVerHedL2a{
+        display: flex; align-items: center; 
+        height: 100%; margin-left: 40px;
+    }
+    .mVerHedL2a1{
+        display: flex; align-items: center;
+        padding: 0; 
+    }
+    .mVerHedL2b{
+        display: flex; 
+        margin-left: auto;
+    }
+    /*List Icon*/
+    .lstIcnBtn{
+        margin:0; padding: 0;
+    }
+    .lstIcn{
+        width: 150px; height: 150px; 
+        margin:0; padding: 0;
+    }
+    /*Fixes backDrop of SideNav*/
+    .md-sidenav-backdrop {
+        position: fixed;
+    }
+    /*Fill ALL google Icon color*/
     md-icon svg {
       fill: rgb(42,81,145);
     }
+    /*Side Nav*/
+    md-sidenav.mdSideNavL1{
+        max-width: 1000px !important; height: 111.5vh !important;
+        width: 650px;
+        top: 1px;
+        border: rgba(255,255,255,0.85) solid 2px ;border-radius: 5px; 
+        background-color: rgb(140,140,140);
+        box-shadow: none;
+    }
+    .mdSideNavL1A{
+        background-color:  rgb(140,140,140);
+    }
+    /*Navigation Side Bar*/
+    /*Navigation Line 1 - "Navigation" and Close Btn*/
+    .navgtL1{
+        display: flex; align-items: center;
+    }
+    .navgtL1a{
+        display: flex; 
+        margin-left: auto; 
+        font-size: 35px; font-weight: 600; 
+        color: rgb(42,81,145);
+    }
+    .navgtL1b{
+        display: flex; 
+        margin-left: auto;
+    }
+    .navgtClBtn{
+        font-size: 30px;
+    }
+    /*Navigation Line 2 - Sign / My Accaunt and Sign Out*/
+    .navgtL2{
+        margin-top: 20px; 
+        padding-bottom:0;
+    }
+    .navgtL2a{
+        margin-bottom: 0; padding-left: 0;
+    }
+    .navgtL2aA{
+        display: flex; align-items: center;
+        padding-bottom: 20px;
+        font-size: 45px;
+        border-bottom: solid 2px rgba(255,255,255,0.65); 
+    }
+    .navgtL2aAA{
+        font-weight: 500; 
+        color: rgba(255,255,255,1);
+    }
+    .navgtL2aAAA{
+        width: 50px; height: 50px;
+    }
+    .navgtL2b{
+        margin-bottom: 0; 
+        padding-left: 0;
+    }
+    .navgtL2bA{
+        display: flex; align-items: center;
+        padding-left: 5px;
+        font-size: 35px; 
+    }
+    .navgtL2bAA{
+        color: rgba(255,255,255,1);
+        font-weight: 500; 
+    }
+    .navgtL2bAAA{
+        width: 50px; height: 50px; 
+        padding-bottom: 10px;
+    }
+    .navgtL2bB{
+        display: flex; align-items: center;
+        padding-left: 5px;
+        font-size: 35px;  
+    }
+    .navgtL2bBA{
+        color: rgba(255,255,255,1);
+        font-weight: 500; 
+    }
+    .navgtL2bBAA{
+        width: 50px; height: 50px; 
+        padding-bottom: 10px;
+    }
+    .navgtL2bC{
+        font-size: 100px; 
+        border-bottom: solid 2px rgba(255,255,255,0.65);
+    }
+    /*Navigation Line 3 - All Categories and Types/Subcategories*/
+    .navgtL3{
+        padding-top: 10px;
+    }
+    .navgtL3a{
+        padding-left: 0px; padding-bottom: 0;
+    }
+    .navgtL3aA{
+        display: flex; align-items: center;
+        padding-top: auto;
+        padding-left: 5px;
+        line-height: 60px;
+        font-size: 45px;
+    }
+    .navgtL3aAA{
+        width: 55px; height: 55px; 
+        margin:0; padding: 0;
+    }
+    .navgtL3aAB{
+        color: rgba(255,255,255,1);
+        font-weight: 500; 
+    }
+    .navgtL3aB{
+        display: flex; align-items: center;
+        padding-top: auto;
+        line-height: 60px;
+        font-size: 45px;   
+    }
+    .navgtL3aBA{
+        width: 55px; height: 55px; 
+        margin:0; padding: 0;
+    }
+    .navgtL3aBB{
+        color: rgba(255,255,255,1);
+        font-weight: 500; 
+    }
+    .navgtL3aC{
+        display: flex; align-items: center;
+        padding-top: auto;
+        line-height: 60px;
+        font-size: 45px;   
+    }
+    .navgtL3aCA{
+        width: 55px; height: 55px;
+        margin:0; padding: 0;
+    }
+    .navgtL3aCB{
+        color: rgba(255,255,255,1);
+        font-weight: 500; 
+    }
+    .navgtL3aD{
+        display: flex; align-items: center;
+        padding-top: auto; padding-bottom: 10px;
+        line-height: 60px;
+        font-size: 45px;    
+    }
+    .navgtL3aDA{
+        width: 55px; height: 55px; 
+        margin:0; padding: 0;
+    }
+    .navgtL3aDB{
+        color: rgba(255,255,255,1);
+        font-weight: 500; 
+    }
+    .navgtL3bAA{
+        margin: 0; padding-left: 5px; 
+        font-size: 40px; font-weight: 500; 
+        color: rgba(255,255,255,1);
+    }
+    .navgtL3cAA{
+        margin: 0;
+        font-size: 40px; font-weight: 500; 
+        color: rgba(255,255,255,1);
+    }
+    .navgtL3dAA{
+        margin: 0;
+        font-size: 40px; font-weight: 500; 
+        color: rgba(255,255,255,1);
+    }
+    .navgtL3eAA{
+        margin: 0;
+        font-size: 40px; font-weight: 500; 
+        color: rgba(255,255,255,1);
+    }
+
+
+
+    /*Radio Button - Box Size*/
+    .md-label{
+        margin-left: 50px !important; padding-top: 20px !important;
+    }
+    md-radio-button .md-off, md-radio-button .md-on{
+        height: 40px; width: 40px;
+        border-color: rgba(42,81,145,0.5) !important;
+    }
+    
+    md-radio-button .md-on {
+        background-color: rgba(63,222,17,0.77);
+    }
+    md-radio-button .md-label{
+        padding-left: 10px;
+    }
+    /*Chenages font color/size of selected Categories*/
+    md-radio-group .SubcategoryName.ng-scope.md-checked{
+        font-weight: 600;
+        font-size: 21px;
+        color: rgba(0,0,0,0.55);
+        background-color: rgba(0,0,0, 0.0) !important;
+    }
+    /*Chenages font color/size of Select All button*/
+    md-radio-group .SubcategoryName.md-checked{
+        font-weight: 600;
+        font-size: 21px;
+        color: rgba(0,0,0,0.55);
+        background-color: rgba(0,0,0, 0.0) !important;
+    }
 }
+

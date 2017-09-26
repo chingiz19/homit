@@ -12,10 +12,12 @@ var categories = {
 
 router.get('/beers', function(req, res, next){
     getAllBeers().then(function(products) {
+        var allBrands = getAllBrands(products);
         var formattedProducts = getFormattedProducts(products);
         getAllBeerTypes(products).then(function(subcategories){
             var response = {
                 success: 'true',
+                all_brands: allBrands,
                 subcategories: subcategories,
                 products: formattedProducts
             };
@@ -26,10 +28,12 @@ router.get('/beers', function(req, res, next){
 
 router.get('/wines', function(req, res, next){
     getAllWines().then(function(products) {
+        var allBrands = getAllBrands(products);        
         var formattedProducts = getFormattedProducts(products);        
         getAllWineTypes(products).then(function(subcategories){
             var response = {
                 success: 'true',
+                all_brands: allBrands,                
                 subcategories: subcategories,
                 products: formattedProducts
             };
@@ -40,10 +44,12 @@ router.get('/wines', function(req, res, next){
 
 router.get('/spirits', function(req, res, next){
     getAllSpirits().then(function(products) {
+        var allBrands = getAllBrands(products);     
         var formattedProducts = getFormattedProducts(products);        
         getAllSpiritTypes(products).then(function(subcategories){            
             var response = {
                 success: 'true',
+                all_brands: allBrands,          
                 subcategories: subcategories,
                 products: formattedProducts
             };
@@ -54,10 +60,12 @@ router.get('/spirits', function(req, res, next){
 
 router.get('/others', function(req, res, next){
     getAllOthers().then(function(products) {
+        var allBrands = getAllBrands(products);        
         var formattedProducts = getFormattedProducts(products);        
         getAllOtherTypes(products).then(function(subcategories){            
             var response = {
                 success: 'true',
+                all_brands: allBrands,                
                 subcategories: subcategories,
                 products: formattedProducts
             };
@@ -209,7 +217,7 @@ var getAllProducts = function(category_id) {
 /**
  * Gets all brands for the products provided
  */
-var getAllBrands = function (products, subcategories) {
+var getAllBrands = function (products) {
     var result = [];
     var tmp_brands = [];
     // for (i = 0; i < subcategories.length; i++) {

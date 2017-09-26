@@ -466,12 +466,12 @@
                                 <ul>
                                     <li>
                                         <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
-                                            <span class="glyphicon glyphicon-plus-sign orBtnSz"></span>
+                                            <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
                                         </md-button>
                                     </li>
                                     <li>
                                         <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
-                                            <span class="glyphicon glyphicon-minus-sign orBtnSz"></span>
+                                            <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
                                         </md-button>
                                     </li>
                                 </ul>
@@ -479,7 +479,7 @@
                             <div flex="35" layout="column" >
                                 <li class="cartBItems2B1">
                                     <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)">
-                                        <span class="glyphicon glyphicon-remove-sign itemRemoveBtn"></span>
+                                        <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
                                     </md-button></li>
                                 <ul class="container cartBItems2B2">
                                     <li><img ng-src={{product.image}}></li>

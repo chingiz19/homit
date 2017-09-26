@@ -18,10 +18,9 @@
   background: rgba(0,0,0,0.61);
   -webkit-border-radius: 100px;
 }
-/*2 below keep SideNav fixed and background color transperent*/
+/*2 below keep SideNav fixed*/
 .md-sidenav-backdrop {
     position: fixed;
-    background-color: transparent !important;
 }
 .md-sidenav-right {
     position: fixed;
@@ -38,28 +37,31 @@ li {
     list-style-type: none;
 }
 
+@media(max-width: 1280px){
+    .sdNavFB1{
+        position: fixed;
+        border-width: 0 0 1px 0 !important;
+        /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
+        transform: translateZ(0); -webkit-transform: translateZ(0);
+        z-index: 5;
+    }
+}
+
 @media(min-width: 600px){
     md-sidenav{
         max-width: 400px !important;
     } 
-    .mdSideNavL1{
+    .mdSideNavR1{
         overflow-y: hidden !important;
     }
-    .receiptB1{
-        position: fixed;
-        border-width: 0 0 1px 0 !important;
-        /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
-        transform: translateZ(0);-webkit-transform: translateZ(0);
-        z-index: 5;
-    }
-     .mdSideNavL2{
+     .mdSideNavR2{
         overflow-y: scroll;
         height: 100%;
     }
 }
 
 /*User Cart SideNav*/
-.mdSideNavL1{
+.mdSideNavR1{
     width: 100%; height: 63%;
     margin-top: 100px; 
     border: rgba(63,222,17,0.1) solid 1.5px ;border-radius: 5px; 
@@ -106,15 +108,23 @@ li {
     border-bottom-right-radius: 5px;
 }
 /*Cart - cart item list */
-.cart1{
-    position: fixed;
-    right: 5px;
-    z-index: 2;
-}
 .cart2a{
     position: relative; 
     top: 5px;
     background-color: rgb(63,222,17) !important;
+}
+.cart2aa{
+    width: 35px !important; height: 35px !important;
+    margin: 0; padding: 0;
+    margin-left: 4px;
+}
+.cart2aa img{
+    width: 100%; height: auto;
+}
+.cart1{
+    position: fixed;
+    right: 5px;
+    z-index: 2;
 }
 .cart2b{
     display: flex; 
@@ -123,7 +133,7 @@ li {
 .cartNotificationNumber{
     position: relative;
     bottom: 65px; left: 45px;
-    width: 25%; height: 20px;
+    width: 30%; height: 20px;
     background-color: orangered;
     color: ghostwhite;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -149,13 +159,10 @@ li {
     justify-content: flex-end;
 }
 .cartBItems2B2{
-    width: 100px !important; height: 100px !important;
+    width: 125px ; height: 125px;
     margin: 0; padding: 0;
     display: flex; 
     justify-content: center;
-}
-.cartBItems2B2 img{
-    width: 100%; height: auto;
 }
 .cartBItems2C{
     display: flex; 
@@ -166,26 +173,33 @@ li {
 }
 .cartBItems2C2{
     margin: 0; padding: 0;
+    font-size: 14px;
 }
 
 /*Order Summaty Buttons*/
-.glyClsBtn{
+.ClsBtn{
     margin-right: auto;
+    height: 100%;
     margin-left: 0;
     padding: 0;
 }
 .glyClsBtnSgn{
-    color: rgb(0,0,0);
-    font-size: 12px;
+    color: rgb(0,94,92);
+    font-size: 14px;
+}
+.ClsBtnCart{
+    width: 25px; height: 25px;
 }
 .chckOut{
+    height: 100%;
     color: rgb(255,255,255) !important; 
     margin-right: 36%; 
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 19px; font-weight: 550;
 }
 .orBtnSz{
-    font-size: 23px;
+    height: 25px;
+    width: 25px;
 }
 .plusItem{
     padding: 0 !important;
@@ -199,7 +213,6 @@ li {
     padding: 0; margin: 0;
 }
 .itemRemoveBtn2{
-    background-color: rgb(255,255,255); color: red;
     font-size: 20px;
 }
 .clrCart{
@@ -212,23 +225,123 @@ li {
 
 
 /*Mobile screens*/
-@media screen and (max-device-width: 480px) {
+@media screen and (max-device-width: 600px) {
+    .cart1{
+        top: 380px;
+    }
+    .md-button.md-fab{
+        width: 115px; height: 115px;
+    }
+    .cart2aa{
+        width: 85px !important; height: 85px !important;
+        margin-left: 10px; margin-top: 7px;
+    }
+    .cartNotificationNumber{
+        position: relative;
+        bottom: 125px; left: 85px;
+        width: 28%; height: 35px;
+        background-color: orangered;
+        color: ghostwhite;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        font-size: 20px; font-weight: 700;
+        border: solid 2px rgb(255,255,255); border-radius: 3px;
+        z-index: 20;
+    }
+    /*SideNav*/
+    .mdSideNavR1{
+        max-width: 1000px !important; height: 111.5vh !important;
+        margin-top: 0;
+        width: 650px;
+        top: 1px;
+        border: rgba(180,180,180,0.5) solid 2px ;border-radius: 5px; 
+        box-shadow: none;
+        z-index: 10000; 
+    }
+    .mdSideNavR2{
+        overflow-y: scroll;
+        height: 90%;
+    }
+
+    md-backdrop.md-opaque {
+        background-color: rgba(33,33,33,0.7);
+    }
+    /*SideNav fixed box, i.e. "Checkout" btn, close btn, "Cart Tot"*/
+    .sdNavFB1{
+        position: fixed;
+        /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
+        transform: translateZ(0);-webkit-transform: translateZ(0);
+    }
+    .sdNavFB2{
+        padding: 0;
+        margin-top: 0; margin-bottom: 0;
+        height: 5em;
+    }
+    .sdNavFB3{
+        line-height: 2.5em;
+    }
+    .sdNavFB3a{
+        width: 220px;
+        padding-left: 70px;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .sdNavFB3b{
+        width: 220px;
+        padding-left: 15px;
+        padding-right: 60px;
+        font-size: 30px;
+    }
+    /*Buttons*/
+    .ClsBtn{
+        padding: 0;
+        margin-top: 0; margin-bottom: 0; margin-left: 0;
+    }
+    .glyClsBtnSgn{
+        font-size: 20px;
+    }
+    .ClsBtnCart{
+        width: 50px; height: 50px;
+    }
     
+    .chckOut{
+        padding: 0;
+        margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 30%;
+        color: rgb(255,255,255) !important; 
+        font-size: 40px; font-weight: 600;
+    }
+    .clrCart{
+        top: 115px;
+        min-height: 50px !important;
+    }
+    .clrCartbtn{
+        font-size: 20px;
+        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    }
+    /*Cart Items*/
+    .orBtnSz{
+        font-size: 45px;
+    }
+    .itemRemoveBtn2{
+        font-size: 40px;
+    }
+    .cartBItems1{
+        top: 130px; 
+    }
+    .cartBItems2B2{
+        width: 200px ; height: 200px;
+    }
+    .cartBItems2C{
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+        margin-top: 3em;
+        text-align: center;
+    }
+    .cartBItems2C2{
+        font-size: 22px;
+        margin: 0; padding: 0;
+    }
 }
-
-
-
-
-
-
-/*.entireSideMenu {
-    position: fixed;
-    right: 0px;
-    z-index: 2;
-}*/
-
-
-
 md-checkbox.md-checked .md-ink-ripple {
      color: rgba(63,222,17,0.87); 
 }
