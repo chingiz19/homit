@@ -90,11 +90,11 @@
     </div>
 </nav>-->
 
-<nav layout="column" ng-controller="NavigationController" ng-cloak>
-    <md-toolbar class="homit-header-bigscreen">
+<nav layout="column" ng-controller="NavigationController" style="margin-bottom: 60px;" ng-cloak>
+    <md-toolbar class="homit-header-bigscreen fixed-header">
       <div class="md-toolbar-tools header">
 
-        <h2 class="header-brand"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="140" height="140"/></a></h2>
+        <h2 class="header-brand"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="70px" height="100%"/></a></h2>
         <md-input-container class="header-search-bar homit-header-input">
             <label>Search</label>
             <input>
@@ -103,16 +103,16 @@
             <md-button class="header-dashboard" ng-click="showDashboard = !showDashboard" ng-class="{'button-press-feel': showDashboard}">
                 <ng-md-icon icon="dashboard" class="header-icon" size="48"></ng-md-icon>
             </md-button>
-            <md-button class="md-raised header-button">Sign In </md-button>
+            <md-button class="md-raised header-button" data-toggle="modal" data-target="#loginModal">Sign In </md-button>
         </div>
       </div>
     </md-toolbar>
 
     <!-- For small screens -->
-    <md-toolbar class="homit-header-smallscreen">
+    <md-toolbar class="homit-header-smallscreen fixed-header">
       <div class="md-toolbar-tools header">
 
-        <h2 class="header-brand"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="140" height="140"/></a></h2>
+        <h2 class="header-brand"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="50" height="50"/></a></h2>
         <md-input-container class="header-search-bar homit-header-input">
             <input>
         </md-input-container>
@@ -120,7 +120,7 @@
             <md-button class="header-dashboard" ng-click="showDashboard = !showDashboard" ng-class="{'button-press-feel': showDashboard}">
                 <ng-md-icon icon="dashboard" class="header-icon" size="30"></ng-md-icon>
             </md-button>
-            <md-button class="header-button">
+            <md-button class="header-button" data-toggle="modal" data-target="#loginModal">
                 <ng-md-icon icon="account_box" class="header-icon" size="30"></ng-md-icon>
             </md-button>
         </div>
