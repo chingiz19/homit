@@ -125,7 +125,7 @@ var getTypes = function(category_id, products) {
     var tmp_brands = [];
     return db.runQuery(sqlQuery, data).then(function(dbResult) {
         for (i = 0; i < dbResult.length; i++) {
-            var canPush = false;
+            var notSame = false;
             if (i==0) {
                 prev_s = dbResult[i].subcategory;
                 tmp_types.push(dbResult[i].type);
@@ -133,20 +133,31 @@ var getTypes = function(category_id, products) {
                 if (dbResult[i].subcategory == prev_s) {
                     tmp_types.push(dbResult[i].type);
                 } else {
-                    canPush = true;
+                    notSame = true;
                 }
             }
 
-            if (canPush || i == dbResult.length-1) {
+            if (notSame) {
                 tmp_brands = getAllBrandsBySubcategory(prev_s, products);
                 var tmp = {
                     subcategory_name: prev_s,
                     types: tmp_types,
                     brands: tmp_brands
                 };
+                result.push(tmp);
+
                 prev_s = dbResult[i].subcategory;
                 tmp_types = [];
                 tmp_types.push(dbResult[i].type);
+            }
+
+            if (i == dbResult.length - 1) {
+                tmp_brands = getAllBrandsBySubcategory(prev_s, products);
+                var tmp = {
+                    subcategory_name: prev_s,
+                    types: tmp_types,
+                    brands: tmp_brands
+                };
                 result.push(tmp);
             }
         }
