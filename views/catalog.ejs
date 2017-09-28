@@ -9,7 +9,7 @@
         <div ng-controller="catalogController">
             <div layout="row"  class="container col01">
                 <md-container class="col1">
-                    <div class="sizeStage">Categories</div>
+                    <div class="sizeStage">Variants</div>
                     <span>
                         <md-radio-group ng-model="SubcategoryName">
                             <md-radio-button class="SubcategoryName" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"><span>{{variant.subcategory_name}}</span></md-radio-button>
@@ -63,7 +63,7 @@
                                         </span>
                                     </ul>
                                     <div>
-                                        <md-button class="md-raised md-primary addToCrtBtn" ng-click="addToCart(product, v_index)"> Add to cart </md-button>
+                                        <md-button aria-label="addToCart" class="md-raised md-primary addToCrtBtn" ng-click="addToCart(product, v_index)"><ng-md-icon icon="add_shopping_cart" class="add-shopping-cart" size="30"></md-button>
                                     </div>
                                 </div>
                             </div>

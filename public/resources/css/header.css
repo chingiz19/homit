@@ -1,22 +1,22 @@
 /*Header Bar*/
 /*Start*/
 .homit-header-input {
-    color: white;
+    color: rgba(42,81,145,1);
     align-self: flex-start;
 }
 
 .homit-header-input label{
-    color: white !important;
+    color: rgba(42,81,145,0.6) !important;
 }
 
 .homit-header-input input{
-    color: white;
-    border-color: white;
+    color: rgba(42,81,145,1);
+    border-bottom: 2px solid rgba(42,81,145,0.6);
 }
 
 .homit-header-input input:focus{
-    color: white;
-    border-color: white !important;
+    color: rgba(42,81,145,1);
+    border-color: rgba(42,81,145,0.6) !important;
 }
 
 .header {
@@ -31,6 +31,26 @@
   z-index: 2;
   width: 100%  !important;
 }
+
+.md-sidenav-left.header-category.md-closed, md-sidenav.header-category.md-closed{
+    transform: translate3d(0,-100%,0) !important;
+}
+.header-category{
+    bottom: auto !important;
+    top: 100%; left: 37%;
+    width: 50%;
+    border-radius: 5px;
+}
+.header-category-content{
+    display: flex; 
+    justify-content: space-around; 
+    flex-wrap: wrap; 
+    line-height: 2.5;
+    margin-bottom: 0; padding: 0;
+}
+.header-category-content-btn{
+    background-color: rgba(42,81,145,0.04);    
+}
 /*End*/
 
 /*Back drop color to light grey when "Cart" clicked*/
@@ -41,20 +61,68 @@ md-backdrop.md-opaque {
 /*For non-phone devices*/
 /*Start*/
 @media screen and (min-device-width: 600px) {
- .mVer{
-     display: none;
+    md-toolbar{
+        min-height: 60px !important;
+        height: 60px;
+        background-color: rgba(253,253,253,0.95) !important;
     }
-
-.button-press-feel{
-    border: 1px inset;
-}
-
-.dashboard{
-    position: fixed;
-    top: 80px;
-    display: flex;
-    z-index: 9999;
-}
+    .md-input-focused .mnSrchAA{
+        margin-bottom: 0px;
+        font-size: 15px;
+        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    }
+    .button-press-feel{
+        border: 1px inset;
+    }
+    /*Header Search*/
+    .mnSrch{
+        position: relative; 
+        left: 7%;
+        flex-basis: 40%; 
+    }
+    .mnSrchA{
+        width: 70%;
+        left: 7.5px;
+        margin: 0;
+        margin-top: 4px;
+    }
+    .mnSrchA .md-errors-spacer{
+        min-height: 1px !important;
+    }
+    .mnSrchAA{
+        display: flex; align-items: center;
+        margin: 0;
+        bottom: 35px !important;
+        font-size: 18px;
+        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    }
+    .mnSrchB{
+        min-height: 33px; min-width: 50px;
+        margin: 0; padding: 0; 
+        border-bottom: 2px solid rgba(42,81,145,0.6); border-radius: 0; 
+    }
+    .header-search-icon{
+        fill: rgba(42,81,145,0.6);
+    }
+    /*Categories Box*/
+    .expBtn{
+        position: fixed; 
+        left: 47%; top: 60px; 
+        min-height: 10px; height: 10px; 
+        background-color: rgba(253,253,253,0.95) !important;
+        border-top-left-radius: 0; border-top-right-radius: 0; 
+    }
+    .expBtnIc{
+        position: relative; 
+        bottom: 8px; 
+        fill: rgba(42,81,145,0.6);
+    }
+    .dashboard{
+        position: fixed;
+        top: 80px;
+        display: flex;
+        z-index: 9999;
+    }
 
     .homit-header-smallscreen{
         display: none;
@@ -78,7 +146,7 @@ md-backdrop.md-opaque {
     }
 
     .header-icon {
-        fill: white; 
+        fill: rgb(42,81,145); 
     }
 
     .header-button {
@@ -99,7 +167,10 @@ md-backdrop.md-opaque {
 /*Start*/
 @media screen and (max-device-width: 600px) {
     /*Disables Header web version */
-    .wVer{
+    .mnSrch{
+        display: none;
+    }
+    .expBtn{
         display: none;
     }
     /*Header*/
@@ -122,43 +193,6 @@ md-backdrop.md-opaque {
         display: flex; 
         margin-left: auto;
     }
-    /*Brand Search Box*/
-    .srchBxHDR{
-        position: relative; 
-        bottom: 0px; 
-        width: 100%; min-width: 180px; 
-        display: flex; 
-        align-items: center; justify-content: center;
-    }
-    .srchBxHDRA{
-        width: 70%; margin-bottom: 0px;
-    }
-    .srchBxHDRAA{
-        margin-bottom: 0; 
-        font-weight: 350 !important; font-size: 14px;
-        color: rgba(255,255,255,1) !important;
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
-    }
-    .srchBxHDRAB{
-        font-size: 14px;
-        color: rgba(255,255,255,1) !important;
-        font-weight: 500;
-        border-bottom: rgba(0,0,0,0.12) solid 1px !important;
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
-    }
-    .srchBxHDRAAA{
-        width: 20px; height: 20px;
-    }
-    .srchBxHDRB{
-        bottom: 3px; right: 2px;
-        min-width: 30px; min-height: 30px;
-        height: 30px; 
-        margin: 0;
-        border-bottom: rgba(255,255,255,1) solid 1px; border-radius: 0; 
-    }
-    .srchBxHDRBA{
-        width: 25px; height: 25px;
-    }
     /*List Icon*/
     .lstIcnBtn{
         margin:0; padding: 0;
@@ -177,12 +211,12 @@ md-backdrop.md-opaque {
     }
     /*Side Nav*/
     md-sidenav.mdSideNavL1{
-        max-width: 1000px !important; height: 111.5vh !important;
+        min-width: 30vw !important; min-height: 241vh !important;
         width: 650px;
         top: 1px;
         border: rgba(255,255,255,0.85) solid 2px ;border-radius: 5px; 
         background-color: rgb(140,140,140);
-        box-shadow: none;
+        z-index: 100;
     }
     .mdSideNavL1A{
         background-color:  rgb(140,140,140);
@@ -221,7 +255,7 @@ md-backdrop.md-opaque {
     }
     .navgtL2aAA{
         font-weight: 500; 
-        color: rgba(255,255,255,1);
+        color: rgba(255,255,255,1) !important;
     }
     .navgtL2aAAA{
         width: 50px; height: 50px;
@@ -279,7 +313,7 @@ md-backdrop.md-opaque {
         margin:0; padding: 0;
     }
     .navgtL3aAB{
-        color: rgba(255,255,255,1);
+        color: rgba(255,255,255,1) !important;
         font-weight: 500; 
     }
     .navgtL3aB{
@@ -293,7 +327,7 @@ md-backdrop.md-opaque {
         margin:0; padding: 0;
     }
     .navgtL3aBB{
-        color: rgba(255,255,255,1);
+        color: rgba(255,255,255,1) !important;
         font-weight: 500; 
     }
     .navgtL3aC{
@@ -307,7 +341,7 @@ md-backdrop.md-opaque {
         margin:0; padding: 0;
     }
     .navgtL3aCB{
-        color: rgba(255,255,255,1);
+        color: rgba(255,255,255,1) !important;
         font-weight: 500; 
     }
     .navgtL3aD{
@@ -321,30 +355,36 @@ md-backdrop.md-opaque {
         margin:0; padding: 0;
     }
     .navgtL3aDB{
-        color: rgba(255,255,255,1);
+        color: rgba(255,255,255,1) !important;
         font-weight: 500; 
     }
     .navgtL3bAA{
         margin: 0; padding-left: 5px; 
         font-size: 40px; font-weight: 500; 
-        color: rgba(255,255,255,1);
+        color: rgba(255,255,255,1) !important;
     }
     .navgtL3cAA{
         margin: 0;
         font-size: 40px; font-weight: 500; 
-        color: rgba(255,255,255,1);
+        color: rgba(255,255,255,1) !important;
     }
     .navgtL3dAA{
         margin: 0;
         font-size: 40px; font-weight: 500; 
-        color: rgba(255,255,255,1);
+        color: rgba(255,255,255,1) !important;
     }
     .navgtL3eAA{
         margin: 0;
         font-size: 40px; font-weight: 500; 
-        color: rgba(255,255,255,1);
+        color: rgba(255,255,255,1) !important;
     }
-
+    /*Subcategories CSS*/
+    .SubcategoryNameHDR{
+        color: rgba(255,255,255,0.85);
+        margin-bottom: 10px;
+        font-size: 40px; 
+        font-weight: 600;
+    }
     /*Radio Button - Box Size*/
     .md-label{
         margin-left: 50px !important; padding-top: 20px !important;
@@ -378,6 +418,7 @@ md-backdrop.md-opaque {
         display: flex; align-items: center;
         max-height: 150px !important;
         height: 100%;
+        padding: 0;
     }
       .homit-header-smallscreen{
         display: inherit;
@@ -390,7 +431,7 @@ md-backdrop.md-opaque {
     }
 
     .header-brand {
-        flex-basis: 20%; 
+        flex-basis: 15%; 
     }
 
     .header-search-bar {
@@ -399,7 +440,7 @@ md-backdrop.md-opaque {
     }
 
     .header-dashboard {
-        flex-basis: 10%;
+        flex-basis: 15%;
         min-width: 45%;
     }
 

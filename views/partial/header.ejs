@@ -2,67 +2,40 @@
 
 <link href="/resources/css/header.css" rel="stylesheet">
 <link href="/resources/css/generic.css" rel="stylesheet">
-
-<!--<nav class="navbar navbar-default navbar-fixed-top mVer" ng-controller="NavigationController" style="height: 110px;">
-    <div class="container-fluid" layout="row" style="display: flex; align-items: center;">
-        <div style="display: flex; align-items: center; height: 100%; margin-left: 40px;">
-            <a class="navbar-brand" href="/main" target="_self" style="padding: 0; display: flex; align-items: center; "><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="90" height="90" /></a>
-        </div>
-        <div class="mVerHedL2b">
-            <md-button class="lstIcnBtn" ng-click="toggleLeft()" aria-label="listToggleLeft">
-                <md-icon class="lstIcn" md-svg-icon="/resources/images/list_Icon.svg"></md-icon>
-            </md-button>
-            <md-sidenav class="md-sidenav-left mdSideNavL1" md-component-id="left" md-whiteframe="4">
-                <md-content layout-padding class="mdSideNavL1A">
-                    <div layout="row" class="navgtL1">
-                        <div class="navgtL1a">NAVIGATE</div>
-                        <md-button ng-click="close()" class="md-primary navgtL1b" hide-gt-md aria-label="closeNavigate"><span class="glyphicon glyphicon-chevron-right" class="navgtClBtn"></span></md-button>
-                    </div>
-                    <div class="navgtL2">
-                        <ul ng-if="!<%=isSignedIn%>" class="navgtL2a">
-                            <li class="navgtL2aA"><a href="#" data-toggle="modal" data-target="#loginModal" class="navgtL2aAA"><md-icon class="navgtL2aAAA" md-svg-icon="/resources/images/account_Icon.svg"></md-icon> Sign to Homit</a></li>
-                        </ul>
-                        <ul ng-if="<%=isSignedIn%>" class="navgtL2b">  
-                            <li class="navgtL2bA"><a href="/myaccount" target="_self" class="navgtL2bAA"><md-icon class="navgtL2bAAA" md-svg-icon="/resources/images/myAccount_icon.svg"></md-icon> <%= username %></a></li>
-                            <li class="navgtL2bB"><a href="#" target="_self" ng-click="logout()" class="navgtL2bBA"><md-icon class="navgtL2bBAA" md-svg-icon="/resources/images/signOut_Icon.svg"></md-icon> Sign Out</a></li>
-                            <li class="navgtL2bC" ></li>
-                        </ul>
-                    </div>
-                    <div ng-controller="catalogController" class="navgtL3">
-                        <ul class="navgtL3a">
-                            <li class="navgtL3aA" ng-style="isBeers && {'margin-left': '0px'} || {'margin-left': '70px'}"><md-icon ng-show="isBeers" class="navgtL3aAA" md-svg-icon="/resources/images/carting_Through_Icon.svg"></md-icon><a ng-style="isBeers && {'margin-left': '13px'} || {'margin-left': '0px'}" href="/catalog?product=beers" target="_self"  class="navgtL3aAB">Beer</a></li>
-                            <li class="navgtL3aB" ng-style="isWines && {'margin-left': '0px'} || {'margin-left': '70px'}"><md-icon ng-show="isWines" class="navgtL3aBA" md-svg-icon="/resources/images/carting_Through_Icon.svg"></md-icon><a ng-style="isWines && {'margin-left': '13px'} || {'margin-left': '0px'}" href="/catalog?product=wines" target="_self" class="navgtL3aBB">Wine</a></li>
-                            <li class="navgtL3aC" ng-style="isSpirits && {'margin-left': '0px'} || {'margin-left': '70px'}"><md-icon ng-show="isSpirits" class="navgtL3aCA" md-svg-icon="/resources/images/carting_Through_Icon.svg"></md-icon><a ng-style="isSpirits && {'margin-left': '13px'} || {'margin-left': '0px'}" href="/catalog?product=spirits" target="_self" class="navgtL3aCB">Spirit</a></li>
-                            <li class="navgtL3aD" ng-style="isOthers && {'margin-left': '0px'} || {'margin-left': '70px'}"><md-icon ng-show="isOthers" class="navgtL3aDA" md-svg-icon="/resources/images/carting_Through_Icon.svg"></md-icon><a ng-style="isOthers && {'margin-left': '13px'} || {'margin-left': '0px'}" href="/catalog?product=others" target="_self" class="navgtL3aDB">Other</a></li>
-                            <li style="font-size: 100px; border-bottom: solid 2px rgba(255,255,255,0.65);" ></li>
-                        </ul>
-                        <span >
-                            <md-radio-group ng-model="SubcategoryName">
-                                <md-radio-button class="SubcategoryName" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="nc.checkSubcategories(variant.subcategory_name)"><span>{{variant.subcategory_name}}</span></md-radio-button>
-                                <md-radio-button class="SubcategoryName" ng-value="selectAll" ng-click="nc.emptySubcategories()">Select All</md-radio-button>
-                            </md-radio-group>
-                        </span>
-                    </div>
-                </md-content>
-            </md-sidenav>
-        </div>
-    </div>
-</nav>-->
-
 <nav layout="column" ng-controller="NavigationController" style="margin-bottom: 60px;" ng-cloak>
     <md-toolbar class="homit-header-bigscreen fixed-header">
       <div class="md-toolbar-tools header">
-
-        <h2 class="header-brand"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="70px" height="100%"/></a></h2>
-        <md-input-container class="header-search-bar homit-header-input">
-            <label>Search</label>
-            <input>
-        </md-input-container>
-        <div style="display: flex; justify-content: flex-end;">
-            <md-button class="header-dashboard" ng-click="showDashboard = !showDashboard" ng-class="{'button-press-feel': showDashboard}">
-                <ng-md-icon icon="dashboard" class="header-icon" size="48"></ng-md-icon>
+        <div class="header-brand"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="50px;" height="75%"/></a></div>
+        <div class="mnSrch">
+            <md-input-container class="header-search-bar homit-header-input mnSrchA">
+                <label class="mnSrchAA"><ng-md-icon icon="search" class="header-search-icon" size="23"></ng-md-icon>Homit ...</label>
+                <input>
+            </md-input-container>
+            <md-button aria-label="clearHeaderSearch" class="mnSrchB">
+                <ng-md-icon icon="clear" class="header-search-icon" size="30"></ng-md-icon>
             </md-button>
-            <md-button class="md-raised header-button" data-toggle="modal" data-target="#loginModal">Sign In </md-button>
+        </div>
+        <md-button aria-label="categoryExpand" class="expBtn" ng-click="toggleTop()">
+            <ng-md-icon icon="expand_more" class="header-search-icon expBtnIc" size="23"></ng-md-icon>
+        </md-button>
+        <md-sidenav class="md-sidenav-left header-category" md-component-id="top" md-whiteframe="4">
+            <md-content layout-padding>
+                <ul class="header-category-content" layout="row">
+                    <li><md-button class="header-category-content-btn" ng-style="isBeers && {'baground-color': 'background-color: rgba(42,81,145,0.09)'}" ><a href="/catalog/liquor/beers" target="_self">Beer</a></md-button></li>
+                    <li><md-button class="header-category-content-btn" ng-style="isWines && {'baground-color': 'background-color: rgba(42,81,145,0.09)'}"><a href="/catalog/liquor/wines" target="_self">Wine</a></md-button></li>
+                    <li><md-button class="header-category-content-btn" ng-style="isSpirits && {'baground-color': 'background-color: rgba(42,81,145,0.09)'}"><a href="/catalog/liquor/spirits" target="_self">Spirit</a></md-button></li>
+                    <li><md-button class="header-category-content-btn" ng-style="isOthers && {'baground-color': 'background-color: rgba(42,81,145,0.09)'}"><a href="/catalog/snacks" target="_self">Snack</a></md-button></li>
+                </ul>
+            </md-content>
+        </md-sidenav>
+
+        <div style="display: flex; justify-content: flex-end;">
+            <md-button aria-label="header-dashboard" class="header-dashboard" ng-click="showDashboard = !showDashboard" ng-class="{'button-press-feel': showDashboard}">
+                <ng-md-icon icon="dashboard" class="header-icon" size="45"></ng-md-icon>
+            </md-button>
+            <md-button aria-label="header-sign" class="header-dashboard" data-toggle="modal" data-target="#loginModal">
+                <ng-md-icon icon="person_outline" class="header-icon" size="48"></ng-md-icon>
+            </md-button>
         </div>
       </div>
     </md-toolbar>
@@ -70,19 +43,23 @@
     <!-- For small screens -->
     <md-toolbar class="homit-header-smallscreen fixed-header">
       <div class="md-toolbar-tools header">
-        <h2 class="header-brand"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100"/></a></h2>
-        <md-button class="header-dashboard">
-                <ng-md-icon icon="search" class="header-icon" size="100"></ng-md-icon>
+        <md-button  class="header-brand">
+            <ng-md-icon icon="search" class="header-icon" size="100"></ng-md-icon>
+        </md-button>
+        <md-button aria-label="header-Logo" class="header-dashboard">
+            <a href="/main" target="_self">
+                <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100"/>
+            </a>
         </md-button>
         <div style="display: flex; justify-content: flex-end;">
             
-            <md-button class="header-dashboard" ng-click="showDashboard = !showDashboard" ng-class="{'button-press-feel': showDashboard}">
+            <md-button aria-label="header-dashboard" class="header-dashboard" ng-click="showDashboard = !showDashboard" ng-class="{'button-press-feel': showDashboard}">
                 <ng-md-icon icon="dashboard" class="header-icon" size="100"></ng-md-icon>
             </md-button>
 
             <!--Start-->
                 <div class="mVerHedL2b">
-                    <md-button class="lstIcnBtn" ng-click="toggleLeft()" aria-label="listToggleLeft">
+                    <md-button aria-label="mob-Category" class="lstIcnBtn" ng-click="toggleLeft()" aria-label="listToggleLeft">
                         <ng-md-icon icon="more_vert" class="header-icon" size="110"></ng-md-icon>
                     </md-button>
                     <md-sidenav class="md-sidenav-left mdSideNavL1" md-component-id="left" md-whiteframe="4">
@@ -111,14 +88,13 @@
                                 </ul>
                                 <span >
                                     <md-radio-group ng-model="SubcategoryName">
-                                        <md-radio-button class="SubcategoryName" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="nc.checkSubcategories(variant.subcategory_name)"><span>{{variant.subcategory_name}}</span></md-radio-button>
-                                        <md-radio-button class="SubcategoryName" ng-value="selectAll" ng-click="nc.emptySubcategories()">Select All</md-radio-button>
+                                        <md-radio-button class="SubcategoryNameHDR" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="nc.checkSubcategories(variant.subcategory_name)"><span>{{variant.subcategory_name}}</span></md-radio-button>
+                                        <md-radio-button class="SubcategoryNameHDR" ng-value="selectAll" ng-click="nc.emptySubcategories()">Select All</md-radio-button>
                                     </md-radio-group>
                                 </span>
                             </div>
                         </md-content>
                     </md-sidenav>
-                    
                 </div>
             <!--End-->
         </div>

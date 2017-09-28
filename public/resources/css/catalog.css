@@ -59,7 +59,7 @@ body{
         max-width: 285px;
     }
 }
-@media(max-width: 519px){
+@media(max-width: 519px) and (min-width: 501px){
     .col1{
         display: none;
     }
@@ -171,7 +171,7 @@ body{
     margin: 0; padding: 0; 
     min-width: 20px; width: 25px; 
     min-height: 20px; height: 20px;
-    z-index: 10;
+    z-index: 1;
 }
 .pvChangeBtnAA{
     width: 20px; height: 20px;
@@ -288,32 +288,38 @@ body{
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
+.add-shopping-cart{
+    fill: rgba(255,255,255,1);
+}
 .addToCrtBtn{
     width: 94%;
 }
 
-@media screen and (min-device-width: 600px){
+@media screen and (min-device-width: 500px){
     .typesSdNB1{
         display: none;
     }
 }
 
-@media screen and (max-device-width: 600px) {
+@media screen and (max-device-width: 500px) {
     body{
         margin-top: 145px !important;
     }
     .col01{
-        margin:0; padding: o;
+        
+        margin:0; padding: 0;
         width: 100%;
     }
     .col1{
         display: none;
+        padding: 0;
     }
     .col24{
         display: flex; justify-content: center;
-        left: 0px;
-        min-width: 900px ;
+        left: 0px ;
+        min-width: 900px;
         width: 100%;
+        margin-left: 0;
         }
     .itemBoxL1{
         position: relative;

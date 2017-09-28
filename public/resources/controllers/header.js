@@ -30,13 +30,11 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
 
     // Header right-SideNav functionality
     // Start
-    $scope.toggleLeft = buildToggler('left');
-    $scope.isOpenRight = function(){
-      return $mdSidenav('left').isOpen();
-    };
+    $scope.toggleTop = buildTogglerTop('top');
+    $scope.toggleLeft=buildTogglerLeft('left');
+
     function debounce(func, wait, context) {
       var timer;
-
       return function debounced() {
         var context = $scope,
             args = Array.prototype.slice.call(arguments);
@@ -47,7 +45,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         }, wait || 10);
       };
     }
-    function buildToggler(navID) {
+    function buildTogglerTop(navID) {
       return function() {
         // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav(navID)
@@ -57,6 +55,24 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
           });
       };
     }
+    function buildTogglerLeft(navID) {
+      return function() {
+        // Component lookup should always be available since we are not using `ng-if`
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      };
+    }
+
+    $scope.close = function () {
+      // Component lookup should always be available since we are not using `ng-if`
+      $mdSidenav('top').close()
+        .then(function () {
+          $log.debug("close TOP is done");
+        });
+    };
     $scope.close = function () {
       // Component lookup should always be available since we are not using `ng-if`
       $mdSidenav('left').close()
