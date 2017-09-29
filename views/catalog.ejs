@@ -7,9 +7,12 @@
     <body class="ng-cloak">
         <%- include('partial/checkout_menu')%>
         <div ng-controller="catalogController">
-            <div layout="row"  class="container col01">
+            <div ng-if="!selectedCategory">
+                Sorry, wrong url
+            </div>
+            <div ng-if="selectedCategory" layout="row"  class="container col01">
                 <md-container class="col1">
-                    <div class="sizeStage">Variants</div>
+                    <div class="sizeStage" style="display: flex; justify-content: center; margin-right: 36px;">{{selectedCategory | capitalize}}s</span></div>
                     <span>
                         <md-radio-group ng-model="SubcategoryName">
                             <md-radio-button class="SubcategoryName" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"><span>{{variant.subcategory_name}}</span></md-radio-button>
@@ -23,6 +26,25 @@
                         </md-input-container>
                         <md-button class="srchBxB" ng-click="clearSearch()" aria-label="clearSearch"><img class="srchBxBA" ng-src="{{'/resources/images/clear_Icon.svg'}}"></md-button>
                     </span>
+                    <!--start-->
+
+                    <span style="position: absolute; top: 0%; right: 0%; z-index: 100;">
+                         <md-switch ng-model="categoryShow" aria-label="categoryShow" ng-true-value="true" ng-false-value="false" class="md-primary">
+                        </md-switch>
+                    </span>
+                    <div style="position: absolute; top: 100%; left: 0; width: 100%; height: 100%; border: lightgray solid 1px; border-radius: 5px; background-color: white; transform: translate3d(0,-100%,0); z-index: 10;" ng-show="categoryShow">
+                        <div layout="column">
+                            <div class="sizeStage" style="display: flex; justify-content: center; left:0;">{{loadedStore}}</div>
+                            <ul class="col1Cat" layout="row">
+                                <li ng-repeat='category in <%= categories %> track by $index'>
+                                    <md-button class="col1Catbtn" ng-style="(selectedCategory == category) && {'background-color': 'rgba(42,81,145,0.29)'}" >
+                                        <a href="/catalog/{{loadedStore | lowercase}}/{{category}}" target="_self">{{ category }}</a>
+                                    </md-button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--End-->
                 </md-container>
                 <div layout-fill layout="row" class="test">
                     <div flex="80" layout-wrap class="col24">

@@ -64,7 +64,7 @@ md-backdrop.md-opaque {
     md-toolbar{
         min-height: 60px !important;
         height: 60px;
-        background-color: rgba(253,253,253,0.95) !important;
+        background-color: rgba(254,254,254,0.95) !important;
     }
     .md-input-focused .mnSrchAA{
         margin-bottom: 0px;

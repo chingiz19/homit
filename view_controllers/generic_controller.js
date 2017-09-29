@@ -8,10 +8,11 @@ router.use(function(req,res,next){
 	/**
 	 * EJS rendering options
 	 */
-	req.options.ejs = {title: "DeliveryStartUp", 
+	req.options.ejs = {title: "Homit", 
 						tabId: "", 
 						isSignedIn: false, 
-						username: ""
+						username: "",
+						catelogies: undefined
 					};
 	if (req.session && req.cookies.user){
 		req.options.ejs["isSignedIn"] = true;

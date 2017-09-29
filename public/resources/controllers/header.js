@@ -88,5 +88,9 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     this.emptySubcategories=function(){
         $rootScope.$broadcast("emptySubcategories");
     }
+
+    $scope.hrefTo = function(path){
+        $window.location.href = $window.location.origin + path;
+    }
     $scope.init();
 });

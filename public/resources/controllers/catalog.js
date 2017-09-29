@@ -9,20 +9,31 @@ $scope.isWines= false;
 $scope.isSpirits= false;
 $scope.isOthers= false;
 
+$scope.selectedCategory = undefined;
+$scope.loadedStore = "Store";
+
 // Determine product URL
 $scope.productUrl;
-    if ($scope.selection == "/catalog/liquor/beers") {
+    if ($scope.selection == "/catalog/liquor/beer") {
         $scope.productUrl = '/api/catalog/beers';
         $scope.isBeers = true;
-    } else if ($scope.selection == "/catalog/liquor/wines") {
+        $scope.selectedCategory = "beer";
+        $scope.loadedStore = "Liquor";
+    } else if ($scope.selection == "/catalog/liquor/wine") {
         $scope.productUrl = '/api/catalog/wines';
         $scope.isWines=true;
-    } else if ($scope.selection == "/catalog/liquor/spirits") {
+        $scope.selectedCategory = "wine";
+        $scope.loadedStore = "Liquor";
+    } else if ($scope.selection == "/catalog/liquor/spirit") {
         $scope.productUrl = '/api/catalog/spirits';
         $scope.isSpirits=true;
+        $scope.selectedCategory = "spirit";
+        $scope.loadedStore = "Liquor";
     } else if ($scope.selection == "/catalog/snacks") {
         $scope.productUrl = '/api/catalog/others';
         $scope.isOthers=true;
+        $scope.selectedCategory = "snack";
+        $scope.loadedStore = "Snacks";
     } else {
         $scope.productUrl = '/api/catalog/notfound';
     }        

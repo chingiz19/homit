@@ -15,20 +15,6 @@
                 <ng-md-icon icon="clear" class="header-search-icon" size="30"></ng-md-icon>
             </md-button>
         </div>
-        <md-button aria-label="categoryExpand" class="expBtn" ng-click="toggleTop()">
-            <ng-md-icon icon="expand_more" class="header-search-icon expBtnIc" size="23"></ng-md-icon>
-        </md-button>
-        <md-sidenav class="md-sidenav-left header-category" md-component-id="top" md-whiteframe="4">
-            <md-content layout-padding>
-                <ul class="header-category-content" layout="row">
-                    <li><md-button class="header-category-content-btn" ng-style="isBeers && {'baground-color': 'background-color: rgba(42,81,145,0.09)'}" ><a href="/catalog/liquor/beers" target="_self">Beer</a></md-button></li>
-                    <li><md-button class="header-category-content-btn" ng-style="isWines && {'baground-color': 'background-color: rgba(42,81,145,0.09)'}"><a href="/catalog/liquor/wines" target="_self">Wine</a></md-button></li>
-                    <li><md-button class="header-category-content-btn" ng-style="isSpirits && {'baground-color': 'background-color: rgba(42,81,145,0.09)'}"><a href="/catalog/liquor/spirits" target="_self">Spirit</a></md-button></li>
-                    <li><md-button class="header-category-content-btn" ng-style="isOthers && {'baground-color': 'background-color: rgba(42,81,145,0.09)'}"><a href="/catalog/snacks" target="_self">Snack</a></md-button></li>
-                </ul>
-            </md-content>
-        </md-sidenav>
-
         <div style="display: flex; justify-content: flex-end;">
             <md-button aria-label="header-dashboard" class="header-dashboard" ng-click="showDashboard = !showDashboard" ng-class="{'button-press-feel': showDashboard}">
                 <ng-md-icon icon="dashboard" class="header-icon" size="45"></ng-md-icon>
@@ -39,7 +25,6 @@
         </div>
       </div>
     </md-toolbar>
-
     <!-- For small screens -->
     <md-toolbar class="homit-header-smallscreen fixed-header">
       <div class="md-toolbar-tools header">
@@ -104,13 +89,13 @@
     <!-- Dashboard -->
     <div class="dashboard dashboard-dimensions box-borders-default" ng-show="showDashboard">
         <ul layout="row" layout-align="space-around center" style="list-style: none; padding-left: 0px; width: 100%; padding-top: 10px;">
-            <li flex="45" style="max-height: 300px;" class="text-center" ng-click="">
+            <li flex="45" style="max-height: 300px;" class="text-center" ng-click="hrefTo('/catalog/snacks')">
                 <div style="background-color: #2dd204">
                     <ng-md-icon icon="credit-card" style="fill: #6f7574" size="48">
                 </div>
                 <label>Snacks</label>
             </li>
-            <li flex="45" style="max-height: 300px;" class="text-center">
+            <li flex="45" style="max-height: 300px;" class="text-center" ng-click="hrefTo('/catalog/liquor')">
                 <div style="background-color: #2dd204">
                     <ng-md-icon icon="work" style="fill: #6f7574" size="48">
                 </div>
