@@ -39,11 +39,12 @@ router.post('/signup', function(req, res, next) {
     var fname = req.body.fname;
     var lname = req.body.lname;
     var email = req.body.email;
-    var dob = req.body.dob;
+    var birth_day = req.body.birth_day;
+    var birth_month = req.body.birth_month;
+    var birth_year = req.body.birth_year;
     var password = req.body.password;
-    var phone = req.body.phone;
 
-    if (!(fname && lname && email && dob && password && phone)) {
+    if (!(fname && lname && email && password && birth_day && birth_month && birth_year)) {
         res.status(400).json({
             "error": {
                 "code": "U000",
@@ -51,13 +52,15 @@ router.post('/signup', function(req, res, next) {
             }
         });
     } else {
+        var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
+        
         bcrypt.hash(password, saltRounds).then(function(hash) {
             var data = {
                 user_email: email,
                 first_name: fname,
                 last_name: lname,
                 password: hash,
-                phone_number: phone
+                birth_date: birth_date
             };
             // check if the user already exists
             userExists(email).then(function(exists) {

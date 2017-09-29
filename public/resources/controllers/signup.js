@@ -151,8 +151,8 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
     //Sign Up
     var _signUp = function () {
         //TODO: find out why this is not working without reassignment
-        login.npassword = login.npassword;
-        var password = login.npassword;
+        login.password = login.password;
+        var password = login.password;
         $http({
             method: 'POST',
             url: '/api/authentication/signup',
@@ -161,7 +161,9 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 email: login.email,
                 fname: login.fname,
                 lname: login.lname,
-                dob: login.dob
+                birth_day: login.birth_day,
+                birth_month: login.birth_month,
+                birth_year: login.birth_year
             }
         }).then(function successCallback(response) {
             if (!response.data["error"]) {
