@@ -1,17 +1,11 @@
 <html ng-app="mainModule">
 <head>
     <%- include('partial/imports')%>
+    <%- include('partial/header', {title: title, product: tabId}); %>
     <link href="/resources/css/checkout.css" rel="stylesheet">
 </head>
 <body class="ng-cloak">
     <div ng-controller="checkoutController">
-        <nav class="navbar navbar-default navbar-fixed-top phnScrnNvBr">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/main" target="_self">Delivery Start Up</a>
-                </div>
-            </div>
-        </nav>
         <div layout="row" layout-align="center" class="container cont2">
             <div class="col1">
                 <div class="col1ChevRgt">

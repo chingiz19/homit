@@ -11,8 +11,55 @@
                 Sorry, wrong url
             </div>
             <div ng-if="selectedCategory" layout="row"  class="container col01">
+                <!--Mob-version Navigate Start-->
+                     <md-button id="navigateMobIcon" ng-click="toggleNavLeft()" ng-hide="NavigateOpen()" class="md-fab md-primary pull-left mobNavigate" aria-label="navigateMob" style="position: fixed; top: 50%;">
+                        <ng-md-icon icon="apps" style="fill:rgba(255,255,255,1);" size="100">
+                    </md-button>
+                    <md-sidenav style="position: fixed; top: 0px; min-width: 65vw; width: 65vw;" md-component-id="navigateMobSN" md-whiteframe="4">
+                        <md-content layout-padding class="mdSideNavL1A">
+                            <div layout="row" class="navgtL1">
+                                <div class="navgtL1a">NAVIGATE</div>
+                                <md-button ng-click="close()" class="md-primary navgtL1b" hide-gt-md aria-label="closeNavigate"><span class="glyphicon glyphicon-chevron-right" class="navgtClBtn"></span></md-button>
+                            </div>
+                            
+                            <div class="navgtL3">
+                                <ul class="navgtL3a">
+
+                                    <ul ng-repeat="category in <%= categories %> track by $index" style="padding-left: 0;">
+
+                                        <!--<li class="navgtL3aA" ng-style="(selectedCategory == category) && {'margin-left': '0px'} || {'margin-left': '70px'}">
+                                            <md-icon ng-show="(selectedCategory == category)" class="navgtL3aAA" md-svg-icon="/resources/images/carting_Through_Icon.svg"></md-icon>
+                                            <a ng-style="(selectedCategory == category) && {'margin-left': '13px'} || {'margin-left': '0px'}" href="/catalog/{{loadedStore | lowercase}}/{{category}}" target="_self"  class="navgtL3aAB">{{ category }}</a>
+                                        </li>-->
+
+                                        <li class="navgtL3aA" ng-style="(selectedCategory == category) && {'margin-left': '0px'} || {'margin-left': '70px'}">
+                                            <ng-md-icon ng-show="(selectedCategory == category)" icon="shopping_cart" style="fill: rgba(42,81,145,0.9);" size="50" ></ng-md-icon>
+                                            <a ng-style="(selectedCategory == category) && {'margin-left': '20px'} || {'margin-left': '0px'}" href="/catalog/{{loadedStore | lowercase}}/{{category}}" target="_self" style="color: rgba(255,255,255,0.95); font-size: 45px; font-weight: 600;">{{category | capitalize}}</a>
+                                        </li>
+
+                                        <!--<md-button class="col1Catbtn" ng-style="(selectedCategory == category) && {'background-color': 'rgba(42,81,145,0.29)'}" >
+                                            <a href="/catalog/{{loadedStore | lowercase}}/{{category}}" target="_self">{{ category }}</a>
+                                        </md-button>-->
+                                    </ul>
+
+                                    <!--<li class="navgtL3aA" ng-style="isBeers && {'margin-left': '0px'} || {'margin-left': '70px'}"><md-icon ng-show="isBeers" class="navgtL3aAA" md-svg-icon="/resources/images/carting_Through_Icon.svg"></md-icon><a ng-style="isBeers && {'margin-left': '13px'} || {'margin-left': '0px'}" href="/catalog/liquor/beer" target="_self"  class="navgtL3aAB">Beer</a></li>
+                                    <li class="navgtL3aB" ng-style="isWines && {'margin-left': '0px'} || {'margin-left': '70px'}"><md-icon ng-show="isWines" class="navgtL3aBA" md-svg-icon="/resources/images/carting_Through_Icon.svg"></md-icon><a ng-style="isWines && {'margin-left': '13px'} || {'margin-left': '0px'}" href="/catalog/liquor/wine" target="_self" class="navgtL3aBB">Wine</a></li>
+                                    <li class="navgtL3aC" ng-style="isSpirits && {'margin-left': '0px'} || {'margin-left': '70px'}"><md-icon ng-show="isSpirits" class="navgtL3aCA" md-svg-icon="/resources/images/carting_Through_Icon.svg"></md-icon><a ng-style="isSpirits && {'margin-left': '13px'} || {'margin-left': '0px'}" href="/catalog/liquor/spirit" target="_self" class="navgtL3aCB">Spirit</a></li>-->
+                                    <!--<li class="navgtL3aD" ng-style="isOthers && {'margin-left': '0px'} || {'margin-left': '70px'}"><md-icon ng-show="isOthers" class="navgtL3aDA" md-svg-icon="/resources/images/carting_Through_Icon.svg"></md-icon><a ng-style="isOthers && {'margin-left': '13px'} || {'margin-left': '0px'}" href="/catalog/snacks" target="_self" class="navgtL3aDB">Other</a></li>-->
+                                    <li style="font-size: 100px; border-bottom: solid 2px rgba(255,255,255,0.65);" ></li>
+                                </ul>
+                                <span >
+                                    <md-radio-group ng-model="SubcategoryName">
+                                        <md-radio-button class="SubcategoryNameHDR" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"><span>{{variant.subcategory_name}}</span></md-radio-button>
+                                        <md-radio-button class="SubcategoryNameHDR" ng-value="selectAll" ng-click="emptySubcategories()">Select All</md-radio-button>
+                                    </md-radio-group>
+                                </span>
+                            </div>
+                        </md-content>
+                    </md-sidenav>
+                <!--End-->
                 <md-container class="col1">
-                    <div class="sizeStage" style="display: flex; justify-content: center; margin-right: 36px;">{{selectedCategory | capitalize}}s</span></div>
+                    <div class="sizeStage" style="display: flex; justify-content: center; margin-right: 36px;">{{selectedCategory | capitalize}}s</div>
                     <span>
                         <md-radio-group ng-model="SubcategoryName">
                             <md-radio-button class="SubcategoryName" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"><span>{{variant.subcategory_name}}</span></md-radio-button>
@@ -27,7 +74,6 @@
                         <md-button class="srchBxB" ng-click="clearSearch()" aria-label="clearSearch"><img class="srchBxBA" ng-src="{{'/resources/images/clear_Icon.svg'}}"></md-button>
                     </span>
                     <!--start-->
-
                     <span style="position: absolute; top: 0%; right: 0%; z-index: 100;">
                          <md-switch ng-model="categoryShow" aria-label="categoryShow" ng-true-value="true" ng-false-value="false" class="md-primary">
                         </md-switch>

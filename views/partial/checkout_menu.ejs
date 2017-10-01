@@ -2,7 +2,7 @@
 <div ng-controller="cartController">
     <div class="cart1 pull-right">
         <md-button id="cart" ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-fab md-primary cart2a" aria-label="toggleRightCart">
-            <div class="cart2aa"><ng-md-icon icon="shopping_cart" class="shopping-cart" style="fill:rgba(0,94,92,0.8);" size="38"></div>
+            <div class="cart2aa"><ng-md-icon icon="shopping_cart" class="shopping-cart"></ng-md-icon></div>
         </md-button>
         <div class="cartNotificationNumber cart2b">{{numberOfItemsInCart}}</div>
     </div>
@@ -14,7 +14,7 @@
                         <span class="glyphicon glyphicon-chevron-left glyClsBtnSgn"></span>
                         <img class="ClsBtnCart" ng-src="{{'/resources/images/cart_Icon.svg'}}"/>
                     </md-button>
-                    <md-button onclick="location.href='/checkout'" class="md-primary chckOut" >Check Out</md-button>
+                    <md-button onclick="location.href='/checkout'" class="md-primary chckOut">Check Out</md-button>
                 </div>
                 <div layout="row" layout-align="center">
                     <div class="sdNavFB3">

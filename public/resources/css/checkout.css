@@ -87,7 +87,7 @@ navbar{
 /*Checkout Information column*/
 .col1{
     height: 93%;
-    margin-top: 53px;
+    margin-top: 75px;
     background-color: rgb(255,255,255);
     border: rgb(233,233,233) solid 1px; border-radius: 5px;
     overflow-y: scroll;

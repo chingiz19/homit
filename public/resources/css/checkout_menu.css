@@ -47,7 +47,7 @@ li {
     }
 }
 
-@media(min-width: 600px){
+@media(min-width: 400px){
     md-sidenav{
         max-width: 400px !important;
     } 
@@ -57,6 +57,10 @@ li {
      .mdSideNavR2{
         overflow-y: scroll;
         height: 100%;
+    }
+    .shopping-cart svg{
+        height: 38px; width: 38px;
+        fill: rgba(0,94,92,0.8);
     }
 }
 
@@ -112,7 +116,7 @@ li {
     position: fixed;
     right: 5px;
     top: 30%; 
-    z-index: 2;
+    z-index: 1;
 }
 .cart2a{
     position: relative; 
@@ -224,6 +228,10 @@ li {
 
 /*Mobile screens*/
 @media screen and (max-device-width: 600px) {
+    .shopping-cart svg{
+        height: 85px; width: 85px;
+        fill: rgba(0,94,92,0.8);
+    }
     .cart1{
         top: 380px;
     }
@@ -247,8 +255,8 @@ li {
     }
     /*SideNav*/
     .mdSideNavR1{
-        min-width: 30vw !important; min-height: 240vh !important;
-        width: 650px;
+        min-width: 65% !important; min-height: 100% !important;
+        width: 65%;
         margin-top: 0;
         top: 1px;
         border: rgba(180,180,180,0.5) solid 2px ;border-radius: 5px; 
