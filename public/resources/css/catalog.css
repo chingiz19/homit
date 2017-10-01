@@ -59,7 +59,7 @@ body{
         max-width: 285px;
     }
 }
-@media(max-width: 519px) and (min-width: 501px){
+@media(max-width: 519px) and (min-width: 400px){
     .col1{
         display: none;
     }
@@ -70,7 +70,6 @@ body{
     }
 }
 /*End*/
-
 
 /*Represent column-1*/
 /*TODO overflow-y doesn't work when page shrinked in y direction*/
@@ -311,14 +310,206 @@ body{
     .typesSdNB1{
         display: none;
     }
+    .mobNavigate{
+        display: none;
+    }
 }
 
 @media screen and (max-device-width: 500px) {
     body{
-        margin-top: 145px !important;
+        margin-top: 100px !important;
     }
+
+    /*Categories Start*/
+    /*Side Nav*/
+    md-sidenav.mdSideNavL1{
+        min-width: 30vw !important; min-height: 241vh !important;
+        width: 650px;
+        top: 1px;
+        border: rgba(255,255,255,0.85) solid 2px ;border-radius: 5px; 
+        background-color: rgb(140,140,140);
+        z-index: 100;
+    }
+    .mdSideNavL1A{
+        background-color:  rgb(140,140,140);
+        height: 100%;
+    }
+    /*Navigation Side Bar*/
+    /*Radio Button - Box Size*/
+    .md-label{
+        margin-left: 50px !important; padding-top: 17px !important;
+    }
+    md-radio-button.md-checked .md-on{
+        height: 40px; width: 40px;
+    }
+    md-radio-button .md-off {
+        height: 40px; width: 40px;
+    }
+    /*Navigation Line 1 - "Navigation" and Close Btn*/
+    .navgtL1{
+        display: flex; align-items: center;
+    }
+    .navgtL1a{
+        display: flex; 
+        margin-left: auto; 
+        font-size: 35px; font-weight: 600; 
+        color: rgb(42,81,145);
+    }
+    .navgtL1b{
+        display: flex; 
+        margin-left: auto;
+    }
+    .navgtClBtn{
+        font-size: 30px;
+    }
+    /*Navigation Line 2 - Sign / My Accaunt and Sign Out*/
+    .navgtL2{
+        margin-top: 20px; 
+        padding-bottom:0;
+    }
+    .navgtL2a{
+        margin-bottom: 0; padding-left: 0;
+    }
+    .navgtL2aA{
+        display: flex; align-items: center;
+        padding-bottom: 20px;
+        font-size: 45px;
+        border-bottom: solid 2px rgba(255,255,255,0.65); 
+    }
+    .navgtL2aAA{
+        font-weight: 500; 
+        color: rgba(255,255,255,1) !important;
+    }
+    .navgtL2aAAA{
+        width: 50px; height: 50px;
+    }
+    .navgtL2b{
+        margin-bottom: 0; 
+        padding-left: 0;
+    }
+    .navgtL2bA{
+        display: flex; align-items: center;
+        padding-left: 5px;
+        font-size: 35px; 
+    }
+    .navgtL2bAA{
+        color: rgba(255,255,255,1);
+        font-weight: 500; 
+    }
+    .navgtL2bAAA{
+        width: 50px; height: 50px; 
+        padding-bottom: 10px;
+    }
+    .navgtL2bB{
+        display: flex; align-items: center;
+        padding-left: 5px;
+        font-size: 35px;  
+    }
+    .navgtL2bBA{
+        color: rgba(255,255,255,1);
+        font-weight: 500; 
+    }
+    .navgtL2bBAA{
+        width: 50px; height: 50px; 
+        padding-bottom: 10px;
+    }
+    .navgtL2bC{
+        font-size: 100px; 
+        border-bottom: solid 2px rgba(255,255,255,0.65);
+    }
+    /*Navigation Line 3 - All Categories and Types/Subcategories*/
+    .navgtL3{
+        padding-top: 10px;
+    }
+    .navgtL3a{
+        padding-left: 0px; padding-bottom: 0;
+    }
+    .navgtL3aA{
+        display: flex; align-items: center;
+        padding-top: auto;
+        padding-left: 5px;
+        line-height: 60px;
+        font-size: 45px;
+    }
+    .navgtL3aAA{
+        width: 55px; height: 55px; 
+        margin:0; padding: 0;
+    }
+    .navgtL3aAB{
+        color: rgba(255,255,255,1) !important;
+        font-weight: 500; 
+    }
+    .navgtL3aB{
+        display: flex; align-items: center;
+        padding-top: auto;
+        line-height: 60px;
+        font-size: 45px;   
+    }
+    .navgtL3aBA{
+        width: 55px; height: 55px; 
+        margin:0; padding: 0;
+    }
+    .navgtL3aBB{
+        color: rgba(255,255,255,1) !important;
+        font-weight: 500; 
+    }
+    .navgtL3aC{
+        display: flex; align-items: center;
+        padding-top: auto;
+        line-height: 60px;
+        font-size: 45px;   
+    }
+    .navgtL3aCA{
+        width: 55px; height: 55px;
+        margin:0; padding: 0;
+    }
+    .navgtL3aCB{
+        color: rgba(255,255,255,1) !important;
+        font-weight: 500; 
+    }
+    .navgtL3aD{
+        display: flex; align-items: center;
+        padding-top: auto; padding-bottom: 10px;
+        line-height: 60px;
+        font-size: 45px;    
+    }
+    .navgtL3aDA{
+        width: 55px; height: 55px; 
+        margin:0; padding: 0;
+    }
+    .navgtL3aDB{
+        color: rgba(255,255,255,1) !important;
+        font-weight: 500; 
+    }
+    .navgtL3bAA{
+        margin: 0; padding-left: 5px; 
+        font-size: 40px; font-weight: 500; 
+        color: rgba(255,255,255,1) !important;
+    }
+    .navgtL3cAA{
+        margin: 0;
+        font-size: 40px; font-weight: 500; 
+        color: rgba(255,255,255,1) !important;
+    }
+    .navgtL3dAA{
+        margin: 0;
+        font-size: 40px; font-weight: 500; 
+        color: rgba(255,255,255,1) !important;
+    }
+    .navgtL3eAA{
+        margin: 0;
+        font-size: 40px; font-weight: 500; 
+        color: rgba(255,255,255,1) !important;
+    }
+    /*Subcategories CSS*/
+    .SubcategoryNameHDR{
+        color: rgba(255,255,255,0.85);
+        margin-bottom: 10px;
+        font-size: 40px; 
+        font-weight: 600;
+    }
+    /*End*/
     .col01{
-        
         margin:0; padding: 0;
         width: 100%;
     }
@@ -328,7 +519,8 @@ body{
     }
     .col24{
         display: flex; justify-content: center;
-        left: 0px ;
+        left: 0px;
+        top: 25px;
         min-width: 900px;
         width: 100%;
         margin-left: 0;

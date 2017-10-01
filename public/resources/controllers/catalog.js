@@ -1,5 +1,5 @@
-app.controller("catalogController", ["$location", "$scope", "$cookies", "$http", "$rootScope", 
-    function($location, $scope, $cookies, $http, $rootScope) {
+app.controller("catalogController", ["$location", "$scope", "$cookies", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log",
+    function($location, $scope, $cookies, $http, $rootScope ,$timeout, $mdSidenav, $log) {
         var catalogCtrl = this;
 
 $scope.selection = $location.path();
@@ -96,6 +96,7 @@ $scope.productUrl;
             }
 
             $scope.checkSubcategories = function(subcategory) {
+                console.log(subcategory);
                 if (subcategory == $scope.userSelectedSubcategories){
                     return;
                 }
@@ -109,16 +110,16 @@ $scope.productUrl;
 
             // Used for mobile version
             // Start
-            $scope.$on("checkTypes", function (event, type) {
-                $scope.checkTypes(type);
-            });
+            // $scope.$on("checkTypes", function (event, type) {
+            //     $scope.checkTypes(type);
+            // });
 
-            $scope.$on("checkSubcategories", function (event, subcategory_name) {
-                $scope.checkSubcategories(subcategory_name);
-            });
-            $scope.$on("emptySubcategories", function(event){
-                $scope.emptySubcategories();
-            })
+            // $scope.$on("checkSubcategories", function (event, subcategory_name) {
+            //     $scope.checkSubcategories(subcategory_name);
+            // });
+            // $scope.$on("emptySubcategories", function(event){
+            //     $scope.emptySubcategories();
+            // })
             // End
 
             $scope.checkTypes = function(type) {
@@ -274,6 +275,40 @@ $scope.productUrl;
             $scope.emptySubcategories = function() {
                 $scope.userSelectedSubcategories = null;
             }
+            // USer Cart right-SideNav functionality
+            // Start
+            $scope.toggleNavLeft = buildToggler('navigateMobSN');
+            $scope.NavigateOpen = function(){
+            return $mdSidenav('navigateMobSN').isOpen();
+            };
+            function debounce(func, wait, context) {
+            var timer;
+            return function debounced() {
+                var context = $scope,
+                    args = Array.prototype.slice.call(arguments);
+                $timeout.cancel(timer);
+                timer = $timeout(function() {
+                timer = undefined;
+                func.apply(context, args);
+                }, wait || 10);
+            };
+            }
+            function buildToggler(navID) {
+            return function() {
+                $mdSidenav(navID)
+                .toggle()
+                .then(function () {
+                    $log.debug("toggle " + navID + " is done");
+                });
+            };
+            }
+            $scope.close = function () {
+            $mdSidenav('navigateMobSN').close()
+                .then(function () {
+                $log.debug("close NAVIGATE is done");
+                });
+            };
+            // End
      }
 ]);
 

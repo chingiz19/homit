@@ -2,7 +2,8 @@ app.controller("LogoSearchController", function ($scope, $http) {});
 
 app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope,$timeout, $mdSidenav, $log) {
         $scope.init = function(){
-            $scope.showDashboard = false;
+            $scope.storeHub = false;
+            $scope.userDropDown=false;
         }
         $scope.logout = function(){
             $http({
@@ -32,7 +33,6 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     // Start
     $scope.toggleTop = buildTogglerTop('top');
     $scope.toggleLeft=buildTogglerLeft('left');
-
     function debounce(func, wait, context) {
       var timer;
       return function debounced() {
@@ -93,4 +93,8 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         $window.location.href = $window.location.origin + path;
     }
     $scope.init();
+
+    $scope.showHideUserDropdown = function(){
+        $scope.userDropDown = !$scope.userDropDown;
+    }
 });
