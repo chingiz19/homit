@@ -3,17 +3,26 @@
     <%- include('partial/imports')%>
     <%- include('partial/header', {title: title}); %>
     <link href="/resources/css/main.css" rel="stylesheet">
-    <script src="http://maps.google.com/maps/api/js?sensor=false" 
-          type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
 </head>
-<body class="ng-cloak" style="width: 100%; height: 100%;">
-    <div class="container" ng-controller="mainController">
-        <!--<div class="weekSpecials">The Week Specials</div>-->
-
-        <div class="row text-center">
-            <h2>Coverage Map</h2>
-            <div id="map" style="width: 100%; height: 400px;"></div>
+<body class="ng-cloak">
+    <div ng-controller="mainController">
+        <div class="full-screen flex-box search-address">
+            <h2>Delivery Address</h2>
+            <h3>Please enter delivery address to ensure we provide delivery to your location</h3>
+            <input id="addressAutocomplete" type="text" class="address-input" placeholder="Address">
+            <h1>{{ addressMessage }}</h1>
         </div>
+
+        <div class="full-screen flex-box coverage-map">
+            <h2>Coverage Map</h2>
+            <div id="map" style="height: 70%; width: 80%"></div>
+        </div>
+
+        <div class="full-screen flex-box store-list">
+            <h2>HomitHub</h2>
+        </div>
+
     </div>
 
     <script src="/resources/controllers/main.js"></script>

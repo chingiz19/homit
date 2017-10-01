@@ -1,0 +1,28 @@
+.full-screen{
+    height: 100vh;
+    width: 100vw;
+}
+
+.flex-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.search-address{
+    background-color: #26929E;
+}
+
+.coverage-map{
+    background-color: white;
+}
+
+.store-list {
+    background-color: #83A5DD;
+}
+
+.address-input{
+    font-size: 28px;
+    width: 50vw;
+}
