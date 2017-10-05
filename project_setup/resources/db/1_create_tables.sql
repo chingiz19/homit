@@ -11,7 +11,7 @@ CREATE TABLE users_customers (
 	last_name VARCHAR(225) NOT NULL, 
 	password VARCHAR(225) NOT NULL, 
 	phone_number VARCHAR(10),
-	birth_date VARCHAR(10) NOT NULL,
+	birth_date DATE NOT NULL,
 	address1 VARCHAR(225),
 	address2 VARCHAR(225),
 	address3 VARCHAR(225),

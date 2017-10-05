@@ -102,10 +102,10 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
     // Check email 
     var _checkEmail = function () {
         $http({
-            method: 'GET',
+            method: 'POST',
             url: '/api/authentication/userexists',
-            params: {
-                email: login.email,
+            data: {
+                email: login.email
             }
         }).then(function successCallback(response) {
             if (response.data["exists"]) {
@@ -121,7 +121,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
     //Sign In 
     var _signIn = function () {
         $http({
-            method: 'GET',
+            method: 'POST',
             url: '/api/authentication/signin',
             params: {
                 email: login.email,

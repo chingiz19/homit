@@ -1,5 +1,18 @@
+/**
+ * @author Jeyhun Gurbanov, Zaman Zamanli
+ * @copyright Homit 2017
+ */
+
 var mysql = require("promise-mysql");
 var con;
+
+/**
+ * Database tables
+ */
+const dbTables = {
+    users_customers : "users_customers"
+} 
+
 
 /* MySQL Connection */
 mysql.createConnection({
@@ -26,7 +39,7 @@ var insertQuery = function(table, data) {
   return con.query('INSERT INTO '+tableName+' SET ?', data);
 };
 
-var selectAllWithCondition = function(table, data) {
+var selectAllWhere = function(table, data) {
   var tableName = table;
   return con.query('SELECT * FROM '+tableName+' WHERE ?', data);
 };
@@ -56,7 +69,8 @@ var end = function(){
 
 module.exports.runQuery = runQuery;
 module.exports.insertQuery = insertQuery;
-module.exports.selectAllWithCondition = selectAllWithCondition;
+module.exports.selectAllWhere = selectAllWhere;
 module.exports.updateQuery = updateQuery;
 module.exports.selectAllFromTable = selectAllFromTable;
 module.exports.deleteQuery = deleteQuery;
+module.exports.dbTables = dbTables;

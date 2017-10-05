@@ -1,8 +1,7 @@
 /* Global variables */
 global.express = require('express');
 global.secretKey = "secretSession";
-global.modelFactory = require("./model-factory");
-global.auth = require("./models/authentication");
+require("./model-factory").init();
 
 /* Variables */
 var session = require("express-session");
@@ -57,7 +56,7 @@ webServer.all('*', function(req, res, next){
 webServer.use("/api", require(path.join(__dirname, "/api_controllers/generic_controller")));
 webServer.use("/", require(path.join(__dirname, "/view_controllers/generic_controller")));
 
-webServer.use(modelFactory.initializeServerErrorHandler());
+webServer.use(serverErrorHandler);
 
 /* Start web server */
 webServer.listen(8080, function(){

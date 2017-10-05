@@ -7,17 +7,17 @@ router.use(function(req, res, next){
 
     var checkQuery = "SELECT first_name, last_name FROM esl_users WHERE ?";
 
-    db.runQuery(checkQuery, {user_email: req.cookies.user.user_email}).then(function(data){
-        if (data.length > 0 && data[0].first_name == req.session.user.first_name && data[0].first_name == req.session.user.first_name) {
-            next();
-       } else {
-            err = {
-                status: 401,
-                message: "Not Authorized"
-            };
-            next(err);
-        }
-    });
+    // db.runQuery(checkQuery, {user_email: req.cookies.user.user_email}).then(function(data){
+    //     if (data.length > 0 && data[0].first_name == req.session.user.first_name && data[0].first_name == req.session.user.first_name) {
+    //         next();
+    //    } else {
+    //         err = {
+    //             status: 401,
+    //             message: "Not Authorized"
+    //         };
+    //         next(err);
+    //     }
+    // });
 });
 
 router.get('/zakaz01', function(req, res, next){

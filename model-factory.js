@@ -17,32 +17,11 @@ var Auth                = require("./models/authentication");
  */
 class modelFactory {
 
-    static initializeUsers(){
-        return Users;
-    }
-
-    static initializeOrders(){
-        return Orders;
-    }
-
-    static initializeCart(){
-        return Cart;
-    }
-
-    static initializeCatalog(){
-        return Catolog;
-    }
-
-    static initializeServerErrorHandler(){
-        return ServerErrorHandler;
-    }
-
-    static initializeDatabase(){
-        return Database;
-    }
-
-    static initializeAuthentication(){
-        return Auth;
+    static init(){
+        global.User = Users;
+        global.db = Database;
+        global.serverErrorHandler = ServerErrorHandler;
+        global.Auth = Auth;
     }
 }
 
