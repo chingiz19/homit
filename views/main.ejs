@@ -7,10 +7,37 @@
 </head>
 <body class="ng-cloak">
     <div ng-controller="mainController">
+        <div layout="row" style="position: fixed; top: 15; width: 100%; display: flex; align-items: center;">
+            <div style="margin-left: 15px;" flex="50">
+                <img ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" width="142px;" height="47px"/>
+            </div>
+            <div flex="50" style="display: flex; justify-content: flex-end;">
+                <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" data-toggle="modal" data-target="#loginModal">
+                    <ng-md-icon  icon="person_outline" style="fill: white;" size="48"></ng-md-icon>
+                </md-button>
+                <md-button ng-if="<%=isSignedIn%>" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
+                    <ng-md-icon icon="person" style="fill: rgba(255,255,255,0.9);" size="50"></ng-md-icon>
+                </md-button>
+                <div ng-show="userDropDown">
+                    <ul layout="column" class="infoDrDwnA">  
+                        <li class="infoDrDwnAA"><a href="/myaccount" target="_self" class="infoDrDwnAAA"><ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198<%= username %></a></li>
+                        <li class="infoDrDwnAB"><a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()"><ng-md-icon icon="logout" size="20"></ng-md-icon>&#8198Sign Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="full-screen flex-box search-address">
             <h2>Delivery Address</h2>
             <h3>Please enter delivery address to ensure we provide delivery to your location</h3>
-            <input id="addressAutocomplete" type="text" class="address-input" placeholder="Address">
+            <span style="background-color: rgba(255,255,255,0.93); border: 0; border-radius: 5px; padding: 15px 15px 0 15px; position: relative; height: 76px;">
+                <span style=" display: flex; align-items: center;">
+                    <i style="position: absolute; padding-left: 5px;"><ng-md-icon icon="place" style="fill: rgba(42,81,245,0.9);" size="35"></ng-md-icon></i>
+                    <input id="addressAutocomplete" ng-model="searchedAddress" type="text" class="address-input" placeholder="Address">
+                    <md-button ng-if="searchedAddress" style="position: absolute; right: 15px; min-width: 45px; min-height: 45px; margin: 0;" ng-click="clearAddressSearch()">
+                        <ng-md-icon icon="clear" style="fill: rgba(0,0,0,0.4);" size="20"></ng-md-icon>
+                    </md-button>
+                </span>
+            </span>
             <h1>{{ addressMessage }}</h1>
         </div>
 

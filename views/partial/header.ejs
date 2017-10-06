@@ -2,88 +2,94 @@
 
 <link href="/resources/css/header.css" rel="stylesheet">
 <link href="/resources/css/generic.css" rel="stylesheet">
-<nav layout="column" ng-controller="NavigationController" style="margin-bottom: 60px;" ng-cloak>
+<nav layout="column" ng-controller="NavigationController" class="navCont" ng-cloak>
     <md-toolbar class="homit-header-bigscreen fixed-header">
-      <div class="md-toolbar-tools header">
-        <div class="header-icon"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="50px;" height="75%"/></a></div>
-        <div class="mnSrch">
-            <md-input-container class="header-search-bar homit-header-input mnSrchA">
-                <label class="mnSrchAA"><ng-md-icon icon="search" class="header-search-icon" size="23"></ng-md-icon>Homit ...</label>
-                <input>
-            </md-input-container>
-            <md-button aria-label="clearHeaderSearch" class="mnSrchB">
-                <ng-md-icon icon="clear" class="header-search-icon" size="30"></ng-md-icon>
-            </md-button>
-        </div>
-        <div style="display: flex; justify-content: flex-end;">
-            <md-button aria-label="header-dashboard" class="header-dashboard" ng-click="storeHub = !storeHub" ng-class="{'button-press-feel': storeHub}">
-                <ng-md-icon icon="dashboard" class="header-icon" size="45"></ng-md-icon>
-            </md-button>
-            <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" class="header-icon" data-toggle="modal" data-target="#loginModal">
-                <ng-md-icon  icon="person_outline" class="header-icon" size="48"></ng-md-icon>
-            </md-button>
-            <md-button ng-if="<%=isSignedIn%>" class="header-dashboard" ng-click="showHideUserDropdown()">
-                <ng-md-icon icon="person" class="header-icon" size="45"></ng-md-icon>
-            </md-button>
-
-            <div ng-show="userDropDown">
-                <ul layout="column" style="display: flex; justify-content: center; align-items: flex-start; position: fixed; top: 70px; right: 10px; height: 20vh; width: 12vw; border: 1.5px rgba(220,220,220,0.99) solid; border-radius: 5px; background-color: rgba(250,250,250,0.99); z-index: 2000; margin: 0; padding: 0;" ng-class="{'button-press-feel': userDropDown}">  
-                    <li style="color: rgba(150,150,150,0.8); font-size: 17px; display: flex; padding-left: 18px;"><a href="/myaccount" target="_self" style="display: flex; align-items: center;"><ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198<%= username %></a></li>
-                    <li style="color: rgba(150,150,150,0.8); font-size: 17px; display: flex; align-items: baseline; padding-left: 20px;"><a href="#" target="_self" style="display: flex; align-items: center;" ng-click="logout()"><ng-md-icon icon="logout" size="20"></ng-md-icon>&#8198Sign Out</a></li>
-                </ul>
+        <div class="md-toolbar-tools header">
+            <div class="header-icon"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="47px;" height="75%"/></a></div>
+            <div class="mnSrch">
+                <md-button aria-label="searchOrClear" class="mnSrchB">
+                    <ng-md-icon ng-if="!searchedItem" icon="search" class="header-search-icon" size="25"></ng-md-icon>
+                    <ng-md-icon ng-if="searchedItem" icon="clear" class="header-search-icon" size="25"></ng-md-icon>
+                </md-button>
+                <md-input-container class="mnSrchA">
+                    <label class="mnSrchAA">
+                    </label>
+                    <input ng-model="searchedItem" placeholder="Search to Homit...">
+                </md-input-container>
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+                <md-button aria-label="header-dashboard" ng-click="storeHub = !storeHub" ng-class="{'button-press-feel': storeHub}">
+                    <ng-md-icon icon="dashboard" class="header-icon" size="45"></ng-md-icon>
+                </md-button>
+                <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" class="header-icon" data-toggle="modal" data-target="#loginModal">
+                    <ng-md-icon  icon="person_outline" class="header-icon" size="48"></ng-md-icon>
+                </md-button>
+                <md-button ng-if="<%=isSignedIn%>" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
+                    <ng-md-icon icon="person" class="header-icon" size="45"></ng-md-icon>
+                </md-button>
+                <div ng-show="userDropDown">
+                    <ul layout="column" class="infoDrDwnA">  
+                        <li class="infoDrDwnAA"><a href="/myaccount" target="_self" class="infoDrDwnAAA"><ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198<%= username %></a></li>
+                        <li class="infoDrDwnAB"><a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()"><ng-md-icon icon="logout" size="20"></ng-md-icon>&#8198Sign Out</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-      </div>
     </md-toolbar>
     <!-- For small screens -->
     <md-toolbar class="homit-header-smallscreen fixed-header">
-      <div class="md-toolbar-tools header">
-        <md-button  class="header-icon">
-            <ng-md-icon icon="search" class="header-icon" size="95"></ng-md-icon>
-        </md-button>
-        <md-button aria-label="header-Logo" class="header-icon" style="left: 6%;">
-            <a href="/main" target="_self">
-                <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100"/>
-            </a>
-        </md-button>
-        <div style="display: flex; justify-content: flex-end;">
-        <md-button aria-label="header-sign" class="header-icon" style="display: flex; margin-right: auto;" ng-click="storeHub = !storeHub" ng-class="{'button-press-feel': storeHub}">
-            <ng-md-icon icon="dashboard" class="header-icon" size="95"></ng-md-icon>
-        </md-button>
-        <md-button aria-label="header-dashboard" class="header-icon" data-toggle="modal" data-target="#loginModal">
-            <ng-md-icon icon="person_outline" class="header-icon" size="95"></ng-md-icon>
-        </md-button>
+        <div class="md-toolbar-tools header">
+            <md-button  class="header-icon">
+                <ng-md-icon aria-label="clearHeaderSearch" icon="search" class="header-icon" size="95"></ng-md-icon>
+            </md-button>
+            <md-button aria-label="header-Logo" class="header-icon" style="left: 6%;">
+                <a href="/main" target="_self">
+                    <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100"/>
+                </a>
+            </md-button>
+            <div style="display: flex; justify-content: flex-end;">
+                <md-button aria-label="header-sign" class="header-icon" style="display: flex; margin-right: auto;" ng-click="storeHub = !storeHub" ng-class="{'button-press-feel': storeHub}">
+                    <ng-md-icon icon="dashboard" class="header-icon" size="92"></ng-md-icon>
+                </md-button>
+                <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" class="header-icon" data-toggle="modal" data-target="#loginModal">
+                    <ng-md-icon  icon="person_outline" class="header-icon" size="95"></ng-md-icon>
+                </md-button>
+                <md-button ng-if="<%=isSignedIn%>" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
+                    <ng-md-icon icon="person" class="header-icon" size="95"></ng-md-icon>
+                </md-button>
+                <div ng-show="userDropDown">
+                    <ul layout="column" class="infoDrDwnA">  
+                        <li class="infoDrDwnAA"><a href="/myaccount" target="_self" class="infoDrDwnAAA"><ng-md-icon icon="settings" size="35"></ng-md-icon>&#8198<%= username %></a></li>
+                        <li class="infoDrDwnAB"><a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()"><ng-md-icon icon="logout" size="35"></ng-md-icon>&#8198Sign Out</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </md-toolbar>
     <!-- Dashboard -->
     <div ng-show="storeHub" class="storeHub">
-        <div style="height: 100%; width: 100%; display: flex; align-items: center;">
-            <ul style="display: flex; justify-content: space-around; flex-wrap: wrap; list-style: none; padding-left: 0px; width: 100%; padding-top: 10px;">
-                <li flex="45" style="max-height: 300px;" class="text-center" ng-click="hrefTo('/catalog/snacks')">
-                    <div style="background-color: #2dd204">
-                        <ng-md-icon icon="panorama_vertical" style="fill: rgba(250,250,250,0.99)" size="48">
+        <div class="storeHubA">
+            <ul class="storeHubAA">
+                <li flex="45" class="storeHubAAA" ng-click="hrefTo('/catalog/snacks')">
+                    <div class="storeHubAAAA">
+                        <ng-md-icon icon="panorama_vertical" class="storeHubAAAAA" size="48">
                     </div>
-                    <label style="font-size: 20px;">Snack Vendor</label>
+                    <label class="storeHubAAAAB">Snack Vendor</label>
                 </li>
-                <li flex="45" style="max-height: 300px;" class="text-center" ng-click="hrefTo('/catalog/liquor')">
-                    <div style="background-color: #2dd204">
-                        <ng-md-icon icon="local_gas_station" style="fill: rgba(250,250,250,0.99)" size="48">
+                <li flex="45" class="storeHubAAA" class="text-center" ng-click="hrefTo('/catalog/liquor')">
+                    <div class="storeHubAAAA">
+                        <ng-md-icon icon="local_gas_station" class="storeHubAAAAA" size="48">
                     </div>
-                    <label style="font-size: 20px;">Liqour</label>
+                    <label class="storeHubAAAAB">Liqour</label>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-
-
 <%- include('signup')%>
 
 <script src="/resources/controllers/header.js"></script>
-<script src="/resources/controllers/catalog.js"></script>
-
 <script>
     $(document).ready(function(){
         if ("#<%=tabId%>" != "#"){

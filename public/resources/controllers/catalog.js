@@ -267,9 +267,18 @@ $scope.productUrl;
 
             catalogCtrl.scope = $scope;
 
-            
-            $scope.clearSearch=function(){
+            // TODO switch to Subcategories box when Category selected
+            $scope.showCategories=false;
+            $scope.filterCategories=function(){
+                if($scope.showCategories)
+                    $scope.showCategories=false;
+                else
+                    $scope.showCategories=true;
+            }
+
+            $scope.clearBrandSearch=function(){
                 $scope.searchedBrand = "";
+                console.log($scope.searchedBrand);
             }
 
             $scope.emptySubcategories = function() {
