@@ -1,6 +1,6 @@
 <link href="/resources/css/checkout_menu.css" rel="stylesheet">
 <div ng-controller="cartController">
-    <div class="cart1 pull-right">
+    <div class="cart1">
         <md-button id="cart" ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-fab md-primary cart2a" aria-label="toggleRightCart">
             <div class="cart2aa"><ng-md-icon icon="shopping_cart" class="shopping-cart"></ng-md-icon></div>
         </md-button>
@@ -11,8 +11,8 @@
             <div class="sdNavFB1">
                 <div class="sdNavFB2">
                     <md-button ng-click="close()" aria-label="HideSideNav" class="ClsBtn" >
-                        <span class="glyphicon glyphicon-chevron-left glyClsBtnSgn"></span>
-                        <img class="ClsBtnCart" ng-src="{{'/resources/images/cart_Icon.svg'}}"/>
+                        <ng-md-icon  icon="keyboard_arrow_left" style="fill: rgb(0,94,92);" size="25" ></ng-md-icon>
+                        <ng-md-icon  icon="add_shopping_cart" style="fill: rgb(0,94,92);" size="25" ></ng-md-icon>
                     </md-button>
                     <md-button onclick="location.href='/checkout'" class="md-primary chckOut">Check Out</md-button>
                 </div>

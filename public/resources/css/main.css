@@ -1,3 +1,7 @@
+.navCont{
+    display: none;
+}
+
 .full-screen{
     height: 100vh;
     width: 100vw;
@@ -11,7 +15,8 @@
 }
 
 .search-address{
-    background-color: #26929E;
+    /*background-color: #26929E;*/
+    background-color: rgba(41,81,145,1);
 }
 
 .coverage-map{
@@ -23,6 +28,8 @@
 }
 
 .address-input{
-    font-size: 28px;
-    width: 50vw;
+    padding-left: 40px;
+    width: 35vw; height: 46px;
+    font-size: 24px;
+    border: 1px solid rgba(200,200,200,0.8); border-radius: 2px;
 }

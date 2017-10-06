@@ -97,4 +97,5 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.showHideUserDropdown = function(){
         $scope.userDropDown = !$scope.userDropDown;
     }
+    $scope.searchedItem="";
 });

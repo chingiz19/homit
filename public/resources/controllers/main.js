@@ -52,6 +52,10 @@
         }
         $scope.$apply();
     }
+
+    $scope.clearAddressSearch = function(){
+        $scope.searchedAddress = "";
+    }
     
     $scope.init();
 });
