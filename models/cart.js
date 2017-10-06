@@ -114,9 +114,9 @@ var getCartProduct = function (user_id, depot_id) {
  */
 var getFormattedProducts = function (products) {
     var tmpResult = {};
-    for (var i=0; i < products.length; i++){
+    for (var i = 0; i < products.length; i++) {
         var product = products[i];
-        var imageLocation = "/resources/images/products/"+product.category.toLowerCase()+"/";
+        var imageLocation = "/resources/images/products/" + product.category.toLowerCase() + "/";
         // Add to tmpResult
         tmpResult[product.depot_id] = {
             depot_id: product.depot_id,
@@ -125,7 +125,7 @@ var getFormattedProducts = function (products) {
             price: product.price,
             brand: products[i].brand,
             name: products[i].name,
-            image: imageLocation+products[i].image,
+            image: imageLocation + products[i].image,
             quantity: products[i].quantity,
         };
     }
