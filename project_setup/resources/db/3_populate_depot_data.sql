@@ -1,8 +1,12 @@
+/* Insert super categories */
+INSERT INTO `delivery_db`.`catalog_super_categories` (id, name) VALUES (1, 'liquor');
+INSERT INTO `delivery_db`.`catalog_super_categories` (id, name) VALUES (2, 'snack');
+
 /* Insert categories */
-INSERT INTO `delivery_db`.`catalog_categories` (id,name) VALUES (1,'Beers');
-INSERT INTO `delivery_db`.`catalog_categories` (id,name) VALUES (2,'Wines');
-INSERT INTO `delivery_db`.`catalog_categories` (id,name) VALUES (3,'Spirits');
-INSERT INTO `delivery_db`.`catalog_categories` (id,name) VALUES (4,'Others');
+INSERT INTO `delivery_db`.`catalog_categories` (id,name,super_category_id) VALUES (1,'beer', 1);
+INSERT INTO `delivery_db`.`catalog_categories` (id,name,super_category_id) VALUES (2,'wine', 1);
+INSERT INTO `delivery_db`.`catalog_categories` (id,name,super_category_id) VALUES (3,'spirit', 1);
+INSERT INTO `delivery_db`.`catalog_categories` (id,name,super_category_id) VALUES (4,'snack', 2);
 
 /* Insert subcategories*/
 INSERT INTO `delivery_db`.`catalog_subcategories`(id,name,category_id) VALUES (1,'Ale',1);

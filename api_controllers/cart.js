@@ -1,5 +1,4 @@
 /**
- * @author Jeyhun Gurbanov, Zaman Zamanli
  * @copyright Homit 2017
  */
 var router = require("express").Router();
