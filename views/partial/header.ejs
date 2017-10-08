@@ -6,6 +6,11 @@
     <md-toolbar class="homit-header-bigscreen fixed-header">
         <div class="md-toolbar-tools header">
             <div class="header-icon"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="47px;" height="75%"/></a></div>
+            <div>
+                <strong>
+                    <label ng-bind-html="deliveryAddress" style="color:black;"></label>
+                </strong>
+            </div>
             <div class="mnSrch">
                 <md-button aria-label="searchOrClear" class="mnSrchB">
                     <ng-md-icon ng-if="!searchedItem" icon="search" class="header-search-icon" size="25"></ng-md-icon>
@@ -90,6 +95,7 @@
 <%- include('signup')%>
 
 <script src="/resources/controllers/header.js"></script>
+<script src="/resources/services/storage.js"></script>
 <script>
     $(document).ready(function(){
         if ("#<%=tabId%>" != "#"){

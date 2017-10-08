@@ -1,9 +1,14 @@
 app.controller("LogoSearchController", function ($scope, $http) {});
 
-app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope,$timeout, $mdSidenav, $log) {
+app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope,$timeout, $mdSidenav, $log, storage) {
         $scope.init = function(){
             $scope.storeHub = false;
             $scope.userDropDown=false;
+            try{
+                $scope.deliveryAddress = $cookies.getObject("homit-address").adr_address;
+            } catch(e){
+                // ignore, address doesn't exist
+            }
         }
         $scope.logout = function(){
             $http({

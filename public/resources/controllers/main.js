@@ -1,4 +1,4 @@
- app.controller("mainController", function($scope, $http, $window) {
+ app.controller("mainController", function($scope, $http, storage, $cookies) {
     $scope.map;
 
     $scope.init = function(){
@@ -47,6 +47,7 @@
         var lng = place.geometry.location.lng();
         if (google.maps.geometry.poly.containsLocation(new google.maps.LatLng(lat, lng), $scope.coveragePolygon)){
             $scope.addressMessage = "We deliver";
+            $cookies.putObject("homit-address", place);
         } else {
             $scope.addressMessage = "Sorry, we do not deliver to your location at the moment";
         }
