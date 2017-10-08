@@ -35,6 +35,8 @@ pub.getAllProductsByCategory = function (superCategory, categoryName) {
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
         if (dbResult != false) {
             return getFormattedProducts(dbResult);
+        } else{
+            return false;
         }
     });
 };
