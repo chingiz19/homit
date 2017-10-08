@@ -1,4 +1,4 @@
- app.controller("mainController", function($scope, $http, storage, $cookies) {
+ app.controller("mainController", function($scope, $http, storage, $cookies, $window) {
     $scope.map;
 
     $scope.init = function(){

@@ -155,7 +155,7 @@ var getFormattedProducts = function (products) {
         var product = products[i];
         var p_package = product.packaging;
         var p_volume = product.volume;
-        var imageLocation = "/resources/images/products/" + product.category.toLowerCase() + "/";
+        var imageLocation = "/resources/images/products/" + product.super_category.toLowerCase() + "/" + product.category.toLowerCase() + "/";
 
         if (tmpResult.hasOwnProperty(product.product_id)) {
             // Add to product variant
