@@ -43,11 +43,20 @@ CREATE TABLE users_customers_all (
 	CONSTRAINT fk_users_customers_all_check_null CHECK (user_id IS NOT NULL OR guest_user_id IS NOT NULL)
 ) ENGINE = InnoDB;
 
-CREATE TABLE catalog_categories ( 
+CREATE TABLE catalog_super_categories ( 
 	id INT NOT NULL, 
 	name VARCHAR(225) NOT NULL, 
 	
 	PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+CREATE TABLE catalog_categories ( 
+	id INT NOT NULL, 
+	name VARCHAR(225) NOT NULL,
+	super_category_id INT NOT NULL,
+	
+	PRIMARY KEY (id),
+	CONSTRAINT fk_categories_super_category_id FOREIGN KEY (super_category_id) REFERENCES catalog_super_categories(id) ON DELETE CASCADE ON UPDATE CASCADE	
 ) ENGINE = InnoDB;
 
 CREATE TABLE catalog_subcategories ( 

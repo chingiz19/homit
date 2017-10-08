@@ -23,6 +23,7 @@ class modelFactory {
         global.serverErrorHandler = ServerErrorHandler;
         global.Auth = Auth;
         global.Cart = Cart;
+        global.Catalog = Catalog;
     }
 }
 

@@ -1,5 +1,4 @@
 /**
- * @author Jeyhun Gurbanov, Zaman Zamanli
  * @copyright Homit 2017
  */
 
@@ -146,7 +145,7 @@ router.post('/signout', function (req, res, next) {
  * Forgot password
  */
 router.post('/forgotpassword', function (req, res, next) {
-    console.log("Not implemented");    
+    console.log("Not implemented");
 });
 
 /**
