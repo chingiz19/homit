@@ -10,7 +10,8 @@ var con;
  * Database tables
  */
 const dbTables = {
-    users_customers : "users_customers"
+    users_customers : "users_customers",
+    user_cart_info: "user_cart_info"
 } 
 
 
