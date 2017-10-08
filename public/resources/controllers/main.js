@@ -1,4 +1,4 @@
- app.controller("mainController", function($scope, $http) {
+ app.controller("mainController", function($scope, $http, $window) {
     $scope.map;
 
     $scope.init = function(){
@@ -56,6 +56,8 @@
     $scope.clearAddressSearch = function(){
         $scope.searchedAddress = "";
     }
-    
+    $scope.hrefTo = function(path){
+        $window.location.href = $window.location.origin + path;
+    }
     $scope.init();
 });
