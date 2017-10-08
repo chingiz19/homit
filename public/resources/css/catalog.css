@@ -99,7 +99,7 @@ body{
     min-width: 180px;
     background-color: white;
     border: lightgray solid 1px; border-radius: 5px; 
-    box-shadow: 0 0px 3px 0px rgba(0,0,0,.26);
+    box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
     flex-grow: 1;
     flex-shrink: 1;
 }
@@ -134,9 +134,12 @@ body{
 }
 .category-list{
     display: flex; align-items: center;
+    padding-left: 2px;
 }
 .category-list:hover{
     text-decoration: none;
+    padding-left: 0;
+    border-left: 2px solid green;
 }
 .category-list span{
     text-transform: uppercase; 
@@ -166,18 +169,26 @@ body{
  .sizeStage
 {   
     position: relative;
-    margin: 10px 0 15px 0;
+    margin: 0px 0 5px 0;
+    padding: 10px 0 10px 0;
+    /*border-bottom: 1px solid rgba(0,0,0,0.03);*/
     color: rgba(0,0,0,0.69);
+    /*background-color: rgba(0,0,0,0.01);*/
     font-size: 24px;
     font-weight: 600;
-    margin-left: 1px;
+    /*margin-left: 1px;*/
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 /*Subcategories CSS*/
 .SubcategoryName{
     color: rgba(0,0,0,0.4);
     margin-bottom: 10px;
+    padding-left: 2px;
     font-size: 20px; 
+}
+.SubcategoryName:hover{
+    padding-left: 0;
+    border-left: 2px solid green;
 }
 /*Brand Search Box*/
 .srchBx{
@@ -229,7 +240,7 @@ body{
     margin: 0 3px 6px 3px;
     border: lightgray solid 1px; border-radius: 5px; 
     background-color: white;
-    box-shadow: 0 0px 3px 0px rgba(0,0,0,0.26);
+    box-shadow: 0 0px 1px 0px rgba(0,0,0,0.26);
 }
 .itemBoxL2{
     padding: 0 20px 0 20px;
@@ -383,88 +394,88 @@ body{
         display: none;
     }
     /*Start*/
-        .highltdVol{
-            font-size: 28px;
-        }
-        .highltdPack{
-            font-size: 28px;
-        }
-        .nHighltdPack{
-            display: flex; justify-content: center;
-            font-size: 16px;
-        }
-        .nHighltdVol{
-            font-size: 16px;
-        }
-        .volPackMobA{
-            position: absolute; top: 93px;
-        }
-        .volPackMobAAA svg{
-            width: 60px; height: 60px;
-            fill: rgba(0,0,0,0.45);
-        }
-        .volPackMobB{
-            padding: 0;
-        }
-        .volPackMobBAA{
-            position: absolute; 
-            top: 146px; left: 25px; 
-            width: 94px; 
-            display: flex; justify-content: center;
-        }
-        .volPackMobBAB{
-            position: absolute; 
-            top: 162px; left: 25px; 
-            width: 94px; 
-            display: flex; justify-content: center;
-        }
-        .volPackMobBAC{
-            position: absolute; 
-            top: 198px; left: 25px; 
-            width: 94px; 
-            display: flex; justify-content: center;
-        }
-        .volPackMobC{
-            position: absolute; top: 209px;
-        }
-        .volPackMobD{
-            position: absolute; 
-            top: 93px; right: 0;
-        }
-        .volPackMobEAA{
-            position: absolute; 
-            top: 146px; right: 3px; 
-            width: 94px; 
-            display: flex; justify-content: center;
-        }
-        .volPackMobEAB{
-            position: absolute; 
-            top: 162px; right: 3px; 
-            width: 94px; 
-            display: flex; justify-content: center;
-        }
-        .volPackMobEAC{
-            position: absolute; 
-            top: 198px; right: 3px; 
-            width: 94px; 
-            display: flex; justify-content: center;
-        }
-        .volPackMobF{
-            position: absolute; 
-            top: 209px; right: 0;
-        }
-    /*End*/
-    .navigateMobIcon{
-        position: fixed; 
-        left: 0; top: 70%;
-        border: 4px solid rgba(255,255,255,0.7);
-        box-shadow: none !important;
+    .highltdVol{
+        font-size: 28px;
     }
-    .navigateMobIconA svg{
-        fill:rgba(255,255,255,1);
-        width: 100px;
-        height: 100px;
+    .highltdPack{
+        font-size: 28px;
     }
+    .nHighltdPack{
+        display: flex; justify-content: center;
+        font-size: 16px;
+    }
+    .nHighltdVol{
+        font-size: 16px;
+    }
+    .volPackMobA{
+        position: absolute; top: 93px;
+    }
+    .volPackMobAAA svg{
+        width: 60px; height: 60px;
+        fill: rgba(0,0,0,0.45);
+    }
+    .volPackMobB{
+        padding: 0;
+    }
+    .volPackMobBAA{
+        position: absolute; 
+        top: 146px; left: 25px; 
+        width: 94px; 
+        display: flex; justify-content: center;
+    }
+    .volPackMobBAB{
+        position: absolute; 
+        top: 162px; left: 25px; 
+        width: 94px; 
+        display: flex; justify-content: center;
+    }
+    .volPackMobBAC{
+        position: absolute; 
+        top: 198px; left: 25px; 
+        width: 94px; 
+        display: flex; justify-content: center;
+    }
+    .volPackMobC{
+        position: absolute; top: 209px;
+    }
+    .volPackMobD{
+        position: absolute; 
+        top: 93px; right: 0;
+    }
+    .volPackMobEAA{
+        position: absolute; 
+        top: 146px; right: 3px; 
+        width: 94px; 
+        display: flex; justify-content: center;
+    }
+    .volPackMobEAB{
+        position: absolute; 
+        top: 162px; right: 3px; 
+        width: 94px; 
+        display: flex; justify-content: center;
+    }
+    .volPackMobEAC{
+        position: absolute; 
+        top: 198px; right: 3px; 
+        width: 94px; 
+        display: flex; justify-content: center;
+    }
+    .volPackMobF{
+        position: absolute; 
+        top: 209px; right: 0;
+    }
+/*End*/
+.navigateMobIcon{
+    position: fixed; 
+    left: 0; top: 70%;
+    border: 4px solid rgba(255,255,255,0.7);
+    box-shadow: none !important;
+}
+.navigateMobIconA svg{
+    fill:rgba(255,255,255,1);
+    width: 100px;
+    height: 100px;
+}
     /*Side Nav*/
     .mdSideNavL1{
         position: fixed; top: 0px; 
@@ -621,6 +632,9 @@ md-radio-group .SubcategoryName.md-checked{
 /*Margein-left for radio-button container*/
 md-radio-group .md-container.md-ink-ripple{
     margin-left: 15px;
+}
+md-radio-group .SubcategoryName:hover .md-container.md-ink-ripple{
+    margin-left: 13px;
 }
 /*Change default radio-button colors*/
 md-radio-button:focus {

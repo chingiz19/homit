@@ -1,4 +1,4 @@
-<html ng-app="mainModule">
+<html ng-app="mainModule" style="overflow-y: hidden;">
 <head>
     <%- include('partial/imports')%>
     <%- include('partial/header', {title: title, product: tabId}); %>
@@ -6,7 +6,7 @@
 </head>
 <body class="ng-cloak">
     <div ng-controller="checkoutController">
-        <div layout="row" layout-align="center" class="container cont2">
+        <div layout="row" layout-align="center" class="container">
             <div class="col1">
                 <div class="col1ChevRgt">
                     <md-button aria-label="toggleRight" ng-click="toggleRight()" class="glypOpnSN" hide-gt-md>

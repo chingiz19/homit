@@ -47,7 +47,8 @@
         margin-bottom: 55px;
     }
     .homit-header-bigscreen{
-        border-bottom: 1px solid lightgray;
+        border-bottom: 1px solid rgba(0,0,0,0.15);
+        box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
     }
     md-toolbar{
         min-height: 60px !important;
