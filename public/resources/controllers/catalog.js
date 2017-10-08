@@ -15,28 +15,27 @@ $scope.loadedStore = "Store";
 // Determine product URL
 $scope.productUrl;
     if ($scope.selection == "/catalog/liquor/beer") {
-        $scope.productUrl = '/api/catalog/beers';
         $scope.isBeers = true;
         $scope.selectedCategory = "beer";
         $scope.loadedStore = "Liquor";
     } else if ($scope.selection == "/catalog/liquor/wine") {
-        $scope.productUrl = '/api/catalog/wines';
         $scope.isWines=true;
         $scope.selectedCategory = "wine";
         $scope.loadedStore = "Liquor";
     } else if ($scope.selection == "/catalog/liquor/spirit") {
-        $scope.productUrl = '/api/catalog/spirits';
         $scope.isSpirits=true;
         $scope.selectedCategory = "spirit";
         $scope.loadedStore = "Liquor";
-    } else if ($scope.selection == "/catalog/snacks") {
-        $scope.productUrl = '/api/catalog/others';
+    } else if ($scope.selection == "/catalog/snackvendor/all") {
         $scope.isOthers=true;
         $scope.selectedCategory = "snack";
-        $scope.loadedStore = "Snacks";
+        $scope.loadedStore = "Snack Vendor";
     } else {
         $scope.productUrl = '/api/catalog/notfound';
-    }        
+    }  
+
+        $scope.productUrl = '/api'+$scope.selection;
+          
 
         $scope.selection = $location.search().product;
         $scope.isBeers = false;
@@ -63,7 +62,7 @@ $scope.productUrl;
                 method: 'GET',
                 url: $scope.productUrl
             }).then(function successCallback(response) {
-                if (response.data['success'] === "true") {
+                if (response.data['success']) {
                     $scope.products = response.data['products'];
                     $scope.products.forEach(function(product){
                         product.selectedVolume = product.product_variants.all_volumes[0];
@@ -77,8 +76,6 @@ $scope.productUrl;
                     $scope.allBrands=response.data['all_brands'];
                     $scope.availableTypes = $scope.subcategories[0]['types'];
                     $scope.availableBrands = $scope.subcategories[0]['brands'];      
-                } else {
-
                 }
             }, function errorCallback(response) {
 
