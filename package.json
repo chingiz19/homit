@@ -1,10 +1,10 @@
 {
-  "name": "deliverystartup",
+  "name": "homit",
   "version": "1.0.0",
-  "description": "delivery star up",
+  "description": "delivery",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --reporter spec tests/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +16,7 @@
   "dependencies": {
     "bcrypt": "^1.0.2",
     "body-parser": "^1.16.1",
+    "chai": "^4.1.2",
     "cookie-encryption": "^1.6.0",
     "cookie-parser": "^1.4.3",
     "cookies": "^0.7.0",
@@ -24,11 +25,14 @@
     "express-session": "^1.15.1",
     "jsonwebtoken": "^8.0.1",
     "jwt-simple": "^0.5.1",
+    "mocha": "^4.0.1",
     "mysql": "^2.5.4",
     "nodemon": "^1.11.0",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.0",
     "path": "^0.12.7",
-    "promise-mysql": "^3.0.0"
+    "promise-mysql": "^3.0.0",
+    "request": "^2.83.0",
+    "sinon": "^4.0.1"
   }
 }
