@@ -6,12 +6,20 @@ const categories = {
 }
 
 router.get('/:parent/', function(req, res, next){
-    res.redirect("/catalog/" + req.params.parent + "/" + categories[req.params.parent][0]);
+    try{
+        res.redirect("/catalog/" + req.params.parent + "/" + categories[req.params.parent][0]);
+    } catch(e){
+        next()
+    }
 })
 
 router.get('/:parent/:category', function(req, res, next){
-    req.options.ejs["categories"] = convertArrayToString(categories[req.params.parent]);
-    	res.render("catalog.ejs", req.options.ejs);
+    try{
+        req.options.ejs["categories"] = convertArrayToString(categories[req.params.parent]);
+        res.render("catalog.ejs", req.options.ejs);
+    } catch(e){
+        next()
+    }
 })
 
 function convertArrayToString(array){
