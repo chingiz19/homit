@@ -65,7 +65,7 @@ pub.hashPassword = function (plainPassword) {
  * Compares plain password to hashed password
  */
 pub.comparePassword = function (plainPassword, hashPassword) {
-    bcrypt.compare(password, hashPassword).then(function (match) {
+    return bcrypt.compare(plainPassword, hashPassword).then(function (match) {
         return match;
     });
 }

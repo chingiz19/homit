@@ -123,7 +123,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
         $http({
             method: 'POST',
             url: '/api/authentication/signin',
-            params: {
+            data: {
                 email: login.email,
                 password: login.password,
             }
