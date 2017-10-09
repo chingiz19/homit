@@ -47,7 +47,7 @@ pub.authenticateUser = function (email, password) {
     var data = { user_email: email };    
     return db.selectAllWhere(db.dbTables.users_customers, data).then(function (user) {
         if (user.length > 0) {
-            Auth.comparePassword(password, user["password"]).then(function (match) {
+            return Auth.comparePassword(password, user[0].password).then(function (match) {
                 if (match) {
                     return sanitizeUserObject(user);
                 } else {
