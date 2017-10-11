@@ -6,7 +6,7 @@
 var pub = {};
 
 function sanitizeUserObject(user) {
-    delete user["password"];
+    delete user.password;
     return user;
 }
 
@@ -17,7 +17,7 @@ pub.findUser = function (email) {
     var data = { user_email: email };
     return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
         if (dbResult.length > 0) {
-            return sanitizeUserObject(dbResult);
+            return sanitizeUserObject(dbResult[0]);
         } else {
             // TODO: Admin
             // return db.selectAllWhere('esl_users', data).then(function (results) {
@@ -36,7 +36,7 @@ pub.findUser = function (email) {
  */
 pub.addUser = function (userData) {
     return db.insertQuery(db.dbTables.users_customers, userData).then(function (dbResult) {
-        return sanitizeUserObject(dbResult);
+        return dbResult.insertId;
     });
 };
 
@@ -49,7 +49,7 @@ pub.authenticateUser = function (email, password) {
         if (user.length > 0) {
             return Auth.comparePassword(password, user[0].password).then(function (match) {
                 if (match) {
-                    return sanitizeUserObject(user);
+                    return sanitizeUserObject(user[0]);
                 } else {
                     return false;
                 }
@@ -59,5 +59,43 @@ pub.authenticateUser = function (email, password) {
         }
     });
 };
+
+/**
+ * Finds guest user based on the email
+ */
+pub.findGuestUser = function (email) {
+    var data = { user_email: email };
+    return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return sanitizeUserObject(dbResult[0]);
+        } else {
+            return false;
+        }
+    });
+};
+
+/**
+ * Adds guest user to database based on the data
+ */
+pub.addGuestUser = function (userData) {
+    return db.insertQuery(db.dbTables.users_customers_guest, userData).then(function (dbResult) {
+        return dbResult.insertId;
+    });
+};
+
+/**
+ * Updates guest user data
+ */
+pub.updateGuestUser = function (userData, key) {
+    var data = [userData, key];
+    return db.updateQuery(db.dbTables.users_customers_guest, data).then(function (dbResult) {
+        if (!dbResult) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+};
+
 
 module.exports = pub;

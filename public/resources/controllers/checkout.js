@@ -138,6 +138,7 @@ function($scope, $http, $location, $rootScope, $cookies, $timeout, $mdSidenav, $
         }
 
         if($scope.isUserSigned){
+            userInfoToSend.id = $scope.userInfo.id;
             userInfoToSend.email=$scope.userInfo.user_email;
             userInfoToSend.address=$scope.userInfo["address" + $scope.selectedAddress];
         }
@@ -154,7 +155,7 @@ function($scope, $http, $location, $rootScope, $cookies, $timeout, $mdSidenav, $
                 method: 'POST',
                 url: '/api/checkout/placeorder',
                 data: {
-                    userInfo: userInfoToSend,
+                    user: userInfoToSend,
                     products: userOrder
                 }
             }).then(function successCallback(response) {

@@ -25,22 +25,10 @@ CREATE TABLE users_customers_guest (
 	user_email VARCHAR(225) NOT NULL, 
 	first_name VARCHAR(225) NOT NULL, 
 	last_name VARCHAR(225) NOT NULL, 
-	password VARCHAR(225) NOT NULL, 
 	phone_number VARCHAR(10) NOT NULL, 
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
-) ENGINE = InnoDB;
-
-CREATE TABLE users_customers_all (
-	id INT NOT NULL AUTO_INCREMENT,
-	user_id INT,
-	guest_user_id INT,
-
-	PRIMARY KEY (id),
-	CONSTRAINT fk_users_customers_all_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT fk_users_customers_all_guest_user_id FOREIGN KEY (guest_user_id) REFERENCES users_customers_guest(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT fk_users_customers_all_check_null CHECK (user_id IS NOT NULL OR guest_user_id IS NOT NULL)
 ) ENGINE = InnoDB;
 
 CREATE TABLE catalog_super_categories ( 
@@ -150,7 +138,8 @@ CREATE TABLE user_cart_info (
 
 CREATE TABLE orders_info (
 	id INT NOT NULL AUTO_INCREMENT,
-	user_id INT NOT NULL,
+	user_id INT,
+	guest_id INT,
 	date_received TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	date_delivered TIMESTAMP,
 	delivery_address VARCHAR(225) NOT NULL,
@@ -159,7 +148,8 @@ CREATE TABLE orders_info (
 	driver_id INT,
 	
 	PRIMARY KEY (id),
-	CONSTRAINT fk_orders_info_user_id FOREIGN KEY (user_id) REFERENCES users_customers_all(id) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT fk_orders_info_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_orders_info_guest_id FOREIGN KEY (guest_id) REFERENCES users_customers_guest(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 

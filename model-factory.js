@@ -24,6 +24,7 @@ class modelFactory {
         global.Auth = Auth;
         global.Cart = Cart;
         global.Catalog = Catalog;
+        global.Orders = Orders;
     }
 }
 
