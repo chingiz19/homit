@@ -21,8 +21,12 @@
 /*Column-1 consists of Types, Brands, Subcategories etc
 Columns-2,3,4 consist of items and items' info*/
 
+html{
+    background-color: rgb(252, 252, 252);
+}
 body{
-    background-color: rgb(249, 249, 249);
+    background-color: rgb(252, 252, 252);
+    letter-spacing: 0.01em;
 }
 
 /*Adjust width col1 and col24 when 2 and 3 columns of items left*/
@@ -104,8 +108,11 @@ body{
     flex-shrink: 1;
 }
 .col1A{
+    /* position: relative; left: 88px; */
     display: flex; justify-content: center; 
-    margin-right: 36px;
+    /* margin-right: 36px; */
+    
+    /* width: 202px !important;  */
 }
 .col1D{
     position: absolute; 
@@ -124,7 +131,7 @@ body{
 .col1EAA{
     display: flex; justify-content: center; 
     left:0;
-    font-size: 25px; font-weight: 600;
+    font-weight: 600;
 }
 .col1EAB{
     position: relative;
@@ -143,7 +150,7 @@ body{
 }
 .category-list span{
     text-transform: uppercase; 
-    font-size: 22px; font-weight: 400; 
+    font-size: 23px; font-weight: 400; 
     color: rgba(0,0,0,0.45); 
     line-height: 43px; 
     margin-left: 40px;
@@ -174,7 +181,7 @@ body{
     /*border-bottom: 1px solid rgba(0,0,0,0.03);*/
     color: rgba(0,0,0,0.69);
     /*background-color: rgba(0,0,0,0.01);*/
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
     /*margin-left: 1px;*/
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
@@ -372,6 +379,11 @@ body{
 }
 .fltCategoryBtn:hover{
     background-color: white !important;
+}
+.fltCategoryBtn{
+    min-width: 68px;
+    margin-left: 0; margin-right: 0;
+    padding-left: 0; padding-right: 0;
 }
 @media screen and (min-device-width: 500px){
     .typesSdNB1{

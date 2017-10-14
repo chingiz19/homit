@@ -70,7 +70,7 @@ Columns-2 consist of items and items' info*/
         height: 89%;
     }
 }
-@media(max-height: 826px) and (min-height: 625px){
+@media(max-height: 825px) and (min-height: 625px){
     .col1{
         height: 91%;
     }
@@ -78,12 +78,20 @@ Columns-2 consist of items and items' info*/
         height: 91%;
     }
 }
-@media(min-height: 827px){
+@media(max-height: 870px) and (min-height: 826px){
     .col1{
         height: 92.5%;
     }
     .mdSideNavL1{
         height: 92.5%;
+    }
+}
+@media(min-height: 871px){
+    .col1{
+        height: 93.5%;
+    }
+    .mdSideNavL1{
+        height: 93.5%;
     }
 }
 
@@ -157,8 +165,7 @@ navbar{
 }
 /*glyphicon Sign*/
 .glypOpnSNsgn{
-    font-size: 14px;
-    color: rgb(63,81,181);
+    fill: rgb(63,81,181);
 }
 /*General Input format*/
 .bigClass{
@@ -213,9 +220,8 @@ md-tabs-wrapper{
     box-shadow: none !important;
 }
 /*glyphicon Sign*/
-.glypOpnCIsgn{
-    font-size: 13px;
-    color: rgb(63,81,181);
+.opnCIsgn{
+    fill: rgb(63,81,181);
 }
 /*Extension Box Input format*/
 .extInput{

@@ -28,8 +28,8 @@ $scope.productUrl;
         $scope.loadedStore = "Liquor";
     } else if ($scope.selection == "/catalog/snackvendor/all") {
         $scope.isOthers=true;
-        $scope.selectedCategory = "snack";
-        $scope.loadedStore = "Snack Vendor";
+        $scope.selectedCategory = "all";
+        $scope.loadedStore = "SnackVendor";
     } else {
         $scope.productUrl = '/api/catalog/notfound';
     }  

@@ -10,7 +10,7 @@
             <div class="col1">
                 <div class="col1ChevRgt">
                     <md-button aria-label="toggleRight" ng-click="toggleRight()" class="glypOpnSN" hide-gt-md>
-                        <span class="glyphicon glyphicon-chevron-right glypOpnSNsgn"></span>
+                        <ng-md-icon icon="keyboard_arrow_right" class="glypOpnSNsgn" size="25"></ng-md-icon>
                     </md-button>
                 </div>
                 <div class="userPic">
@@ -21,7 +21,7 @@
                     <md-input-container class="md-block bigClass">
                         <label class="inptLbl">Date</label>
                         <md-select ng-model="birth_day">
-                            <md-option ng-value="0">Day</md-option>
+                            <md-option ng-value="0" ng-disabled="true">Day</md-option>
                             <md-option ng-value="1">1</md-option>
                             <md-option ng-value="2">2</md-option>
                             <md-option ng-value="3">3</md-option>
@@ -58,7 +58,7 @@
                     <md-input-container class="md-block bigClass">
                         <label class="inptLbl">of</label>
                         <md-select ng-model="birth_month">
-                            <md-option ng-value="0">Month</md-option>
+                            <md-option ng-value="0" ng-disabled="true">Month</md-option>
                             <md-option ng-value="1">Jan</md-option>
                             <md-option ng-value="2">Feb</md-option>
                             <md-option ng-value="3">Mar</md-option>
@@ -76,7 +76,7 @@
                     <md-input-container class="md-block bigClass">
                         <label class="inptLbl">Birth</label>
                         <md-select ng-model="birth_year">
-                            <md-option ng-value="0">Year</md-option>
+                            <md-option ng-value="0" ng-disabled="true">Year</md-option>
                             <md-option ng-value="2017">2017</md-option>
                             <md-option ng-value="2016">2016</md-option>
                             <md-option ng-value="2015">2015</md-option>
@@ -260,7 +260,8 @@
                     <div layout="row" layout-align="start center">
                         <div class="extBoxTtl">Card Info</div>
                         <md-button aria-label="ShowHideCardInfo" class="md-fab md-mini md-primary glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown">
-                            <span class="glyphicon glypOpnCIsgn" ng-class="{'glyphicon-chevron-down': !userInfo.cardIsShown,'glyphicon-chevron-up': userInfo.cardIsShown}"aria-hidden="true"></span>
+                            <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="20"></ng-md-icon>
+                            <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="20"></ng-md-icon>
                         </md-button>
                     </div>
                 </div>
@@ -415,12 +416,12 @@
             </div>
             <!--Order Summary SideNav-->
             <md-sidenav class="md-sidenav-right mdSideNavL1" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
-                <md-content layout-padding>
+                <md-content layout-padding style="height: 100%;">
                     <!--Order Summary - Reciept box-->
                     <div class="receiptB1">
                         <div class="summerLnP1">
                             <md-button ng-click="close()" aria-label="HideSideNav"  hide-gt-md class="glyClsBtn">
-                                <span class="glyphicon glyphicon-chevron-left glyClsBtnSgn"></span>
+                                <ng-md-icon icon="keyboard_arrow_left" size="30" style="fill: white;"></ng-md-icon>
                             </md-button>
                             <span class="summerLnP2">Order Summary</span>
                         </div>
@@ -482,10 +483,9 @@
                             <div class="cartBItems2C" flex="35">
                                 <ul class="cartBItems2C2">
                                     <li>{{product.brand}} {{product.name}}</li>
-                                    <li>X{{product.packaging}}</li>
                                     <li>{{product.volume}}</li>
+                                    <li>{{product.quantity}}X{{product.packaging}}</li>
                                     <li>{{product.price}}C$</li>
-                                    <li>#{{product.quantity}}</li>
                                 </ul>
                             </div>
                         </div>
