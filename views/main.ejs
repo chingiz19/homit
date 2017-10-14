@@ -7,7 +7,7 @@
 </head>
 <body class="ng-cloak">
     <div ng-controller="mainController">
-        <div layout="row" style="position: fixed; top: 15; width: 100%; display: flex; align-items: center;">
+        <div layout="row" class="mainpage-header">
             <div style="margin-left: 15px;" flex="50">
                 <img ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" width="142px;" height="47px"/>
             </div>
@@ -26,7 +26,14 @@
                 </div>
             </div>
         </div>
-        <div class="full-screen flex-box search-address">
+        <!-- Getting started page -->
+        <div class="full-screen flex-box getting-started">
+            <md-button class="md-raised button-big brand-button" ng-click="scrollTo('address')">
+                Let's Homit
+            </md-button>
+        </div>
+
+        <div id="address" class="full-screen flex-box search-address">
             <h2>Delivery Address</h2>
             <h3>Please enter delivery address to ensure we provide delivery to your location</h3>
             <span style="background-color: rgba(255,255,255,0.93); border: 0; border-radius: 5px; padding: 15px 15px 0 15px; position: relative; height: 76px;">
@@ -38,15 +45,15 @@
                     </md-button>
                 </span>
             </span>
-            <h1>{{ addressMessage }}</h1>
         </div>
 
-        <div class="full-screen flex-box coverage-map">
+        <div id="coverage" class="full-screen flex-box coverage-map">
             <h2>Coverage Map</h2>
             <div id="map" style="height: 70%; width: 80%"></div>
+            <h3>{{addressMessage}}</h3>
         </div>
 
-        <div class="full-screen flex-box store-list">
+        <div id="homitHub" class="full-screen flex-box store-list">
             <h2>Homit Hub</h2>
              <ul class="storeHubAA">
                 <li flex="30" class="storeHubAAA" ng-click="hrefTo('/catalog/snackvendor')">

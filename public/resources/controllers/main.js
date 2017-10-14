@@ -1,7 +1,11 @@
- app.controller("mainController", function($scope, $http, storage, $cookies, $window) {
+ app.controller("mainController", function($scope, $http, storage, $cookies, $window, $location, $anchorScroll) {
     $scope.map;
 
     $scope.init = function(){
+        // always scroll to the top, then later to defined hash
+        var currentHash = $location.hash();
+        $scope.scrollTo("");
+
         $scope.map = new google.maps.Map($("#map")[0], {
             zoom: 12,
             center: new google.maps.LatLng(51.074314, -114.094996),
@@ -36,6 +40,11 @@
             }, function errorCallback(response) {
                 console.error("Something went wrong while getting coverage map");
             });
+
+            // scroll to defined hash, if any
+            setTimeout(function(){
+                $scope.scrollTo(currentHash);
+            }, 1000);
     };
 
     /**
@@ -46,10 +55,11 @@
         var lat = place.geometry.location.lat();
         var lng = place.geometry.location.lng();
         if (google.maps.geometry.poly.containsLocation(new google.maps.LatLng(lat, lng), $scope.coveragePolygon)){
-            $scope.addressMessage = "We deliver";
             $cookies.putObject("homit-address", place);
+            $scope.scrollTo('homitHub');
         } else {
             $scope.addressMessage = "Sorry, we do not deliver to your location at the moment";
+            $scope.scrollTo('coverage');
         }
         $scope.$apply();
     }
@@ -60,5 +70,15 @@
     $scope.hrefTo = function(path){
         $window.location.href = $window.location.origin + path;
     }
+
+    /**
+     * When called this method will scroll view to the element with 'id'
+     * @param id - element id
+     */
+    $scope.scrollTo = function(id){
+        $location.hash(id);
+        $anchorScroll();
+    }
+
     $scope.init();
 });

@@ -16,15 +16,20 @@
 
 .search-address{
     /*background-color: #26929E;*/
-    background-color: rgba(41,81,145,1);
+    background-color: #5689DD;
+}
+
+.getting-started{
+    background-color: rgba(42,81,145,1);
 }
 
 .coverage-map{
-    background-color: white;
+    background-color: #287AA8;
 }
 
 .store-list {
-    background-color: #83A5DD;
+    background-color: #0D2244;
+    color: white;
 }
 
 .address-input{
@@ -32,4 +37,12 @@
     width: 35vw; height: 46px;
     font-size: 24px;
     border: 1px solid rgba(200,200,200,0.8); border-radius: 2px;
+}
+
+.mainPage-header {
+    position: fixed; 
+    top: 15; 
+    width: 100%; 
+    display: flex; 
+    align-items: center;
 }
