@@ -39,6 +39,11 @@ webServer.use(bodyParser.urlencoded({ extended: true}));
 webServer.use(express.static(webpagePath));
 webServer.set('view engine', 'ejs');
 
+webServer.use(function(req, res, next){
+	res.setHeader("Keep-Alive", "timeout: 60, max: 1000");
+	next();
+})
+
 /* Redirect all HTTP to HTTPS */
 webServer.all('*', function(req, res, next){
   if(req.secure){
