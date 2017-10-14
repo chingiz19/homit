@@ -26,10 +26,6 @@
     position: fixed;
 }
 /*General Tags*/
-body{
-    background-color: rgb(249, 249, 249);
-    letter-spacing: 0.01em;
-}
 ul {
     list-style-type: none;
 }

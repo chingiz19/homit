@@ -44,7 +44,7 @@
                 </md-sidenav>
                 <!--End-->
                 <md-container class="col1">
-                    <div class="sizeStage col1A" >{{selectedCategory | capitalize}}s</div>
+                    <div class="sizeStage col1A">{{selectedCategory | capitalize}}</div>
                     <span>
                         <md-radio-group ng-model="SubcategoryName">
                             <md-radio-button class="SubcategoryName" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)">
@@ -66,16 +66,16 @@
                     <!--Category Box start-->
                     <span class="col1D">
                         <md-button ng-click="filterCategories()" class="fltCategoryBtn">
-                            <ng-md-icon icon="filter_list" size="40" ng-style="(showCategories) && {'fill': 'rgba(41,81,145,0.3)'} || {'fill': 'rgb(63,81,181)'}"></ng-md-icon>
+                            <ng-md-icon icon="filter_list" size="30" ng-style="(showCategories) && {'fill': 'rgba(41,81,145,0.3)'} || {'fill': 'rgb(63,81,181)'}"></ng-md-icon>
                         </md-button>
                     </span>
-                    <div class="col1E" ng-show="showCategories || (selectedCategory == beer)">
+                    <div class="col1E" ng-show="showCategories">
                         <div layout="column">
                             <div class="sizeStage col1EAA">{{loadedStore}}</div>
                             <ul class="col1EAB" layout="column">
                                 <li ng-repeat='category in <%= categories %> track by $index'>
-                                    <a href="/catalog/{{loadedStore | lowercase}}/{{category}}" target="_self" class="category-list" ng-style="((selectedCategory == category)||(selectedCategory == 'snack')) && {'background-color': 'rgba(63,222,17,0.8)'}">
-                                        <span ng-style="((selectedCategory == category)||(selectedCategory == 'snack')) && {'font-weight':'900', 'color': 'rgba(255,255,255,1)','font-size':'24px'}">{{ category }}</span>
+                                    <a href="/catalog/{{loadedStore | lowercase}}/{{category}}" target="_self" class="category-list" ng-style="((selectedCategory == category)||(selectedCategory == 'all')) && {'background-color': 'rgba(101,228,64,1)'}">
+                                        <span ng-style="((selectedCategory == category)||(selectedCategory == 'all')) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}">{{ category }}</span>
                                     </a>
                                 </li>
                             </ul>

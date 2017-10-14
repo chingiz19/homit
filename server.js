@@ -17,7 +17,7 @@ var fs = require('fs');
 /* SLL options */
 var sslOptions = {
 	key: fs.readFileSync('./ssl/server.enc.key'),
-   	cert: fs.readFileSync('./ssl/server.crt'),
+	cert: fs.readFileSync('./ssl/server.crt'),
 	passphrase: 'test'
 }
 
@@ -28,28 +28,28 @@ webServer.use(session({
 	saveUninitialized: true,
 	httpOnly: false,
 	cookie: {
-		expires: new Date(Date.now() + (60 * 60 *1000)),
+		expires: new Date(Date.now() + (60 * 60 * 1000)),
 		maxAge: 60 * 60 * 1000  // 1 hour
 	}
 }));
 
 webServer.use(bodyParser.json());
 webServer.use(cookieParser(secretKey));
-webServer.use(bodyParser.urlencoded({ extended: true}));
+webServer.use(bodyParser.urlencoded({ extended: true }));
 webServer.use(express.static(webpagePath));
 webServer.set('view engine', 'ejs');
 
 /* Redirect all HTTP to HTTPS */
-webServer.all('*', function(req, res, next){
-  if(req.secure){
-    return next();
-  };
+webServer.all('*', function (req, res, next) {
+	if (req.secure) {
+		return next();
+	};
 
-  if (req.query.mobile){
-	  return next();
-  } else {
-  	res.redirect('https://' + req.hostname + req.url); // express 4.x
-  }
+	if (req.query.mobile) {
+		return next();
+	} else {
+		res.redirect('https://' + req.hostname + req.url); // express 4.x
+	}
 });
 
 /* Custom modules to use for proper routing */
@@ -59,10 +59,10 @@ webServer.use("/", require(path.join(__dirname, "/view_controllers/generic_contr
 webServer.use(serverErrorHandler);
 
 /* Start web server */
-webServer.listen(8080, function(){
+webServer.listen(8080, function () {
 	console.log("Listening at http://localhost:8080");
 });
 
-https.createServer(sslOptions, webServer).listen(443, function(){
+https.createServer(sslOptions, webServer).listen(443, function () {
 	console.log("Listening at https://localhost:443");
 });

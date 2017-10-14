@@ -53,7 +53,7 @@
     md-toolbar{
         min-height: 60px !important;
         height: 60px;
-        background-color: rgba(254,254,254,0.95) !important;
+        background-color: rgba(255,255,255,0.95) !important;
     }
     .md-input-focused .mnSrchAA{
         margin-bottom: 0px;
@@ -103,7 +103,7 @@
         font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     }
     .mnSrchB{
-        left: 15px;
+        left: 16px;
         min-height: 33px; min-width: 40px;
         margin: 0; padding: 0; 
         border-bottom: 2px solid rgba(42,81,145,0.6); border-radius: 0; 
