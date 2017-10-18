@@ -87,7 +87,7 @@ CREATE TABLE catalog_packagings (
 ) ENGINE = InnoDB;
 
 CREATE TABLE catalog_listings ( 
-	id INT NOT NULL AUTO_INCREMENT, 
+	id INT NOT NULL, 
 	product_brand VARCHAR(225), 
 	product_name VARCHAR(225), 
 	product_description VARCHAR(225),
@@ -99,7 +99,7 @@ CREATE TABLE catalog_listings (
 ) ENGINE = InnoDB;
 
 CREATE TABLE catalog_products ( 
-	id INT NOT NULL AUTO_INCREMENT, 
+	id INT NOT NULL, 
 	listing_id INT NOT NULL, 
 	container_id INT NOT NULL, 
 	product_image VARCHAR(225),
@@ -110,7 +110,7 @@ CREATE TABLE catalog_products (
 ) ENGINE = InnoDB;
 
 CREATE TABLE catalog_depot ( 
-	id INT NOT NULL AUTO_INCREMENT, 
+	id INT NOT NULL, 
 	product_id INT NOT NULL, 
 	packaging_id INT NOT NULL, 
 	packaging_volume_id INT NOT NULL,
