@@ -146,6 +146,8 @@ CREATE TABLE orders_info (
 	store_address VARCHAR(225),
 	order_status VARCHAR(225) NOT NULL,
 	driver_id INT,
+	order_received_name VARCHAR(225),
+	order_received_age INT,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_orders_info_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
