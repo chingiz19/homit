@@ -1,4 +1,4 @@
- app.controller("mainController", function($scope, $http, storage, $cookies, $window, $location, $anchorScroll) {
+ app.controller("mainController", function($scope, $http, storage, $cookies, $window, $location, $anchorScroll, mapServices) {
     $scope.map;
 
     $scope.init = function(){
@@ -6,45 +6,22 @@
         var currentHash = $location.hash();
         $scope.scrollTo("");
 
-        $scope.map = new google.maps.Map($("#map")[0], {
-            zoom: 12,
-            center: new google.maps.LatLng(51.074314, -114.094996),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+        $scope.map = mapServices.createMap("map");
+
+        mapServices.createCoveragePolygon().then(function(polygon){
+            if (polygon){
+                $scope.coveragePolygon = polygon;
+                $scope.coveragePolygon.setMap($scope.map);
+            }
         });
+        
+        $scope.autocomplete = mapServices.createAddressAutocomplete("addressAutocomplete");
+        $scope.autocomplete.addListener('place_changed', gotAddressResults);
 
-        $http({
-                method: 'GET',
-                url: '/api/map/coverage'
-            }).then(function successCallback(response) {
-                if (response.data["success"]) {
-                    $scope.coveragePolygon = new google.maps.Polygon({
-                        paths: response.data.coverage,
-                        strokeColor: '#2a5191',
-                        strokeOpacity: 1,
-                        strokeWeight: 3,
-                        fillColor: '#2a5191',
-                        fillOpacity: 0.5,
-                        geodesic: true
-                    });
-                    $scope.coveragePolygon.setMap($scope.map);
-                    $scope.autocomplete = new google.maps.places.Autocomplete(
-                        document.getElementById("addressAutocomplete"), {
-                            types: ['geocode'],
-                            componentRestrictions: {country: 'ca'}
-                        }
-                    );
-                    $scope.autocomplete.addListener('place_changed', gotAddressResults);
-                } else {
-                    console.warn("Couldn't get coverage map");
-                }
-            }, function errorCallback(response) {
-                console.error("Something went wrong while getting coverage map");
-            });
-
-            // scroll to defined hash, if any
-            setTimeout(function(){
-                $scope.scrollTo(currentHash);
-            }, 1000);
+        // scroll to defined hash, if any
+        setTimeout(function(){
+            $scope.scrollTo(currentHash);
+        }, 1000);
     };
 
     /**
@@ -52,9 +29,7 @@
      */
     function gotAddressResults(){
         var place = $scope.autocomplete.getPlace();
-        var lat = place.geometry.location.lat();
-        var lng = place.geometry.location.lng();
-        if (google.maps.geometry.poly.containsLocation(new google.maps.LatLng(lat, lng), $scope.coveragePolygon)){
+        if (mapServices.isPlaceInsidePolygon(place, $scope.coveragePolygon)){
             $cookies.putObject("homit-address", place);
             $scope.scrollTo('homitHub');
         } else {
