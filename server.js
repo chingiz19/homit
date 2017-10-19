@@ -45,17 +45,17 @@ webServer.use(function(req, res, next){
 })
 
 /* Redirect all HTTP to HTTPS */
-webServer.all('*', function (req, res, next) {
-	if (req.secure) {
-		return next();
-	};
+// webServer.all('*', function (req, res, next) {
+// 	if (req.secure) {
+// 		return next();
+// 	};
 
-	if (req.query.mobile) {
-		return next();
-	} else {
-		res.redirect('https://' + req.hostname + req.url); // express 4.x
-	}
-});
+// 	if (req.query.mobile) {
+// 		return next();
+// 	} else {
+// 		res.redirect('https://' + req.hostname + req.url); // express 4.x
+// 	}
+// });
 
 /* Custom modules to use for proper routing */
 webServer.use("/api", require(path.join(__dirname, "/api_controllers/generic_controller")));

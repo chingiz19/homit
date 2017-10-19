@@ -260,7 +260,10 @@ body{
     z-index: 1;
 }
 .pvChangeBtnAA{
-    width: 20px; height: 20px;
+    fill: rgba(0,0,0,0.6);
+}
+.pvChangeBtnAA svg{
+    width: 21px; height: 21px;
 }
 .pvChangeBtn{
     width: 100%; height: auto;
@@ -277,37 +280,38 @@ body{
 }
 .pvChange1AAA{
     position: absolute; 
-    left: 155px; top: 4;
+    left: 180px; top: 5;
 }
 .pvChange1AAB{
     position: absolute; 
-    right: 30px; top: 4;
+    right: 20px; top: 9;
 }
 .pvChange1AABA{
     display: flex; 
     justify-content: center; align-items: baseline; 
-    width: 80px;
+    width: 60px;
 }
 .pvChange1AAC{
     position: absolute; 
-    right: 15px; top: 4;
+    right: 5px; top: 5;
 }
 .pvChange1ABA{
     position: absolute; 
-    left: 155px; top: 22px;
+    left: 185px; top: 23px;
 }
 .pvChange1ABB{
     position: absolute; 
-    right: 30px;
+    top: 25px;
+    right: 22px;
 }
 .pvChange1ABBA{
     display: flex; 
     justify-content: center; align-items: baseline; 
-    width: 80px;
+    width: 55px;
 }
 .pvChange1ABC{
     position: absolute; 
-    right: 15px; top: 22px;
+    right: 5px; top: 23px;
 }
 
 .itmPic{
@@ -325,28 +329,29 @@ body{
 }
 
 .highltdVol{
-    color: black;
-    font-size: 13px; font-weight: bold;
+    color: rgba(255,255,255,1);
+    font-size: 11px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .nHighltdVol{
-    color: rgba(120,120,120,0.4);
-    font-size: 9px; font-weight: bold;
+    color: rgba(255,255,255,0.6);
+    font-weight: 700;
+    font-size: 7px; font-weight: bold;
     letter-spacing: 0.025em;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .highltdPack{
-    color: orangered;
-    font-size: 16px; font-weight: bold;
+    color: rgba(255,255,255,1);
+    font-size: 13px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .nHighltdPack{
-    color: rgba(120,120,120,0.4);
-    font-size: 11px; font-weight: bold;
+    color: rgba(255,255,255,0.6);
+    font-size: 7px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
@@ -581,6 +586,7 @@ body{
     }
     .itemBoxL2{
         padding: 37px 20px 0 20px;
+        margin-bottom: 0;
     }
     /*item Price and Brand*/
     .brand{

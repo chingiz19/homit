@@ -1,5 +1,5 @@
 app.controller("checkoutController",
-    function ($scope, $http, $location, $rootScope, $cookies, $timeout, $mdSidenav, $log, advancedStorage, cartService) {
+    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, advancedStorage, cartService, storage) {
 
         $scope.localCartName = "bizim_userCart";
         $scope.userCart = advancedStorage.getUserCart() || {};
@@ -14,16 +14,37 @@ app.controller("checkoutController",
 
         $scope.toggleRight = buildDelayedToggler('right');
 
+        // init didn't work that's why $cookies.getObject is outside
+        if($cookies.get("user")){
+            $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
+                if($scope.userInfo){
+                    $scope.isUserSigned = true;
+                }
+                else{
+                    $scope.userInfo = {};
+                    $scope.isUserSigned = false;
+                }
+        }
+        if($cookies.getObject("homit-address")){
+            $scope.deliveryAddress = $cookies.getObject("homit-address").name;
+            var inputAddressGuestUser = document.getElementById('addressGuestUser');
+            if (inputAddressGuestUser.value.length == 0){
+                $scope.userInfo.address=$scope.deliveryAddress;
+            }
+            var inputAddressUser = document.getElementById('newAddressUser');
+            if (!inputAddressUser){
+                $scope.userInfo.address1=$scope.deliveryAddress;
+            }
+        }
+
         $scope.init = function () {
             try {
                 $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
                 $scope.isUserSigned = true;
             } catch (e) {
-                $scope.userInfo = {
-                };
+                $scope.userInfo = {};
                 $scope.isUserSigned = false;
             }
-
             $scope.selectedAddress = 1;
         }
 
@@ -124,7 +145,16 @@ app.controller("checkoutController",
             $scope.GST = (($scope.totalAmount + $scope.delFee) * 0.05).toFixed(2);
             $scope.receipt = (($scope.totalAmount + $scope.delFee) * 1.05).toFixed(2);
         }
-        $scope.init();
+        $scope.init =function(){
+            console.log("buradaa");
+            try{
+                $scope.deliveryAddress = $cookies.getObject("homit-address").name;
+                console.log($cookies.getObject("homit-address"));
+                console.log("burada");
+            } catch(e){
+                // ignore, address doesn't exist
+            }
+        }
         $scope.userInfo.cardIsShown = false;
 
         $scope.HomeIt = function () {
