@@ -74,7 +74,7 @@
                             <div class="sizeStage col1EAA">{{loadedStore}}</div>
                             <ul class="col1EAB" layout="column">
                                 <li ng-repeat='category in <%= categories %> track by $index'>
-                                    <a href="/catalog/{{loadedStore | lowercase}}/{{category}}" target="_self" class="category-list" ng-style="((selectedCategory == category)||(selectedCategory == 'all')) && {'background-color': 'rgba(101,228,64,1)'}">
+                                    <a href="/catalog/{{loadedStore | lowercase}}/{{category}}" target="_self" class="category-list" ng-style="((selectedCategory == category)||(selectedCategory == 'all')) && {'background-color': 'rgba(0,189,149,0.7)'}">
                                         <span ng-style="((selectedCategory == category)||(selectedCategory == 'all')) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}">{{ category }}</span>
                                     </a>
                                 </li>

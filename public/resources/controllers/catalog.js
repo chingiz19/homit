@@ -93,7 +93,6 @@ $scope.productUrl;
             }
 
             $scope.checkSubcategories = function(subcategory) {
-                console.log(subcategory);
                 if (subcategory == $scope.userSelectedSubcategories){
                     return;
                 }

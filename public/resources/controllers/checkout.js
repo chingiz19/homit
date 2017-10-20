@@ -146,11 +146,8 @@ app.controller("checkoutController",
             $scope.receipt = (($scope.totalAmount + $scope.delFee) * 1.05).toFixed(2);
         }
         $scope.init =function(){
-            console.log("buradaa");
             try{
                 $scope.deliveryAddress = $cookies.getObject("homit-address").name;
-                console.log($cookies.getObject("homit-address"));
-                console.log("burada");
             } catch(e){
                 // ignore, address doesn't exist
             }
