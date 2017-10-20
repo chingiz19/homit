@@ -9,7 +9,7 @@
     <div ng-controller="mainController">
         <div layout="row" class="mainpage-header">
             <div style="margin-left: 15px;" flex="50">
-                <img ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" width="142px;" height="47px"/>
+                <a href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" width="142px;" height="47px"/></a>
             </div>
             <div flex="50" style="display: flex; justify-content: flex-end;">
                 <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" data-toggle="modal" data-target="#loginModal">

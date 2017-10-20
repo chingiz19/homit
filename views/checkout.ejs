@@ -207,23 +207,23 @@
                 <div layout="row" layout-align="center" ng-show="!isUserSigned">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label class="inptLbl">Delivery Address</label>
-                        <input id="addressAutocomplete" name="address" type="text" ng-model="userInfo.address" required/>
+                        <input id="addressGuestUser" name="address" type="text" ng-model="userInfo.address" ng-required="userInfo.address"/>
                     </md-input-container>
                 </div>
                 <!--Address-->
                 <div layout="row" layout-align="center" ng-show="isUserSigned">
                     <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true" class="md-block adTb" flex="80" >
-                        <md-tab label="Address 1" md-on-select="selectedAddress = 1">
+                    <md-tab label="New" md-on-select="selectedAddress = 1">
                             <md-tab-body>
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
-                                        <label ng-show="!userInfo.address1" class="inptLbl">Address</label>
-                                        <input name="address" type="text" ng-model="userInfo.address1" ng-required="selectedAddress == 1"/>
+                                        <label class="inptLbl">Address</label>
+                                        <input id="newAddressUser" name="address" type="text" ng-model="userInfo.address1" ng-required="selectedAddress == 1"/>
                                     </md-input-container>
                                 </div>
                             </md-tab-body>
                         </md-tab>
-                        <md-tab label="Address 2" md-on-select="selectedAddress = 2">
+                        <md-tab label="Address 1" md-on-select="selectedAddress = 2">
                             <md-tab-body>
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
@@ -233,7 +233,7 @@
                                 </div>
                             </md-tab-body>
                         </md-tab>
-                        <md-tab label="Address 3" md-on-select="selectedAddress = 3">
+                        <md-tab label="Address 2" md-on-select="selectedAddress = 3">
                             <md-tab-body>
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
@@ -243,11 +243,11 @@
                                 </div>
                             </md-tab-body>
                         </md-tab>
-                        <md-tab label="New" md-on-select="selectedAddress = 4">
+                        <md-tab label="Address 3" md-on-select="selectedAddress = 4">
                             <md-tab-body>
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
-                                        <label class="inptLbl">Address</label>
+                                        <label ng-show="!userInfo.address4" class="inptLbl">Address</label>
                                         <input name="address" type="text" ng-model="userInfo.address4" ng-required="selectedAddress == 4"/>
                                     </md-input-container>
                                 </div>

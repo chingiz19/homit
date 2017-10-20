@@ -93,7 +93,6 @@ $scope.productUrl;
             }
 
             $scope.checkSubcategories = function(subcategory) {
-                console.log(subcategory);
                 if (subcategory == $scope.userSelectedSubcategories){
                     return;
                 }
@@ -272,12 +271,6 @@ $scope.productUrl;
                 else
                     $scope.showCategories=true;
             }
-
-            $scope.clearBrandSearch=function(){
-                $scope.searchedBrand = "";
-                console.log($scope.searchedBrand);
-            }
-
             $scope.emptySubcategories = function() {
                 $scope.userSelectedSubcategories = null;
             }
