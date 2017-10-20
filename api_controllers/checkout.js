@@ -94,12 +94,11 @@ router.post('/placeorder', function (req, res, next) {
 var createOrder = function (id, address, isGuest, products) {
     return Orders.createOrder(id, address, isGuest).then(function (order_id) {
         if (order_id != false) {
-            return Orders.insertProducts(order_id, products).then(function (result) {
-                var response = {
-                    success: true
-                };
-                return response;
-            });
+            var success = Orders.insertProducts(order_id, products);            
+            var response = {
+                success: success
+            };
+            return response;
         } else {
             var response = {
                 success: false,

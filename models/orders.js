@@ -36,13 +36,13 @@ pub.insertProducts = function (order_id, products) {
             quantity: products[i].quantity,
             order_id: order_id
         };
-        return db.insertQuery(db.dbTables.orders_cart_info, data).then(function(success) {
+        db.insertQuery(db.dbTables.orders_cart_info, data).then(function (success) {
             if (!success) {
                 return false;
             }
         });
     }
-    return true;    
+    return true;
 };
 
 module.exports = pub;
