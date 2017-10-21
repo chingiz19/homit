@@ -13,19 +13,23 @@ app.filter('totalPrice', function () {
 app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "$rootScope",
     function ($location, $scope, $cookies, $http, $rootScope) {
 
-        console.log("heeeellllooo");
+        var whichOrder ='';
         $scope.orders = [];
 
-        $http({
-            method: 'GET',
-            url: "/api/orders/vieworders"
-        }).then(function successCallback(response) {
-            $scope.orders = response.data;
-            console.log("yaxsi");
-            console.log(response.data);
-        }, function errorCallback(response) {
-            console.error("error");
-        });
+        $scope.searchOrder = function(){
+            console.log($scope.whichOrder);
+            $http({
+                method: 'POST',
+                url: "/api/orders/vieworders",
+                data: {
+                    phoneNumber: whichOrder
+                }
+            }).then(function successCallback(response) {
+                $scope.orders = response.data;
+            }, function errorCallback(response) {
+                console.error("error");
+            });
+        }
 
         $scope.logoutBtn = function () {
             console.log("signout");
