@@ -97,7 +97,7 @@ var getCartProduct = function (user_id, depot_id) {
     var data2 = {
         depot_id: depot_id
     };
-    return db.selectQuery2(db.dbTables.user_cart_info, [data1, data2]).then(function (dbResult) {
+    return db.selectAllWhere(db.dbTables.user_cart_info, [data1, data2]).then(function (dbResult) {
         if (dbResult.length > 0) {
             return dbResult[0];
         } else {
