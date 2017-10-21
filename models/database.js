@@ -14,7 +14,8 @@ const dbTables = {
     users_customers_guest : "users_customers_guest",
     user_cart_info: "user_cart_info",
     orders_info: "orders_info",
-    orders_cart_info: "orders_cart_info"
+    orders_cart_info: "orders_cart_info",
+    esl_users: "esl_users"
 } 
 
 

@@ -36,9 +36,8 @@ router.get("/checkout", function(req, res, next){
 	res.render("checkout.ejs", req.options.ejs);
 });
 
-router.get("/admin", function(req, res, next){
-	req.options.ejs["title"] = "Admin";
-	res.render("admin.ejs", req.options.ejs);
+router.get("/sifarish01", function(req, res, next){
+	res.render("esl_login.ejs");
 });
 
 router.use("/catalog/", require("./catalogView.js"));

@@ -32,17 +32,12 @@ pub.clear = function (res) {
     vault.flush();
 };
 
+
+
 pub.validate = function (options) {
     return function (req, res, next) {
-        if (req.session) {
-            var user = vault.read(req);
-            if (user && user.startsWith("{")) {
-                user = JSON.parse(user);
-                if (user.user_email == req.cookies.user.user_email) {
-                    next();
-                    return;
-                }
-            }
+        if (checkAuth(req)) {
+            next();
         }
         if (options && options.redirect) {
             res.redirect("/");
@@ -68,6 +63,34 @@ pub.comparePassword = function (plainPassword, hashPassword) {
     return bcrypt.compare(plainPassword, hashPassword).then(function (match) {
         return match;
     });
+}
+
+pub.validateAdmin = function (options) {
+    return function (req, res, next) {
+        if (checkAuth(req)) {
+            next();
+            return;
+        }
+        if (options && options.redirect) {
+            res.redirect("/");
+        } else {
+            // TODO: Not found should be generic
+            res.status(404).send("Not Found");
+        }
+    }
+};
+
+function checkAuth(req) {
+    if (req.session) {
+        var user = vault.read(req);
+        if (user && user.startsWith("{")) {
+            user = JSON.parse(user);
+            if (user.user_email == req.cookies.user.user_email && user.role == "esl") {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 module.exports = pub;

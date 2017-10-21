@@ -122,7 +122,7 @@ router.post('/signin', function (req, res, next) {
 /**
  * Sign out the user
  */
-router.post('/signout', function (req, res, next) {
+router.all('/signout', function (req, res, next) {
     if (!req.session) {
         res.status(200).json({
             status: "success",
@@ -153,6 +153,22 @@ router.post('/forgotpassword', function (req, res, next) {
  */
 router.post('/changepassword', function (req, res, next) {
     console.log("Not implemented");
+});
+
+router.get("/esllogin", function(req, res, next){
+    User.authenticateEslUser(req.query.username, req.query.password).then(function (user) {
+        var errResponse = {
+            error: {
+                code: "A003"
+            }
+        };
+        if (!user) {
+            res.json(errResponse);
+        } else {
+            Auth.sign(req, res, user);
+            res.redirect("/vieworders");
+        }
+    });
 });
 
 module.exports = router;

@@ -44,7 +44,7 @@ pub.addUser = function (userData) {
  * Authenticates a user based on the email and password
  */
 pub.authenticateUser = function (email, password) {
-    var data = { user_email: email };    
+    var data = { user_email: email };
     return db.selectAllWhere(db.dbTables.users_customers, data).then(function (user) {
         if (user.length > 0) {
             return Auth.comparePassword(password, user[0].password).then(function (match) {
@@ -94,6 +94,25 @@ pub.updateGuestUser = function (userData, key) {
         } else {
             return true;
         }
+    });
+};
+
+/**
+ * Authenticate esl user
+ */
+pub.authenticateEslUser = function (email, password) {
+    var data = { user_email: email };    
+    return db.selectAllWhere(db.dbTables.esl_users, data).then(function (user) {
+        if (user.length > 0) {
+            return Auth.comparePassword(password, user[0].password).then(function (match) {
+                if (match) {
+                    return sanitizeUserObject(user[0]);
+                } else {
+                    return false;
+                }
+            });
+        }
+        return false;
     });
 };
 

@@ -8,10 +8,10 @@ CREATE TABLE esl_users (
 	first_name VARCHAR(225) NOT NULL, 
 	last_name VARCHAR(225) NOT NULL, 
 	password VARCHAR(225) NOT NULL, 
+	role VARCHAR(225) NOT NULL,
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
 ) ENGINE = InnoDB;
 
-INSERT INTO esl_users(id, user_email, first_name, last_name, password) 
-	VALUES (NULL, 'findiq@qoz.com', 'Findiq', 'Qoz', '$2a$10$l0s0OoG8WEginiBF4hryxOI51mX2pSjotdYxuiaPLbJSkxbjU6rBm');
+INSERT INTO `delivery_db`.`esl_users` (user_email,first_name,last_name,password, role) VALUES ('sifarish@homit.ca', 'Order', 'Manager', '$2a$10$W7etBBDQJgjHZW4nEjkvyOVuPOWQiKsXDr1LEilcd996U3QxG.3Q2', 'esl');
