@@ -31,8 +31,8 @@ pub.getAllProductsByCategory = function (superCategory, categoryName) {
         
         ORDER BY listing_id, product_id, depot_id`;
 
-    var data = [{ "category.name": categoryName }, { "super_category.name": superCategory }];
-    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+    // var data = [{ "category.name": categoryName }, { "super_category.name": superCategory }];
+    return db.runQuery(sqlQuery).then(function (dbResult) {
         if (dbResult != false) {
             return getFormattedProducts(dbResult);
         } else{

@@ -19,13 +19,6 @@ pub.findUser = function (email) {
         if (dbResult.length > 0) {
             return sanitizeUserObject(dbResult[0]);
         } else {
-            // TODO: Admin
-            // return db.selectAllWhere('esl_users', data).then(function (results) {
-            //     if (results.length > 0)
-            //         return results[0];
-            //     else
-            //         return false;
-            // });
             return false;
         }
     });
@@ -113,6 +106,34 @@ pub.authenticateEslUser = function (email, password) {
             });
         }
         return false;
+    });
+};
+
+/**
+ * Finds user by phone number
+ */
+pub.findUserByPhone = function (phone_number) {
+    var data = { phone_number: phone_number };
+    return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return sanitizeUserObject(dbResult[0]);
+        } else {
+            return false;
+        }
+    });
+};
+
+/**
+ * Finds guest user by phone number
+ */
+pub.findGuestUserByPhone = function (phone_number) {
+    var data = { phone_number: phone_number };
+    return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return sanitizeUserObject(dbResult[0]);
+        } else {
+            return false;
+        }
     });
 };
 
