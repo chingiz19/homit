@@ -75,7 +75,6 @@ app.controller("checkoutController",
                 console.log("error");
                 console.log(response);
             });
-
         $scope.plusItem = function (product) {
             var tmpQuantity = 1;
             if ($scope.userCart.hasOwnProperty(product.depot_id) && $scope.userCart[product.depot_id]["quantity"] < 10) {

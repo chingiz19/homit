@@ -41,7 +41,7 @@
 
 .mainPage-header {
     position: fixed; 
-    top: 15; 
+    top: 10; 
     width: 100%; 
     display: flex; 
     align-items: center;

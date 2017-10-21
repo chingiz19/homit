@@ -9,11 +9,11 @@
     <div ng-controller="mainController">
         <div layout="row" class="mainpage-header">
             <div style="margin-left: 15px;" flex="50">
-                <a href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" width="142px;" height="47px"/></a>
+                <a href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" style="filter: drop-shadow(0px 0px 7px rgba(0,0,0,0.5));" width="130px;" height="43px"/></a>
             </div>
             <div flex="50" style="display: flex; justify-content: flex-end;">
                 <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" data-toggle="modal" data-target="#loginModal">
-                    <ng-md-icon  icon="person_outline" style="fill: white;" size="48"></ng-md-icon>
+                    <ng-md-icon  icon="person_outline" style="fill: white; filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.5));" size="48"></ng-md-icon>
                 </md-button>
                 <md-button ng-if="<%=isSignedIn%>" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
                     <ng-md-icon icon="person" style="fill: rgba(255,255,255,0.9);" size="50"></ng-md-icon>
@@ -49,7 +49,7 @@
 
         <div id="coverage" class="full-screen flex-box coverage-map">
             <h2>Coverage Map</h2>
-            <div id="map" style="height: 70%; width: 80%"></div>
+            <div id="map" style="position: absolute; left: 15%; height: 70%; width: 70%"></div>
             <h3>{{addressMessage}}</h3>
         </div>
 
