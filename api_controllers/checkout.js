@@ -14,13 +14,13 @@ router.post('/placeorder', function (req, res, next) {
     var address = req.body.user.address;
     var products = req.body.products;
 
-    if (req.session.user) {
-        if (!id || !products || !address) {
+    if (req.cookies.user) {
+        if (!userId || !products || !address) {
             res.status(403).json({
                 error: {
                     "code": "U000",
                     "dev_message": "Missing params",
-                    "required_params": ["id", "address", "products"]
+                    "required_params": ["userId", "address", "products"]
                 }
             });
         } else {
