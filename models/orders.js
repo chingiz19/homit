@@ -85,5 +85,33 @@ function getOrdersWithQuery(sqlQuery, data) {
     });
 }
 
+pub.getOrderById = function (orderId) {
+    var sqlQuery = `
+        SELECT
+        orders_cart_info.depot_id AS depot_id, super_categories.name AS super_category,
+        categories.name AS category, subcategories.name AS subcategory, types.name AS type,
+        listings.product_brand AS brand, listings.product_name AS name,
+        listings.product_description AS description, listings.product_country AS country,
+        containers.name, packagings.name AS packaging, volumes.volume_name AS volume,
+        depot.price AS price, products.product_image AS image, orders_cart_info.quantity AS quantity
+        
+        FROM orders_cart_info AS orders_cart_info, catalog_depot AS depot, catalog_products AS products,
+        catalog_listings AS listings, catalog_types AS types, catalog_subcategories AS subcategories,
+        catalog_categories AS categories, catalog_super_categories AS super_categories,
+        catalog_packagings AS packagings, catalog_packaging_volumes AS volumes,
+        catalog_containers AS containers
+        
+        WHERE depot.id = orders_cart_info.depot_id AND depot.product_id = products.id
+        AND products.listing_id = listings.id AND listings.type_id = types.id AND
+        types.subcategory_id = subcategories.id AND subcategories.category_id = categories.id
+        AND categories.super_category_id = super_categories.id AND depot.packaging_id = packagings.id
+        AND depot.packaging_volume_id = volumes.id AND products.container_id = containers.id
+        AND ?`
+
+    var data = { "orders_cart_info.order_id": orderId };
+    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+        return dbResult;
+    });
+};
 
 module.exports = pub;

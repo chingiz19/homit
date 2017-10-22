@@ -56,4 +56,25 @@ router.post('/vieworders', Auth.validateAdmin(), function (req, res, next) {
     }
 });
 
+router.post('/getorder', Auth.validateAdmin(), function (req, res, next) {
+    var orderId = req.body.order_id;
+
+    if (!orderId) {
+        res.status(403).json({
+            error: {
+                "code": "U000",
+                "dev_message": "Missing params",
+                "required_params": ["order_id"]
+            }
+        });
+    } else {
+        Orders.getOrderById(orderId).then(function (data) {
+            res.json({
+                success: true,
+                orders: data
+            });
+        });
+    }
+});
+
 module.exports = router;
