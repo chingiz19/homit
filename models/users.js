@@ -94,7 +94,7 @@ pub.updateGuestUser = function (userData, key) {
  * Authenticate esl user
  */
 pub.authenticateEslUser = function (email, password) {
-    var data = { user_email: email };    
+    var data = { user_email: email };
     return db.selectAllWhere(db.dbTables.esl_users, data).then(function (user) {
         if (user.length > 0) {
             return Auth.comparePassword(password, user[0].password).then(function (match) {
@@ -110,30 +110,30 @@ pub.authenticateEslUser = function (email, password) {
 };
 
 /**
- * Finds user by phone number
+ * Finds users by phone number
  */
-pub.findUserByPhone = function (phone_number) {
+pub.findUsersByPhone = function (phone_number) {
     var data = { phone_number: phone_number };
+    var result = [];
     return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return sanitizeUserObject(dbResult[0]);
-        } else {
-            return false;
+        for (i = 0; i < dbResult.length; i++) {
+            result.push(sanitizeUserObject(dbResult[i]));
         }
+        return result;
     });
 };
 
 /**
- * Finds guest user by phone number
+ * Finds guest users by phone number
  */
-pub.findGuestUserByPhone = function (phone_number) {
+pub.findGuestUsersByPhone = function (phone_number) {
     var data = { phone_number: phone_number };
+    var result = [];
     return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return sanitizeUserObject(dbResult[0]);
-        } else {
-            return false;
+        for (i = 0; i < dbResult.length; i++) {
+            result.push(sanitizeUserObject(dbResult[i]));
         }
+        return result;
     });
 };
 

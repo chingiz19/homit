@@ -81,11 +81,7 @@ pub.getOrdersByGuestId = function (user_id) {
 
 function getOrdersWithQuery(sqlQuery, data) {
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
-        if (dbResult != false) {
-            return dbResult;
-        } else {
-            return false;
-        }
+        return dbResult;
     });
 }
 
