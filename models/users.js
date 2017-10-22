@@ -10,6 +10,11 @@ function sanitizeUserObject(user) {
     return user;
 }
 
+function addIsGuest(user) {
+    user.is_guest = true;
+    return user;
+}
+
 /**
  * Finds user based on the email
  */
@@ -131,7 +136,7 @@ pub.findGuestUsersByPhone = function (phone_number) {
     var result = [];
     return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
         for (i = 0; i < dbResult.length; i++) {
-            result.push(sanitizeUserObject(dbResult[i]));
+            result.push(addIsGuest(sanitizeUserObject(dbResult[i])));
         }
         return result;
     });
