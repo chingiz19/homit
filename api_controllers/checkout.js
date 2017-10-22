@@ -15,17 +15,36 @@ router.post('/placeorder', function (req, res, next) {
     var products = req.body.products;
 
     if (req.cookies.user) {
-        if (!userId || !products || !address) {
+        if (!userId || !products || !phone || !address) {
             res.status(403).json({
                 error: {
                     "code": "U000",
                     "dev_message": "Missing params",
-                    "required_params": ["userId", "address", "products"]
+                    "required_params": ["userId", "phone", "address", "products"]
                 }
             });
         } else {
-            createOrder(userId, address, false, products).then(function (response) {
-                res.send(response);
+            var data = {
+                phone_number: phone
+            };
+            var key = {
+                id: userId
+            };
+            User.updateUser(data, key).then(function (updatedUser) {
+                if (updatedUser != false) {
+                    createOrder(userId, address, false, products).then(function (response) {
+                        res.send(response);
+                    });
+                } else {
+                    var response = {
+                        success: false,
+                        error: {
+                            dev_message: "Something went wrong while updating the user",
+                            ui_message: "Error happened while checkout. Please try again"
+                        }
+                    };
+                    res.send(response);
+                }
             });
         }
     } else {
@@ -68,7 +87,9 @@ router.post('/placeorder', function (req, res, next) {
                         last_name: lname,
                         phone_number: phone
                     };
-                    var key = guestUserFound.id;
+                    var key = {
+                        id: guestUserFound.id
+                    };
                     User.updateGuestUser(data, key).then(function (guestUser) {
                         if (guestUser != false) {
                             createOrder(key, address, true, products).then(function (response) {
@@ -94,7 +115,7 @@ router.post('/placeorder', function (req, res, next) {
 var createOrder = function (id, address, isGuest, products) {
     return Orders.createOrder(id, address, isGuest).then(function (order_id) {
         if (order_id != false) {
-            var success = Orders.insertProducts(order_id, products);            
+            var success = Orders.insertProducts(order_id, products);
             var response = {
                 success: success
             };

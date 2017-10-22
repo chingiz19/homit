@@ -96,6 +96,20 @@ pub.updateGuestUser = function (userData, key) {
 };
 
 /**
+ * Updates user data
+ */
+pub.updateUser = function (userData, key) {
+    var data = [userData, key];
+    return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
+        if (!dbResult) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+};
+
+/**
  * Authenticate esl user
  */
 pub.authenticateEslUser = function (email, password) {
