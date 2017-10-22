@@ -5,29 +5,43 @@
     </head>
 
     <body class="ng-cloak">
-        <div class="container-fluid" style="padding: 0;">
             <div ng-controller="adminController">
-                <div style="width: 100%; height: 50px; display: flex; justify-content: center; align-items: center; background-color: rgba(42,81,145,0.7);">
-                    <span style="font-size: 25px; color: rgba(255,255,255,1); font-weight: 650;">Admin Page</span>
-                    <md-button aria-label="logOut" ng-click="logoutBtn()" style="position: absolute; right: 0px; margin: 0; padding: 0;">
-                        <ng-md-icon icon="logout" size="30" style="fill: rgba(255,255,255,1);"></ng-md-icon>
-                    </md-button>
+                <div class="container-fluid" style="padding: 0;">
+                    <div style="width: 100%; height: 50px; display: flex; justify-content: center; align-items: center; background-color: rgba(42,81,145,0.7);">
+                        <span style="font-size: 25px; color: rgba(255,255,255,1); font-weight: 650;">Admin Page</span>
+                        <md-button aria-label="logOut" ng-click="logoutBtn()" style="position: absolute; right: 0px; margin: 0; padding: 0;">
+                            <ng-md-icon icon="logout" size="30" style="fill: rgba(255,255,255,1);"></ng-md-icon>
+                        </md-button>
+                    </div>
+                    <md-container  style="display: flex; justify-content: center; position: relative; top: 30px;">
+                        <md-button aria-label="searchOrder" ng-click="searchOrder()" style="height: 30px; margin: 0; padding: 0; border-bottom: 1px solid gray; border-radius: 0;" >
+                            <ng-md-icon icon="search" class="header-search-icon" size="20"></ng-md-icon>
+                        </md-button>
+                        <md-input-container style="width: 40%; margin: 0; margin-top: 4px;">
+                            <label class="mnSrchAA">
+                            </label>
+                            <input ng-model="userPhoneNumber" style="font-size: 18px; padding-bottom: 7px; border-bottom: 1px solid gray;" placeholder="4033977020">
+                        </md-input-container>
+                        <md-button aria-label="searchOrClear" ng-click="userPhoneNumber = undefined; foundUsers = undefined;" style="height: 30px; margin: 0; padding: 0; border-bottom: 1px solid gray; border-radius: 0;">
+                            <ng-md-icon icon="clear" class="header-search-icon" size="20"></ng-md-icon>
+                        </md-button>
+                    </md-container>
                 </div>
-                <md-container  style="display: flex; justify-content: center; position: relative; top: 30px;">
-                    <md-button aria-label="searchOrder" ng-click="searchOrder()" style="height: 30px; margin: 0; padding: 0; border-bottom: 1px solid gray; border-radius: 0;" >
-                        <ng-md-icon icon="search" class="header-search-icon" size="20"></ng-md-icon>
-                    </md-button>
-                    <md-input-container style="width: 40%; margin: 0; margin-top: 4px;">
-                        <label class="mnSrchAA">
-                        </label>
-                        <input ng-model="whichOrder" style="font-size: 18px; padding-bottom: 7px; border-bottom: 1px solid gray;" placeholder="4033977020">
-                    </md-input-container>
-                    <md-button aria-label="searchOrClear" ng-click="whichOrder = undefined;" style="height: 30px; margin: 0; padding: 0; border-bottom: 1px solid gray; border-radius: 0;">
-                        <ng-md-icon icon="clear" class="header-search-icon" size="20"></ng-md-icon>
-                    </md-button>
-                </md-container>
+                <div class="container">
+                    <md-radio-group ng-model="whichUser" style="position: relative; top: 50px;">
+                        <md-radio-button style="margin: 0; margin-bottom: 10px;" aria-label="selectUser" ng-repeat="user in foundUsers" ng-value="user.id" ng-click="selectedUserID(user.id)">
+                            <ul layout="row" style="margin: 0;">
+                                <li style="font-size: 15px;">First Name: </li>
+                                <li style="font-size: 15px; font-weight: bold;">&nbsp{{user.first_name}};&nbsp&nbsp</li>
+                                <li style="font-size: 15px;">Last Name: </li>
+                                <li style="font-size: 15px; font-weight: bold;">&nbsp{{user.last_name}};&nbsp&nbsp</li>
+                                <li style="font-size: 15px;">Email: </li>
+                                <li style="font-size: 15px; font-weight: bold;">&nbsp{{user.user_email}};&nbsp&nbsp</li>
+                            </ul>
+                        </md-radio-button>
+                    </md-radio-group>
+                </div>
             </div>
-        </div>
         <script src="/resources/controllers/orders.js"></script>
     </body>
 </html>

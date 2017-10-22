@@ -2,6 +2,7 @@ var router = require("express").Router();
 
 router.post('/findusers', Auth.validateAdmin(), function (req, res, next) {
     var phone_number = req.body.phone_number;
+    console.log(phone_number);
     if (!phone_number) {
         res.status(403).json({
             error: {

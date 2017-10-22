@@ -166,6 +166,7 @@ app.controller("checkoutController",
             if ($scope.isUserSigned) {
                 userInfoToSend.id = $scope.userInfo.id;
                 userInfoToSend.email = $scope.userInfo.user_email;
+                userInfoToSend.phone = $scope.userInfo.phone_number;
                 userInfoToSend.address = $scope.userInfo["address" + $scope.selectedAddress];
             }
             else {

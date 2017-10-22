@@ -1,0 +1,25 @@
+ul {
+    list-style-type: none;
+}
+li {
+    list-style-type: none;
+}
+
+
+/*Changes default border color*/
+md-radio-button .md-off{
+    border-color: rgba(0,0,0,0.4);
+}
+/*Change default radio-button colors*/
+md-radio-button:focus {
+    outline: none;
+}
+md-radio-button .md-on {
+    background-color: rgba(63,222,17,0.77);
+}
+md-radio-button.md-checked .md-off {
+    border-color: rgba(63,222,17,0.77);
+}
+md-radio-button .md-label{
+    padding-left: 20px;
+}
