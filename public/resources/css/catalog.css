@@ -633,7 +633,7 @@ body{
 md-radio-button .md-off{
     border-color: rgba(0,0,0,0.4);
 }
-/*Chenages font color/size of selected Categories*/
+/*Chenages font color/size  and background-color of selected Categories*/
 md-radio-group .SubcategoryName.ng-scope.md-checked{
     font-weight: 600;
     font-size: 21px;

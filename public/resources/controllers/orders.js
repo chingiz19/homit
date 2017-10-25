@@ -16,8 +16,9 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
         $scope.userPhoneNumber;
         $scope.foundUsers = [];
         $scope.foundOrders = [];
+        $scope.foundOrderContent = [];
 
-        $scope.searchOrder = function(){
+        $scope.searchUserHistory = function(){
             $http({
                 method: 'POST',
                 url: "/api/orders/findusers",
@@ -26,21 +27,41 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 }
             }).then(function successCallback(response) {
                 $scope.foundUsers = response.data.users;
-                console.log(response.data);
             }, function errorCallback(response) {
                 console.error("error");
             });
         }
-        $scope.selectedUserID = function (userID){
+        $scope.selectedUserID = function (user){
+            $scope.foundOrderContent = [];
+            var guestId;
+            var userId;
+            if (user.is_guest) {
+                guestId = user.id;
+            } else {
+                userId = user.id;
+            }
             $http({
                 method: 'POST',
                 url: "/api/orders/vieworders",
                 data: {
-                    userId: userID,
-                    guestId: guestID
+                    user_id: userId,
+                    guest_id: guestId
                 }
             }).then(function successCallback(response) {
-                $scope.foundOrders = response.data;
+                $scope.foundOrders = response.data.orders;
+            }, function errorCallback(response) {
+                console.error("error");
+            });
+        }
+        $scope.selectedOrderId = function (order){
+            $http({
+                method: 'POST',
+                url: "/api/orders/getorder",
+                data: {
+                    order_id: order.order_id
+                }
+            }).then(function successCallback(response) {
+                $scope.foundOrderContent = response.data.orders;
             }, function errorCallback(response) {
                 console.error("error");
             });

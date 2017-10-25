@@ -1,10 +1,6 @@
-ul {
-    list-style-type: none;
-}
-li {
-    list-style-type: none;
-}
-
+ul {list-style-type: none;}
+li {list-style-type: none;}
+html{background-color: white;}
 
 /*Changes default border color*/
 md-radio-button .md-off{
@@ -22,4 +18,165 @@ md-radio-button.md-checked .md-off {
 }
 md-radio-button .md-label{
     padding-left: 20px;
+}
+md-radio-group .gtDataAA.ng-scope.md-checked .gtDataAAAA{
+    font-size: 16px !important;
+    color: rgba(0,0,0,0.85);
+}
+md-radio-group .gtDataAA.ng-scope.md-checked .gtDataAAAB{
+    font-size: 16px !important;
+    font-weight: 650;
+    color: rgba(0,0,0,0.85);
+}
+
+md-radio-group .gtDataBA.ng-scope.md-checked .gtDataBAAA{
+    font-size: 16px !important;
+    color: rgba(0,0,0,0.85);
+}
+md-radio-group .gtDataBA.ng-scope.md-checked .gtDataBAAB{
+    font-size: 16px !important;
+    font-weight: 650;
+    color: rgba(0,0,0,0.85);
+}
+/* Page header and search bar */
+.adminPtop{
+    padding: 0;
+}
+.adminPtopA{
+    width: 100%; height: 50px; 
+    display: flex; justify-content: center; align-items: center; 
+    background-color: rgba(42,81,145,0.7);
+}
+.adminPtopAA{
+    font-size: 25px; color: rgba(255,255,255,1); font-weight: 650;
+}
+.adminPtopAB{
+    position: absolute; right: 0px; 
+    margin: 0; padding: 0;
+}
+.adminPtopABA{
+    fill: rgba(255,255,255,1);
+}
+.adminPtopABA svg {
+    height: 30px; width: 30px;
+}
+.adminPtopB{
+    display: flex; justify-content: center; 
+    position: relative; 
+    top: 30px;
+}
+.adminPtopBA{
+    height: 25px !important; 
+    margin: 0; padding: 0; 
+    border-bottom: 1px solid gray; border-radius: 0;
+}
+.adminPtopBAA{
+    fill: rgba(0,0,0,0.65);
+}
+.adminPtopBAA svg{
+    height: 20px; width: 20px;
+}
+.adminPtopBB{
+    width: 40%; 
+    margin: 0; margin-top: 4px;
+}
+.adminPtopBBB{
+    font-size: 18px; 
+    padding-bottom: 7px !important; 
+    border-bottom: 1px solid gray !important;
+}
+.adminPtopBC{
+    height: 30px; 
+    margin: 0; padding: 0; 
+    border-bottom: 1px solid gray; border-radius: 0;
+}
+.adminPtopBCA{
+    fill: rgba(0,0,0,0.65);
+}
+.adminPtopBCA svg{
+    height: 20px; width: 20px;
+}
+.gtDataA{
+    position: relative; top: 50px;
+}
+.gtDataAA{
+    margin: 0; margin-bottom: 5px;
+}
+.gtDataAAA{
+    margin: 0;
+}
+.gtDataAAAA{
+    font-size: 15px;
+    color: rgba(0,0,0, 0.4);
+}
+.gtDataAAAB{
+    font-size: 15px; font-weight: bold;
+    color: rgba(0,0,0, 0.4);
+}
+.gtDataAB{
+    border-bottom: 1px solid rgba(150,150,150,0.7); 
+    margin-bottom: 10px; margin-top: 10px;
+}
+.gtDataB{
+    position: relative; top: 50px;
+}
+.gtDataBA{
+    margin: 0; margin-bottom: 5px;
+}
+.gtDataBAA{
+    margin: 0;
+}
+.gtDataBAAA{
+    font-size: 15px;
+    color: rgba(0,0,0, 0.4);
+}
+.gtDataBAAB{
+    font-size: 15px; font-weight: bold;
+    color: rgba(0,0,0, 0.4);
+}
+.gtDataBB{
+    margin-top: 10px;
+    border-bottom: 1px solid rgba(150,150,150,0.7);
+}
+.gtDataC{
+    position: relative; 
+    top: 50px; 
+    margin: 0; margin-top: 10px;
+}
+.gtDataCA{
+    display: flex; justify-content: center;
+    font-size: 30px; font-weight: 650; 
+}
+.gtDataCBA{
+    margin-top: 10px;
+}
+.gtDataCBAA{
+    position: relative; left: 30%;
+    
+}
+.gtDataCBAAA{
+    height: 125px !important;
+    width: 125px !important;
+}
+.gtDataCBAB{
+    position: relative; left: 30%;
+}
+.gtDataCBABA{
+    display: flex; justify-content: center; align-items: center; 
+    margin: 0;
+}
+.gtDataCBABAA{
+    font-size: 15px;
+}
+.gtDataCBABAB{
+    font-size: 15px; font-weight: bold;
+}
+.gtDataCBABB{
+    display: flex; justify-content: center; align-items: center; 
+    margin: 0;
+}
+.gtDataCBB{
+    margin-top: 10px; 
+    width: 100%;
+    border-bottom: 1px dashed rgba(84, 151, 123, 0.7); 
 }
