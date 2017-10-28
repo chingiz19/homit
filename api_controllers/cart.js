@@ -7,7 +7,7 @@ var router = require("express").Router();
  * Gets user's cart
  */
 router.get('/usercart', function (req, res, next) {
-    if (!req.session.user) {
+    if (!req.cookies.user) {
         res.json({
             error: {
                 code: "C001",
@@ -15,7 +15,7 @@ router.get('/usercart', function (req, res, next) {
             }
         });
     } else {
-        var user_id = req.session.user.id;
+        var user_id = req.cookies.user.id;
         Cart.getUserCart(user_id).then(function (cart) {
             var response = {
                 success: true,
@@ -32,7 +32,7 @@ router.get('/usercart', function (req, res, next) {
 router.post('/modifyitem', function (req, res, next) {
     var depot_id = req.body.depot_id;
     var quantity = req.body.quantity;
-    if (!req.session.user) {
+    if (!req.cookies.user) {
         res.json({
             error: {
                 code: "C001",
@@ -40,7 +40,7 @@ router.post('/modifyitem', function (req, res, next) {
             }
         });
     } else {
-        var user_id = req.session.user.id;
+        var user_id = req.cookies.user.id;
         Cart.modifyProductInCart(user_id, depot_id, quantity).then(function (result) {
             var isSuccess = false;
             if (result != false) {
@@ -58,7 +58,7 @@ router.post('/modifyitem', function (req, res, next) {
  * Clears user's cart
  */
 router.post('/clear', function (req, res, next) {
-    if (!req.session.user) {
+    if (!req.cookies.user) {
         res.json({
             error: {
                 code: "C001",
@@ -66,7 +66,8 @@ router.post('/clear', function (req, res, next) {
             }
         });
     } else {
-        var user_id = req.session.user.id;
+        var user_id = req.cookies.user.id;
+        
         Cart.clearCart(user_id).then(function (result) {
             var isSuccess = false;
             if (result != false) {

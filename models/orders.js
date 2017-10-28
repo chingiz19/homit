@@ -5,7 +5,7 @@
 var pub = {};
 
 /**
- * Creates order in orders_info table
+ * Creates order in orders_history table
  */
 pub.createOrder = function (id, address, isGuest) {
     var data;
@@ -21,7 +21,7 @@ pub.createOrder = function (id, address, isGuest) {
         };
     }
 
-    return db.insertQuery(db.dbTables.orders_info, data).then(function (inserted) {
+    return db.insertQuery(db.dbTables.orders_history, data).then(function (inserted) {
         return inserted.insertId;
     });
 };
@@ -32,9 +32,9 @@ pub.createOrder = function (id, address, isGuest) {
 pub.insertProducts = function (order_id, products) {
     for (var i = 0; i < products.length; i++) {
         var data = {
+            order_id: order_id,            
             depot_id: products[i].depot_id,
-            quantity: products[i].quantity,
-            order_id: order_id
+            quantity: products[i].quantity
         };
         db.insertQuery(db.dbTables.orders_cart_info, data).then(function (success) {
             if (!success) {
@@ -51,9 +51,9 @@ pub.insertProducts = function (order_id, products) {
 pub.getOrdersByUserId = function (user_id) {
     var sqlQuery = `
         SELECT
-        orders_info.id AS order_id, orders_info.date_received AS date_received, orders_info.date_delivered AS date_delivered, orders_info.delivery_address AS delivery_address, orders_info.store_address AS store_address, orders_info.order_status AS order_status, orders_info.driver_id AS driver_id, orders_info.order_received_name AS order_received_name, orders_info.order_received_age AS order_received_age
-        FROM orders_info, users_customers as users
-        WHERE orders_info.user_id = users.id AND ?
+        orders_history.id AS order_id, orders_history.date_received AS date_received, orders_history.date_delivered AS date_delivered, orders_history.delivery_address AS delivery_address, orders_history.store_address AS store_address, orders_history.driver_id AS driver_id, orders_history.order_received_name AS order_received_name, orders_history.order_received_age AS order_received_age
+        FROM orders_history, users_customers as users
+        WHERE orders_history.user_id = users.id AND ?
         
         ORDER BY date_received`;
 
@@ -68,9 +68,9 @@ pub.getOrdersByUserId = function (user_id) {
 pub.getOrdersByGuestId = function (user_id) {
     var sqlQuery = `
         SELECT
-        orders_info.id AS order_id, orders_info.date_received AS date_received, orders_info.date_delivered AS date_delivered, orders_info.delivery_address AS delivery_address, orders_info.store_address AS store_address, orders_info.order_status AS order_status, orders_info.driver_id AS driver_id, orders_info.order_received_name AS order_received_name, orders_info.order_received_age AS order_received_age
-        FROM orders_info, users_customers_guest as guests
-        WHERE orders_info.guest_id = guests.id AND ?
+        orders_history.id AS order_id, orders_history.date_received AS date_received, orders_history.date_delivered AS date_delivered, orders_history.delivery_address AS delivery_address, orders_history.store_address AS store_address, orders_history.driver_id AS driver_id, orders_history.order_received_name AS order_received_name, orders_history.order_received_age AS order_received_age
+        FROM orders_history, users_customers_guest as guests
+        WHERE orders_history.guest_id = guests.id AND ?
 
         ORDER BY date_received`;
 

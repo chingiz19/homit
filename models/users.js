@@ -110,11 +110,17 @@ pub.updateUser = function (userData, key) {
 };
 
 /**
- * Authenticate esl user
+ * Authenticate csr user
  */
-pub.authenticateEslUser = function (email, password) {
-    var data = { user_email: email };
-    return db.selectAllWhere(db.dbTables.esl_users, data).then(function (user) {
+pub.authenticateCsrUser = function (email, password) {
+    var sqlQuery = `
+    SELECT *
+    FROM users_employees
+    WHERE role_id = 2 AND ?`
+    var data = {
+        user_email: email,
+    };
+    return db.runQuery(sqlQuery, data).then(function (user) {
         if (user.length > 0) {
             return Auth.comparePassword(password, user[0].password).then(function (match) {
                 if (match) {

@@ -155,8 +155,11 @@ router.post('/changepassword', function (req, res, next) {
     console.log("Not implemented");
 });
 
-router.get("/esllogin", function(req, res, next){
-    User.authenticateEslUser(req.query.username, req.query.password).then(function (user) {
+/**
+ * Login for CSR
+ */
+router.get("/csrlogin", function (req, res, next) {
+    User.authenticateCsrUser(req.query.username, req.query.password).then(function (user) {
         var errResponse = {
             error: {
                 code: "A003"

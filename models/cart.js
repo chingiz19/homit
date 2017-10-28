@@ -91,13 +91,12 @@ pub.clearCart = function (user_id) {
  * Return quantity based on the user id, depot id provided
  */
 var getCartProduct = function (user_id, depot_id) {
-    var data1 = {
-        user_id: user_id
-    };
-    var data2 = {
-        depot_id: depot_id
-    };
-    return db.selectAllWhere(db.dbTables.user_cart_info, [data1, data2]).then(function (dbResult) {
+    var sqlQuery = `
+    SELECT *
+    FROM user_cart_info
+    WHERE user_id = `+ user_id + ` AND depot_id = ` + depot_id
+
+    return db.runQuery(sqlQuery).then(function (dbResult) {
         if (dbResult.length > 0) {
             return dbResult[0];
         } else {

@@ -15,25 +15,25 @@ app.controller("checkoutController",
         $scope.toggleRight = buildDelayedToggler('right');
 
         // init didn't work that's why $cookies.getObject is outside
-        if($cookies.get("user")){
+        if ($cookies.get("user")) {
             $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
-                if($scope.userInfo){
-                    $scope.isUserSigned = true;
-                }
-                else{
-                    $scope.userInfo = {};
-                    $scope.isUserSigned = false;
-                }
+            if ($scope.userInfo) {
+                $scope.isUserSigned = true;
+            }
+            else {
+                $scope.userInfo = {};
+                $scope.isUserSigned = false;
+            }
         }
-        if($cookies.getObject("homit-address")){
+        if ($cookies.getObject("homit-address")) {
             $scope.deliveryAddress = $cookies.getObject("homit-address").name;
             var inputAddressGuestUser = document.getElementById('addressGuestUser');
-            if (inputAddressGuestUser.value.length == 0){
-                $scope.userInfo.address=$scope.deliveryAddress;
+            if (inputAddressGuestUser.value.length == 0) {
+                $scope.userInfo.address = $scope.deliveryAddress;
             }
             var inputAddressUser = document.getElementById('newAddressUser');
-            if (!inputAddressUser){
-                $scope.userInfo.address1=$scope.deliveryAddress;
+            if (!inputAddressUser) {
+                $scope.userInfo.address1 = $scope.deliveryAddress;
             }
         }
 
@@ -144,10 +144,10 @@ app.controller("checkoutController",
             $scope.GST = (($scope.totalAmount + $scope.delFee) * 0.05).toFixed(2);
             $scope.receipt = (($scope.totalAmount + $scope.delFee) * 1.05).toFixed(2);
         }
-        $scope.init =function(){
-            try{
+        $scope.init = function () {
+            try {
                 $scope.deliveryAddress = $cookies.getObject("homit-address").name;
-            } catch(e){
+            } catch (e) {
                 // ignore, address doesn't exist
             }
         }
