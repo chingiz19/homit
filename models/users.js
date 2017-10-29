@@ -100,13 +100,30 @@ pub.updateGuestUser = function (userData, key) {
  */
 pub.updateUser = function (userData, key) {
     var data = [userData, key];
-    return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
-        if (!dbResult) {
-            return false;
-        } else {
-            return true;
+    var historyData = {
+        user_id: key.id
+    };
+
+    return db.selectColumnsWhere(Object.keys(userData), db.dbTables.users_customers, key).then(function (users) {
+        if (users != false) {
+            historyData = Object.assign(historyData, users[0]);
+            return db.insertQuery(db.dbTables.users_customers_history, historyData).then(function (historyInserted) {
+                if (historyInserted != false) {
+                    return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
+                        if (!dbResult) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+                } else {
+                    return false;
+                }
+            });
         }
     });
+
+
 };
 
 /**
@@ -159,6 +176,66 @@ pub.findGuestUsersByPhone = function (phone_number) {
             result.push(addIsGuest(sanitizeUserObject(dbResult[i])));
         }
         return result;
+    });
+};
+
+/**
+ * Find users by phone number including history table
+ */
+pub.findUsersByPhoneWithHistory = function (phone_number) {
+    var data = { phone_number: phone_number };
+
+    var sqlQuery = `SELECT users_customers.id AS id, users_customers.id_prefix AS id_prefix,
+    users_customers.user_email AS user_email, users_customers.first_name AS first_name,
+    users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
+    users_customers.birth_date AS birth_date, users_customers.address1 AS address1,
+    users_customers.address2 AS address2, users_customers.address3 AS address3
+    
+    FROM users_customers
+    WHERE ? OR id IN (
+        SELECT user_id FROM users_customers_history
+        WHERE ?
+    ) `;
+
+    return db.runQuery(sqlQuery, [data, data]).then(function (dbResult) {
+        return dbResult;
+    });
+};
+
+/**
+ * Finds guest users by email
+ */
+pub.findGuestUsersByEmail = function (user_email) {
+    var data = { user_email: user_email };
+    var result = [];
+    return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
+        for (i = 0; i < dbResult.length; i++) {
+            result.push(addIsGuest(sanitizeUserObject(dbResult[i])));
+        }
+        return result;
+    });
+};
+
+/**
+ * Find users by email including history table
+ */
+pub.findUsersByEmailWithHistory = function (user_email) {
+    var data = { user_email: user_email };
+
+    var sqlQuery = `SELECT users_customers.id AS id, users_customers.id_prefix AS id_prefix,
+    users_customers.user_email AS user_email, users_customers.first_name AS first_name,
+    users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
+    users_customers.birth_date AS birth_date, users_customers.address1 AS address1,
+    users_customers.address2 AS address2, users_customers.address3 AS address3
+    
+    FROM users_customers
+    WHERE ? OR id IN (
+        SELECT user_id FROM users_customers_history
+        WHERE ?
+    ) `;
+
+    return db.runQuery(sqlQuery, [data, data]).then(function (dbResult) {
+        return dbResult;
     });
 };
 

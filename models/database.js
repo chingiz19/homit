@@ -58,6 +58,10 @@ var insertQuery = function (table, data) {
   return con.query('INSERT INTO ' + tableName + ' SET ?', data);
 };
 
+var selectColumnsWhere = function(columns, table, data) {
+  return con.query('SELECT ' + columns + ' FROM ' + table + ' WHERE ?', data);
+};
+
 var selectAllWhere = function (table, data) {
   var tableName = table;
   return con.query('SELECT * FROM ' + tableName + ' WHERE ?', data);
@@ -88,6 +92,7 @@ var end = function () {
 
 module.exports.runQuery = runQuery;
 module.exports.insertQuery = insertQuery;
+module.exports.selectColumnsWhere = selectColumnsWhere;
 module.exports.selectAllWhere = selectAllWhere;
 module.exports.updateQuery = updateQuery;
 module.exports.selectAllFromTable = selectAllFromTable;

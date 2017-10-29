@@ -1,6 +1,6 @@
 var router = require("express").Router();
 
-router.post('/findusers', Auth.validateAdmin(), function (req, res, next) {
+router.post('/findusersbyphone', Auth.validateAdmin(), function (req, res, next) {
     var phone_number = req.body.phone_number;
     if (!phone_number) {
         res.status(403).json({
@@ -12,9 +12,34 @@ router.post('/findusers', Auth.validateAdmin(), function (req, res, next) {
         });
     } else {
         var result = [];
-        return User.findUsersByPhone(phone_number).then(function (users) {
+        return User.findUsersByPhoneWithHistory(phone_number).then(function (users) {
             result = result.concat(users);
-            User.findGuestUsersByPhone(phone_number).then(function (guests) {
+            return User.findGuestUsersByPhone(phone_number).then(function (guests) {
+                result = result.concat(guests);
+                res.json({
+                    success: true,
+                    users: result
+                });
+            });
+        });
+    }
+});
+
+router.post('/findusersbyemail', Auth.validateAdmin(), function (req, res, next) {
+    var user_email = req.body.user_email;
+    if (!user_email) {
+        res.status(403).json({
+            error: {
+                "code": "U000",
+                "dev_message": "Missing params",
+                "required_params": ["user_email"]
+            }
+        });
+    } else {
+        var result = [];
+        return User.findUsersByEmailWithHistory(user_email).then(function (users) {
+            result = result.concat(users);
+            return User.findGuestUsersByEmail(user_email).then(function (guests) {
                 result = result.concat(guests);
                 res.json({
                     success: true,
