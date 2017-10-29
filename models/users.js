@@ -193,7 +193,7 @@ pub.findUsersByPhoneWithHistory = function (phone_number) {
     
     FROM users_customers
     WHERE ? OR id IN (
-        SELECT user_id FROM users_customers_history
+        SELECT DISTINCT user_id FROM users_customers_history
         WHERE ?
     ) `;
 
@@ -206,11 +206,10 @@ pub.findUsersByPhoneWithHistory = function (phone_number) {
  * Finds guest users by email
  */
 pub.findGuestUsersByEmail = function (user_email) {
-    var data = { user_email: user_email };
     var result = [];
-    return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
-        for (i = 0; i < dbResult.length; i++) {
-            result.push(addIsGuest(sanitizeUserObject(dbResult[i])));
+    return this.findGuestUser(user_email).then(function (guest) {
+        if (guest != false) {
+            result.push(addIsGuest(guest));
         }
         return result;
     });
@@ -230,7 +229,7 @@ pub.findUsersByEmailWithHistory = function (user_email) {
     
     FROM users_customers
     WHERE ? OR id IN (
-        SELECT user_id FROM users_customers_history
+        SELECT DISTINCT user_id FROM users_customers_history
         WHERE ?
     ) `;
 
