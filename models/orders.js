@@ -51,7 +51,7 @@ pub.insertProducts = function (order_id, products) {
 pub.getOrdersByUserId = function (user_id) {
     var sqlQuery = `
         SELECT
-        orders_history.id AS order_id, orders_history.date_received AS date_received, orders_history.date_delivered AS date_delivered, orders_history.delivery_address AS delivery_address, orders_history.store_address AS store_address, orders_history.driver_id AS driver_id, orders_history.order_received_name AS order_received_name, orders_history.order_received_age AS order_received_age
+        orders_history.id AS order_id, orders_history.date_received AS date_received, orders_history.date_delivered AS date_delivered, orders_history.delivery_address AS delivery_address, orders_history.store_id AS store_id, orders_history.driver_id AS driver_id, orders_history.order_received_name AS order_received_name, orders_history.order_received_age AS order_received_age
         FROM orders_history, users_customers as users
         WHERE orders_history.user_id = users.id AND ?
         
@@ -68,7 +68,7 @@ pub.getOrdersByUserId = function (user_id) {
 pub.getOrdersByGuestId = function (user_id) {
     var sqlQuery = `
         SELECT
-        orders_history.id AS order_id, orders_history.date_received AS date_received, orders_history.date_delivered AS date_delivered, orders_history.delivery_address AS delivery_address, orders_history.store_address AS store_address, orders_history.driver_id AS driver_id, orders_history.order_received_name AS order_received_name, orders_history.order_received_age AS order_received_age
+        orders_history.id AS order_id, orders_history.date_received AS date_received, orders_history.date_delivered AS date_delivered, orders_history.delivery_address AS delivery_address, orders_history.store_id AS store_id, orders_history.driver_id AS driver_id, orders_history.order_received_name AS order_received_name, orders_history.order_received_age AS order_received_age
         FROM orders_history, users_customers_guest as guests
         WHERE orders_history.guest_id = guests.id AND ?
 
