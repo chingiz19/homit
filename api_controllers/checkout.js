@@ -92,7 +92,7 @@ router.post('/placeorder', function (req, res, next) {
                     };
                     User.updateGuestUser(data, key).then(function (guestUser) {
                         if (guestUser != false) {
-                            createOrder(key, address, true, products).then(function (response) {
+                            createOrder(guestUserFound.id, address, true, products).then(function (response) {
                                 res.send(response);
                             });
                         } else {
