@@ -13,15 +13,23 @@
                             <ng-md-icon icon="logout" class="adminPtopABA"></ng-md-icon>
                         </md-button>
                     </div>
-                    <md-container  class="adminPtopB">
-                        <md-button aria-label="searchUserHistory" ng-click="searchUserHistory()" class="adminPtopBA">
-                            <ng-md-icon icon="search" class="adminPtopBAA"></ng-md-icon>
-                        </md-button>
+                    <md-container  class="md-block adminPtopB">
+                        <md-input-container class="adminPtopBD">
+                            <label class="inptLbl">Seacrh By</label>
+                            <md-select ng-model="searchBy">
+                                <md-option ng-value="1">Email</md-option>
+                                <md-option ng-value="2">Phone</md-option>
+                                <md-option ng-value="3">Order ID</md-option>
+                            </md-select>
+                        </md-input-container>
                         <md-input-container class="adminPtopBB">
                             <label></label>
-                            <input ng-model="userPhoneNumber" class="adminPtopBBB" placeholder="4033977020">
+                            <input ng-model="searchCriteria" class="adminPtopBBB" placeholder="4033977020">
                         </md-input-container>
-                        <md-button aria-label="searchOrClear" class="adminPtopBC" ng-click="userPhoneNumber = undefined; foundUsers = undefined; foundOrders = undefined; foundOrderContent = undefined;">
+                        <md-button aria-label="searchUserHistory" ng-click="searchUserHistory(searchBy)" class="adminPtopBA">
+                            <ng-md-icon icon="search" class="adminPtopBAA"></ng-md-icon>
+                        </md-button>
+                        <md-button aria-label="searchOrClear" class="adminPtopBC" ng-click="searchCriteria = ''; foundUsers = ''; foundOrders = ''; foundOrderContent = '';">
                             <ng-md-icon icon="clear" class="adminPtopBCA"></ng-md-icon>
                         </md-button>
                     </md-container>
@@ -40,7 +48,7 @@
                                 <li class="gtDataAAAB">&nbsp{{user.phone_number}};&nbsp&nbsp</li>
                             </ul>
                         </md-radio-button>
-                        <div ng-show="foundUsers" class="gtDataAB"></div>
+                        <div ng-if="foundUsers != '' " class="gtDataAB"></div>
                     </md-radio-group>
                     <md-radio-group class="gtDataB">
                         <md-radio-button aria-label="selectOrder" class="gtDataBA" ng-value="order" ng-repeat="order in foundOrders" ng-click="selectedOrderId(order)">
@@ -53,10 +61,10 @@
                                 <li class="gtDataBAAB">&nbsp{{order.delivery_address}};&nbsp&nbsp</li>
                             </ul>
                         </md-radio-button>
-                        <div ng-show="foundOrders" class="gtDataBB"></div>
+                        <div ng-if="foundOrders  != '' " class="gtDataBB"></div>
                     </md-radio-group>
                     <div aria-label="orderItems" class="gtDataC">
-                        <div class="gtDataCA" ng-show="foundOrderContent">Order List</div>
+                        <div class="gtDataCA" ng-if="foundOrderContent  != '' ">Order List</div>
                         <div ng-value="item" ng-repeat="item in foundOrderContent">
                             <div layout="row" class="gtDataCBA">
                                 <ul class="gtDataCBAA"><img  class="gtDataCBAAA" ng-src="{{'/resources/images/products/' + item.super_category + '/' + item.category + '/' + item.image}}"></ul>

@@ -13,23 +13,54 @@ app.filter('totalPrice', function () {
 app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "$rootScope",
     function ($location, $scope, $cookies, $http, $rootScope) {
 
-        $scope.userPhoneNumber;
+        $scope.searchCriteria;
+        $scope.searCriteriaIndex;
         $scope.foundUsers = [];
         $scope.foundOrders = [];
         $scope.foundOrderContent = [];
 
-        $scope.searchUserHistory = function(){
-            $http({
-                method: 'POST',
-                url: "/api/orders/findusers",
-                data: {
-                    phone_number: $scope.userPhoneNumber
-                }
-            }).then(function successCallback(response) {
-                $scope.foundUsers = response.data.users;
-            }, function errorCallback(response) {
-                console.error("error");
-            });
+        $scope.searchUserHistory = function(searchBy){
+            $scope.searCriteriaIndex = searchBy;
+            if($scope.searCriteriaIndex == 1){
+                $http({
+                    method: 'POST',
+                    url: "/api/orders/findusersbyemail",
+                    data: {
+                        user_email: $scope.searchCriteria
+                    }
+                }).then(function successCallback(response) {
+                    $scope.foundUsers = response.data.users;
+                }, function errorCallback(response) {
+                    console.error("error");
+                });
+            }
+            else if($scope.searCriteriaIndex == 2){
+                $http({
+                    method: 'POST',
+                    url: "/api/orders/findusersbyphone",
+                    data: {
+                        phone_number: $scope.searchCriteria
+                    }
+                }).then(function successCallback(response) {
+                    $scope.foundUsers = response.data.users;
+                }, function errorCallback(response) {
+                    console.error("error");
+                });
+            }
+            else if($scope.searCriteriaIndex == 3){
+                $http({
+                    method: 'POST',
+                    url: "/api/orders/getorder",
+                    data: {
+                        order_id: $scope.searchCriteria
+                    }
+                }).then(function successCallback(response) {
+                    console.log(response.data);
+                    $scope.foundOrderContent = response.data.orders;
+                }, function errorCallback(response) {
+                    console.error("error");
+                });
+            }
         }
         $scope.selectedUserID = function (user){
             $scope.foundOrderContent = [];
@@ -68,7 +99,6 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
         }
 
         $scope.logoutBtn = function () {
-            console.log("signout");
             $http({
                 method: 'POST',
                 url: '/api/authentication/signout'

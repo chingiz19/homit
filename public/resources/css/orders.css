@@ -38,6 +38,10 @@ md-radio-group .gtDataBA.ng-scope.md-checked .gtDataBAAB{
     font-weight: 650;
     color: rgba(0,0,0,0.85);
 }
+md-select .md-select-value{
+    border-bottom: 1px solid gray !important; padding-bottom: 1px !important;
+}
+
 /* Page header and search bar */
 .adminPtop{
     padding: 0;
@@ -78,6 +82,10 @@ md-radio-group .gtDataBA.ng-scope.md-checked .gtDataBAAB{
 }
 .adminPtopBB{
     width: 40%; 
+    margin: 0; margin-top: 4px;
+}
+.adminPtopBD{
+    width: 110px; 
     margin: 0; margin-top: 4px;
 }
 .adminPtopBBB{
