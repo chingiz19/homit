@@ -27,7 +27,7 @@ router.use('/', function (req, res, next) {
 
 router.post('/search', function (req, res, next) {
     var searchText = req.body.search;
-    if (searchText.length<3) {
+    if (searchText.length < 3) {
         var response = {
             success: false
         };
@@ -57,7 +57,24 @@ router.post('/search', function (req, res, next) {
                             };
                             res.send(response);
                         } else {
-                            res.send([]);
+                            Catalog.searchProducts(searchText).then(function (products) {
+                                if (products != false) {
+                                    var resultProducts = {
+                                        products: products
+                                    };
+                                    var response = {
+                                        success: true,
+                                        result: resultProducts
+                                    };
+                                    res.send(response);
+                                } else {
+                                    var response = {
+                                        success: true,
+                                        result: []
+                                    };
+                                    res.send(response);
+                                }
+                            });
                         }
                     });
                 }

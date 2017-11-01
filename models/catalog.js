@@ -256,6 +256,30 @@ pub.searchSubcategory = function (searchText) {
     });
 };
 
+pub.searchProducts = function (searchText) {
+    var sqlQuery = `SELECT product.id AS product_id, listing.id AS listing_id, subcategory.name AS subcategory,
+        type.name AS type, listing.product_brand AS brand, listing.product_name AS name,
+        listing.product_description AS description, product.product_image AS image,
+        container.name AS container,
+        category.name AS category, super_category.name AS super_category
+        FROM catalog_products AS product, catalog_listings AS listing, catalog_categories AS category,
+        catalog_types AS type, catalog_subcategories AS subcategory, catalog_containers AS container,
+        catalog_super_categories AS super_category
+        WHERE product.listing_id = listing.id AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+        AND container.id = product.container_id AND category.id = subcategory.category_id AND
+        category.super_category_id = super_category.id
+        AND (listing.product_brand LIKE '%` + searchText + `%' OR listing.product_name LIKE '%` + searchText + `%'
+        OR listing.product_description LIKE '%` + searchText + `%' OR listing.product_country LIKE '%` + searchText + `%')`;
+
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return dbResult;
+        } else {
+            return false;
+        }
+    });
+};
+
 /**
  * Custom function to do alphanumeric sort
  * 
