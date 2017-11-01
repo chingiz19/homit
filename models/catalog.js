@@ -35,7 +35,7 @@ pub.getAllProductsByCategory = function (superCategory, categoryName) {
     return db.runQuery(sqlQuery).then(function (dbResult) {
         if (dbResult != false) {
             return getFormattedProducts(dbResult);
-        } else{
+        } else {
             return false;
         }
     });
@@ -143,7 +143,7 @@ var getAllBrandsBySubcategory = function (subcategory, products) {
         }
     }
     return result.sort();
-}
+};
 
 /**
  * Return products for front-end
@@ -214,7 +214,47 @@ var getFormattedProducts = function (products) {
         }
     };
     return results;
-}
+};
+
+pub.searchSuperCategory = function (searchText) {
+    var sqlQuery = `SELECT name AS super_category FROM catalog_super_categories WHERE name LIKE '%` + searchText + `%'`;
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return dbResult;
+        } else {
+            return false;
+        }
+    });
+};
+
+pub.searchCategory = function (searchText) {
+    var sqlQuery = `SELECT catalog_super_categories.name AS super_category, catalog_categories.name AS category
+        FROM catalog_categories, catalog_super_categories
+        WHERE catalog_categories.super_category_id = catalog_super_categories.id
+        AND catalog_categories.name LIKE '%` + searchText + `%'`;
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return dbResult;
+        } else {
+            return false;
+        }
+    });
+};
+
+pub.searchSubcategory = function (searchText) {
+    var sqlQuery = `SELECT catalog_super_categories.name AS super_category, catalog_categories.name AS category, catalog_subcategories.name AS subcategory  
+        FROM catalog_categories, catalog_super_categories, catalog_subcategories
+        WHERE catalog_categories.super_category_id = catalog_super_categories.id
+        AND catalog_subcategories.category_id = catalog_categories.id
+        AND catalog_subcategories.name LIKE '%` + searchText + `%'`;
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return dbResult;
+        } else {
+            return false;
+        }
+    });
+};
 
 /**
  * Custom function to do alphanumeric sort
@@ -233,6 +273,6 @@ function sortAlphaNum(a, b) {
     } else {
         return aA > bA ? 1 : -1;
     }
-}
+};
 
 module.exports = pub;
