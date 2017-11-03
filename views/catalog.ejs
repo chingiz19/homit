@@ -6,7 +6,7 @@
     </head>
     <body class="ng-cloak">
         <%- include('partial/checkout_menu')%>
-        <div ng-controller="catalogController">
+        <div ng-controller="catalogController" id="ctnCont">
             <div ng-if="!selectedCategory">Sorry, wrong url</div>
             <div ng-if="selectedCategory" layout="row"  class="container col01">
                 <!--Mob-version Navigate Start-->
@@ -46,7 +46,7 @@
                 <md-container class="col1">
                     <div class="sizeStage col1A">{{selectedCategory | capitalize}}</div>
                     <span>
-                        <md-radio-group ng-model="SubcategoryName">
+                        <md-radio-group  ng-model="SubcategoryName">
                             <md-radio-button aria-label="variantInSubcad" class="SubcategoryName" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)">
                                 <span>{{variant.subcategory_name}}</span>
                             </md-radio-button>
@@ -65,7 +65,7 @@
                     </span>
                     <!--Category Box start-->
                     <span class="col1D">
-                        <md-button ng-click="filterCategories()" class="fltCategoryBtn">
+                        <md-button aria-label="filterCategories" ng-click="filterCategories()" class="fltCategoryBtn">
                             <ng-md-icon icon="filter_list" size="30" ng-style="(showCategories) && {'fill': 'rgba(41,81,145,0.3)'} || {'fill': 'rgb(63,81,181)'}"></ng-md-icon>
                         </md-button>
                     </span>
@@ -84,10 +84,10 @@
                     <!--End-->
                 </md-container>
                 <div layout-fill layout="row" class="test">
-                    <div flex="80" layout-wrap class="col24">
+                    <div flex="80" layout-wrap class="col24" id="col24">
                         <div ng-repeat="product in products | filter:searchedBrand">
-                            <div ng-show="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedBrands(product.brand)">
-                                <div class="itemBoxL1">
+                            <div ng-if="isInSelectedSubcategories(product.subcategory) && isInSelectedTypes(product.type) && isInSelectedBrands(product.brand)">
+                                <div class="itemBoxL1" id="{{product.product_id}}">
                                     <ul class="itemBoxL2">
                                         <div style="z-index: 0; position: absolute; top: 5px; right: 0; width: 100px; height: 40px; border: 2px rgba(0,189,149,0.7) solid; background-color: rgba(0,189,149,0.7); border-radius: 6px 0 0 6px; "></div>
                                         <div class="pvChange1"> 
@@ -95,7 +95,6 @@
                                                 <ul>
                                                     <li class="pvChange1AAA">
                                                         <md-button class="pvChangeBtnA" ng-show="product.product_variants.all_volumes[product.volumeI-1]" ng-click="previousVolume(product)" aria-label="leftVol">
-                                                            <!-- <img class="pvChangeBtnAA" ng-src="{{'/resources/images/left_Icon.svg'}}"> -->
                                                             <ng-md-icon icon="keyboard_arrow_left" class="pvChangeBtnAA"></ng-md-icon>
                                                         </md-button>
                                                     </li>
@@ -108,7 +107,6 @@
                                                     </span>
                                                     <li class="pvChange1AAC">
                                                         <md-button class="pvChangeBtnA" ng-show="product.product_variants.all_volumes[product.volumeI+1]" ng-click="nextVolume(product)" aria-label="rightVol">
-                                                            <!-- <img class="pvChangeBtnAA" ng-src="{{'/resources/images/right_Icon.svg'}}"> -->
                                                             <ng-md-icon icon="keyboard_arrow_right" class="pvChangeBtnAA"></ng-md-icon>
                                                         </md-button>
                                                     </li>
@@ -116,7 +114,6 @@
                                                 <ul>
                                                     <li class="pvChange1ABA">
                                                         <md-button class="pvChangeBtnA" ng-show="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ-1]" ng-click="previousPack(product)" aria-label="leftPack">
-                                                            <!-- <img class="pvChangeBtnAA" ng-src="{{'/resources/images/left_Icon.svg'}}"> -->
                                                             <ng-md-icon icon="keyboard_arrow_left" class="pvChangeBtnAA"></ng-md-icon>
                                                         </md-button>
                                                     </li>
@@ -129,7 +126,6 @@
                                                     </span>
                                                     <li class="pvChange1ABC">
                                                         <md-button class="pvChangeBtnA" ng-show="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ+1]" ng-click="nextPack(product)" aria-label="rightPack">
-                                                            <!-- <img class="pvChangeBtnAA" ng-src="{{'/resources/images/right_Icon.svg'}}"> -->
                                                             <ng-md-icon icon="keyboard_arrow_right" class="pvChangeBtnAA"></ng-md-icon>
                                                         </md-button>
                                                     </li>
@@ -174,14 +170,11 @@
                                                 </md-button>
                                             </div>
                                         </div>
-                                        <!--End-->
-                                        <!-- <ul> -->
                                         <li class="container itmPic">
                                             <img ng-src={{product.image}}>
                                         </li>
                                         <li class="brand">{{product.brand}} {{product.name}}</li>
                                         <li class="price">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</li>
-                                        <!-- </ul> -->
                                     </ul>
                                     <div>
                                         <md-button aria-label="addToCart" class="md-raised md-primary addToCrtBtn" ng-click="addToCart(product, v_index)">

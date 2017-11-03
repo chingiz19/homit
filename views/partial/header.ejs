@@ -1,41 +1,69 @@
-<title> <%= title %> </title>
+<title>
+    <%= title %>
+</title>
 
 <link href="/resources/css/header.css" rel="stylesheet">
 <link href="/resources/css/generic.css" rel="stylesheet">
 <nav layout="column" ng-controller="NavigationController" class="navCont" ng-cloak>
     <md-toolbar class="homit-header-bigscreen fixed-header">
         <div class="md-toolbar-tools header">
-            <div class="header-icon"><a class="mVerHedL2a1" href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="47px;" height="75%"/></a></div>
-            <!-- <div>
-                <strong>
-                    <label ng-bind-html="deliveryAddress" style="color:black;"></label>
-                </strong>
-            </div> -->
+            <div class="header-icon">
+                <a class="mVerHedL2a1" href="/main" target="_self">
+                    <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="47px;" height="75%" />
+                </a>
+            </div>
             <div class="mnSrch">
-                <md-button aria-label="searchOrClear" class="mnSrchB">
-                    <ng-md-icon ng-if="!searchedItem" icon="search" class="header-search-icon" size="25"></ng-md-icon>
-                    <ng-md-icon ng-if="searchedItem" icon="clear" class="header-search-icon" size="25"></ng-md-icon>
-                </md-button>
-                <md-input-container class="mnSrchA">
+                <md-input-container class="mnSrchA" layout="row">
+                    <md-button aria-label="searchOrClear" class="mnSrchB" ng-click="searchRequest = '' ; searchResult = ''; ">
+                        <ng-md-icon ng-if="!searchRequest" icon="search" class="header-search-icon" size="25"></ng-md-icon>
+                        <ng-md-icon ng-if="searchRequest" icon="clear" class="header-search-icon" size="25"></ng-md-icon>
+                    </md-button>
                     <label class="mnSrchAA">
                     </label>
-                    <input ng-model="searchedItem" placeholder="Search to Homit...">
+                    <input id="glbSearchRequest" ng-model="searchRequest" placeholder="Search to Homit...">
                 </md-input-container>
+                <div ng-if="searchResult" id="glbSearchRequest" class="mnSrchC">
+                    <ul ng-if="searchResult[0].result" class="mnSrchCA">
+                        <li ng-repeat="node in searchResult">
+                            <a href="{{node.path}}" target="_self" ng-click="sendSubcategory(node.subcategory, '' )" class="srchRslt mnSrchCAAA">
+                                <span class="mnSrchCAAAA">{{node.result}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul ng-if="!searchResult[0].result" class="mnSrchCB">
+                        <li ng-repeat="node in searchResult">
+                            <a href="{{node.path}}" target="_self" ng-click="sendSubcategory(node.subcategory, node.product_id)" class="srchRslt mnSrchCBAA">
+                                <span class="mnSrchCBAAA">
+                                    <img class="mnSrchImg" ng-src={{node.image}}>
+                                </span>
+                                <span class="mnSrchCBAAB">{{node.brandName}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div style="display: flex; justify-content: flex-end;">
                 <md-button aria-label="header-dashboard" ng-click="storeHub = !storeHub" ng-class="{'button-press-feel': storeHub}">
                     <ng-md-icon icon="dashboard" class="header-icon" size="45"></ng-md-icon>
                 </md-button>
                 <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" class="header-icon" data-toggle="modal" data-target="#loginModal">
-                    <ng-md-icon  icon="person_outline" class="header-icon" size="48"></ng-md-icon>
+                    <ng-md-icon icon="person_outline" class="header-icon" size="48"></ng-md-icon>
                 </md-button>
                 <md-button ng-if="<%=isSignedIn%>" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
                     <ng-md-icon icon="person" class="header-icon" size="45"></ng-md-icon>
                 </md-button>
                 <div ng-show="userDropDown">
-                    <ul layout="column" class="infoDrDwnA">  
-                        <li class="infoDrDwnAA"><a href="/myaccount" target="_self" class="infoDrDwnAAA"><ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198<%= username %></a></li>
-                        <li class="infoDrDwnAB"><a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()"><ng-md-icon icon="logout" size="20"></ng-md-icon>&#8198Sign Out</a></li>
+                    <ul layout="column" class="infoDrDwnA">
+                        <li class="infoDrDwnAA">
+                            <a href="/myaccount" target="_self" class="infoDrDwnAAA">
+                                <ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198
+                                <%= username %>
+                            </a>
+                        </li>
+                        <li class="infoDrDwnAB">
+                            <a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()">
+                                <ng-md-icon icon="logout" size="20"></ng-md-icon>&#8198Sign Out</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -44,28 +72,37 @@
     <!-- For small screens -->
     <md-toolbar class="homit-header-smallscreen fixed-header">
         <div class="md-toolbar-tools header">
-            <md-button  class="header-icon">
+            <md-button class="header-icon">
                 <ng-md-icon aria-label="clearHeaderSearch" icon="search" class="header-icon" size="95"></ng-md-icon>
             </md-button>
             <md-button aria-label="header-Logo" class="header-icon" style="left: 6%;">
                 <a href="/main" target="_self">
-                    <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100"/>
+                    <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100" />
                 </a>
             </md-button>
             <div style="display: flex; justify-content: flex-end;">
-                <md-button aria-label="header-sign" class="header-icon" style="display: flex; margin-right: auto;" ng-click="storeHub = !storeHub" ng-class="{'button-press-feel': storeHub}">
+                <md-button aria-label="header-sign" class="header-icon" style="display: flex; margin-right: auto;" ng-click="storeHub = !storeHub"
+                    ng-class="{'button-press-feel': storeHub}">
                     <ng-md-icon icon="dashboard" class="header-icon" size="92"></ng-md-icon>
                 </md-button>
                 <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" class="header-icon" data-toggle="modal" data-target="#loginModal">
-                    <ng-md-icon  icon="person_outline" class="header-icon" size="95"></ng-md-icon>
+                    <ng-md-icon icon="person_outline" class="header-icon" size="95"></ng-md-icon>
                 </md-button>
                 <md-button ng-if="<%=isSignedIn%>" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
                     <ng-md-icon icon="person" class="header-icon" size="95"></ng-md-icon>
                 </md-button>
                 <div ng-show="userDropDown">
-                    <ul layout="column" class="infoDrDwnA">  
-                        <li class="infoDrDwnAA"><a href="/myaccount" target="_self" class="infoDrDwnAAA"><ng-md-icon icon="settings" size="35"></ng-md-icon>&#8198<%= username %></a></li>
-                        <li class="infoDrDwnAB"><a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()"><ng-md-icon icon="logout" size="35"></ng-md-icon>&#8198Sign Out</a></li>
+                    <ul layout="column" class="infoDrDwnA">
+                        <li class="infoDrDwnAA">
+                            <a href="/myaccount" target="_self" class="infoDrDwnAAA">
+                                <ng-md-icon icon="settings" size="35"></ng-md-icon>&#8198
+                                <%= username %>
+                            </a>
+                        </li>
+                        <li class="infoDrDwnAB">
+                            <a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()">
+                                <ng-md-icon icon="logout" size="35"></ng-md-icon>&#8198Sign Out</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -94,25 +131,19 @@
 
 <%- include('signup')%>
 
-<script src="/resources/controllers/header.js"></script>
-<script src="/resources/services/storage.js"></script>
-<script>
-    $(document).ready(function(){
-        if ("#<%=tabId%>" != "#"){
-            $("#<%=tabId%>").addClass("active");
-        }
+    <script src="/resources/controllers/header.js"></script>
+    <script src="/resources/services/storage.js"></script>
+    <script>
+        $(document).ready(function () {
+            if ("#<%=tabId%>" != "#") {
+                $("#<%=tabId%>").addClass("active");
+            }
 
-        $(window).resize(function(){
-            var navHeight = $(".navbar").height();
-            $(document.body).css("margin-top", navHeight);
+            $(window).resize(function () {
+                var navHeight = $(".navbar").height();
+                $(document.body).css("margin-top", navHeight);
+            });
+
+            $(window).resize();
         });
-
-        $(window).resize();
-    });
-</script>
-
-
-
-
-
-            
+    </script>

@@ -42,7 +42,19 @@
 }
 /*For non-phone devices*/
 /*Start*/
-@media screen and (min-device-width: 600px) {
+@media screen and (min-device-width: 1501px){
+    /* Header Search */
+    .mnSrch{
+        flex-basis: 25%; 
+    }
+}
+@media screen and (max-device-width: 1500px) and (min-device-width: 601px) {
+    /* Header Search */
+    .mnSrch{
+        flex-basis: 35%; 
+    }
+}
+@media (min-device-width: 601px){
     .navCont{
         margin-bottom: 55px;
     }
@@ -67,22 +79,69 @@
     .mnSrchA input::-webkit-input-placeholder{
         color: rgba(42,81,145,0.6) !important;
         font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
-        font-size: 21px;
+        font-size: 20px;
+    }
+
+    .mnSrchC{
+        position: absolute; 
+        left: 0.5%; top: 35px; 
+        width: 99.5%; max-height: 450px; 
+        border: 1px solid rgba(145, 143, 143, 0.856); border-radius: 0 0 5px 5px; 
+        background-color: rgba(255,255,255, 0.99); 
+        overflow-y: scroll; 
+        z-index: 1000;
+    }
+    .mnSrchCA{
+        margin: 0; padding: 0;
+    }
+    .mnSrchCAAA{
+        display: flex; 
+        padding-top: 10px; padding-bottom: 10px;
+    }
+    .mnSrchCAAAA{
+        position: relative; 
+        left: 25px; 
+        font-size: 20px; font-weight: 600; color: rgba(0,0,0, 0.65);
+    }
+    .mnSrchCB{
+        min-width: 100%; 
+        margin: 0; padding: 0;
+    }
+    .mnSrchCBAA{
+        display: flex; 
+        padding-top: 10px; padding-bottom: 10px;
+    }
+    .mnSrchCBAAA{
+        position: relative; 
+        left: 25px;
+    }
+    .mnSrchImg{
+        width: 50px; height: 50px;
+    }
+    .mnSrchCBAAB{
+        display: flex; 
+        align-items: center; 
+        position: relative; 
+        left: 35px; 
+        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+        font-size: 16px; font-weight: 500; color: rgba(0,0,0, 0.55);
     }
     .button-press-feel{
         border: 1px inset;
     }
     /*Header Search*/
     .mnSrch{
-        position: relative; 
+        position: relative;
         left: 7%;
-        flex-basis: 40%; 
+    }
+    .srchRslt:hover{
+        background-color: rgba(0,0,0,0.08);
+        transition: 0.4s;
     }
     .mnSrchA{
-        width: 70%;
-        left: 7.5px;
+        /* left: 7.5px; */
         margin: 0;
-        /*margin-top: 2px;*/ padding-top: 6px;
+        padding-top: 6px;
     }
     .mnSrchA label{
         color: rgba(42,81,145,0.6) !important;
@@ -102,9 +161,10 @@
         font-size: 18px;
         font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     }
+
     .mnSrchB{
-        left: 16px;
-        min-height: 33px; min-width: 40px;
+        left: 1px;
+        min-height: 30px; min-width: 35px;
         margin: 0; padding: 0; 
         border-bottom: 2px solid rgba(42,81,145,0.6); border-radius: 0; 
     }
@@ -267,3 +327,5 @@
         z-index: 1000;
     }
 }
+
+

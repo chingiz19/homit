@@ -2,7 +2,6 @@
  * @copyright Homit 2017
  */
 var router = require("express").Router();
-
 router.use('/', function (req, res, next) {
     var tempArray = req.path.split('/');
     var superCategory = tempArray[1];
