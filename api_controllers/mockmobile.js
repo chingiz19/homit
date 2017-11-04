@@ -30,7 +30,7 @@ var OutPutData1 = {
                         "container": "bottle",
                         "price": "22",
                         "type_name": "Lager",
-                        "subcategory": "beer",
+                        "subcategory": "Lager",
                         "category": "beer",
                         "super_category": "liquor"
                     },

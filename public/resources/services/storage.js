@@ -22,8 +22,32 @@ app.service('storage', ["$window", function($window){
         return value;
     }
 
+    var _getSearchSubcategory = function(){
+        var value = _get("searchSubcategory");
+        _setSearchSubcategory(undefined);
+        return value;
+    }
+
+    var _getSearchProduct = function(){
+        var value = _get("searchProduct");
+        _setSearchProduct(undefined);
+        return value;
+    }
+
+    var _setSearchSubcategory = function(value){
+        return _set("searchSubcategory", value);
+    }
+
+    var _setSearchProduct = function(value){
+        return _set("searchProduct", value);
+    }
+
     return {
         get: _get,
-        set: _set
+        set: _set,
+        getSearchSubcategory: _getSearchSubcategory,
+        getSearchProduct: _getSearchProduct,
+        setSearchSubcategory: _setSearchSubcategory,
+        setSearchProduct: _setSearchProduct
     }
 }]);

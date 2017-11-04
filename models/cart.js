@@ -14,16 +14,17 @@ pub.getUserCart = function (user_id) {
                         listing.product_brand AS brand, listing.product_name AS name,
                         product.product_image AS image, category.name AS category,
                         depot.price AS price, depot.quantity AS depot_quantity, packaging.name AS packaging,
-                        volume.volume_name AS volume
+                        volume.volume_name AS volume, catalog_super_categories.name as super_category
                     FROM 
                         catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
                         catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
                         catalog_containers AS container, catalog_packagings AS packaging, catalog_packaging_volumes AS volume,
-                        user_cart_info AS usercart
+                        user_cart_info AS usercart, catalog_super_categories
                     WHERE 
                         depot.product_id = product.id AND product.listing_id = listing.id AND depot.id = usercart.depot_id
                         AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
                         AND container.id = product.container_id AND packaging.id = depot.packaging_id
+                        AND category.super_category_id = catalog_super_categories.id
                         AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND ?
                     ORDER BY 
                         depot_id`;
@@ -114,7 +115,7 @@ var getFormattedProducts = function (products) {
     var tmpResult = {};
     for (var i = 0; i < products.length; i++) {
         var product = products[i];
-        var imageLocation = "/resources/images/products/" + product.category.toLowerCase() + "/";
+        var imageLocation = "/resources/images/products/" + product.super_category.toLowerCase() + "/" + product.category.toLowerCase() + "/";
         // Add to tmpResult
         tmpResult[product.depot_id] = {
             depot_id: product.depot_id,

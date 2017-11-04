@@ -1,5 +1,5 @@
-app.controller("catalogController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log",
-    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log) {
+app.controller("catalogController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "storage",
+    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, storage) {
         var catalogCtrl = this;
 
         $scope.selection = $location.path();
@@ -201,7 +201,6 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         };
 
         $scope.addToCart = function (product) {
-            console.log(product);
             var p = jQuery.extend(true, {}, product);
 
             //prepare product for cart
@@ -314,11 +313,10 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         };
         // End
         $window.onload = function () {
-            var subcad = $cookies.getObject("ToTheSubcategory");
-            var prodID = $cookies.getObject("ToTheProduct");
+            var subcad = storage.getSearchSubcategory();
+            var prodID = storage.getSearchProduct();
             if (subcad) {
                 var x = document.querySelectorAll(".SubcategoryName");
-                $cookies.remove("ToTheSubcategory");
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].textContent.trim() == subcad) {
                         document.getElementById(x[i].id).click();
@@ -327,18 +325,17 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             }
             if (prodID) {
                 var x = document.querySelectorAll(".itemBoxL1");
-                $cookies.remove("ToTheProduct");
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].id == prodID) {
                         Element.prototype.documentOffsetTop = function () {
                             return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0);
                         };
                         var top = document.getElementById(x[i].id).documentOffsetTop() - ($window.innerHeight / 5);
-                        $window.scrollTo(0, top);
+                        animateScrollTo(top, 1600);
                         document.getElementById(prodID).classList.add('highlighted');
                         setTimeout(function () {
                             document.getElementById(prodID).classList.remove('highlighted');
-                        }, 1200);
+                        }, 2500);
                     }
                 }
             }

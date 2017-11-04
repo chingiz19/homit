@@ -67,7 +67,7 @@ pub.comparePassword = function (plainPassword, hashPassword) {
 
 pub.validateAdmin = function (options) {
     return function (req, res, next) {
-        if (checkAuth(req)) {
+        if (checkAuthAdmin(req)) {
             next();
             return;
         }
@@ -81,6 +81,20 @@ pub.validateAdmin = function (options) {
 };
 
 function checkAuth(req) {
+    if (req.session) {
+        var user = vault.read(req);
+        console.log(user);
+        if (user && user.startsWith("{")) {
+            user = JSON.parse(user);
+            if (user.user_email == req.cookies.user.user_email) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function checkAuthAdmin(req) {
     if (req.session) {
         var user = vault.read(req);
         console.log(user);

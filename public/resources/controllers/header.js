@@ -179,9 +179,9 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
             });
         }
         $scope.sendSubcategory = function (subcategory, product_id) {
-            $cookies.putObject("ToTheSubcategory", subcategory);
+            storage.setSearchSubcategory(subcategory);
             if (product_id) {
-                $cookies.putObject("ToTheProduct", product_id);
+                storage.setSearchProduct(product_id);
             }
         }
     }

@@ -69,6 +69,6 @@ webServer.listen(8080, function () {
 	console.log("Listening at http://localhost:8080");
 });
 
-https.createServer(sslOptions, webServer).listen(443, function () {
-	console.log("Listening at https://localhost:443");
+https.createServer(sslOptions, webServer).listen(8081, function () {
+	console.log("Listening at https://localhost:8081");
 });
