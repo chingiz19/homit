@@ -1,3 +1,6 @@
+/**
+ * Got from https://www.npmjs.com/package/animated-scroll-to
+ */
 (function() {
   'use strict';
 
