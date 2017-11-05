@@ -1,94 +1,134 @@
+/**
+ * @copyright Homit 2017
+ */
+
 var router = require("express").Router();
-//var tokenAPI = require("../token.js");
-var bcrypt = require('bcrypt');
-const saltRounds = 10;
 
-// router.use(global.checkAuth);
+router.post('/update', function (req, res, next) {
+    if (req.cookies.user) {
+        var id = req.body.user.id;
+        var user_email = req.body.user.email;
+        var first_name = req.body.user.fname;
+        var last_name = req.body.user.lname;
+        var phone_number = req.body.user.phone_number;
+        var birth_date = req.body.user.birth_date;
+        var address1 = req.body.user.address1;
+        var address2 = req.body.user.address2;
+        var address3 = req.body.user.address3;
+        
+        if (!id || !(user_email || first_name || last_name
+            || phone_number || birth_date || address1 || address2 || address3)) {
+            res.status(403).json({
 
-router.post('/updateUserInfo', function(req, res, next){
-    var user = req.body;
-    var userId = user.id;
-    delete user["id"];
-
-    var query = `UPDATE users_customers
-                 SET ?
-                 WHERE id=` + userId ;
-
-
-    db.runQuery(query, user).then(function(data){
-        query =  `SELECT id, user_email, first_name, last_name, phone_number, address1, address2, address3
-                 FROM users_customers
-                 WHERE id=` + userId;
-        db.runQuery(query).then(function(userinfo){
-            req.session.user = userinfo[0];
-            // req.cookies.user = userinfo[0];
-            res.send({
-                "success": true,
-                "ui_message": "Successfully updated",
-                "user": userinfo[0]
+                error: {
+                    "code": "U000",
+                    "dev_message": "Missing params",
+                    "required_params": ["user_id", "email", "fname", "lname",
+                        "phone_number", "birth_date", "address1", "address2", "address3"]
+                }
             });
+        }
+
+        var key = {
+            id: id
+        };
+
+        var userData = {};
+
+        if (user_email) {
+            userData.user_email = user_email;
+        }
+        if (first_name) {
+            userData.first_name = first_name;
+        }
+        if (last_name) {
+            userData.last_name = last_name;
+        }
+        if (phone_number) {
+            userData.phone_number = phone_number;
+        }
+        if (birth_date) {
+            userData.birth_date = birth_date;
+        }
+        if (address1) {
+            userData.address1 = address1;
+        }
+        if (address2) {
+            userData.address2 = address2;
+        }
+        if (address3) {
+            userData.address3 = address3;
+        }
+
+        User.updateUser(userData, key).then(function (updatedUser) {
+            if (updatedUser) {
+                var response = {
+                    success: true,
+                };
+                res.send(response);
+            } else {
+                var response = {
+                    success: false,
+                    error: {
+                        dev_message: "Something went wrong while updating the user",
+                        ui_message: "Error happened while updating the user. Please try again"
+                    }
+                };
+                res.send(response);
+            }
         });
-    });
+    } else {
+        res.status(403).json({
+            error: {
+                "code": "",
+                "dev_message": "User is not signed in"
+            }
+        });
+    }
 });
 
-router.post('/resetpassword', function(req, res, next){
-    var email = req.query.email;
-    var token = req.query.token;
-    var newpassword = req.query.newpassword;
-    userExists(email).then(function(exists){
-        if (!exists) {
-            res.json({
+router.post('/resetpassword', function (req, res, next) {
+    if (req.cookies.user) {
+        var id = req.body.user_id;
+        var oldPassword = req.body.old_password;
+        var newPassword = req.body.new_password;
+
+        if (!id || !oldPassword || !newPassword) {
+            res.status(403).json({
                 error: {
-                    code: "M001",
-                    ui_message: "User doesn't exist"
+                    "code": "U000",
+                    "dev_message": "Missing params",
+                    "required_params": ["user_id", "email", "fname", "lname",
+                        "phone_number", "birth_date", "address1", "address2", "address3"]
                 }
             });
         } else {
-            tokenValid = tokenAPI.validateToken(exists['id'], token);
-            console.log(tokenValid);
-            if (tokenValid == true) {
-                tokenAPI.destroyToken(token);
-                bcrypt.hash(newpassword, saltRounds).then(function(hash) {
-                    var users_customers = "users_customers";
-                    var data = [
-                        {password: hash},
-                        {id: exists['id']}];
-                    db.updateQuery(users_customers, data).then(function(updated){
-                        var response = {status: 'success'};
-                        res.send(response);
-                    });                
-                });
-            } else if (tokenValid == 'expired'){
-                res.json({
-                    error: {
-                        code: "M002",
-                        ui_message: "Expired token."
-                    }
-                });
-            } else {
-                var response = {
-                    code: "M003",
-                    ui_message: ""
-                };
-                res.status(403);
-                res.send(response);
+            User.updatePassword(id, oldPassword, newPassword).then(function(updatedUser) {
+                if (updatedUser) {
+                    var response = {
+                        success: true,
+                    };
+                    res.send(response);
+                } else {
+                    var response = {
+                        success: false,
+                        error: {
+                            dev_message: "Password didn't match.",
+                            ui_message: "Password didn't match."
+                        }
+                    };
+                    res.send(response);
+                }
+            });
+        }
+    } else {
+        res.status(403).json({
+            error: {
+                "code": "",
+                "dev_message": "User is not signed in"
             }
-        }
-    });
+        });
+    }
 });
-
-var userExists = function(email) {
-    var users_customers = "users_customers";
-    var data = {user_email: email};
-    return db.selectQuery(users_customers, data).then(function(dbResult) {
-        if (dbResult.length>0) {
-            return dbResult[0];
-        } else {
-            return false;
-        }
-    });
-};
-
-
 
 module.exports = router;

@@ -1,5 +1,4 @@
 /**
- * @author Jeyhun Gurbanov, Zaman Zamanli
  * @copyright Homit 2017
  */
 
@@ -238,5 +237,31 @@ pub.findUsersByEmailWithHistory = function (user_email) {
     });
 };
 
+pub.updatePassword = function (userId, oldPassword, newPassword) {
+    var key = { id: userId };
+    return db.selectColumnsWhere("password", db.dbTables.users_customers, key).then(function (user) {
+        if (user.length > 0) {
+            return Auth.comparePassword(oldPassword, user[0].password).then(function (match) {
+                if (match) {
+                    return Auth.hashPassword(newPassword).then(function (hashedPassword) {
+                        var userData = { password: hashedPassword };
+                        var data = [userData, key];
+                        return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
+                            if (!dbResult) {
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        });
+                    });
+                } else {
+                    return false;
+                }
+            });
+        } else {
+            return false;
+        }
+    });
+};
 
 module.exports = pub;
