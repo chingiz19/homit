@@ -1,122 +1,289 @@
 <html ng-app="mainModule">
+
 <head>
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/myaccount.css" rel="stylesheet">
 </head>
+
 <body ng-controller="myaccountController as myaccount" class="ng-cloak">
     <!-- main part -->
     <div id="mainPart">
-        <div class="container" layout="row" layout-align="space-between start">
-            <div flex="40" style="margin-top: 10px;" layout="column" layout-align="center center">
-                <md-content style="background-color: transparent;">
-                <img height="200px" width="200px">            
-                
-                <md-divider style="margin: 2em;"></md-divider>
-                
-                <div class="text-center">
-                    <a ng-click="myaccount.selectedView = 0" style="cursor: pointer"><h4>Profile Info</h4></a>
-                    <a ng-click="myaccount.selectedView = 1" style="cursor: pointer"><h4>Change password</h4></a>
+        <div class="container-fluid content" layout="row">
+            <div class="contentLC" flex="40">
+                <div class="contentLCA" layout="column" layout-align="center center">
+                    <img class="usrImg">
+                    <md-divider style="margin: 2em;"></md-divider>
+                    <ul layout="column" class="contentLCAC">
+                        <li id="myAcTi0" class="myTabs selectedTab">
+                            <a ng-click="myaccount.updateTab(0)" class="myTabsA">Me</a>
+                        </li>
+                        <li id="myAcLi0" class="myTabsBtmLn selectedTabLn"></li>
+                        <li id="myAcTi1" class="myTabs">
+                            <a ng-click="myaccount.updateTab(1)" class="myTabsA myTabsTM">Contact</a>
+                        </li>
+                        <li id="myAcLi1" class="myTabsBtmLn"></li>
+                        <li id="myAcTi2" class="myTabs">
+                            <a ng-click="myaccount.updateTab(2)" class="myTabsA myTabsTM">Address</a>
+                        </li>
+                        <li id="myAcLi2" class="myTabsBtmLn"></li>
+                        <li id="myAcTi3" class="myTabs">
+                            <a ng-click="myaccount.updateTab(3)" class="myTabsA myTabsTM">Password</a>
+                        </li>
+                        <li id="myAcLi3" class="myTabsBtmLn"></li>
+                        <md-divider style="margin: 2em;"></md-divider>
+                        <li id="myAcTi4" class="myTabs">
+                            <a ng-click="myaccount.updateTab(4)" class="myTabsA">Credit Crad</a>
+                        </li>
+                        <li id="myAcLi4" class="myTabsBtmLn"></li>
+                        <md-divider style="margin: 2em;"></md-divider>
+                        <li id="myAcTi5" class="myTabs">
+                            <a ng-click="myaccount.updateTab(5)" class="myTabsA">Order History</a>
+                        </li>
+                        <li id="myAcLi5" class="myTabsBtmLn"></li>
+                    </ul>
                 </div>
-                </md-content>
             </div>
-            <div flex="60" layout="column" style="margin-top: 10px;">
-                <!-- Profile Info -->
-                <div ng-show="myaccount.selectedView == 0">
-                    <div layout="row" layout-align="end center">
-                        <md-button class="md-raised"  ng-if="!myaccount.edit" ng-click="myaccount.editButton();">Edit</md-button>
+            <div flex="60" layout="column" class="contentRC">
+                <div class="contentRCA">
+                    <div ng-if="myaccount.selectedTab != 5" class="contentRCAB" layout="row">
+                        <md-button aria-label="editButton" ng-if="!myaccount.edit" ng-click="myaccount.editButton();" class="contentRCABA">
+                            <ng-md-icon icon="mode_edit" class="contentRCBAA"></ng-md-icon>
+                        </md-button>
+                        <md-button aria-label="cancelEdit" ng-if="myaccount.edit" ng-click="myaccount.cancelEdit()" class="contentRCABA">
+                            <ng-md-icon icon="close" class="contentRCBAB"></ng-md-icon>
+                        </md-button>
                     </div>
-
-                    <div layout="row" layout-align="space-between center">
-                        
-                        <!-- First name -->
-                        <md-input-container class="md-block" flex="45">
-                            <label>First Name</label>
-                            <input name="fname" type="text" ng-model="myaccount.user.first_name" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
-                        </md-input-container>
-
-                        <!-- Last name -->
-                        <md-input-container class="md-block" flex="45">
-                            <label>Last Name</label>
-                            <input name="lname" type="text" ng-model="myaccount.user.last_name" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
-                        </md-input-container>
-                    </div>
-
-                    <div layout="row" layout-align="space-between center">
-                        <!-- Email -->
-                        <md-input-container class="md-block" flex="100">
-                            <label>Email</label>
-                            <input name="email" type="email" ng-model="myaccount.user.email" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
-                        </md-input-container>
-                    </div>
-
-                    <div layout="row" layout-align="space-between center">
-                        <!-- Phone number -->
-                        <md-input-container class="md-block" flex="100">
-                            <label>Phone</label>
-                            <input name="phone" type="text" ng-model="myaccount.user.phone_number" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
-                        </md-input-container>
-                    </div>
-
-                    <!-- Date of birth -->
-                    <div layout="row" layout-align="space-between">
-                            <!--Year -->
-                            <md-input-container flex="30">
-                                <label>Year</label>
-                                <md-select ng-model="myaccount.user.birth_year" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
-                                    <md-option ng-repeat="year in myaccount.date.getYears()" ng-value="year">{{ year }}</md-option>
+                    <!-- Me -->
+                    <div ng-if="myaccount.selectedTab == 0">
+                        <div layout="row" layout-align="center">
+                            <md-input-container class="md-block" flex="40">
+                                <label>First Name</label>
+                                <input required ng-model="myaccount.user.firstName" ng-disabled="!myaccount.edit" type="text" />
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="40">
+                                <label class="inptLbl">Last Name</label>
+                                <input required ng-model="myaccount.user.lastName" ng-disabled="!myaccount.edit" type="text" />
+                            </md-input-container>
+                        </div>
+                        <div layout="row" layout-align="center">
+                            <md-input-container class="md-block">
+                                <label class="inptLbl">Date</label>
+                                <md-select ng-disabled="!myaccount.edit" ng-model="myaccount.user.birthDay">
+                                    <md-option ng-value="0" ng-disabled="true">Day</md-option>
+                                    <md-option ng-value="1">1</md-option>
+                                    <md-option ng-value="2">2</md-option>
+                                    <md-option ng-value="3">3</md-option>
+                                    <md-option ng-value="4">4</md-option>
+                                    <md-option ng-value="5">5</md-option>
+                                    <md-option ng-value="6">6</md-option>
+                                    <md-option ng-value="7">7</md-option>
+                                    <md-option ng-value="8">8</md-option>
+                                    <md-option ng-value="9">9</md-option>
+                                    <md-option ng-value="10">10</md-option>
+                                    <md-option ng-value="11">11</md-option>
+                                    <md-option ng-value="12">12</md-option>
+                                    <md-option ng-value="13">13</md-option>
+                                    <md-option ng-value="14">14</md-option>
+                                    <md-option ng-value="15">15</md-option>
+                                    <md-option ng-value="16">16</md-option>
+                                    <md-option ng-value="17">17</md-option>
+                                    <md-option ng-value="18">18</md-option>
+                                    <md-option ng-value="19">19</md-option>
+                                    <md-option ng-value="20">20</md-option>
+                                    <md-option ng-value="21">21</md-option>
+                                    <md-option ng-value="22">22</md-option>
+                                    <md-option ng-value="23">23</md-option>
+                                    <md-option ng-value="24">24</md-option>
+                                    <md-option ng-value="25">25</md-option>
+                                    <md-option ng-value="26">26</md-option>
+                                    <md-option ng-value="27">27</md-option>
+                                    <md-option ng-value="28">28</md-option>
+                                    <md-option ng-value="29">29</md-option>
+                                    <md-option ng-value="30">30</md-option>
+                                    <md-option ng-value="31">31</md-option>
                                 </md-select>
                             </md-input-container>
-
-                            <!--Month -->
-                            <md-input-container flex="30">
-                                <label>Month</label>
-                                <md-select ng-model="myaccount.user.birth_month" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
-                                    <md-option ng-repeat="month in myaccount.date.getMonths()" ng-value="month">{{ month }}</md-option>
+                            <md-input-container class="md-block">
+                                <label>of</label>
+                                <md-select ng-disabled="!myaccount.edit" ng-model="myaccount.user.birthMonth">
+                                    <md-option ng-value="0" ng-disabled="true">Month</md-option>
+                                    <md-option ng-value="1">Jan</md-option>
+                                    <md-option ng-value="2">Feb</md-option>
+                                    <md-option ng-value="3">Mar</md-option>
+                                    <md-option ng-value="4">Apr</md-option>
+                                    <md-option ng-value="5">May</md-option>
+                                    <md-option ng-value="6">Jun</md-option>
+                                    <md-option ng-value="7">Jul</md-option>
+                                    <md-option ng-value="8">Aug</md-option>
+                                    <md-option ng-value="9">Sep</md-option>
+                                    <md-option ng-value="10">Oct</md-option>
+                                    <md-option ng-value="11">Nov</md-option>
+                                    <md-option ng-value="12">Dec</md-option>
                                 </md-select>
                             </md-input-container>
-
-                            <!-- Day -->
-                            <md-input-container flex="30">
-                                <label>Day</label>
-                                <md-select ng-model="myaccount.user.birth_day" ng-disabled="!myaccount.edit" ng-required="myaccount.edit">
-                                    <md-option ng-repeat="day in myaccount.date.getDays(myaccount.user.birth_month, myaccount.user.birth_year)" ng-value="day">{{ day }}</md-option>
+                            <md-input-container class="md-block">
+                                <label>Birth</label>
+                                <md-select ng-disabled="!myaccount.edit" ng-model="myaccount.user.birthYear">
+                                    <md-option ng-value="0" ng-disabled="true">Year</md-option>
+                                    <md-option ng-value="2017">2017</md-option>
+                                    <md-option ng-value="2016">2016</md-option>
+                                    <md-option ng-value="2015">2015</md-option>
+                                    <md-option ng-value="2014">2014</md-option>
+                                    <md-option ng-value="2013">2013</md-option>
+                                    <md-option ng-value="2012">2012</md-option>
+                                    <md-option ng-value="2011">2011</md-option>
+                                    <md-option ng-value="2010">2010</md-option>
+                                    <md-option ng-value="2009">2009</md-option>
+                                    <md-option ng-value="2008">2008</md-option>
+                                    <md-option ng-value="2007">2007</md-option>
+                                    <md-option ng-value="2006">2006</md-option>
+                                    <md-option ng-value="2005">2005</md-option>
+                                    <md-option ng-value="2004">2004</md-option>
+                                    <md-option ng-value="2003">2003</md-option>
+                                    <md-option ng-value="2002">2002</md-option>
+                                    <md-option ng-value="2001">2001</md-option>
+                                    <md-option ng-value="2000">2000</md-option>
+                                    <md-option ng-value="1999">1999</md-option>
+                                    <md-option ng-value="1998">1998</md-option>
+                                    <md-option ng-value="1997">1997</md-option>
+                                    <md-option ng-value="1996">1996</md-option>
+                                    <md-option ng-value="1995">1995</md-option>
+                                    <md-option ng-value="1994">1994</md-option>
+                                    <md-option ng-value="1993">1993</md-option>
+                                    <md-option ng-value="1992">1992</md-option>
+                                    <md-option ng-value="1991">1991</md-option>
+                                    <md-option ng-value="1990">1990</md-option>
+                                    <md-option ng-value="1989">1989</md-option>
+                                    <md-option ng-value="1988">1988</md-option>
+                                    <md-option ng-value="1987">1987</md-option>
+                                    <md-option ng-value="1986">1986</md-option>
+                                    <md-option ng-value="1985">1985</md-option>
+                                    <md-option ng-value="1984">1984</md-option>
+                                    <md-option ng-value="1983">1983</md-option>
+                                    <md-option ng-value="1982">1982</md-option>
+                                    <md-option ng-value="1981">1981</md-option>
+                                    <md-option ng-value="1980">1980</md-option>
+                                    <md-option ng-value="1979">1979</md-option>
+                                    <md-option ng-value="1978">1978</md-option>
+                                    <md-option ng-value="1977">1977</md-option>
+                                    <md-option ng-value="1976">1976</md-option>
+                                    <md-option ng-value="1975">1975</md-option>
+                                    <md-option ng-value="1974">1974</md-option>
+                                    <md-option ng-value="1973">1973</md-option>
+                                    <md-option ng-value="1972">1972</md-option>
+                                    <md-option ng-value="1971">1971</md-option>
+                                    <md-option ng-value="1970">1970</md-option>
+                                    <md-option ng-value="1969">1969</md-option>
+                                    <md-option ng-value="1968">1968</md-option>
+                                    <md-option ng-value="1967">1967</md-option>
+                                    <md-option ng-value="1966">1966</md-option>
+                                    <md-option ng-value="1965">1965</md-option>
+                                    <md-option ng-value="1964">1964</md-option>
+                                    <md-option ng-value="1963">1963</md-option>
+                                    <md-option ng-value="1962">1962</md-option>
+                                    <md-option ng-value="1961">1961</md-option>
+                                    <md-option ng-value="1960">1960</md-option>
+                                    <md-option ng-value="1959">1959</md-option>
+                                    <md-option ng-value="1958">1958</md-option>
+                                    <md-option ng-value="1957">1957</md-option>
+                                    <md-option ng-value="1956">1956</md-option>
+                                    <md-option ng-value="1955">1955</md-option>
+                                    <md-option ng-value="1954">1954</md-option>
+                                    <md-option ng-value="1953">1953</md-option>
+                                    <md-option ng-value="1952">1952</md-option>
+                                    <md-option ng-value="1951">1951</md-option>
+                                    <md-option ng-value="1950">1950</md-option>
+                                    <md-option ng-value="1949">1949</md-option>
+                                    <md-option ng-value="1948">1948</md-option>
+                                    <md-option ng-value="1947">1947</md-option>
+                                    <md-option ng-value="1946">1946</md-option>
+                                    <md-option ng-value="1945">1945</md-option>
+                                    <md-option ng-value="1944">1944</md-option>
+                                    <md-option ng-value="1943">1943</md-option>
+                                    <md-option ng-value="1942">1942</md-option>
+                                    <md-option ng-value="1941">1941</md-option>
+                                    <md-option ng-value="1940">1940</md-option>
+                                    <md-option ng-value="1939">1939</md-option>
+                                    <md-option ng-value="1938">1938</md-option>
+                                    <md-option ng-value="1937">1937</md-option>
+                                    <md-option ng-value="1936">1936</md-option>
+                                    <md-option ng-value="1935">1935</md-option>
+                                    <md-option ng-value="1934">1934</md-option>
+                                    <md-option ng-value="1933">1933</md-option>
+                                    <md-option ng-value="1932">1932</md-option>
+                                    <md-option ng-value="1931">1931</md-option>
+                                    <md-option ng-value="1930">1930</md-option>
+                                    <md-option ng-value="1929">1929</md-option>
+                                    <md-option ng-value="1928">1928</md-option>
+                                    <md-option ng-value="1927">1927</md-option>
+                                    <md-option ng-value="1926">1926</md-option>
+                                    <md-option ng-value="1925">1925</md-option>
+                                    <md-option ng-value="1924">1924</md-option>
+                                    <md-option ng-value="1923">1923</md-option>
+                                    <md-option ng-value="1922">1922</md-option>
+                                    <md-option ng-value="1921">1921</md-option>
+                                    <md-option ng-value="1920">1920</md-option>
                                 </md-select>
                             </md-input-container>
                         </div>
-
-                        <div>
-                            <!-- Address -->
-                            <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true">
+                        <div ng-if="myaccount.edit" class="svBtn">
+                            <md-button aria-label="updateMe" ng-click="myaccount.updateMe()" class="md-raised md-primary" flex="15">Save</md-button>
+                        </div>
+                    </div>
+                    <!-- Contact -->
+                    <div ng-if="myaccount.selectedTab == 1" layout="column">
+                        <ul layout-align="center">
+                            <li class="flxCntrLn">
+                                <md-input-container class="md-block" flex="70">
+                                    <label>Email</label>
+                                    <input required name="userFname" ng-model="myaccount.user.email" ng-disabled="!myaccount.edit" type="text" />
+                                </md-input-container>
+                            </li>
+                            <li class="flxCntrLn">
+                                <md-input-container class="md-block" flex="70">
+                                    <label class="inptLbl">Phone Number</label>
+                                    <input required name="lName" ng-model="myaccount.user.phoneNumber" ng-disabled="!myaccount.edit" type="text" />
+                                </md-input-container>
+                            </li>
+                            <div ng-if="myaccount.edit" class="svBtn">
+                                <md-button aria-label="updateContact" class="md-raised md-primary" ng-click="myaccount.updateContact()" flex="15">Save</md-button>
+                            </div>
+                        </ul>
+                    </div>
+                    <!-- Address -->
+                    <div ng-if="myaccount.selectedTab == 2">
+                        <div class="flxCntrLn">
+                            <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true" flex="80">
                                 <md-tab label="Address 1">
                                     <md-tab-body>
                                         <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="80">
-                                                <label>Nickname (Optional)</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address1_nickname" ng-disabled="!myaccount.edit"/>
+                                            <md-input-container class="md-block" flex="60">
+                                                <label>Shortname</label>
+                                                <input name="address" type="text" ng-model="myaccount.user.address1_shortname" ng-disabled="!myaccount.edit" />
                                             </md-input-container>
                                         </div>
-
                                         <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="80">
+                                            <md-input-container class="md-block" flex="60">
                                                 <label>Address</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address1" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"/>
+                                                <input name="address" type="text" ng-model="myaccount.user.address1" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"
+                                                />
                                             </md-input-container>
                                         </div>
                                     </md-tab-body>
                                 </md-tab>
                                 <md-tab label="Address 2" ng-disabled="!myaccount.edit">
                                     <md-tab-body>
-                                    <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="80">
-                                                <label>Nickname (Optional)</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address2_nickname" ng-disabled="!myaccount.edit"/>
+                                        <div layout="row" layout-align="center center">
+                                            <md-input-container class="md-block" flex="60">
+                                                <label>Shortname</label>
+                                                <input name="address" type="text" ng-model="myaccount.user.address2_shortname" ng-disabled="!myaccount.edit" />
                                             </md-input-container>
                                         </div>
-
                                         <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="80">
+                                            <md-input-container class="md-block" flex="60">
                                                 <label>Address</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address2" ng-disabled="!myaccount.edit"/>
+                                                <input name="address" type="text" ng-model="myaccount.user.address2" ng-disabled="!myaccount.edit" />
                                             </md-input-container>
                                         </div>
                                     </md-tab-body>
@@ -124,124 +291,143 @@
                                 <md-tab label="Address 3" ng-disabled="!myaccount.edit">
                                     <md-tab-body>
                                         <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="80">
-                                                <label>Nickname (Optional)</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address3_nickname" ng-disabled="!myaccount.edit"/>
+                                            <md-input-container class="md-block" flex="60">
+                                                <label>Shortname</label>
+                                                <input name="address" type="text" ng-model="myaccount.user.address3_shortname" ng-disabled="!myaccount.edit" />
                                             </md-input-container>
                                         </div>
-
                                         <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="80">
+                                            <md-input-container class="md-block" flex="60">
                                                 <label>Address</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address3" ng-disabled="!myaccount.edit"/>
+                                                <input name="address" type="text" ng-model="myaccount.user.address3" ng-disabled="!myaccount.edit" />
                                             </md-input-container>
                                         </div>
                                     </md-tab-body>
                                 </md-tab>
                             </md-tabs>
-                            
                         </div>
-
-                        <!--<div layout="column" layout-align="center">-->
-                            <!-- Reset password -->
-                            <!--<md-button class="md-raised">Reset password</md-button>
-                        </div>-->
-
-                        <div layout="row" layout-align="space-between center" ng-if="myaccount.edit">
-                            <!-- Update button -->
-                            <md-button class="md-raised" ng-click="myaccount.cancelEdit()" flex="45">Cancel</md-button>
-                            <md-button class="md-raised md-primary" ng-click="myaccount.updateUserInfo()" flex="45">Update</md-button>
+                        <div ng-if="myaccount.edit" class="svBtn">
+                            <md-button aria-label="updateAddress" class="md-raised md-primary" ng-click="myaccount.updateAddress()" flex="15">Save</md-button>
                         </div>
                     </div>
-
                     <!-- Change password -->
-                    <div ng-show="myaccount.selectedView == 1">
-                        <form ng-submit="myaccount.changePassword()">
-                            <!-- Current password -->
-                            <md-input-container class="md-block" flex="100">
-                                <label>Current password</label>
-                                <input name="password" type="password" ng-model="myaccount.password" required/>
-                            </md-input-container>
-
-                            <!-- New password -->
-                            <md-input-container class="md-block" flex="100">
-                                <label>New password</label>
-                                <input name="npassword" type="password" ng-change="myaccount.checkPassword()" ng-model="myaccount.new_password" required/>
-                            </md-input-container>
-
-                            <!-- Confirm password -->
-                            <md-input-container class="md-block" flex="100" ng-class="{'md-input-invalid': myaccount.passwordError}" >
-                                <label>Confirm password</label>
-                                <input name="cpassword" type="password" 
-                                            ng-change="myaccount.checkPassword()" 
-                                            ng-model="myaccount.confirm_password" required/>
-                            </md-input-container>
-                        
-                            <!-- Change password button -->
-                            <div layout="row" layout-align="center center">
-                                <md-button type="submit" class="md-raised md-primary">Change password</md-button>
+                    <div ng-show="myaccount.selectedTab == 3" layout="column">
+                        <ul class="ulMP_0">
+                            <li class="flxCntrLn">
+                                <md-input-container class="md-block" flex="70">
+                                    <label>Current password</label>
+                                    <input name="password" type="password" ng-model="myaccount.password" ng-disabled="!myaccount.edit" autocomplete="off" required/>
+                                </md-input-container>
+                            </li>
+                            <li class="flxCntrLn">
+                                <md-input-container class="md-block" flex="70">
+                                    <label>New password</label>
+                                    <input name="npassword" type="password" ng-change="myaccount.checkPassword()" ng-model="myaccount.new_password" ng-disabled="!myaccount.edit"
+                                        autocomplete="off" required/>
+                                </md-input-container>
+                            </li>
+                            <li class="flxCntrLn">
+                                <md-input-container class="md-block" flex="70" ng-class="{'md-input-invalid': myaccount.passwordError}">
+                                    <label>Confirm password</label>
+                                    <input name="cpassword" type="password" ng-change="myaccount.checkPassword()" ng-model="myaccount.confirm_password" ng-disabled="!myaccount.edit"
+                                        autocomplete="off" required/>
+                                </md-input-container>
+                            </li>
+                            <div class="svBtn" ng-if="myaccount.edit">
+                                <md-button class="md-raised md-primary" ng-click="myaccount.changePassword()" flex="15">Save</md-button>
                             </div>
-                        </form>
+                        </ul>
+                    </div>
+                    <!-- Credit Card -->
+                    <div ng-if="myaccount.selectedTab == 4">
+                        <ul layout="column" class="flxCntrLn">
+                            <li layout="row" layout-align="center">
+                                <md-input-container class="md-block" flex="40">
+                                    <label>First Name</label>
+                                    <input required ng-model="myaccount.card.firstName" ng-disabled="!myaccount.edit" type="text" />
+                                </md-input-container>
+                                <md-input-container class="md-block" flex="40">
+                                    <label class="inptLbl">Last Name</label>
+                                    <input required ng-model="myaccount.card.lastName" ng-disabled="!myaccount.edit" type="text" />
+                                </md-input-container>
+                            </li>
+                            <li class="flxCntrLn">
+                                <md-input-container class="md-block" flex="40">
+                                    <label class="inptLbl">Crad Number</label>
+                                    <input required ng-model="myaccount.card.number" ng-disabled="!myaccount.edit" type="text" />
+                                </md-input-container>
+                            </li>
+                            <li layout="row" class="flxCntrLn">
+                                <md-input-container class="md-block extInput" flex="25">
+                                    <label class="inptLbl">Expiry</label>
+                                    <md-select ng-disabled="!myaccount.edit" ng-model="myaccount.card.month">
+                                        <md-option ng-value="0">Month</md-option>
+                                        <md-option ng-value="1">Jan</md-option>
+                                        <md-option ng-value="2">Feb</md-option>
+                                        <md-option ng-value="3">Mar</md-option>
+                                        <md-option ng-value="4">Apr</md-option>
+                                        <md-option ng-value="5">May</md-option>
+                                        <md-option ng-value="6">Jun</md-option>
+                                        <md-option ng-value="7">Jul</md-option>
+                                        <md-option ng-value="8">Aug</md-option>
+                                        <md-option ng-value="9">Sep</md-option>
+                                        <md-option ng-value="10">Oct</md-option>
+                                        <md-option ng-value="11">Nov</md-option>
+                                        <md-option ng-value="12">Dec</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block extInput" flex="25">
+                                    <label class="inptLbl">Date</label>
+                                    <md-select ng-disabled="!myaccount.edit" ng-model="myaccount.card.year">
+                                        <md-option ng-value="0">Year</md-option>
+                                        <md-option ng-value="2017">2017</md-option>
+                                        <md-option ng-value="2018">2018</md-option>
+                                        <md-option ng-value="2019">2019</md-option>
+                                        <md-option ng-value="2020">2020</md-option>
+                                        <md-option ng-value="2021">2021</md-option>
+                                        <md-option ng-value="2022">2022</md-option>
+                                        <md-option ng-value="2023">2023</md-option>
+                                        <md-option ng-value="2024">2024</md-option>
+                                        <md-option ng-value="2025">2025</md-option>
+                                        <md-option ng-value="2026">2026</md-option>
+                                        <md-option ng-value="2027">2027</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex="25">
+                                    <label>Security Code</label>
+                                    <input ng-disabled="!myaccount.edit" required name="cardSecCode" ng-model="myaccount.card.secCode" type="text" />
+                                </md-input-container>
+                            </li>
+                            <div ng-if="myaccount.edit" class="svBtn">
+                                <md-button aria-label="updateCard" class="md-raised md-primary" ng-click="card.updateCard()" flex="15">Save</md-button>
+                            </div>
+                        </ul>
+                    </div>
+                    <!-- Order History -->
+                    <div ng-if="myaccount.selectedTab == 5" class="contentRCorHist">
+                        <ul layout="row" class="flxCntrLn">
+                            <li flex="15" layout="row">
+                                <span>Order#</span>
+                                <md-button aria-label="ShowHideCardInfo" style="margin: 0; padding: 0; min-width: 20px; min-height: 25px;">
+                                    <ng-md-icon ng-if="true" icon="keyboard_arrow_down" size="20"></ng-md-icon>
+                                    <!-- <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="20"></ng-md-icon> -->
+                                </md-button>
+                            </li>
+                            <li flex="15">Store</li>
+                            <li flex="15">Address</li>
+                            <li flex="15">Date</li>
+                            <li flex="15">Price</li>
+                            <li flex="15">Price</li>
+                        </ul>
                     </div>
                 </div>
             </div>
+
         </div>
+    </div>
 
-        <md-divider style="margin: 2em;"></md-divider>
-
-        <!-- Order History table -->
-        <div class="container">
-            <div layout="row" layout-align="start center">
-                <h3>Orders history</h3>
-                <md-button class="md-fab md-mini md-primary" ng-click="myaccount.isOrderHistoryShown = !myaccount.isOrderHistoryShown">
-                    <span class="glyphicon" ng-class="{'glyphicon-chevron-down': !myaccount.isOrderHistoryShown,
-                                            'glyphicon-chevron-up': myaccount.isOrderHistoryShown}" 
-                            aria-hidden="true">
-                    </span>
-                </md-button>
-            </div>
-
-            <div ng-if="myaccount.isOrderHistoryShown">
-                <table class="table">
-                    <thead>
-                        <th>Order #</th>
-                        <th>Delivery Address</th>
-                        <th>Status</th>
-                        <th>Price</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat-start="order in myaccount.orders">
-                            <td>{{order.order_id}}</td>
-                            <td>{{order.delivery_address}}</td>
-                            <td>{{order.status}}</td>
-                            <td>{{myaccount.getTotalPriceForOrder(order) | currency:'C$':2}}</td>
-                            <td ng-click="order.moreInfoShown = !order.moreInfoShown"><span class="glyphicon" ng-class="{'glyphicon-chevron-down': !order.moreInfoShown,
-                                            'glyphicon-chevron-up': order.moreInfoShown}" 
-                                    aria-hidden="true">
-                                </span>
-                            </td>
-                        </tr>
-                        <tr ng-repeat-end ng-show="order.moreInfoShown" class="well">
-                            <td colspan=2>
-                                <p>Date received: {{order.date_received}}</p>
-                                <p>Date delivered: {{order.date_delivered}}</p>
-                            </td>
-                            <td colspan="3">
-                                <ul ng-repeat="cartItem in order.cart">
-                                    <li> {{cartItem.name}} </li>
-                                    <li> {{cartItem.brand}} </li>
-                                    <li> {{cartItem.volume}} </li>
-                                    <li> {{cartItem.quantity}} </li>
-                                    <li> {{cartItem.price}}</li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     <script src="/resources/services/date.js"></script>
     <script src="/resources/controllers/myaccount.js"></script>
 </body>
+
 </html>

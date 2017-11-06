@@ -61,6 +61,7 @@ router.post('/update', function (req, res, next) {
         }
 
         User.updateUser(userData, key).then(function (updatedUser) {
+            console.log("User Data: " + userData);
             if (updatedUser) {
                 var response = {
                     success: true,
@@ -92,7 +93,6 @@ router.post('/resetpassword', function (req, res, next) {
         var id = req.body.user_id;
         var oldPassword = req.body.old_password;
         var newPassword = req.body.new_password;
-
         if (!id || !oldPassword || !newPassword) {
             res.status(403).json({
                 error: {

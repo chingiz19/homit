@@ -1,124 +1,183 @@
-app.controller("myaccountController", ["$scope", "$http", "$cookies", "$rootScope", "$mdToast", "date",
-function($scope, $http, $cookies, $rootScope, $mdToast, date){
+app.controller("myaccountController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "storage", "$mdToast", "date",
+    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, storage, $mdToast, date) {
 
-    var myaccount = this;   
-    myaccount.init = function(){
-        myaccount.user = {};
-        myaccount.edit = false;
-        myaccount.isOrderHistoryShown = false;
-        myaccount.date = date;
-        myaccount.selectedView = 0;
-        myaccount.passwordError = false;
+        var myaccount = this;
+        myaccount.init = function () {
+            myaccount.user = {};
+            myaccount.edit = false;
+            myaccount.isOrderHistoryShown = false;
+            myaccount.date = date;
+            myaccount.selectedTab = 0;
+            myaccount.passwordError = false;
 
-        $http({
-                method: 'GET',
-                url: '/api/orders/getUserOrder'
-            }).then(function successCallback(response) {
-                if (response.data["success"]) {
-                    myaccount.orders = response.data["orders"];
-                } else {
-                    console.log("error");
-                }
-            }, function errorCallback(response) {
-                var m = response.data["ui_message"] || "Something went wrong while loading orders";
-                $rootScope.$broadcast("addNotification", { type: "alert-danger", message: m});
-                console.log("ERROR in password reset");
-            });
-    }
-    /* Info Section */
-    // $scope.user = JSON.parse( $cookies.get("user").replace("j:", "")); 
+            $scope.user = JSON.parse($cookies.get("user").replace("j:", ""));
 
+            myaccount.user.firstName = $scope.user['first_name'];
+            myaccount.user.lastName = $scope.user['last_name'];
+            myaccount.user.birthYear = $scope.user['birth_date'].slice(0, 4);
+            myaccount.user.birthMonth = new Date(parseInt($scope.user['birth_date'].slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
+            myaccount.user.birthDay = parseInt($scope.user['birth_date'].slice(8, 10), 10);
+            myaccount.user.email = $scope.user['user_email'];
+            myaccount.user.phoneNumber = $scope.user['phone_number'];
+        }
+        /* Info Section */
+        // $scope.testU = JSON.parse( $cookies.get("user").replace("j:", ""));
+        // for (tmp in $scope.testU){
+        //     console.log("$scope.user[" + tmp + "] = " + $scope.testU[tmp]);
+        // }
 
-    myaccount.editButton = function(){
-        myaccount.edit = !myaccount.edit;
-    }
+        myaccount.updateTab = function (tab) {
+            myaccount.selectedTab = tab;
+            var el = document.querySelector('.selectedTab');
+            if (el) {
+                document.getElementById(el.id).classList.remove("selectedTab");
+            }
+            document.getElementById("myAcTi" + tab).classList.add("selectedTab");
+            var el = document.querySelector('.selectedTabLn');
+            if (el) {
+                document.getElementById(el.id).classList.remove("selectedTabLn");
+                document.getElementById(el.id).classList.add("myTabsBtmLn");
+            }
+            document.getElementById("myAcLi" + tab).classList.remove("myTabsBtmLn");
+            document.getElementById("myAcLi" + tab).classList.add("selectedTabLn");
+        }
 
-    myaccount.cancelEdit = function(){
-        //TODO: set user info to default
-        myaccount.edit = false;
-    }
-    
-    myaccount.updateUserInfo = function(){
-            $http({
-                method: 'POST',
-                url: '/api/myaccount/updateUserInfo',
-                data: myaccount.user
-            }).then(function successCallback(response) {
-                if (response.data["success"]) {
-                    $rootScope.$broadcast("addNotification", { 
-                        type: "alert-success", 
-                        message: response.data["ui_message"]
-                    });
-                    myaccount.user = response.data.user;
-                } else {
-                    $rootScope.$broadcast("addNotification", { 
-                        type: "alert-danger", 
-                        message: response.data["ui_message"]
-                    });
-                }
-            }, function errorCallback(response) {
-                var m = response.data["ui_message"] || "Something went wrong while updating your info, please try again";
-                $rootScope.$broadcast("addNotification", { type: "alert-danger", message: m});
-                console.log("ERROR in password reset");
-            });
-    }
+        myaccount.editButton = function () {
+            myaccount.edit = !myaccount.edit;
+        }
 
-     var showToast = function(message, action){
-        var toast = $mdToast.simple()
+        myaccount.cancelEdit = function () {
+            myaccount.edit = false;
+            myaccount.user.firstName = $scope.user['first_name'];
+            myaccount.user.lastName = $scope.user['last_name'];
+            myaccount.user.birthYear = $scope.user['birth_date'].slice(0, 4);
+            myaccount.user.birthMonth = new Date(parseInt($scope.user['birth_date'].slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
+            myaccount.user.birthDay = parseInt($scope.user['birth_date'].slice(8, 10), 10);
+            myaccount.user.email = $scope.user['user_email'];
+            myaccount.user.phoneNumber = $scope.user['phone_number'];
+        }
+
+        var showToast = function (message, action) {
+            var toast = $mdToast.simple()
                 .textContent(message)
                 .highlightAction(true)
                 .action(action)
                 .highlightClass("md-accent")
                 .parent($("#mainPart"))
                 .position('top right');
-       
-        if (action) {
-            toast.action(action);
-            $mdToast.show(toast).then(function(response){
-                if (response === 'ok'){
-                    $mdToast.hide(toast);
-                }
-            })
-        } else {
-            $mdToast.show(toast);
-        }
-    };
 
-    myaccount.checkPassword = function(){
-        myaccount.passwordError = (myaccount.new_password != myaccount.confirm_password);
-    }
-
-    myaccount.changePassword = function(){
-        if (myaccount.passwordError){
-            showToast("Password did not match", "Close");
-            return;
-        }
-
-        $http({
-            method: 'POST',
-            url: '/api/myaccount/resetpassword',
-            data: {
-                current_password: myaccount.password,
-                new_password: myaccount.new_password
-            }
-        }).then(function successCallback(response) {
-            if (response.data["success"] === "true") {
-                console.log("password reset");
+            if (action) {
+                toast.action(action);
+                $mdToast.show(toast).then(function (response) {
+                    if (response === 'ok') {
+                        $mdToast.hide(toast);
+                    }
+                })
             } else {
-                console.log("password not reset");
+                $mdToast.show(toast);
             }
-        }, function errorCallback(response) {
-            console.log("ERROR in password reset");
-        });
-    }
+        };
 
-    myaccount.getTotalPriceForOrder = function(order) {
-        var total = 0;
-        for (var i=0; i < order.cart.length; i++){
-            total += parseFloat(order.cart[i].price);
+        myaccount.checkPassword = function () {
+            myaccount.passwordError = (myaccount.new_password != myaccount.confirm_password);
         }
-        return total;
-    }
 
-    myaccount.init();
-}]);
+        myaccount.updateMe = function () {
+            $http({
+                method: 'POST',
+                url: '/api/myaccount/update',
+                data: {
+                    user: {
+                        id: $scope.user['id'],
+                        fname: myaccount.user.firstName,
+                        lname: myaccount.user.lastName,
+                        birth_date: myaccount.user.birthYear + "-" + myaccount.user.birthMonth + "-" + myaccount.user.birthDay
+                    }
+                }
+            }).then(function successCallback(response) {
+                if (response.data["success"] === "true") {
+                    console.log("Success:  Me updated");
+                } else {
+                    console.log("Fail: Me failed to update");
+                }
+            }, function errorCallback(response) {
+                console.log("Error: in me update");
+            });
+        }
+
+        myaccount.updateContact = function () {
+            console.log("email is: " + myaccount.user.email);
+            console.log("phone is: " + myaccount.user.phoneNumber);
+            $http({
+                method: 'POST',
+                url: '/api/myaccount/update',
+                data: {
+                    user: {
+                        id: $scope.user['id'],
+                        email: myaccount.user.email,
+                        phone_number: myaccount.user.phoneNumber,
+                    }
+                }
+            }).then(function successCallback(response) {
+                if (response.data["success"] === "true") {
+                    console.log("Success: Contact updated");
+                } else {
+                    console.log("Fail: Contact failed to update");
+                }
+            }, function errorCallback(response) {
+                console.log("ERROR in contact update");
+            });
+        }
+
+        myaccount.updateAddress = function () {
+            $http({
+                method: 'POST',
+                url: '/api/myaccount/update',
+                data: {
+                    user: {
+                        id: $scope.user['id'],
+                        address1: myaccount.user.address1,
+                        address1_shortname: myaccount.user.address1_shortname,
+                        address2: myaccount.user.address2,
+                        address2_shortname: myaccount.user.address2_shortname,
+                        address3: myaccount.user.address3,
+                        address3_shortname: myaccount.user.address3_shortname
+                    }
+                }
+            }).then(function successCallback(response) {
+                if (response.data["success"] === "true") {
+                    console.log("Success: Address updated");
+                } else {
+                    console.log("Fail: Address failed to update");
+                }
+            }, function errorCallback(response) {
+                console.log("ERROR in address update");
+            });
+        }
+
+        myaccount.changePassword = function () {
+            if (myaccount.passwordError) {
+                showToast("Password did not match", "Close");
+                return;
+            }
+            $http({
+                method: 'POST',
+                url: '/api/myaccount/resetpassword',
+                data: {
+                    user_id: $scope.user['id'],
+                    old_password: myaccount.password,
+                    new_password: myaccount.new_password
+                }
+            }).then(function successCallback(response) {
+                if (response.data["success"] === "true") {
+                    console.log("Success: Password reset");
+                } else {
+                    console.log("Error: Password failed to reset");
+                }
+            }, function errorCallback(response) {
+                console.log("ERROR in password reset");
+            });
+        }
+
+        myaccount.init();
+    }]);

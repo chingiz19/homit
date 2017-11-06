@@ -247,6 +247,11 @@ pub.updatePassword = function (userId, oldPassword, newPassword) {
                         var userData = { password: hashedPassword };
                         var data = [userData, key];
                         return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
+                            // console.log("db: " + dbResult.result);
+                            console.log("Start here");
+                            for (tmp in dbResult){
+                                    console.log("dbResult[" + tmp + "] = " + dbResult[tmp]);
+                                }
                             if (!dbResult) {
                                 return false;
                             } else {

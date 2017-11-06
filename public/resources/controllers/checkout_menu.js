@@ -10,7 +10,6 @@ function ($scope, $sce, $rootScope, $http, advancedStorage, cartService,$timeout
                 if (response.data['success'] === true) {
                     if (Object.entries($scope.userCart).length == 0){
                         $scope.userCart = response.data['cart'];
-                        console.log($scope.userCart);
                     } else {
                         advancedStorage.setUserCart({});
                         $scope.userCart = cartService.mergeCarts($scope.userCart, response.data['cart']);

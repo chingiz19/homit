@@ -37,11 +37,16 @@ pub.clear = function (res) {
 pub.validate = function (options) {
     return function (req, res, next) {
         if (checkAuth(req)) {
+            console.log("authenticated");
             next();
         }
         if (options && options.redirect) {
+            console.log("redirect");
+            
             res.redirect("/");
         } else {
+            console.log("r400");
+            
             res.status(400).send("Not Authorized");
         }
     }
