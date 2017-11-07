@@ -2,7 +2,15 @@
     display: flex;
     justify-content: space-between;
 }
+.md-button:not([disabled]):hover {
+    background-color: transparent;
+}
+.md-button:not([disabled]).md-focused {
+    background-color: transparent;
+}
 
+[aria-hidden="true"] { visibility: hidden; }
+  
 .fixed-header {
   position: fixed;
   top: 0;
@@ -24,21 +32,45 @@
     display: flex; 
     justify-content: space-around; flex-wrap: wrap; 
     list-style: none;  
-    width: 100%; 
-    padding-top: 10px; padding-left: 0px;
+    width: 100%;
+    margin: 0; padding: 0;
+    /* padding-top: 10px; padding-left: 0px; */
 }
 .storeHubAAA{
     max-height: 300px;
     text-align: center;
 }
 .storeHubAAAA{
-    background-color: #2dd204;
+    background-color: rgba(42,81,145,0.9);
 }
 .storeHubAAAAA{
     fill: rgba(250,250,250,0.99);
 }
 .storeHubAAAAB{
-    font-size: 20px;
+    font-size: 15px;
+    margin: 0;
+}
+.storeHubB{
+    position: absolute; 
+    left: 70%; top: -7; 
+    width: 13px; height: 13px; 
+    background-color: rgba(255,255,255,1); 
+    border: 1px rgba(220,220,220,0.99) solid; border-right-color: rgba(255,255,255,1); border-bottom-color: rgba(255,255,255,1); 
+    -webkit-transform: rotate(45deg); 
+    z-index: 1;
+}
+.hmtHubTxt{
+    color: rgba(0,0,0,1);
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    letter-spacing: 0.045em;
+    -webkit-font-smoothing: antialiased;
+}
+/* To make Homit-Hub box appear more smoothly */
+.fdIn{ -webkit-animation: fadein 0.09s; }
+@-webkit-keyframes fadein { from {opacity:0;} to {opacity:1;} }
+
+.storeHubAAA:focus{
+    outline: none !important;
 }
 /*For non-phone devices*/
 /*Start*/
@@ -81,7 +113,6 @@
         font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
         font-size: 20px;
     }
-
     .mnSrchC{
         position: absolute; 
         left: 0.5%; top: 35px; 
@@ -161,7 +192,6 @@
         font-size: 18px;
         font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     }
-
     .mnSrchB{
         left: 1px;
         min-height: 30px; min-width: 35px;
@@ -213,11 +243,12 @@
     }
     .storeHub{
         position: fixed; 
-        top: 70px; right: 10px; 
-        height: 40vh; width: 28.5vw;  
-        border: 1.5px rgba(220,220,220,0.99) solid; 
+        top: 70px; right: 97px;; 
+        height: 400px; width: 270px;  
+        border: 1px rgba(220,220,220,0.99) solid; 
         border-radius: 5px;
-        background-color: rgba(250,250,250,0.99);
+        background-color: rgba(255,255,255,1);
+        box-shadow: 0 0px 10px rgba(0,0,0,0.2);
         z-index: 1000;
     }
     .homit-header-smallscreen{

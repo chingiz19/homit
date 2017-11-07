@@ -1,6 +1,18 @@
 ul {list-style-type: none;}
 li {list-style-type: none;}
-body{background-color: rgba(255,255,255,0.9);}
+html{
+    background-color: rgb(252, 252, 252);
+}
+body{
+    background-color: rgb(252, 252, 252);
+    letter-spacing: 0.01em;
+}
+/* .md-button:not([disabled]):hover {
+    background-color: transparent;
+} */
+.md-button .md-ripple-container {
+    background-color: transparent !important;
+}
 
 .content{
     position: relative; 
@@ -11,13 +23,14 @@ body{background-color: rgba(255,255,255,0.9);}
 /* Content box left column */
 .contentLC{
     background-color: rgba(255,255,255,1);
-    border: 2px solid rgba(0,0,0,0.1); border-radius: 0 20px 20px 0; 
+    border: 1px solid rgba(0,0,0,0.15); border-radius: 0 20px 20px 0; 
     margin-right: 1%; 
     box-shadow: 0 0px 2px 0px rgba(0,0,0,0.05);
-    z-index: 100;
+    z-index: 1;
 }
 .contentLCA{
-    margin-left: 10%; margin-top: 5%;
+    /* margin-left: 10%;  */
+    margin-top: 3%;
 }
 .usrImg{
     height: 200px; width: 200px; 
@@ -34,7 +47,7 @@ body{background-color: rgba(255,255,255,0.9);}
     display: flex; justify-content: center;
 }
 .myTabsTM{
-    margin-top: 2px;
+    margin-top: 3px;
 }
 .myTabsA{
     cursor: pointer; color: rgba(42,81,145, 0.9);
@@ -52,10 +65,23 @@ body{background-color: rgba(255,255,255,0.9);}
 .contentRC{
     background-color: rgba(255,255,255,1);
     margin-left: 1%; 
-    border: 2px solid rgba(0,0,0,0.1); border-radius: 20px 0 0 20px; 
+    border: 1px solid rgba(0,0,0,0.15); border-radius: 20px 0 0 20px; 
     box-shadow: 0 0px 2px 0px rgba(0,0,0,0.05);
-    z-index: 100;
+    z-index: 1;
 }
+.tglLbtn{
+    position: absolute; 
+    left: 19%; top: 45%; 
+    min-width: 10px; width: 18px; height: 50px;
+    margin: 0; padding: 0; 
+    background-color: rgba(255,255,255,1); 
+    border:1px solid rgba(0,0,0,0.15); border-radius: 15px 0 0 15px; border-right-color: rgba(255,255,255,1);
+}
+.tglLbtn svg{
+    width: 25px; height: 25px;
+    padding-right: 3px;
+}
+
 .contentRCAB{
     margin-right: 5%; margin-top: 2.5%;
 }
@@ -88,10 +114,8 @@ contentRCABB svg{
 .contentRCorHist{
     position: relative; top: 55px;
 }
-
 .selectedTab{
     font-weight: 700;
-    transition: 0.6s
 }
 .selectedTabLn{
 	margin: auto;
@@ -99,4 +123,13 @@ contentRCABB svg{
     width: 100%;
     border-bottom: 3px solid rgba(42,81,145,0.9);
 	transition: width 0.6s ease, background-color .5s ease;
+}
+
+@media(max-width: 1280px){
+    .cntnt_SH{
+        display: flex; justify-content: center;
+    }
+    .RC_SH{
+        border-radius: 20px 20px 20px 20px;
+    }
 }

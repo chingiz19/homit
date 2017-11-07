@@ -1,79 +1,93 @@
 <html ng-app="mainModule">
+
 <head>
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
-    <link href="/resources/css/main.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/main.css" rel="stylesheet">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
 </head>
+
 <body class="ng-cloak">
     <div ng-controller="mainController">
         <div layout="row" class="mainpage-header">
-            <div style="margin-left: 15px;" flex="50">
-                <a href="/main" target="_self"><img ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" style="filter: drop-shadow(0px 0px 7px rgba(0,0,0,0.5));" width="130px;" height="43px"/></a>
+            <div class="logoTg" flex="50">
+                <a href="/main" target="_self">
+                    <img ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" class="logoTgAA" />
+                </a>
             </div>
-            <div flex="50" style="display: flex; justify-content: flex-end;">
+            <div flex="50" class="signTg">
                 <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" data-toggle="modal" data-target="#loginModal">
-                    <ng-md-icon  icon="person_outline" style="fill: white; filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.5));" size="48"></ng-md-icon>
+                    <ng-md-icon icon="person_outline" class="signTgAA"></ng-md-icon>
                 </md-button>
                 <md-button ng-if="<%=isSignedIn%>" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
-                    <ng-md-icon icon="person" style="fill: rgba(255,255,255,0.9);" size="50"></ng-md-icon>
+                    <ng-md-icon icon="person" class="signTgAB"></ng-md-icon>
                 </md-button>
                 <div ng-show="userDropDown">
-                    <ul layout="column" class="infoDrDwnA">  
-                        <li class="infoDrDwnAA"><a href="/myaccount" target="_self" class="infoDrDwnAAA"><ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198<%= username %></a></li>
-                        <li class="infoDrDwnAB"><a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()"><ng-md-icon icon="logout" size="20"></ng-md-icon>&#8198Sign Out</a></li>
+                    <ul layout="column" class="infoDrDwnA">
+                        <li class="infoDrDwnAA">
+                            <a href="/myaccount" target="_self" class="infoDrDwnAAA">
+                                <ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198
+                                <%= username %>
+                            </a>
+                        </li>
+                        <li class="infoDrDwnAB">
+                            <a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()">
+                                <ng-md-icon icon="logout" size="20"></ng-md-icon>&#8198Sign Out</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
         <!-- Getting started page -->
-        <div class="full-screen flex-box getting-started">
+        <div id="gettingStarted" class="full-screen flex-box getting-started">
             <md-button class="md-raised button-big brand-button" ng-click="scrollTo('address')">
                 Let's Homit
-            </md-button>
+            </md-button>`
         </div>
-
-        <div id="address" class="full-screen flex-box search-address">
+        <div id="address" class="full-screen flex-box srchAddrs">
             <h2>Delivery Address</h2>
             <h3>Please enter delivery address to ensure we provide delivery to your location</h3>
-            <span style="background-color: rgba(255,255,255,0.93); border: 0; border-radius: 5px; padding: 15px 15px 0 15px; position: relative; height: 76px;">
-                <span style=" display: flex; align-items: center;">
-                    <i style="position: absolute; padding-left: 5px;"><ng-md-icon icon="place" style="fill: rgba(42,81,245,0.9);" size="35"></ng-md-icon></i>
-                    <input id="addressAutocomplete" ng-model="searchedAddress" type="text" class="address-input" placeholder="Address">
-                    <md-button ng-if="searchedAddress" style="position: absolute; right: 15px; min-width: 45px; min-height: 45px; margin: 0;" ng-click="clearAddressSearch()">
-                        <ng-md-icon icon="clear" style="fill: rgba(0,0,0,0.4);" size="20"></ng-md-icon>
+            <span class="srchAddrsC">
+                <span class="srchAddrsCA">
+                    <i class="srchAddrsCAA">
+                        <ng-md-icon icon="place" class="srchAddrsCAAA"></ng-md-icon>
+                    </i>
+                    <input id="addressAutocomplete" ng-model="searchedAddress" type="text" class="srchAddrsCAB" placeholder="Address">
+                    <md-button ng-if="searchedAddress" class="srchAddrsCAC" ng-click="clearAddressSearch()">
+                        <ng-md-icon icon="clear" class="srchAddrsCACA"></ng-md-icon>
                     </md-button>
                 </span>
             </span>
         </div>
-
-        <div id="coverage" class="full-screen flex-box coverage-map">
+        <div id="coverage" class="full-screen flex-box areaMp">
             <h2>Coverage Map</h2>
-            <div id="map" style="position: absolute; left: 15%; height: 70%; width: 70%"></div>
+            <div id="map" class="areaMpB"></div>
             <h3>{{addressMessage}}</h3>
         </div>
-
-        <div id="homitHub" class="full-screen flex-box store-list">
-            <h2>Homit Hub</h2>
-             <ul class="storeHubAA">
-                <li flex="30" class="storeHubAAA" ng-click="hrefTo('/catalog/snackvendor')">
-                    <div class="storeHubAAAA">
-                        <ng-md-icon icon="panorama_vertical" class="storeHubAAAAA" size="48">
-                    </div>
-                    <label class="storeHubAAAAB">Snack Vendor</label>
-                </li>
-                <li flex="30" class="storeHubAAA" class="text-center" ng-click="hrefTo('/catalog/liquor')">
-                    <div class="storeHubAAAA">
-                        <ng-md-icon icon="local_gas_station" class="storeHubAAAAA" size="48">
-                    </div>
-                    <label class="storeHubAAAAB">Liqour</label>
-                </li>
-            </ul>
+        <div id="homitHub" class="full-screen hmtHub">
+            <div class="hmtHubA hmtHubTxt">Homit Hub</div>
+            <div layout="row" class="hmtHubB">
+                <div flex="30" ng-click="hrefTo('/catalog/snackvendor')" class="hmtHubBA">
+                    <ul layout="column" class="hmtHubBAA">
+                        <li class="hmtHubBAAA">
+                            <ng-md-icon icon="panorama_vertical" class="hmtHubBAAAA"></ng-md-icon>
+                        </li>
+                        <li class="hmtHubABAB hmtHubTxt">Snack Vendor</li>
+                    </ul>
+                </div>
+                <div flex="30" ng-click="hrefTo('/catalog/liquor')" class="hmtHubBA">
+                    <ul layout="column" class="hmtHubBAA">
+                        <li class="hmtHubBAAA">
+                            <ng-md-icon icon="local_bar" class="hmtHubBAAAA"></ng-md-icon>
+                        </li>
+                        <li class="hmtHubABAB hmtHubTxt">Liquor Station</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
     </div>
-
     <script src="/resources/services/mapServices.js"></script>
     <script src="/resources/controllers/main.js"></script>
 </body>
+
 </html>

@@ -34,6 +34,31 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         });
     }
 
+    function clickedOffBox(e){
+        var el = document.getElementById('hdrHub').attributes;
+        if (el['aria-hidden'].value == "false") {
+            if(event.target['id'] != 'hdrHub' && event.target['id'] != 'hdrHub1' && event.target['id'] != 'hdrHub2' && event.target['id'] != 'hdrHub3'){
+                document.getElementById('hdrHub').setAttribute("aria-hidden", "true");
+                window.removeEventListener('click', clickedOffBox, false);
+            }
+        }
+    }
+    $scope.hubClicked = function(){
+        var el_ID = "hdrHub";
+        var el = document.getElementById(el_ID).attributes;
+        if(el["aria-hidden"].value == "true"){
+            document.getElementById(el_ID).setAttribute("aria-hidden", "false");
+        } else{
+            document.getElementById(el_ID).setAttribute("aria-hidden", "true");
+            window.removeEventListener('click', clickedOffBox, false);
+        }
+        if(el["aria-hidden"].value == "false"){
+            setTimeout(function() {
+                window.addEventListener('click', clickedOffBox, false);
+            }, 100);
+        }
+    }
+
     // Header right-SideNav functionality
     // Start
     $scope.toggleTop = buildTogglerTop('top');

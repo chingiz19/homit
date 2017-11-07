@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div style="display: flex; justify-content: flex-end;">
-                <md-button aria-label="header-dashboard" ng-click="storeHub = !storeHub" ng-class="{'button-press-feel': storeHub}">
+                <md-button aria-label="header-dashboard" id="dashboardBtn" ng-click="hubClicked()">
                     <ng-md-icon icon="dashboard" class="header-icon" size="45"></ng-md-icon>
                 </md-button>
                 <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" class="header-icon" data-toggle="modal" data-target="#loginModal">
@@ -56,8 +56,7 @@
                     <ul layout="column" class="infoDrDwnA">
                         <li class="infoDrDwnAA">
                             <a href="/myaccount" target="_self" class="infoDrDwnAAA">
-                                <ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198
-                                <%= username %>
+                                <ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198<%= username %>
                             </a>
                         </li>
                         <li class="infoDrDwnAB">
@@ -109,20 +108,21 @@
         </div>
     </md-toolbar>
     <!-- Dashboard -->
-    <div ng-show="storeHub" class="storeHub">
-        <div class="storeHubA">
-            <ul class="storeHubAA">
+    <div id="hdrHub" aria-hidden="true" class="storeHub fdIn">
+        <div id="hdrHub1" class="storeHubB"></div>
+        <div id="hdrHub2" class="storeHubA">
+            <ul id="hdrHub3" class="storeHubAA">
                 <li flex="45" class="storeHubAAA" ng-click="hrefTo('/catalog/snackvendor')">
                     <div class="storeHubAAAA">
-                        <ng-md-icon icon="panorama_vertical" class="storeHubAAAAA" size="48">
+                        <ng-md-icon icon="panorama_vertical" class="storeHubAAAAA" size="40">
                     </div>
-                    <label class="storeHubAAAAB">Snack Vendor</label>
+                    <div class="hmtHubTxt storeHubAAAAB">Snack Vendor</div>
                 </li>
                 <li flex="45" class="storeHubAAA" class="text-center" ng-click="hrefTo('/catalog/liquor')">
                     <div class="storeHubAAAA">
-                        <ng-md-icon icon="local_gas_station" class="storeHubAAAAA" size="48">
+                        <ng-md-icon icon="local_bar" class="storeHubAAAAA" size="40">
                     </div>
-                    <label class="storeHubAAAAB">Liqour</label>
+                    <div class="hmtHubTxt storeHubAAAAB">Liqour Station</div>
                 </li>
             </ul>
         </div>

@@ -9,42 +9,48 @@
 <body ng-controller="myaccountController as myaccount" class="ng-cloak">
     <!-- main part -->
     <div id="mainPart">
-        <div class="container-fluid content" layout="row">
-            <div class="contentLC" flex="40">
-                <div class="contentLCA" layout="column" layout-align="center center">
-                    <img class="usrImg">
-                    <md-divider style="margin: 2em;"></md-divider>
-                    <ul layout="column" class="contentLCAC">
-                        <li id="myAcTi0" class="myTabs selectedTab">
-                            <a ng-click="myaccount.updateTab(0)" class="myTabsA">Me</a>
-                        </li>
-                        <li id="myAcLi0" class="myTabsBtmLn selectedTabLn"></li>
-                        <li id="myAcTi1" class="myTabs">
-                            <a ng-click="myaccount.updateTab(1)" class="myTabsA myTabsTM">Contact</a>
-                        </li>
-                        <li id="myAcLi1" class="myTabsBtmLn"></li>
-                        <li id="myAcTi2" class="myTabs">
-                            <a ng-click="myaccount.updateTab(2)" class="myTabsA myTabsTM">Address</a>
-                        </li>
-                        <li id="myAcLi2" class="myTabsBtmLn"></li>
-                        <li id="myAcTi3" class="myTabs">
-                            <a ng-click="myaccount.updateTab(3)" class="myTabsA myTabsTM">Password</a>
-                        </li>
-                        <li id="myAcLi3" class="myTabsBtmLn"></li>
+        <div class="container-fluid content cntnt_SH" layout="row">
+            <md-sidenav class="md-sidenav-left contentLC" style="z-index: 1000;" flex="40" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"
+                md-whiteframe="4">
+                <md-content>
+                    <div class="contentLCA" layout="column" layout-align="center center">
+                        <img class="usrImg">
                         <md-divider style="margin: 2em;"></md-divider>
-                        <li id="myAcTi4" class="myTabs">
-                            <a ng-click="myaccount.updateTab(4)" class="myTabsA">Credit Crad</a>
-                        </li>
-                        <li id="myAcLi4" class="myTabsBtmLn"></li>
-                        <md-divider style="margin: 2em;"></md-divider>
-                        <li id="myAcTi5" class="myTabs">
-                            <a ng-click="myaccount.updateTab(5)" class="myTabsA">Order History</a>
-                        </li>
-                        <li id="myAcLi5" class="myTabsBtmLn"></li>
-                    </ul>
-                </div>
-            </div>
-            <div flex="60" layout="column" class="contentRC">
+                        <ul layout="column" class="contentLCAC">
+                            <li id="myAcTi0" class="myTabs selectedTab">
+                                <a ng-click="myaccount.updateTab(0)" class="myTabsA">Me</a>
+                            </li>
+                            <li id="myAcLi0" class="myTabsBtmLn selectedTabLn"></li>
+                            <li id="myAcTi1" class="myTabs">
+                                <a ng-click="myaccount.updateTab(1)" class="myTabsA myTabsTM">Contact</a>
+                            </li>
+                            <li id="myAcLi1" class="myTabsBtmLn"></li>
+                            <li id="myAcTi2" class="myTabs">
+                                <a ng-click="myaccount.updateTab(2)" class="myTabsA myTabsTM">Address</a>
+                            </li>
+                            <li id="myAcLi2" class="myTabsBtmLn"></li>
+                            <li id="myAcTi3" class="myTabs">
+                                <a ng-click="myaccount.updateTab(3)" class="myTabsA myTabsTM">Password</a>
+                            </li>
+                            <li id="myAcLi3" class="myTabsBtmLn"></li>
+                            <md-divider style="margin: 2em;"></md-divider>
+                            <li id="myAcTi4" class="myTabs">
+                                <a ng-click="myaccount.updateTab(4)" class="myTabsA">Credit Crad</a>
+                            </li>
+                            <li id="myAcLi4" class="myTabsBtmLn"></li>
+                            <md-divider style="margin: 2em;"></md-divider>
+                            <li id="myAcTi5" class="myTabs">
+                                <a ng-click="myaccount.updateTab(5)" class="myTabsA">Order History</a>
+                            </li>
+                            <li id="myAcLi5" class="myTabsBtmLn"></li>
+                        </ul>
+                    </div>
+                </md-content>
+            </md-sidenav>
+            <div flex="60" layout="column" class="contentRC RC_SH">
+                <md-button aria-label="toggleLeft" ng-click="toggleLeft()" class="tglLbtn" hide-gt-md>
+                        <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+                </md-button>
                 <div class="contentRCA">
                     <div ng-if="myaccount.selectedTab != 5" class="contentRCAB" layout="row">
                         <md-button aria-label="editButton" ng-if="!myaccount.edit" ng-click="myaccount.editButton();" class="contentRCABA">

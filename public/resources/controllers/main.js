@@ -1,10 +1,11 @@
  app.controller("mainController", function($scope, $http, storage, $cookies, $window, $location, $anchorScroll, mapServices) {
     $scope.map;
+    $scope.userDropDown = false;
 
     $scope.init = function(){
         // always scroll to the top, then later to defined hash
         var currentHash = $location.hash();
-        $scope.scrollTo("");
+        $scope.scrollTo("gettingStarted");
 
         $scope.map = mapServices.createMap("map");
 
@@ -17,12 +18,11 @@
         
         $scope.autocomplete = mapServices.createAddressAutocomplete("addressAutocomplete");
         $scope.autocomplete.addListener('place_changed', gotAddressResults);
-
-        // scroll to defined hash, if any
-        setTimeout(function(){
-            $scope.scrollTo(currentHash);
-        }, 1000);
     };
+
+    $scope.showHideUserDropdown = function () {
+        $scope.userDropDown = !$scope.userDropDown;
+    }
 
     /**
      * This function is called after autocomplete gets the address
@@ -52,7 +52,14 @@
      */
     $scope.scrollTo = function(id){
         $location.hash(id);
-        $anchorScroll();
+        Element.prototype.documentOffsetTop = function () {
+            return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0);
+        };
+        var el = document.getElementById(id);
+        if(el){
+            var top = document.getElementById(id).documentOffsetTop();
+            animateScrollTo(top, {speed: 1000});
+        }
     }
 
     $scope.init();
