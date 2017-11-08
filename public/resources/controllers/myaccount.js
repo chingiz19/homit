@@ -20,12 +20,6 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             myaccount.user.email = $scope.user['user_email'];
             myaccount.user.phoneNumber = $scope.user['phone_number'];
         }
-        /* Info Section */
-        // $scope.testU = JSON.parse( $cookies.get("user").replace("j:", ""));
-        // for (tmp in $scope.testU){
-        //     console.log("$scope.user[" + tmp + "] = " + $scope.testU[tmp]);
-        // }
-
         myaccount.updateTab = function (tab) {
             myaccount.selectedTab = tab;
             var el = document.querySelector('.selectedTab');
@@ -178,37 +172,36 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 console.log("ERROR in password reset");
             });
 
-        // Checkout Page right-SideNav functionality
-        $scope.toggleLeft = buildDelayedToggler('left');
-        function debounce(func, wait, context) {
-            var timer;
-            return function debounced() {
-                var context = $scope,
-                    args = Array.prototype.slice.call(arguments);
-                $timeout.cancel(timer);
-                timer = $timeout(function () {
-                    timer = undefined;
-                    func.apply(context, args);
-                }, wait || 10);
+            // myAccount Page left-SideNav functionality
+            $scope.toggleLeft = buildDelayedToggler('left');
+            function debounce(func, wait, context) {
+                var timer;
+                return function debounced() {
+                    var context = $scope,
+                        args = Array.prototype.slice.call(arguments);
+                    $timeout.cancel(timer);
+                    timer = $timeout(function () {
+                        timer = undefined;
+                        func.apply(context, args);
+                    }, wait || 10);
+                };
+            }
+            function buildDelayedToggler(navID) {
+                return debounce(function () {
+                    $mdSidenav(navID)
+                        .toggle()
+                        .then(function () {
+                            $log.debug("toggle " + navID + " is done");
+                        });
+                }, 200);
+            }
+            $scope.close = function () {
+                $mdSidenav('right').close()
+                    .then(function () {
+                        $log.debug("close RIGHT is done");
+                    });
             };
         }
-        function buildDelayedToggler(navID) {
-            return debounce(function () {
-                // Component lookup should always be available since we are not using `ng-if`
-                $mdSidenav(navID)
-                    .toggle()
-                    .then(function () {
-                        $log.debug("toggle " + navID + " is done");
-                    });
-            }, 200);
-        }
-        $scope.close = function () {
-            // Component lookup should always be available since we are not using `ng-if`
-            $mdSidenav('right').close()
-                .then(function () {
-                    $log.debug("close RIGHT is done");
-                });
-        };
-
         myaccount.init();
     }]);
+    
