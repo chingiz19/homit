@@ -29,6 +29,20 @@ pub.findUser = function (email) {
 };
 
 /**
+ * Finds user based on the id
+ */
+pub.findUserById = function (id) {
+    var data = { id: id };
+    return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return sanitizeUserObject(dbResult[0]);
+        } else {
+            return false;
+        }
+    });
+};
+
+/**
  * Adds user to database based on the data
  */
 pub.addUser = function (userData) {
@@ -64,7 +78,21 @@ pub.findGuestUser = function (email) {
     var data = { user_email: email };
     return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
         if (dbResult.length > 0) {
-            return sanitizeUserObject(dbResult[0]);
+            return addIsGuest(sanitizeUserObject(dbResult[0]));
+        } else {
+            return false;
+        }
+    });
+};
+
+/**
+ * Finds guest user based on the id
+ */
+pub.findGuestUserById = function (id) {
+    var data = { id: id };
+    return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return addIsGuest(sanitizeUserObject(dbResult[0]));
         } else {
             return false;
         }
@@ -86,13 +114,31 @@ pub.addGuestUser = function (userData) {
 pub.updateGuestUser = function (userData, key) {
     var data = [userData, key];
     return db.updateQuery(db.dbTables.users_customers_guest, data).then(function (dbResult) {
-        if (!dbResult) {
-            return false;
-        } else {
+        if (dbResult != false) {
             return true;
+        } else {
+            return false;
         }
     });
 };
+
+function ifNewInfo(newData, user) {
+    for (var key in newData) {
+        if (newData[key] != user[key]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function isHistoryNull(user) {
+    for (var key in user) {
+        if (user[key] != null) {
+            return false;
+        }
+    }
+    return true;
+}
 
 /**
  * Updates user data
@@ -105,24 +151,32 @@ pub.updateUser = function (userData, key) {
 
     return db.selectColumnsWhere(Object.keys(userData), db.dbTables.users_customers, key).then(function (users) {
         if (users != false) {
-            historyData = Object.assign(historyData, users[0]);
-            return db.insertQuery(db.dbTables.users_customers_history, historyData).then(function (historyInserted) {
-                if (historyInserted != false) {
-                    return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
-                        if (!dbResult) {
-                            return false;
+            if (ifNewInfo(userData, users[0])) {
+                return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
+                    if (dbResult != false) {
+                        if (!isHistoryNull(users[0])) {
+                            historyData = Object.assign(historyData, users[0]);
+                            return db.insertQuery(db.dbTables.users_customers_history, historyData).then(function (historyInserted) {
+                                if (historyInserted != false) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            });
                         } else {
                             return true;
                         }
-                    });
-                } else {
-                    return false;
-                }
-            });
+                    } else {
+                        return false;
+                    }
+                });
+            } else {
+                return true;
+            }
+        } else {
+            return false;
         }
     });
-
-
 };
 
 /**
@@ -247,15 +301,10 @@ pub.updatePassword = function (userId, oldPassword, newPassword) {
                         var userData = { password: hashedPassword };
                         var data = [userData, key];
                         return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
-                            // console.log("db: " + dbResult.result);
-                            console.log("Start here");
-                            for (tmp in dbResult){
-                                    console.log("dbResult[" + tmp + "] = " + dbResult[tmp]);
-                                }
-                            if (!dbResult) {
-                                return false;
-                            } else {
+                            if (dbResult != false) {
                                 return true;
+                            } else {
+                                return false;
                             }
                         });
                     });

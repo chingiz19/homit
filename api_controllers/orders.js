@@ -94,9 +94,19 @@ router.post('/getorder', Auth.validateAdmin(), function (req, res, next) {
         });
     } else {
         Orders.getOrderById(orderId).then(function (data) {
-            res.json({
-                success: true,
-                orders: data
+            Orders.getUserByOrderId(orderId).then(function (user) {
+                if (user != false) {
+                    res.json({
+                        success: true,
+                        user: user,
+                        orders: data
+                    });
+                } else {
+                    res.json({
+                        success: false
+                    });
+                }
+
             });
         });
     }

@@ -32,7 +32,7 @@ pub.createOrder = function (id, address, isGuest) {
 pub.insertProducts = function (order_id, products) {
     for (var i = 0; i < products.length; i++) {
         var data = {
-            order_id: order_id,            
+            order_id: order_id,
             depot_id: products[i].depot_id,
             quantity: products[i].quantity
         };
@@ -111,6 +111,45 @@ pub.getOrderById = function (orderId) {
     var data = { "orders_cart_info.order_id": orderId };
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
         return dbResult;
+    });
+};
+
+pub.getOrderByIdUserId = function (orderId, userId) {
+    var sqlQuery = `
+    SELECT id
+    FROM orders_history
+    WHERE user_id = ` + userId + ` AND ?`
+
+    var data = { "id": orderId };
+    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return Orders.getOrderById(orderId);
+        } else {
+            return false;
+        }
+    });
+};
+
+pub.getUserByOrderId = function (orderId) {
+    var data = {
+        id: orderId
+    };
+
+    return db.selectAllWhere(db.dbTables.orders_history, data).then(function (orders) {
+        if (orders.length > 0) {
+            var order = orders[0];
+            if (order.user_id == null) {
+                return User.findGuestUserById(order.guest_id).then(function (user) {
+                    return user;
+                });
+            } else {
+                return User.findUserById(order.user_id).then(function (user) {
+                    return user;
+                });
+            }
+        } else {
+            return false;
+        }
     });
 };
 

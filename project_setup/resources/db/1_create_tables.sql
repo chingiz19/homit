@@ -18,6 +18,9 @@ CREATE TABLE users_customers (
 	address1 VARCHAR(225),
 	address2 VARCHAR(225),
 	address3 VARCHAR(225),
+	address1_name VARCHAR(225),
+	address2_name VARCHAR(225),
+	address3_name VARCHAR(225),
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
@@ -35,6 +38,9 @@ CREATE TABLE users_customers_history (
 	address1 VARCHAR(225),
 	address2 VARCHAR(225),
 	address3 VARCHAR(225),
+	address1_name VARCHAR(225),
+	address2_name VARCHAR(225),
+	address3_name VARCHAR(225),
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_users_customers_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE	

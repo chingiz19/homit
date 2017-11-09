@@ -88,7 +88,6 @@ pub.validateAdmin = function (options) {
 function checkAuth(req) {
     if (req.session) {
         var user = vault.read(req);
-        console.log(user);
         if (user && user.startsWith("{")) {
             user = JSON.parse(user);
             if (user.user_email == req.cookies.user.user_email) {
@@ -102,7 +101,6 @@ function checkAuth(req) {
 function checkAuthAdmin(req) {
     if (req.session) {
         var user = vault.read(req);
-        console.log(user);
         if (user && user.startsWith("{")) {
             user = JSON.parse(user);
             if (user.user_email == req.cookies.user.user_email && user.role_id == 2) {

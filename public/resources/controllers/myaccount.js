@@ -89,7 +89,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     }
                 }
             }).then(function successCallback(response) {
-                if (response.data["success"] === "true") {
+                if (response.data["success"] === true) {
                     console.log("Success:  Me updated");
                 } else {
                     console.log("Fail: Me failed to update");
@@ -113,7 +113,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     }
                 }
             }).then(function successCallback(response) {
-                if (response.data["success"] === "true") {
+                if (response.data["success"] === true) {
                     console.log("Success: Contact updated");
                 } else {
                     console.log("Fail: Contact failed to update");
@@ -131,15 +131,15 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     user: {
                         id: $scope.user['id'],
                         address1: myaccount.user.address1,
-                        address1_shortname: myaccount.user.address1_shortname,
+                        address1_name: myaccount.user.address1_shortname,
                         address2: myaccount.user.address2,
-                        address2_shortname: myaccount.user.address2_shortname,
+                        address2_name: myaccount.user.address2_shortname,
                         address3: myaccount.user.address3,
-                        address3_shortname: myaccount.user.address3_shortname
+                        address3_name: myaccount.user.address3_shortname
                     }
                 }
             }).then(function successCallback(response) {
-                if (response.data["success"] === "true") {
+                if (response.data["success"] === true) {
                     console.log("Success: Address updated");
                 } else {
                     console.log("Fail: Address failed to update");
@@ -163,7 +163,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     new_password: myaccount.new_password
                 }
             }).then(function successCallback(response) {
-                if (response.data["success"] === "true") {
+                if (response.data["success"] === true) {
                     console.log("Success: Password reset");
                 } else {
                     console.log("Error: Password failed to reset");
@@ -204,4 +204,4 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
         }
         myaccount.init();
     }]);
-    
+
