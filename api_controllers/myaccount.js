@@ -5,8 +5,9 @@
 var router = require("express").Router();
 
 router.post('/update', function (req, res, next) {
-    if (req.cookies.user) {
-        var id = req.body.user.id;
+    var signedUser = Auth.getSignedUser(req);
+    if (signedUser != false) {
+        var id = signedUser.id;
         var user_email = req.body.user.email;
         var first_name = req.body.user.fname;
         var last_name = req.body.user.lname;
@@ -19,7 +20,7 @@ router.post('/update', function (req, res, next) {
         var address2_name = req.body.user.address2_name;
         var address3_name = req.body.user.address3_name;
 
-        if (!id || !(user_email || first_name || last_name
+        if (!(user_email || first_name || last_name
             || phone_number || birth_date || address1 || address2 || address3 ||
             address1_name || address2_name || address3_name)) {
             res.status(403).json({
@@ -27,7 +28,7 @@ router.post('/update', function (req, res, next) {
                 error: {
                     "code": "U000",
                     "dev_message": "Missing params",
-                    "required_params": ["user_id", "email", "fname", "lname",
+                    "required_params": ["email", "fname", "lname",
                         "phone_number", "birth_date", "address1", "address2", "address3",
                         "address1_name", "address2_name", "address3_name"]
                 }
@@ -102,17 +103,18 @@ router.post('/update', function (req, res, next) {
 });
 
 router.post('/resetpassword', function (req, res, next) {
-    if (req.cookies.user) {
-        var id = req.body.user_id;
+    var signedUser = Auth.getSignedUser(req);
+    if (signedUser != false) {
+        var id = signedUser.id;
         var oldPassword = req.body.old_password;
         var newPassword = req.body.new_password;
 
-        if (!id || !oldPassword || !newPassword) {
+        if (!oldPassword || !newPassword) {
             res.status(403).json({
                 error: {
                     "code": "U000",
                     "dev_message": "Missing params",
-                    "required_params": ["user_id", "old_password", "new_password"]
+                    "required_params": ["old_password", "new_password"]
                 }
             });
         } else {
@@ -145,18 +147,9 @@ router.post('/resetpassword', function (req, res, next) {
 });
 
 router.post('/vieworders', function (req, res, next) {
-    if (req.cookies.user) {
-        var userId = req.body.user_id;
-
-        if (!userId) {
-            res.status(403).json({
-                error: {
-                    "code": "U000",
-                    "dev_message": "Missing params",
-                    "required_params": ["user_id"]
-                }
-            });
-        } 
+    var signedUser = Auth.getSignedUser(req);
+    if (signedUser != false) {
+        var userId = signedUser.id;
 
         Orders.getOrdersByUserId(userId).then(function (data) {
             res.json({
@@ -175,19 +168,20 @@ router.post('/vieworders', function (req, res, next) {
 });
 
 router.post('/getorder', function (req, res, next) {
-    if (req.cookies.user) {
-        var userId = req.body.user_id;
+    var signedUser = Auth.getSignedUser(req);
+    if (signedUser != false) {
+        var userId = signedUser.id;
         var orderId = req.body.order_id;
 
-        if (!userId && !orderId) {
+        if (!orderId) {
             res.status(403).json({
                 error: {
                     "code": "U000",
                     "dev_message": "Missing params",
-                    "required_params": ["user_id", "order_id"]
+                    "required_params": ["order_id"]
                 }
             });
-        } 
+        }
 
         Orders.getOrderByIdUserId(orderId, userId).then(function (data) {
             if (data != false) {

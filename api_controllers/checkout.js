@@ -6,7 +6,6 @@ var router = require("express").Router();
 
 router.post('/placeorder', function (req, res, next) {
     //TODO: Add support for Date of Birth (body.dob)
-    var userId = req.body.user.id;
     var email = req.body.user.email;
     var fname = req.body.user.fname;
     var lname = req.body.user.lname;
@@ -14,13 +13,15 @@ router.post('/placeorder', function (req, res, next) {
     var address = req.body.user.address;
     var products = req.body.products;
 
-    if (req.cookies.user) {
-        if (!userId || !products || !phone || !address) {
+    var signedUser = Auth.getSignedUser(req);
+    if (signedUser != false) {
+        var userId = signedUser.id;
+        if (!products || !phone || !address) {
             res.status(403).json({
                 error: {
                     "code": "U000",
                     "dev_message": "Missing params",
-                    "required_params": ["userId", "phone", "address", "products"]
+                    "required_params": ["phone", "address", "products"]
                 }
             });
         } else {

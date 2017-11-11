@@ -42,11 +42,11 @@ pub.validate = function (options) {
         }
         if (options && options.redirect) {
             console.log("redirect");
-            
+
             res.redirect("/");
         } else {
             console.log("r400");
-            
+
             res.status(400).send("Not Authorized");
         }
     }
@@ -105,6 +105,19 @@ function checkAuthAdmin(req) {
             user = JSON.parse(user);
             if (user.user_email == req.cookies.user.user_email && user.role_id == 2) {
                 return true;
+            }
+        }
+    }
+    return false;
+}
+
+pub.getSignedUser = function(req) {
+    if (req.session) {
+        var user = vault.read(req);
+        if (user && user.startsWith("{")) {
+            user = JSON.parse(user);
+            if (user.user_email == req.cookies.user.user_email) {
+                return user;
             }
         }
     }
