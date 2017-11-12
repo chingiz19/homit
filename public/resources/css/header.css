@@ -1,6 +1,8 @@
 .header {
     display: flex;
     justify-content: space-between;
+    max-height: 60px;
+    height: 60px;
 }
 .md-button:not([disabled]):hover {
     background-color: transparent;

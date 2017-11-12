@@ -10,12 +10,11 @@
     <!-- main part -->
     <div id="mainPart">
         <div class="container-fluid content cntnt_SH" layout="row">
-            <md-sidenav class="md-sidenav-left contentLC" style="z-index: 1000;" flex="40" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"
-                md-whiteframe="4">
+            <md-sidenav class="md-sidenav-left contentLC" flex="40" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
                 <md-content>
                     <div class="contentLCA" layout="column" layout-align="center center">
                         <img class="usrImg">
-                        <md-divider style="margin: 2em;"></md-divider>
+                        <md-divider style="margin: 1em;"></md-divider>
                         <ul layout="column" class="contentLCAC">
                             <li id="myAcTi0" class="myTabs selectedTab">
                                 <a ng-click="myaccount.updateTab(0)" class="myTabsA">Me</a>
@@ -49,7 +48,7 @@
             </md-sidenav>
             <div flex="60" layout="column" class="contentRC RC_SH">
                 <md-button aria-label="toggleLeft" ng-click="toggleLeft()" class="tglLbtn" hide-gt-md>
-                        <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+                    <ng-md-icon icon="keyboard_arrow_left" class="contentRCBAA"></ng-md-icon>
                 </md-button>
                 <div class="contentRCA">
                     <div ng-if="myaccount.selectedTab != 5" class="contentRCAB" layout="row">
@@ -412,19 +411,47 @@
                     <!-- Order History -->
                     <div ng-if="myaccount.selectedTab == 5" class="contentRCorHist">
                         <ul layout="row" class="flxCntrLn">
-                            <li flex="15" layout="row">
-                                <span>Order#</span>
-                                <md-button aria-label="ShowHideCardInfo" style="margin: 0; padding: 0; min-width: 20px; min-height: 25px;">
-                                    <ng-md-icon ng-if="true" icon="keyboard_arrow_down" size="20"></ng-md-icon>
-                                    <!-- <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="20"></ng-md-icon> -->
-                                </md-button>
+                            <li flex="15" layout="row" class="flxCntrLn">
+                                <span class="ordCntHdr ordCntTxt">Order</span>
                             </li>
-                            <li flex="15">Store</li>
-                            <li flex="15">Address</li>
-                            <li flex="15">Date</li>
-                            <li flex="15">Price</li>
-                            <li flex="15">Price</li>
+                            <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Date</li>
+                            <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Store</li>
+                            <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Price</li>
+                            <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Address</li>
                         </ul>
+                        <div class="ordHist">
+                            <div ng-repeat="order in myaccount.foundOrders">
+                                <ul layout="row" class="flxCntrLn">
+                                    <li flex="15" layout="row" class="flxCntrLn">
+                                        <span>#{{order.order_id}}</span>
+                                        <md-button aria-label="ShowHideCardInfo" ng-click="myaccount.getOrderContent(order.order_id);" class="ordHistCntBtn">
+                                            <ng-md-icon icon="keyboard_arrow_down"></ng-md-icon>
+                                        </md-button>
+                                    </li>
+                                    <li flex="15" class="ordCntTxt flxCntrLn">{{order.date_received}}</li>
+                                    <li flex="15" class="ordCntTxt flxCntrLn">Liquor Station</li>
+                                    <li flex="15" class="ordCntTxt flxCntrLn">$CXXX</li>
+                                    <li flex="15" class="ordCntTxt flxCntrLn">{{order.fe_address}}</li>
+                                </ul>
+                                <div id="{{order.order_id}}" class="cntBx">
+                                    <div ng-value="item" class="cntBxA">
+                                        <div flex="40" layout="row" class="cntBxAA" ng-repeat="item in myaccount.foundTheOrder">
+                                            <ul class="cntBxAAA">
+                                                <img class="cntBxAAAA" ng-src="{{'/resources/images/products/' + item.super_category + '/' + item.category + '/' + item.image}}">
+                                            </ul>
+                                            <div layout="row" class="cntBxAAB">
+                                                <ul layout="column" class="cntBxAABA">
+                                                    <li class="cntBxAABAA">{{item.brand}}</li>
+                                                    <li class="cntBxAABAA">#{{item.packaging}}</li>
+                                                    <li class="cntBxAABAA">{{item.volume}}</li>
+                                                    <li class="cntBxAABAA">C${{item.price}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

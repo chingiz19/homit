@@ -7,13 +7,12 @@ body{
     background-color: rgb(252, 252, 252);
     letter-spacing: 0.01em;
 }
-/* .md-button:not([disabled]):hover {
-    background-color: transparent;
-} */
-.md-button .md-ripple-container {
-    background-color: transparent !important;
+.md-button.tglLbtn:not([disabled]):hover{
+    background-color: rgba(255,255,255,1);
 }
-
+.md-button.tglLbtn:not([disabled]).md-focused{
+    background-color: rgba(255,255,255,1);
+}
 .content{
     position: relative; 
     top: 40px; 
@@ -23,18 +22,17 @@ body{
 /* Content box left column */
 .contentLC{
     background-color: rgba(255,255,255,1);
-    border: 1px solid rgba(0,0,0,0.15); border-radius: 0 20px 20px 0; 
+    border: 1px solid rgba(0,0,0,0.15); border-radius: 0 10px 10px 0; 
     margin-right: 1%; 
     box-shadow: 0 0px 2px 0px rgba(0,0,0,0.05);
-    z-index: 1;
+    z-index: 1000;
 }
 .contentLCA{
-    /* margin-left: 10%;  */
-    margin-top: 3%;
+    margin-top: 5%;
 }
 .usrImg{
-    height: 200px; width: 200px; 
-    border: 1px solid rgba(0,0,0,0.25); border-radius: 10px;
+    height: 150px; width: 150px; 
+    border: 1px solid rgba(0,0,0,0.1); border-radius: 10px;
 }
 .contentLCAC{
     display: flex; justify-content: center; 
@@ -63,15 +61,16 @@ body{
 }
 /* Content box right column */
 .contentRC{
+    min-width: 710px;
     background-color: rgba(255,255,255,1);
     margin-left: 1%; 
-    border: 1px solid rgba(0,0,0,0.15); border-radius: 20px 0 0 20px; 
+    border: 1px solid rgba(0,0,0,0.15); border-radius: 10px 0 0 10px; 
     box-shadow: 0 0px 2px 0px rgba(0,0,0,0.05);
     z-index: 1;
 }
 .tglLbtn{
-    position: absolute; 
-    left: 19%; top: 45%; 
+    position: relative; 
+    right: 17px; top: 45%; 
     min-width: 10px; width: 18px; height: 50px;
     margin: 0; padding: 0; 
     background-color: rgba(255,255,255,1); 
@@ -83,10 +82,8 @@ body{
 }
 
 .contentRCAB{
-    margin-right: 5%; margin-top: 2.5%;
-}
-.contentRCAB{
     display: flex; justify-content: flex-end;
+    margin-right: 5%; margin-top: 2.5%;
 }
 .contentRCABA{
     min-width: 36px ;
@@ -106,6 +103,7 @@ contentRCABB svg{
 /* display flex center in row */
 .flxCntrLn{
     display: flex; justify-content: center;
+    margin: 0; padding: 0;
 }
 /* ul margin/padding zero */
 .ulMP_0{
@@ -113,6 +111,19 @@ contentRCABB svg{
 }
 .contentRCorHist{
     position: relative; top: 55px;
+    overflow-y: scroll;
+}
+.ordHist{
+    margin-top: 10px;
+}
+.ordHistCntBtn{
+    margin: 0; padding: 0; min-width: 20px; min-height: 20px; height: 20px;
+}
+.ordHistCntBtn ng-md-icon{
+    fill: rgba(0,0,0,0.8);
+}
+.ordHistCntBtn ng-md-icon svg{
+    width: 20px; height: 20px;
 }
 .selectedTab{
     font-weight: 700;
@@ -124,12 +135,65 @@ contentRCABB svg{
     border-bottom: 3px solid rgba(42,81,145,0.9);
 	transition: width 0.6s ease, background-color .5s ease;
 }
+.ordCntHdr{
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(0,0,0,0.8);
+}
+.ordCntTxt{
+    letter-spacing: 0.025em;
+    -webkit-font-smoothing: antialiased;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+}
+.cntBx{
+    overflow-y: scroll;
+    width: 75%; height: 0;
+    transition: height 0.3s ease, background-color .3s ease;
+}
+.cntBxA{
+    display: flex; justify-content: center; flex-wrap: wrap;
+}
+.cntBxAA{
+    margin: 10px 0 10px 0;
+}
+.cntBxAAA{
+    position: relative; left: 10%;
+    padding: 0; margin: 0 0 0 20px;
+}
+.cntBxAAAA{
+    height: 75px;
+    width: 75px;
+}
+.cntBxAAB{
+    display: flex; align-items: center; 
+    margin: 0; padding: 0;
+}
+.cntBxAABA{
+    margin-left: 30px; padding: 0;
+}
+.cntBxAABAA{
+    display: flex; justify-content: center; 
+    font-size: 10px; font-weight: bold;
+    letter-spacing: 0.025em;
+    color: rgba(0,0,0,0.65);
+    -webkit-font-smoothing: antialiased;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+}
+.slctcntBx{
+    margin: auto;
+    height: 40%;
+    background-color: rgba(42,81,145,0.01);
+    border: 2px solid rgba(108, 221, 231, 0.237); border-radius: 5px;
+    transition: height 0.6s ease, background-color .5s ease;
+}
 
-@media(max-width: 1280px){
+@media(max-width: 1280px) and (min-width: 670px){
     .cntnt_SH{
         display: flex; justify-content: center;
     }
+}
+@media (max-width: 1280px){
     .RC_SH{
-        border-radius: 20px 20px 20px 20px;
+        border-radius: 10px 10px 10px 10px;
     }
 }

@@ -315,7 +315,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         $window.onload = function () {
             var subcad = storage.getSearchSubcategory();
             var prodID = storage.getSearchProduct();
-            if (subcad) {
+            if (subcad != 'undefined') {
                 var x = document.querySelectorAll(".SubcategoryName");
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].textContent.trim() == subcad) {
@@ -323,7 +323,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                     }
                 }
             }
-            if (prodID) {
+            if (prodID != 'undefined') {
                 var x = document.querySelectorAll(".itemBoxL1");
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].id == prodID) {

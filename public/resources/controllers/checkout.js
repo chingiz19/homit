@@ -12,7 +12,6 @@ app.controller("checkoutController",
         $scope.isUserSigned;
         $scope.orderer = {};
 
-        $scope.toggleRight = buildDelayedToggler('right');
 
         // init didn't work that's why $cookies.getObject is outside
         if ($cookies.get("user")) {
@@ -33,7 +32,7 @@ app.controller("checkoutController",
             }
             var inputAddressUser = document.getElementById('newAddressUser');
             if (!inputAddressUser) {
-                $scope.userInfo.address1 = $scope.deliveryAddress;
+                $scope.userInfo.address0 = $scope.deliveryAddress;
             }
         }
 
@@ -45,7 +44,7 @@ app.controller("checkoutController",
                 $scope.userInfo = {};
                 $scope.isUserSigned = false;
             }
-            $scope.selectedAddress = 1;
+            $scope.selectedAddress = 0;
         }
 
         cartService.getCart()
@@ -177,7 +176,6 @@ app.controller("checkoutController",
                 userInfoToSend.phone = $scope.userInfo.phone_number;
                 userInfoToSend.dob = $scope.userInfo.dob;
             }
-            console.log(userInfoToSend);
             $http({
                 method: 'POST',
                 url: '/api/checkout/placeorder',
@@ -205,6 +203,7 @@ app.controller("checkoutController",
         }
 
         // Checkout Page right-SideNav functionality
+        $scope.toggleRight = buildDelayedToggler('right');
         function debounce(func, wait, context) {
             var timer;
             return function debounced() {

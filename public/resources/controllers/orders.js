@@ -10,8 +10,8 @@ app.filter('totalPrice', function () {
     };
 });
 
-app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "$rootScope",
-    function ($location, $scope, $cookies, $http, $rootScope) {
+app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "$rootScope", "$window",
+    function ($location, $scope, $cookies, $http, $rootScope, $window) {
 
         $scope.searchCriteria;
         $scope.searCriteriaIndex;
@@ -55,8 +55,15 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                         order_id: $scope.searchCriteria
                     }
                 }).then(function successCallback(response) {
-                    console.log(response.data);
-                    $scope.foundOrderContent = response.data.orders;
+
+                    $scope.foundUsers.push(response.data.user);
+                    setTimeout(() => {
+                        document.getElementById("usrRbtn").click();
+                        setTimeout(() => {
+                            document.getElementById($scope.searchCriteria).click();
+                        }, 10);
+                    }, 10);
+
                 }, function errorCallback(response) {
                     console.error("error");
                 });

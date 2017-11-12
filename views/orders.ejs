@@ -36,7 +36,7 @@
                 </div>
                 <div class="container">
                     <md-radio-group class="gtDataA">
-                        <md-radio-button aria-label="selectUser" class="gtDataAA" ng-value="user" ng-repeat="user in foundUsers" ng-click="selectedUserID(user)">
+                        <md-radio-button id="usrRbtn" aria-label="selectUser" class="gtDataAA" ng-value="user" ng-repeat="user in foundUsers" ng-click="selectedUserID(user)">
                             <ul layout="row" class="gtDataAAA">
                                 <li class="gtDataAAAA">First Name: </li>
                                 <li class="gtDataAAAB">&nbsp{{user.first_name}};&nbsp&nbsp</li>
@@ -51,7 +51,7 @@
                         <div ng-if="foundUsers != '' " class="gtDataAB"></div>
                     </md-radio-group>
                     <md-radio-group class="gtDataB">
-                        <md-radio-button aria-label="selectOrder" class="gtDataBA" ng-value="order" ng-repeat="order in foundOrders" ng-click="selectedOrderId(order)">
+                        <md-radio-button id="{{order.order_id}}" aria-label="selectOrder" class="gtDataBA" ng-value="order" ng-repeat="order in foundOrders" ng-click="selectedOrderId(order)">
                             <ul layout="row" class="gtDataBAA">
                                 <li class="gtDataBAAA">Order Id: </li>
                                 <li class="gtDataBAAB">&nbsp{{order.order_id}};&nbsp&nbsp</li>

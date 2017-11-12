@@ -4,6 +4,8 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
         var myaccount = this;
         myaccount.init = function () {
             myaccount.user = {};
+            myaccount.foundOrders = [];
+            myaccount.foundTheOrder = [];
             myaccount.edit = false;
             myaccount.isOrderHistoryShown = false;
             myaccount.date = date;
@@ -19,6 +21,12 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             myaccount.user.birthDay = parseInt($scope.user['birth_date'].slice(8, 10), 10);
             myaccount.user.email = $scope.user['user_email'];
             myaccount.user.phoneNumber = $scope.user['phone_number'];
+            myaccount.user.address1_shortname = $scope.user['address1_name'];
+            myaccount.user.address1 = $scope.user['address1'];
+            myaccount.user.address2_shortname = $scope.user['address2_name'];
+            myaccount.user.address2 = $scope.user['address2'];
+            myaccount.user.address3_shortname = $scope.user['address3_name'];
+            myaccount.user.address3 = $scope.user['address3'];
         }
         myaccount.updateTab = function (tab) {
             myaccount.selectedTab = tab;
@@ -34,6 +42,9 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             }
             document.getElementById("myAcLi" + tab).classList.remove("myTabsBtmLn");
             document.getElementById("myAcLi" + tab).classList.add("selectedTabLn");
+            if (myaccount.selectedTab == 5) {
+                myaccount.viewUserOrders();
+            }
         }
 
         myaccount.editButton = function () {
@@ -49,6 +60,12 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             myaccount.user.birthDay = parseInt($scope.user['birth_date'].slice(8, 10), 10);
             myaccount.user.email = $scope.user['user_email'];
             myaccount.user.phoneNumber = $scope.user['phone_number'];
+            myaccount.user.address1_shortname = $scope.user['address1_name'];
+            myaccount.user.address1 = $scope.user['address1'];
+            myaccount.user.address2_shortname = $scope.user['address2_name'];
+            myaccount.user.address2 = $scope.user['address2'];
+            myaccount.user.address3_shortname = $scope.user['address3_name'];
+            myaccount.user.address3 = $scope.user['address3'];
         }
 
         var showToast = function (message, action) {
@@ -100,8 +117,6 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
         }
 
         myaccount.updateContact = function () {
-            console.log("email is: " + myaccount.user.email);
-            console.log("phone is: " + myaccount.user.phoneNumber);
             $http({
                 method: 'POST',
                 url: '/api/myaccount/update',
@@ -158,7 +173,6 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 method: 'POST',
                 url: '/api/myaccount/resetpassword',
                 data: {
-                    user_id: $scope.user['id'],
                     old_password: myaccount.password,
                     new_password: myaccount.new_password
                 }
@@ -171,37 +185,101 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             }, function errorCallback(response) {
                 console.log("ERROR in password reset");
             });
+        }
 
-            // myAccount Page left-SideNav functionality
-            $scope.toggleLeft = buildDelayedToggler('left');
-            function debounce(func, wait, context) {
-                var timer;
-                return function debounced() {
-                    var context = $scope,
-                        args = Array.prototype.slice.call(arguments);
-                    $timeout.cancel(timer);
-                    timer = $timeout(function () {
-                        timer = undefined;
-                        func.apply(context, args);
-                    }, wait || 10);
-                };
+        $scope.mm_dd_yyyy = function (inDate) {
+            return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
+        }
+
+        myaccount.viewUserOrders = function () {
+            $http({
+                method: 'POST',
+                url: '/api/myaccount/vieworders',
+            }).then(function successCallback(response) {
+                myaccount.foundOrders = response.data.orders;
+                var inDate;
+                for (tmp in myaccount.foundOrders) {
+                    inDate = myaccount.foundOrders[tmp]['date_received'];
+                    myaccount.foundOrders[tmp]['date_received'] = $scope.mm_dd_yyyy(inDate);
+                    myaccount.foundOrders[tmp]['fe_address'] = myaccount.foundOrders[tmp]['delivery_address'].substring(0, 13) + "..";
+                }
+            }, function errorCallback(response) {
+                console.log("Error in getting user Orders.");
+            });
+        }
+
+        $scope.reqOrderID = 0;
+
+        myaccount.getOrderContent = function (order_id) {
+            myaccount.slctcntBxIsSet = false;
+            var el_order_id = document.getElementById(order_id);
+
+            if (order_id == $scope.reqOrderID) {
+                if (el_order_id.classList.contains("slctcntBx")) {
+                    el_order_id.classList.remove("slctcntBx");
+                } else {
+                    el_order_id.classList.add("slctcntBx");
+                }
+            } else {
+                var x = document.querySelectorAll(".cntBx");
+                if ($scope.reqOrderID == 0) {
+                    el_order_id.classList.add("slctcntBx");
+                    $scope.reqOrderID = order_id;
+                } else {
+                    for (var i = 0; i < x.length; i++) {
+                        if (x[i].classList.contains("slctcntBx")) {
+                            document.getElementById(x[i].id).classList.remove("slctcntBx");
+                            el_order_id.classList.add("slctcntBx");
+                            $scope.reqOrderID = order_id;
+                            myaccount.slctcntBxIsSet = true;
+                        } else if (!myaccount.slctcntBxIsSet) {
+                            el_order_id.classList.add("slctcntBx");
+                        }
+                    }
+                }
             }
-            function buildDelayedToggler(navID) {
-                return debounce(function () {
-                    $mdSidenav(navID)
-                        .toggle()
-                        .then(function () {
-                            $log.debug("toggle " + navID + " is done");
-                        });
-                }, 200);
-            }
-            $scope.close = function () {
-                $mdSidenav('right').close()
-                    .then(function () {
-                        $log.debug("close RIGHT is done");
-                    });
+            $http({
+                method: 'POST',
+                url: 'api/myaccount/getorder',
+                data: {
+                    order_id: order_id
+                }
+            }).then(function successCallback(response) {
+                myaccount.foundTheOrder = response.data.orders;
+            }, function errorCallback(response) {
+                console.log("Error in getting the requested Order");
+            });
+        }
+
+        // myAccount Page left-SideNav functionality
+        $scope.toggleLeft = buildDelayedToggler('left');
+        function debounce(func, wait, context) {
+            var timer;
+            return function debounced() {
+                var context = $scope,
+                    args = Array.prototype.slice.call(arguments);
+                $timeout.cancel(timer);
+                timer = $timeout(function () {
+                    timer = undefined;
+                    func.apply(context, args);
+                }, wait || 10);
             };
         }
+        function buildDelayedToggler(navID) {
+            return debounce(function () {
+                $mdSidenav(navID)
+                    .toggle()
+                    .then(function () {
+                        $log.debug("toggle " + navID + " is done");
+                    });
+            }, 200);
+        }
+        $scope.close = function () {
+            $mdSidenav('right').close()
+                .then(function () {
+                    $log.debug("close LEFT is done");
+                });
+        };
         myaccount.init();
     }]);
 
