@@ -8,6 +8,8 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         $scope.isWines = false;
         $scope.isSpirits = false;
         $scope.isOthers = false;
+        $scope.screenIsMob = false;
+
 
         $scope.selectedCategory = undefined;
         $scope.loadedStore = "Store";
@@ -46,18 +48,12 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         $scope.searchedBrand = "";
 
         // User selected variables
-        $scope.userSelectedSubcategories = null;
-        $scope.userSelectedTypes = [];
-        $scope.userSelectedBrands = [];
-        $scope.userSelectedPackings = [];
-
         // Get initial list of products
         $scope.products;
         $scope.subcategories = [];
         $scope.availableTypes = [];
         $scope.availableBrands = [];
         $scope.allBrands = [];
-        $scope.packings;
         $http({
             method: 'GET',
             url: $scope.productUrl
@@ -71,11 +67,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                     product.packJ = 0;
                 })
                 $scope.subcategories = response.data['subcategories'];
-                $scope.packings = response.data['packagings'];
-
-                $scope.allBrands = response.data['all_brands'];
-                $scope.availableTypes = $scope.subcategories[0]['types'];
-                $scope.availableBrands = $scope.subcategories[0]['brands'];
+                $scope.userSelectedSubcategories = $scope.subcategories[0]['subcategory_name'];
             }
         }, function errorCallback(response) {
 
@@ -99,51 +91,11 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             $scope.userSelectedSubcategories = subcategory;
             var i = getElementIdByName(subcategory);
             if (i < 0) {
-                $scope.availableBrands = $scope.allBrands;
+                $scope.availableBrands = $scope.subcategories[0]['brands'];
             } else {
-                // $scope.availableTypes = $scope.subcategories[i]['types'];
-                // $scope.userSelectedTypes = [];
                 $scope.availableBrands = $scope.subcategories[i]['brands'];
             }
             $scope.userSelectedBrands = [];
-        };
-
-        // Used for mobile version
-        // Start
-        // $scope.$on("checkTypes", function (event, type) {
-        //     $scope.checkTypes(type);
-        // });
-
-        // $scope.$on("checkSubcategories", function (event, subcategory_name) {
-        //     $scope.checkSubcategories(subcategory_name);
-        // });
-        // $scope.$on("emptySubcategories", function(event){
-        //     $scope.emptySubcategories();
-        // })
-        // End
-
-        $scope.checkTypes = function (type) {
-            if (!$scope.userSelectedTypes.includes(type)) {
-                $scope.userSelectedTypes.push(type);
-            } else {
-                $scope.userSelectedTypes.splice($scope.userSelectedTypes.indexOf(type), 1);
-            }
-        };
-
-        $scope.checkBrands = function (brand) {
-            if (!$scope.userSelectedBrands.includes(brand)) {
-                $scope.userSelectedBrands.push(brand);
-            } else {
-                $scope.userSelectedBrands.splice($scope.userSelectedBrands.indexOf(brand), 1);
-            }
-        };
-
-        $scope.checkPackings = function (packing) {
-            if (!$scope.userSelectedPackings.includes(packing)) {
-                $scope.userSelectedPackings.push(packing);
-            } else {
-                $scope.userSelectedPackings.splice($scope.userSelectedPackings.indexOf(packing), 1);
-            }
         };
 
         $scope.isInSelectedSubcategories = function (subcategory) {
@@ -156,54 +108,9 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             }
         };
 
-        $scope.isInSelectedTypes = function (type) {
-            if ($scope.userSelectedTypes.length === 0) {
-                return true;
-            } else {
-                if ($scope.userSelectedTypes.includes(type)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-
-        $scope.isInSelectedBrands = function (brand) {
-            if ($scope.userSelectedBrands.length === 0) {
-                return true;
-            } else {
-                if ($scope.userSelectedBrands.includes(brand)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-
-        $scope.isInSelectedPackings = function (packing) {
-            if ($scope.userSelectedPackings.length === 0) {
-                return true;
-            } else {
-                if ($scope.userSelectedPackings.includes(packing)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-
-        $scope.isBrandCheckboxChecked = function (brand) {
-            if ($scope.userSelectedBrands.includes(brand)) {
-                return true;
-            } else {
-                return false;
-            }
-        };
-
         $scope.addToCart = function (product) {
             var p = jQuery.extend(true, {}, product);
 
-            //prepare product for cart
             p.volume = p.selectedVolume;
             p.packaging = p.selectedPack;
             p.price = p.product_variants[p.volume][p.packaging].price;
@@ -278,6 +185,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         $scope.emptySubcategories = function () {
             $scope.userSelectedSubcategories = null;
         }
+        
         // USer Cart right-SideNav functionality
         // Start
         $scope.toggleNavLeft = buildToggler('navigateMobSN');
@@ -313,15 +221,26 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         };
         // End
         $window.onload = function () {
+            var screen_width = $(window).width();
+            if (screen_width < 901) {
+                $scope.screenIsMob = true;
+            } else {
+                $scope.screenIsMob = false;
+            }
+            console.log("screen width is: " + screen_width);
+            console.log("screen mobile: " + $scope.screenIsMob);
             var subcad = storage.getSearchSubcategory();
             var prodID = storage.getSearchProduct();
-            if (subcad != 'undefined') {
+            if (subcad != 'undefined' && subcad != null) {
+
                 var x = document.querySelectorAll(".SubcategoryName");
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].textContent.trim() == subcad) {
                         document.getElementById(x[i].id).click();
                     }
                 }
+            } else {
+                document.getElementById('radio_1').click();
             }
             if (prodID != 'undefined') {
                 var x = document.querySelectorAll(".itemBoxL1");

@@ -171,8 +171,11 @@
         background-color: rgba(0,0,0,0.08);
         transition: 0.4s;
     }
+    .srchRsltKEYS{
+        background-color: rgba(0,0,0,0.08) !important;
+        /* transition: 0.4s; */
+    }
     .mnSrchA{
-        /* left: 7.5px; */
         margin: 0;
         padding-top: 6px;
     }
@@ -360,5 +363,3 @@
         z-index: 1000;
     }
 }
-
-

@@ -145,11 +145,6 @@ contentRCABB svg{
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
-.cntBx{
-    overflow-y: scroll;
-    width: 75%; height: 0;
-    transition: height 0.3s ease, background-color .3s ease;
-}
 .cntBxA{
     display: flex; justify-content: center; flex-wrap: wrap;
 }
@@ -161,15 +156,15 @@ contentRCABB svg{
     padding: 0; margin: 0 0 0 20px;
 }
 .cntBxAAAA{
-    height: 75px;
-    width: 75px;
+    height: 85px;
+    width: 85px;
 }
 .cntBxAAB{
     display: flex; align-items: center; 
     margin: 0; padding: 0;
 }
 .cntBxAABA{
-    margin-left: 30px; padding: 0;
+    margin-left: 40px; padding: 0;
 }
 .cntBxAABAA{
     display: flex; justify-content: center; 
@@ -179,11 +174,17 @@ contentRCABB svg{
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
+.cntBx{
+    margin: auto;
+    overflow-y: scroll;
+    width: 75%; height: 0;
+    transition: height 0.3s ease, background-color .3s ease;
+}
 .slctcntBx{
     margin: auto;
     height: 40%;
     background-color: rgba(42,81,145,0.01);
-    border: 2px solid rgba(108, 221, 231, 0.237); border-radius: 5px;
+    border: 1px solid rgba(55, 118, 143, 0.432); border-radius: 5px;
     transition: height 0.6s ease, background-color .5s ease;
 }
 

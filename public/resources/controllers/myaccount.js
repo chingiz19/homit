@@ -99,7 +99,6 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 url: '/api/myaccount/update',
                 data: {
                     user: {
-                        id: $scope.user['id'],
                         fname: myaccount.user.firstName,
                         lname: myaccount.user.lastName,
                         birth_date: myaccount.user.birthYear + "-" + myaccount.user.birthMonth + "-" + myaccount.user.birthDay
@@ -122,7 +121,6 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 url: '/api/myaccount/update',
                 data: {
                     user: {
-                        id: $scope.user['id'],
                         email: myaccount.user.email,
                         phone_number: myaccount.user.phoneNumber,
                     }
@@ -144,7 +142,6 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 url: '/api/myaccount/update',
                 data: {
                     user: {
-                        id: $scope.user['id'],
                         address1: myaccount.user.address1,
                         address1_name: myaccount.user.address1_shortname,
                         address2: myaccount.user.address2,

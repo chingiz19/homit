@@ -34,26 +34,26 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         });
     }
 
-    function clickedOffBox(e){
+    function clickedOffBox(e) {
         var el = document.getElementById('hdrHub').attributes;
         if (el['aria-hidden'].value == "false") {
-            if(event.target['id'] != 'hdrHub' && event.target['id'] != 'hdrHub1' && event.target['id'] != 'hdrHub2' && event.target['id'] != 'hdrHub3'){
+            if (event.target['id'] != 'hdrHub' && event.target['id'] != 'hdrHub1' && event.target['id'] != 'hdrHub2' && event.target['id'] != 'hdrHub3') {
                 document.getElementById('hdrHub').setAttribute("aria-hidden", "true");
                 window.removeEventListener('click', clickedOffBox, false);
             }
         }
     }
-    $scope.hubClicked = function(){
+    $scope.hubClicked = function () {
         var el_ID = "hdrHub";
         var el = document.getElementById(el_ID).attributes;
-        if(el["aria-hidden"].value == "true"){
+        if (el["aria-hidden"].value == "true") {
             document.getElementById(el_ID).setAttribute("aria-hidden", "false");
-        } else{
+        } else {
             document.getElementById(el_ID).setAttribute("aria-hidden", "true");
             window.removeEventListener('click', clickedOffBox, false);
         }
-        if(el["aria-hidden"].value == "false"){
-            setTimeout(function() {
+        if (el["aria-hidden"].value == "false") {
+            setTimeout(function () {
                 window.addEventListener('click', clickedOffBox, false);
             }, 100);
         }
@@ -77,7 +77,6 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     }
     function buildTogglerTop(navID) {
         return function () {
-            // Component lookup should always be available since we are not using `ng-if`
             $mdSidenav(navID)
                 .toggle()
                 .then(function () {
@@ -87,7 +86,6 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     }
     function buildTogglerLeft(navID) {
         return function () {
-            // Component lookup should always be available since we are not using `ng-if`
             $mdSidenav(navID)
                 .toggle()
                 .then(function () {
@@ -95,16 +93,13 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 });
         };
     }
-
     $scope.close = function () {
-        // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav('top').close()
             .then(function () {
                 $log.debug("close TOP is done");
             });
     };
     $scope.close = function () {
-        // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav('left').close()
             .then(function () {
                 $log.debug("close LEFT is done");
@@ -129,14 +124,15 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     }
 
     $scope.searchRequest = "";
-    $scope.searchRequestResult = {};
     $scope.searchRequestURL = "";
+    $scope.isArrowPressed = false;
+    $scope.resListNode = 0;
 
     var searchRequestElement = document.getElementById('glbSearchRequest');
     searchRequestElement.addEventListener('keyup', globalSearch, false);
 
-    function globalSearch() {
-        if ($scope.searchRequest.length >= 3) {
+    function globalSearch(evt) {
+        if ($scope.searchRequest.length >= 3 && evt.keyCode != 40 && evt.keyCode != 38 && evt.keyCode != 13) {
             $http({
                 method: 'POST',
                 url: "/api/catalog/search",
@@ -203,11 +199,53 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 console.error("error");
             });
         }
+
         $scope.sendSubcategory = function (subcategory, product_id) {
             storage.setSearchSubcategory(subcategory);
             if (product_id) {
                 storage.setSearchProduct(product_id);
             }
+        }
+        navigateSearchResult(evt, $scope.searchResult);
+    }
+
+    function navigateSearchResult(evt, searchResult) {
+        // TODO make arrow selected result node appear in the "input line"
+
+        var el = document.querySelectorAll('.srchRslt');
+        if (evt.keyCode == 40 && $scope.isArrowPressed == false) {
+            if (searchResult[0]['result']) {
+                // $scope.searchRequest = $scope.searchResult[0]['brandName'];
+                $scope.isArrowPressed = true;
+            } else {
+                // $scope.searchRequest = $scope.searchResult[0]['brandName'];
+                $scope.isArrowPressed = true;
+            }
+            document.getElementById(el[0].id).classList.add('srchRsltKEYS');
+        } 
+        else if (evt.keyCode == 38) {
+            if($scope.resListNode == 0 ){
+                $scope.resListNode = $scope.searchResult.length - 1;
+                document.getElementById(el[0].id).classList.remove('srchRsltKEYS');
+                document.getElementById(el[$scope.resListNode].id).classList.add('srchRsltKEYS');
+            } else{
+                $scope.resListNode -= 1;
+                document.getElementById(el[$scope.resListNode + 1].id).classList.remove('srchRsltKEYS');
+                document.getElementById(el[$scope.resListNode].id).classList.add('srchRsltKEYS');
+            }
+        } else if (evt.keyCode == 40) {
+            if($scope.resListNode == $scope.searchResult.length - 1){
+                $scope.resListNode = 0;
+                document.getElementById(el[$scope.searchResult.length-1].id).classList.remove('srchRsltKEYS');
+                document.getElementById(el[0].id).classList.add('srchRsltKEYS');
+            } else{
+                $scope.resListNode += 1;
+                document.getElementById(el[$scope.resListNode].id).classList.add('srchRsltKEYS');
+                document.getElementById(el[$scope.resListNode-1].id).classList.remove('srchRsltKEYS');
+            }
+        }
+        if (evt.keyCode == 13 && $scope.isArrowPressed == true) {
+            document.getElementById(el[$scope.resListNode].id).click();
         }
     }
 

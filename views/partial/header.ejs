@@ -23,16 +23,16 @@
                     <input id="glbSearchRequest" ng-model="searchRequest" placeholder="Search to Homit...">
                 </md-input-container>
                 <div ng-if="searchResult" id="glbSearchRequest" class="mnSrchC">
-                    <ul ng-if="searchResult[0].result" class="mnSrchCA">
+                    <ul ng-if="searchResult[0].result" id="glbSrchA" class="mnSrchCA">
                         <li ng-repeat="node in searchResult">
-                            <a href="{{node.path}}" target="_self" ng-click="sendSubcategory(node.subcategory, '' )" class="srchRslt mnSrchCAAA">
+                            <a href="{{node.path}}" target="_self" ng-click="sendSubcategory(node.subcategory, '' )" id="{{$index + 1}}" class="srchRslt mnSrchCAAA">
                                 <span class="mnSrchCAAAA">{{node.result}}</span>
                             </a>
                         </li>
                     </ul>
-                    <ul ng-if="!searchResult[0].result" class="mnSrchCB">
+                    <ul ng-if="!searchResult[0].result" id="glbSrchB" class="mnSrchCB">
                         <li ng-repeat="node in searchResult">
-                            <a href="{{node.path}}" target="_self" ng-click="sendSubcategory(node.subcategory, node.product_id)" class="srchRslt mnSrchCBAA">
+                            <a href="{{node.path}}" target="_self" ng-click="sendSubcategory(node.subcategory, node.product_id)" id="{{$index + 1}}" class="srchRslt mnSrchCBAA">
                                 <span class="mnSrchCBAAA">
                                     <img class="mnSrchImg" ng-src={{node.image}}>
                                 </span>
