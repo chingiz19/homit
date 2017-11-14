@@ -30,37 +30,42 @@
                 </div>
             </div>
             <!--Order Summary - Cart Items-->
-            <div ng-repeat="product in userCart" class="cartBItems1">
-                <div layout="row" layout-align="center">
-                    <div class="cartBItems2A" flex="30">
-                        <ul>
-                            <li>
-                                <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
-                                    <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
+            <div ng-repeat="super_category in userCartToView" class="cartBItems1">
+                <div style="border-bottom: 1px solid rgba(0,0,0,0.40);  display: flex; justify-content: flex-end; ">
+                     <div style="color: rgba(0,0,0,0.45); font-size: 15px; text-transform: uppercase; margin-right: 5px;">{{ super_category[0] }}</div>
+                </div>
+                <div ng-repeat="product in super_category[1]">
+                    <div layout="row" layout-align="center">
+                        <div class="cartBItems2A" flex="30">
+                            <ul>
+                                <li>
+                                    <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
+                                        <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
+                                    </md-button>
+                                </li>
+                                <li>
+                                    <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
+                                        <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
+                                    </md-button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div flex="35" layout="column" >
+                            <li class="cartBItems2B1">
+                                <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)" class="itemRemoveBtn1">
+                                    <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
                                 </md-button>
                             </li>
-                            <li>
-                                <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
-                                    <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
-                                </md-button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div flex="35" layout="column" >
-                        <li class="cartBItems2B1">
-                            <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)" class="itemRemoveBtn1">
-                                <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
-                            </md-button>
-                        </li>
-                        <li><img class="cartBItems2B2" ng-src={{product.image}}></li>
-                    </div>
-                    <div class="cartBItems2C" flex="35">
-                        <ul class="cartBItems2C2">
-                            <li>{{product.brand}} {{product.name}}</li>
-                            <li>{{product.volume}}</li>
-                            <li>{{product.quantity}}&#8202X{{product.packaging}}</li>
-                            <li>C${{product.price}}</li>
-                        </ul>
+                            <li><img class="cartBItems2B2" ng-src={{product.image}}></li>
+                        </div>
+                        <div class="cartBItems2C" flex="35">
+                            <ul class="cartBItems2C2">
+                                <li>{{product.brand}} {{product.name}}</li>
+                                <li>{{product.volume}}</li>
+                                <li>{{product.quantity}}&#8202X{{product.packaging}}</li>
+                                <li>C${{product.price}}</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

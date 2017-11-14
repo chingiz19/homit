@@ -122,6 +122,7 @@ var getFormattedProducts = function (products) {
             packaging: product.packaging,
             volume: product.volume,
             price: product.price,
+            super_category: product.super_category,
             brand: products[i].brand,
             name: products[i].name,
             image: imageLocation + products[i].image,

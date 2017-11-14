@@ -182,6 +182,7 @@ var getFormattedProducts = function (products) {
                 type: products[i].type,
                 brand: products[i].brand,
                 name: products[i].name,
+                super_category: product.super_category,
                 description: products[i].description,
                 image: imageLocation + products[i].image,
                 quantity: products[i].quantity,

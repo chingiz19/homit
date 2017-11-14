@@ -1,9 +1,11 @@
 <html ng-app="mainModule" style="overflow-y: hidden;">
+
 <head>
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title, product: tabId}); %>
-    <link href="/resources/css/checkout.css" rel="stylesheet">
+        <%- include('partial/header', {title: title, product: tabId}); %>
+            <link href="/resources/css/checkout.css" rel="stylesheet">
 </head>
+
 <body class="ng-cloak">
     <div ng-controller="checkoutController">
         <div layout="row" layout-align="center" class="container">
@@ -124,7 +126,7 @@
                             <md-option ng-value="1973">1973</md-option>
                             <md-option ng-value="1972">1972</md-option>
                             <md-option ng-value="1971">1971</md-option>
-                            <md-option ng-value="1970">1970</md-option>                                
+                            <md-option ng-value="1970">1970</md-option>
                             <md-option ng-value="1969">1969</md-option>
                             <md-option ng-value="1968">1968</md-option>
                             <md-option ng-value="1967">1967</md-option>
@@ -182,18 +184,18 @@
                 <div layout="row" layout-align="center">
                     <md-input-container class="md-block bigClass" flex="40">
                         <label class="inptLbl">First Name</label>
-                        <input required name="fname" type="text" ng-model="userInfo.first_name"/>
+                        <input required name="fname" type="text" ng-model="userInfo.first_name" />
                     </md-input-container>
                     <md-input-container class="md-block bigClass" flex="40">
                         <label class="inptLbl">Last Name</label>
-                        <input required name="lname" type="text" ng-model="userInfo.last_name"/>
+                        <input required name="lname" type="text" ng-model="userInfo.last_name" />
                     </md-input-container>
                 </div>
                 <!--Email-->
                 <div layout="row" layout-align="center">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label class="inptLbl">Email</label>
-                        <input required name="email" type="email" ng-model="userInfo.user_email"/>
+                        <input required name="email" type="email" ng-model="userInfo.user_email" />
                     </md-input-container>
                 </div>
                 <!--Phone Number-->
@@ -207,18 +209,18 @@
                 <div layout="row" layout-align="center" ng-show="!isUserSigned">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label class="inptLbl">Delivery Address</label>
-                        <input id="addressGuestUser" name="address" type="text" ng-model="userInfo.address" ng-required="userInfo.address"/>
+                        <input id="addressGuestUser" name="address" type="text" ng-model="userInfo.address" ng-required="userInfo.address" />
                     </md-input-container>
                 </div>
                 <!--Address-->
                 <div layout="row" layout-align="center" ng-show="isUserSigned">
-                    <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true" class="md-block adTb" flex="80" >
-                    <md-tab label="New Address" md-on-select="selectedAddress = 0">
+                    <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true" class="md-block adTb" flex="80">
+                        <md-tab label="New Address" md-on-select="selectedAddress = 0">
                             <md-tab-body>
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
                                         <label class="inptLbl">Address</label>
-                                        <input id="newAddressUser" name="address" type="text" ng-model="userInfo.address0" ng-required="selectedAddress == 0"/>
+                                        <input id="newAddressUser" name="address" type="text" ng-model="userInfo.address0" ng-required="selectedAddress == 0" />
                                     </md-input-container>
                                 </div>
                             </md-tab-body>
@@ -228,7 +230,7 @@
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
                                         <label ng-show="!userInfo.address2" class="inptLbl">Address</label>
-                                        <input name="address" type="text" ng-model="userInfo.address1" ng-required="selectedAddress == 1"/>
+                                        <input name="address" type="text" ng-model="userInfo.address1" ng-required="selectedAddress == 1" />
                                     </md-input-container>
                                 </div>
                             </md-tab-body>
@@ -238,7 +240,7 @@
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
                                         <label ng-show="!userInfo.address3" class="inptLbl">Address</label>
-                                        <input name="address" type="text" ng-model="userInfo.address2" ng-required="selectedAddress == 2"/>
+                                        <input name="address" type="text" ng-model="userInfo.address2" ng-required="selectedAddress == 2" />
                                     </md-input-container>
                                 </div>
                             </md-tab-body>
@@ -248,7 +250,7 @@
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
                                         <label ng-show="!userInfo.address4" class="inptLbl">Address</label>
-                                        <input name="address" type="text" ng-model="userInfo.address3" ng-required="selectedAddress == 3"/>
+                                        <input name="address" type="text" ng-model="userInfo.address3" ng-required="selectedAddress == 3" />
                                     </md-input-container>
                                 </div>
                             </md-tab-body>
@@ -270,17 +272,17 @@
                     <div layout="row" layout-align="center">
                         <md-input-container class="md-block extInput" flex="30">
                             <label class="inptLbl">First Name</label>
-                            <input required name="fname" type="text"/>
+                            <input required name="fname" type="text" />
                         </md-input-container>
                         <md-input-container class="md-block extInput" flex="30">
                             <label class="inptLbl">Last Name</label>
-                            <input required name="lname" type="text"/>
+                            <input required name="lname" type="text" />
                         </md-input-container>
                     </div>
                     <div layout="row" layout-align="center">
                         <md-input-container class="md-block extInput" flex="60">
                             <label class="inptLbl">Card Number</label>
-                            <input required name="cnumber" type="text"/>
+                            <input required name="cnumber" type="text" />
                         </md-input-container>
                     </div>
                     <div layout="row" layout-align="center">
@@ -353,7 +355,7 @@
                                 <md-option ng-value="1973">1973</md-option>
                                 <md-option ng-value="1972">1972</md-option>
                                 <md-option ng-value="1971">1971</md-option>
-                                <md-option ng-value="1970">1970</md-option>                                
+                                <md-option ng-value="1970">1970</md-option>
                                 <md-option ng-value="1969">1969</md-option>
                                 <md-option ng-value="1968">1968</md-option>
                                 <md-option ng-value="1967">1967</md-option>
@@ -408,11 +410,13 @@
                         </md-input-container>
                         <md-input-container class="md-block extInput" flex="25">
                             <label class="inptLbl inptLblSC1">Security Code</label>
-                            <input required name="sCode" type="text" class="inptLblSC2"/>
+                            <input required name="sCode" type="text" class="inptLblSC2" />
                         </md-input-container>
                     </div>
                 </div>
-                <div class="HomeItBtn"><button type="submit" class="btn btn-success" ng-click="HomeIt()">Home It</button></div>
+                <div class="HomeItBtn">
+                    <button type="submit" class="btn btn-success" ng-click="HomeIt()">Home It</button>
+                </div>
             </div>
             <!--Order Summary SideNav-->
             <md-sidenav class="md-sidenav-right mdSideNavL1" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
@@ -420,7 +424,7 @@
                     <!--Order Summary - Reciept box-->
                     <div class="receiptB1">
                         <div class="summerLnP1">
-                            <md-button ng-click="close()" aria-label="HideSideNav"  hide-gt-md class="glyClsBtn">
+                            <md-button ng-click="close()" aria-label="HideSideNav" hide-gt-md class="glyClsBtn">
                                 <ng-md-icon icon="keyboard_arrow_left" size="30" style="fill: white;"></ng-md-icon>
                             </md-button>
                             <span class="summerLnP2">Order Summary</span>
@@ -455,38 +459,46 @@
                         </div>
                     </div>
                     <!--Order Summary - Cart Items-->
-                    <div ng-repeat="product in userCart" class="cartBItems1">
-                        <div layout="row" layout-align="center">
-                            <div class="cartBItems2A" flex="30">
-                                <ul>
-                                    <li>
-                                        <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
-                                            <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
+                    <div ng-repeat="(super_category, super_category_items) in userCart" class="cartBItems1">
+                        <div style="border-bottom: 1px solid rgba(0,0,0,0.40);  display: flex; justify-content: flex-end; ">
+                            <div style="color: rgba(0,0,0,0.45); font-size: 15px; text-transform: uppercase; margin-right: 5px;">{{ super_category }}</div>
+                        </div>
+                        <div ng-repeat="product in super_category_items">
+                            <div layout="row" layout-align="center">
+                                <div class="cartBItems2A" flex="30">
+                                    <ul>
+                                        <li>
+                                            <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
+                                                <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
+                                            </md-button>
+                                        </li>
+                                        <li>
+                                            <md-button aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
+                                                <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
+                                            </md-button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div flex="35" layout="column">
+                                    <li class="cartBItems2B1">
+                                        <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)">
+                                            <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
                                         </md-button>
                                     </li>
-                                    <li>
-                                        <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
-                                            <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
-                                        </md-button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div flex="35" layout="column" >
-                                <li class="cartBItems2B1">
-                                    <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)">
-                                        <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
-                                    </md-button></li>
-                                <ul class="container cartBItems2B2">
-                                    <li><img ng-src={{product.image}}></li>
-                                </ul>
-                            </div>
-                            <div class="cartBItems2C" flex="35">
-                                <ul class="cartBItems2C2">
-                                    <li>{{product.brand}} {{product.name}}</li>
-                                    <li>{{product.volume}}</li>
-                                    <li>{{product.quantity}}X{{product.packaging}}</li>
-                                    <li>{{product.price}}C$</li>
-                                </ul>
+                                    <ul class="container cartBItems2B2">
+                                        <li>
+                                            <img ng-src={{product.image}}>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="cartBItems2C" flex="35">
+                                    <ul class="cartBItems2C2">
+                                        <li>{{product.brand}} {{product.name}}</li>
+                                        <li>{{product.volume}}</li>
+                                        <li>{{product.quantity}}X{{product.packaging}}</li>
+                                        <li>{{product.price}}C$</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -498,4 +510,5 @@
         <script src="/resources/controllers/checkout.js"></script>
     </div>
 </body>
+
 </html>
