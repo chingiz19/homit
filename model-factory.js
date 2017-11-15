@@ -10,6 +10,7 @@ var Catalog             = require("./models/catalog");
 var ServerErrorHandler  = require("./models/server-error-handler");
 var Database            = require("./models/database");
 var Auth                = require("./models/authentication");
+var Driver              = require("./models/driver");
 
 
 /**
@@ -25,6 +26,7 @@ class modelFactory {
         global.Cart = Cart;
         global.Catalog = Catalog;
         global.Orders = Orders;
+        global.Driver = Driver;
     }
 }
 

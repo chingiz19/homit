@@ -4,15 +4,15 @@
 
 var pub = {};
 
-function sanitizeUserObject(user) {
+pub.sanitizeUserObject = function (user) {
     delete user.password;
     return user;
-}
+};
 
 function addIsGuest(user) {
     user.is_guest = true;
     return user;
-}
+};
 
 /**
  * Finds user based on the email
