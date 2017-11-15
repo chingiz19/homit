@@ -33,7 +33,11 @@ router.post('/placeorder', function (req, res, next) {
             };
             User.updateUser(data, key).then(function (updatedUser) {
                 if (updatedUser != false) {
-                    createOrder(userId, address, false, products).then(function (response) {
+                    createOrders(userId, address, false, products).then(function (userOrders) {
+                        var response = {
+                            success: true,
+                            orders: userOrders
+                        };
                         res.send(response);
                     });
                 } else {
@@ -68,7 +72,11 @@ router.post('/placeorder', function (req, res, next) {
                     };
                     User.addGuestUser(data).then(function (guestUserId) {
                         if (guestUserId != false) {
-                            createOrder(guestUserId, address, true, products).then(function (response) {
+                            createOrders(guestUserId, address, true, products).then(function (userOrders) {
+                                var response = {
+                                    success: true,
+                                    orders: userOrders
+                                };
                                 res.send(response);
                             });
                         } else {
@@ -93,7 +101,11 @@ router.post('/placeorder', function (req, res, next) {
                     };
                     User.updateGuestUser(data, key).then(function (guestUser) {
                         if (guestUser != false) {
-                            createOrder(guestUserFound.id, address, true, products).then(function (response) {
+                            createOrders(guestUserFound.id, address, true, products).then(function (userOrders) {
+                                var response = {
+                                    success: true,
+                                    orders: userOrders
+                                };
                                 res.send(response);
                             });
                         } else {
@@ -113,24 +125,27 @@ router.post('/placeorder', function (req, res, next) {
     }
 });
 
-var createOrder = function (id, address, isGuest, products) {
-    return Orders.createOrder(id, address, isGuest).then(function (order_id) {
-        if (order_id != false) {
-            var success = Orders.insertProducts(order_id, products);
-            var response = {
-                success: success
+var createOrders = function (id, address, isGuest, products) {
+    var createFunctions = [];
+    var userOrders = [];
+
+    for (var superCategory in products) {
+        createFunctions.push(Orders.createOrder(id, address, isGuest));
+    }
+
+    return Promise.all(createFunctions).then(function (orderIds) {
+        var i = 0;
+        for (var superCategory in products) {
+            var inserted = Orders.insertProducts(orderIds[i], products[superCategory]);
+            var userOrder = {
+                super_category: superCategory,
+                order_id: orderIds[i]
             };
-            return response;
-        } else {
-            var response = {
-                success: false,
-                error: {
-                    dev_message: "Something went wrong",
-                    ui_message: "Error happened while checkout. Please try again"
-                }
-            };
-            return response;
+            userOrders.push(userOrder);
+            i++;
         }
+
+        return userOrders;
     });
 };
 

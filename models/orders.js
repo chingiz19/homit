@@ -30,11 +30,11 @@ pub.createOrder = function (id, address, isGuest) {
  * Inserts products
  */
 pub.insertProducts = function (order_id, products) {
-    for (var i = 0; i < products.length; i++) {
+    for (var key in products) {
         var data = {
             order_id: order_id,
-            depot_id: products[i].depot_id,
-            quantity: products[i].quantity
+            depot_id: products[key].depot_id,
+            quantity: products[key].quantity
         };
         db.insertQuery(db.dbTables.orders_cart_info, data).then(function (success) {
             if (!success) {
