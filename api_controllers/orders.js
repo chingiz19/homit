@@ -94,11 +94,11 @@ router.post('/getorder', Auth.validateAdmin(), function (req, res, next) {
         });
     } else {
         Orders.getOrderById(orderId).then(function (data) {
-            Orders.getUserByOrderId(orderId).then(function (user) {
+            Orders.getUserWithOrderByOrderId(orderId).then(function (result) {
                 if (user != false) {
                     res.json({
                         success: true,
-                        user: user,
+                        user: result.user,
                         orders: data
                     });
                 } else {

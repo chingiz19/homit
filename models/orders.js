@@ -139,7 +139,7 @@ pub.getOrderByIdUserId = function (orderId, userId) {
     });
 };
 
-pub.getUserByOrderId = function (orderId) {
+pub.getUserWithOrderByOrderId = function (orderId) {
     var data = {
         id: orderId
     };
@@ -149,11 +149,19 @@ pub.getUserByOrderId = function (orderId) {
             var order = orders[0];
             if (order.user_id == null) {
                 return User.findGuestUserById(order.guest_id).then(function (user) {
-                    return user;
+                    var result = {
+                        order: order,
+                        user: user
+                    };
+                    return result;
                 });
             } else {
                 return User.findUserById(order.user_id).then(function (user) {
-                    return user;
+                    var result = {
+                        order: order,
+                        user: user
+                    };
+                    return result;
                 });
             }
         } else {
