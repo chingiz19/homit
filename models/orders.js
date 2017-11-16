@@ -60,7 +60,7 @@ pub.getOrdersByUserId = function (user_id) {
         FROM orders_history, users_customers as users
         WHERE orders_history.user_id = users.id AND ?
         
-        ORDER BY date_received`;
+        ORDER BY date_placed`;
 
     var data = { "users.id": user_id };
 
@@ -81,7 +81,7 @@ pub.getOrdersByGuestId = function (user_id) {
         FROM orders_history, users_customers_guest as guests
         WHERE orders_history.guest_id = guests.id AND ?
 
-        ORDER BY date_received`;
+        ORDER BY date_placed`;
 
     var data = { "guests.id": user_id };
 
