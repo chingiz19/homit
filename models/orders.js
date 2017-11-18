@@ -53,8 +53,7 @@ pub.getOrdersByUserId = function (user_id) {
         SELECT
         orders_history.id AS order_id,
         orders_history.date_placed AS date_placed, orders_history.date_assigned AS date_assigned,
-        orders_history.date_left_for_store AS date_left_for_store,
-        orders_history.date_picked AS date_picked, orders_history.date_left_for_customer AS date_left_for_customer,
+        orders_history.date_picked AS date_picked,
         orders_history.date_delivered AS date_delivered,
         orders_history.delivery_address AS delivery_address, orders_history.store_id AS store_id, orders_history.driver_id AS driver_id, orders_history.order_received_name AS order_received_name, orders_history.order_received_age AS order_received_age
         FROM orders_history, users_customers as users
@@ -75,8 +74,7 @@ pub.getOrdersByGuestId = function (user_id) {
         SELECT
         orders_history.id AS order_id,
         orders_history.date_placed AS date_placed, orders_history.date_assigned AS date_assigned,
-        orders_history.date_left_for_store AS date_left_for_store,
-        orders_history.date_picked AS date_picked, orders_history.date_left_for_customer AS date_left_for_customer,
+        orders_history.date_picked AS date_picked,
         orders_history.date_delivered AS date_delivered, orders_history.delivery_address AS delivery_address, orders_history.store_id AS store_id, orders_history.driver_id AS driver_id, orders_history.order_received_name AS order_received_name, orders_history.order_received_age AS order_received_age
         FROM orders_history, users_customers_guest as guests
         WHERE orders_history.guest_id = guests.id AND ?
