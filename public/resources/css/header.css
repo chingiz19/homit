@@ -1,8 +1,8 @@
 .header {
     display: flex;
     justify-content: space-between;
-    max-height: 60px;
-    height: 60px;
+    /* max-height: 50px;
+    height: 50px; */
 }
 .md-button:not([disabled]):hover {
     background-color: transparent;
@@ -26,17 +26,25 @@
     width: 50%;
     border-radius: 5px;
 }
+.hdrRend{
+    display: flex; justify-content: flex-end;
+}
+.hdrRendBtn{
+    margin: 0; padding: 0; 
+    min-width: 78px; width: 78px;
+}
+.hdrRendBtn svg {
+    width: 42px; height: 42px;
+}
 .storeHubA{
     display: flex; align-items: center;
     height: 100%; width: 100%; 
 }
 .storeHubAA{
-    display: flex; 
-    justify-content: space-around; flex-wrap: wrap; 
+    margin-top: 10px;
     list-style: none;  
     width: 100%;
     margin: 0; padding: 0;
-    /* padding-top: 10px; padding-left: 0px; */
 }
 .storeHubAAA{
     max-height: 300px;
@@ -52,9 +60,9 @@
     font-size: 15px;
     margin: 0;
 }
-.storeHubB{
+.bxExtn{
     position: absolute; 
-    left: 70%; top: -7; 
+    left: 73%; top: -7; 
     width: 13px; height: 13px; 
     background-color: rgba(255,255,255,1); 
     border: 1px rgba(220,220,220,0.99) solid; border-right-color: rgba(255,255,255,1); border-bottom-color: rgba(255,255,255,1); 
@@ -67,11 +75,50 @@
     letter-spacing: 0.045em;
     -webkit-font-smoothing: antialiased;
 }
+.myAccntAA{
+    margin-top: 10px;
+    list-style: none;  
+    width: 100%;
+    margin: 0; padding: 0;
+}
+.myAccntBAA{
+    padding: 5px 0 0px 20;
+}
+.myAccntBAB{
+    padding: 5px 0 5px 20;
+}
+.myAccntBAD{
+    margin-top: 5px;
+    padding: 5px 0 0px 20; 
+}
+.myAccntBAAAA{
+    color: black; font-size: 16px; font-weight: 500;
+}
+.myAccntBADAA{
+    color: black; font-size: 14px;
+}
+.myAccntBAB:hover .myAccntBAAAA{
+    text-decoration-line: underline;
+}
+
+.myAccntBAA:hover .myAccntBAAAA{
+    text-decoration-line: underline;
+}
+.myAccntBAD:hover .myAccntBADAA{
+    text-decoration-line: underline;
+}
+.myAccntBAC{
+    line-height: 2px; border-bottom: 1px rgba(220,220,220,0.99) solid
+}
+
 /* To make Homit-Hub box appear more smoothly */
 .fdIn{ -webkit-animation: fadein 0.09s; }
 @-webkit-keyframes fadein { from {opacity:0;} to {opacity:1;} }
 
 .storeHubAAA:focus{
+    outline: none !important;
+}
+.myAccntFCS:focus{
     outline: none !important;
 }
 /*For non-phone devices*/
@@ -93,13 +140,13 @@
         margin-bottom: 55px;
     }
     .homit-header-bigscreen{
-        border-bottom: 1px solid rgba(0,0,0,0.15);
+        border-bottom: 1px solid rgba(42,81,145,1);
         box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
     }
     md-toolbar{
-        min-height: 60px !important;
-        height: 60px;
-        background-color: rgba(255,255,255,0.95) !important;
+        min-height: 55px !important;
+        height: 55px;
+        background-color: rgba(42,81,145, 0.85) !important;
     }
     .md-input-focused .mnSrchAA{
         margin-bottom: 0px;
@@ -108,17 +155,17 @@
     }
     .mnSrchA.md-input-focused input{
         padding-bottom: 4px;
-        border-color: rgba(42,81,145,0.6) !important;
+        border: none;
     }
     .mnSrchA input::-webkit-input-placeholder{
         color: rgba(42,81,145,0.6) !important;
         font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
-        font-size: 20px;
+        font-size: 17px;
     }
     .mnSrchC{
         position: absolute; 
         left: 0.5%; top: 35px; 
-        width: 99.5%; max-height: 450px; 
+        width: 99.15%; max-height: 450px; 
         border: 1px solid rgba(145, 143, 143, 0.856); border-radius: 0 0 5px 5px; 
         background-color: rgba(255,255,255, 0.99); 
         overflow-y: scroll; 
@@ -179,13 +226,13 @@
         margin: 0;
         padding-top: 6px;
     }
-    .mnSrchA label{
-        color: rgba(42,81,145,0.6) !important;
-    }
     .mnSrchA input{
         padding-bottom: 4px;
-        color: rgba(42,81,145,1);
-        border-bottom: 2px solid rgba(42,81,145,0.6);
+        color: rgba(0,0,0,0.8);
+        font-size: 17px;
+        background-color: rgba(255,255,255,1);
+        border-radius: 0 3px 3px 0; 
+        border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); border-right: 2px solid rgba(255,255,255,0.8);
     }
     .mnSrchA .md-errors-spacer{
         min-height: 1px !important;
@@ -201,7 +248,12 @@
         left: 1px;
         min-height: 30px; min-width: 35px;
         margin: 0; padding: 0; 
-        border-bottom: 2px solid rgba(42,81,145,0.6); border-radius: 0; 
+        background-color: rgba(245,245,245,1);
+        border-top: 2px solid rgba(245,245,245,0.8); border-bottom: 2px solid rgba(245,245,245,0.8); border-left: 2px solid rgba(245,245,245,0.8);
+        border-radius: 3px 0 0 3px; 
+    }
+    .mnSrchB:hover{
+        background-color: rgba(245,245,245,1) !important;
     }
     .header-search-icon{
         fill: rgba(42,81,145,0.6);
@@ -248,10 +300,20 @@
     }
     .storeHub{
         position: fixed; 
-        top: 70px; right: 97px;; 
+        top: 70px; right: 65px;; 
         height: 400px; width: 270px;  
         border: 1px rgba(220,220,220,0.99) solid; 
-        border-radius: 5px;
+        border-radius: 2px;
+        background-color: rgba(255,255,255,1);
+        box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    .myAccnt{
+        position: fixed; 
+        top: 70px; right: 8px;; 
+        height: 120px; width: 200px;  
+        border: 1px rgba(220,220,220,0.99) solid; 
+        border-radius: 2px;
         background-color: rgba(255,255,255,1);
         box-shadow: 0 0px 10px rgba(0,0,0,0.2);
         z-index: 1000;
@@ -261,8 +323,10 @@
     }
     .header-icon {
         flex-basis: 5%;
-        fill: rgb(42,81,145); 
+        /* fill: rgb(42,81,145);  */
+        fill: rgba(255,255,255,1);
     }
+   
 }
 
 /*For non-computer screen*/

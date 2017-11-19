@@ -11,8 +11,7 @@
             <div class="sdNavFB1">
                 <div class="sdNavFB2">
                     <md-button ng-click="close()" aria-label="HideSideNav" class="ClsBtn" >
-                        <ng-md-icon  icon="keyboard_arrow_left" style="fill: rgb(0,94,92);" size="25" ></ng-md-icon>
-                        <ng-md-icon  icon="add_shopping_cart" style="fill: rgb(0,94,92);" size="25" ></ng-md-icon>
+                        <ng-md-icon  icon="keyboard_arrow_left" style="fill: rgba(5, 26, 25, 0.6);" size="25" ></ng-md-icon>
                     </md-button>
                     <md-button onclick="location.href='/checkout'" class="md-primary chckOut">Check Out</md-button>
                 </div>
@@ -31,8 +30,10 @@
             </div>
             <!--Order Summary - Cart Items-->
             <div ng-repeat="super_category in userCartToView" class="cartBItems1">
-                <div style="border-bottom: 1px solid rgba(0,0,0,0.40);  display: flex; justify-content: flex-end; ">
-                     <div style="color: rgba(0,0,0,0.45); font-size: 15px; text-transform: uppercase; margin-right: 5px;">{{ super_category[0] }}</div>
+                <div class="strBrk">
+                    <div flex="10" class="strTypeLn"></div>
+                    <span class="strType">{{ super_category[0] }}</span>
+                    <div  class="strTypeLn"></div>
                 </div>
                 <div ng-repeat="product in super_category[1]">
                     <div layout="row" layout-align="center">

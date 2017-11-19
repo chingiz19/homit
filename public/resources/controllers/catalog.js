@@ -227,8 +227,6 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             } else {
                 $scope.screenIsMob = false;
             }
-            console.log("screen width is: " + screen_width);
-            console.log("screen mobile: " + $scope.screenIsMob);
             var subcad = storage.getSearchSubcategory();
             var prodID = storage.getSearchProduct();
             if (subcad != 'undefined' && subcad != null) {

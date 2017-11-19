@@ -4,6 +4,15 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.init = function () {
         $scope.storeHub = false;
         $scope.userDropDown = false;
+        $scope.screenIsMob = false;
+
+        var screen_width = $(window).width();
+        if (screen_width < 901) {
+            $scope.screenIsMob = true;
+        } else {
+            $scope.screenIsMob = false;
+        }
+        
         try {
             $scope.deliveryAddress = $cookies.getObject("homit-address").name;
         } catch (e) {
@@ -35,26 +44,34 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     }
 
     function clickedOffBox(e) {
-        var el = document.getElementById('hdrHub').attributes;
+        var el = document.getElementById($scope.id_1).attributes;
         if (el['aria-hidden'].value == "false") {
-            if (event.target['id'] != 'hdrHub' && event.target['id'] != 'hdrHub1' && event.target['id'] != 'hdrHub2' && event.target['id'] != 'hdrHub3') {
-                document.getElementById('hdrHub').setAttribute("aria-hidden", "true");
+            if (event.target['id'] != $scope.id_1 && event.target['id'] != $scope.id_2 && event.target['id'] != $scope.id_3 && event.target['id'] != $scope.id_4) {
+                document.getElementById($scope.id_1).setAttribute("aria-hidden", "true");
                 window.removeEventListener('click', clickedOffBox, false);
             }
         }
     }
-    $scope.hubClicked = function () {
-        var el_ID = "hdrHub";
-        var el = document.getElementById(el_ID).attributes;
+
+    $scope.hdrExtBx = function (id_1, id_2, id_3, id_4) {
+        if($scope.id_1 != undefined && $scope.id_1 != id_1){
+            document.getElementById($scope.id_1).setAttribute("aria-hidden", "true");
+            window.removeEventListener('click', clickedOffBox, false);
+        }
+        $scope.id_1 = id_1;
+        $scope.id_2 = id_2;
+        $scope.i_3 = id_3;
+        $scope.id_4 = id_4;
+        var el = document.getElementById(id_1).attributes;
         if (el["aria-hidden"].value == "true") {
-            document.getElementById(el_ID).setAttribute("aria-hidden", "false");
+            document.getElementById($scope.id_1).setAttribute("aria-hidden", "false");
         } else {
-            document.getElementById(el_ID).setAttribute("aria-hidden", "true");
+            document.getElementById($scope.id_1).setAttribute("aria-hidden", "true");
             window.removeEventListener('click', clickedOffBox, false);
         }
         if (el["aria-hidden"].value == "false") {
             setTimeout(function () {
-                window.addEventListener('click', clickedOffBox, false);
+                window.addEventListener('click',clickedOffBox, false);
             }, 100);
         }
     }

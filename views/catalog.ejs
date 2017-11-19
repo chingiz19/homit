@@ -87,7 +87,10 @@
                             <div ng-if="isInSelectedSubcategories(product.subcategory)">
                                 <div class="itemBoxL1" id="{{product.product_id}}">
                                     <ul class="itemBoxL2">
-                                        <div style="z-index: 0; position: absolute; top: 5px; right: 0; width: 100px; height: 40px; border: 2px rgba(0,189,149,0.7) solid; background-color: rgba(0,189,149,0.7); border-radius: 6px 0 0 6px; "></div>
+                                        <md-button aria-label="addToCart" class="addToCrtBtn" ng-click="addToCart(product, v_index)">
+                                            <ng-md-icon icon="shopping_cart" class="add-shopping-cart"></ng-md-icon>
+                                        </md-button>
+                                        <div class="pvChangeBx"></div>
                                         <div class="pvChange1">
                                             <div class="pvChange1A">
                                                 <ul>
@@ -177,14 +180,9 @@
                                         <li class="container itmPic">
                                             <img ng-src={{product.image}}>
                                         </li>
-                                        <li class="brand">{{product.brand}} {{product.name}}</li>
+                                        <li class="brand hmtTxt">{{product.brand}} {{product.name}}</li>
                                         <li class="price">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</li>
                                     </ul>
-                                    <div>
-                                        <md-button aria-label="addToCart" class="md-raised md-primary addToCrtBtn" ng-click="addToCart(product, v_index)">
-                                            <ng-md-icon icon="add_shopping_cart" class="add-shopping-cart" size="30"></ng-md-icon>
-                                        </md-button>
-                                    </div>
                                 </div>
                             </div>
                         </div>

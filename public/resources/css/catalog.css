@@ -79,7 +79,7 @@ body{
 /*TODO overflow-y doesn't work when page shrinked in y direction*/
 .col1{
     position: fixed;
-    margin-top: 10px;
+    margin-top: 4px;
     min-width: 180px;
     background-color: white;
     border: lightgray solid 1px; border-radius: 5px; 
@@ -139,7 +139,7 @@ body{
      position: relative;
      display: flex; align-content: flex-start;
      left: 25%;
-     margin-top: 10px; margin-left: 10px;
+     margin-top: 4px; margin-left: 10px;
      flex-grow: 2;
      flex-shrink: 2;
  }
@@ -232,7 +232,14 @@ body{
 .itemBoxL2{
     padding: 0 20px 0 20px;
 }
-
+.pvChangeBx{
+    position: absolute; top: 5px; left: 0; 
+    width: 100px; height: 40px; 
+    border-width: 2px 2px 2px 0; border-color: rgba(33, 241, 193, 0.1); border-style: solid;
+    border-radius: 0 6px 6px 0;
+    background-color: rgba(33, 241, 193, 0.089);
+    z-index: 0; 
+}
 .pvChangeBtnA{
     margin: 0; padding: 0; 
     min-width: 20px; width: 25px; 
@@ -260,11 +267,11 @@ body{
 }
 .pvChange1AAA{
     position: absolute; 
-    left: 180px; top: 5;
+    left: 5px; top: 5;
 }
 .pvChange1AAB{
     position: absolute; 
-    right: 20px; top: 9;
+    left: 20px; top: 9;
 }
 .pvChange1AABA{
     display: flex; 
@@ -273,16 +280,16 @@ body{
 }
 .pvChange1AAC{
     position: absolute; 
-    right: 5px; top: 5;
+    right: 180px; top: 5;
 }
 .pvChange1ABA{
     position: absolute; 
-    left: 185px; top: 23px;
+    left: 5px; top: 23px;
 }
 .pvChange1ABB{
     position: absolute; 
     top: 25px;
-    right: 22px;
+    left: 22px;
 }
 .pvChange1ABBA{
     display: flex; 
@@ -291,7 +298,7 @@ body{
 }
 .pvChange1ABC{
     position: absolute; 
-    right: 5px; top: 23px;
+    right: 185px; top: 23px;
 }
 
 .itmPic{
@@ -309,7 +316,7 @@ body{
 }
 
 .highltdVol{
-    color: rgba(255,255,255,1);
+    color: rgba(0,0,0,0.6);
     font-size: 11px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
@@ -323,7 +330,7 @@ body{
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .highltdPack{
-    color: rgba(255,255,255,1);
+    color: rgba(0,0,0,0.6);
     font-size: 13px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
@@ -357,10 +364,18 @@ body{
 }
 
 .add-shopping-cart{
-    fill: rgba(255,255,255,1);
+    fill: rgba(0,94,92,0.8);
+}
+.add-shopping-cart svg{
+    width: 28px; height: 28px;
 }
 .addToCrtBtn{
-    width: 94%;
+    margin: 0; padding: 0;
+    position: absolute; right: 0; 
+    top: 5px;
+    width: 100px; height: 40px; 
+    border-width: 2px 0 2px 2px; border-color: rgba(33, 241, 193, 0.1); border-style: solid; ; background-color: rgba(33, 241, 193, 0.089);
+    border-radius: 6px 0 0 6px;
 }
 .fltCategoryBtn:hover{
     background-color: white !important;
@@ -461,18 +476,18 @@ body{
         position: absolute; 
         top: 209px; right: 0;
     }
-/*End*/
-.navigateMobIcon{
-    position: fixed; 
-    left: 0; top: 70%;
-    border: 4px solid rgba(255,255,255,0.7);
-    box-shadow: none !important;
-}
-.navigateMobIconA svg{
-    fill:rgba(255,255,255,1);
-    width: 100px;
-    height: 100px;
-}
+    /*End*/
+    .navigateMobIcon{
+        position: fixed; 
+        left: 0; top: 70%;
+        border: 4px solid rgba(255,255,255,0.7);
+        box-shadow: none !important;
+    }
+    .navigateMobIconA svg{
+        fill:rgba(255,255,255,1);
+        width: 100px;
+        height: 100px;
+    }
     /*Side Nav*/
     .mdSideNavL1{
         position: fixed; top: 0px; 
@@ -652,4 +667,10 @@ md-radio-button .md-label{
     z-index: 10000;
     transition: 0.5s;
     box-shadow: 0 0px 100px 0px rgba(0,0,0,0.8);
+}
+.hmtTxt{
+    color: rgba(0,0,0,0.66);
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    letter-spacing: 0.025em;
+    -webkit-font-smoothing: antialiased;
 }

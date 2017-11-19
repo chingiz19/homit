@@ -486,3 +486,25 @@ md-tabs-wrapper{
 md-backdrop.md-opaque {
     background-color: rgba(33,33,33,0.7);
 }
+
+.strBrk{
+    display: flex; align-items: center; 
+    margin: 15px 0 0px 0;
+}
+
+.strTypeLn { 
+    width: 100%; 
+    /* border-bottom: 1px solid rgba(245, 114, 67, 0.266); */
+    border-bottom: 1px solid rgba(0,0,0, 0.866); 
+    line-height: 1px; margin: 5px 0 5px; 
+} 
+.strType { 
+    background:#fff; padding:0 5px; 
+    /* color: rgba(245, 114, 67, 0.466); */
+    color: 1px solid rgba(0,0,0, 0.866); 
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    letter-spacing: 0.045em;
+    -webkit-font-smoothing: antialiased;
+    font-size: 13px;
+    text-transform: uppercase; 
+}
