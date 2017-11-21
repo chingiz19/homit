@@ -95,7 +95,7 @@ router.post('/getorder', Auth.validateAdmin(), function (req, res, next) {
     } else {
         Orders.getOrderById(orderId).then(function (data) {
             Orders.getUserWithOrderByOrderId(orderId).then(function (result) {
-                if (user != false) {
+                if (result != false) {
                     res.json({
                         success: true,
                         user: result.user,

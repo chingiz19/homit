@@ -65,8 +65,8 @@ webServer.use("/", require(path.join(__dirname, "/view_controllers/generic_contr
 webServer.use(serverErrorHandler);
 
 /* Start web server */
-webServer.listen(8080, function () {
-	console.log("Listening at http://localhost:8080");
+webServer.listen(8080, '0.0.0.0', function () {
+	console.log("Listening at http://any host:8080");
 });
 
 https.createServer(sslOptions, webServer).listen(8081, function () {

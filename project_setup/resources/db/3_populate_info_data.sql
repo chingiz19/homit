@@ -2,6 +2,15 @@
 INSERT INTO `homit`.`catalog_super_categories` (id, name) VALUES (1, 'liquor');
 INSERT INTO `homit`.`catalog_super_categories` (id, name) VALUES (2, 'snackvendor');
 
+/* Insert super categories */
+INSERT INTO `homit`.`catalog_stores` (id, name, address, store_type) VALUES (1, 'Liquor Depot Brentwood', '3630 Brentwood Rd NW, Calgary, AB', '1');
+INSERT INTO `homit`.`catalog_stores` (id, name, address, store_type) VALUES (2, 'Liquor Depot Dalhouise', '5005 Dalhousie Dr NW, Calgary, AB', '1');
+INSERT INTO `homit`.`catalog_stores` (id, name, address, store_type) VALUES (3, 'Liquor Depot 14 Ave', '1810 14 Ave NW, Calgary, AB', '1');
+INSERT INTO `homit`.`catalog_stores` (id, name, address, store_type) VALUES (4, 'Liquor Depot Edmonton Trail', '831 Edmonton Trail NE, Calgary, AB', '1');
+INSERT INTO `homit`.`catalog_stores` (id, name, address, store_type) VALUES (5, 'Safeway Brentwood', '3636 Brentwood Rd NW, Calgary, AB', '2');
+INSERT INTO `homit`.`catalog_stores` (id, name, address, store_type) VALUES (6, 'Safeway Dalhouise', '5005 Dalhousie Drive NW, Calgary, AB', '2');
+INSERT INTO `homit`.`catalog_stores` (id, name, address, store_type) VALUES (7, 'Safeway 4 St', '5607 4 St NW, Calgary, AB', '2');
+INSERT INTO `homit`.`catalog_stores` (id, name, address, store_type) VALUES (8, 'Safeway 10 St', '410 10 St NW, Calgary, AB', '2');
 
 /* Insert categories */
 INSERT INTO `homit`.`catalog_categories` (id,name,super_category_id) VALUES (1,'beer', 1);

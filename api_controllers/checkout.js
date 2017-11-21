@@ -141,12 +141,23 @@ var createOrders = function (id, address, isGuest, products) {
                 super_category: superCategory,
                 order_id: orderIds[i]
             };
+
+            var cmUserId = "";
+            var cmOrderId = "o_" + userOrder.order_id;
+            if (isGuest) {
+                cmUserId = "g_" + id;
+            } else {
+                cmUserId = "u_" + id;
+            }
+            CM.sendOrder(cmUserId, address, cmOrderId, superCategory);
+
             userOrders.push(userOrder);
             i++;
         }
 
         return userOrders;
     });
+
 };
 
 module.exports = router;

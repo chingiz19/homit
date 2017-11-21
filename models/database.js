@@ -12,6 +12,7 @@ const dbTables = {
   catalog_categories: "catalog_categories",
   catalog_containers: "catalog_containers",
   catalog_depot: "catalog_depot",
+  catalog_stores: "catalog_stores",  
   catalog_listings: "catalog_listings",
   catalog_packagings: "catalog_packagings",
   catalog_packaging_volumes: "catalog_packaging_volumes",

@@ -5,8 +5,8 @@
 var router = require("express").Router();
 
 router.post('/signin', function (req, res, next) {
-    var email = req.body.email;
-    var password = req.body.password;
+    var email = req.query.email;
+    var password = req.query.password;
 
     if (!(email && password)) {
         res.status(400).json({
@@ -17,13 +17,23 @@ router.post('/signin', function (req, res, next) {
         });
     } else {
         Driver.authenticateDriver(email, password).then(function (driver) {
-            if (driver!=false) {
-                // TODO: Find port and connection info for driver and send it
-                res.json({
-                    success: true,
-                    driver: driver,
-                    ui_message: "Successfully signed in"
+            if (driver != false) {
+                var driverId = driver.id_prefix + driver.id;
+                Driver.getConnectionPort(driverId).then(function (portId) {
+                    delete driver.id_prefix;
+                    driver.id = driverId;
+                    var response = {
+                        success: true,
+                        driver: driver,
+                        connection: {
+                            host: "",
+                            port: portId
+                        }
+                    };
+
+                    res.send(response);
                 });
+
             } else {
                 res.json({
                     success: false,

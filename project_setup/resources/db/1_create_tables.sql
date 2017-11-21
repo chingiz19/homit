@@ -49,11 +49,12 @@ CREATE TABLE users_customers_history (
 
 CREATE TABLE users_customers_guest ( 
 	id INT NOT NULL AUTO_INCREMENT, 
-	id_prefix VARCHAR(3) NOT NULL DEFAULT "ug_", 
+	id_prefix VARCHAR(3) NOT NULL DEFAULT "g_", 
 	user_email VARCHAR(225) NOT NULL, 
 	first_name VARCHAR(225) NOT NULL, 
 	last_name VARCHAR(225) NOT NULL, 
-	phone_number VARCHAR(10) NOT NULL, 
+	phone_number VARCHAR(10) NOT NULL,
+	birth_date DATE NOT NULL,
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
@@ -208,7 +209,7 @@ CREATE TABLE catalog_depot (
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE stores (
+CREATE TABLE catalog_stores (
 	id INT NOT NULL AUTO_INCREMENT,
 	id_prefix VARCHAR(3) NOT NULL DEFAULT "s_", 
 	name VARCHAR(225) NOT NULL,
@@ -216,7 +217,7 @@ CREATE TABLE stores (
 	store_type INT NOT NULL,
 
 	PRIMARY KEY (id),
-	CONSTRAINT fk_stores_store_type FOREIGN KEY (store_type) REFERENCES catalog_super_categories(id) ON DELETE RESTRICT ON UPDATE CASCADE		
+	CONSTRAINT fk_catalog_stores_store_type FOREIGN KEY (store_type) REFERENCES catalog_super_categories(id) ON DELETE RESTRICT ON UPDATE CASCADE		
  ) ENGINE = InnoDB;
 
 
@@ -251,7 +252,7 @@ CREATE TABLE orders_history (
 	PRIMARY KEY (id),
 	CONSTRAINT fk_orders_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT fk_orders_history_guest_id FOREIGN KEY (guest_id) REFERENCES users_customers_guest(id) ON DELETE SET NULL ON UPDATE CASCADE,	
-	CONSTRAINT fk_orders_history_store_id FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_orders_history_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_orders_history_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE
 	
 ) ENGINE = InnoDB;
