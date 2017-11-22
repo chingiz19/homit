@@ -62,7 +62,7 @@ pub.getConnectionPort = function (receivedDriverId) {
 
         connection.on('data', function (receivedData) {
             var receivedJson = JSON.parse(receivedData);
-            if (receivedJson.action == "status") {
+            if (receivedJson.action == "driver_status") {
                 var sendToCm = true;
                 switch (receivedJson.details.status) {
                     case "online":
