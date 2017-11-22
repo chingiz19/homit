@@ -1,7 +1,5 @@
-# First time setup
-    1. In cygwin/terminal change working directory to project root (where README.md is located)
-    2. Run 'sh project_setup/initial_setup.sh'
+1. Install all dependencies
+	Run: npm install
 
-# To configure .gitignore
-    1. In cygwin/terminal change working directory to project root (where README.md is located)
-    2. Run 'sh project_setup/git_setup.sh'
+2. install nodemon as global function so we can access it just by typing 'nodemon server.js'
+	Run: npm install -g nodemon
