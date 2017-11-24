@@ -63,28 +63,31 @@ pub.getConnectionPort = function (receivedDriverId) {
         connection.on('data', function (receivedData) {
             var receivedJson = JSON.parse(receivedData);
             if (receivedJson.action == "driver_status") {
+                var driverDetails = receivedJson.details;
+                var driverIdString = driverDetails.driver_id;
+                var driverIdInt = driverIdString.split("_")[1];
                 var sendToCm = true;
-                switch (receivedJson.details.status) {
+                switch (driverDetails.status) {
                     case "online":
-                        // add to db shift
+                        saveOnline(driverIdInt);
                         break;
                     case "offline":
-                        // add to db shift
+                        saveOffline(driverIdInt);
                         break;
                     case "arrived_store":
-                        // put to database
+                        saveArrivedStore(driverIdInt, driverDetails.arrived_store.order_ids);
                         break;
                     case "pick_up":
-                        // put to database
+                        savePickUp(driverIdInt, driverDetails.pick_up.order_ids);
                         break;
                     case "drop_off":
-                        // put to database                    
+                        saveDropOff(driverIdInt, driverDetails.drop_off);
                         break;
                     case "location_update":
                         break;
                     case "arrived_customer":
-                        // put to database                 
-                        // then send text message
+                        saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids);
+                        // send text message
                         sendToCm = false;
                         break;
                     default:
@@ -130,6 +133,98 @@ pub.send = function (driverId, json) {
             driverConnections[driverId].temp_storage.push(json);
         }
     }
-}
+};
+
+var saveOnline = function (driverId) {
+    var sqlQuery = `
+    SELECT * FROM drivers_shift_history WHERE shift_end = 0    
+    AND ?`
+
+    var data = { "driver_id": driverId };
+    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+        if (dbResult.length == 0) {
+            insertData = {
+                driver_id: driverId
+            };
+            return db.insertQuery(db.dbTables.drivers_shift_history, insertData).then(function (inserted) {
+                return inserted.insertId;
+            });
+        }
+    });
+};
+
+var saveOffline = function (driverId) {
+    var sqlQuery = `
+    SELECT * FROM drivers_shift_history WHERE shift_end = 0    
+    AND ?`
+
+    var data = { "driver_id": driverId };
+    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+
+            var sqlQuery2 = `
+            UPDATE drivers_shift_history
+            SET shift_end = CURRENT_TIMESTAMP
+            WHERE ?`
+
+            var key = {
+                id: dbResult[0].id
+            };
+
+            return db.runQuery(sqlQuery2, key).then(function (updated) {
+                return updated;
+            });
+        }
+    });
+};
+
+var saveArrivedStore = function (driverId, orderIds) {
+    updateOrdersHistory("date_arrived_store", orderIds);
+};
+
+var savePickUp = function (driverId, storeId) {
+    updateOrdersHistory("date_picked", orderIds);
+};
+
+var saveDropOff = function (driverId, dropOff) {
+    var orderIdString = dropOff.order_id;
+    var orderId = orderIdString.split("_")[1];
+
+    var updateData = {
+        refused: dropOff.refused,
+    };
+
+    if (dropOff.same_receiver != true) {
+        updateData.receiver_name = dropOff.receiver_name;
+        updateData.receiver_age = dropOff.receiver_age;
+    }
+
+    var key = {
+        id: orderId
+    };
+
+    return db.updateQuery(db.dbTables.orders_history, [updateData, key]).then(function (updated) {
+        updateOrdersHistory("date_delivered", [orderIdString]);
+    });
+};
+
+var saveArrivedCustomer = function (driverId, orderIds) {
+    updateOrdersHistory("date_arrived_customer", orderIds);
+};
+
+var updateOrdersHistory = function (updateColumn, orderIdsString) {
+    var orderIds = [];
+    for (var i = 0; i < orderIdsString.length; i++) {
+        orderIds.push(orderIdsString[i].split("_")[1]);
+    }
+    var sqlQuery = `
+    UPDATE orders_history
+    SET `+ updateColumn + ` = CURRENT_TIMESTAMP
+    WHERE id in (` + orderIds + `)`;
+
+    return db.runQuery(sqlQuery).then(function (updated) {
+        return updated;
+    });
+};
 
 module.exports = pub;

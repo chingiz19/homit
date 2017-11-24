@@ -36,13 +36,12 @@ var receiver = function (jsonResponse) {
         var driverId = driverIdString.split("_")[1];
         var orderId = orderIdString.split("_")[1];
 
-        console.log("order_id is: " + orderIdString);
         var storeId = storeIdString.split("_")[1];
 
         var data = {
             driver_id: driverId,
             store_id: storeId,
-            date_assigned: "CURRENT_TIMESTAMP"
+            date_assigned: Date.now()
         };
 
         var key = {

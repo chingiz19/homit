@@ -50,6 +50,10 @@ mysql.createConnection({
   }
 });
 
+var runQuery = function (query) {
+  return con.query(query);
+};
+
 var runQuery = function (query, data) {
   return con.query(query, data);
 };
@@ -75,6 +79,11 @@ var selectAllFromTable = function (table) {
 var updateQuery = function (table, data) {
   var tableName = table;
   return con.query('UPDATE ' + tableName + ' SET ? WHERE ?', data);
+};
+
+var updateQueryWhereIn = function (table, data) {
+  var tableName = table;
+  return con.query('UPDATE ' + tableName + ' SET ? WHERE ? in ?', data);
 };
 
 var deleteQuery = function (table, data) {
