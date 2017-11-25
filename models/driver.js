@@ -1,7 +1,7 @@
 /**
  * @copyright Homit 2017
  */
-var driverConnector = require('net');
+var driverConnector = require("net");
 
 var pub = {};
 var driverConnections = {};
@@ -60,7 +60,7 @@ pub.getConnectionPort = function (receivedDriverId) {
             driverConnections[driverId] = conInfo;
         }
 
-        connection.on('data', function (receivedData) {
+        connection.on("data", function (receivedData) {
             var receivedJson = JSON.parse(receivedData);
             if (receivedJson.action == "driver_status") {
                 var driverDetails = receivedJson.details;
@@ -75,17 +75,32 @@ pub.getConnectionPort = function (receivedDriverId) {
                         saveOffline(driverIdInt);
                         break;
                     case "arrived_store":
+                        console.log("Data received from driver: arrived_store");
+                        console.log("store_id: " + receivedJson.details.arrived_store.store_id);
+                        console.log("order_ids: " + receivedJson.details.arrived_store.order_ids + "\n");
                         saveArrivedStore(driverIdInt, driverDetails.arrived_store.order_ids);
                         break;
                     case "pick_up":
+                        console.log("Data received from driver: pick_up");
+                        console.log("store_id: " + receivedJson.details.pick_up.store_id);
+                        console.log("order_ids: " + receivedJson.details.pick_up.order_ids + "\n");
                         savePickUp(driverIdInt, driverDetails.pick_up.order_ids);
                         break;
                     case "drop_off":
+                        console.log("Data received from driver: drop_off");
+                        console.log("order_id: " + receivedJson.details.drop_off.order_id);
+                        console.log("refused: " + receivedJson.details.drop_off.refused);
+                        console.log("same_receiver: " + receivedJson.details.drop_off.same_receiver);
+                        console.log("receiver_name: " + receivedJson.details.drop_off.receiver_name);
+                        console.log("receiver_age: " + receivedJson.details.drop_off.receiver_age + "\n");
                         saveDropOff(driverIdInt, driverDetails.drop_off);
                         break;
                     case "location_update":
                         break;
                     case "arrived_customer":
+                        console.log("Data received from driver: arrived_customer");
+                        console.log("customer_id: " + receivedJson.details.arrived_customer.customer_id);
+                        console.log("order_ids: " + receivedJson.details.arrived_customer.order_ids + "\n");
                         saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids);
                         // send text message
                         sendToCm = false;
@@ -101,19 +116,19 @@ pub.getConnectionPort = function (receivedDriverId) {
             }
         });
 
-        connection.on('close', function (data) {
+        connection.on("close", function (data) {
             driverConnections[driverId].online = false;
             console.log(driverId + " app has been disconnected from server");
         });
 
-        connection.on('error', function (data) {
+        connection.on("error", function (data) {
             console.log("Error has been occurred " + data);
         })
     });
 
     return new Promise(function (resolve, reject) {
-        portInitiator.listen(0, '0.0.0.0', function () {
-            console.log('Waiting for ' + receivedDriverId + ' at port ' + portInitiator.address().port);
+        portInitiator.listen(0, "0.0.0.0", function () {
+            console.log("Waiting for " + receivedDriverId + " at port " + portInitiator.address().port);
             portId = portInitiator.address().port;
             driverId = receivedDriverId;
             if (portId != 0) {
@@ -128,7 +143,7 @@ pub.getConnectionPort = function (receivedDriverId) {
 pub.send = function (driverId, json) {
     if (driverConnections[driverId]) {
         if (driverConnections[driverId].online) {
-            driverConnections[driverId].connection.write(JSON.stringify(json) + "\n");
+            driverConnections[driverId].connection.write(" " + JSON.stringify(json) + "\n");
         } else {
             driverConnections[driverId].temp_storage.push(json);
         }
