@@ -50,7 +50,21 @@ pub.insertProducts = function (order_id, products) {
  */
 pub.getOrdersByUserId = function (user_id) {
     var sqlQuery = `
-        SELECT *
+        SELECT
+        orders_history.id AS order_id,
+        orders_history.id_prefix AS order_id_prefix,
+        orders_history.date_placed AS date_placed,
+        orders_history.date_assigned AS date_assigned,
+        orders_history.date_arrived_store AS date_arrived_store,
+        orders_history.date_picked AS date_picked,
+        orders_history.date_arrived_customer AS date_arrived_customer,
+        orders_history.date_delivered AS date_delivered,
+        orders_history.delivery_address AS delivery_address,
+        orders_history.store_id AS store_id,
+        orders_history.driver_id AS driver_id,
+        orders_history.refused AS refused,
+        orders_history.receiver_name AS receiver_name,
+        orders_history.receiver_age AS receiver_age
 
         FROM orders_history, users_customers as users
         WHERE orders_history.user_id = users.id AND ?
@@ -67,7 +81,21 @@ pub.getOrdersByUserId = function (user_id) {
  */
 pub.getOrdersByGuestId = function (user_id) {
     var sqlQuery = `
-        SELECT *
+        SELECT
+        orders_history.id AS order_id,
+        orders_history.id_prefix AS order_id_prefix,
+        orders_history.date_placed AS date_placed,
+        orders_history.date_assigned AS date_assigned,
+        orders_history.date_arrived_store AS date_arrived_store,
+        orders_history.date_picked AS date_picked,
+        orders_history.date_arrived_customer AS date_arrived_customer,
+        orders_history.date_delivered AS date_delivered,
+        orders_history.delivery_address AS delivery_address,
+        orders_history.store_id AS store_id,
+        orders_history.driver_id AS driver_id,
+        orders_history.refused AS refused,
+        orders_history.receiver_name AS receiver_name,
+        orders_history.receiver_age AS receiver_age
 
         FROM orders_history, users_customers_guest as guests
         WHERE orders_history.guest_id = guests.id AND ?
