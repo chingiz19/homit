@@ -22,6 +22,7 @@ const dbTables = {
   catalog_types: "catalog_types",
   drivers: "drivers",
   drivers_shift_history: "drivers_shift_history",
+  drivers_location: "drivers_location",
   employee_roles: "employee_roles",
   orders_cart_info: "orders_cart_info",
   orders_history: "orders_history",

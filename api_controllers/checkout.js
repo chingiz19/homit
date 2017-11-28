@@ -130,7 +130,7 @@ var createOrders = function (id, address, isGuest, products) {
     var userOrders = [];
 
     for (var superCategory in products) {
-        createFunctions.push(Orders.createOrder(id, address, isGuest));
+        createFunctions.push(Orders.createOrder(id, address, isGuest, superCategory));
     }
 
     return Promise.all(createFunctions).then(function (orderIds) {

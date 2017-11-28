@@ -77,6 +77,7 @@ CREATE TABLE users_employees (
 	last_name VARCHAR(225) NOT NULL, 
 	password VARCHAR(225) NOT NULL,
 	sin_number VARCHAR(9),
+	phone_number VARCHAR(10),
 	role_id INT NOT NULL,
 	
 	PRIMARY KEY (id), 
@@ -104,6 +105,17 @@ CREATE TABLE drivers_shift_history (
 
 	PRIMARY KEY (id),
 	CONSTRAINT fk_drivers_shift_history_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE	
+) ENGINE = InnoDB;
+
+
+CREATE TABLE drivers_location (
+	id INT NOT NULL AUTO_INCREMENT,
+	driver_id INT NOT NULL,
+	latitude FLOAT,
+	longitude FLOAT,
+
+	PRIMARY KEY(id),
+	CONSTRAINT fk_drivers_location_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE = InnoDB;
 
 
@@ -246,6 +258,7 @@ CREATE TABLE orders_history (
 	date_arrived_customer TIMESTAMP,	
 	date_delivered TIMESTAMP,
 	delivery_address VARCHAR(225) NOT NULL,
+	store_type INT NOT NULL,
 	store_id INT,
 	driver_id INT,
 	refused BOOLEAN,
@@ -255,6 +268,7 @@ CREATE TABLE orders_history (
 	PRIMARY KEY (id),
 	CONSTRAINT fk_orders_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT fk_orders_history_guest_id FOREIGN KEY (guest_id) REFERENCES users_customers_guest(id) ON DELETE SET NULL ON UPDATE CASCADE,	
+	CONSTRAINT fk_orders_history_store_type FOREIGN KEY (store_type) REFERENCES catalog_super_categories(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_orders_history_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_orders_history_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE
 	

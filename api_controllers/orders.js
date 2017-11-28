@@ -112,4 +112,13 @@ router.post('/getorder', Auth.validateAdmin(), function (req, res, next) {
     }
 });
 
+router.get('/pendingorders', Auth.validateAdmin(), function (req, res, next) {
+    Orders.getPendingOrders().then(function (pendingOrders) {
+        res.json({
+            success: true,
+            drivers: pendingOrders
+        });
+    });
+});
+
 module.exports = router;

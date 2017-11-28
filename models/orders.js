@@ -7,22 +7,26 @@ var pub = {};
 /**
  * Creates order in orders_history table
  */
-pub.createOrder = function (id, address, isGuest) {
-    var data;
-    if (isGuest) {
-        data = {
-            guest_id: id,
-            delivery_address: address
-        };
-    } else {
-        data = {
-            user_id: id,
-            delivery_address: address
-        };
-    }
-
-    return db.insertQuery(db.dbTables.orders_history, data).then(function (inserted) {
-        return inserted.insertId;
+pub.createOrder = function (id, address, isGuest, superCategory) {
+    return Catalog.getSuperCategoryIdByName(superCategory).then(function(superCategoryId) {
+        var data;
+        if (isGuest) {
+            data = {
+                guest_id: id,
+                delivery_address: address,
+                store_type: superCategoryId
+            };
+        } else {
+            data = {
+                user_id: id,
+                delivery_address: address,
+                store_type: superCategoryId                
+            };
+        }
+    
+        return db.insertQuery(db.dbTables.orders_history, data).then(function (inserted) {
+            return inserted.insertId;
+        });
     });
 };
 
@@ -61,13 +65,16 @@ pub.getOrdersByUserId = function (user_id) {
         orders_history.date_delivered AS date_delivered,
         orders_history.delivery_address AS delivery_address,
         orders_history.store_id AS store_id,
+        super_categories.name AS super_category,    
         orders_history.driver_id AS driver_id,
         orders_history.refused AS refused,
         orders_history.receiver_name AS receiver_name,
         orders_history.receiver_age AS receiver_age
 
-        FROM orders_history, users_customers as users
-        WHERE orders_history.user_id = users.id AND ?
+        FROM orders_history, users_customers as users,
+        catalog_super_categories AS super_categories
+        WHERE super_categories.id = orders_history.store_type
+        AND orders_history.user_id = users.id AND ?
         
         ORDER BY date_placed`;
 
@@ -92,13 +99,16 @@ pub.getOrdersByGuestId = function (user_id) {
         orders_history.date_delivered AS date_delivered,
         orders_history.delivery_address AS delivery_address,
         orders_history.store_id AS store_id,
+        super_categories.name AS super_category,    
         orders_history.driver_id AS driver_id,
         orders_history.refused AS refused,
         orders_history.receiver_name AS receiver_name,
         orders_history.receiver_age AS receiver_age
 
-        FROM orders_history, users_customers_guest as guests
-        WHERE orders_history.guest_id = guests.id AND ?
+        FROM orders_history, users_customers_guest AS guests,
+        catalog_super_categories AS super_categories
+        WHERE super_categories.id = orders_history.store_type
+        AND orders_history.guest_id = guests.id AND ?
 
         ORDER BY date_placed`;
 
@@ -186,6 +196,98 @@ pub.getUserWithOrderByOrderId = function (orderId) {
         } else {
             return false;
         }
+    });
+};
+
+pub.getPendingOrders = function () {
+    var sqlQuery = `
+    SELECT
+    history.id AS order_id, history.id_prefix AS order_id_prefix, history.date_placed AS date_placed,
+    history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
+    history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
+    history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
+    history.driver_id AS driver_id, history.store_id AS store_id,
+    stores.id_prefix AS store_id_prefix, stores.name AS store_name,
+    stores.address AS store_address, super_categories.name AS super_category,
+    users.id AS user_id, users.id_prefix AS user_id_prefix, users.user_email AS user_email,
+    users.first_name AS first_name, users.last_name AS last_name, users.phone_number AS user_phone_number,
+    users.birth_date AS user_birth_date
+    FROM
+    orders_history AS history,
+    catalog_stores AS stores,
+    catalog_super_categories AS super_categories,
+    users_customers AS users
+    WHERE
+    history.store_id = stores.id
+    AND history.store_type = super_categories.id
+    AND history.user_id = users.id
+    AND history.date_delivered = 0
+    
+    UNION
+    
+    SELECT history.id AS order_id, history.id_prefix AS order_id_prefix, history.date_placed AS date_placed,
+    history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
+    history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
+    history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
+    history.driver_id AS driver_id, history.store_id AS store_id, stores.id_prefix AS store_id_prefix,
+    stores.name AS store_name, stores.address AS store_address, super_categories.name AS super_category,
+    guests.id AS user_id, guests.id_prefix AS user_id_prefix, guests.user_email AS user_email,
+    guests.first_name AS first_name, guests.last_name AS last_name, guests.phone_number AS user_phone_number,
+    guests.birth_date AS user_birth_date
+    FROM
+    orders_history AS history,
+    catalog_stores AS stores,
+    catalog_super_categories AS super_categories,
+    users_customers_guest AS guests
+    WHERE
+    history.store_id = stores.id
+    AND history.store_type = super_categories.id
+    AND history.guest_id = guests.id
+    AND history.date_delivered = 0
+    
+    UNION
+    
+    SELECT history.id AS order_id, history.id_prefix AS order_id_prefix, history.date_placed AS date_placed,
+    history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
+    history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
+    history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
+    history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
+    NULL AS store_address, super_categories.name AS super_category, users.id AS user_id, users.id_prefix AS user_id_prefix,
+    users.user_email AS user_email, users.first_name AS first_name, users.last_name AS last_name,
+    users.phone_number AS user_phone_number, users.birth_date AS user_birth_date
+    FROM
+    orders_history AS history,
+    catalog_super_categories AS super_categories,    
+    users_customers AS users
+    WHERE
+    history.store_id IS NULL
+    AND history.store_type = super_categories.id    
+    AND history.date_delivered = 0
+    AND history.user_id = users.id
+    
+    UNION
+    
+    SELECT history.id AS order_id, history.id_prefix AS order_id_prefix, history.date_placed AS date_placed,
+    history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
+    history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
+    history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
+    history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
+    NULL AS store_address, super_categories.name AS super_category, guests.id AS user_id, guests.id_prefix AS user_id_prefix,
+    guests.user_email AS user_email, guests.first_name AS first_name, guests.last_name AS last_name,
+    guests.phone_number AS user_phone_number, guests.birth_date AS user_birth_date
+    FROM
+    orders_history AS history,
+    catalog_super_categories AS super_categories,    
+    users_customers_guest AS guests
+    WHERE
+    history.store_id IS NULL
+    AND history.store_type = super_categories.id        
+    AND history.date_delivered = 0
+    AND history.guest_id = guests.id
+    `;
+
+    return db.runQuery(sqlQuery).then(function (pendingOrders) {
+        return pendingOrders;
     });
 };
 

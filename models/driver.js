@@ -76,31 +76,32 @@ pub.getConnectionPort = function (receivedDriverId) {
                         break;
                     case "arrived_store":
                         console.log("Data received from driver: arrived_store");
-                        console.log("store_id: " + receivedJson.details.arrived_store.store_id);
-                        console.log("order_ids: " + receivedJson.details.arrived_store.order_ids + "\n");
+                        console.log("store_id: " + driverDetails.arrived_store.store_id);
+                        console.log("order_ids: " + driverDetails.arrived_store.order_ids + "\n");
                         saveArrivedStore(driverIdInt, driverDetails.arrived_store.order_ids);
                         break;
                     case "pick_up":
                         console.log("Data received from driver: pick_up");
-                        console.log("store_id: " + receivedJson.details.pick_up.store_id);
-                        console.log("order_ids: " + receivedJson.details.pick_up.order_ids + "\n");
+                        console.log("store_id: " + driverDetails.pick_up.store_id);
+                        console.log("order_ids: " + driverDetails.pick_up.order_ids + "\n");
                         savePickUp(driverIdInt, driverDetails.pick_up.order_ids);
                         break;
                     case "drop_off":
                         console.log("Data received from driver: drop_off");
-                        console.log("order_id: " + receivedJson.details.drop_off.order_id);
-                        console.log("refused: " + receivedJson.details.drop_off.refused);
-                        console.log("same_receiver: " + receivedJson.details.drop_off.same_receiver);
-                        console.log("receiver_name: " + receivedJson.details.drop_off.receiver_name);
-                        console.log("receiver_age: " + receivedJson.details.drop_off.receiver_age + "\n");
+                        console.log("order_id: " + driverDetails.drop_off.order_id);
+                        console.log("refused: " + driverDetails.drop_off.refused);
+                        console.log("same_receiver: " + driverDetails.drop_off.same_receiver);
+                        console.log("receiver_name: " + driverDetails.drop_off.receiver_name);
+                        console.log("receiver_age: " + driverDetails.drop_off.receiver_age + "\n");
                         saveDropOff(driverIdInt, driverDetails.drop_off);
                         break;
                     case "location_update":
+                        saveLocation(driverIdInt, driverDetails.location);
                         break;
                     case "arrived_customer":
                         console.log("Data received from driver: arrived_customer");
-                        console.log("customer_id: " + receivedJson.details.arrived_customer.customer_id);
-                        console.log("order_ids: " + receivedJson.details.arrived_customer.order_ids + "\n");
+                        console.log("customer_id: " + driverDetails.arrived_customer.customer_id);
+                        console.log("order_ids: " + driverDetails.arrived_customer.order_ids + "\n");
                         saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids);
                         // send text message
                         sendToCm = false;
@@ -241,5 +242,43 @@ var updateOrdersHistory = function (updateColumn, orderIdsString) {
         return updated;
     });
 };
+
+var saveLocation = function (driverId, location) {
+    var updateData = {
+        longitude: location.longitude,
+        latitude: location.latitude
+    };
+    var key = {
+        id: driverId
+    };
+
+    return db.updateQuery(db.dbTables.drivers_location, [updateData, key]).then(function (updated) {
+        return updated;
+    });
+};
+
+pub.getOnlineDrivers = function () {
+    var sqlQuery = `
+    SELECT drivers.id AS driver_id, drivers.id_prefix AS driver_id_prefix,
+    employee.user_email AS email, employee.first_name AS first_name,
+    employee.last_name AS last_name, employee.phone_number AS phone_number,
+    location.latitude AS latitude, location.longitude AS longitude,
+    shift.shift_start AS shift_start
+    FROM 
+    drivers_shift_history AS shift,
+    drivers,
+    users_employees AS employee,
+    drivers_location AS location
+    WHERE
+    shift.shift_end = 0
+    AND drivers.id = shift.driver_id
+    AND employee.id = drivers.employee_id,
+    AND drivers.id = location.driver_id
+    `;
+
+    return db.runQuery(sqlQuery).then(function (onlineDrivers) {
+        return onlineDrivers;
+    });
+}
 
 module.exports = pub;

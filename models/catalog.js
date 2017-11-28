@@ -281,6 +281,17 @@ pub.searchProducts = function (searchText) {
     });
 };
 
+pub.getSuperCategoryIdByName = function (superCategory) {
+    var data = { name: superCategory };
+    return db.selectAllWhere(db.dbTables.catalog_super_categories, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return dbResult[0].id;
+        } else {
+            return false;
+        }
+    });
+}
+
 /**
  * Custom function to do alphanumeric sort
  * 
