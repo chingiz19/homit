@@ -197,7 +197,7 @@ var saveArrivedStore = function (driverId, orderIds) {
     updateOrdersHistory("date_arrived_store", orderIds);
 };
 
-var savePickUp = function (driverId, storeId) {
+var savePickUp = function (driverId, orderIds) {
     updateOrdersHistory("date_picked", orderIds);
 };
 
