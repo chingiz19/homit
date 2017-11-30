@@ -119,6 +119,20 @@ CREATE TABLE drivers_location (
 ) ENGINE = InnoDB;
 
 
+CREATE TABLE drivers_routes (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	driver_id INT NOT NULL,
+	store_id INT,
+	order_id INT,
+	position INT NOT NULL,
+
+	PRIMARY KEY(id),
+	CONSTRAINT fk_drivers_routes_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_drivers_routes_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_drivers_routes_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE			
+) ENGINE = InnoDB;
+
+
 CREATE TABLE catalog_super_categories ( 
 	id INT NOT NULL, 
 	name VARCHAR(225) NOT NULL, 

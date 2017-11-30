@@ -32,10 +32,10 @@ var receiver = function (jsonResponse) {
         var driverIdString = jsonResponse.details.driver_id;
         var orderIdString = jsonResponse.details.order_id;
         var storeIdString = jsonResponse.details.store_id;
+        var storeAdded = jsonResponse.details.store_added;
 
         var driverId = driverIdString.split("_")[1];
         var orderId = orderIdString.split("_")[1];
-
         var storeId = storeIdString.split("_")[1];
 
         var data = {
@@ -52,10 +52,10 @@ var receiver = function (jsonResponse) {
         db.updateQuery(db.dbTables.orders_history, [data, key]).then(function (updated) {
 
             // Build json
-            var storekey = {
+            var storeKey = {
                 id: storeId
             };
-            db.selectAllWhere(db.dbTables.catalog_stores, storekey).then(function (dbStore) {
+            db.selectAllWhere(db.dbTables.catalog_stores, storeKey).then(function (dbStore) {
 
                 var jsonStore = {
                     id: storeIdString,
@@ -95,6 +95,9 @@ var receiver = function (jsonResponse) {
                             }
                         };
                         Driver.send(driverIdString, jsonFinal);
+
+                        Driver.dispatchOrder(
+                            driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded);
                     });
                 });
             });

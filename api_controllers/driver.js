@@ -53,4 +53,14 @@ router.get('/onlinedrivers', Auth.validateAdmin(), function (req, res, next) {
     });
 });
 
+router.post('/getroutes', Auth.validateAdmin(), function(req, res, next) {
+    var driverId = req.body.driver_id;
+    Driver.getRoutes(driverId).then(function (routes) {
+        res.json({
+            success: true,
+            routes: routes
+        });
+    });
+});
+
 module.exports = router;

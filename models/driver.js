@@ -79,6 +79,7 @@ pub.getConnectionPort = function (receivedDriverId) {
                         console.log("store_id: " + driverDetails.arrived_store.store_id);
                         console.log("order_ids: " + driverDetails.arrived_store.order_ids + "\n");
                         saveArrivedStore(driverIdInt, driverDetails.arrived_store.order_ids);
+                        removeStoreRouteNode(driverIdInt, driverDetails.arrived_store.store_id);
                         break;
                     case "pick_up":
                         console.log("Data received from driver: pick_up");
@@ -93,6 +94,7 @@ pub.getConnectionPort = function (receivedDriverId) {
                         console.log("same_receiver: " + driverDetails.drop_off.same_receiver);
                         console.log("receiver_name: " + driverDetails.drop_off.receiver_name);
                         console.log("receiver_age: " + driverDetails.drop_off.receiver_age + "\n");
+                        removeOrderRouteNode(driverIdInt, driverDetails.arrived_store.order_id);
                         saveDropOff(driverIdInt, driverDetails.drop_off);
                         break;
                     case "location_update":
@@ -279,6 +281,156 @@ pub.getOnlineDrivers = function () {
     return db.runQuery(sqlQuery).then(function (onlineDrivers) {
         return onlineDrivers;
     });
-}
+};
+
+var getRoutesMaxPosition = function (driverId) {
+    var data = { driver_id: driverId };
+    var sqlQuery = `
+        SELECT MAX(position) AS max_position
+        FROM drivers_routes
+        WHERE ?`;
+
+    return db.runQuery(sqlQuery, data).then(function (maxPosition) {
+        if (maxPosition[0].max_position == null) {
+            return -1;
+        } else {
+            return maxPosition[0].max_position;
+        }
+    });
+};
+
+var shiftRoutes = function (driverId, nextNodeIdString) {
+    if (nextNodeIdString != -1) {
+        var nextNodeType = nextNodeIdString.split("_")[0];
+        var nextNodeId = nextNodeIdString.split("_")[1];
+
+        var selectData = {};
+        if (nextNodeType == "s") {
+            selectData.store_id = nextNodeId;
+        } else {
+            selectData.order_id = nextNodeId;
+        }
+
+        var sqlQuerySelect = `
+            SELECT position
+            FROM drivers_routes
+            WHERE driver_id = `+ driverId + ` AND ?`;
+        return db.runQuery(sqlQuerySelect, selectData).then(function (route) {
+            var sqlQuery = `
+                    UPDATE drivers_routes
+                    SET position = position + 1
+                    WHERE ? AND position >= ` + route[0].position;
+
+            var driverData = { driver_id: driverId };
+
+            return db.runQuery(sqlQuery, driverData).then(function (updatedPosition) {
+                return route[0].position;
+            });
+        });
+    } else {
+        return getRoutesMaxPosition(driverId).then(function (maxPosition) {
+            return maxPosition + 1;
+        });
+    }
+};
+
+var insertStoreToRoutes = function (driverId, storeId, nextNodeIdString, storeAdded) {
+    if (storeAdded) {
+        return shiftRoutes(driverId, nextNodeIdString).then(function (positionToInsert) {
+            var storeData = {
+                driver_id: driverId,
+                store_id: storeId,
+                position: positionToInsert
+            };
+
+            return db.insertQuery(db.dbTables.drivers_routes, storeData).then(function (insertedStore) {
+                return getRoutesMaxPosition(driverId).then(function (maxPosition) {
+                    return maxPosition + 1;
+                });
+            });
+        });
+    } else {
+        return getRoutesMaxPosition(driverId).then(function (maxPosition) {
+            return maxPosition + 1;
+        });
+    }
+};
+
+pub.dispatchOrder = function (driverId, storeId, orderId, nextNodeIdString, storeAdded) {
+    return insertStoreToRoutes(driverId, storeId, nextNodeIdString, storeAdded).then(function (orderInsertAt) {
+        var orderData = {
+            driver_id: driverId,
+            order_id: orderId,
+            position: orderInsertAt
+        };
+
+        return db.insertQuery(db.dbTables.drivers_routes, orderData).then(function (dispatched) {
+            return dispatched;
+        });
+    });
+};
+
+var removeRouteNode = function (driverId, data) {
+    var sqlQuerySelect = `
+        SELECT id, position
+        FROM drivers_routes
+        WHERE driver_id = `+ driverId + ` AND ?`;
+
+    return db.runQuery(sqlQuerySelect, data).then(function (route) {
+        var deleteData = { id: route[0].id };
+        return db.deleteQuery(db.dbTables.drivers_routes, deleteData).then(function (deleted) {
+            var sqlQuery = `
+                UPDATE drivers_routes
+                SET position = position - 1
+                WHERE ? AND position >= ` + route[0].position;
+
+            var driverData = { driver_id: driverId };
+            return db.runQuery(sqlQuery, driverData).then(function (updatedPosition) {
+                return true;
+            });
+        });
+    });
+};
+
+var removeStoreRouteNode = function (driverId, storeId) {
+    var storeData = { store_id: storeId };
+
+    removeRouteNode(driverId, storeData).then(function (removed) {
+        return true;
+    });
+};
+
+var removeOrderRouteNode = function (driverId, orderId) {
+    var orderData = { order_id: orderId };
+
+    removeRouteNode(driverId, orderData).then(function (removed) {
+        return true;
+    });
+};
+
+pub.getRoutes = function (driverId) {
+    var sqlQuery = `
+        SELECT routes.id AS route_id, routes.position AS position, history.id_prefix AS node_id_prefix, routes.order_id AS node_id, history.delivery_address AS node_address, "order" AS node_type
+        FROM drivers_routes AS routes,
+        orders_history AS history
+        WHERE 
+        routes.order_id = history.id
+        AND routes.driver_id = ` + driverId + ` 
+        
+        UNION
+        
+        SELECT routes.id AS route_id, routes.position AS position, stores.id_prefix AS node_id_prefix, routes.store_id AS node_id, stores.address AS node_address, "store" AS node_type
+        FROM drivers_routes AS routes,
+        catalog_stores AS stores
+        WHERE 
+        routes.store_id = stores.id
+        AND routes.driver_id = ` + driverId + `
+        
+        ORDER BY position`;
+
+    return db.runQuery(sqlQuery).then(function (routes) {
+        return routes;
+    });
+};
 
 module.exports = pub;
