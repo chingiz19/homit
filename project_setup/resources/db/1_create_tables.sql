@@ -102,6 +102,7 @@ CREATE TABLE drivers_shift_history (
 	driver_id INT NOT NULL,
 	shift_start TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	shift_end TIMESTAMP,
+	online BOOLEAN DEFAULT TRUE,
 
 	PRIMARY KEY (id),
 	CONSTRAINT fk_drivers_shift_history_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE	

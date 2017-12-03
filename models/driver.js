@@ -167,6 +167,10 @@ var saveOnline = function (driverId) {
             return db.insertQuery(db.dbTables.drivers_shift_history, insertData).then(function (inserted) {
                 return inserted.insertId;
             });
+        } else {
+            return setDriverOnlineFlag(dbResult[0].id, true).then(function (updated) {
+                return updated;
+            });
         }
     });
 };
@@ -180,17 +184,10 @@ var saveOffline = function (driverId) {
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
         if (dbResult.length > 0) {
 
-            var sqlQuery2 = `
-            UPDATE drivers_shift_history
-            SET shift_end = CURRENT_TIMESTAMP
-            WHERE ?`
-
-            var key = {
-                id: dbResult[0].id
-            };
-
-            return db.runQuery(sqlQuery2, key).then(function (updated) {
-                return updated;
+            return setDriverOnlineFlag(dbResult[0].id, false).then(function (updated) {
+                return endShift(dbResult[0].id, driverId).then(function (ended) {
+                    return true;
+                });
             });
         }
     });
@@ -265,7 +262,7 @@ pub.getOnlineDrivers = function () {
     employee.user_email AS email, employee.first_name AS first_name,
     employee.last_name AS last_name, employee.phone_number AS phone_number,
     location.latitude AS latitude, location.longitude AS longitude,
-    shift.shift_start AS shift_start
+    shift.shift_start AS shift_start, shift.online AS is_online
     FROM 
     drivers_shift_history AS shift,
     drivers,
@@ -404,7 +401,9 @@ var removeOrderRouteNode = function (driverId, orderId) {
     var orderData = { order_id: orderId };
 
     removeRouteNode(driverId, orderData).then(function (removed) {
-        return true;
+        return checkToEndShift(driverId).then(function (ended) {
+            return true;
+        });
     });
 };
 
@@ -430,6 +429,50 @@ pub.getRoutes = function (driverId) {
 
     return db.runQuery(sqlQuery).then(function (routes) {
         return routes;
+    });
+};
+
+var setDriverOnlineFlag = function (rowId, status) {
+    var data = {
+        online: status
+    };
+    var key = {
+        id: rowId
+    };
+    db.updateQuery(db.dbTables.drivers_shift_history, [data, key]).then(function (updated) {
+        return updated.id;
+    });
+};
+
+var endShift = function (rowId, driverId) {
+    return getRoutes(driverId).then(function (routes) {
+        if (routes.length == 0) {
+            var sqlQuery2 = `
+            UPDATE drivers_shift_history
+            SET shift_end = CURRENT_TIMESTAMP
+            WHERE ?`
+
+            var key = {
+                id: rowId
+            };
+
+            return db.runQuery(sqlQuery2, key).then(function (updated) {
+                return updated;
+            });
+        }
+    });
+};
+
+var checkToEndShift = function (driverId) {
+    var sqlQuery = `
+    SELECT * FROM drivers_shift_history WHERE shift_end = 0    
+    AND online = false AND ?`
+
+    var data = { "driver_id": driverId };
+    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+        return endShift(dbResult[0].id, driverId).then(function (ended) {
+            return true;
+        });
     });
 };
 
