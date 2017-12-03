@@ -48,7 +48,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                     } else if (action == login.passwordErrorAction){
                         login.goToForgotPasswordForm();
                     } else {
-                        console.error("ERROR");
+                        Logger.error("ERROR");
                     }
                 }
             })
@@ -114,7 +114,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 login.showToast("Login doesn't exist", login.signUpErrorAction);
             }
         }, function errorCallback(response) {
-            console.log("ERROR");
+            Logger.log("ERROR");
         });
     };
 
@@ -137,7 +137,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 login.showToast(response.data["error"].ui_message, login.passwordErrorAction);
             }
         }, function errorCallback(response) {
-            console.log("ERROR");
+            Logger.log("ERROR");
         });
     }
 
@@ -175,7 +175,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 login.showToast(response.data["error"].ui_message);
             }
         }, function errorCallback(response) {
-            console.log("ERROR");
+            Logger.log("ERROR");
         });
     }
 
@@ -188,12 +188,12 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
             }
         }).then(function successCallback(response) {
             if (response.data["success"] === "true") {
-                console.log("password reset");
+                Logger.log("password reset");
             } else {
-                console.log("password not reset");
+                Logger.log("password not reset");
             }
         }, function errorCallback(response) {
-            console.log("ERROR in password reset");
+            Logger.log("ERROR in password reset");
         });
     }
 

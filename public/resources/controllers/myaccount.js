@@ -106,12 +106,12 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 }
             }).then(function successCallback(response) {
                 if (response.data["success"] === true) {
-                    console.log("Success:  Me updated");
+                    Logger.log("Success:  Me updated");
                 } else {
-                    console.log("Fail: Me failed to update");
+                    Logger.log("Fail: Me failed to update");
                 }
             }, function errorCallback(response) {
-                console.log("Error: in me update");
+                Logger.log("Error: in me update");
             });
         }
 
@@ -127,12 +127,12 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 }
             }).then(function successCallback(response) {
                 if (response.data["success"] === true) {
-                    console.log("Success: Contact updated");
+                    Logger.log("Success: Contact updated");
                 } else {
-                    console.log("Fail: Contact failed to update");
+                    Logger.log("Fail: Contact failed to update");
                 }
             }, function errorCallback(response) {
-                console.log("ERROR in contact update");
+                Logger.log("ERROR in contact update");
             });
         }
 
@@ -152,12 +152,12 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 }
             }).then(function successCallback(response) {
                 if (response.data["success"] === true) {
-                    console.log("Success: Address updated");
+                    Logger.log("Success: Address updated");
                 } else {
-                    console.log("Fail: Address failed to update");
+                    Logger.log("Fail: Address failed to update");
                 }
             }, function errorCallback(response) {
-                console.log("ERROR in address update");
+                Logger.log("ERROR in address update");
             });
         }
 
@@ -175,12 +175,12 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 }
             }).then(function successCallback(response) {
                 if (response.data["success"] === true) {
-                    console.log("Success: Password reset");
+                    Logger.log("Success: Password reset");
                 } else {
-                    console.log("Error: Password failed to reset");
+                    Logger.log("Error: Password failed to reset");
                 }
             }, function errorCallback(response) {
-                console.log("ERROR in password reset");
+                Logger.log("ERROR in password reset");
             });
         }
 
@@ -201,7 +201,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     myaccount.foundOrders[tmp]['fe_address'] = myaccount.foundOrders[tmp]['delivery_address'].substring(0, 13) + "..";
                 }
             }, function errorCallback(response) {
-                console.log("Error in getting user Orders.");
+                Logger.log("Error in getting user Orders.");
             });
         }
 
@@ -244,7 +244,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             }).then(function successCallback(response) {
                 myaccount.foundTheOrder = response.data.orders;
             }, function errorCallback(response) {
-                console.log("Error in getting the requested Order");
+                Logger.log("Error in getting the requested Order");
             });
         }
 

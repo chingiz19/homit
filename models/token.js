@@ -18,7 +18,7 @@ var validateToken = function(userId, token) {
         if (err == jwt.TokenExpiredError) {
             return "expired";
         } else {
-            console.log(err);
+            Logger.log(err);
             return "wrong";
         }
     }
@@ -26,7 +26,7 @@ var validateToken = function(userId, token) {
 
 var destroyToken = function(token) {
     //TODO: impement
-    console.log("token destroy");
+    Logger.log("token destroy");
 };
 
 module.exports.createToken = createToken;

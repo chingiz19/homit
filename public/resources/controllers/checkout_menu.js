@@ -102,7 +102,7 @@ function ($scope, $sce, $rootScope, $http, advancedStorage, cartService,$timeout
                     advancedStorage.setUserCart($scope.userCart);
                 }
             }, function errorCallback(response) {
-                console.log("ERROR");
+                Logger.log("ERROR");
             });
     }
 
@@ -130,7 +130,7 @@ function ($scope, $sce, $rootScope, $http, advancedStorage, cartService,$timeout
                     advancedStorage.setUserCart($scope.userCart);
                 }
             }, function errorCallback(response) {
-                console.log("ERROR");
+                Logger.log("ERROR");
             });
     }
 

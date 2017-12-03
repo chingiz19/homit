@@ -28,10 +28,10 @@ app.service('mapServices', ["$http", function($http){
                         geodesic: true
                     });
                 } else {
-                    console.warn("Couldn't get coverage map");
+                    Logger.warn("Couldn't get coverage map");
                 }
             }, function errorCallback(response) {
-                console.error("Something went wrong while getting coverage map");
+                Logger.error("Something went wrong while getting coverage map");
                 return false;
             });
     }

@@ -71,8 +71,8 @@ app.controller("checkoutController",
 
             }, function errorCallback(response) {
                 $scope.userCart = advancedStorage.getUserCart($scope);
-                console.log("error");
-                console.log(response);
+                Logger.log("error");
+                Logger.log(response);
             });
         $scope.plusItem = function (product) {
             var tmpQuantity = 1;
@@ -118,7 +118,7 @@ app.controller("checkoutController",
                         advancedStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
-                    console.log("ERROR");
+                    Logger.log("ERROR");
                 });
         }
 
@@ -145,7 +145,7 @@ app.controller("checkoutController",
                         advancedStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
-                    console.log("ERROR");
+                    Logger.log("ERROR");
                 });
 
             // Calculation For receipt
@@ -199,7 +199,7 @@ app.controller("checkoutController",
             }, function errorCallback(response) {
                 var m = response.data["ui_message"] || "Something went wrong while processing your order, please try again";
                 $rootScope.$broadcast("addNotification", { type: "alert-danger", message: m });
-                console.log("ERROR in order processing");
+                Logger.log("ERROR in order processing");
             });
         }
 

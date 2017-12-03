@@ -35,11 +35,11 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 });
             } else {
                 // TODO: error handling
-                console.log("password not reset");
+                Logger.log("password not reset");
             }
         }, function errorCallback(response) {
             $rootScope.$broadcast("addNotification", { type: "alert-danger", message: response.data["ui_message"] });
-            console.log("ERROR in password reset");
+            Logger.log("ERROR in password reset");
         });
     }
 
@@ -213,7 +213,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                     }
                 }
             }, function errorCallback(response) {
-                console.error("error");
+                Logger.error("error");
             });
         }
 

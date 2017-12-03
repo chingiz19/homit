@@ -20,10 +20,10 @@ router.use(function(err, req, res, next){
 	fileSystem.writeFile(errorLog, message, {encoding: 'utf-8', flag: 'a'}, 
 		function(err){
 			if (err){
-				console.log("-- > Error occured, but couldn't write to " + errorLog);
+				Logger.log("-- > Error occured, but couldn't write to " + errorLog);
 			}
 		});
-	console.log("[ERROR] For more information, please visit .logs/error_log file");
+	Logger.log("[ERROR] For more information, please visit .logs/error_log file");
 	//res.status(404).send("Path not found: " + req.path);
 	res.status(err.status || 500).send("<h1>Path Not Found</h1><h2>" + req.path + "</h2><h3> Status:" + 
 	err.status || 500 + "</h3>");

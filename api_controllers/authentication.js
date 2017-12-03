@@ -145,14 +145,14 @@ router.all('/signout', function (req, res, next) {
  * Forgot password
  */
 router.post('/forgotpassword', function (req, res, next) {
-    console.log("Not implemented");
+    Logger.log("Not implemented");
 });
 
 /**
  * Changes password
  */
 router.post('/changepassword', function (req, res, next) {
-    console.log("Not implemented");
+    Logger.log("Not implemented");
 });
 
 /**

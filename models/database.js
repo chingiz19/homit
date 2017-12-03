@@ -98,7 +98,7 @@ var end = function () {
     // The connection is terminated gracefully
     // Ensures all previously enqueued queries are still
     // before sending a COM_QUIT packet to the MySQL server.
-    console.log("ended DB connection");
+    Logger.log("ended DB connection");
   });
 };
 

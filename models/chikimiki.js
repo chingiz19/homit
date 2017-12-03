@@ -7,7 +7,7 @@ var pub = {};
 var outputStream;
 
 connector.createServer(function (connection) {
-    console.log('Connection to ChikiMiki has been established \n\n');
+    Logger.log('Connection to ChikiMiki has been established \n\n');
     connection.writable = true;
     outputStream = connection;
 
@@ -16,15 +16,15 @@ connector.createServer(function (connection) {
     });
 
     connection.on('close', function (data) {
-        console.log("ChikiMiki has been disconnected.");
+        Logger.log("ChikiMiki has been disconnected.");
     });
 
     connection.on('error', function (data) {
-        console.log("Error has been occurred.");
+        Logger.log("Error has been occurred.");
     })
 
 }).listen(6262, 'localhost', function () {
-    console.log('Waiting for ChikiMiki at port 6262')
+    Logger.log('Waiting for ChikiMiki at port 6262')
 });
 
 var receiver = function (jsonResponse) {
@@ -103,13 +103,13 @@ var receiver = function (jsonResponse) {
             });
         });
     } else {
-        console.log("Something went wrong");
+        Logger.log("Something went wrong");
     }
 
 };
 
 pub.send = function (json) {
-    console.log(JSON.stringify(json) + "\n");
+    Logger.log(JSON.stringify(json) + "\n");
     outputStream.write(JSON.stringify(json) + "\n");
 };
 

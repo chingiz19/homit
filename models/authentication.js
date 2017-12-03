@@ -21,7 +21,7 @@ pub.sign = function (req, res, obj) {
         vault.write(req, JSON.stringify(obj));
         return true;
     } catch (e) {
-        console.log(e);
+        Logger.log(e);
         return false;
     }
 };
@@ -37,15 +37,15 @@ pub.clear = function (res) {
 pub.validate = function (options) {
     return function (req, res, next) {
         if (checkAuth(req)) {
-            console.log("authenticated");
+            Logger.log("authenticated");
             next();
         }
         if (options && options.redirect) {
-            console.log("redirect");
+            Logger.log("redirect");
 
             res.redirect("/");
         } else {
-            console.log("r400");
+            Logger.log("r400");
 
             res.status(400).send("Not Authorized");
         }

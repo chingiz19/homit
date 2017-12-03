@@ -31,7 +31,7 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 }).then(function successCallback(response) {
                     $scope.foundUsers = response.data.users;
                 }, function errorCallback(response) {
-                    console.error("error");
+                    Logger.error("error");
                 });
             }
             else if($scope.searCriteriaIndex == 2){
@@ -44,7 +44,7 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 }).then(function successCallback(response) {
                     $scope.foundUsers = response.data.users;
                 }, function errorCallback(response) {
-                    console.error("error");
+                    Logger.error("error");
                 });
             }
             else if($scope.searCriteriaIndex == 3){
@@ -65,7 +65,7 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                     }, 10);
 
                 }, function errorCallback(response) {
-                    console.error("error");
+                    Logger.error("error");
                 });
             }
         }
@@ -88,7 +88,7 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
             }).then(function successCallback(response) {
                 $scope.foundOrders = response.data.orders;
             }, function errorCallback(response) {
-                console.error("error");
+                Logger.error("error");
             });
         }
         $scope.selectedOrderId = function (order){
@@ -101,7 +101,7 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
             }).then(function successCallback(response) {
                 $scope.foundOrderContent = response.data.orders;
             }, function errorCallback(response) {
-                console.error("error");
+                Logger.error("error");
             });
         }
 
@@ -121,11 +121,11 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                     });
                 } else {
                     // TODO: error handling
-                    console.log("password not reset");
+                    Logger.log("password not reset");
                 }
             }, function errorCallback(response) {
                 $rootScope.$broadcast("addNotification", { type: "alert-danger", message: response.data["ui_message"] });
-                console.log("ERROR in password reset");
+                Logger.log("ERROR in password reset");
             });
         };
     }]);

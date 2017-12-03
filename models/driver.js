@@ -42,7 +42,7 @@ pub.getConnectionPort = function (receivedDriverId) {
         connection.writable = true;
 
         if (driverConnections[driverId]) {
-            console.log(driverId + " has reconnected back");
+            Logger.log(driverId + " has reconnected back");
             driverConnections[driverId].connection = connection;
             driverConnections[driverId].online = true;
 
@@ -51,6 +51,7 @@ pub.getConnectionPort = function (receivedDriverId) {
             }
 
         } else {
+            Logger.log(driverId + " has been connected");
             var conInfo = {
                 online: true,
                 port: portId,
@@ -62,6 +63,7 @@ pub.getConnectionPort = function (receivedDriverId) {
 
         connection.on("data", function (receivedData) {
             var receivedJson = JSON.parse(receivedData);
+            Logger.log(receivedJson);
             if (receivedJson.action == "driver_status") {
                 var driverDetails = receivedJson.details;
                 var driverIdString = driverDetails.driver_id;
@@ -75,25 +77,13 @@ pub.getConnectionPort = function (receivedDriverId) {
                         saveOffline(driverIdInt);
                         break;
                     case "arrived_store":
-                        console.log("Data received from driver: arrived_store");
-                        console.log("store_id: " + driverDetails.arrived_store.store_id);
-                        console.log("order_ids: " + driverDetails.arrived_store.order_ids + "\n");
                         saveArrivedStore(driverIdInt, driverDetails.arrived_store.order_ids);
                         removeStoreRouteNode(driverIdInt, driverDetails.arrived_store.store_id);
                         break;
                     case "pick_up":
-                        console.log("Data received from driver: pick_up");
-                        console.log("store_id: " + driverDetails.pick_up.store_id);
-                        console.log("order_ids: " + driverDetails.pick_up.order_ids + "\n");
                         savePickUp(driverIdInt, driverDetails.pick_up.order_ids);
                         break;
                     case "drop_off":
-                        console.log("Data received from driver: drop_off");
-                        console.log("order_id: " + driverDetails.drop_off.order_id);
-                        console.log("refused: " + driverDetails.drop_off.refused);
-                        console.log("same_receiver: " + driverDetails.drop_off.same_receiver);
-                        console.log("receiver_name: " + driverDetails.drop_off.receiver_name);
-                        console.log("receiver_age: " + driverDetails.drop_off.receiver_age + "\n");
                         removeOrderRouteNode(driverIdInt, driverDetails.arrived_store.order_id);
                         saveDropOff(driverIdInt, driverDetails.drop_off);
                         break;
@@ -101,37 +91,35 @@ pub.getConnectionPort = function (receivedDriverId) {
                         saveLocation(driverIdInt, driverDetails.location);
                         break;
                     case "arrived_customer":
-                        console.log("Data received from driver: arrived_customer");
-                        console.log("customer_id: " + driverDetails.arrived_customer.customer_id);
-                        console.log("order_ids: " + driverDetails.arrived_customer.order_ids + "\n");
                         saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids);
                         // send text message
                         sendToCm = false;
                         break;
                     default:
-                        console.log("Error has been occurred ");
+                        // Logger.log("Error has been occurred ");
+                        Logger.log("Wrong driver status");
                 }
                 if (sendToCm) {
                     CM.send(receivedJson);
                 }
             } else {
-                console.log("Error has been occurred ");
+                Logger.log("Error has been occurred ");
             }
         });
 
         connection.on("close", function (data) {
             driverConnections[driverId].online = false;
-            console.log(driverId + " app has been disconnected from server");
+            Logger.log(driverId + " app has been disconnected from server");
         });
 
         connection.on("error", function (data) {
-            console.log("Error has been occurred " + data);
+            Logger.log("Error has been occurred " + data);
         })
     });
 
     return new Promise(function (resolve, reject) {
         portInitiator.listen(0, "0.0.0.0", function () {
-            console.log("Waiting for " + receivedDriverId + " at port " + portInitiator.address().port);
+            Logger.log("Waiting for " + receivedDriverId + " at port " + portInitiator.address().port);
             portId = portInitiator.address().port;
             driverId = receivedDriverId;
             if (portId != 0) {
