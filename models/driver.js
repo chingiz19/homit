@@ -40,7 +40,7 @@ io.on("connection", function (socket) {
         } else {
             socket.isVerified = true;
             driverConnections[socket.id].driver_id = tokenData.driver_id;
-            if (driverTempStorage[tokenData.driver_id]){
+            if (driverTempStorage[tokenData.driver_id]) {
                 for (var i = 0; i < driverTempStorage[tokenData.driver_id].length; i++) {
                     Driver.send(tokenData.driver_id, driverTempStorage[tokenData.driver_id][i]);
                 }
@@ -65,6 +65,7 @@ io.on("connection", function (socket) {
             switch (driverDetails.status) {
                 case "online":
                     saveOnline(driverIdInt);
+                    saveLocation(driverIdInt, driverDetails.location);
                     break;
                 case "offline":
                     saveOffline(driverIdInt);
@@ -93,7 +94,7 @@ io.on("connection", function (socket) {
                     saveDropOff(driverIdInt, driverDetails.drop_off);
                     break;
                 case "location_update":
-                    saveLocation(driverIdInt, driverDetails.location_update);
+                    saveLocation(driverIdInt, driverDetails.location);
                     break;
                 case "arrived_customer":
                     console.log("Data received from driver: arrived_customer");
@@ -174,7 +175,7 @@ pub.send = function (id, json) {
     }
 
     if (driverOffline) {
-        if (!driverTempStorage[id]){
+        if (!driverTempStorage[id]) {
             driverTempStorage[id] = [];
         }
         driverTempStorage[id].push(json);
@@ -197,7 +198,7 @@ var saveOnline = function (driverId) {
             });
         } else {
             return setDriverOnlineFlag(dbResult[0].id, true).then(function (updated) {
-                return updated;
+                return true;
             });
         }
     });
@@ -271,16 +272,31 @@ var updateOrdersHistory = function (updateColumn, orderIdsString) {
 };
 
 var saveLocation = function (driverId, location) {
-    var updateData = {
-        longitude: location.longitude,
-        latitude: location.latitude
-    };
-    var key = {
-        id: driverId
-    };
+    var data = { driver_id: driverId };
+    return db.selectAllWhere(db.dbTables.drivers_location, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            var updateData = {
+                longitude: location.longitude,
+                latitude: location.latitude
+            };
+            var key = {
+                driver_id: driverId
+            };
 
-    return db.updateQuery(db.dbTables.drivers_location, [updateData, key]).then(function (updated) {
-        return updated;
+            return db.updateQuery(db.dbTables.drivers_location, [updateData, key]).then(function (updated) {
+                return updated;
+            });
+        } else {
+            var insertData = {
+                driver_id: driverId,
+                longitude: location.longitude,
+                latitude: location.latitude
+            };
+
+            return db.insertQuery(db.dbTables.drivers_location, insertData).then(function (inserted) {
+                return inserted;
+            });
+        }
     });
 };
 
@@ -418,7 +434,8 @@ var removeRouteNode = function (driverId, data) {
 };
 
 var removeStoreRouteNode = function (driverId, storeId) {
-    var storeData = { store_id: storeId };
+    var storeIdInt = storeId.split("_")[1];
+    var storeData = { store_id: storeIdInt };
 
     removeRouteNode(driverId, storeData).then(function (removed) {
         return true;
@@ -426,9 +443,10 @@ var removeStoreRouteNode = function (driverId, storeId) {
 };
 
 var removeOrderRouteNode = function (driverId, orderId) {
-    var orderData = { order_id: orderId };
+    var orderIdInt = orderId.split("_")[1];
+    var orderData = { order_id: orderIdInt };
 
-    removeRouteNode(driverId, orderData).then(function (removed) {
+    return removeRouteNode(driverId, orderData).then(function (removed) {
         return checkToEndShift(driverId).then(function (ended) {
             return true;
         });
@@ -467,13 +485,13 @@ var setDriverOnlineFlag = function (rowId, status) {
     var key = {
         id: rowId
     };
-    db.updateQuery(db.dbTables.drivers_shift_history, [data, key]).then(function (updated) {
-        return updated.id;
+    return db.updateQuery(db.dbTables.drivers_shift_history, [data, key]).then(function (updated) {
+        return true;
     });
 };
 
 var endShift = function (rowId, driverId) {
-    return getRoutes(driverId).then(function (routes) {
+    return Driver.getRoutes(driverId).then(function (routes) {
         if (routes.length == 0) {
             var sqlQuery2 = `
             UPDATE drivers_shift_history
@@ -498,9 +516,13 @@ var checkToEndShift = function (driverId) {
 
     var data = { "driver_id": driverId };
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
-        return endShift(dbResult[0].id, driverId).then(function (ended) {
+        if (dbResult.length > 0) {
+            return endShift(dbResult[0].id, driverId).then(function (ended) {
+                return true;
+            });
+        } else {
             return true;
-        });
+        }
     });
 };
 
