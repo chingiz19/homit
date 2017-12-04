@@ -112,12 +112,13 @@ CREATE TABLE drivers_shift_history (
 CREATE TABLE drivers_location (
 	id INT NOT NULL AUTO_INCREMENT,
 	driver_id INT NOT NULL,
-	latitude FLOAT,
-	longitude FLOAT,
+	latitude DOUBLE,
+	longitude DOUBLE,
 
 	PRIMARY KEY(id),
 	CONSTRAINT fk_drivers_location_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE = InnoDB;
+
 
 CREATE TABLE catalog_super_categories ( 
 	id INT NOT NULL, 
@@ -286,6 +287,7 @@ CREATE TABLE orders_cart_info (
 	CONSTRAINT fk_orders_cart_info_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_orders_cart_info_depot_id FOREIGN KEY (depot_id) REFERENCES catalog_depot(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
+
 
 CREATE TABLE drivers_routes (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,

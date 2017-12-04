@@ -299,7 +299,7 @@ pub.getOnlineDrivers = function () {
     WHERE
     shift.shift_end = 0
     AND drivers.id = shift.driver_id
-    AND employee.id = drivers.employee_id,
+    AND employee.id = drivers.employee_id
     AND drivers.id = location.driver_id
     `;
 
