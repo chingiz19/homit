@@ -11,6 +11,7 @@ var Database            = require("./models/database");
 var Auth                = require("./models/authentication");
 var ChikiMiki           = require("./models/chikimiki");
 var Driver              = require("./models/driver");
+var JWTToken            = require("./models/jwt_token");
 var Logger              = require("./models/logger");
 
 
@@ -29,6 +30,7 @@ class modelFactory {
         global.Orders = Orders;
         global.CM = ChikiMiki;
         global.Driver = Driver;
+        global.JWTToken = JWTToken;
         global.Logger = Logger;
     }
 }

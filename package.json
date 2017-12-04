@@ -23,6 +23,7 @@
     "ejs": "^2.5.6",
     "express": "^4.14.1",
     "express-session": "^1.15.1",
+    "ip": "^1.1.5",
     "jsonwebtoken": "^8.0.1",
     "jwt-simple": "^0.5.1",
     "mocha": "^4.0.1",
@@ -33,6 +34,7 @@
     "path": "^0.12.7",
     "promise-mysql": "^3.0.0",
     "request": "^2.83.0",
-    "sinon": "^4.0.1"
+    "sinon": "^4.0.1",
+    "socket.io": "^2.0.4"
   }
 }

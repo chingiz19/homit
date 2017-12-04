@@ -3,6 +3,7 @@
  */
 
 var router = require("express").Router();
+var ip = require("ip");
 
 router.post('/signin', function (req, res, next) {
     var email = req.body.email;
@@ -19,20 +20,25 @@ router.post('/signin', function (req, res, next) {
         Driver.authenticateDriver(email, password).then(function (driver) {
             if (driver != false) {
                 var driverId = driver.id_prefix + driver.id;
-                Driver.getConnectionPort(driverId).then(function (portId) {
-                    delete driver.id_prefix;
-                    driver.id = driverId;
-                    var response = {
-                        success: true,
-                        driver: driver,
-                        connection: {
-                            host: "",
-                            port: portId
-                        }
-                    };
-
-                    res.send(response);
+                var portId = Driver.getConnectionPort();
+                var jwt_token = JWTToken.createToken({
+                    driver_id: driverId
                 });
+                
+                delete driver.id_prefix;
+                driver.id = driverId;
+                var response = {
+                    success: true,
+                    driver: driver,
+                    jwt_token: jwt_token,
+                    connection: {
+                        //host: "70.72.208.119",
+                        host: ip.address(),
+                        port: portId
+                    }
+                };
+
+                res.send(response);
 
             } else {
                 res.json({

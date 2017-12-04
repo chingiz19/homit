@@ -1,10 +1,134 @@
 /**
  * @copyright Homit 2017
  */
+
+var sockIOServer = require("http").createServer();
+var io = require("socket.io")(sockIOServer, {
+    pingInterval: 2100,
+    pingTimeout: 2000
+});
 var driverConnector = require("net");
 
 var pub = {};
 var driverConnections = {};
+var driverTempStorage = {};
+var SOCKET_PORT = 3000;
+var DEFAULT_EMIT = "data";
+
+io.on("connection", function (socket) {
+    console.log(socket.id + " app has been connected to server");
+    socket.isVerified = false;
+
+    setTimeout(function () {
+        if (!socket.isVerified) {
+            socket.disconnect();
+        }
+    }, 5000);
+
+    var conInfo = {
+        driver_id: "",
+        port: SOCKET_PORT,
+        socket: socket
+    };
+    driverConnections[socket.id] = conInfo;
+
+    socket.on("verify", function (data) {
+        var receivedJson = JSON.parse(data);
+        var tokenData = JWTToken.validateToken(receivedJson.token);
+        if (!tokenData || tokenData.driver_id != receivedJson.driver_id) {
+            socket.disconnect();
+        } else {
+            socket.isVerified = true;
+            driverConnections[socket.id].driver_id = tokenData.driver_id;
+            if (driverTempStorage[tokenData.driver_id]){
+                for (var i = 0; i < driverTempStorage[tokenData.driver_id].length; i++) {
+                    Driver.send(tokenData.driver_id, driverTempStorage[tokenData.driver_id][i]);
+                }
+                driverTempStorage[tokenData.driver_id] = [];
+            }
+        }
+    });
+
+    socket.on("data", function (data) {
+        if (!socket.isVerified) {
+            socket.disconnect();
+        }
+        var receivedJson = JSON.parse(data);
+        console.log("--------------------------------------------------------");
+        console.log(receivedJson);
+        console.log("--------------------------------------------------------");
+        if (receivedJson.action == "driver_status") {
+            var driverDetails = receivedJson.details;
+            var driverIdString = driverDetails.driver_id;
+            var driverIdInt = driverIdString.split("_")[1];
+            var sendToCm = true;
+            switch (driverDetails.status) {
+                case "online":
+                    saveOnline(driverIdInt);
+                    break;
+                case "offline":
+                    saveOffline(driverIdInt);
+                    break;
+                case "arrived_store":
+                    console.log("Data received from driver: arrived_store");
+                    console.log("store_id: " + driverDetails.arrived_store.store_id);
+                    console.log("order_ids: " + driverDetails.arrived_store.order_ids + "\n");
+                    saveArrivedStore(driverIdInt, driverDetails.arrived_store.order_ids);
+                    removeStoreRouteNode(driverIdInt, driverDetails.arrived_store.store_id);
+                    break;
+                case "pick_up":
+                    console.log("Data received from driver: pick_up");
+                    console.log("store_id: " + driverDetails.pick_up.store_id);
+                    console.log("order_ids: " + driverDetails.pick_up.order_ids + "\n");
+                    savePickUp(driverIdInt, driverDetails.pick_up.order_ids);
+                    break;
+                case "drop_off":
+                    console.log("Data received from driver: drop_off");
+                    console.log("order_id: " + driverDetails.drop_off.order_id);
+                    console.log("refused: " + driverDetails.drop_off.refused);
+                    console.log("same_receiver: " + driverDetails.drop_off.same_receiver);
+                    console.log("receiver_name: " + driverDetails.drop_off.receiver_name);
+                    console.log("receiver_age: " + driverDetails.drop_off.receiver_age + "\n");
+                    removeOrderRouteNode(driverIdInt, driverDetails.arrived_store.order_id);
+                    saveDropOff(driverIdInt, driverDetails.drop_off);
+                    break;
+                case "location_update":
+                    saveLocation(driverIdInt, driverDetails.location_update);
+                    break;
+                case "arrived_customer":
+                    console.log("Data received from driver: arrived_customer");
+                    console.log("customer_id: " + driverDetails.arrived_customer.customer_id);
+                    console.log("order_ids: " + driverDetails.arrived_customer.order_ids + "\n");
+                    saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids);
+                    // send text message
+                    sendToCm = false;
+                    break;
+                default:
+                    console.log("Error has been occurred ");
+            }
+            if (sendToCm) {
+                CM.send(receivedJson);
+            }
+        } else {
+            console.log("Error has been occurred ");
+        }
+    });
+
+    socket.on("disconnect", function () {
+        delete driverConnections[socket.id];
+        console.log(socket.id + " app has been disconnected from server");
+    });
+
+    socket.on("connect_error", function (data) {
+        console.log("Connect error has been occurred " + data);
+    });
+
+    socket.on("connect_timeout", function (data) {
+        console.log("Conenct timeout has been occurred " + data);
+    });
+});
+
+sockIOServer.listen(SOCKET_PORT);
 
 /**
  * Authenticate driver
@@ -35,109 +159,25 @@ pub.authenticateDriver = function (email, password) {
 /**
  * Get connection info for driver
  */
-pub.getConnectionPort = function (receivedDriverId) {
-    var portId;
-    var driverId;
-    var portInitiator = driverConnector.createServer(function (connection) {
-        connection.writable = true;
-
-        if (driverConnections[driverId]) {
-            Logger.log(driverId + " has reconnected back");
-            driverConnections[driverId].connection = connection;
-            driverConnections[driverId].online = true;
-
-            for (var i = 0; i < driverConnections[driverId].temp_storage.length; i++) {
-                Driver.send(driverId, driverConnections[driverId].temp_storage[i]);
-            }
-
-        } else {
-            Logger.log(driverId + " has been connected");
-            var conInfo = {
-                online: true,
-                port: portId,
-                connection: connection,
-                temp_storage: []
-            };
-            driverConnections[driverId] = conInfo;
-        }
-
-        connection.on("data", function (receivedData) {
-            var receivedJson = JSON.parse(receivedData);
-            Logger.log(receivedJson);
-            if (receivedJson.action == "driver_status") {
-                var driverDetails = receivedJson.details;
-                var driverIdString = driverDetails.driver_id;
-                var driverIdInt = driverIdString.split("_")[1];
-                var sendToCm = true;
-                switch (driverDetails.status) {
-                    case "online":
-                        saveOnline(driverIdInt);
-                        break;
-                    case "offline":
-                        saveOffline(driverIdInt);
-                        break;
-                    case "arrived_store":
-                        saveArrivedStore(driverIdInt, driverDetails.arrived_store.order_ids);
-                        removeStoreRouteNode(driverIdInt, driverDetails.arrived_store.store_id);
-                        break;
-                    case "pick_up":
-                        savePickUp(driverIdInt, driverDetails.pick_up.order_ids);
-                        break;
-                    case "drop_off":
-                        removeOrderRouteNode(driverIdInt, driverDetails.arrived_store.order_id);
-                        saveDropOff(driverIdInt, driverDetails.drop_off);
-                        break;
-                    case "location_update":
-                        saveLocation(driverIdInt, driverDetails.location);
-                        break;
-                    case "arrived_customer":
-                        saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids);
-                        // send text message
-                        sendToCm = false;
-                        break;
-                    default:
-                        // Logger.log("Error has been occurred ");
-                        Logger.log("Wrong driver status");
-                }
-                if (sendToCm) {
-                    CM.send(receivedJson);
-                }
-            } else {
-                Logger.log("Error has been occurred ");
-            }
-        });
-
-        connection.on("close", function (data) {
-            driverConnections[driverId].online = false;
-            Logger.log(driverId + " app has been disconnected from server");
-        });
-
-        connection.on("error", function (data) {
-            Logger.log("Error has been occurred " + data);
-        })
-    });
-
-    return new Promise(function (resolve, reject) {
-        portInitiator.listen(0, "0.0.0.0", function () {
-            Logger.log("Waiting for " + receivedDriverId + " at port " + portInitiator.address().port);
-            portId = portInitiator.address().port;
-            driverId = receivedDriverId;
-            if (portId != 0) {
-                resolve(portId);
-            } else {
-                reject(0);
-            }
-        });
-    });
+pub.getConnectionPort = function () {
+    return SOCKET_PORT;
 };
 
-pub.send = function (driverId, json) {
-    if (driverConnections[driverId]) {
-        if (driverConnections[driverId].online) {
-            driverConnections[driverId].connection.write(" " + JSON.stringify(json) + "\n");
-        } else {
-            driverConnections[driverId].temp_storage.push(json);
+pub.send = function (id, json) {
+    var driverOffline = true;
+    for (var sockId in driverConnections) {
+        if (driverConnections[sockId].driver_id == id) {
+            driverConnections[sockId].socket.emit(DEFAULT_EMIT, JSON.stringify(json) + "\n");
+            driverOffline = false;
+            break;
         }
+    }
+
+    if (driverOffline) {
+        if (!driverTempStorage[id]){
+            driverTempStorage[id] = [];
+        }
+        driverTempStorage[id].push(json);
     }
 };
 
