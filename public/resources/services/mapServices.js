@@ -5,14 +5,14 @@
  * @copyright Homit (c) 2017
  * @author Jeyhun Gurbanov
  */
-app.service('mapServices', ["$http", function($http){
+app.service('mapServices', ["$http", function ($http) {
 
     var pub = {};
 
     /**
      * Retrieves coordinates from backend, and creates Polygon
      */
-    pub.createCoveragePolygon = function(){
+    pub.createCoveragePolygon = function () {
         return $http({
                 method: 'GET',
                 url: '/api/map/coverage'
@@ -43,17 +43,17 @@ app.service('mapServices', ["$http", function($http){
      * @param elementId - id of element to bind autocomplete to
      * @return Google autocomplete variable
      */
-    pub.createAddressAutocomplete = function(elementId){
+    pub.createAddressAutocomplete = function (elementId) {
         return new google.maps.places.Autocomplete(
             document.getElementById(elementId), {
                 types: ['geocode'],
-                componentRestrictions: {country: 'ca'}
+                componentRestrictions: { country: 'ca' }
             }
-        ); 
+        );
     }
 
-    pub.createMap = function(elementId, options){
-        if (!options){
+    pub.createMap = function (elementId, options) {
+        if (!options) {
             options = {
                 zoom: 12,
                 center: new google.maps.LatLng(51.074314, -114.094996),
@@ -70,10 +70,65 @@ app.service('mapServices', ["$http", function($http){
      * @param polygon   - Polygon to check against
      * @return boolean
      */
-    pub.isPlaceInsidePolygon = function(place, polygon){
+    pub.isPlaceInsidePolygon = function (place, polygon) {
         var lat = place.geometry.location.lat();
         var lng = place.geometry.location.lng();
         return google.maps.geometry.poly.containsLocation(new google.maps.LatLng(lat, lng), polygon);
+    }
+
+    var icon_customer = {
+        path: "M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 2c1.1 0 2 .9 2 2 0 1.11-.9 2-2 2s-2-.89-2-2c0-1.1.9-2 2-2zm0 10c-1.67 0-3.14-.85-4-2.15.02-1.32 2.67-2.05 4-2.05s3.98.73 4 2.05c-.86 1.3-2.33 2.15-4 2.15z",
+        fillColor: 'rgba(42,81,145,0.8)',
+        fillOpacity: 1,
+        strokeWeight: 0,
+    }
+    var icon_driver = {
+        path: "M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z",
+        fillColor: 'rgba(0,0,0,0.8)',
+        fillOpacity: 1,
+        strokeWeight: 0,
+    }
+    var all_markers = [];
+
+    pub.addMarkerToMap = function (ADL_POL_markers, map) {
+        for (var i = 0; i < all_markers.length; i++) {
+            all_markers[i].setMap(null);
+        }
+        for (var i = 0; i < ADL_POL_markers.length; i++) {
+            var icon;
+            var marker = {};
+            if (ADL_POL_markers[i]['type'] == "customer") {
+                icon = icon_customer;
+            } else {
+                icon = icon_driver;
+            }
+            marker = new google.maps.Marker({
+                position: ADL_POL_markers[i]['latLng'],
+                map: map,
+                icon: icon_customer,
+            });
+            var infowindow = new google.maps.InfoWindow();
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    infowindow.setContent('<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<div id="bodyContent">'+
+                    '<div style="display: flex; justify-content: center; line-height: 2em; font-size: 20px; font-weight: 500;">' + ADL_POL_markers[i]['id_prefix'] + ADL_POL_markers[i]['order_id'] + '</div>'+
+                    '<ul style="margin: 0; padding: 0;">'+
+                    '<li>Call - <button onclick="call(' + ADL_POL_markers[i]['phone_number'] +')">' + ADL_POL_markers[i]['phone_number'] + '</button></li>'+
+                    '<li>Text - <button onclick="sendText('+ ADL_POL_markers[i]['phone_number'] +')">' + ADL_POL_markers[i]['phone_number'] + '</button></li>'+
+                    '<li>Email - <button onclick="sendEmail('+ ADL_POL_markers[i]['email'] +')">' + ADL_POL_markers[i]['email'] + '</button></li>'+
+                    '</ul>'+
+                    '</div>'+
+                    '</div>');
+                    infowindow.setOptions({maxWidth: 300});
+                    infowindow.open(map, marker);
+                }
+            }) (marker, i));
+
+            all_markers.push(marker);
+        }
     }
 
     return pub;

@@ -116,7 +116,7 @@ router.get('/pendingorders', Auth.validateAdmin(), function (req, res, next) {
     Orders.getPendingOrders().then(function (pendingOrders) {
         res.json({
             success: true,
-            drivers: pendingOrders
+            orders: pendingOrders
         });
     });
 });

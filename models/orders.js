@@ -131,7 +131,8 @@ pub.getOrderById = function (orderId) {
         listings.product_brand AS brand, listings.product_name AS name,
         listings.product_description AS description, listings.product_country AS country,
         containers.name, packagings.name AS packaging, volumes.volume_name AS volume,
-        depot.price AS price, products.product_image AS image, orders_cart_info.quantity AS quantity
+        depot.price AS price, products.product_image AS image, orders_cart_info.quantity AS quantity,
+        orders_cart_info.price_sold AS price_sold
         
         FROM orders_cart_info AS orders_cart_info, catalog_depot AS depot, catalog_products AS products,
         catalog_listings AS listings, catalog_types AS types, catalog_subcategories AS subcategories,

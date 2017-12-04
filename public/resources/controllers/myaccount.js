@@ -196,9 +196,9 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 myaccount.foundOrders = response.data.orders;
                 var inDate;
                 for (tmp in myaccount.foundOrders) {
-                    inDate = myaccount.foundOrders[tmp]['date_received'];
-                    myaccount.foundOrders[tmp]['date_received'] = $scope.mm_dd_yyyy(inDate);
-                    myaccount.foundOrders[tmp]['fe_address'] = myaccount.foundOrders[tmp]['delivery_address'].substring(0, 13) + "..";
+                    inDate = myaccount.foundOrders[tmp]['date_placed'];
+                    myaccount.foundOrders[tmp]['date_placed'] = $scope.mm_dd_yyyy(inDate);
+                    myaccount.foundOrders[tmp]['delivery_address'] = myaccount.foundOrders[tmp]['delivery_address'].substring(0, 13) + "..";
                 }
             }, function errorCallback(response) {
                 Logger.log("Error in getting user Orders.");

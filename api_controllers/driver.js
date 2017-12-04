@@ -54,7 +54,7 @@ router.get('/onlinedrivers', Auth.validateAdmin(), function (req, res, next) {
     Driver.getOnlineDrivers().then(function (onlineDrivers) {
         res.json({
             success: true,
-            orders: onlineDrivers
+            drivers: onlineDrivers
         });
     });
 });

@@ -64,10 +64,10 @@
                     <!--Category Box start-->
                     <span class="col1D">
                         <md-button aria-label="filterCategories" ng-click="filterCategories()" class="fltCategoryBtn">
-                            <ng-md-icon icon="filter_list" size="30" ng-style="(showCategories) && {'fill': 'rgba(41,81,145,0.3)'} || {'fill': 'rgb(63,81,181)'}"></ng-md-icon>
+                            <ng-md-icon id="show_cat_icon" icon="settings_backup_restore" size="30"></ng-md-icon>
                         </md-button>
                     </span>
-                    <div class="col1E" ng-show="showCategories">
+                    <div id="category_box" class="col1E" ng-if="showCategories">
                         <div layout="column">
                             <div class="sizeStage col1EAA">{{loadedStore}}</div>
                             <ul class="col1EAB" layout="column">

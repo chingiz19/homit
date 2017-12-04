@@ -102,10 +102,12 @@ body{
 .col1E{
     position: absolute; 
     top: 100%; left: 0; 
-    width: 100%; min-height: 250px; height: 100%; 
+    width: 100%; 
+    height: 0;
+    min-height: 250px; height: 100%; 
     border: lightgray solid 0.1px; border-radius: 5px; 
     background-color: white; 
-    transform: translate3d(0,-100%,0); 
+    transform: translate3d(0,-100%,0);
     z-index: 10;
 }
 .col1EAA{
@@ -140,6 +142,7 @@ body{
      display: flex; align-content: flex-start;
      left: 25%;
      margin-top: 4px; margin-left: 10px;
+     padding-bottom: 15px;
      flex-grow: 2;
      flex-shrink: 2;
  }
@@ -385,6 +388,11 @@ body{
     margin-left: 0; margin-right: 0;
     padding-left: 0; padding-right: 0;
 }
+.fltCategoryBtn svg{
+    width: 30px; height: 30px;
+    fill: rgba(0, 189, 149, 1);
+}
+
 @media screen and (min-device-width: 500px){
     .typesSdNB1{
         display: none;
@@ -654,10 +662,10 @@ md-radio-button:focus {
     outline: none;
 }
 md-radio-button .md-on {
-    background-color: rgba(63,222,17,0.77);
+    background-color: rgba(0, 189, 149,0.67);
 }
 md-radio-button.md-checked .md-off {
-    border-color: rgba(63,222,17,0.77);
+    border-color: rgba(0, 189, 149,0.67);
 }
 md-radio-button .md-label{
     padding-left: 20px;
@@ -673,4 +681,14 @@ md-radio-button .md-label{
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
+}
+.rot180_1 svg{
+    transform: rotate(-180deg);
+    transition: 0.5s;
+    fill: rgba(42,81,145, 0.95);
+}
+.rot180_2 svg{
+    transform: rotate(-360deg);
+    transition: 0.5s;
+    fill: rgba(0, 189, 149, 1);
 }

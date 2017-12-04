@@ -177,15 +177,23 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         // TODO switch to Subcategories box when Category selected
         $scope.showCategories = false;
         $scope.filterCategories = function () {
-            if ($scope.showCategories)
+            if ($scope.showCategories) {
                 $scope.showCategories = false;
-            else
+                document.getElementById("show_cat_icon").classList.add('rot180_2');
+                var el = document.getElementById("show_cat_icon").classList;
+                setTimeout(() => {
+                    el.remove('rot180_1', 'rot180_2');
+                }, 500);
+            }
+            else {
                 $scope.showCategories = true;
+                document.getElementById("show_cat_icon").classList.add('rot180_1');
+            }
         }
         $scope.emptySubcategories = function () {
             $scope.userSelectedSubcategories = null;
         }
-        
+
         // USer Cart right-SideNav functionality
         // Start
         $scope.toggleNavLeft = buildToggler('navigateMobSN');

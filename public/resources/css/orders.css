@@ -53,6 +53,10 @@ md-select .md-select-value{
 }
 .adminPtopAA{
     font-size: 25px; color: rgba(255,255,255,1); font-weight: 650;
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    letter-spacing: 0.065em;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 .adminPtopAB{
     position: absolute; right: 0px; 
@@ -106,6 +110,8 @@ md-select .md-select-value{
 }
 .gtDataA{
     position: relative; top: 50px;
+    max-height: 70px; 
+    overflow-y: scroll;
 }
 .gtDataAA{
     margin: 0; margin-bottom: 5px;
@@ -122,11 +128,15 @@ md-select .md-select-value{
     color: rgba(0,0,0, 0.4);
 }
 .gtDataAB{
+    position: relative;
+    top: 45px;
     border-bottom: 1px solid rgba(150,150,150,0.7); 
-    margin-bottom: 10px; margin-top: 10px;
+    margin-bottom: 5px; margin-top: 10px;
 }
 .gtDataB{
     position: relative; top: 50px;
+    max-height: 130px; 
+    overflow-y: scroll;
 }
 .gtDataBA{
     margin: 0; margin-bottom: 5px;
@@ -143,6 +153,8 @@ md-select .md-select-value{
     color: rgba(0,0,0, 0.4);
 }
 .gtDataBB{
+    position: relative;
+    top: 45px;
     margin-top: 10px;
     border-bottom: 1px solid rgba(150,150,150,0.7);
 }
@@ -153,13 +165,15 @@ md-select .md-select-value{
 }
 .gtDataCA{
     display: flex; justify-content: center;
-    font-size: 30px; font-weight: 650; 
+    font-size: 30px; font-weight: 650;
+    margin-bottom: 15px; 
 }
 .gtDataCBA{
     margin-top: 10px;
+    min-width: 300px;
 }
 .gtDataCBAA{
-    position: relative; left: 30%;
+    /* position: relative; left: 30%; */
     
 }
 .gtDataCBAAA{
@@ -179,6 +193,15 @@ md-select .md-select-value{
 .gtDataCBABAB{
     font-size: 15px; font-weight: bold;
 }
+.gtDataStrCBABAB{
+    text-transform: uppercase;
+    font-size: 15px; font-weight: 550;
+    color: rgba(126, 120, 120, 0.65);
+}
+.gtDataPrCBABAB{
+    font-size: 14px; font-weight: 550;
+    color: rgba(39, 36, 36, 0.65);
+}
 .gtDataCBABB{
     display: flex; justify-content: center; align-items: center; 
     margin: 0;
@@ -187,4 +210,155 @@ md-select .md-select-value{
     margin-top: 10px; 
     width: 100%;
     border-bottom: 1px dashed rgba(84, 151, 123, 0.7); 
+}
+
+.doc{
+    position: fixed; bottom: 10px; left: 47%;
+    width: 120px; 
+    background-color: rgba(255,255,255,0.9);
+    display: flex; align-items: baseline;
+    border-bottom: 1px solid rgba(0,0,0,0.45); 
+}
+.pageDocIcon{
+    fill: rgba(150,150,150,0.7);
+}
+.pageDocIcon svg{
+    width: 20px; height: 20px;
+}
+.pageDocSlctIcon{
+    fill: rgba(42,81,145,0.7) !important;
+}
+.pageDocSlctIcon svg{
+    width: 40px !important; height: 40px !important;
+}
+.pageDocBtn{
+    display: flex; justify-content: center;
+    margin: 0; padding: 0; 
+    min-width: 25px; width: 25px; 
+    min-height: 35px; height: 35px; 
+}
+.pageDocSlctBtn{
+    min-width: 35px !important; width: 35px !important; 
+    min-height: 35px !important; height: 35px !important;
+}
+.pageDocSlctBtn svg{
+    width: 30px !important; height: 30px !important;
+    transition: height 0.2s ease; transition: width 0.2s ease;
+}
+.pageDocSlctBtn ng-md-icon{
+    fill: rgb(31, 196, 157) !important;
+}
+
+#pg_1:hover{
+    min-width: 50px !important; width: 50px !important; 
+    min-height: 50px !important; height: 50px !important;
+    background-color: transparent !important;
+}
+#pg_1:hover .pageDocHvrIcon1{
+    fill: rgba(42,81,145,0.35);
+}
+#pg_1:hover .pageDocHvrIcon1 svg{
+    width: 40px !important; height: 40px !important;
+    transition: height 0.2s ease; transition: width 0.2s ease;
+}
+
+#pg_2:hover{
+    min-width: 50px !important; width: 50px !important; 
+    min-height: 50px !important; height: 50px !important;
+    background-color: transparent !important;
+}
+#pg_2:hover .pageDocHvrIcon2{
+    fill: rgba(42,81,145,0.35);
+}
+#pg_2:hover .pageDocHvrIcon2 svg{
+    width: 40px !important; height: 40px !important;
+    transition: height 0.2s ease; transition: width 0.2s ease;
+}
+
+#pg_3:hover{
+    min-width: 50px !important; width: 50px !important; 
+    min-height: 50px !important; height: 50px !important;
+    background-color: transparent !important;
+}
+#pg_3:hover .pageDocHvrIcon3{
+    fill: rgba(42,81,145,0.35);
+}
+#pg_3:hover .pageDocHvrIcon3 svg{
+    width: 40px !important; height: 40px !important;
+    transition: height 0.2s ease; transition: width 0.2s ease;
+}
+
+.disRoomMap{
+    position: relative; 
+    top: 15px; 
+    height: 80%;
+    width: 100%;
+    border: 1px rgba(0,0,0,0.25) solid; border-radius: 3px;
+}
+.ADL{
+    position: relative; 
+    top: 10px; 
+    height: 45%;
+    display: flex; justify-content: center;
+}
+.POL{
+    position: relative; 
+    top: 13px; 
+    height: 45%;
+    display: flex; justify-content: center;
+}
+
+.srchCntr{
+    position: relative; top: 5px;
+    margin: 0; padding: 0; 
+    background-color: rgba(255, 255,255, 1);
+    border: 1px solid grey; border-radius: 3px 3px 0 0 ;
+}
+.srchBtn{
+    min-width: 30px; width: 30px; min-height: 30px; height: 30px;
+    margin: 0; padding: 0;
+    border-radius: 3px 0 0 0px; 
+}
+.srchBtnCus{
+    background-color: rgba(34, 138, 74, 0.301);
+}
+.srchBtnDr{
+    background-color: rgba(63, 117, 168, 0.363);
+}
+.srchInpt{
+    border: none !important;
+}
+.listBx{
+    position: relative; 
+    top: 5px; 
+    height: 80%; 
+    border-left: 1px solid rgba(145,145,145,0.8); border-right: 1px solid rgba(145,145,145,0.8);
+    overflow-y: scroll;
+}
+.slctAllBx{
+    position: relative; 
+    top: 5px; 
+    display: flex; justify-content: center; 
+    border: 1px solid rgba(145,145,145,0.8); 
+    border-radius: 0 0 3px 3px;
+}
+.slctAllCheck{
+    margin: 0; padding: 4px 0 4px 0;
+}
+.cusTblLn{
+    border-color: rgba(34, 138, 74, 0.753);
+}
+.drTblLn{
+    border-color: rgba(63, 117, 168, 0.904);
+}
+
+
+.ADL_POL md-radio-button{
+    margin: 5px 0 5px 10px;
+}
+.ADL_POL md-radio-button ul{
+    margin: 0; padding: 0;
+}
+.ADL_POL md-radio-button .md-label{
+    margin-left: 10px;
 }

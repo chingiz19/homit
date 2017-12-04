@@ -1,41 +1,44 @@
 <html ng-app="mainModule">
-    <head>
-        <%- include('partial/imports')%>
-        <link href="/resources/css/orders.css" rel="stylesheet">
-    </head>
 
-    <body class="ng-cloak">
-            <div ng-controller="adminController">
-                <div class="container-fluid adminPtop">
-                    <div class="adminPtopA">
-                        <span class="adminPtopAA">Admin Page</span>
-                        <md-button aria-label="logOut" ng-click="logoutBtn()" class="adminPtopAB">
-                            <ng-md-icon icon="logout" class="adminPtopABA"></ng-md-icon>
-                        </md-button>
-                    </div>
-                    <md-container  class="md-block adminPtopB">
-                        <md-input-container class="adminPtopBD">
-                            <label class="inptLbl">Seacrh By</label>
-                            <md-select ng-model="searchBy">
-                                <md-option ng-value="1">Email</md-option>
-                                <md-option ng-value="2">Phone</md-option>
-                                <md-option ng-value="3">Order ID</md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-input-container class="adminPtopBB">
-                            <label></label>
-                            <input ng-model="searchCriteria" class="adminPtopBBB" placeholder="4033977020">
-                        </md-input-container>
-                        <md-button aria-label="searchUserHistory" ng-click="searchUserHistory(searchBy)" class="adminPtopBA">
-                            <ng-md-icon icon="search" class="adminPtopBAA"></ng-md-icon>
-                        </md-button>
-                        <md-button aria-label="searchOrClear" class="adminPtopBC" ng-click="searchCriteria = ''; foundUsers = ''; foundOrders = ''; foundOrderContent = '';">
-                            <ng-md-icon icon="clear" class="adminPtopBCA"></ng-md-icon>
-                        </md-button>
-                    </md-container>
-                </div>
-                <div class="container">
-                    <md-radio-group class="gtDataA">
+<head>
+    <%- include('partial/imports')%>
+        <link href="/resources/css/orders.css" rel="stylesheet">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
+</head>
+
+<body class="ng-cloak">
+    <div ng-controller="adminController">
+        <div class="adminPtopA">
+            <span class="adminPtopAA">{{pageName}}</span>
+            <md-button aria-label="logOut" ng-click="logoutBtn()" class="adminPtopAB">
+                <ng-md-icon icon="logout" class="adminPtopABA"></ng-md-icon>
+            </md-button>
+        </div>
+        <!-- Order history -->
+        <!-- Start -->
+        <div ng-show="page == 1">
+            <div class="container-fluid adminPtop">
+                <md-container class="md-block adminPtopB">
+                    <md-input-container class="adminPtopBD">
+                        <md-select ng-model="searchBy" placeholder="Seacrh By" ng-change="callSearch()">
+                            <md-option ng-value="1">Email</md-option>
+                            <md-option ng-value="2">Phone</md-option>
+                            <md-option ng-value="3">Order ID</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="adminPtopBB">
+                        <label></label>
+                        <input id="csr_Search" ng-model="searchCriteria" class="adminPtopBBB">
+                    </md-input-container>
+                    <md-button aria-label="searchOrClear" class="adminPtopBC" ng-click="searchCriteria = ''; foundUsers = ''; foundOrders = ''; foundOrderContent = '';">
+                        <ng-md-icon ng-if="!searchCriteria" icon="search" class="adminPtopBAA"></ng-md-icon>
+                        <ng-md-icon ng-if="searchCriteria" icon="clear" class="adminPtopBCA"></ng-md-icon>
+                    </md-button>
+                </md-container>
+            </div>
+            <div class="container">
+                <div class="gtDataA">
+                    <md-radio-group>
                         <md-radio-button id="usrRbtn" aria-label="selectUser" class="gtDataAA" ng-value="user" ng-repeat="user in foundUsers" ng-click="selectedUserID(user)">
                             <ul layout="row" class="gtDataAAA">
                                 <li class="gtDataAAAA">First Name: </li>
@@ -48,50 +51,295 @@
                                 <li class="gtDataAAAB">&nbsp{{user.phone_number}};&nbsp&nbsp</li>
                             </ul>
                         </md-radio-button>
-                        <div ng-if="foundUsers != '' " class="gtDataAB"></div>
                     </md-radio-group>
-                    <md-radio-group class="gtDataB">
-                        <md-radio-button id="{{order.order_id}}" aria-label="selectOrder" class="gtDataBA" ng-value="order" ng-repeat="order in foundOrders" ng-click="selectedOrderId(order)">
+                </div>
+                <div ng-if="foundUsers != '' " class="gtDataAB"></div>
+                <div class="gtDataB">
+                    <md-radio-group>
+                        <md-radio-button id="{{order.order_id}}" aria-label="selectOrder" class="gtDataBA" ng-value="order" ng-repeat="order in foundOrders"
+                            ng-click="selectedOrderId(order)">
                             <ul layout="row" class="gtDataBAA">
                                 <li class="gtDataBAAA">Order Id: </li>
                                 <li class="gtDataBAAB">&nbsp{{order.order_id}};&nbsp&nbsp</li>
-                                <li class="gtDataBAAA">Delivery Date: </li>
-                                <li class="gtDataBAAB">&nbsp{{order.date_received}};&nbsp&nbsp</li>
+                                <li class="gtDataBAAA">Date Recieved: </li>
+                                <li class="gtDataBAAB">&nbsp{{order.date_placed}};&nbsp&nbsp</li>
                                 <li class="gtDataBAAA">Delivery Address: </li>
                                 <li class="gtDataBAAB">&nbsp{{order.delivery_address}};&nbsp&nbsp</li>
                             </ul>
                         </md-radio-button>
-                        <div ng-if="foundOrders  != '' " class="gtDataBB"></div>
                     </md-radio-group>
-                    <div aria-label="orderItems" class="gtDataC">
-                        <div class="gtDataCA" ng-if="foundOrderContent  != '' ">Order List</div>
+                </div>
+                <div ng-if="foundOrders  != '' " class="gtDataBB"></div>
+                <div aria-label="orderItems" class="gtDataC">
+                    <div class="gtDataCA" ng-if="foundOrderContent  != '' ">Order List</div>
+                    <div style="display: flex; justify-content: center; flex-wrap: wrap;">
                         <div ng-value="item" ng-repeat="item in foundOrderContent">
                             <div layout="row" class="gtDataCBA">
-                                <ul class="gtDataCBAA"><img  class="gtDataCBAAA" ng-src="{{'/resources/images/products/' + item.super_category + '/' + item.category + '/' + item.image}}"></ul>
-                                <div layout="row" class="gtDataCBAB">
-                                    <ul layout="column" class="gtDataCBABA">
-                                        <li class="gtDataCBABAA">Store: </li>
-                                        <li class="gtDataCBABAB">&nbsp{{item.super_category}};&nbsp&nbsp</li>
-                                        <li class="gtDataCBABAA">Category: </li>
-                                        <li class="gtDataCBABAB">&nbsp{{item.subcategory}};&nbsp&nbsp</li>
-                                        <li class="gtDataCBABAA">Brand: </li>
-                                        <li class="gtDataCBABAB">&nbsp{{item.brand}};&nbsp&nbsp</li>
-                                    </ul>
-                                    <ul layout="column" class="gtDataCBABB">
-                                        <li class="gtDataCBABAA">Packaging: </li>
-                                        <li class="gtDataCBABAB">&nbspX{{item.packaging}};&nbsp&nbsp</li>
-                                        <li class="gtDataCBABAA">Volume: </li>
-                                        <li class="gtDataCBABAB">&nbsp{{item.volume}};&nbsp&nbsp</li>
-                                        <li class="gtDataCBABAA">Price: </li>
-                                        <li class="gtDataCBABAB">&nbspC${{item.price}};&nbsp&nbsp</li>
-                                    </ul>
-                                </div>
+                                <ul class="gtDataCBAA" style="margin: 0; padding: 0;">
+                                    <img class="gtDataCBAAA" ng-src="{{'/resources/images/products/' + item.super_category + '/' + item.category + '/' + item.image}}">
+                                </ul>
+                                <ul layout="column" class="gtDataCBABB" style="margin: 0; padding: 0;">
+                                    <li class="gtDataStrCBABAB">{{item.super_category}}</li>
+                                    <li class="gtDataCBABAB">&nbsp{{item.brand}}&nbsp&nbsp</li>
+                                    <li class="gtDataCBABAB">{{item.volume}}&nbspX{{item.packaging}}</li>
+                                    <li class="gtDataPrCBABAB">C$&nbsp{{item.price}}</li>
+                                </ul>
                             </div>
                             <div class="gtDataCBB"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        <script src="/resources/controllers/orders.js"></script>
-    </body>
+        </div>
+        <!-- End -->
+        <!-- Dispatch Room -->
+        <!-- Start -->
+        <div ng-show="page == 2" class="container">
+            <div layout="row">
+                <div id="drMap" class="disRoomMap" flex="100"></div>
+                <div flex="50" layout="column">
+                    <div layout="column">
+                        <div class="ADL" flex="40">
+                            <div flex="90">
+                                <div layout="column" style="width: 80%;">
+                                    <md-input-container layout="row" class="srchCntr drTblLn">
+                                        <md-button aria-label="searchOrClear" class="srchBtn srchBtnDr" ng-click="driver.table_search = '' ">
+                                            <ng-md-icon ng-if="!driver.table_search" icon="search" size="18"></ng-md-icon>
+                                            <ng-md-icon ng-if="driver.table_search" icon="clear" size="18"></ng-md-icon>
+                                        </md-button>
+                                        <label>
+                                        </label>
+                                        <input id="adlSearch" ng-model="driver.table_search" class="srchInpt" placeholder="Active Driver List">
+                                    </md-input-container>
+                                    <div class="listBx drTblLn">
+                                        <md-radio-group ng-model="driver.seeRoute">
+                                            <md-radio-button aria-label="seeDriverRoute" ng-repeat="driver in driver.online_list | filter:driver.table_search" ng-value="{{driver.driver_id}}">
+                                                <ul layout="row">
+                                                    <li>Driver ID: {{driver.driver_id}}</li>
+                                                    <li>Booked: {{driver.booked_time}</li>
+                                                </ul>
+                                            </md-radio-button>
+                                        </md-radio-group>
+                                    </div>
+                                    <div class="slctAllBx drTblLn">
+                                        <md-checkbox class="slctAllCheck">Select All</md-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="POL" flex="40">
+                            <div flex="90">
+                                <div layout="column" style="width: 80%;">
+                                    <md-input-container layout="row" class="srchCntr cusTblLn">
+                                        <md-button aria-label="searchOrClear" class="srchBtn srchBtnCus" ng-click="POL_search = '' ">
+                                            <ng-md-icon ng-if="!POL_search" icon="search" size="18"></ng-md-icon>
+                                            <ng-md-icon ng-if="POL_search" icon="clear" size="18"></ng-md-icon>
+                                        </md-button>
+                                        <label>
+                                        </label>
+                                        <input id="polSearch" ng-model="POL_search" class="srchInpt" placeholder="Pending Order List">
+                                    </md-input-container>
+                                    <div class="listBx cusTblLn">
+                                        <md-radio-group id="pendingOrderList" class="ADL_POL" ng-model="POL_radioGroup">
+                                            <md-radio-button id="{{order.order_id}}" aria-label="selectOrder" ng-value="order" ng-click="showOrder(order)"
+                                                ng-repeat="order in customer_pendingList | orderBy : '-WT' | filter : {order_id : POL_search}">
+                                                <ul layout="row">
+                                                    <li>Order ID: {{order.user_id_prefix}}{{order.order_id}}</li>
+                                                    <li>&nbsp WT:&nbsp</li>
+                                                    <li ng-style="(order.WT > 40) && {'color': 'red', 'font-weight':'600'}">{{order.WT}}</li>
+                                                </ul>
+                                            </md-radio-button>
+                                        </md-radio-group>
+                                    </div>
+                                    <div class="slctAllBx cusTblLn">
+                                        <md-checkbox class="slctAllCheck" ng-click="selectAllOrders(customer_pendingList)">Select All</md-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End -->
+
+
+
+        <!-- Request Room -->
+        <!-- Start -->
+        <div ng-show="page == 3" class="container">
+            <div flex="100" layout="row">
+                <md-input-container style="margin: 0; margin-top: 10px; min-width: 120px; width: 120px;">
+                    <md-select ng-model="reqeustType" placeholder="Request" ng-change="callSearch()">
+                        <md-option ng-value="1">Add Item</md-option>
+                        <md-option ng-value="2">Cancel Item</md-option>
+                        <md-option ng-value="3">Delete Order</md-option>
+                        <md-option ng-value="4">"Bug" Issue</md-option>
+                        <md-option ng-value="5">Open Tytle</md-option>
+                    </md-select>
+                </md-input-container>
+                <div layout="column" ng-show="reqeustType == 1 || reqeustType == 2 || reqeustType == 3" style="position: relative; left: 30%;">
+                    <div>Has the order been delivered?</div>
+                    <md-radio-group ng-model="isOrderDelivered">
+                        <md-radio-button aria-label="deliveredTrue" ng-value="true">Yes</md-radio-button>
+                        <md-radio-button aria-label="deliveredFalse" ng-value="false">No</md-radio-button>
+                    </md-radio-group>
+                </div>
+                <md-button class="md-accent" style="position: absolute; right: 135; padding: 0; margin: 0;" ng-click="reqeustType = undefined; isOrderDelivered = undefined ">CLEAR</md-button>
+            </div>
+            <div ng-if="reqeustType == 1">
+                <div ng-if="isOrderDelivered == true ">We are sorry, but new items can not be added to your order at this point. Please submit a new order.</div>
+                <div ng-if="isOrderDelivered == false">
+                    <div layout="row" style="display: flex; justify-content: center; align-items: center;">
+                        <md-input-container style="min-width: 150px; width: 200px; margin-bottom: 2px; min-height: 30px; height: 30px;">
+                            <label>First Name</label>
+                            <input required ng-model="customer.first_name" type="text" />
+                        </md-input-container>
+                        <md-input-container style="min-width: 150px; width: 200px; margin-bottom: 2px; min-height: 30px; height: 30px;">
+                            <label>Last Name</label>
+                            <input required ng-model="customer.last_name" type="text" />
+                        </md-input-container>
+                        <md-button aria-label="viewPendingOrder" style="border: 1px solid rgba(42,81,145,0.45); margin: 0; padding: 0; margin-top: 10px; min-height: 40px; height: 40px; min-width: 40px; width: 40px;">
+                            <ng-md-icon icon="search" size="20" ng-click="viewPendingOrder()"></ng-md-icon>
+                        </md-button>
+                        <!-- ng-if="customer.pending_orders" ng-repeat="order in customer.pending_orders" -->
+                        <div flex="15" style="border: 1px grey solid; margin: 0 20px 0 20px;">
+                            <ul>
+                                <li>Store Name</li>
+                                <li>Cart C$</li>
+                                <li>Delivery Fee C$</li>
+                                <li>GST C$</li>
+                                <li>Total C$</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div layout="row">
+                        <div flex="50" style="margin-top: 20px; height: 55%; border: 1px solid rgba(0,0,0,0.25);" layout="row">
+                            <div flex="50">
+                                <md-input-container layout="row" class="srchCntr cusTblLn">
+                                    <md-button aria-label="addItemSearch" class="srchBtn srchBtnCus" ng-click="customer.addItem_search = '' ">
+                                        <ng-md-icon ng-if="!customer.addItem_search" icon="search" size="18"></ng-md-icon>
+                                        <ng-md-icon ng-if="customer.addItem_search" icon="clear" size="18"></ng-md-icon>
+                                    </md-button>
+                                    <label>
+                                    </label>
+                                    <input id="addItemSearch" ng-model="customer.addItem_search" class="srchInpt" placeholder="Search Item">
+                                </md-input-container>
+                            </div>
+                            <div flex="50" style="min-height: 100px;" layout="column">
+                                <div layout="row" style="display: flex; justify-content: center;">
+                                    <div style="display: flex; align-items: center;">Temprory Cart</div>
+                                    <md-button aria-label="3_Next" ng-click="" style="margin: 0; padding: 0; min-width: 40px; width: 40px;">
+                                        <ng-md-icon icon="navigate_next" size="20"></ng-md-icon>
+                                    </md-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div flex="50" layout="column" style="margin-top: 20px; height: 55%; border: 1px solid rgba(0,0,0,0.25); display: flex; align-items: center;">
+                            <ul>
+                                <li>Cart: </li>
+                                <li>Delivery Fee: </li>
+                                <li>GST: </li>
+                                <li>Total: </li>
+                            </ul>
+                            <div layout="row">
+                                <md-input-container style="margin: 0; padding: 0; max-height: 50px; height: 50px;" flex="50">
+                                    <label>First Name</label>
+                                    <input ng-model="customer.first_name">
+                                </md-input-container>
+                                <md-input-container style="margin: 0; padding: 0; margin-left: 5px; max-height: 50px; height: 50px;" flex="50">
+                                    <label>Last Name</label>
+                                    <input ng-model="customer.last_name">
+                                </md-input-container>
+                            </div>
+                            <md-input-container style="margin: 0; padding: 0; max-height: 50px; height: 50px;" flex="50">
+                                <label>Date of Birth</label>
+                                <input ng-model="customer.dob">
+                            </md-input-container>
+                            <div layout="row">
+                                <md-input-container style="margin: 0; padding: 0; max-height: 50px; height: 50px;" flex="50">
+                                    <label>Email</label>
+                                    <input ng-model="customer.email">
+                                </md-input-container>
+                                <md-input-container style="margin: 0; padding: 0; margin-left: 5px; max-height: 50px; height: 50px;" flex="50">
+                                    <label>Phone</label>
+                                    <input ng-model="customer.phone">
+                                </md-input-container>
+                            </div>
+                            <md-input-container style="margin: 0; padding: 0; max-height: 50px; height: 50px;" flex="50">
+                                <label>Address</label>
+                                <input ng-model="customer.address">
+                            </md-input-container>
+                            <md-button class="md-raised md-primary">Submit</md-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="reqeustType == 2"></div>
+            <div ng-if="reqeustType == 3">
+                <div ng-if="isOrderDelivered == true || isOrderDelivered == false">
+                    <div style="display: flex; justify-content: center;">
+                        <md-input-container style="min-width: 150px; width: 200px; margin-bottom: 2px; min-height: 30px; height: 30px;">
+                            <label>First Name</label>
+                            <input required ng-model="customer.first_name" type="text" />
+                        </md-input-container>
+                        <md-input-container style="min-width: 150px; width: 200px; margin-bottom: 2px; min-height: 30px; height: 30px;">
+                            <label>Last Name</label>
+                            <input required ng-model="customer.last_name" type="text" />
+                        </md-input-container>
+                        <md-input-container style="min-width: 100px; width: 100px; margin-bottom: 2px; min-height: 30px; height: 30px;">
+                            <label>Order Id</label>
+                            <input required ng-model="customer.orderID_delete" type="text" />
+                        </md-input-container>
+                        <md-button aria-label="viewPendingOrder" style="border: 1px solid rgba(42,81,145,0.45); margin: 0; padding: 0; margin-top: 10px; min-height: 40px; height: 40px; min-width: 40px; width: 40px;">
+                            <ng-md-icon icon="search" size="20" ng-click="viewPendingOrder()"></ng-md-icon>
+                        </md-button>
+                    </div>
+                    <div style="display: flex; align-items: center;" layout="column">
+                        <div style="display: flex; justify-content: center; margin-top: 20px; border-bottom: 1px solid rgb(172, 39, 39); width: 150px;">Money to Refund</div>
+                        <ul>
+                            <li>Cart: C$</li>
+                            <li>Delivery Fee: C$ 0.00</li>
+                            <li>GST: C$</li>
+                            <li>Total: C$</li>
+                        </ul>
+                    </div>
+                    <div ng-if="isOrderDelivered == true" style="display: flex; align-items: center;" layout="column">
+                        <div style="display: flex; justify-content: center; margin-top: 20px; border-bottom: 1px solid rgb(172, 39, 39); width: 300px;">When to Pick up</div>
+                        <div layout="row" style="display: flex; justify-content: center;">
+                            <md-input-container style="min-width: 150px; width: 150px; margin-bottom: 2px; min-height: 30px; height: 30px;">
+                                <label>dd/mm/yyyy</label>
+                                <input required ng-model="customer.first_name" type="text" />
+                            </md-input-container>
+                            <md-input-container style="min-width: 150px; width: 150px; margin-bottom: 2px; min-height: 30px; height: 30px;">
+                                <label>hh:mm</label>
+                                <input required ng-model="customer.last_name" type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center;">
+                        <md-button class="md-raised md-primary" style="margin: 0; padding: 0; margin-top: 25px;">Submit</md-button>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="reqeustType == 4"></div>
+            <div ng-if="reqeustType == 5"></div>
+        </div>
+        <!-- End -->
+        <div layout="row" class="doc">
+            <md-button aria-label="OH" id="pg_1" ng-click="toPage(1)" flex="33" class="pageDocBtn">
+                <ng-md-icon icon="history" class="pageDocHvrIcon1 pageDocIcon"></ng-md-icon>
+            </md-button>
+            <md-button aria-label="DR" id="pg_2" ng-click="toPage(2)" flex="33" class="pageDocBtn">
+                <ng-md-icon icon="person_pin_circle" class="pageDocHvrIcon2 pageDocIcon"></ng-md-icon>
+            </md-button>
+            <md-button aria-label="RC" id="pg_3" ng-click="toPage(3)" flex="33" class="pageDocBtn">
+                <ng-md-icon icon="create" class="pageDocHvrIcon3 pageDocIcon"></ng-md-icon>
+            </md-button>
+        </div>
+    </div>
+    <script src="/resources/services/mapServices.js"></script>
+    <script src="/resources/controllers/orders.js"></script>
+</body>
+
 </html>

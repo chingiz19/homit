@@ -12,6 +12,8 @@ app.controller("checkoutController",
         $scope.isUserSigned;
         $scope.orderer = {};
 
+        var checkout = this;
+
 
         // init didn't work that's why $cookies.getObject is outside
         if ($cookies.get("user")) {
@@ -26,6 +28,9 @@ app.controller("checkoutController",
         }
         if ($cookies.getObject("homit-address")) {
             $scope.deliveryAddress = $cookies.getObject("homit-address").name;
+            checkout.deliveryAddress_lat = $cookies.getObject("homit-address").geometry.location['lat'];
+            checkout.deliveryAddress_lng = $cookies.getObject("homit-address").geometry.location['lng'];
+
             var inputAddressGuestUser = document.getElementById('addressGuestUser');
             if (inputAddressGuestUser.value.length == 0) {
                 $scope.userInfo.address = $scope.deliveryAddress;
@@ -173,7 +178,7 @@ app.controller("checkoutController",
                 userInfoToSend.fname = $scope.userInfo.first_name;
                 userInfoToSend.lname = $scope.userInfo.last_name;
                 userInfoToSend.email = $scope.userInfo.user_email;
-                userInfoToSend.address = $scope.userInfo.address;
+                userInfoToSend.address = $scope.userInfo.address + "/" + checkout.deliveryAddress_lat + "/" + checkout.deliveryAddress_lng;
                 userInfoToSend.phone = $scope.userInfo.phone_number;
                 userInfoToSend.dob = $scope.userInfo.dob;
             }
