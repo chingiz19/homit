@@ -1,5 +1,5 @@
 /**
- * @copyright Homit
+ * @copyright Homit 2017 
  */
 
 var Users               = require("./models/users");
@@ -13,7 +13,7 @@ var ChikiMiki           = require("./models/chikimiki");
 var Driver              = require("./models/driver");
 var JWTToken            = require("./models/jwt_token");
 var Logger              = require("./models/logger");
-
+var SMS                 = require("./models/SMS");
 
 /**
  * This class uses 
@@ -32,6 +32,7 @@ class modelFactory {
         global.Driver = Driver;
         global.JWTToken = JWTToken;
         global.Logger = Logger;
+        global.SMS = SMS;
     }
 }
 
