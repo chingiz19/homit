@@ -2,30 +2,37 @@
  * @copyright Homit 2017
  */
 
+var SECRET_KEY = "hF)Zf:NR2W+gBGF]"
 var connector = require('net');
 var pub = {};
 var outputStream;
+var cmConnection = new connector.Socket();
 
-connector.createServer(function (connection) {
-    Logger.log('Connection to ChikiMiki has been established \n\n');
-    connection.writable = true;
-    outputStream = connection;
-
-    connection.on('data', function (data) {
-        receiver(JSON.parse(data));
-    });
-
-    connection.on('close', function (data) {
-        Logger.log("ChikiMiki has been disconnected.");
-    });
-
-    connection.on('error', function (data) {
-        Logger.log("Error has been occurred.");
-    })
-
-}).listen(6262, 'localhost', function () {
-    Logger.log('Waiting for ChikiMiki at port 6262')
+//CM is listening at port 6262 on localhost only!
+cmConnection.connect(6262, '127.0.0.1', function () {
+    var verification = {
+        "action": "verify_server",
+        "key": SECRET_KEY
+    }
+    cmConnection.write(" "+JSON.stringify(verification)+ "\n");
+    outputStream = cmConnection;
+    Logger.log("Connection to CM established");
 });
+
+cmConnection.on('data', function (data) {
+    receiver(JSON.parse(data));
+});
+
+cmConnection.on('close', function (data) {
+    Logger.log("ChikiMiki has been disconnected.");
+    //it is a serious issue if this happens
+    //TODO send text message to directors (means CM has been shut down). 
+});
+
+cmConnection.on('error', function (data) {
+    Logger.log("Error has been occurred. Here");
+})
+
 
 var receiver = function (jsonResponse) {
     if (jsonResponse.action == "chikimiki_response_to_driver") {
@@ -110,7 +117,7 @@ var receiver = function (jsonResponse) {
 
 pub.send = function (json) {
     Logger.log(JSON.stringify(json) + "\n");
-    outputStream.write(JSON.stringify(json) + "\n");
+    outputStream.write(" "+JSON.stringify(json) + "\n");   
 };
 
 pub.sendOrder = function (customerId, customerAddress, orderId, storeType) {
