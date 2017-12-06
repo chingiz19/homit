@@ -455,7 +455,8 @@ var removeOrderRouteNode = function (driverId, orderId) {
 
 pub.getRoutes = function (driverId) {
     var sqlQuery = `
-        SELECT routes.id AS route_id, routes.position AS position, history.id_prefix AS node_id_prefix, routes.order_id AS node_id, history.delivery_address AS node_address, "order" AS node_type
+        SELECT routes.id AS route_id, routes.position AS position, history.id_prefix AS node_id_prefix, routes.order_id AS node_id, history.delivery_address AS node_address, "order" AS node_type,
+        history.delivery_latitude AS node_latitude, history.delivery_longitude AS node_longitude
         FROM drivers_routes AS routes,
         orders_history AS history
         WHERE 
@@ -464,7 +465,8 @@ pub.getRoutes = function (driverId) {
         
         UNION
         
-        SELECT routes.id AS route_id, routes.position AS position, stores.id_prefix AS node_id_prefix, routes.store_id AS node_id, stores.address AS node_address, "store" AS node_type
+        SELECT routes.id AS route_id, routes.position AS position, stores.id_prefix AS node_id_prefix, routes.store_id AS node_id, stores.address AS node_address, "store" AS node_type,
+        stores.address_latitude AS node_latitude, stores.address_longitude AS node_longitude
         FROM drivers_routes AS routes,
         catalog_stores AS stores
         WHERE 
