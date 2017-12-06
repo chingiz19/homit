@@ -21,7 +21,8 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
         $scope.foundOrderContent = [];
         $scope.searchBy;
         $scope.isSearchLisenerOn = false;
-
+        $scope.driverRouteNodes = [];
+        $scope.routeNodesMarkers = [];
 
         $scope.callSearch = function () {
             $scope.searchCriteria = "";
@@ -109,7 +110,7 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
             }).then(function successCallback(response) {
                 $scope.foundOrders = response.data.orders;
                 for (tmp in $scope.foundOrders) {
-                    $scope.foundOrders[tmp]["date_placed"] = $scope.mm_dd_yyyy($scope.foundOrders[tmp]["date_placed"]);
+                    $scope.foundOrders[tmp]["date_placed"] = mm_dd_yyyy($scope.foundOrders[tmp]["date_placed"]);
                 }
             }, function errorCallback(response) {
                 Logger.error("error");
@@ -156,13 +157,11 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
         $scope.page = 2;
         $scope.pageName = "Dispatch Room";
         $scope.disRoomMap = undefined;
-        $scope.adlSearch;
-        $scope.polSearch;
         $scope.reqeustType;
         $scope.isOrderDelivered;
         $scope.POL_search;
-        $scope.selectAllOrdersChecked = false;
         $scope.POL_radioGroup;
+        $scope.ADL_radioGroup;
 
         $scope.toPage = function (num) {
             document.getElementById("pg_" + $scope.page).classList.remove("pageDocSlctBtn");
@@ -188,15 +187,19 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
             $scope.online_driverList = [];
             $scope.customer_pendingList = [];
             $scope.ADL_POL_markers = [];
-            // $http({
-            //     method: 'GET',
-            //     url: "/api/driver/onlinedrivers",
-
-            // }).then(function successCallback(response) {
-            //     $scope.online_driverList = response.data.drivers;
-            // }, function errorCallback(response) {
-            //     console.error("error");
-            // });
+            $http({
+                method: 'GET',
+                url: "/api/driver/onlinedrivers",
+            }).then(function successCallback(response) {
+                $scope.online_driverList = response.data.drivers;
+                for (driver in $scope.online_driverList) {
+                    var order_marker = {};
+                    $scope.online_driverList[driver]['on_shift'] = Math.round(Math.abs((new Date() - new Date($scope.online_driverList[driver]['shift_start'])) / (1000 * 60)));
+                    $scope.ADL_POL_markers.push(buildMarker("driver", $scope.online_driverList[driver]['driver_id'], $scope.online_driverList[driver]['driver_id_prefix'], $scope.online_driverList[driver]['first_name'], $scope.online_driverList[driver]['last_name'], $scope.online_driverList[driver]['phone_number'], $scope.online_driverList[driver]['email'], $scope.online_driverList[driver]['on_shift'], $scope.online_driverList[driver]['latitude'], $scope.online_driverList[driver]['longitude']));
+                }
+            }, function errorCallback(response) {
+                console.error("error");
+            });
 
             $http({
                 method: 'GET',
@@ -207,11 +210,7 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 for (order in $scope.customer_pendingList) {
                     var order_marker = {};
                     $scope.customer_pendingList[order]['WT'] = Math.round(Math.abs((new Date() - new Date($scope.customer_pendingList[order]['date_placed'])) / (1000 * 60)));
-                    var lat_lng = $scope.customer_pendingList[order]['delivery_address'].split("/");
-                    $scope.customer_pendingList[order]['lat'] = parseFloat(lat_lng[1]);
-                    $scope.customer_pendingList[order]['lng'] = parseFloat(lat_lng[2]);
-
-                    $scope.ADL_POL_markers.push(buildMarker($scope.customer_pendingList[order]['user_id_prefix'], $scope.customer_pendingList[order]['order_id'], $scope.customer_pendingList[order]['user_id_prefix'], $scope.customer_pendingList[order]['first_name'], $scope.customer_pendingList[order]['last_name'], $scope.customer_pendingList[order]['user_phone_number'], $scope.customer_pendingList[order]['user_email'], $scope.customer_pendingList[order]['WT'], $scope.customer_pendingList[order]['lat'], $scope.customer_pendingList[order]['lng']));
+                    $scope.ADL_POL_markers.push(buildMarker("customer", $scope.customer_pendingList[order]['order_id'], $scope.customer_pendingList[order]['user_id_prefix'], $scope.customer_pendingList[order]['first_name'], $scope.customer_pendingList[order]['last_name'], $scope.customer_pendingList[order]['user_phone_number'], $scope.customer_pendingList[order]['user_email'], $scope.customer_pendingList[order]['WT'], $scope.customer_pendingList[order]['delivery_latitude'], $scope.customer_pendingList[order]['delivery_longitude']));
                 }
                 mapServices.addMarkerToMap($scope.ADL_POL_markers, $scope.disRoomMap);
             }, function errorCallback(response) {
@@ -219,71 +218,90 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
             });
         }
 
+        $scope.showDriverRoute = function (driver) {
+            clearInterval($scope.setInterval_ADL_POL);
+            clearSelection();
+            $http({
+                method: 'POST',
+                url: "/api/driver/getroutes",
+                data: {
+                    driver_id: driver['driver_id']
+                }
+            }).then(function successCallback(response) {
+                $scope.driverRouteNodes = response.data.routes;
+                $scope.routeNodesMarkers.push(buildMarker("driver", driver['driver_id'], driver['driver_id_prefix'], driver['first_name'], driver['last_name'], driver['phone_number'], driver['email'], driver['on_shift'], driver['latitude'], driver['longitude']));
+                for (node in $scope.driverRouteNodes) {
+                    $scope.routeNodesMarkers.push(buildMarker($scope.driverRouteNodes[node]['node_type'], $scope.driverRouteNodes[node]['node_id'], $scope.driverRouteNodes[node]['node_id_prefix'], "first_name", "last_name", "phone_number", "email", "time", parseFloat(lat_lng[1]), parseFloat(lat_lng[2])));
+                }
+                mapServices.addPolylineToMap($scope.routeNodesMarkers, $scope.disRoomMap);
+            }, function errorCallback(response) {
+                console.error("error");
+            });
+        }
+
         $scope.showOrder = function (order) {
+            clearSelection();
+            clearInterval($scope.setInterval_ADL_POL);
             var order_marker = [];
-                order_marker.push(buildMarker(order['user_id_prefix'], order['order_id'], order['user_id_prefix'], order['first_name'], order['last_name'], order['user_phone_number'], order['user_email'], order['WT'], order['lat'], order['lng']));
-                clearInterval(setInterval_ADL_POL);
+            order_marker.push(buildMarker("customer", order['order_id'], order['user_id_prefix'], order['first_name'], order['last_name'], order['user_phone_number'], order['user_email'], order['WT'], order['delivery_latitude'], order['delivery_longitude']));
             mapServices.addMarkerToMap(order_marker, $scope.disRoomMap);
         }
 
-        $scope.selectAllOrders = function (customer_pendingList) {
-            var order_markers = [];
-            if (!$scope.selectAllOrdersChecked) {
+        $scope.selectAll = function (type, list) {
+            var markers = [];
+            if (!$scope.POL_SelectAll && type == 'order' || !$scope.ADL_SelectAll && type == 'driver') {
+                clearSelection();
                 var marker = {};
-                for (var i = 0; i < customer_pendingList.length; i++) {
-                    marker = buildMarker(customer_pendingList[i]['user_id_prefix'], customer_pendingList[i]['order_id'], customer_pendingList[i]['user_id_prefix'], customer_pendingList[i]['first_name'], customer_pendingList[i]['last_name'], customer_pendingList[i]['user_phone_number'], customer_pendingList[i]['user_email'], customer_pendingList[i]['WT'], customer_pendingList[i]['lat'], customer_pendingList[i]['lng']);
-                    order_markers.push(marker);
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i]['driver_id_prefix'] == "d_") {
+                        marker = buildMarker("driver", list[i]['driver_id'], list[i]['driver_id_prefix'], list[i]['first_name'], list[i]['last_name'], list[i]['phone_number'], list[i]['email'], list[i]['on_shift'], list[i]['latitude'], list[i]['longitude']);
+                    } else {
+                        marker = buildMarker("customer", list[i]['order_id'], list[i]['user_id_prefix'], list[i]['first_name'], list[i]['last_name'], list[i]['user_phone_number'], list[i]['user_email'], list[i]['WT'], list[i]['delivery_latitude'], list[i]['delivery_longitude']);
+                    }
+                    markers.push(marker);
                 }
-                $scope.selectAllOrdersChecked = true;
-                $scope.POL_radioGroup = "";
-                clearInterval(setInterval_ADL_POL);
-            } else{
-                var order_markers = [];
-                $scope.selectAllOrdersChecked = false;
-                setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 15000);
+                clearInterval($scope.setInterval_ADL_POL);
+            } else {
+                var markers = [];
+                $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 15000);
+                getListActiveDriverCustomer();
             }
-            mapServices.addMarkerToMap(order_markers, $scope.disRoomMap);
+            mapServices.addMarkerToMap(markers, $scope.disRoomMap);
         }
 
-        var setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 15000);
-        
-        /**
-         * Generates marker format for google maps
-         * @param {string} type - "customer" or "driver"
-         * @param {double} order_id
-         * @param {string} id_prefix - "g_ or u_ or d_"
-         * @param {string} first_name
-         * @param {string} last_name
-         * @param {string} phone_number
-         * @param {string} email
-         * @param {double} WT - Waiting Time
-         * @param {double} lat - latitude
-         * @param {double} lng - longitude
-         */
-        function buildMarker(type, order_id, id_prefix, first_name, last_name, phone_number, email, WT, lat, lng) {
-            var order_marker = {};
-            order_marker['type'] = type;
-            order_marker['order_id'] = order_id;
-            order_marker['id_prefix'] = id_prefix;
-            order_marker['first_name'] = first_name;
-            order_marker['last_name'] = last_name;
-            order_marker['phone_number'] = phone_number;
-            order_marker['email'] = email;
-            order_marker['WT'] = WT;
-            order_marker['latLng'] = {
+        function buildMarker(type, order_id, id_prefix, first_name, last_name, phone_number, email, time, lat, lng) {
+            var marker = {};
+            marker['type'] = type;
+            marker['order_id'] = order_id;
+            marker['id_prefix'] = id_prefix;
+            marker['first_name'] = first_name;
+            marker['last_name'] = last_name;
+            marker['phone_number'] = phone_number;
+            marker['email'] = email;
+            marker['time'] = time;
+            marker['latLng'] = {
                 lat: lat,
                 lng: lng
             };
-            return order_marker;
+            return marker;
         }
-        
-        $scope.mm_dd_yyyy = function (inDate) {
+        function clearSelection() {
+            $scope.POL_radioGroup = "";
+            $scope.ADL_radioGroup = "";
+            $scope.POL_SelectAll = "";
+            $scope.ADL_SelectAll = "";
+            $scope.driverRouteNodes = [];
+            $scope.routeNodesMarkers = [];
+        }
+        function mm_dd_yyyy(inDate) {
             return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
         }
 
         $scope.init = function () {
             $scope.toPage($scope.page);
             getListActiveDriverCustomer();
+            $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 15000);
+
         };
         $(document).ready(function () {
             $scope.init();

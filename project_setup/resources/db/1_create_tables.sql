@@ -227,6 +227,8 @@ CREATE TABLE catalog_stores (
 	id_prefix VARCHAR(3) NOT NULL DEFAULT "s_", 
 	name VARCHAR(225) NOT NULL,
 	address VARCHAR(225) NOT NULL,
+	address_latitude DOUBLE NOT NULL,
+	address_longitude DOUBLE NOT NULL,
 	store_type INT NOT NULL,
 
 	PRIMARY KEY (id),
@@ -259,6 +261,8 @@ CREATE TABLE orders_history (
 	date_arrived_customer TIMESTAMP,	
 	date_delivered TIMESTAMP,
 	delivery_address VARCHAR(225) NOT NULL,
+	delivery_latitude DOUBLE NOT NULL,
+	delivery_longitude DOUBLE NOT NULL,
 	store_type INT NOT NULL,
 	store_id INT,
 	driver_id INT,

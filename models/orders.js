@@ -7,23 +7,20 @@ var pub = {};
 /**
  * Creates order in orders_history table
  */
-pub.createOrder = function (id, address, isGuest, superCategory) {
-    return Catalog.getSuperCategoryIdByName(superCategory).then(function(superCategoryId) {
-        var data;
+pub.createOrder = function (id, address, address_lat, address_long, isGuest, superCategory) {
+    return Catalog.getSuperCategoryIdByName(superCategory).then(function (superCategoryId) {
+        var data = {
+            delivery_address: address,
+            store_type: superCategoryId,
+            delivery_latitude: address_lat,
+            delivery_longitude: address_long
+        };
         if (isGuest) {
-            data = {
-                guest_id: id,
-                delivery_address: address,
-                store_type: superCategoryId
-            };
+            data.guest_id = id;
         } else {
-            data = {
-                user_id: id,
-                delivery_address: address,
-                store_type: superCategoryId                
-            };
+            data.user_id = id;
         }
-    
+
         return db.insertQuery(db.dbTables.orders_history, data).then(function (inserted) {
             return inserted.insertId;
         });
@@ -207,6 +204,7 @@ pub.getPendingOrders = function () {
     history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
     history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
     history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
+    history.delivery_latitude AS delivery_latitude, history.delivery_longitude AS delivery_longitude,
     history.driver_id AS driver_id, history.store_id AS store_id,
     stores.id_prefix AS store_id_prefix, stores.name AS store_name,
     stores.address AS store_address, super_categories.name AS super_category,
@@ -230,6 +228,7 @@ pub.getPendingOrders = function () {
     history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
     history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
     history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
+    history.delivery_latitude AS delivery_latitude, history.delivery_longitude AS delivery_longitude,    
     history.driver_id AS driver_id, history.store_id AS store_id, stores.id_prefix AS store_id_prefix,
     stores.name AS store_name, stores.address AS store_address, super_categories.name AS super_category,
     guests.id AS user_id, guests.id_prefix AS user_id_prefix, guests.user_email AS user_email,
@@ -252,6 +251,7 @@ pub.getPendingOrders = function () {
     history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
     history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
     history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
+    history.delivery_latitude AS delivery_latitude, history.delivery_longitude AS delivery_longitude,        
     history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
     NULL AS store_address, super_categories.name AS super_category, users.id AS user_id, users.id_prefix AS user_id_prefix,
     users.user_email AS user_email, users.first_name AS first_name, users.last_name AS last_name,
@@ -272,6 +272,7 @@ pub.getPendingOrders = function () {
     history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
     history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
     history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
+    history.delivery_latitude AS delivery_latitude, history.delivery_longitude AS delivery_longitude,        
     history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
     NULL AS store_address, super_categories.name AS super_category, guests.id AS user_id, guests.id_prefix AS user_id_prefix,
     guests.user_email AS user_email, guests.first_name AS first_name, guests.last_name AS last_name,

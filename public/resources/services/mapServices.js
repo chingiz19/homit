@@ -88,24 +88,49 @@ app.service('mapServices', ["$http", function ($http) {
         fillOpacity: 1,
         strokeWeight: 0,
     }
+    var icon_store = {
+        path: "M19 7V4H5v3H2v13h8v-4h4v4h8V7h-3zm-8 3H9v1h2v1H8V9h2V8H8V7h3v3zm5 2h-1v-2h-2V7h1v2h1V7h1v5z",
+        fillColor: 'rgba(102, 7, 7, 0.8)',
+        fillOpacity: 1,
+        strokeWeight: 0,
+    }
     var all_markers = [];
+    var polyline_latLng = [];
+    var routePath = {};
 
-    pub.addMarkerToMap = function (ADL_POL_markers, map) {
-        for (var i = 0; i < all_markers.length; i++) {
-            all_markers[i].setMap(null);
+    pub.addPolylineToMap = function(route_markers, map){
+        clearMap();
+        pub.addMarkerToMap(route_markers, map);
+
+        for(node in route_markers){
+            polyline_latLng.push(route_markers[node]['latLng']);
         }
-        for (var i = 0; i < ADL_POL_markers.length; i++) {
+        routePath = new google.maps.Polyline({
+            path: polyline_latLng,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+          });
+          routePath.setMap(map);
+    }
+
+    pub.addMarkerToMap = function (markers, map) {
+        clearMap();
+        for (var i = 0; i < markers.length; i++) {
             var icon;
             var marker = {};
-            if (ADL_POL_markers[i]['type'] == "customer") {
+            if (markers[i]['type'] == "customer") {
                 icon = icon_customer;
-            } else {
+            } else if(markers[i]['type'] == "driver") {
                 icon = icon_driver;
+            } else{
+                icon = icon_store;
             }
             marker = new google.maps.Marker({
-                position: ADL_POL_markers[i]['latLng'],
+                position: markers[i]['latLng'],
                 map: map,
-                icon: icon_customer,
+                icon: icon,
             });
             var infowindow = new google.maps.InfoWindow();
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -114,11 +139,11 @@ app.service('mapServices', ["$http", function ($http) {
                     '<div id="siteNotice">'+
                     '</div>'+
                     '<div id="bodyContent">'+
-                    '<div style="display: flex; justify-content: center; line-height: 2em; font-size: 20px; font-weight: 500;">' + ADL_POL_markers[i]['id_prefix'] + ADL_POL_markers[i]['order_id'] + '</div>'+
+                    '<div style="display: flex; justify-content: center; line-height: 2em; font-size: 20px; font-weight: 500;">' + markers[i]['id_prefix'] + markers[i]['order_id'] + '</div>'+
                     '<ul style="margin: 0; padding: 0;">'+
-                    '<li>Call - <button onclick="call(' + ADL_POL_markers[i]['phone_number'] +')">' + ADL_POL_markers[i]['phone_number'] + '</button></li>'+
-                    '<li>Text - <button onclick="sendText('+ ADL_POL_markers[i]['phone_number'] +')">' + ADL_POL_markers[i]['phone_number'] + '</button></li>'+
-                    '<li>Email - <button onclick="sendEmail('+ ADL_POL_markers[i]['email'] +')">' + ADL_POL_markers[i]['email'] + '</button></li>'+
+                    '<li>Call - <button onclick="call(' + markers[i]['phone_number'] +')">' + markers[i]['phone_number'] + '</button></li>'+
+                    '<li>Text - <button onclick="sendText('+ markers[i]['phone_number'] +')">' + markers[i]['phone_number'] + '</button></li>'+
+                    '<li>Email - <button onclick="sendEmail('+ markers[i]['email'] +')">' + markers[i]['email'] + '</button></li>'+
                     '</ul>'+
                     '</div>'+
                     '</div>');
@@ -128,6 +153,17 @@ app.service('mapServices', ["$http", function ($http) {
             }) (marker, i));
 
             all_markers.push(marker);
+        }
+    }
+
+    function clearMap(){
+        for (var i = 0; i < all_markers.length; i++) {
+            all_markers[i].setMap(null);
+        } 
+        for(var i=0; i < polyline_latLng.length; i++){
+            polyline_latLng = [];
+            routePath.setMap(null);
+            break;
         }
     }
 

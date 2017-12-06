@@ -178,7 +178,9 @@ app.controller("checkoutController",
                 userInfoToSend.fname = $scope.userInfo.first_name;
                 userInfoToSend.lname = $scope.userInfo.last_name;
                 userInfoToSend.email = $scope.userInfo.user_email;
-                userInfoToSend.address = $scope.userInfo.address + "/" + checkout.deliveryAddress_lat + "/" + checkout.deliveryAddress_lng;
+                userInfoToSend.address = $scope.userInfo.address;
+                userInfoToSend.address_latitude = checkout.deliveryAddress_lat;
+                userInfoToSend.address_longitude = checkout.deliveryAddress_lng;
                 userInfoToSend.phone = $scope.userInfo.phone_number;
                 userInfoToSend.dob = $scope.userInfo.dob;
             }

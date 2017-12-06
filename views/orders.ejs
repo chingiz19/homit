@@ -103,26 +103,27 @@
                             <div flex="90">
                                 <div layout="column" style="width: 80%;">
                                     <md-input-container layout="row" class="srchCntr drTblLn">
-                                        <md-button aria-label="searchOrClear" class="srchBtn srchBtnDr" ng-click="driver.table_search = '' ">
-                                            <ng-md-icon ng-if="!driver.table_search" icon="search" size="18"></ng-md-icon>
-                                            <ng-md-icon ng-if="driver.table_search" icon="clear" size="18"></ng-md-icon>
+                                        <md-button aria-label="searchOrClear" class="srchBtn srchBtnDr" ng-click="adl_Search = '' ">
+                                            <ng-md-icon ng-if="!adl_Search" icon="search" size="18"></ng-md-icon>
+                                            <ng-md-icon ng-if="adl_Search" icon="clear" size="18"></ng-md-icon>
                                         </md-button>
                                         <label>
                                         </label>
-                                        <input id="adlSearch" ng-model="driver.table_search" class="srchInpt" placeholder="Active Driver List">
+                                        <input id="adlSearch" ng-model="adl_Search" class="srchInpt" placeholder="Active Driver List">
                                     </md-input-container>
                                     <div class="listBx drTblLn">
-                                        <md-radio-group ng-model="driver.seeRoute">
-                                            <md-radio-button aria-label="seeDriverRoute" ng-repeat="driver in driver.online_list | filter:driver.table_search" ng-value="{{driver.driver_id}}">
+                                        <md-radio-group id="activeDriverList" ng-model="ADL_radioGroup" class="ADL_POL">
+                                            <md-radio-button aria-label="seeDriverRoute" id="{{driver.order_id}}" ng-value="{{driver}}" ng-click="showDriverRoute(driver)"
+                                                ng-repeat="driver in online_driverList | orderBy : '-on_shift' | filter : {driver_id : adl_Search}">
                                                 <ul layout="row">
                                                     <li>Driver ID: {{driver.driver_id}}</li>
-                                                    <li>Booked: {{driver.booked_time}</li>
+                                                    <li>Active: {{driver.on_shift}}</li>
                                                 </ul>
                                             </md-radio-button>
                                         </md-radio-group>
                                     </div>
                                     <div class="slctAllBx drTblLn">
-                                        <md-checkbox class="slctAllCheck">Select All</md-checkbox>
+                                        <md-checkbox class="slctAllCheck" ng-click="selectAll('driver',online_driverList)" ng-model="ADL_SelectAll">Select All</md-checkbox>
                                     </div>
                                 </div>
                             </div>
@@ -141,8 +142,7 @@
                                     </md-input-container>
                                     <div class="listBx cusTblLn">
                                         <md-radio-group id="pendingOrderList" class="ADL_POL" ng-model="POL_radioGroup">
-                                            <md-radio-button id="{{order.order_id}}" aria-label="selectOrder" ng-value="order" ng-click="showOrder(order)"
-                                                ng-repeat="order in customer_pendingList | orderBy : '-WT' | filter : {order_id : POL_search}">
+                                            <md-radio-button aria-label="selectOrder" id="{{order.order_id}}" ng-value="order" ng-click="showOrder(order)" ng-repeat="order in customer_pendingList | orderBy : '-WT' | filter : {order_id : POL_search}">
                                                 <ul layout="row">
                                                     <li>Order ID: {{order.user_id_prefix}}{{order.order_id}}</li>
                                                     <li>&nbsp WT:&nbsp</li>
@@ -152,7 +152,7 @@
                                         </md-radio-group>
                                     </div>
                                     <div class="slctAllBx cusTblLn">
-                                        <md-checkbox class="slctAllCheck" ng-click="selectAllOrders(customer_pendingList)">Select All</md-checkbox>
+                                        <md-checkbox class="slctAllCheck" ng-click="selectAll('order',customer_pendingList)" ng-model="POL_SelectAll">Select All</md-checkbox>
                                     </div>
                                 </div>
                             </div>

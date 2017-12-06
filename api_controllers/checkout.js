@@ -11,17 +11,20 @@ router.post('/placeorder', function (req, res, next) {
     var lname = req.body.user.lname;
     var phone = req.body.user.phone;
     var address = req.body.user.address;
+    var address_long = req.body.user.address_longitude;
+    var address_lat = req.body.user.address_latitude;
     var products = req.body.products;
+
 
     var signedUser = Auth.getSignedUser(req);
     if (signedUser != false) {
         var userId = signedUser.id;
-        if (!products || !phone || !address) {
+        if (!products || !phone || !address || !address_lat || !address_long) {
             res.status(403).json({
                 error: {
                     "code": "U000",
                     "dev_message": "Missing params",
-                    "required_params": ["phone", "address", "products"]
+                    "required_params": ["phone", "address", "address_latitude", "address_longitude", "products"]
                 }
             });
         } else {
@@ -33,7 +36,7 @@ router.post('/placeorder', function (req, res, next) {
             };
             User.updateUser(data, key).then(function (updatedUser) {
                 if (updatedUser != false) {
-                    createOrders(userId, address, false, products).then(function (userOrders) {
+                    createOrders(userId, address, address_lat, address_long, false, products).then(function (userOrders) {
                         var response = {
                             success: true,
                             orders: userOrders
@@ -72,7 +75,7 @@ router.post('/placeorder', function (req, res, next) {
                     };
                     User.addGuestUser(data).then(function (guestUserId) {
                         if (guestUserId != false) {
-                            createOrders(guestUserId, address, true, products).then(function (userOrders) {
+                            createOrders(guestUserId, address, address_lat, address_long, true, products).then(function (userOrders) {
                                 var response = {
                                     success: true,
                                     orders: userOrders
@@ -101,7 +104,7 @@ router.post('/placeorder', function (req, res, next) {
                     };
                     User.updateGuestUser(data, key).then(function (guestUser) {
                         if (guestUser != false) {
-                            createOrders(guestUserFound.id, address, true, products).then(function (userOrders) {
+                            createOrders(guestUserFound.id, address, address_lat, address_long, true, products).then(function (userOrders) {
                                 var response = {
                                     success: true,
                                     orders: userOrders
@@ -125,12 +128,12 @@ router.post('/placeorder', function (req, res, next) {
     }
 });
 
-var createOrders = function (id, address, isGuest, products) {
+var createOrders = function (id, address, address_lat, address_long, isGuest, products) {
     var createFunctions = [];
     var userOrders = [];
 
     for (var superCategory in products) {
-        createFunctions.push(Orders.createOrder(id, address, isGuest, superCategory));
+        createFunctions.push(Orders.createOrder(id, address, address_lat, address_long, isGuest, superCategory));
     }
 
     return Promise.all(createFunctions).then(function (orderIds) {
