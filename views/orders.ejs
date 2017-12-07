@@ -65,6 +65,12 @@
                                 <li class="gtDataBAAB">&nbsp{{order.date_placed}};&nbsp&nbsp</li>
                                 <li class="gtDataBAAA">Delivery Address: </li>
                                 <li class="gtDataBAAB">&nbsp{{order.delivery_address}};&nbsp&nbsp</li>
+                                <li class="gtDataBAAB">&nbsp Paired:&nbsp</li>
+                                <li>
+                                    <ng-md-icon ng-if="order.dispatched" style="fill: rgb(31, 196, 157);" icon="done" size="17"></ng-md-icon>
+                                    <ng-md-icon ng-if="!order.dispatched" style="fill: red;" icon="highlight_off" size="17"></ng-md-icon>
+                                </li>
+                                <li class="gtDataBAAB">&nbsp Driver ID: {{order.driver_id}}&nbsp</li>
                             </ul>
                         </md-radio-button>
                     </md-radio-group>
@@ -92,68 +98,71 @@
             </div>
         </div>
         <!-- End -->
+
         <!-- Dispatch Room -->
         <!-- Start -->
-        <div ng-show="page == 2" class="container">
+        <div ng-show="page == 2" class="container-fluid">
             <div layout="row">
-                <div id="drMap" class="disRoomMap" flex="100"></div>
-                <div flex="50" layout="column">
+                <div id="drMap" class="disRoomMap"></div>
+                <div class="ADL_POL_tbl" layout="column">
                     <div layout="column">
-                        <div class="ADL" flex="40">
-                            <div flex="90">
-                                <div layout="column" style="width: 80%;">
-                                    <md-input-container layout="row" class="srchCntr drTblLn">
-                                        <md-button aria-label="searchOrClear" class="srchBtn srchBtnDr" ng-click="adl_Search = '' ">
-                                            <ng-md-icon ng-if="!adl_Search" icon="search" size="18"></ng-md-icon>
-                                            <ng-md-icon ng-if="adl_Search" icon="clear" size="18"></ng-md-icon>
-                                        </md-button>
-                                        <label>
-                                        </label>
-                                        <input id="adlSearch" ng-model="adl_Search" class="srchInpt" placeholder="Active Driver List">
-                                    </md-input-container>
-                                    <div class="listBx drTblLn">
-                                        <md-radio-group id="activeDriverList" ng-model="ADL_radioGroup" class="ADL_POL">
-                                            <md-radio-button aria-label="seeDriverRoute" id="{{driver.order_id}}" ng-value="{{driver}}" ng-click="showDriverRoute(driver)"
-                                                ng-repeat="driver in online_driverList | orderBy : '-on_shift' | filter : {driver_id : adl_Search}">
-                                                <ul layout="row">
-                                                    <li>Driver ID: {{driver.driver_id}}</li>
-                                                    <li>Active: {{driver.on_shift}}</li>
-                                                </ul>
-                                            </md-radio-button>
-                                        </md-radio-group>
-                                    </div>
-                                    <div class="slctAllBx drTblLn">
-                                        <md-checkbox class="slctAllCheck" ng-click="selectAll('driver',online_driverList)" ng-model="ADL_SelectAll">Select All</md-checkbox>
-                                    </div>
+                        <div class="ADL">
+                            <div layout="column" class="ADL_POL_A_w">
+                                <md-input-container layout="row" class="srchCntr drTblLn">
+                                    <md-button aria-label="searchOrClear" class="srchBtn srchBtnDr" ng-click="adl_Search = '' ">
+                                        <ng-md-icon ng-if="!adl_Search" icon="search" size="18"></ng-md-icon>
+                                        <ng-md-icon ng-if="adl_Search" icon="clear" size="18"></ng-md-icon>
+                                    </md-button>
+                                    <label>
+                                    </label>
+                                    <input id="adlSearch" ng-model="adl_Search" class="srchInpt" placeholder="Active Driver List">
+                                </md-input-container>
+                                <div class="listBx drTblLn">
+                                    <md-radio-group id="activeDriverList" ng-model="ADL_radioGroup" class="ADL_POL">
+                                        <md-radio-button aria-label="seeDriverRoute" id="{{driver.order_id}}" ng-value="{{driver}}" ng-click="showDriverRoute(driver)"
+                                            ng-repeat="driver in online_driverList | orderBy : '-on_shift' | filter : {driver_id : adl_Search}">
+                                            <ul layout="row">
+                                                <li>Driver ID: {{driver.driver_id}}</li>
+                                                <li>Active: {{driver.on_shift}}</li>
+                                            </ul>
+                                        </md-radio-button>
+                                    </md-radio-group>
+                                </div>
+                                <div class="slctAllBx drTblLn">
+                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('driver',online_driverList)" ng-model="ADL_SelectAll">Select All</md-checkbox>
                                 </div>
                             </div>
                         </div>
-                        <div class="POL" flex="40">
-                            <div flex="90">
-                                <div layout="column" style="width: 80%;">
-                                    <md-input-container layout="row" class="srchCntr cusTblLn">
-                                        <md-button aria-label="searchOrClear" class="srchBtn srchBtnCus" ng-click="POL_search = '' ">
-                                            <ng-md-icon ng-if="!POL_search" icon="search" size="18"></ng-md-icon>
-                                            <ng-md-icon ng-if="POL_search" icon="clear" size="18"></ng-md-icon>
-                                        </md-button>
-                                        <label>
-                                        </label>
-                                        <input id="polSearch" ng-model="POL_search" class="srchInpt" placeholder="Pending Order List">
-                                    </md-input-container>
-                                    <div class="listBx cusTblLn">
-                                        <md-radio-group id="pendingOrderList" class="ADL_POL" ng-model="POL_radioGroup">
-                                            <md-radio-button aria-label="selectOrder" id="{{order.order_id}}" ng-value="order" ng-click="showOrder(order)" ng-repeat="order in customer_pendingList | orderBy : '-WT' | filter : {order_id : POL_search}">
-                                                <ul layout="row">
-                                                    <li>Order ID: {{order.user_id_prefix}}{{order.order_id}}</li>
-                                                    <li>&nbsp WT:&nbsp</li>
-                                                    <li ng-style="(order.WT > 40) && {'color': 'red', 'font-weight':'600'}">{{order.WT}}</li>
-                                                </ul>
-                                            </md-radio-button>
-                                        </md-radio-group>
-                                    </div>
-                                    <div class="slctAllBx cusTblLn">
-                                        <md-checkbox class="slctAllCheck" ng-click="selectAll('order',customer_pendingList)" ng-model="POL_SelectAll">Select All</md-checkbox>
-                                    </div>
+                        <div class="POL">
+                            <div layout="column" class="ADL_POL_A_w">
+                                <md-input-container layout="row" class="srchCntr cusTblLn">
+                                    <md-button aria-label="searchOrClear" class="srchBtn srchBtnCus" ng-click="POL_search = '' ">
+                                        <ng-md-icon ng-if="!POL_search" icon="search" size="18"></ng-md-icon>
+                                        <ng-md-icon ng-if="POL_search" icon="clear" size="18"></ng-md-icon>
+                                    </md-button>
+                                    <label>
+                                    </label>
+                                    <input id="polSearch" ng-model="POL_search" class="srchInpt" placeholder="Pending Order List">
+                                </md-input-container>
+                                <div class="listBx cusTblLn">
+                                    <md-radio-group id="pendingOrderList" class="ADL_POL" ng-model="POL_radioGroup">
+                                        <md-radio-button aria-label="selectOrder" id="{{order.order_id}}" ng-value="order" ng-click="showOrder(order)" ng-repeat="order in customer_pendingList | orderBy : '-WT' | filter : {order_id : POL_search}">
+                                            <ul layout="row">
+                                                <li>Order ID: </li>
+                                                <li style="font-weight: 550;">&nbsp{{order.order_id}}</li>
+                                                <li>&nbsp Paired:&nbsp</li>
+                                                <li>
+                                                    <ng-md-icon ng-if="order.dispatched" style="fill: rgb(31, 196, 157);" icon="done" size="17"></ng-md-icon>
+                                                    <ng-md-icon ng-if="!order.dispatched" style="fill: red;" icon="highlight_off" size="17"></ng-md-icon>
+                                                </li>
+                                                <li>&nbsp WT:&nbsp</li>
+                                                <li ng-style="(order.WT > 40) && {'color': 'red', 'font-weight':'600'}">{{order.WT}}</li>
+                                            </ul>
+                                        </md-radio-button>
+                                    </md-radio-group>
+                                </div>
+                                <div class="slctAllBx cusTblLn">
+                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('order',customer_pendingList)" ng-model="POL_SelectAll">Select All</md-checkbox>
                                 </div>
                             </div>
                         </div>

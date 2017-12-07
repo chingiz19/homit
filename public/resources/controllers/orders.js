@@ -42,6 +42,7 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
         }
 
         $scope.searchUserHistory = function (searchBy) {
+            $scope.foundUsers = [];
             $scope.searCriteriaIndex = searchBy;
             if ($scope.searCriteriaIndex == 1) {
                 $http({
@@ -77,7 +78,6 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                         order_id: $scope.searchCriteria
                     }
                 }).then(function successCallback(response) {
-
                     $scope.foundUsers.push(response.data.user);
                     setTimeout(() => {
                         document.getElementById("usrRbtn").click();
@@ -111,6 +111,11 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 $scope.foundOrders = response.data.orders;
                 for (tmp in $scope.foundOrders) {
                     $scope.foundOrders[tmp]["date_placed"] = mm_dd_yyyy($scope.foundOrders[tmp]["date_placed"]);
+                    if (new Date($scope.foundOrders[tmp]['date_assigned']) > 0) {
+                        $scope.foundOrders[tmp]['dispatched'] = true;
+                    } else {
+                        $scope.foundOrders[tmp]['dispatched'] = false;
+                    }
                 }
             }, function errorCallback(response) {
                 Logger.error("error");
@@ -209,6 +214,11 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 $scope.customer_pendingList = response.data.orders;
                 for (order in $scope.customer_pendingList) {
                     var order_marker = {};
+                    if (new Date($scope.customer_pendingList[order]['date_assigned']) > 0) {
+                        $scope.customer_pendingList[order]['dispatched'] = true;
+                    } else {
+                        $scope.customer_pendingList[order]['dispatched'] = false;
+                    }
                     $scope.customer_pendingList[order]['WT'] = Math.round(Math.abs((new Date() - new Date($scope.customer_pendingList[order]['date_placed'])) / (1000 * 60)));
                     $scope.ADL_POL_markers.push(buildMarker("customer", $scope.customer_pendingList[order]['order_id'], $scope.customer_pendingList[order]['user_id_prefix'], $scope.customer_pendingList[order]['first_name'], $scope.customer_pendingList[order]['last_name'], $scope.customer_pendingList[order]['user_phone_number'], $scope.customer_pendingList[order]['user_email'], $scope.customer_pendingList[order]['WT'], $scope.customer_pendingList[order]['delivery_latitude'], $scope.customer_pendingList[order]['delivery_longitude']));
                 }
@@ -231,7 +241,7 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 $scope.driverRouteNodes = response.data.routes;
                 $scope.routeNodesMarkers.push(buildMarker("driver", driver['driver_id'], driver['driver_id_prefix'], driver['first_name'], driver['last_name'], driver['phone_number'], driver['email'], driver['on_shift'], driver['latitude'], driver['longitude']));
                 for (node in $scope.driverRouteNodes) {
-                    $scope.routeNodesMarkers.push(buildMarker($scope.driverRouteNodes[node]['node_type'], $scope.driverRouteNodes[node]['node_id'], $scope.driverRouteNodes[node]['node_id_prefix'], "first_name", "last_name", "phone_number", "email", "time", parseFloat(lat_lng[1]), parseFloat(lat_lng[2])));
+                    $scope.routeNodesMarkers.push(buildMarker($scope.driverRouteNodes[node]['node_type'], $scope.driverRouteNodes[node]['node_id'], $scope.driverRouteNodes[node]['node_id_prefix'], "first_name", "last_name", "phone_number", "email", "time", $scope.driverRouteNodes[node]['node_latitude'], $scope.driverRouteNodes[node]['node_longitude']));
                 }
                 mapServices.addPolylineToMap($scope.routeNodesMarkers, $scope.disRoomMap);
             }, function errorCallback(response) {

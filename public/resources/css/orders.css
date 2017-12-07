@@ -291,21 +291,31 @@ md-select .md-select-value{
 .disRoomMap{
     position: relative; 
     top: 15px; 
-    height: 80%;
-    width: 100%;
+    left: 3%;
+    height: 85%;
+    width: 80%;
     border: 1px rgba(0,0,0,0.25) solid; border-radius: 3px;
+}
+.ADL_POL_tbl{
+    width: 30%; 
+    display: flex; justify-content: center;
 }
 .ADL{
     position: relative; 
     top: 10px; 
-    height: 45%;
+    left: 9%;
+    height: 42%;
     display: flex; justify-content: center;
 }
 .POL{
     position: relative; 
     top: 13px; 
-    height: 45%;
+    left: 9%;
+    height: 42%;
     display: flex; justify-content: center;
+}
+.ADL_POL_A_w{
+    width: 80%;
 }
 
 .srchCntr{
