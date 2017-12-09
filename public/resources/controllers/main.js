@@ -5,7 +5,7 @@
     $scope.init = function(){
         // always scroll to the top, then later to defined hash
         var currentHash = $location.hash();
-        $scope.scrollTo("gettingStarted");
+        $scope.scrollTo("gettingstarted");
 
         $scope.map = mapServices.createMap("map");
 
@@ -51,7 +51,7 @@
      * @param id - element id
      */
     $scope.scrollTo = function(id){
-        $location.hash(id);
+        $location.hash(id.toLowerCase());
         Element.prototype.documentOffsetTop = function () {
             return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0);
         };
