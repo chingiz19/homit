@@ -30,7 +30,7 @@ cmConnection.on('close', function (data) {
 });
 
 cmConnection.on('error', function (data) {
-    Logger.log("Error has been occurred. Here");
+    Logger.log("Error has been occurred. Here - in CM connection");
 })
 
 

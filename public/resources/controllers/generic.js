@@ -4,7 +4,12 @@ var app = angular.module('mainModule', ["ngRoute", "ngCookies", "ngMaterial", "n
             enabled: true,
             requireBase: false
         });
-    });
+    })
+
+    // Set up CSRF Header for AJAX calls
+    .run(function($http, $cookies){
+        $http.defaults.headers.post['CSRF-TOKEN'] = $cookies.get("csrf-token");
+    })
 
 app.filter("capitalize", function(){
     return function(str){

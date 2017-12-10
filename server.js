@@ -14,6 +14,14 @@ var cookieParser = require("cookie-parser");
 var https = require("https");
 var fs = require('fs');
 
+var helmet = require("helmet");
+var csurf = require("csurf");
+var limiter = require("express-rate-limit")({ // alternative - bottleneck
+	windowMs: 60*1000, // every minute
+	max: 500, // max 500 requests
+	delayMs: 0
+});
+
 /* SLL options */
 var sslOptions = {
 	key: fs.readFileSync('./ssl/server.enc.key'),
@@ -23,6 +31,7 @@ var sslOptions = {
 
 /* Server Middleware */
 webServer.use(session({
+	key: "session",
 	secret: secretKey,
 	resave: false,
 	saveUninitialized: true,
@@ -33,16 +42,25 @@ webServer.use(session({
 	}
 }));
 
+
+webServer.use(limiter);
 webServer.use(bodyParser.json());
 webServer.use(cookieParser(secretKey));
 webServer.use(bodyParser.urlencoded({ extended: true }));
 webServer.use(express.static(webpagePath));
 webServer.set('view engine', 'ejs');
 
+webServer.use(helmet());
+webServer.use(csurf());
+
 webServer.use(function(req, res, next){
+	// Set CSRF token per request
+	res.cookie("csrf-token", req.csrfToken());
+
 	res.setHeader("Keep-Alive", "timeout: 60, max: 1000");
-	next();
+	return next();
 })
+
 
 /* Redirect all HTTP to HTTPS */
 webServer.all('*', function (req, res, next) {

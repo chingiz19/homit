@@ -1,15 +1,10 @@
 app.service('cartService', ["$http", function ($http) {
 
     var _modifyCartItem = function (depot_id, itemQuantity) {
-        //TODO: return response directly
-        return $http({
-            method: 'POST',
-            url: '/api/cart/modifyitem',
-            data: {
+        return $http.post('/api/cart/modifyitem', {
                 depot_id: depot_id,
-                quantity: itemQuantity
-            }
-        });
+                quantity: itemQuantity,                
+        })
     }
 
     var _clearCart = function () {
