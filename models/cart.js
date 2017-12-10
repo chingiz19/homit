@@ -13,7 +13,7 @@ pub.getUserCart = function (user_id) {
                         depot.id AS depot_id,
                         listing.product_brand AS brand, listing.product_name AS name,
                         product.product_image AS image, category.name AS category,
-                        depot.price AS price, depot.quantity AS depot_quantity, packaging.name AS packaging,
+                        depot.price AS price, depot.tax AS tax, depot.quantity AS depot_quantity, packaging.name AS packaging,
                         volume.volume_name AS volume, catalog_super_categories.name as super_category
                     FROM 
                         catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
@@ -122,6 +122,7 @@ var getFormattedProducts = function (products) {
             packaging: product.packaging,
             volume: product.volume,
             price: product.price,
+            tax: product.tax,
             super_category: product.super_category,
             brand: products[i].brand,
             name: products[i].name,

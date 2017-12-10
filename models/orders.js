@@ -7,13 +7,14 @@ var pub = {};
 /**
  * Creates order in orders_history table
  */
-pub.createOrder = function (id, address, address_lat, address_long, isGuest, superCategory) {
+pub.createOrder = function (id, address, address_lat, address_long, isGuest, transactionId, superCategory) {
     return Catalog.getSuperCategoryIdByName(superCategory).then(function (superCategoryId) {
         var data = {
             delivery_address: address,
             store_type: superCategoryId,
             delivery_latitude: address_lat,
-            delivery_longitude: address_long
+            delivery_longitude: address_long,
+            transaction_id: transactionId
         };
         if (isGuest) {
             data.guest_id = id;
@@ -290,6 +291,20 @@ pub.getPendingOrders = function () {
 
     return db.runQuery(sqlQuery).then(function (pendingOrders) {
         return pendingOrders;
+    });
+};
+
+pub.checkTransaction = function (transactionId) {
+    var data = {
+        transaction_id: transactionId
+    };
+
+    return db.selectAllWhere(db.dbTables.orders_history, data).then(function (orders) {
+        if (orders.length > 0) {
+            return false;
+        } else {
+            return true;
+        }
     });
 };
 

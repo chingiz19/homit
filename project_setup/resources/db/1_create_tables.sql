@@ -214,6 +214,7 @@ CREATE TABLE catalog_depot (
 	packaging_volume_id INT NOT NULL,
 	price DECIMAL(6,2) NOT NULL, 
 	quantity INT NOT NULL, 
+	tax BOOLEAN DEFAULT TRUE,
 	
 	PRIMARY KEY (id), 
 	CONSTRAINT fk_catalog_depot_product_id FOREIGN KEY (product_id) REFERENCES catalog_products(id) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -254,6 +255,7 @@ CREATE TABLE orders_history (
 	id_prefix VARCHAR(3) NOT NULL DEFAULT "o_", 
 	user_id INT,
 	guest_id INT,
+	transaction_id INT NOT NULL,
 	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	date_assigned TIMESTAMP,
 	date_arrived_store TIMESTAMP,

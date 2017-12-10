@@ -14,34 +14,76 @@ router.post('/placeorder', function (req, res, next) {
     var address_long = req.body.user.address_longitude;
     var address_lat = req.body.user.address_latitude;
     var products = req.body.products;
+    var transactionId = req.body.transaction_id;
 
 
     var signedUser = Auth.getSignedUser(req);
     if (signedUser != false) {
         var userId = signedUser.id;
-        if (!products || !phone || !address || !address_lat || !address_long) {
+        if (!products || !phone || !address || !address_lat || !address_long || !transactionId) {
+            Logger.log("Missing params");
             res.status(403).json({
                 error: {
                     "code": "U000",
                     "dev_message": "Missing params",
-                    "required_params": ["phone", "address", "address_latitude", "address_longitude", "products"]
+                    "required_params": ["phone", "address", "address_latitude", "address_longitude", "products", "transactionId"]
                 }
             });
         } else {
-            var data = {
-                phone_number: phone
-            };
-            var key = {
-                id: userId
-            };
-            User.updateUser(data, key).then(function (updatedUser) {
-                if (updatedUser != false) {
-                    createOrders(userId, address, address_lat, address_long, false, products).then(function (userOrders) {
-                        var response = {
-                            success: true,
-                            orders: userOrders
-                        };
-                        res.send(response);
+            Orders.checkTransaction(transactionId).then(function (isTransactionFine) {
+                if (isTransactionFine) {
+                    MP.getTransaction(transactionId, function (transactionDetails) {
+                        if (transactionDetails.transactions != undefined) {
+                            Catalog.getTotalPriceForProducts(products).then(function (totalPrice) {
+                                if (transactionDetails.transactions.transaction[0].amount >= totalPrice) {
+                                    var data = {
+                                        phone_number: phone
+                                    };
+                                    var key = {
+                                        id: userId
+                                    };
+                                    User.updateUser(data, key).then(function (updatedUser) {
+                                        if (updatedUser != false) {
+                                            createOrders(userId, address, address_lat, address_long, false, transactionId, products).then(function (userOrders) {
+                                                var response = {
+                                                    success: true,
+                                                    orders: userOrders
+                                                };
+                                                res.send(response);
+                                            });
+                                        } else {
+                                            var response = {
+                                                success: false,
+                                                error: {
+                                                    dev_message: "Something went wrong while updating the user",
+                                                    ui_message: "Error happened while checkout. Please try again"
+                                                }
+                                            };
+                                            res.send(response);
+                                        }
+                                    });
+                                } else {
+                                    var response = {
+                                        success: false,
+                                        error: {
+                                            dev_message: "Something went wrong while updating the user",
+                                            ui_message: "Error happened while checkout. Please try again"
+                                        }
+                                    };
+                                    res.send(response);
+                                }
+                            });
+                        } else {
+                            var response = {
+                                success: false,
+                                error: {
+                                    dev_message: "Something went wrong while updating the user",
+                                    ui_message: "Error happened while checkout. Please try again"
+                                }
+                            };
+                            res.send(response);
+                        }
+
                     });
                 } else {
                     var response = {
@@ -56,60 +98,91 @@ router.post('/placeorder', function (req, res, next) {
             });
         }
     } else {
-        if (!email || !phone || !fname || !lname || !address || !products) {
+        if (!email || !phone || !fname || !lname || !address || !address_lat || !address_long || !products) {
+            Logger.log("Missing params");
             res.status(403).json({
                 error: {
                     "code": "U000",
                     "dev_message": "Missing params",
-                    "required_params": ["email", "phone", "fname", "lname", "address", "products"]
+                    "required_params": ["email", "phone", "fname", "lname", "address", "address_lat", "address_long", "products"]
                 }
             });
         } else {
-            User.findGuestUser(email).then(function (guestUserFound) {
-                if (guestUserFound == false) {
-                    var data = {
-                        user_email: email,
-                        first_name: fname,
-                        last_name: lname,
-                        phone_number: phone
-                    };
-                    User.addGuestUser(data).then(function (guestUserId) {
-                        if (guestUserId != false) {
-                            createOrders(guestUserId, address, address_lat, address_long, true, products).then(function (userOrders) {
-                                var response = {
-                                    success: true,
-                                    orders: userOrders
-                                };
-                                res.send(response);
-                            });
-                        } else {
-                            var response = {
-                                success: false,
-                                error: {
-                                    dev_message: "Something went wrong while adding the user",
-                                    ui_message: "Error happened while checkout. Please try again"
+            Orders.checkTransaction(transactionId).then(function (isTransactionFine) {
+                if (isTransactionFine) {
+                    MP.getTransaction(transactionId, function (transactionDetails) {
+                        if (transactionDetails.transactions != undefined) {
+                            Catalog.getTotalPriceForProducts(products).then(function (totalPrice) {
+                                if (transactionDetails.transactions.transaction[0].amount >= totalPrice) {
+                                    User.findGuestUser(email).then(function (guestUserFound) {
+                                        if (guestUserFound == false) {
+                                            var data = {
+                                                user_email: email,
+                                                first_name: fname,
+                                                last_name: lname,
+                                                phone_number: phone
+                                            };
+                                            User.addGuestUser(data).then(function (guestUserId) {
+                                                if (guestUserId != false) {
+                                                    createOrders(guestUserId, address, address_lat, address_long, true, transactionId, products).then(function (userOrders) {
+                                                        var response = {
+                                                            success: true,
+                                                            orders: userOrders
+                                                        };
+                                                        res.send(response);
+                                                    });
+                                                } else {
+                                                    var response = {
+                                                        success: false,
+                                                        error: {
+                                                            dev_message: "Something went wrong while adding the user",
+                                                            ui_message: "Error happened while checkout. Please try again"
+                                                        }
+                                                    };
+                                                    res.send(response);
+                                                }
+                                            });
+                                        } else {
+                                            var data = {
+                                                first_name: fname,
+                                                last_name: lname,
+                                                phone_number: phone
+                                            };
+                                            var key = {
+                                                id: guestUserFound.id
+                                            };
+                                            User.updateGuestUser(data, key).then(function (guestUser) {
+                                                if (guestUser != false) {
+                                                    createOrders(guestUserFound.id, address, address_lat, address_long, true, transactionId, products).then(function (userOrders) {
+                                                        var response = {
+                                                            success: true,
+                                                            orders: userOrders
+                                                        };
+                                                        res.send(response);
+                                                    });
+                                                } else {
+                                                    var response = {
+                                                        success: false,
+                                                        error: {
+                                                            dev_message: "Something went wrong while updating the user",
+                                                            ui_message: "Error happened while checkout. Please try again"
+                                                        }
+                                                    };
+                                                    res.send(response);
+                                                }
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    var response = {
+                                        success: false,
+                                        error: {
+                                            dev_message: "Something went wrong while updating the user",
+                                            ui_message: "Error happened while checkout. Please try again"
+                                        }
+                                    };
+                                    res.send(response);
                                 }
-                            };
-                            res.send(response);
-                        }
-                    });
-                } else {
-                    var data = {
-                        first_name: fname,
-                        last_name: lname,
-                        phone_number: phone
-                    };
-                    var key = {
-                        id: guestUserFound.id
-                    };
-                    User.updateGuestUser(data, key).then(function (guestUser) {
-                        if (guestUser != false) {
-                            createOrders(guestUserFound.id, address, address_lat, address_long, true, products).then(function (userOrders) {
-                                var response = {
-                                    success: true,
-                                    orders: userOrders
-                                };
-                                res.send(response);
                             });
                         } else {
                             var response = {
@@ -122,18 +195,27 @@ router.post('/placeorder', function (req, res, next) {
                             res.send(response);
                         }
                     });
+                } else {
+                    var response = {
+                        success: false,
+                        error: {
+                            dev_message: "Something went wrong while updating the user",
+                            ui_message: "Error happened while checkout. Please try again"
+                        }
+                    };
+                    res.send(response);
                 }
             });
         }
     }
 });
 
-var createOrders = function (id, address, address_lat, address_long, isGuest, products) {
+var createOrders = function (id, address, address_lat, address_long, isGuest, transactionId, products) {
     var createFunctions = [];
     var userOrders = [];
 
     for (var superCategory in products) {
-        createFunctions.push(Orders.createOrder(id, address, address_lat, address_long, isGuest, superCategory));
+        createFunctions.push(Orders.createOrder(id, address, address_lat, address_long, isGuest, transactionId, superCategory));
     }
 
     return Promise.all(createFunctions).then(function (orderIds) {

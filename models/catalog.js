@@ -13,7 +13,7 @@ pub.getAllProductsByCategory = function (superCategory, categoryName) {
         listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
         listing.product_brand AS brand, listing.product_name AS name,
         listing.product_description AS description, product.product_image AS image,
-        depot.price AS price, depot.quantity AS quantity, packaging.name AS packaging,
+        depot.price AS price, depot.tax AS tax, depot.quantity AS quantity, packaging.name AS packaging,
         container.name AS container, volume.volume_name AS volume, category.name AS category,
         super_category.name AS super_category
         
@@ -188,6 +188,7 @@ var getFormattedProducts = function (products) {
                 quantity: products[i].quantity,
                 container: products[i].container,
                 category: products[i].category,
+                tax: products[i].tax,
                 product_variants: {
                     all_volumes: []
                 },
@@ -290,7 +291,53 @@ pub.getSuperCategoryIdByName = function (superCategory) {
             return false;
         }
     });
-}
+};
+
+pub.getTotalPriceForProducts = function (products) {
+    var deliveryFee1 = 4.99;
+    var deliveryFee2 = 2.99;
+    var albertaGst = 0.05;
+    var depotQuantities = {};
+    var depotIds = [];
+    for (var superCategory in products) {
+        for (var key in products[superCategory]) {
+            depotIds.push(products[superCategory][key].depot_id);
+            depotQuantities[products[superCategory][key].depot_id] = products[superCategory][key].quantity;
+        }
+    }
+
+
+    var sqlQuery = `
+    SELECT *
+    FROM catalog_depot
+    WHERE id in (` + depotIds + `);`
+
+    return db.runQuery(sqlQuery).then(function (prices) {
+        var totalAmount = 0;
+        var totalTax = 0;
+        for (var i = 0; i < prices.length; i++) {
+            totalAmount = totalAmount + parseFloat(prices[i].price) * depotQuantities[prices[i].id];
+            if (prices[i].tax) {
+                totalTax = totalTax + parseFloat(prices[i].price) * depotQuantities[prices[i].id] * albertaGst;
+            }
+        }
+         // Calculating math numbers
+         totalAmount = Math.round(totalAmount * 100) / 100;
+         var deliveryFee = deliveryFee1;
+         if (totalAmount > 100) {
+             deliveryFee = deliveryFee1 + deliveryFee2;
+         }
+         totalTax = Math.round((totalTax + deliveryFee * albertaGst) * 100) / 100;            
+         var totalPrice = totalAmount + deliveryFee + totalTax;
+
+        // Updating display variables
+        totalTax = totalTax.toFixed(2);
+        totalAmount = totalAmount.toFixed(2);
+        totalPrice = totalPrice.toFixed(2);
+
+        return parseFloat(totalPrice);
+    });
+};
 
 /**
  * Custom function to do alphanumeric sort
