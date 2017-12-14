@@ -34,6 +34,12 @@ app.service('storage', ["$window", function($window){
         return value;
     }
 
+    var _getCheckoutUserInfo = function(){
+        var value = _get("setCheckoutUserInfo");
+        _setCheckoutUserInfo(undefined);
+        return value;
+    }
+
     var _setSearchSubcategory = function(value){
         return _set("searchSubcategory", value);
     }
@@ -42,12 +48,18 @@ app.service('storage', ["$window", function($window){
         return _set("searchProduct", value);
     }
 
+    var _setCheckoutUserInfo = function(value){
+        return _set("setCheckoutUserInfo", value);
+    }
+
     return {
         get: _get,
         set: _set,
         getSearchSubcategory: _getSearchSubcategory,
         getSearchProduct: _getSearchProduct,
+        getCheckoutUserInfo: _getCheckoutUserInfo,
         setSearchSubcategory: _setSearchSubcategory,
-        setSearchProduct: _setSearchProduct
+        setSearchProduct: _setSearchProduct,
+        setCheckoutUserInfo: _setCheckoutUserInfo,
     }
 }]);

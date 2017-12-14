@@ -14,7 +14,7 @@ app.service('date', [function(){
      * Initializes variables for this service
      */
     function init(){
-        for (var i = 1900; i <= new Date().getUTCFullYear(); i++){
+        for (var i = new Date().getUTCFullYear(); i >= 1900; i--){
             arr_years.push(i);    
         }   
 
@@ -63,6 +63,10 @@ app.service('date', [function(){
             default:
                 return arr_days_28.concat([29, 30, 31]);
         }
+    }
+
+    pub.isOver18Years = function(day, month, year){
+        return new Date(year+18, month-1, day) <= new Date();
     }
 
     init();

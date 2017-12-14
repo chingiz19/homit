@@ -47,7 +47,6 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
 
         $scope.searchedBrand = "";
 
-        // User selected variables
         // Get initial list of products
         $scope.products;
         $scope.subcategories = [];
@@ -128,7 +127,20 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             delete p["container"];
 
             $rootScope.$broadcast("addToCart", p);
+            $scope.addItemNotification(p);
         };
+
+        $scope.notification = {};
+
+        $scope.addItemNotification = function (product) {
+            $scope.notification.el = document.getElementById('addItem');
+            $scope.notification.el.setAttribute("aria-hidden", "false");
+            clearTimeout($scope.notification.lifeTime);
+            $scope.notification.lifeTime = setTimeout(function () {
+                $scope.notification.el.setAttribute("aria-hidden", "true");
+            }, 1450);
+            $scope.notification.content = product;
+        }
 
         $scope.nextVolume = function (product) {
             $scope.numberOfVolumes = product.product_variants.all_volumes.length;
@@ -177,6 +189,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         // TODO switch to Subcategories box when Category selected
         $scope.showCategories = false;
         $scope.filterCategories = function () {
+            $('#category_box').slideToggle(500);
             if ($scope.showCategories) {
                 $scope.showCategories = false;
                 document.getElementById("show_cat_icon").classList.add('rot180_2');
@@ -243,6 +256,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].textContent.trim() == subcad) {
                         document.getElementById(x[i].id).click();
+                        $scope.filterCategories();
                     }
                 }
             } else {
@@ -261,6 +275,8 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                         setTimeout(function () {
                             document.getElementById(prodID).classList.remove('highlighted');
                         }, 2500);
+                        if (subcad == 'undefined' && subcad == null)
+                            $scope.filterCategories();
                     }
                 }
             }

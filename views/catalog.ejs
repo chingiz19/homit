@@ -63,11 +63,11 @@
                     </span>
                     <!--Category Box start-->
                     <span class="col1D">
-                        <md-button aria-label="filterCategories" ng-click="filterCategories()" class="fltCategoryBtn">
-                            <ng-md-icon id="show_cat_icon" icon="settings_backup_restore" size="30"></ng-md-icon>
+                        <md-button aria-label="filterCategories" id="toggleTest" ng-click="filterCategories()" class="fltCategoryBtn">
+                            <ng-md-icon id="show_cat_icon" icon="loop"></ng-md-icon>
                         </md-button>
                     </span>
-                    <div id="category_box" class="col1E" ng-if="showCategories">
+                    <div id="category_box" class="col1E">
                         <div layout="column">
                             <div class="sizeStage col1EAA">{{loadedStore}}</div>
                             <ul class="col1EAB" layout="column">
@@ -187,6 +187,23 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div id="addItem" aria-hidden="true">
+                <div class="addItem" layout="row">
+                    <div layout="column">
+                        <li>
+                            <img class="addItem_img" ng-src={{notification.content.image}}>
+                        </li>
+                    </div>
+                    <ul class="addItem_ul">
+                        <li class="addItem_ulA">
+                            <span>{{notification.content.brand}}</span>
+                        </li>
+                        <li class="addItem_ulB">
+                            <span>{{notification.content.volume}} &#8202X{{notification.content.packaging}}</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@
 
 <body class="ng-cloak">
     <div ng-controller="checkoutController">
+
         <div layout="row" layout-align="center" class="container">
             <div class="col1">
                 <div class="col1ChevRgt">
@@ -22,161 +23,23 @@
                 <div layout="row" layout-align="center" ng-show="!isUserSigned">
                     <md-input-container class="md-block bigClass">
                         <label class="inptLbl">Date</label>
-                        <md-select ng-model="birth_day">
-                            <md-option ng-value="0" ng-disabled="true">Day</md-option>
-                            <md-option ng-value="1">1</md-option>
-                            <md-option ng-value="2">2</md-option>
-                            <md-option ng-value="3">3</md-option>
-                            <md-option ng-value="4">4</md-option>
-                            <md-option ng-value="5">5</md-option>
-                            <md-option ng-value="6">6</md-option>
-                            <md-option ng-value="7">7</md-option>
-                            <md-option ng-value="8">8</md-option>
-                            <md-option ng-value="9">9</md-option>
-                            <md-option ng-value="10">10</md-option>
-                            <md-option ng-value="11">11</md-option>
-                            <md-option ng-value="12">12</md-option>
-                            <md-option ng-value="13">13</md-option>
-                            <md-option ng-value="14">14</md-option>
-                            <md-option ng-value="15">15</md-option>
-                            <md-option ng-value="16">16</md-option>
-                            <md-option ng-value="17">17</md-option>
-                            <md-option ng-value="18">18</md-option>
-                            <md-option ng-value="19">19</md-option>
-                            <md-option ng-value="20">20</md-option>
-                            <md-option ng-value="21">21</md-option>
-                            <md-option ng-value="22">22</md-option>
-                            <md-option ng-value="23">23</md-option>
-                            <md-option ng-value="24">24</md-option>
-                            <md-option ng-value="25">25</md-option>
-                            <md-option ng-value="26">26</md-option>
-                            <md-option ng-value="27">27</md-option>
-                            <md-option ng-value="28">28</md-option>
-                            <md-option ng-value="29">29</md-option>
-                            <md-option ng-value="30">30</md-option>
-                            <md-option ng-value="31">31</md-option>
+                        <md-select ng-model="userInfo.birth_day" ng-change="updateBDays()">
+                                <md-option ng-value="-1" ng-disabled="true" >Day</md-option>
+                            <md-option ng-value="day" ng-repeat="day in b_days">{{ day }}</md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container class="md-block bigClass">
                         <label class="inptLbl">of</label>
-                        <md-select ng-model="birth_month">
-                            <md-option ng-value="0" ng-disabled="true">Month</md-option>
-                            <md-option ng-value="1">Jan</md-option>
-                            <md-option ng-value="2">Feb</md-option>
-                            <md-option ng-value="3">Mar</md-option>
-                            <md-option ng-value="4">Apr</md-option>
-                            <md-option ng-value="5">May</md-option>
-                            <md-option ng-value="6">Jun</md-option>
-                            <md-option ng-value="7">Jul</md-option>
-                            <md-option ng-value="8">Aug</md-option>
-                            <md-option ng-value="9">Sep</md-option>
-                            <md-option ng-value="10">Oct</md-option>
-                            <md-option ng-value="11">Nov</md-option>
-                            <md-option ng-value="12">Dec</md-option>
+                        <md-select ng-model="userInfo.birth_month" ng-change="updateBDays()">
+                                <md-option ng-value="-1" ng-disabled="true" >Month</md-option>
+                                <md-option ng-value="month" ng-repeat="month in b_months">{{ month }}</md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container class="md-block bigClass">
                         <label class="inptLbl">Birth</label>
-                        <md-select ng-model="birth_year">
-                            <md-option ng-value="0" ng-disabled="true">Year</md-option>
-                            <md-option ng-value="2017">2017</md-option>
-                            <md-option ng-value="2016">2016</md-option>
-                            <md-option ng-value="2015">2015</md-option>
-                            <md-option ng-value="2014">2014</md-option>
-                            <md-option ng-value="2013">2013</md-option>
-                            <md-option ng-value="2012">2012</md-option>
-                            <md-option ng-value="2011">2011</md-option>
-                            <md-option ng-value="2010">2010</md-option>
-                            <md-option ng-value="2009">2009</md-option>
-                            <md-option ng-value="2008">2008</md-option>
-                            <md-option ng-value="2007">2007</md-option>
-                            <md-option ng-value="2006">2006</md-option>
-                            <md-option ng-value="2005">2005</md-option>
-                            <md-option ng-value="2004">2004</md-option>
-                            <md-option ng-value="2003">2003</md-option>
-                            <md-option ng-value="2002">2002</md-option>
-                            <md-option ng-value="2001">2001</md-option>
-                            <md-option ng-value="2000">2000</md-option>
-                            <md-option ng-value="1999">1999</md-option>
-                            <md-option ng-value="1998">1998</md-option>
-                            <md-option ng-value="1997">1997</md-option>
-                            <md-option ng-value="1996">1996</md-option>
-                            <md-option ng-value="1995">1995</md-option>
-                            <md-option ng-value="1994">1994</md-option>
-                            <md-option ng-value="1993">1993</md-option>
-                            <md-option ng-value="1992">1992</md-option>
-                            <md-option ng-value="1991">1991</md-option>
-                            <md-option ng-value="1990">1990</md-option>
-                            <md-option ng-value="1989">1989</md-option>
-                            <md-option ng-value="1988">1988</md-option>
-                            <md-option ng-value="1987">1987</md-option>
-                            <md-option ng-value="1986">1986</md-option>
-                            <md-option ng-value="1985">1985</md-option>
-                            <md-option ng-value="1984">1984</md-option>
-                            <md-option ng-value="1983">1983</md-option>
-                            <md-option ng-value="1982">1982</md-option>
-                            <md-option ng-value="1981">1981</md-option>
-                            <md-option ng-value="1980">1980</md-option>
-                            <md-option ng-value="1979">1979</md-option>
-                            <md-option ng-value="1978">1978</md-option>
-                            <md-option ng-value="1977">1977</md-option>
-                            <md-option ng-value="1976">1976</md-option>
-                            <md-option ng-value="1975">1975</md-option>
-                            <md-option ng-value="1974">1974</md-option>
-                            <md-option ng-value="1973">1973</md-option>
-                            <md-option ng-value="1972">1972</md-option>
-                            <md-option ng-value="1971">1971</md-option>
-                            <md-option ng-value="1970">1970</md-option>
-                            <md-option ng-value="1969">1969</md-option>
-                            <md-option ng-value="1968">1968</md-option>
-                            <md-option ng-value="1967">1967</md-option>
-                            <md-option ng-value="1966">1966</md-option>
-                            <md-option ng-value="1965">1965</md-option>
-                            <md-option ng-value="1964">1964</md-option>
-                            <md-option ng-value="1963">1963</md-option>
-                            <md-option ng-value="1962">1962</md-option>
-                            <md-option ng-value="1961">1961</md-option>
-                            <md-option ng-value="1960">1960</md-option>
-                            <md-option ng-value="1959">1959</md-option>
-                            <md-option ng-value="1958">1958</md-option>
-                            <md-option ng-value="1957">1957</md-option>
-                            <md-option ng-value="1956">1956</md-option>
-                            <md-option ng-value="1955">1955</md-option>
-                            <md-option ng-value="1954">1954</md-option>
-                            <md-option ng-value="1953">1953</md-option>
-                            <md-option ng-value="1952">1952</md-option>
-                            <md-option ng-value="1951">1951</md-option>
-                            <md-option ng-value="1950">1950</md-option>
-                            <md-option ng-value="1949">1949</md-option>
-                            <md-option ng-value="1948">1948</md-option>
-                            <md-option ng-value="1947">1947</md-option>
-                            <md-option ng-value="1946">1946</md-option>
-                            <md-option ng-value="1945">1945</md-option>
-                            <md-option ng-value="1944">1944</md-option>
-                            <md-option ng-value="1943">1943</md-option>
-                            <md-option ng-value="1942">1942</md-option>
-                            <md-option ng-value="1941">1941</md-option>
-                            <md-option ng-value="1940">1940</md-option>
-                            <md-option ng-value="1939">1939</md-option>
-                            <md-option ng-value="1938">1938</md-option>
-                            <md-option ng-value="1937">1937</md-option>
-                            <md-option ng-value="1936">1936</md-option>
-                            <md-option ng-value="1935">1935</md-option>
-                            <md-option ng-value="1934">1934</md-option>
-                            <md-option ng-value="1933">1933</md-option>
-                            <md-option ng-value="1932">1932</md-option>
-                            <md-option ng-value="1931">1931</md-option>
-                            <md-option ng-value="1930">1930</md-option>
-                            <md-option ng-value="1929">1929</md-option>
-                            <md-option ng-value="1928">1928</md-option>
-                            <md-option ng-value="1927">1927</md-option>
-                            <md-option ng-value="1926">1926</md-option>
-                            <md-option ng-value="1925">1925</md-option>
-                            <md-option ng-value="1924">1924</md-option>
-                            <md-option ng-value="1923">1923</md-option>
-                            <md-option ng-value="1922">1922</md-option>
-                            <md-option ng-value="1921">1921</md-option>
-                            <md-option ng-value="1920">1920</md-option>
+                        <md-select ng-model="userInfo.birth_year" ng-change="updateBDays()">
+                                <md-option ng-value="-1" ng-disabled="true" >Year</md-option>
+                                <md-option ng-value="year" ng-repeat="year in b_years">{{ year }}</md-option>
                         </md-select>
                     </md-input-container>
                 </div>
@@ -260,7 +123,7 @@
                 <!--Card Info-->
                 <div class="container cardContainer" flex="80">
                     <div layout="row" layout-align="start center">
-                        <div class="extBoxTtl">Payment Info</div>
+                        <div class="extBoxTtl" ng-style="(userInfo.card == '0') && {'color': 'rgba(209, 58, 58, 0.95)'}">{{userInfo.cardText}}</div>
                         <md-button aria-label="ShowHideCardInfo" class="md-fab md-mini md-primary glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown">
                             <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="20"></ng-md-icon>
                             <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="20"></ng-md-icon>
@@ -269,54 +132,41 @@
                 </div>
                 <!--Card Info Hidden Box-->
                 <div id="helcimResults">
-                    <form name="helcimForm" id="helcimForm" method="POST">
-
+                    <form name="helcimForm" id="helcimForm" method="POST" novalidate>
                         <div ng-show="userInfo.cardIsShown">
-
                             <input type="hidden" id="token" value="505e8387dfa8085c20be9b">
                             <input type="hidden" id="language" value="en">
                             <input type="hidden" id="test" value="1">
                             <input type="hidden" id="amount" value={{receipt}}>
                             <input type="hidden" id="amountShipping" value={{delFee}}>
                             <input type="hidden" id="amountTax" value={{GST}}>
-                            <!-- <input type="hidden" id="amountDiscount" value=""> -->
                             <input type="hidden" id="customerCode" value={{userInfo.id}}>
-                            <!-- <input type="hidden" id="orderNumber" value="INV2020"> -->
                             <input type="hidden" id="comments" value="This is comment for Chingiz">
-
-
-                            <!-- <input type="hidden" id="cardToken" value="6dc57d55b60fce3f9c6a5d"> -->
-
                             <div layout="row" layout-align="center">
-                                <md-input-container class="md-block extInput" flex="60">
+                                <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl">Card Number</label>
-                                    <input required id="cardNumber" type="text" maxlength="16">
+                                    <input required id="cardNumber" type="text" maxlength="16" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}">
                                 </md-input-container>
                             </div>
                             <div layout="row" layout-align="center">
-                                <md-input-container class="md-block extInput" flex="60">
+                                <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl">Expiry Date [MMYY]</label>
-                                    <input required id="cardExpiry" maxlength="4">
+                                    <input required id="cardExpiry" type="text" maxlength="4" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}">
                                 </md-input-container>
                             </div>
                             <div layout="row" layout-align="center">
-                                <md-input-container class="md-block extInput" flex="60">
+                                <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl inptLblSC1">CVV/CVC</label>
-                                    <input required id="cardCVV" type="text" maxlength="4" class="inptLblSC2">
+                                    <input required id="cardCVV" type="text" maxlength="3" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}">
                                 </md-input-container>
                             </div>
                         </div>
                         <div class="HomeItBtn">
                             <button name="buttonProcess" id="buttonProcess" class="btn btn-success" onclick="javascript:helcimProcess();" ng-click="HomeIt()">Home it</button>
-
-                            <!-- <button type="submit" class="btn btn-success" ng-click="HomeIt()">Home It old</button> -->
                         </div>
                     </form>
                     <br>
                     <br>
-
-                <!-- <div id="helcimResults" ng-model="helCimResponse" ng-click="helCimResponse != undefined || testt()"> -->
-                    <!-- <div ng-model="helCimResponse" ng-click="helCimResponse != undefined || testt()"> -->
                     <?xml version=\"1.0\"?>
                     <message>
                         <response></response>
@@ -338,14 +188,11 @@
                         <orderNumber></orderNumber>
                         <customerCode></customerCode>
                     </message>
-                <!-- </div> -->
                 </div>
-            </div>
             </div>
             <!--Order Summary SideNav-->
             <md-sidenav class="md-sidenav-right mdSideNavL1" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
                 <md-content layout-padding style="height: 100%;">
-                    <!--Order Summary - Reciept box-->
                     <div class="receiptB1">
                         <div class="summerLnP1">
                             <md-button ng-click="close()" aria-label="HideSideNav" hide-gt-md class="glyClsBtn">
@@ -382,7 +229,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--Order Summary - Cart Items-->
                     <div ng-repeat="(super_category, super_category_items) in userCart" class="cartBItems1">
                         <div class="strBrk">
                             <div flex="10" class="strTypeLn"></div>
@@ -431,10 +277,39 @@
                 </md-content>
             </md-sidenav>
         </div>
+        <!-- Payment Modal -->
+        <div id="checkoutModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-body" id="modalBody">
+                        <div layout="column">
+                            <div id="inProcess" ng-if="paymentResult == 'inProcess' ">
+                                <div class="inPr_A"><span class="inPr_AA">Payment in process...</span></div>
+                                <div class="inPr_B">
+                                    <md-progress-circular md-colors="{color: 'primary'}" md-diameter="76" ng-disabled="paymentResult != 'inProcess' "></md-progress-circular>
+                                </div>
+                            </div>
+                            <div id="paymentResult" ng-if="paymentResult == '1' || paymentResult == '0' || paymentResult == '10' ">
+                                <div class="pR_A">
+                                    <md-button ng-if="paymentResult == '1' " ng-click="clearPage()" class="clrPg">
+                                        <ng-md-icon icon="done" class="pR_A1"></ng-md-icon>
+                                    </md-button>
+                                    <ng-md-icon ng-if="paymentResult == '10' " icon="warning" class="pR_A10"></ng-md-icon>
+                                </div>
+                                <div class="pR_B"><span class="pR_BA">{{paymentMessage_1}}{{userInfo.first_name}}</span></div>
+                                <div class="pR_C"><span class="pR_CA">{{paymentMessage_2}}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="https://secure.myhelcim.com/js/version2.js"></script>
         <script src="/resources/services/advancedStorage.js"></script>
         <script src="/resources/services/cartService.js"></script>
+        <script src="/resources/services/date.js"></script>
         <script src="/resources/controllers/checkout.js"></script>
     </div>
 </body>
+
 </html>

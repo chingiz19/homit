@@ -95,29 +95,6 @@ Columns-2 consist of items and items' info*/
     }
 }
 
-
-/*Customize the scrollbar to IOS version*/
-::-webkit-scrollbar {
-  width: 10px;
-  background-color: rgba(0,0,0,0);
-  -webkit-border-radius: 100px;
-}
-::-webkit-scrollbar:hover {
-  background-color: rgba(0, 0, 0, 0.09);
-}
- 
-::-webkit-scrollbar-thumb:vertical {
-  background: rgba(0,0,0,0.5);
-  -webkit-border-radius: 100px;
-  background-clip: padding-box;
-  border: 2px solid rgba(0, 0, 0, 0);
-  min-height: 10px;
-}
-::-webkit-scrollbar-thumb:vertical:active {
-  background: rgba(0,0,0,0.61);
-  -webkit-border-radius: 100px;
-}
-
 body{
     background-color: rgb(249, 249, 249);
     letter-spacing: 0.01em;
@@ -137,9 +114,8 @@ md-content{
 navbar{
     min-width: 400px !important; max-height: 1em !important;
 }
-/*Checkout Information column*/
 .col1{
-    margin-top: 6px;
+    margin-top: 3px;
     background-color: rgb(255,255,255);
     border: rgb(233,233,233) solid 1px; border-radius: 5px;
     overflow-y: scroll;
@@ -154,7 +130,6 @@ navbar{
     justify-content: center; 
     margin-top: 2.5em;
 }
-/*SideNav open Glyphicon*/
 .glypOpnSN
 {   
     margin:0px 2px 0px 2px;
@@ -163,11 +138,9 @@ navbar{
     height: 2.5em!important; width:75px !important; 
     box-shadow: none !important;
 }
-/*glyphicon Sign*/
 .glypOpnSNsgn{
     fill: rgb(63,81,181);
 }
-/*General Input format*/
 .bigClass{
     margin-bottom: 0px;
 }
@@ -195,11 +168,9 @@ md-tabs-wrapper{
     position: relative;
     top: 25px; left: 40%;
 }
-/*Card Info Container*/
 .cardContainer{
     padding:0 0 0 2px;
 }
-/*Extension Box Title*/
 .extBoxTtl{
     position: relative;
     left: 12%;
@@ -208,7 +179,6 @@ md-tabs-wrapper{
     font-weight: 700;
     color: #333;
 }
-/*Glyphicon for Card Info extension Box*/
 .glypOpnCI
 {   
     position: relative;
@@ -219,21 +189,18 @@ md-tabs-wrapper{
     height: 50px; width: 50px !important; 
     box-shadow: none !important;
 }
-/*glyphicon Sign*/
 .opnCIsgn{
     fill: rgb(63,81,181);
 }
-/*Extension Box Input format*/
 .extInput{
     margin-bottom: 0px;
 }
-
-/*Order Summary/Column 2/SideNav*/
 .mdSideNavL1{
     width: 100%;
-    margin-top: 6px; 
+    margin-top: 3px; 
     border: rgb(233,233,233) solid 1px ;border-radius: 5px; 
     box-shadow: none;
+    z-index: 10;
 }
 .glyClsBtn{
     margin: 0; padding: 0;
@@ -242,7 +209,6 @@ md-tabs-wrapper{
     color: rgb(254,254,254);
     font-size: 14px;
 }
-/*Reciept box consists of combination of receiptB1 to receiptB3*/
 .receiptB1{
     position: fixed;
     width: 100%;
@@ -300,7 +266,6 @@ md-tabs-wrapper{
     background-color: rgb(224,234,248);
     border-bottom-right-radius: 5px;
 }
-/*Order Summary line part 1 and 2*/
 .summerLnP1{
     display: flex;
     align-items: center;
@@ -315,7 +280,6 @@ md-tabs-wrapper{
     font-size: 19px; font-weight: bold;
     color: rgb(255,255,255);
 }
-/*Order Summary - cart item list */
 .cartBItems1{
     position: relative; 
     top: 140px; 
@@ -352,8 +316,6 @@ md-tabs-wrapper{
 .cartBItems2C2{
     margin: 0; padding: 0;
 }
-
-/*Order Summaty Buttons*/
 .orBtnSz{
     font-size: 25px;
 }
@@ -370,8 +332,6 @@ md-tabs-wrapper{
     font-size: 20px;
 }
 
-
-
 /*Mobile screens*/
 @media screen and (max-device-width: 480px) {
     .mdSideNavL1{
@@ -383,29 +343,24 @@ md-tabs-wrapper{
         line-height: 1.6em;
         font-size: 150% !important;
     }
-    /*Extension Box Title*/
     .extBoxTtl{
         font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
         font-size: 18px;
         font-weight: 700;
     }
-    /*glyphicon Sign*/
     .glypOpnCIsgn{
         font-size: 19px;
         color: rgb(63,81,181);
     }
-    /*SideNav open Glyphicon*/
     .glypOpnSN
     {   
         height: 3em!important; width:85px !important; 
         z-index: 4;
     }
-    /*glyphicon Sign*/
     .glypOpnSNsgn{
         font-size: 19px;
     }
 
-    /*Order Summary line part 1 and 2*/
     .summerLnP1{
         height: 3.5em;
     }
@@ -435,12 +390,10 @@ md-tabs-wrapper{
         width: 200px;
         font-size: 20px;
     }
-    /*Order Summary - cart item list */
     .cartBItems1{
         position: relative; 
         top: 195px; 
     }
-    /*Cart items Image*/
     .cartBItems2B2{
         width: 175px !important; height: 175px !important;
         margin: 0; padding: 0;
@@ -459,11 +412,9 @@ md-tabs-wrapper{
     .btn{
         font-size: 25px;
     }
-    /*Order Summaty Buttons*/
     .orBtnSz{
         font-size: 30px;
     }
-    /*md-input Modification*/
     .md-input-has-value.bigClass > input {
         font-size: 30px;
     }
@@ -473,12 +424,10 @@ md-tabs-wrapper{
     .inptLbl{
         margin-bottom: 0px; 
     }
-    /*Modification to Card Info Security Code input line*/
     .inptLblSC1{
         bottom: 56px !important; 
     }
     .inptLblSC2{
-        /*max-height: 50px;*/
         height: 37px !important;
         padding-top: 0 !important; padding-bottom: 0 !important;
     }
@@ -486,7 +435,6 @@ md-tabs-wrapper{
 md-backdrop.md-opaque {
     background-color: rgba(33,33,33,0.7);
 }
-
 .strBrk{
     display: flex; align-items: center; 
     margin: 15px 0 0px 0;
@@ -494,17 +442,89 @@ md-backdrop.md-opaque {
 
 .strTypeLn { 
     width: 100%; 
-    /* border-bottom: 1px solid rgba(245, 114, 67, 0.266); */
     border-bottom: 1px solid rgba(0,0,0, 0.866); 
     line-height: 1px; margin: 5px 0 5px; 
 } 
 .strType { 
     background:#fff; padding:0 5px; 
-    /* color: rgba(245, 114, 67, 0.466); */
-    color: 1px solid rgba(0,0,0, 0.866); 
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.045em;
     -webkit-font-smoothing: antialiased;
     font-size: 13px;
     text-transform: uppercase; 
+}
+
+#helcimResults{
+    color: rgba(255,255,255,1);
+}
+#checkoutModal .modal-dialog{
+    top: 20%;
+}
+#checkoutModal .modal-content{
+    width: 400px;
+}
+
+.inPr_A{
+    display: flex; justify-content: center;
+    width: 100%; 
+}
+.inPr_AA{
+    font-size: 29px; font-weight: 500; 
+    color: rgba(0,0,0,0.78); 
+    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased; 
+}
+.inPr_B{
+    display: flex; justify-content: center;
+    width: 100%;
+    margin-top: 20px; margin-bottom: 10px; 
+}
+.pR_A{
+    display: flex; justify-content: center;
+    width: 100%; 
+    margin-top: 10px; margin-bottom: 10px;
+}
+.pR_A1{
+    fill: rgba(255,255,255,0.95);
+    border-radius: 40px;
+    width: 80px; height: 80px; 
+}
+.pR_A1 svg{
+    width: 80px; height: 80px;
+}
+.pR_A10{
+    fill: rgba(209, 58, 58, 0.95); 
+    background-color: rgba(255,255,255,1);
+    border-radius: 40px;
+}
+.pR_A10 svg{
+    width: 80px; height: 80px;
+}
+.pR_B{
+    display: flex; justify-content: center;
+    width: 100%; 
+}
+.pR_BA{
+    font-size: 25px; font-weight: 500; 
+    color: rgba(0,0,0,0.78);
+    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+.pR_C{
+    width: 100%; 
+    margin-top: 5px; margin-bottom: 10px;
+}
+.pR_CA{
+    display: flex; justify-content: center; align-items: center; 
+    font-size: 14px; font-weight: 400; 
+    color: rgba(0,0,0,0.78);
+    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+.clrPg{
+    margin: 0; padding: 0; 
+    min-height: 81px; height: 81px; 
+    min-width: 81px; width: 81px; 
+    border-radius: 40px; 
+    background-color: rgba(0, 189, 149,1);
 }

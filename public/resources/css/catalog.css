@@ -80,7 +80,9 @@ body{
 .col1{
     position: fixed;
     margin-top: 4px;
+    padding-bottom: 5px;
     min-width: 180px;
+    min-height: 300px;
     background-color: white;
     border: lightgray solid 1px; border-radius: 5px; 
     box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
@@ -88,11 +90,7 @@ body{
     flex-shrink: 1;
 }
 .col1A{
-    /* position: relative; left: 88px; */
     display: flex; justify-content: center; 
-    /* margin-right: 36px; */
-    
-    /* width: 202px !important;  */
 }
 .col1D{
     position: absolute; 
@@ -101,18 +99,17 @@ body{
 }
 .col1E{
     position: absolute; 
-    top: 100%; left: 0; 
+    bottom: 0; left: 0; 
     width: 100%; 
-    height: 0;
-    min-height: 250px; height: 100%; 
+    display: block;
+    height: 100%; 
     border: lightgray solid 0.1px; border-radius: 5px; 
     background-color: white; 
-    transform: translate3d(0,-100%,0);
     z-index: 10;
 }
 .col1EAA{
     display: flex; justify-content: center; 
-    left:0;
+    left: 0;
     font-weight: 600;
 }
 .col1EAB{
@@ -123,12 +120,12 @@ body{
 }
 .category-list{
     display: flex; align-items: center;
-    padding-left: 2px;
+    padding-left: 1px;
 }
 .category-list:hover{
     text-decoration: none;
     padding-left: 0;
-    border-left: 2px solid green;
+    border-left: 1px solid rgba(24, 136, 24, 0.685);
 }
 .category-list span{
     text-transform: uppercase; 
@@ -161,24 +158,21 @@ body{
     position: relative;
     margin: 0px 0 5px 0;
     padding: 10px 0 10px 0;
-    /*border-bottom: 1px solid rgba(0,0,0,0.03);*/
     color: rgba(0,0,0,0.69);
-    /*background-color: rgba(0,0,0,0.01);*/
     font-size: 22px;
     font-weight: 600;
-    /*margin-left: 1px;*/
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 /*Subcategories CSS*/
 .SubcategoryName{
     color: rgba(0,0,0,0.4);
     margin-bottom: 10px;
-    padding-left: 2px;
+    padding-left: 1px;
     font-size: 20px; 
 }
 .SubcategoryName:hover{
     padding-left: 0;
-    border-left: 2px solid green;
+    border-left: 1px solid rgba(24, 136, 24, 0.685);
 }
 /*Brand Search Box*/
 .srchBx{
@@ -326,8 +320,8 @@ body{
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .nHighltdVol{
-    color: rgba(255,255,255,0.6);
-    font-weight: 700;
+    color: rgba(0,0,0,0.4);
+    /* font-weight: 500; */
     font-size: 7px; font-weight: bold;
     letter-spacing: 0.025em;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
@@ -340,7 +334,7 @@ body{
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .nHighltdPack{
-    color: rgba(255,255,255,0.6);
+    color: rgba(0,0,0,0.4);
     font-size: 7px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
@@ -655,7 +649,7 @@ md-radio-group .md-container.md-ink-ripple{
     margin-left: 15px;
 }
 md-radio-group .SubcategoryName:hover .md-container.md-ink-ripple{
-    margin-left: 13px;
+    margin-left: 14px;
 }
 /*Change default radio-button colors*/
 md-radio-button:focus {
@@ -691,4 +685,34 @@ md-radio-button .md-label{
     transform: rotate(-360deg);
     transition: 0.5s;
     fill: rgba(0, 189, 149, 1);
+}
+
+#addItem [aria-hidden="true"] { visibility: hidden; }
+
+.addItem{
+    position: fixed; 
+    bottom: 30px; right: 30px; 
+    height: 60px; width: 250px; 
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(44, 37, 37, 0.733);
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 1);   
+    box-shadow: 0 0px 5px 0px rgba(0,0,0,.26);
+    z-index: 1000;
+    transition: all 0.4s ease-in-out;
+}
+.addItem_img{
+    width: 50px; height: 50px;
+}
+.addItem_ul{
+    margin: 0; padding: 0; 
+    margin-left: 10px;
+}
+.addItem_ulA{
+    display: flex; justify-content: center; 
+    font-weight: 500;
+}
+.addItem_ulB{
+    display: flex; justify-content: center; 
+    font-size: 13px;
 }

@@ -1,7 +1,7 @@
 // import { clearInterval } from "timers";
 
 app.controller("checkoutController",
-    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, advancedStorage, cartService, storage) {
+    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, advancedStorage, cartService, storage, date) {
 
         $scope.localCartName = "bizim_userCart";
         $scope.userCart = advancedStorage.getUserCart() || {};
@@ -16,42 +16,45 @@ app.controller("checkoutController",
 
         var checkout = this;
 
+        $scope.b_years = date.getYears();
+        $scope.b_months = date.getMonths();
+        $scope.b_days = date.getDays($scope.userInfo.birth_month, $scope.userInfo.birth_year);
 
-        // init didn't work that's why $cookies.getObject is outside
-        if ($cookies.get("user")) {
-            $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
-            if ($scope.userInfo) {
-                $scope.isUserSigned = true;
-            }
-            else {
-                $scope.userInfo = {};
-                $scope.isUserSigned = false;
-            }
-        }
-        if ($cookies.getObject("homit-address")) {
-            $scope.deliveryAddress = $cookies.getObject("homit-address").name;
-            checkout.deliveryAddress_lat = $cookies.getObject("homit-address").geometry.location['lat'];
-            checkout.deliveryAddress_lng = $cookies.getObject("homit-address").geometry.location['lng'];
-
-            var inputAddressGuestUser = document.getElementById('addressGuestUser');
-            if (inputAddressGuestUser.value.length == 0) {
-                $scope.userInfo.address = $scope.deliveryAddress;
-            }
-            var inputAddressUser = document.getElementById('newAddressUser');
-            if (!inputAddressUser) {
-                $scope.userInfo.address0 = $scope.deliveryAddress;
-            }
+        $scope.updateBDays = function(){
+            $scope.b_days = date.getDays($scope.userInfo.birth_month, $scope.userInfo.birth_year);
         }
 
         $scope.init = function () {
-            try {
-                $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
-                $scope.isUserSigned = true;
-            } catch (e) {
-                $scope.userInfo = {};
-                $scope.isUserSigned = false;
-            }
+            checkout.getCheckoutUserInfo = storage.getCheckoutUserInfo();
+            $scope.userInfo.cardText = "Credit card";
             $scope.selectedAddress = 0;
+            if ($cookies.get("user")) {
+                $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
+                if ($scope.userInfo) {
+                    $scope.isUserSigned = true;
+                }
+                else {
+                    $scope.userInfo = {};
+                    $scope.isUserSigned = false;
+                }
+            }
+            if (checkout.getCheckoutUserInfo != "undefined") {
+                $scope.userInfo = checkout.getCheckoutUserInfo;
+            }
+            if ($cookies.getObject("homit-address")) {
+                $scope.deliveryAddress = $cookies.getObject("homit-address").name;
+                checkout.deliveryAddress_lat = $cookies.getObject("homit-address").geometry.location['lat'];
+                checkout.deliveryAddress_lng = $cookies.getObject("homit-address").geometry.location['lng'];
+
+                var inputAddressGuestUser = document.getElementById('addressGuestUser');
+                if (inputAddressGuestUser.value.length == 0) {
+                    $scope.userInfo.address = $scope.deliveryAddress;
+                }
+                var inputAddressUser = document.getElementById('newAddressUser');
+                if (!inputAddressUser) {
+                    $scope.userInfo.address0 = $scope.deliveryAddress;
+                }
+            }
         }
 
         cartService.getCart()
@@ -77,8 +80,7 @@ app.controller("checkoutController",
 
             }, function errorCallback(response) {
                 $scope.userCart = advancedStorage.getUserCart($scope);
-                Logger.log("error");
-                Logger.log(response);
+                console.log("error");
             });
         $scope.plusItem = function (product) {
             var tmpQuantity = 1;
@@ -123,7 +125,7 @@ app.controller("checkoutController",
                         advancedStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
-                    Logger.log("ERROR");
+                    console.log.log("ERROR");
                 });
         }
 
@@ -150,42 +152,49 @@ app.controller("checkoutController",
                         advancedStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
-                    Logger.log("ERROR");
+                    console.log("ERROR");
                 });
 
             // Calculation For receipt
             $scope.updatePrices($scope.userCart);
-        }
-        $scope.init = function () {
-            try {
-                $scope.deliveryAddress = $cookies.getObject("homit-address").name;
-            } catch (e) {
-                // ignore, address doesn't exist
-            }
         }
         $scope.userInfo.cardIsShown = false;
 
         function checkPaymentResponse(callback) {
             function looper() {
                 setTimeout(() => {
-                    var helcim_response = document.getElementById("response");
+                    var helcim_message = document.getElementById("helcimResults");
+                    var response_id = document.getElementById("response");
+                    var response_message = document.getElementById("responseMessage");
                     var transaction_id = document.getElementById("transactionId");
-                    if (helcim_response) {
-                        callback(helcim_response.value, transaction_id.value);
+                    if (response_id || helcim_message.textContent != "CONNECTING...") {
+                        if (response_id) {
+                            if (response_id.value == 1) {
+                                callback(response_id.value, response_message.value, transaction_id.value);
+                            } else if (response_id.value == 0) {
+                                callback(response_id.value, response_message.value, 0);
+                            }
+                        } else if (helcim_message.childNodes.length == 1) {
+                            callback(0, 0, 0);
+                        }
                     } else {
                         looper();
                     }
-                }, 100);
+                }, 500);
             }
             looper();
         }
 
-        $scope.HomeIt = function () {
-            var hcRespond = undefined;
-            checkPaymentResponse(function (responseCode, transaction_id) {
-                if (responseCode == 1) {
-                    var userInfoToSend = {};
+        $scope.paymentResult = "";
+        $scope.paymentMessage_1 = "";
+        $scope.paymentMessage_2 = "";
 
+        $scope.HomeIt = function () {
+            activateCheckoutModal();
+            updateCheckoutModal("inProcess");
+            checkPaymentResponse(function (response_id, response_message, transaction_id) {
+                if (response_id == 1 && transaction_id) {
+                    var userInfoToSend = {};
                     if ($scope.isUserSigned) {
                         userInfoToSend.email = $scope.userInfo.user_email;
                         userInfoToSend.phone = $scope.userInfo.phone_number;
@@ -212,30 +221,39 @@ app.controller("checkoutController",
                             transaction_id: transaction_id
                         }
                     }).then(function successCallback(response) {
-                        if (response.data["success"]) {
-                            $rootScope.$broadcast("addNotification", {
-                                type: "alert-success",
-                                message: response.data["ui_message"]
-                            });
-                        } else {
-                            $rootScope.$broadcast("addNotification", {
-                                type: "alert-danger",
-                                message: response.data["ui_message"]
-                            });
-                        }
+                        $scope.paymentMessage_1 = "Thank You, ";
+                        $scope.paymentMessage_2 = "Homit will take care!";
+                        updateCheckoutModal("1");
                     }, function errorCallback(response) {
-                        var m = response.data["ui_message"] || "Something went wrong while processing your order, please try again";
-                        $rootScope.$broadcast("addNotification", { type: "alert-danger", message: m });
-                        Logger.log("ERROR in order processing");
+                        $scope.paymentMessage_1 = "We are sorry, "
+                        $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403)40-Homit.";
+                        updateCheckoutModal("10");
+                        console.log("ERROR in order processing");
                     });
-                    console.log("Girdi == 1");
-                } else if (responseCode == 0) {
-                    alert("Process payment error occured");
-                    console.log("Girdi == 0");
+                } else if (response_id == 0 && response_message == 0 && transaction_id == 0) {
+                    updateCheckoutModal("0");
+                } else if (response_id == 0 && response_message == "Duplicate Payment") {
+                    $scope.paymentMessage_1 = "Thank You, ";
+                    $scope.paymentMessage_2 = "You order already processed.";
+                    updateCheckoutModal("1");
                 }
             });
+        }
 
-
+        function activateCheckoutModal() {
+            $('#checkoutModal').modal('toggle');
+            $('#checkoutModal').modal('show');
+        }
+        function updateCheckoutModal(type) {
+            $scope.paymentResult = type;
+            $('#checkoutModal').modal();
+            if (type == "0") {
+                $('#checkoutModal').click();
+                $scope.userInfo.card = type;
+                $scope.userInfo.cardText = "Credit card error";
+                storage.setCheckoutUserInfo($scope.userInfo);
+                location.reload();
+            }
         }
 
         // Checkout Page right-SideNav functionality
@@ -254,7 +272,6 @@ app.controller("checkoutController",
         }
         function buildDelayedToggler(navID) {
             return debounce(function () {
-                // Component lookup should always be available since we are not using `ng-if`
                 $mdSidenav(navID)
                     .toggle()
                     .then(function () {
@@ -263,7 +280,6 @@ app.controller("checkoutController",
             }, 200);
         }
         $scope.close = function () {
-            // Component lookup should always be available since we are not using `ng-if`
             $mdSidenav('right').close()
                 .then(function () {
                     $log.debug("close RIGHT is done");
@@ -314,5 +330,17 @@ app.controller("checkoutController",
             $scope.GST = totalTax;
             $scope.receipt = totalPrice;
         };
+
+        function clearPage() {
+            $scope.userInfo = {};
+            $scope.userCart = {};
+            $scope.delFee = 0;
+            $scope.totalAmount = 0;
+            $scope.GST = 0;
+            $scope.receipt = 0;
+            location.reload();
+        }
+
+        $scope.init();
 
     });
