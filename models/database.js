@@ -39,7 +39,7 @@ const dbTables = {
 mysql.createConnection({
   host: "localhost",
   user: "db_admin",
-  password: "ahmadtea",
+  password: "gg:(@SH%H3K5^4#P",
   database: "homit"
 }).then(function (connection) {
   con = connection;
