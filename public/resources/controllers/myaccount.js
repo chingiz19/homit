@@ -1,5 +1,5 @@
-app.controller("myaccountController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "storage", "$mdToast", "date",
-    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, storage, $mdToast, date) {
+app.controller("myaccountController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "sessionStorage", "$mdToast", "date",
+    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, $mdToast, date) {
 
         var myaccount = this;
         myaccount.init = function () {

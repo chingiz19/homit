@@ -1,5 +1,5 @@
-app.controller("catalogController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "storage",
-    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, storage) {
+app.controller("catalogController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "sessionStorage",
+    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage) {
         var catalogCtrl = this;
 
         $scope.selection = $location.path();
@@ -248,8 +248,8 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             } else {
                 $scope.screenIsMob = false;
             }
-            var subcad = storage.getSearchSubcategory();
-            var prodID = storage.getSearchProduct();
+            var subcad = sessionStorage.getSearchSubcategory();
+            var prodID = sessionStorage.getSearchProduct();
             if (subcad != 'undefined' && subcad != null) {
 
                 var x = document.querySelectorAll(".SubcategoryName");

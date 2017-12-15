@@ -1,7 +1,7 @@
 app.controller("cartController", 
-function ($scope, $sce, $rootScope, $http, advancedStorage, cartService,$timeout, $mdSidenav, $log, $location) {
+function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $mdSidenav, $log, $location) {
 
-    $scope.userCart = advancedStorage.getUserCart() || {};
+    $scope.userCart = localStorage.getUserCart() || {};
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
     $scope.super_category = $location.path().split("/")[2];
@@ -11,9 +11,9 @@ function ($scope, $sce, $rootScope, $http, advancedStorage, cartService,$timeout
                 if (response.data['success'] === true) {                                
                     updateUserCart(cartService.mergeCarts($scope.userCart, response.data['cart']))
                 } else {
-                    updateUserCart(cartService.mergeCarts(advancedStorage.getUserCart(), {})); //REQUIRED to convert to new convention with super_category
+                    updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {})); //REQUIRED to convert to new convention with super_category
                 }
-                advancedStorage.setUserCart({});    
+                localStorage.setUserCart({});    
 
                 for(var super_category in $scope.userCart){
                     for (var a in $scope.userCart[super_category]){
@@ -24,7 +24,7 @@ function ($scope, $sce, $rootScope, $http, advancedStorage, cartService,$timeout
                     }
                 }
             }, function errorCallback(response) {
-                updateUserCart(advancedStorage.getUserCart());
+                updateUserCart(localStorage.getUserCart());
                 alert("Couldn't retrieve your cart. If error persists contact customer service");
             });
 
@@ -99,7 +99,7 @@ function ($scope, $sce, $rootScope, $http, advancedStorage, cartService,$timeout
         cartService.clearCart()
             .then(function successCallback(response) {
                 if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
-                    advancedStorage.setUserCart($scope.userCart);
+                    localStorage.setUserCart($scope.userCart);
                 }
             }, function errorCallback(response) {
                 Logger.log("ERROR");
@@ -127,7 +127,7 @@ function ($scope, $sce, $rootScope, $http, advancedStorage, cartService,$timeout
         cartService.modifyCartItem(depot_id, itemQuantity)
             .then(function successCallback(response) {
                 if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
-                    advancedStorage.setUserCart($scope.userCart);
+                    localStorage.setUserCart($scope.userCart);
                 }
             }, function errorCallback(response) {
                 Logger.log("ERROR");

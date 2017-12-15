@@ -1,5 +1,5 @@
 /**
- * This service provides storage services
+ * This service provides map services
  * 
  * 
  * @copyright Homit (c) 2017

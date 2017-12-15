@@ -1,4 +1,4 @@
- app.controller("mainController", function($scope, $http, storage, $cookies, $window, $location, $anchorScroll, mapServices) {
+ app.controller("mainController", function($scope, $http, sessionStorage, $cookies, $window, $location, $anchorScroll, mapServices) {
     $scope.map;
     $scope.userDropDown = false;
 

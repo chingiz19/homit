@@ -1,6 +1,6 @@
 app.controller("LogoSearchController", function ($scope, $http) { });
 
-app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $timeout, $mdSidenav, $log, storage) {
+app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $timeout, $mdSidenav, $log, sessionStorage) {
     $scope.init = function () {
         $scope.storeHub = false;
         $scope.userDropDown = false;
@@ -218,9 +218,9 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         }
 
         $scope.sendSubcategory = function (subcategory, product_id) {
-            storage.setSearchSubcategory(subcategory);
+            sessionStorage.setSearchSubcategory(subcategory);
             if (product_id) {
-                storage.setSearchProduct(product_id);
+                sessionStorage.setSearchProduct(product_id);
             }
         }
         navigateSearchResult(evt, $scope.searchResult);

@@ -1,10 +1,10 @@
 // import { clearInterval } from "timers";
 
 app.controller("checkoutController",
-    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, advancedStorage, cartService, storage, date) {
+    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, localStorage, cartService, sessionStorage, date) {
 
         $scope.localCartName = "bizim_userCart";
-        $scope.userCart = advancedStorage.getUserCart() || {};
+        $scope.userCart = localStorage.getUserCart() || {};
         $scope.numberOfItemsInCart = 0;
         $scope.totalAmount = 0;
         $scope.delFee = 4.99;
@@ -25,7 +25,7 @@ app.controller("checkoutController",
         }
 
         $scope.init = function () {
-            checkout.getCheckoutUserInfo = storage.getCheckoutUserInfo();
+            checkout.getCheckoutUserInfo = sessionStorage.getCheckoutUserInfo();
             $scope.userInfo.cardText = "Credit card";
             $scope.selectedAddress = 0;
             if ($cookies.get("user")) {
@@ -62,9 +62,9 @@ app.controller("checkoutController",
                 if (response.data['success'] === true) {
                     $scope.userCart = cartService.mergeCarts($scope.userCart, response.data['cart']);
                 } else {
-                    $scope.userCart = cartService.mergeCarts(advancedStorage.getUserCart(), {}); //REQUIRED to convert to new convention with super_category
+                    $scope.userCart = cartService.mergeCarts(localStorage.getUserCart(), {}); //REQUIRED to convert to new convention with super_category
                 }
-                advancedStorage.setUserCart({});
+                localStorage.setUserCart({});
 
                 for (var super_category in $scope.userCart) {
                     for (var a in $scope.userCart[super_category]) {
@@ -79,7 +79,7 @@ app.controller("checkoutController",
                 $scope.updatePrices($scope.userCart);
 
             }, function errorCallback(response) {
-                $scope.userCart = advancedStorage.getUserCart($scope);
+                $scope.userCart = localStorage.getUserCart($scope);
                 console.log("error");
             });
         $scope.plusItem = function (product) {
@@ -122,7 +122,7 @@ app.controller("checkoutController",
             cartService.clearCart()
                 .then(function successCallback(response) {
                     if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
-                        advancedStorage.setUserCart($scope.userCart);
+                        localStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
                     console.log.log("ERROR");
@@ -149,7 +149,7 @@ app.controller("checkoutController",
             cartService.modifyCartItem(depot_id, itemQuantity)
                 .then(function successCallback(response) {
                     if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
-                        advancedStorage.setUserCart($scope.userCart);
+                        localStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
                     console.log("ERROR");
@@ -251,7 +251,7 @@ app.controller("checkoutController",
                 $('#checkoutModal').click();
                 $scope.userInfo.card = type;
                 $scope.userInfo.cardText = "Credit card error";
-                storage.setCheckoutUserInfo($scope.userInfo);
+                sessionStorage.setCheckoutUserInfo($scope.userInfo);
                 location.reload();
             }
         }
