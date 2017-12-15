@@ -5,7 +5,6 @@
 var router = require("express").Router();
 
 router.post('/placeorder', function (req, res, next) {
-    //TODO: Add support for Date of Birth (body.dob)
     var email = req.body.user.email;
     var fname = req.body.user.fname;
     var lname = req.body.user.lname;
@@ -13,6 +12,9 @@ router.post('/placeorder', function (req, res, next) {
     var address = req.body.user.address;
     var address_long = req.body.user.address_longitude;
     var address_lat = req.body.user.address_latitude;
+    var birth_day = req.body.user.birth_day;
+    var birth_month = req.body.user.birth_month;
+    var birth_year = req.body.user.birth_year;
     var products = req.body.products;
     var transactionId = req.body.transaction_id;
 
@@ -122,6 +124,10 @@ router.post('/placeorder', function (req, res, next) {
                                                 last_name: lname,
                                                 phone_number: phone
                                             };
+                                            if (birth_year && birth_month && birth_day) {
+                                                var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
+                                                data.birth_date = birth_date;
+                                            }
                                             User.addGuestUser(data).then(function (guestUserId) {
                                                 if (guestUserId != false) {
                                                     createOrders(guestUserId, address, address_lat, address_long, true, transactionId, products).then(function (userOrders) {
@@ -148,6 +154,10 @@ router.post('/placeorder', function (req, res, next) {
                                                 last_name: lname,
                                                 phone_number: phone
                                             };
+                                            if (birth_year && birth_month && birth_day) {
+                                                var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
+                                                data.birth_date = birth_date;
+                                            }
                                             var key = {
                                                 id: guestUserFound.id
                                             };
