@@ -31,7 +31,7 @@ app.controller("checkoutController",
         $scope.b_days = date.getDays($scope.userInfo.birth_month, $scope.userInfo.birth_year);
 
         $scope.init = function () {
-            checkout.getCheckoutUserInfo = storage.getCheckoutUserInfo();
+            checkout.getCheckoutUserInfo = sessionStorage.getCheckoutUserInfo();
             $scope.selectedAddress = 0;
             if ($cookies.get("user")) {
                 $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
