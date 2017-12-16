@@ -46,7 +46,7 @@ router.post('/signup', function (req, res, next) {
     var birth_year = req.body.birth_year;
     var password = req.body.password;
 
-    if (!(fname && lname && email && password && birth_day && birth_month && birth_year)) {
+    if (!(fname && lname && email && password)) {
         res.status(400).json({
             "error": {
                 "code": "U000",
@@ -54,7 +54,6 @@ router.post('/signup', function (req, res, next) {
             }
         });
     } else {
-        var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
         Auth.hashPassword(password).then(function (hashedPassword) {
             User.findUser(email).then(function (exists) {
                 if (!exists) {
@@ -62,9 +61,12 @@ router.post('/signup', function (req, res, next) {
                         user_email: email,
                         first_name: fname,
                         last_name: lname,
-                        password: hashedPassword,
-                        birth_date: birth_date
+                        password: hashedPassword
                     };
+                    if (birth_year && birth_month && birth_day) {
+                        var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
+                        userData.birth_date = birth_date;
+                    }
                     User.addUser(userData).then(function (user) {
                         req.session.user = user;
                         res.json({

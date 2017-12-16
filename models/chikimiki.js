@@ -14,7 +14,7 @@ cmConnection.connect(6262, '127.0.0.1', function () {
         "action": "verify_server",
         "key": SECRET_KEY
     }
-    cmConnection.write(" "+JSON.stringify(verification)+ "\n");
+    cmConnection.write(" " + JSON.stringify(verification) + "\n");
     outputStream = cmConnection;
     Logger.log("Connection to CM established");
 });
@@ -117,7 +117,11 @@ var receiver = function (jsonResponse) {
 
 pub.send = function (json) {
     Logger.log(JSON.stringify(json) + "\n");
-    outputStream.write(" "+JSON.stringify(json) + "\n");   
+    if (outputStream) {
+        outputStream.write(" " + JSON.stringify(json) + "\n");
+    } else {
+        Logger.log("Chikimiki is disconnected. Cannot send.");
+    }
 };
 
 pub.sendOrder = function (customerId, customerAddress, orderId, storeType) {

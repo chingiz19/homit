@@ -14,7 +14,7 @@ CREATE TABLE users_customers (
 	last_name VARCHAR(225) NOT NULL, 
 	password VARCHAR(225) NOT NULL, 
 	phone_number VARCHAR(10),
-	birth_date DATE,
+	birth_date DATE NULL,
 	address1 VARCHAR(225),
 	address2 VARCHAR(225),
 	address3 VARCHAR(225),
@@ -34,7 +34,7 @@ CREATE TABLE users_customers_history (
 	first_name VARCHAR(225), 
 	last_name VARCHAR(225), 
 	phone_number VARCHAR(10),
-	birth_date DATE,
+	birth_date DATE NULL,
 	address1 VARCHAR(225),
 	address2 VARCHAR(225),
 	address3 VARCHAR(225),
@@ -54,7 +54,7 @@ CREATE TABLE users_customers_guest (
 	first_name VARCHAR(225) NOT NULL, 
 	last_name VARCHAR(225) NOT NULL, 
 	phone_number VARCHAR(10) NOT NULL,
-	birth_date DATE NOT NULL,
+	birth_date DATE NULL,
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
