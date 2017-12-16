@@ -1,12 +1,12 @@
 <html ng-app="mainModule">
 
-<head>
+<head ng-cloak>
     <%- include('partial/imports')%>
         <%- include('partial/header', {title: title, product: tabId}); %>
             <link href="/resources/css/catalog.css" rel="stylesheet">
 </head>
 
-<body class="ng-cloak">
+<body ng-cloak>
     <%- include('partial/checkout_menu')%>
         <div ng-controller="catalogController" id="ctnCont">
             <div ng-if="!selectedCategory">Sorry, wrong url</div>

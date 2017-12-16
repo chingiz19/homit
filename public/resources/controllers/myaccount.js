@@ -6,11 +6,12 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             myaccount.user = {};
             myaccount.foundOrders = [];
             myaccount.foundTheOrder = [];
-            myaccount.edit = false;
-            myaccount.isOrderHistoryShown = false;
             myaccount.date = date;
             myaccount.selectedTab = 0;
+            myaccount.edit = false;
+            myaccount.isOrderHistoryShown = false;
             myaccount.passwordError = false;
+            myaccount.info_updated = false;
 
             $scope.user = JSON.parse($cookies.get("user").replace("j:", ""));
 
@@ -27,6 +28,10 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             myaccount.user.address2 = $scope.user['address2'];
             myaccount.user.address3_shortname = $scope.user['address3_name'];
             myaccount.user.address3 = $scope.user['address3'];
+
+            myaccount.b_years = date.getYears();
+            myaccount.b_months = date.getMonths();
+            myaccount.b_days = date.getDays(myaccount.user.birthMonth, myaccount.user.birthYear);
         }
         myaccount.updateTab = function (tab) {
             myaccount.selectedTab = tab;
@@ -49,6 +54,13 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
 
         myaccount.editButton = function () {
             myaccount.edit = !myaccount.edit;
+            myaccount.user.fname_valid = false;
+            myaccount.user.lname_valid = false;
+            myaccount.user.email_valid = false;
+            myaccount.user.phone_valid = false;
+            myaccount.user.crPsswrd_valid = false;
+            myaccount.user.new1Psswrd_valid = false;
+            myaccount.user.new2Psswrd_valid = false;
         }
 
         myaccount.cancelEdit = function () {
@@ -89,51 +101,63 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             }
         };
 
-        myaccount.checkPassword = function () {
-            myaccount.passwordError = (myaccount.new_password != myaccount.confirm_password);
-        }
-
         myaccount.updateMe = function () {
-            $http({
-                method: 'POST',
-                url: '/api/myaccount/update',
-                data: {
-                    user: {
-                        fname: myaccount.user.firstName,
-                        lname: myaccount.user.lastName,
-                        birth_date: myaccount.user.birthYear + "-" + myaccount.user.birthMonth + "-" + myaccount.user.birthDay
+            if (myaccount.user.fname_valid || myaccount.user.lname_valid || (myaccount.user.birthDay && myaccount.user.birthMonth && myaccount.user.birthYear) || (!myaccount.user.birthDay && !myaccount.user.birthMonth && !myaccount.user.birthYear)) {
+                $http({
+                    method: 'POST',
+                    url: '/api/myaccount/update',
+                    data: {
+                        user: {
+                            fname: myaccount.user.firstName,
+                            lname: myaccount.user.lastName,
+                            birth_year: myaccount.user.birthYear,
+                            birth_month: myaccount.user.birthMonth,
+                            birth_day: myaccount.user.birthDay
+                        }
                     }
-                }
-            }).then(function successCallback(response) {
-                if (response.data["success"] === true) {
-                    Logger.log("Success:  Me updated");
-                } else {
-                    Logger.log("Fail: Me failed to update");
-                }
-            }, function errorCallback(response) {
-                Logger.log("Error: in me update");
-            });
+                }).then(function successCallback(response) {
+                    if (response.data["success"] === true) {
+                        myaccount.user.fname_valid = false;
+                        myaccount.user.lname_valid = false;
+                        myaccount.update_success();
+                        console.log("Success:  Me updated");
+                    } else {
+                        console.log("Fail: Me failed to update");
+                    }
+                }, function errorCallback(response) {
+                    console.log("Error: in me update");
+                });
+            } else {
+                myaccount.input_invalid_message = "Please make sure input data is correct.";
+            }
         }
 
         myaccount.updateContact = function () {
-            $http({
-                method: 'POST',
-                url: '/api/myaccount/update',
-                data: {
-                    user: {
-                        email: myaccount.user.email,
-                        phone_number: myaccount.user.phoneNumber,
+            if (myaccount.user.email_valid || myaccount.user.phone_valid) {
+                $http({
+                    method: 'POST',
+                    url: '/api/myaccount/update',
+                    data: {
+                        user: {
+                            email: myaccount.user.email,
+                            phone_number: myaccount.user.phoneNumber,
+                        }
                     }
-                }
-            }).then(function successCallback(response) {
-                if (response.data["success"] === true) {
-                    Logger.log("Success: Contact updated");
-                } else {
-                    Logger.log("Fail: Contact failed to update");
-                }
-            }, function errorCallback(response) {
-                Logger.log("ERROR in contact update");
-            });
+                }).then(function successCallback(response) {
+                    if (response.data["success"] === true) {
+                        myaccount.user.email_valid = false;
+                        myaccount.user.phone_valid = false;
+                        myaccount.update_success();
+                        console.log("Success: Contact updated");
+                    } else {
+                        console.log("Fail: Contact failed to update");
+                    }
+                }, function errorCallback(response) {
+                    console.log("ERROR in contact update");
+                });
+            } else {
+                myaccount.input_invalid_message = "Please make sure input data is correct.";
+            }
         }
 
         myaccount.updateAddress = function () {
@@ -152,40 +176,41 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 }
             }).then(function successCallback(response) {
                 if (response.data["success"] === true) {
-                    Logger.log("Success: Address updated");
+                    console.log("Success: Address updated");
                 } else {
-                    Logger.log("Fail: Address failed to update");
+                    console.log("Fail: Address failed to update");
                 }
             }, function errorCallback(response) {
-                Logger.log("ERROR in address update");
+                console.log("ERROR in address update");
             });
         }
 
         myaccount.changePassword = function () {
-            if (myaccount.passwordError) {
-                showToast("Password did not match", "Close");
-                return;
+            if (myaccount.user.crPsswrd_valid && myaccount.user.new1Psswrd_valid && myaccount.user.new2Psswrd_valid && !myaccount.passwordError) {
+                $http({
+                    method: 'POST',
+                    url: '/api/myaccount/resetpassword',
+                    data: {
+                        old_password: myaccount.password,
+                        new_password: myaccount.new_password
+                    }
+                }).then(function successCallback(response) {
+                    if (response.data["success"] === true) {
+                        myaccount.user.crPsswrd_valid = false;
+                        myaccount.user.new1Psswrd_valid = false;
+                        myaccount.user.new2Psswrd_valid = false;
+                        myaccount.passwordError = false;
+                        myaccount.update_success();
+                        console.log("Success: Password reset");
+                    } else {
+                        console.log("Error: Password failed to reset");
+                    }
+                }, function errorCallback(response) {
+                    console.log("ERROR in password reset");
+                });
+            } else {
+                myaccount.input_invalid_message = "Please make sure input data is correct.";
             }
-            $http({
-                method: 'POST',
-                url: '/api/myaccount/resetpassword',
-                data: {
-                    old_password: myaccount.password,
-                    new_password: myaccount.new_password
-                }
-            }).then(function successCallback(response) {
-                if (response.data["success"] === true) {
-                    Logger.log("Success: Password reset");
-                } else {
-                    Logger.log("Error: Password failed to reset");
-                }
-            }, function errorCallback(response) {
-                Logger.log("ERROR in password reset");
-            });
-        }
-
-        $scope.mm_dd_yyyy = function (inDate) {
-            return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
         }
 
         myaccount.viewUserOrders = function () {
@@ -197,11 +222,11 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 var inDate;
                 for (tmp in myaccount.foundOrders) {
                     inDate = myaccount.foundOrders[tmp]['date_placed'];
-                    myaccount.foundOrders[tmp]['date_placed'] = $scope.mm_dd_yyyy(inDate);
+                    myaccount.foundOrders[tmp]['date_placed'] = myaccount.mm_dd_yyyy(inDate);
                     myaccount.foundOrders[tmp]['delivery_address'] = myaccount.foundOrders[tmp]['delivery_address'].substring(0, 13) + "..";
                 }
             }, function errorCallback(response) {
-                Logger.log("Error in getting user Orders.");
+                console.log("Error in getting user Orders.");
             });
         }
 
@@ -244,7 +269,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             }).then(function successCallback(response) {
                 myaccount.foundTheOrder = response.data.orders;
             }, function errorCallback(response) {
-                Logger.log("Error in getting the requested Order");
+                console.log("Error in getting the requested Order");
             });
         }
 
@@ -277,6 +302,44 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     $log.debug("close LEFT is done");
                 });
         };
+
+        myaccount.updateBDays = function () {
+            myaccount.b_days = date.getDays(myaccount.user.birthMonth, myaccount.user.birthYear);
+        }
+
+        myaccount.checkPassword = function () {
+            if (myaccount.passwordError == true || myaccount.passwordError == false) {
+                myaccount.passwordError = (myaccount.new_password != myaccount.confirm_password);
+            } else {
+                myaccount.passwordError = (myaccount.new_password != myaccount.confirm_password);
+            }
+            return myaccount.passwordError;
+        }
+
+        myaccount.sanitizeInput = function (text, type) {
+            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/, "crPsswrd_valid": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, "new1Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, "new2Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/ };
+            if (text && type) {
+                if (text.match(pattern[type])) {
+                    myaccount.user[type + "_valid"] = true;
+                }
+                else {
+                    myaccount.user[type + "_valid"] = false;
+                }
+            }
+        }
+
+        myaccount.mm_dd_yyyy = function (inDate) {
+            return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
+        }
+
+        myaccount.update_success = function(){
+            myaccount.info_updated = true;
+            setTimeout(() => {
+                myaccount.info_updated = false;
+                document.getElementById("cancelEdit").click();
+            }, 1500);
+        }
+
         myaccount.init();
     }]);
 

@@ -1,12 +1,12 @@
 <html ng-app="mainModule" style="overflow-y: hidden;">
 
-<head>
+<head ng-cloak>
     <%- include('partial/imports')%>
         <%- include('partial/header', {title: title, product: tabId}); %>
             <link href="/resources/css/checkout.css" rel="stylesheet">
 </head>
 
-<body class="ng-cloak">
+<body ng-cloak>
     <div ng-controller="checkoutController">
 
         <div layout="row" layout-align="center" class="container">
@@ -20,65 +20,89 @@
                     <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="135" height="135" />
                 </div>
                 <!--DoB-->
-                <div layout="row" layout-align="center" ng-show="!isUserSigned">
-                    <md-input-container class="md-block bigClass">
-                        <label class="inptLbl">Date</label>
-                        <md-select ng-model="userInfo.birth_day" ng-change="updateBDays()">
-                                <md-option ng-value="-1" ng-disabled="true" >Day</md-option>
-                            <md-option ng-value="day" ng-repeat="day in b_days">{{ day }}</md-option>
-                        </md-select>
-                    </md-input-container>
-                    <md-input-container class="md-block bigClass">
-                        <label class="inptLbl">of</label>
-                        <md-select ng-model="userInfo.birth_month" ng-change="updateBDays()">
-                                <md-option ng-value="-1" ng-disabled="true" >Month</md-option>
+                <div layout="column" ng-if="userInfo.hasLiquor">
+                    <div layout="row" layout-align="center">
+                        <md-input-container class="md-block bigClass">
+                            <label class="inptLbl">Date</label>
+                            <md-select ng-model="userInfo.birth_day" ng-change="updateBDays(); checkUserAge()">
+                                <md-option ng-value="-1" ng-disabled="true">Day</md-option>
+                                <md-option ng-value="day" ng-repeat="day in b_days">{{ day }}</md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block bigClass">
+                            <label class="inptLbl">of</label>
+                            <md-select ng-model="userInfo.birth_month" ng-change="updateBDays(); checkUserAge()">
+                                <md-option ng-value="-1" ng-disabled="true">Month</md-option>
                                 <md-option ng-value="month" ng-repeat="month in b_months">{{ month }}</md-option>
-                        </md-select>
-                    </md-input-container>
-                    <md-input-container class="md-block bigClass">
-                        <label class="inptLbl">Birth</label>
-                        <md-select ng-model="userInfo.birth_year" ng-change="updateBDays()">
-                                <md-option ng-value="-1" ng-disabled="true" >Year</md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block bigClass">
+                            <label class="inptLbl">Birth</label>
+                            <md-select ng-model="userInfo.birth_year" ng-change="updateBDays(); checkUserAge()">
+                                <md-option ng-value="-1" ng-disabled="true">Year</md-option>
                                 <md-option ng-value="year" ng-repeat="year in b_years">{{ year }}</md-option>
-                        </md-select>
-                    </md-input-container>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div ng-if="userInfo.dob_valid == false" class="bodErrMsg_A">
+                        <span class="bodErrMsg_B">Homit liquor in {{userInfo.dob_diff}}&#8198days</span>
+                    </div>
                 </div>
                 <!--First & Last Name-->
-                <div layout="row" layout-align="center">
+                <form layout="row" layout-align="center" name="names" style="margin: 0;">
                     <md-input-container class="md-block bigClass" flex="40">
                         <label class="inptLbl">First Name</label>
-                        <input required name="fname" type="text" ng-model="userInfo.first_name" />
+                        <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.first_name" ng-blur="sanitizeInput(userInfo.first_name,'fname')" type="text" required />
+                        <div ng-messages="names.fname.$error">
+                            <div ng-message="pattern" class="inptErMsg">Letters only</div>
+                            <div ng-message="required" class="inptErMsg">Required</div>
+                        </div>
                     </md-input-container>
                     <md-input-container class="md-block bigClass" flex="40">
                         <label class="inptLbl">Last Name</label>
-                        <input required name="lname" type="text" ng-model="userInfo.last_name" />
+                        <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.last_name" ng-blur="sanitizeInput(userInfo.last_name,'lname')" type="text" required/>
+                        <div ng-messages="names.lname.$error">
+                            <div ng-message="pattern" class="inptErMsg">Letters only</div>
+                            <div ng-message="required" class="inptErMsg">Required</div>
+                        </div>
                     </md-input-container>
-                </div>
+                </form>
                 <!--Email-->
-                <div layout="row" layout-align="center">
+                <form name="Email" class="inptFrm">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label class="inptLbl">Email</label>
-                        <input required name="email" type="email" ng-model="userInfo.user_email" />
+                        <input name="email" ng-pattern="/^.+@.+\..+$/" ng-model="userInfo.user_email"   ng-blur="sanitizeInput(userInfo.user_email,'email')" type="email" required/>
+                        <div ng-messages="Email.email.$error">
+                            <div ng-message="pattern" class="inptErMsg">Email format only</div>
+                            <div ng-message="required" class="inptErMsg">Required</div>
+                        </div>
                     </md-input-container>
-                </div>
+                </form>
                 <!--Phone Number-->
-                <div layout="row" layout-align="center">
+                <form name="Phone" class="inptFrm">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label for="idCell" class="inptLbl">Phone</label>
-                        <input name="cphone" type="text" placeholder="+1(403)-397-7020" ng-model="userInfo.phone_number" required/>
+                        <input name="phone" maxlength="25" ng-pattern="/^[0-9]*$/" ng-model="userInfo.phone_number" ng-blur="sanitizeInput(userInfo.phone_number,'phone')" type="text" required/>
+                        <div ng-messages="Phone.phone.$error">
+                            <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                            <div ng-message="required" class="inptErMsg">Required</div>
+                        </div>
                     </md-input-container>
-                </div>
+                </form>
                 <!--Delivery Address-->
-                <div layout="row" layout-align="center" ng-show="!isUserSigned">
+                <form name="Address" class="inptFrm" ng-if="!isUserSigned">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label class="inptLbl">Delivery Address</label>
-                        <input id="addressGuestUser" name="address" type="text" ng-model="userInfo.address" ng-required="userInfo.address" />
+                        <input name="address" id="addressGuestUser" ng-model="userInfo.address" type="text" required/>
+                        <div ng-messages="Address.address.$error">
+                            <div ng-message="required" class="inptErMsg">Required</div>
+                        </div>
                     </md-input-container>
-                </div>
+                </form>
                 <!--Address-->
                 <div layout="row" layout-align="center" ng-show="isUserSigned">
                     <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true" class="md-block adTb" flex="80">
-                        <md-tab label="New Address" md-on-select="selectedAddress = 0">
+                        <md-tab label="New" md-on-select="selectedAddress = 0">
                             <md-tab-body>
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
@@ -108,7 +132,7 @@
                                 </div>
                             </md-tab-body>
                         </md-tab>
-                        <md-tab label="Address 3" md-on-select="selectedAddress = 3">
+                        <md-tab ng-if="userInfo.address3" label="Address 3" md-on-select="selectedAddress = 3">
                             <md-tab-body>
                                 <div layout="row" layout-align="center">
                                     <md-input-container class="md-block" flex="50">
@@ -123,8 +147,13 @@
                 <!--Card Info-->
                 <div class="container cardContainer" flex="80">
                     <div layout="row" layout-align="start center">
-                        <div class="extBoxTtl" ng-style="(userInfo.card == '0') && {'color': 'rgba(209, 58, 58, 0.95)'}">{{userInfo.cardText}}</div>
-                        <md-button aria-label="ShowHideCardInfo" class="md-fab md-mini md-primary glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown">
+                        <div  class="extBoxTtl" ng-if="userInfo.cardText" ng-style="(userInfo.card == '0') && {'color': 'rgba(209, 58, 58, 0.95)'}">{{userInfo.cardText}}</div>
+                        <div layout="row" ng-if="!userInfo.cardText">
+                            <div><img ng-src="{{'/resources/images/non-homit_images/visa_logo.jpeg'}}" width="25px;" height="15.625px" /></div>
+                            <div><img ng-src="{{'/resources/images/non-homit_images/mastercard_logo.jpeg'}}" width="25px;" height="15.625px" /></div>
+                            <div><img ng-src="{{'/resources/images/non-homit_images/american-express_logo.jpeg'}}" width="25px;" height="15.625px" /></div>
+                        </div>
+                        <md-button aria-label="ShowHideCardInfo" class="glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown">
                             <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="20"></ng-md-icon>
                             <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="20"></ng-md-icon>
                         </md-button>
@@ -145,24 +174,38 @@
                             <div layout="row" layout-align="center">
                                 <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl">Card Number</label>
-                                    <input required id="cardNumber" type="text" maxlength="16" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}">
+                                    <input name="cardNumber" id="cardNumber" ng-pattern="/^[0-9]*$/" maxlength="16" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}"
+                                        ng-model="cardNumber" ng-blur="sanitizeInput(cardNumber,'cd_1')" type="text" required>
+                                    <div ng-messages="helcimForm.cardNumber.$error">
+                                        <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                        <div ng-message="required" class="inptErMsg">Required</div>
+                                    </div>
                                 </md-input-container>
                             </div>
                             <div layout="row" layout-align="center">
                                 <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl">Expiry Date [MMYY]</label>
-                                    <input required id="cardExpiry" type="text" maxlength="4" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}">
+                                    <input name="expiryDate" id="cardExpiry" ng-pattern="/^[0-9]*$/" maxlength="4" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}"
+                                        ng-model="expirayDate" ng-blur="sanitizeInput(expirayDate,'cd_2')" type="text" required>
+                                    <div ng-messages="helcimForm.expiryDate.$error">
+                                        <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                        <div ng-message="required" class="inptErMsg">Required</div>
+                                    </div>
                                 </md-input-container>
                             </div>
                             <div layout="row" layout-align="center">
                                 <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl inptLblSC1">CVV/CVC</label>
-                                    <input required id="cardCVV" type="text" maxlength="3" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}">
+                                    <input name="cvv" id="cardCVV" ng-pattern="/^[0-9]*$/" maxlength="4" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}" ng-model="cvv" ng-blur="sanitizeInput(cvv,'cd_3')" type="text" required>
+                                    <div ng-messages="helcimForm.cvv.$error">
+                                        <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                        <div ng-message="required" class="inptErMsg">Required</div>
+                                    </div>
                                 </md-input-container>
                             </div>
                         </div>
                         <div class="HomeItBtn">
-                            <button name="buttonProcess" id="buttonProcess" class="btn btn-success" onclick="javascript:helcimProcess();" ng-click="HomeIt()">Home it</button>
+                            <button ng-disabled="!userInfo.HomeIt" name="buttonProcess" id="buttonProcess" class="btn btn-success" onclick="javascript:helcimProcess();" ng-click="HomeIt()">Home it</button>
                         </div>
                     </form>
                     <br>
@@ -284,7 +327,9 @@
                     <div class="modal-body" id="modalBody">
                         <div layout="column">
                             <div id="inProcess" ng-if="paymentResult == 'inProcess' ">
-                                <div class="inPr_A"><span class="inPr_AA">Payment in process...</span></div>
+                                <div class="inPr_A">
+                                    <span class="inPr_AA">Payment in process...</span>
+                                </div>
                                 <div class="inPr_B">
                                     <md-progress-circular md-colors="{color: 'primary'}" md-diameter="76" ng-disabled="paymentResult != 'inProcess' "></md-progress-circular>
                                 </div>
@@ -296,8 +341,12 @@
                                     </md-button>
                                     <ng-md-icon ng-if="paymentResult == '10' " icon="warning" class="pR_A10"></ng-md-icon>
                                 </div>
-                                <div class="pR_B"><span class="pR_BA">{{paymentMessage_1}}{{userInfo.first_name}}</span></div>
-                                <div class="pR_C"><span class="pR_CA">{{paymentMessage_2}}</span></div>
+                                <div class="pR_B">
+                                    <span class="pR_BA">{{paymentMessage_1}}{{userInfo.first_name}}</span>
+                                </div>
+                                <div class="pR_C">
+                                    <span class="pR_CA">{{paymentMessage_2}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
