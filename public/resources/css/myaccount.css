@@ -130,7 +130,6 @@ contentRCABB svg{
 }
 .selectedTabLn{
 	margin: auto;
-	width: 0px;
     width: 100%;
     border-bottom: 3px solid rgba(42,81,145,0.9);
 	transition: width 0.6s ease, background-color .5s ease;
