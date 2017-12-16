@@ -1,4 +1,4 @@
-app.service('advancedStorage', ["$window", function($window){
+app.service('localStorage', ["$window", function($window){
     var _store = $window.localStorage;
 
     var _set = function(key, value){

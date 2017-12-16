@@ -1,16 +1,26 @@
 // import { clearInterval } from "timers";
 
 app.controller("checkoutController",
-    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, advancedStorage, cartService, storage, date) {
+    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, localStorage, cartService, sessionStorage, date) {
 
         $scope.localCartName = "bizim_userCart";
-        $scope.userCart = advancedStorage.getUserCart() || {};
+        $scope.userCart = localStorage.getUserCart() || {};
         $scope.numberOfItemsInCart = 0;
         $scope.totalAmount = 0;
         $scope.delFee = 4.99;
         $scope.GST = 0;
         $scope.receipt = 0;
-        $scope.userInfo = {};
+        $scope.userInfo = {
+            "fname_valid": false,
+            "lname_valid": false,
+            "email_valid": false,
+            "phone_valid": false,
+            "dob_valid": undefined,
+            "cd_1_valid": false,
+            "cd_2_valid": false,
+            "cd_3_valid": false,
+            "HomeIt": false
+        }
         $scope.isUserSigned;
         $scope.orderer = {};
 
@@ -20,16 +30,15 @@ app.controller("checkoutController",
         $scope.b_months = date.getMonths();
         $scope.b_days = date.getDays($scope.userInfo.birth_month, $scope.userInfo.birth_year);
 
-        $scope.updateBDays = function(){
-            $scope.b_days = date.getDays($scope.userInfo.birth_month, $scope.userInfo.birth_year);
-        }
-
         $scope.init = function () {
             checkout.getCheckoutUserInfo = storage.getCheckoutUserInfo();
-            $scope.userInfo.cardText = "Credit card";
             $scope.selectedAddress = 0;
             if ($cookies.get("user")) {
                 $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
+                if (!$scope.userInfo.address1_name)
+                    $scope.userInfo.address1_name = "Home";
+                if (!$scope.userInfo.address2_name)
+                    $scope.userInfo.address2_name = "Friend's place";
                 if ($scope.userInfo) {
                     $scope.isUserSigned = true;
                 }
@@ -38,7 +47,7 @@ app.controller("checkoutController",
                     $scope.isUserSigned = false;
                 }
             }
-            if (checkout.getCheckoutUserInfo != "undefined") {
+            if (checkout.getCheckoutUserInfo != "undefined" && checkout.getCheckoutUserInfo != null) {
                 $scope.userInfo = checkout.getCheckoutUserInfo;
             }
             if ($cookies.getObject("homit-address")) {
@@ -46,14 +55,8 @@ app.controller("checkoutController",
                 checkout.deliveryAddress_lat = $cookies.getObject("homit-address").geometry.location['lat'];
                 checkout.deliveryAddress_lng = $cookies.getObject("homit-address").geometry.location['lng'];
 
-                var inputAddressGuestUser = document.getElementById('addressGuestUser');
-                if (inputAddressGuestUser.value.length == 0) {
-                    $scope.userInfo.address = $scope.deliveryAddress;
-                }
-                var inputAddressUser = document.getElementById('newAddressUser');
-                if (!inputAddressUser) {
-                    $scope.userInfo.address0 = $scope.deliveryAddress;
-                }
+                $scope.userInfo.address = $scope.deliveryAddress;
+                $scope.userInfo.address0 = $scope.deliveryAddress;
             }
         }
 
@@ -62,9 +65,9 @@ app.controller("checkoutController",
                 if (response.data['success'] === true) {
                     $scope.userCart = cartService.mergeCarts($scope.userCart, response.data['cart']);
                 } else {
-                    $scope.userCart = cartService.mergeCarts(advancedStorage.getUserCart(), {}); //REQUIRED to convert to new convention with super_category
+                    $scope.userCart = cartService.mergeCarts(localStorage.getUserCart(), {}); //REQUIRED to convert to new convention with super_category
                 }
-                advancedStorage.setUserCart({});
+                localStorage.setUserCart({});
 
                 for (var super_category in $scope.userCart) {
                     for (var a in $scope.userCart[super_category]) {
@@ -73,26 +76,27 @@ app.controller("checkoutController",
                         $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
                         $scope.prepareItemForDB(a, $scope.userCart[super_category][a].quantity);
                     }
+                    if (super_category == "liquor") {
+                        $scope.userInfo["hasLiquor"] = true;
+                    }
                 }
 
                 // Calculation For receipt
                 $scope.updatePrices($scope.userCart);
 
             }, function errorCallback(response) {
-                $scope.userCart = advancedStorage.getUserCart($scope);
+                $scope.userCart = localStorage.getUserCart($scope);
                 console.log("error");
             });
+
         $scope.plusItem = function (product) {
             var tmpQuantity = 1;
             if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
                 var currentQuantity = $scope.userCart[product.super_category][product.depot_id]["quantity"];
                 if (currentQuantity < 10) {
                     currentQuantity++;
-
                     $scope.userCart[product.super_category][product.depot_id]["quantity"] = currentQuantity;
                     $scope.numberOfItemsInCart++;
-
-
                     $scope.prepareItemForDB(product.depot_id, currentQuantity);
                     $scope.updatePrices($scope.userCart);
                 }
@@ -122,7 +126,7 @@ app.controller("checkoutController",
             cartService.clearCart()
                 .then(function successCallback(response) {
                     if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
-                        advancedStorage.setUserCart($scope.userCart);
+                        localStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
                     console.log.log("ERROR");
@@ -149,7 +153,7 @@ app.controller("checkoutController",
             cartService.modifyCartItem(depot_id, itemQuantity)
                 .then(function successCallback(response) {
                     if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
-                        advancedStorage.setUserCart($scope.userCart);
+                        localStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
                     console.log("ERROR");
@@ -210,7 +214,9 @@ app.controller("checkoutController",
                         userInfoToSend.address_latitude = checkout.deliveryAddress_lat;
                         userInfoToSend.address_longitude = checkout.deliveryAddress_lng;
                         userInfoToSend.phone = $scope.userInfo.phone_number;
-                        userInfoToSend.dob = $scope.userInfo.dob;
+                        userInfoToSend.birth_year = $scope.userInfo.birth_year;
+                        userInfoToSend.birth_month = $scope.userInfo.birth_month;
+                        userInfoToSend.birth_day = $scope.userInfo.birth_day;
                     }
                     $http({
                         method: 'POST',
@@ -244,6 +250,7 @@ app.controller("checkoutController",
             $('#checkoutModal').modal('toggle');
             $('#checkoutModal').modal('show');
         }
+
         function updateCheckoutModal(type) {
             $scope.paymentResult = type;
             $('#checkoutModal').modal();
@@ -251,7 +258,7 @@ app.controller("checkoutController",
                 $('#checkoutModal').click();
                 $scope.userInfo.card = type;
                 $scope.userInfo.cardText = "Credit card error";
-                storage.setCheckoutUserInfo($scope.userInfo);
+                sessionStorage.setCheckoutUserInfo($scope.userInfo);
                 location.reload();
             }
         }
@@ -329,7 +336,42 @@ app.controller("checkoutController",
             $scope.totalAmount = totalAmount;
             $scope.GST = totalTax;
             $scope.receipt = totalPrice;
-        };
+        }
+
+        $scope.updateBDays = function () {
+            $scope.b_days = date.getDays($scope.userInfo.birth_month, $scope.userInfo.birth_year);
+        }
+
+        $scope.checkUserAge = function () {
+            if ($scope.userInfo.birth_day && $scope.userInfo.birth_month && $scope.userInfo.birth_year) {
+                $scope.userInfo.dob_valid = date.isOver18Years($scope.userInfo.birth_day, $scope.userInfo.birth_month, $scope.userInfo.birth_year);
+                if (!$scope.userInfo.dob_valid) {
+                    $scope.userInfo.dob_diff = date.dayDifference($scope.userInfo.birth_day, $scope.userInfo.birth_month, $scope.userInfo.birth_year);
+                }
+            }
+            readyToHomeIt();
+        }
+
+        $scope.sanitizeInput = function (text, type) {
+            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/ };
+            if (text && type) {
+                if (text.match(pattern[type])) {
+                    $scope.userInfo[type + "_valid"] = true;
+                }
+                else {
+                    $scope.userInfo[type + "_valid"] = false;
+                }
+            }
+            readyToHomeIt();
+        }
+
+        function readyToHomeIt() {
+            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo["hasLiquor"]) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid) {
+                $scope.userInfo.HomeIt = true;
+            } else {
+                $scope.userInfo.HomeIt = false;
+            }
+        }
 
         function clearPage() {
             $scope.userInfo = {};

@@ -146,6 +146,8 @@ navbar{
 }
 .inptLbl{
     margin-bottom: 0px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
 }
 .flName{
     position: relative;
@@ -181,8 +183,8 @@ md-tabs-wrapper{
 }
 .glypOpnCI
 {   
-    position: relative;
-    left: 12%;
+    /* position: relative;
+    left: 12%; */
     margin:0px 2px 0px 2px;
     background-color: white !important;
     min-width: 1px !important; min-height: 1px !important; 
@@ -346,7 +348,7 @@ md-tabs-wrapper{
     .extBoxTtl{
         font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
         font-size: 18px;
-        font-weight: 700;
+        font-weight: 500;
     }
     .glypOpnCIsgn{
         font-size: 19px;
@@ -527,4 +529,23 @@ md-backdrop.md-opaque {
     min-width: 81px; width: 81px; 
     border-radius: 40px; 
     background-color: rgba(0, 189, 149,1);
+}
+
+.inptErMsg{
+    font-size: 9px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400; 
+}
+.inptFrm{
+    display: flex; justify-content: center;
+    margin: 0;
+}
+.bodErrMsg_A{
+    display: flex; justify-content: center; margin-top: 4px;
+}
+.bodErrMsg_B{
+    font-size: 14px; font-weight: 400;
+    color: rgba(209, 58, 58, 0.95);
+    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }

@@ -198,3 +198,28 @@ contentRCABB svg{
         border-radius: 10px 10px 10px 10px;
     }
 }
+
+.ma_inptErMsg{
+    font-size: 9px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400; 
+}
+
+.invInptErrMsg_A{
+    display: flex; justify-content: center; margin-top: 4px;
+}
+.invInptErrMsg_B{
+    font-size: 14px; font-weight: 400;
+    color: rgba(209, 58, 58, 0.95);
+    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+.scss_A{
+    border-radius: 41px; border: 1px solid rgba(0, 189, 149,1); background-color: rgba(0, 189, 149,0.95); box-shadow: 0 0px 8px 0px rgba(0,0,0,.36);
+}
+.scss_B{
+    fill: rgba(255,255,255,1);
+}
+.scss_B svg{
+    width: 80px; height: 80px;
+}

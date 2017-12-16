@@ -1,6 +1,6 @@
 app.controller("LogoSearchController", function ($scope, $http) { });
 
-app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $timeout, $mdSidenav, $log, storage) {
+app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $timeout, $mdSidenav, $log, sessionStorage) {
     $scope.init = function () {
         $scope.storeHub = false;
         $scope.userDropDown = false;
@@ -35,11 +35,11 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 });
             } else {
                 // TODO: error handling
-                Logger.log("password not reset");
+                console.log("password not reset");
             }
         }, function errorCallback(response) {
             $rootScope.$broadcast("addNotification", { type: "alert-danger", message: response.data["ui_message"] });
-            Logger.log("ERROR in password reset");
+            console.log("ERROR in password reset");
         });
     }
 
@@ -213,14 +213,14 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                     }
                 }
             }, function errorCallback(response) {
-                Logger.error("error");
+                console.error("error");
             });
         }
 
         $scope.sendSubcategory = function (subcategory, product_id) {
-            storage.setSearchSubcategory(subcategory);
+            sessionStorage.setSearchSubcategory(subcategory);
             if (product_id) {
-                storage.setSearchProduct(product_id);
+                sessionStorage.setSearchProduct(product_id);
             }
         }
         navigateSearchResult(evt, $scope.searchResult);

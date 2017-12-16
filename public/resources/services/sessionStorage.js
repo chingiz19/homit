@@ -1,11 +1,11 @@
 /**
- * This service provides storage services
+ * This service provides sessionStorage services
  * 
  * 
  * @copyright Homit (c) 2017
  * @author Jeyhun Gurbanov
  */
-app.service('storage', ["$window", function($window){
+app.service('sessionStorage', ["$window", function($window){
     var _store = $window.sessionStorage;
 
     var _set = function(key, value){

@@ -36,7 +36,14 @@ app.service('date', [function(){
      * @return Array of String containing months
      */
     pub.getMonths = function(){
-        return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];    
+        return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];    
+    }
+    /**
+     * @return Month number
+     */
+    pub.convertMonth = function(month){
+        var months = {"Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6, "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12,}
+        return months[month];  
     }
 
     /**
@@ -66,7 +73,14 @@ app.service('date', [function(){
     }
 
     pub.isOver18Years = function(day, month, year){
-        return new Date(year+18, month-1, day) <= new Date();
+        return new Date(year+18, pub.convertMonth(month)-1, day) <= new Date();
+    }
+
+    pub.dayDifference = function(day, month, year){
+        var oneDay = 24*60*60*1000;
+        var inputDate = new Date(year + 18,pub.convertMonth(month) - 1 , day);
+        var today = new Date();
+        return Math.round(Math.abs((inputDate.getTime() - today.getTime())/(oneDay)));
     }
 
     init();
