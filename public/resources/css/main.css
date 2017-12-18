@@ -74,7 +74,7 @@ li {list-style-type: none;}
     border: 1px solid rgba(200,200,200,0.8); border-radius: 2px;
 }
 .srchAddrsCAC{
-    position: absolute; right: 15px; min-width: 45px; min-height: 45px; margin: 0;
+    position: absolute; right: 15px; top: 17px; min-width: 45px; min-height: 45px; margin: 0;
 }
 .srchAddrsCACA{
     fill: rgba(0,0,0,0.4);

@@ -5,7 +5,9 @@
     $scope.init = function(){
         // always scroll to the top, then later to defined hash
         var currentHash = $location.hash();
-        $scope.scrollTo("gettingstarted");
+        if (!sessionStorage.getAddress()){
+            $scope.scrollTo("gettingstarted");
+        }
 
         $scope.map = mapServices.createMap("map");
 
@@ -15,9 +17,6 @@
                 $scope.coveragePolygon.setMap($scope.map);
             }
         });
-        
-        $scope.autocomplete = mapServices.createAddressAutocomplete("addressAutocomplete");
-        $scope.autocomplete.addListener('place_changed', gotAddressResults);
     };
 
     $scope.showHideUserDropdown = function () {
@@ -27,21 +26,18 @@
     /**
      * This function is called after autocomplete gets the address
      */
-    function gotAddressResults(){
-        var place = $scope.autocomplete.getPlace();
-        if (mapServices.isPlaceInsidePolygon(place, $scope.coveragePolygon)){
-            $cookies.putObject("homit-address", place);
+    $scope.gotAddressResults = function(){
+        var latLng = $scope.autocomplete.getLatLng();
+        if (!latLng) return;
+        if (mapServices.isPlaceInsidePolygon(latLng, $scope.coveragePolygon)){
+            sessionStorage.setAddress($scope.autocomplete.getPlace());
             $scope.scrollTo('homitHub');
         } else {
             $scope.addressMessage = "Sorry, we do not deliver to your location at the moment";
             $scope.scrollTo('coverage');
         }
-        $scope.$apply();
     }
-
-    $scope.clearAddressSearch = function(){
-        $scope.searchedAddress = "";
-    }
+    
     $scope.hrefTo = function(path){
         $window.location.href = $window.location.origin + path;
     }

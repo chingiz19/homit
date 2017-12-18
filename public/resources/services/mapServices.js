@@ -36,22 +36,6 @@ app.service('mapServices', ["$http", function ($http) {
             });
     }
 
-
-    /**
-     * Creates Google autocomplete
-     * 
-     * @param elementId - id of element to bind autocomplete to
-     * @return Google autocomplete variable
-     */
-    pub.createAddressAutocomplete = function (elementId) {
-        return new google.maps.places.Autocomplete(
-            document.getElementById(elementId), {
-                types: ['geocode'],
-                componentRestrictions: { country: 'ca' }
-            }
-        );
-    }
-
     pub.createMap = function (elementId, options) {
         if (!options) {
             options = {
@@ -70,10 +54,8 @@ app.service('mapServices', ["$http", function ($http) {
      * @param polygon   - Polygon to check against
      * @return boolean
      */
-    pub.isPlaceInsidePolygon = function (place, polygon) {
-        var lat = place.geometry.location.lat();
-        var lng = place.geometry.location.lng();
-        return google.maps.geometry.poly.containsLocation(new google.maps.LatLng(lat, lng), polygon);
+    pub.isPlaceInsidePolygon = function (latLng, polygon) {
+        return google.maps.geometry.poly.containsLocation(latLng, polygon);
     }
 
     var icon_customer = {

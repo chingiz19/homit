@@ -52,10 +52,8 @@
                     <i class="srchAddrsCAA">
                         <ng-md-icon icon="place" class="srchAddrsCAAA"></ng-md-icon>
                     </i>
-                    <input id="addressAutocomplete" ng-model="searchedAddress" type="text" class="srchAddrsCAB" placeholder="Address">
-                    <md-button ng-if="searchedAddress" class="srchAddrsCAC" ng-click="clearAddressSearch()">
-                        <ng-md-icon icon="clear" class="srchAddrsCACA"></ng-md-icon>
-                    </md-button>
+                    <address-autocomplete input-class="srchAddrsCAB" icon-class="srchAddrsCACA" button-class="srchAddrsCAC" 
+                            autocomplete-bounds="map.getBounds()" autocomplete="autocomplete" on-address-selected="gotAddressResults"></address-autocomplete>
                 </span>
             </span>
         </div>
@@ -86,6 +84,7 @@
             </div>
         </div>
     </div>
+    <script src="/resources/directives/addressAutocomplete.js"></script>
     <script src="/resources/services/mapServices.js"></script>
     <script src="/resources/controllers/main.js"></script>
 </body>

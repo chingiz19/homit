@@ -18,6 +18,7 @@ app.service('sessionStorage', ["$window", function($window){
     var _get = function(key){
         if (!_store) return false;
         var value = _store.getItem(key);
+        if (value == "undefined") return undefined;
         if (value && (value.startsWith("{") || value.startsWith("["))) value = JSON.parse(value);
         return value;
     }
@@ -52,6 +53,14 @@ app.service('sessionStorage', ["$window", function($window){
         return _set("setCheckoutUserInfo", value);
     }
 
+    var _setAddress = function(value){
+        return _set("delivery-address", value);
+    }
+
+    var _getAddress = function(value){
+        return _get("delivery-address");
+    }
+
     return {
         get: _get,
         set: _set,
@@ -61,5 +70,7 @@ app.service('sessionStorage', ["$window", function($window){
         setSearchSubcategory: _setSearchSubcategory,
         setSearchProduct: _setSearchProduct,
         setCheckoutUserInfo: _setCheckoutUserInfo,
+        setAddress: _setAddress,
+        getAddress: _getAddress
     }
 }]);
