@@ -21,6 +21,12 @@ CREATE TABLE users_customers (
 	address1_name VARCHAR(225),
 	address2_name VARCHAR(225),
 	address3_name VARCHAR(225),
+	address1_latitude DOUBLE,
+	address1_longitude DOUBLE,
+	address2_latitude DOUBLE,
+	address2_longitude DOUBLE,
+	address3_latitude DOUBLE,
+	address3_longitude DOUBLE,
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
@@ -41,6 +47,12 @@ CREATE TABLE users_customers_history (
 	address1_name VARCHAR(225),
 	address2_name VARCHAR(225),
 	address3_name VARCHAR(225),
+	address1_latitude DOUBLE,
+	address1_longitude DOUBLE,
+	address2_latitude DOUBLE,
+	address2_longitude DOUBLE,
+	address3_latitude DOUBLE,
+	address3_longitude DOUBLE,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_users_customers_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE	

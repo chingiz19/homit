@@ -238,20 +238,8 @@ pub.findGuestUsersByPhone = function (phone_number) {
 pub.findUsersByPhoneWithHistory = function (phone_number) {
     var data = { phone_number: phone_number };
 
-    var sqlQuery = `SELECT users_customers.id AS id, users_customers.id_prefix AS id_prefix,
-    users_customers.user_email AS user_email, users_customers.first_name AS first_name,
-    users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
-    users_customers.birth_date AS birth_date, users_customers.address1 AS address1,
-    users_customers.address2 AS address2, users_customers.address3 AS address3
-    
-    FROM users_customers
-    WHERE ? OR id IN (
-        SELECT DISTINCT user_id FROM users_customers_history
-        WHERE ?
-    ) `;
-
-    return db.runQuery(sqlQuery, [data, data]).then(function (dbResult) {
-        return dbResult;
+    return findUsersWithHistory(data).then(function (result) {
+        return result;
     });
 };
 
@@ -274,17 +262,29 @@ pub.findGuestUsersByEmail = function (user_email) {
 pub.findUsersByEmailWithHistory = function (user_email) {
     var data = { user_email: user_email };
 
+    return findUsersWithHistory(data).then(function (result) {
+        return result;
+    });
+};
+
+function findUsersWithHistory(data) {
     var sqlQuery = `SELECT users_customers.id AS id, users_customers.id_prefix AS id_prefix,
-    users_customers.user_email AS user_email, users_customers.first_name AS first_name,
-    users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
-    users_customers.birth_date AS birth_date, users_customers.address1 AS address1,
-    users_customers.address2 AS address2, users_customers.address3 AS address3
-    
-    FROM users_customers
-    WHERE ? OR id IN (
-        SELECT DISTINCT user_id FROM users_customers_history
-        WHERE ?
-    ) `;
+        users_customers.user_email AS user_email, users_customers.first_name AS first_name,
+        users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
+        users_customers.birth_date AS birth_date, users_customers.address1 AS address1,
+        users_customers.address2 AS address2, users_customers.address3 AS address3,
+        users_customers.address1_latitude AS address1_latitude,
+        users_customers.address1_longitude AS address1_longitude,
+        users_customers.address2_latitude AS address2_latitude,
+        users_customers.address2_longitude AS address2_longitude,    
+        users_customers.address3_latitude AS address3_latitude,
+        users_customers.address3_longitude AS address3_longitude
+        
+        FROM users_customers
+        WHERE ? OR id IN (
+            SELECT DISTINCT user_id FROM users_customers_history
+            WHERE ?
+        ) `;
 
     return db.runQuery(sqlQuery, [data, data]).then(function (dbResult) {
         return dbResult;

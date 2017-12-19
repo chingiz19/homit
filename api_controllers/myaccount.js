@@ -21,9 +21,16 @@ router.post('/update', function (req, res, next) {
         var address1_name = req.body.user.address1_name;
         var address2_name = req.body.user.address2_name;
         var address3_name = req.body.user.address3_name;
+        var address1_lat = req.body.user.address1_latitude;
+        var address1_long = req.body.user.address1_longitude;
+        var address2_lat = req.body.user.address2_latitude;
+        var address2_long = req.body.user.address2_longitude;
+        var address3_lat = req.body.user.address3_latitude;
+        var address3_long = req.body.user.address3_longitude;
 
         if (!(user_email || first_name || last_name
-            || phone_number || (birth_day && birth_month && birth_year) || address1 || address2 || address3 ||
+            || phone_number || (birth_day && birth_month && birth_year) || (address1 && address1_lat && address1_long)
+            || (address2 && address2_lat && address2_long) || (address3 && address3_lat && address3_long) ||
             address1_name || address2_name || address3_name)) {
             res.status(403).json({
 
@@ -59,14 +66,20 @@ router.post('/update', function (req, res, next) {
             var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
             userData.birth_date = birth_date;
         }
-        if (address1) {
+        if (address1 && address1_lat && address1_long) {
             userData.address1 = address1;
+            userData.address1_latitude = address1_lat;
+            userData.address1_longitude = address1_long;
         }
-        if (address2) {
+        if (address2 && address2_lat && address2_long) {
             userData.address2 = address2;
+            userData.address2_latitude = address2_lat;
+            userData.address2_longitude = address2_long;
         }
-        if (address3) {
+        if (address3 && address3_lat && address3_long) {
             userData.address3 = address3;
+            userData.address3_latitude = address3_latitude;
+            userData.address3_longitude = address3_longitude;
         }
         if (address1_name) {
             userData.address1_name = address1_name;
