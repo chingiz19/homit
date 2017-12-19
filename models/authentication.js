@@ -38,7 +38,7 @@ pub.validate = function (options) {
     return function (req, res, next) {
         if (checkAuth(req)) {
             Logger.log("authenticated");
-            next();
+            return next();
         }
         if (options && options.redirect) {
             Logger.log("redirect");
