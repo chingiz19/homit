@@ -4,11 +4,10 @@
 * Grants all privileges for the database to the user.
 */
 DROP DATABASE IF EXISTS homit;
-DROP USER IF EXISTS 'db_admin'@'localhost';
+DROP USER IF EXISTS 'db_web_user'@'localhost';
 
-CREATE USER 'db_admin'@'localhost' IDENTIFIED BY 'gg:(@SH%H3K5^4#P';
-GRANT USAGE ON *.* TO 'db_admin'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+CREATE USER 'db_web_user'@'localhost' IDENTIFIED BY 'gg:(@SH%H3K5^4#P';
 
 CREATE DATABASE homit;
 
-GRANT ALL PRIVILEGES ON `homit`.* TO 'db_admin'@'localhost' WITH GRANT OPTION;
+GRANT SELECT, INSERT, UPDATE, DELETE ON `homit`.* TO 'db_web_user'@'localhost' WITH GRANT OPTION;

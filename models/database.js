@@ -38,7 +38,7 @@ const dbTables = {
 /* MySQL Connection */
 mysql.createConnection({
   host: "localhost",
-  user: "db_admin",
+  user: "db_web_user",
   password: "gg:(@SH%H3K5^4#P",
   database: "homit"
 }).then(function (connection) {
