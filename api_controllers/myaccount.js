@@ -12,7 +12,9 @@ router.post('/update', function (req, res, next) {
         var first_name = req.body.user.fname;
         var last_name = req.body.user.lname;
         var phone_number = req.body.user.phone_number;
-        var birth_date = req.body.user.birth_date;
+        var birth_day = req.body.user.birth_day;
+        var birth_month = req.body.user.birth_month;
+        var birth_year = req.body.user.birth_year;
         var address1 = req.body.user.address1;
         var address2 = req.body.user.address2;
         var address3 = req.body.user.address3;
@@ -21,7 +23,7 @@ router.post('/update', function (req, res, next) {
         var address3_name = req.body.user.address3_name;
 
         if (!(user_email || first_name || last_name
-            || phone_number || birth_date || address1 || address2 || address3 ||
+            || phone_number || (birth_day && birth_month && birth_year) || address1 || address2 || address3 ||
             address1_name || address2_name || address3_name)) {
             res.status(403).json({
 
@@ -29,7 +31,7 @@ router.post('/update', function (req, res, next) {
                     "code": "U000",
                     "dev_message": "Missing params",
                     "required_params": ["email", "fname", "lname",
-                        "phone_number", "birth_date", "address1", "address2", "address3",
+                        "phone_number", "birth_day", "birth_month", "birth_year", "address1", "address2", "address3",
                         "address1_name", "address2_name", "address3_name"]
                 }
             });
@@ -53,7 +55,8 @@ router.post('/update', function (req, res, next) {
         if (phone_number) {
             userData.phone_number = phone_number;
         }
-        if (birth_date) {
+        if (birth_year && birth_month && birth_day) {
+            var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
             userData.birth_date = birth_date;
         }
         if (address1) {
