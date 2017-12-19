@@ -10,6 +10,12 @@ footer a:hover{
     text-decoration: none !important;
     color: rgba(28, 38, 87, 0.85); 
 }
+#sm_ln{
+    cursor: default;
+}
+#rs_ln{
+    cursor: default;
+}
 .col_1{
     padding: 0;
     margin: 22px 0 5px auto;
@@ -40,8 +46,13 @@ footer a:hover{
 }
 
 .col_2{
-    margin: 21px auto 19px auto;
+    margin: 29px auto 6px auto;
     text-align: center;
+    display: flex; justify-content: center; align-items: center; 
+    height: 120px; width: 120px; 
+    border: 1px solid rgba(42,81,145,1); border-radius: 60px;
+    background-color: rgba(42,81,145,1);  
+    box-shadow: 0 0px 8px 4px rgba(0,0,0,0.45);
 }
 .col_3{
     padding: 0;
@@ -72,20 +83,20 @@ footer a:hover{
     position: relative; left: 20px; 
 }
 
-#sm_tx:hover + #sm_ln{
+/* #sm_tx:hover + #sm_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
+    border-bottom: 2px solid rgba(27, 27, 27,0.75);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 20px;
     margin-left: 0; 
     max-width: 350px;
-}
+} */
 #fd_tx:hover + #fd_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
+    border-bottom: 2px solid rgba(27, 27, 27,0.75);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 40px; 
@@ -95,7 +106,7 @@ footer a:hover{
 #if_tx:hover + #if_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
+    border-bottom: 2px solid rgba(27, 27, 27,0.75);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 60px; 
@@ -105,7 +116,7 @@ footer a:hover{
 #is_tx:hover + #is_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
+    border-bottom: 2px solid rgba(27, 27, 27,0.75);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 40px; 
@@ -115,7 +126,7 @@ footer a:hover{
 #tw_tx:hover + #tw_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
+    border-bottom: 2px solid rgba(27, 27, 27,0.75);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 20px; 
@@ -123,20 +134,10 @@ footer a:hover{
     max-width: 350px;
 }
 
-#rs_tx:hover + #rs_ln{
-	margin: auto;
-    width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
-    transition: width .6s ease, background-color .5s ease;
-    position: relative; 
-    right: 20px; 
-    margin-right: 0; 
-    max-width: 350px;
-}
 #tu_tx:hover + #tu_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
+    border-bottom: 2px solid rgba(27, 27, 27,0.75);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 40px; 
@@ -146,7 +147,7 @@ footer a:hover{
 #pp_tx:hover + #pp_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
+    border-bottom: 2px solid rgba(27, 27, 27,0.75);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 60px; 
@@ -156,7 +157,7 @@ footer a:hover{
 #cu_tx:hover + #cu_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
+    border-bottom: 2px solid rgba(27, 27, 27,0.75);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 40px; 
@@ -166,7 +167,7 @@ footer a:hover{
 #fq_tx:hover + #fq_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,0.9);
+    border-bottom: 2px solid rgba(27, 27, 27,0.75);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 20px; 
@@ -187,7 +188,7 @@ footer a:hover{
 }
 .cpw{
     display: flex; justify-content: flex-end; 
-    padding: 0 5px 5px 0px; 
+    margin: 0 5px 0px 0px;
     font-size: 12px; font-weight: 400; color: rgb(27, 27, 27);
     -webkit-font-smoothing: antialiased;
     font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;

@@ -201,7 +201,7 @@ app.controller("checkoutController",
                     var userInfoToSend = {};
                     if ($scope.isUserSigned) {
                         userInfoToSend.email = $scope.userInfo.user_email;
-                        userInfoToSend.phone = $scope.userInfo.phone_number;
+                        userInfoToSend.phone = $scope.userInfo.phone_number.replace(/[()+-]/g, "");
                         userInfoToSend.address = $scope.userInfo["address" + $scope.selectedAddress];
                         userInfoToSend.address_latitude = 114; // TODO: temp fix this
                         userInfoToSend.address_longitude = 51; // TODO: temp
@@ -213,9 +213,9 @@ app.controller("checkoutController",
                         userInfoToSend.address = $scope.userInfo.address;
                         userInfoToSend.address_latitude = checkout.deliveryAddress_lat;
                         userInfoToSend.address_longitude = checkout.deliveryAddress_lng;
-                        userInfoToSend.phone = $scope.userInfo.phone_number;
+                        userInfoToSend.phone = $scope.userInfo.phone_number.replace(/[()+-]/g, "");
                         userInfoToSend.birth_year = $scope.userInfo.birth_year;
-                        userInfoToSend.birth_month = $scope.userInfo.birth_month;
+                        userInfoToSend.birth_month = date.convertMonth($scope.userInfo.birth_month);
                         userInfoToSend.birth_day = $scope.userInfo.birth_day;
                     }
                     $http({
@@ -353,7 +353,7 @@ app.controller("checkoutController",
         }
 
         $scope.sanitizeInput = function (text, type) {
-            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/ };
+            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+-]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/ };
             if (text && type) {
                 if (text.match(pattern[type])) {
                     $scope.userInfo[type + "_valid"] = true;

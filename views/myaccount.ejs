@@ -124,7 +124,7 @@
                             <li class="flxCntrLn">
                                 <md-input-container class="md-block" flex="70">
                                     <label class="inptLbl">Phone Number</label>
-                                    <input name="phone" maxlength="25" ng-pattern="/^[0-9]*$/" ng-model="myaccount.user.phoneNumber" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.user.phoneNumber,'phone')" type="text" required/>
+                                    <input name="phone" maxlength="14" ng-pattern="/^[0-9()+-]*$/" ng-model="myaccount.user.phoneNumber" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.user.phoneNumber,'phone')" type="text" required/>
                                     <div ng-messages="contact.phone.$error">
                                         <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>

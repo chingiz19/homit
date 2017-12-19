@@ -111,7 +111,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                             fname: myaccount.user.firstName,
                             lname: myaccount.user.lastName,
                             birth_year: myaccount.user.birthYear,
-                            birth_month: myaccount.user.birthMonth,
+                            birth_month: date.convertMonth(myaccount.user.birthMonth),
                             birth_day: myaccount.user.birthDay
                         }
                     }
@@ -140,7 +140,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     data: {
                         user: {
                             email: myaccount.user.email,
-                            phone_number: myaccount.user.phoneNumber,
+                            phone_number: myaccount.user.phoneNumber.replace(/[()+-]/g, ""),
                         }
                     }
                 }).then(function successCallback(response) {
@@ -317,7 +317,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
         }
 
         myaccount.sanitizeInput = function (text, type) {
-            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/, "crPsswrd_valid": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, "new1Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, "new2Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/ };
+            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+-]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/, "crPsswrd_valid": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, "new1Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, "new2Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/ };
             if (text && type) {
                 if (text.match(pattern[type])) {
                     myaccount.user[type + "_valid"] = true;

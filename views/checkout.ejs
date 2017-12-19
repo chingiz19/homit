@@ -82,7 +82,7 @@
                 <form name="Phone" class="inptFrm">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label for="idCell" class="inptLbl">Phone</label>
-                        <input name="phone" maxlength="25" ng-pattern="/^[0-9]*$/" ng-model="userInfo.phone_number" ng-blur="sanitizeInput(userInfo.phone_number,'phone')" type="text" required/>
+                        <input name="phone" maxlength="14" ng-pattern="/^[0-9()+-]*$/" ng-model="userInfo.phone_number" ng-blur="sanitizeInput(userInfo.phone_number,'phone')" placeholder="+1(403)4046648" type="text" required/>
                         <div ng-messages="Phone.phone.$error">
                             <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                             <div ng-message="required" class="inptErMsg">Required</div>
