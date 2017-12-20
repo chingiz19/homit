@@ -114,12 +114,13 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 login.showToast("Login doesn't exist", login.signUpErrorAction);
             }
         }, function errorCallback(response) {
-            Logger.log("ERROR");
+            console.log("ERROR");
         });
     };
 
     //Sign In 
     var _signIn = function () {
+        // setLoading("Signing in...");
         $http({
             method: 'POST',
             url: '/api/authentication/signin',
@@ -129,15 +130,14 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
             }
         }).then(function successCallback(response) {
             if (!response.data["error"]) {
-                setLoading("Signing in...");
-                setTimeout(function () {
-                    window.location.reload();
-                }, 4000);
+                $rootScope.$broadcast("checkUserLogin");
+                login.reset();
+                login.hideModal();
             } else {
                 login.showToast(response.data["error"].ui_message, login.passwordErrorAction);
             }
         }, function errorCallback(response) {
-            Logger.log("ERROR");
+            console.log("ERROR");
         });
     }
 
@@ -167,15 +167,14 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
             }
         }).then(function successCallback(response) {
             if (!response.data["error"]) {
-                setLoading("Signing in...");
-                setTimeout(function () {
-                    window.location.reload();
-                }, 4000);
+                $rootScope.$broadcast("checkUserLogin");
+                login.reset();
+                login.hideModal();
             } else {
                 login.showToast(response.data["error"].ui_message);
             }
         }, function errorCallback(response) {
-            Logger.log("ERROR");
+            console.log("ERROR");
         });
     }
 

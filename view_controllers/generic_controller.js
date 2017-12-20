@@ -9,15 +9,9 @@ router.use(function(req,res,next){
 	 * EJS rendering options
 	 */
 	req.options.ejs = {title: "Homit", 
-						tabId: "", 
-						isSignedIn: false, 
-						username: "",
+						tabId: "",
 						catelogies: undefined
 					};
-	if (req.session && req.cookies.user){
-		req.options.ejs["isSignedIn"] = true;
-		req.options.ejs["username"] = req.cookies.user.first_name;
-	}
 	next();
 });
 

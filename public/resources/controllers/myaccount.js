@@ -1,5 +1,5 @@
-app.controller("myaccountController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "sessionStorage", "$mdToast", "date",
-    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, $mdToast, date) {
+app.controller("myaccountController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "sessionStorage", "$mdToast", "date", "user",
+    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, $mdToast, date, user) {
 
         var myaccount = this;
         myaccount.init = function () {
@@ -333,12 +333,18 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
         }
 
         myaccount.update_success = function(){
-            myaccount.info_updated = true;
+            myaccount.info_updated = true;ma
             setTimeout(() => {
                 myaccount.info_updated = false;
                 document.getElementById("cancelEdit").click();
             }, 1500);
         }
+
+        $scope.$on("checkUserLogin", function (event, args) {
+            if (!user.isUserLogged()){
+                $window.location.href = "/main";
+            }
+        });
 
         myaccount.init();
     }]);

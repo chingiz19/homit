@@ -67,18 +67,21 @@ router.post('/signup', function (req, res, next) {
                         var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
                         userData.birth_date = birth_date;
                     }
-                    User.addUser(userData).then(function (user) {
-                        req.session.user = user;
-                        res.json({
-                            status: "success",
-                            ui_message: "Successfully signed up. You will receive an email with confirmation"
+                    User.addUser(userData).then(function (insertedUser) {
+                        //TODO: check for success
+                        User.findUser(email).then(function(user){
+                            Auth.sign(req, res, user);
+                            res.json({
+                                status: "success",
+                                ui_message: "Successfully signed up. You will receive an email with confirmation"
+                            });
                         });
                     });
                 } else {
                     res.json({
                         error: {
                             code: "A002",
-                            "ui_message": "User already exists"
+                            "ui_message": "User already exists" // TODO update this error message to non obvious one (security)
                         }
                     });
                 }
@@ -94,7 +97,7 @@ router.post('/signin', function (req, res, next) {
     var email = req.body.email;
     var password = req.body.password;
     if (!(email && password)) {
-        res.status(403).json({
+        res.status(200).json({
             "error": {
                 "code": "U000",
                 "dev_message": "Missing params"
@@ -134,13 +137,8 @@ router.all('/signout', function (req, res, next) {
     }
 
     Auth.clear(res);
-    req.session.destroy(function (err) {
-        if (err) {
-            res.status(400).send({ "success": false, "ui_message": "Could not sign out, please try again" });
-        } else {
-            res.status(200).send({ "success": true, "ui_message": "Successfully logged out" });
-        }
-    });
+    var response = response = { "success": false, "ui_message": "Could not sign out, please try again" };
+    res.status(200).json({ "success": true, "ui_message": "Successfully logged out" });
 });
 
 /**

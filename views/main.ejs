@@ -16,10 +16,10 @@
                 </a>
             </div>
             <div flex="50" class="signTg">
-                <md-button ng-if="!<%=isSignedIn%>" aria-label="header-sign" data-toggle="modal" data-target="#loginModal">
+                <md-button ng-if="!isSignedIn" aria-label="header-sign" data-toggle="modal" data-target="#loginModal">
                     <ng-md-icon icon="person_outline" class="signTgAA"></ng-md-icon>
                 </md-button>
-                <md-button ng-if="<%=isSignedIn%>" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
+                <md-button ng-if="!isSignedIn" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
                     <ng-md-icon icon="person" class="signTgAB"></ng-md-icon>
                 </md-button>
                 <div ng-show="userDropDown">
@@ -27,7 +27,7 @@
                         <li class="infoDrDwnAA">
                             <a href="/myaccount" target="_self" class="infoDrDwnAAA">
                                 <ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198
-                                <%= username %>
+                                {{ username }}
                             </a>
                         </li>
                         <li class="infoDrDwnAB">

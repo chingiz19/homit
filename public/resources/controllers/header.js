@@ -1,6 +1,6 @@
 app.controller("LogoSearchController", function ($scope, $http) { });
 
-app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $timeout, $mdSidenav, $log, sessionStorage) {
+app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, user) {
     $scope.init = function () {
         $scope.storeHub = false;
         $scope.userDropDown = false;
@@ -18,7 +18,14 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         } catch (e) {
             // ignore, address doesn't exist
         }
+
+        checkUser();
     }
+
+    $scope.$on("checkUserLogin", function (event, args) {
+        checkUser();
+    });
+
     $scope.logout = function () {
         $http({
             method: 'POST',
@@ -27,12 +34,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
             if (response.data["success"]) {
                 //delete cookie
                 $cookies.remove("user");
-                $rootScope.$broadcast("addNotification", {
-                    type: "alert-success",
-                    message: response.data["ui_message"],
-                    href: "/",
-                    reload: true
-                });
+                $rootScope.$broadcast("checkUserLogin");
             } else {
                 // TODO: error handling
                 console.log("password not reset");
@@ -266,4 +268,14 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         }
     }
 
+
+    function checkUser(){
+        if (user.isUserLogged()){
+            $scope.isSignedIn = true;
+            $scope.username = user.getName();
+        } else {
+            $scope.isSignedIn = false;
+            $scope.username = "";
+        }
+    }
 });
