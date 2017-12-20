@@ -93,10 +93,14 @@ router.post('/update', function (req, res, next) {
 
         User.updateUser(userData, key).then(function (updatedUser) {
             if (updatedUser) {
-                var response = {
-                    success: true,
-                };
-                res.send(response);
+                User.findUserById(id).then(function (newUser) {
+                    Auth.sign(req, res, newUser);
+                    var response = {
+                        user: newUser,
+                        success: true
+                    };
+                    res.send(response);
+                });
             } else {
                 var response = {
                     success: false,
