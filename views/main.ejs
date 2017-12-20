@@ -2,42 +2,13 @@
 
 <head>
     <%- include('partial/imports')%>
-        <%- include('partial/header', {title: title}); %>
-            <link href="/resources/css/main.css" rel="stylesheet">
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
+    <%- include('partial/header', {title: title}); %>
+    <link href="/resources/css/main.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
 </head>
 
 <body class="ng-cloak">
     <div ng-controller="mainController">
-        <div layout="row" class="mainpage-header">
-            <div class="logoTg" flex="50">
-                <a href="/main" target="_self">
-                    <img ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" class="logoTgAA" />
-                </a>
-            </div>
-            <div flex="50" class="signTg">
-                <md-button ng-if="!isSignedIn" aria-label="header-sign" data-toggle="modal" data-target="#loginModal">
-                    <ng-md-icon icon="person_outline" class="signTgAA"></ng-md-icon>
-                </md-button>
-                <md-button ng-if="!isSignedIn" aria-label="userDropDown" ng-class="{'button-press-feel': userDropDown}" ng-click="showHideUserDropdown()">
-                    <ng-md-icon icon="person" class="signTgAB"></ng-md-icon>
-                </md-button>
-                <div ng-show="userDropDown">
-                    <ul layout="column" class="infoDrDwnA">
-                        <li class="infoDrDwnAA">
-                            <a href="/myaccount" target="_self" class="infoDrDwnAAA">
-                                <ng-md-icon icon="settings" size="20"></ng-md-icon>&#8198
-                                {{ username }}
-                            </a>
-                        </li>
-                        <li class="infoDrDwnAB">
-                            <a href="#" target="_self" class="infoDrDwnAAA" ng-click="logout()">
-                                <ng-md-icon icon="logout" size="20"></ng-md-icon>&#8198Sign Out</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
         <!-- Getting started page -->
         <div id="gettingStarted" class="full-screen flex-box getting-started">
             <md-button class="md-raised button-big brand-button" ng-click="scrollTo('address')">

@@ -12,7 +12,7 @@
                     <img ng-src="{{'/resources/images/Homit_Logo_white.jpeg'}}" width="42px;" height="75%" />
                 </a>
             </div>
-            <div class="mnSrch">
+            <div class="mnSrch" ng-show="showSearchBar">
                 <md-input-container class="mnSrchA" layout="row">
                     <md-button aria-label="searchOrClear" class="mnSrchB" ng-click="searchRequest = '' ; searchResult = ''; ">
                         <ng-md-icon ng-if="!searchRequest" icon="search" class="header-search-icon" size="25"></ng-md-icon>
@@ -147,10 +147,6 @@
 <script src="/resources/controllers/header.js"></script>
 <script>
     $(document).ready(function () {
-        if ("#<%=tabId%>" != "#") {
-            $("#<%=tabId%>").addClass("active");
-        }
-
         $(window).resize(function () {
             var navHeight = $(".navbar").height();
             $(document.body).css("margin-top", navHeight);

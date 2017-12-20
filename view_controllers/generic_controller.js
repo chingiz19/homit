@@ -9,7 +9,6 @@ router.use(function(req,res,next){
 	 * EJS rendering options
 	 */
 	req.options.ejs = {title: "Homit", 
-						tabId: "",
 						catelogies: undefined
 					};
 	next();
