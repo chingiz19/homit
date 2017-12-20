@@ -25,8 +25,8 @@ cmConnection.on('data', function (data) {
 
 cmConnection.on('close', function (data) {
     Logger.log("ChikiMiki has been disconnected.");
-    //it is a serious issue if this happens
-    //TODO send text message to directors (means CM has been shut down). 
+    //it is a serious issue alert all directors
+    SMS.alertDirectors("CM is down!!!");
 });
 
 cmConnection.on('error', function (data) {
@@ -85,12 +85,13 @@ var receiver = function (jsonResponse) {
 
                         var jsonCustomer = {
                             id: user.id_prefix + user.id,
+                            email: user.user_email,
                             first_name: user.first_name,
                             last_name: user.last_name,
                             dob: user.birth_date,
                             phone: user.phone_number,
                             address: orderDetails.delivery_address,
-                            // comments: orderDetails.comments,
+                            // comments: orderDetails.comments,      //TODO: Elnar and Zaman add them in FE and BE
                             order: jsonOrder
                         };
 
@@ -104,13 +105,16 @@ var receiver = function (jsonResponse) {
                         Driver.send(driverIdString, jsonFinal);
 
                         Driver.dispatchOrder(
-                            driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded);
+                            driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded)
+                            .then(function (dispatched) {
+                                Email.sendOrderSlip(jsonFinal.details);
+                            });
                     });
                 });
             });
         });
     } else {
-        Logger.log("Something went wrong");
+        Logger.log("Something went wrong, while receiving order from CM");
     }
 
 };

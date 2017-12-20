@@ -324,9 +324,7 @@ pub.getTotalPriceForProducts = function (products) {
          // Calculating math numbers
          totalAmount = Math.round(totalAmount * 100) / 100;
          var deliveryFee = deliveryFee1;
-         if (totalAmount > 100) {
-             deliveryFee = deliveryFee1 + deliveryFee2;
-         }
+         deliveryFee = deliveryFee1 + parseInt(totalAmount/100)*deliveryFee2;
          totalTax = Math.round((totalTax + deliveryFee * albertaGst) * 100) / 100;            
          var totalPrice = totalAmount + deliveryFee + totalTax;
 

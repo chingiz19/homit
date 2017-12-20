@@ -69,7 +69,6 @@ webServer.use(csurf());
 webServer.use(function(req, res, next){
 	// Set CSRF token per request
 	res.cookie("csrf-token", req.csrfToken());
-
 	res.setHeader("Keep-Alive", "timeout: 60, max: 1000");
 	return next();
 })

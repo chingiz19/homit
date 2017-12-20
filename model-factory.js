@@ -14,6 +14,7 @@ var JWTToken            = require("./models/jwt_token");
 var Logger              = require("./models/logger");
 var SMS                 = require("./models/SMS");
 var MP                  = require("./models/money-processing");
+var Email               = require("./models/email");
 
 /**
  * This class uses 
@@ -33,6 +34,7 @@ class modelFactory {
         global.Logger = Logger;
         global.SMS = SMS;
         global.MP = MP;
+        global.Email = Email;
     }
 }
 

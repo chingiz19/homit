@@ -203,8 +203,8 @@ app.controller("checkoutController",
                         userInfoToSend.email = $scope.userInfo.user_email;
                         userInfoToSend.phone = $scope.userInfo.phone_number.replace(/[()+-]/g, "");
                         userInfoToSend.address = $scope.userInfo["address" + $scope.selectedAddress];
-                        userInfoToSend.address_latitude = 114; // TODO: temp fix this
-                        userInfoToSend.address_longitude = 51; // TODO: temp
+                        userInfoToSend.address_latitude = 51; // TODO: temp fix this
+                        userInfoToSend.address_longitude = -114; // TODO: temp
                     }
                     else {
                         userInfoToSend.fname = $scope.userInfo.first_name;

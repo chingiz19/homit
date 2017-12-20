@@ -267,6 +267,7 @@ var updateOrdersHistory = function (updateColumn, orderIdsString) {
     WHERE id in (` + orderIds + `)`;
 
     return db.runQuery(sqlQuery).then(function (updated) {
+       //TODO: Zaman Zamanli please call SMS.arrivalNotification(number, name) here for arrival notification
         return updated;
     });
 };

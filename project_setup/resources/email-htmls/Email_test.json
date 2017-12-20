@@ -1,0 +1,44 @@
+{
+    "store": {
+        "id": "s_1",
+        "address": "2439 Chicoutimi Dr NW",
+        "name": "Store name",
+        "phone_nubmer":"403-289-2946",  //TODO needs to be added currently using Liquor Brentwood phone number. As per AGLC regulations
+        "nextnodeid": "-1 | s_25 | o_25 "
+    },
+    "customer": {
+        "credit_card":"**** **** **** 1234",   //Zaman Zamanli add this one as well
+        "id": "u_1",
+        "email": "chingiz.bakhishov@gmail.com",
+        "first_name": "FName",
+        "last_name": "LName",
+        "address": "civil address",
+        "phone": 4031234567,
+        "dob": "19 Sptember, 1993",
+        "comments": "Side Door, please",
+        "order": {
+            "id": "o_1",
+            "store": "s_1",
+            "products": [
+                {
+                    "tax":true,                              //add this one as well (Zaman Zamanli)
+                    "depot_id": 1,
+                    "brand": "brand name",
+                    "name": "name",
+                    "image": "",
+                    "packaging": "6",
+                    "volume": "330ml",
+                    "container": "bottle",
+                    "price": "",
+                    "quantity": 1,
+                    "type": "ale",
+                    "subcategory": "ale",
+                    "category": "beer",
+                    "super_category": "liquor",
+                    "description": "description",
+                    "country": "country"
+                }
+            ]
+        }
+    }
+}
