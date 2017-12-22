@@ -31,6 +31,8 @@
         if (!latLng) return;
         if (mapServices.isPlaceInsidePolygon(latLng, $scope.coveragePolygon)){
             sessionStorage.setAddress($scope.autocomplete.getPlace());
+            sessionStorage.setAddressLat(latLng.lat());
+            sessionStorage.setAddressLng(latLng.lng());
             $scope.scrollTo('homitHub');
         } else {
             $scope.addressMessage = "Sorry, we do not deliver to your location at the moment";

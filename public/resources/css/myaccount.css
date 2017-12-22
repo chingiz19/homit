@@ -222,3 +222,40 @@ contentRCABB svg{
 .scss_B svg{
     width: 80px; height: 80px;
 }
+
+.adrInpt{
+    width: 100%; height: 30px;
+    font-size: 15px;
+    color: rgba(0,0,0,0.85);
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    overflow-y: hidden;
+    outline-width: 0;
+}
+.adrInpt::placeholder{
+    color: rgba(0,0,0,0.38);
+    font-size: 15px;
+}
+.adrInpt_x{
+    background-color: rgba(255,255,255,1);
+    position: absolute; right: 0px; top: 0px; min-width: 30px; min-height: 30px; margin: 0;
+    border-bottom: rgba(0,0,0,0.12);
+}
+.adrInpt_x_A{
+    fill: rgba(0,0,0,0.4);
+}
+.adrInpt_x_A svg{
+    width: 20px; height: 20px;
+}
+.outPlgn_txt{
+    font-size: 12px;
+    color: #d44444;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+}
+.block_centered{
+    margin-left: auto; margin-right: auto;
+}

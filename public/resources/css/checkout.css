@@ -37,9 +37,6 @@ Columns-2 consist of items and items' info*/
     md-sidenav{
         overflow-y: hidden;
     }
-    .userPic{
-        margin-top: 0 !important;
-    }
      md-sidenav md-content{
         overflow-y: scroll;
         height: 100%;
@@ -115,6 +112,7 @@ navbar{
     min-width: 400px !important; max-height: 1em !important;
 }
 .col1{
+    position: relative;
     margin-top: 3px;
     background-color: rgb(255,255,255);
     border: rgb(233,233,233) solid 1px; border-radius: 5px;
@@ -124,19 +122,33 @@ navbar{
 .col1ChevRgt{
     display: flex; 
     justify-content: flex-end;
+    position: absolute;
+    top: 10px; right: 0;
+    width: 75px; height: 35px;
 }
 .userPic{
     display: flex;
     justify-content: center; 
-    margin-top: 2.5em;
+    margin-top: 25px;
 }
 .glypOpnSN
 {   
-    margin:0px 2px 0px 2px;
-    background-color: white !important;
-    min-width: 1px !important; min-height: 1px !important; 
-    height: 2.5em!important; width:75px !important; 
-    box-shadow: none !important;
+    margin: 0; padding: 0;
+    max-height: 60px !important; height: 60px !important;
+    max-width: 30px !important; min-width: 15px !important; width: 15px;
+    background-color: rgba(245,245,245,1);
+    border: 1px solid rgba(200,200,200,1);
+    border-right-width: 0px;
+    border-radius: 4px 0 0 4px; 
+}
+.glypOpnSN:hover{
+    background-color: rgba(245,245,245,1) !important;
+    border-radius: 25px 0 0 25px;
+    width: 25px;
+    transition: all 0.3s ease, background-color .3s ease;
+}
+.col1ChevRgt .md-button:not([disabled]).md-focused {
+    background-color: rgba(245,245,245,1) !important;
 }
 .glypOpnSNsgn{
     fill: rgb(63,81,181);
@@ -183,8 +195,6 @@ md-tabs-wrapper{
 }
 .glypOpnCI
 {   
-    /* position: relative;
-    left: 12%; */
     margin:0px 2px 0px 2px;
     background-color: white !important;
     min-width: 1px !important; min-height: 1px !important; 
@@ -202,7 +212,11 @@ md-tabs-wrapper{
     margin-top: 3px; 
     border: rgb(233,233,233) solid 1px ;border-radius: 5px; 
     box-shadow: none;
-    z-index: 10;
+    z-index: 1;
+}
+md-backdrop.md-opaque {
+    background-color: rgba(33,33,33,0.7);
+    z-index:1;
 }
 .glyClsBtn{
     margin: 0; padding: 0;
@@ -354,15 +368,6 @@ md-tabs-wrapper{
         font-size: 19px;
         color: rgb(63,81,181);
     }
-    .glypOpnSN
-    {   
-        height: 3em!important; width:85px !important; 
-        z-index: 4;
-    }
-    .glypOpnSNsgn{
-        font-size: 19px;
-    }
-
     .summerLnP1{
         height: 3.5em;
     }
@@ -549,3 +554,45 @@ md-backdrop.md-opaque {
     font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
+
+
+.adrInpt{
+    width: 100%; height: 30px;
+    font-size: 15px;
+    color: rgba(0,0,0,0.85);
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    overflow-y: hidden;
+    outline-width: 0;
+}
+.adrInpt::placeholder{
+    color: rgba(0,0,0,0.38);
+    font-size: 15px;
+}
+.adrInpt_x{
+    background-color: rgba(255,255,255,1);
+    position: absolute; right: 0px; top: 0px; min-width: 30px; min-height: 30px; margin: 0;
+    border-bottom: rgba(0,0,0,0.12);
+}
+.adrInpt_x_A{
+    fill: rgba(0,0,0,0.4);
+}
+.adrInpt_x_A svg{
+    width: 20px; height: 20px;
+}
+.inptFrm input{
+    font-size: 15px;
+}
+
+.outPlgn_txt{
+    font-size: 12px;
+    color: #d44444;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+}
+
+
+Delete glyClsBtn class after 

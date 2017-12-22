@@ -66,12 +66,13 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval){
                 autocomplete: "=", // public functions (two way binding)
                 inputClass: "@?inputClass",  // optional input element class(es) (as is biding)
                 iconClass: "@?iconClass", // optional x icon class(es) (as is biding)
+                inputDisabled: "@?inputDisabled", // optional input element
                 buttonClass: "@?buttonClass", // optional x button class(es) (as is biding)
                 bounds: "<autocompleteBounds" // autocomplete results in these bounds are shown first
     
             },
-            template: `<input id="autocompleteAddressInputBox" ng-model='_searchedAddress' placeholder='Address' type='text' class='{{inputClass}}'>
-                        <md-button ng-if='_searchedAddress' class="{{buttonClass}}" ng-click="clearText()">
+            template: `<input id="autocompleteAddressInputBox" name="address" ng-model='_searchedAddress' ng-disbaled="{{inputDisabled}}" placeholder='Address' type='text' class='{{inputClass}}' required>
+                        <md-button aria-label="address" ng-if='_searchedAddress' class="{{buttonClass}}" ng-click="clearText()">
                             <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
                         </md-button>
                     `,

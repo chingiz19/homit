@@ -61,6 +61,25 @@ app.service('sessionStorage', ["$window", function($window){
         return _get("delivery-address");
     }
 
+    var _setAddressLat = function(value){
+        return _set("delivery-address-latitude", value);
+    }
+
+    var _getAddressLat = function(value){
+        return _get("delivery-address-latitude");
+    }
+
+    var _setAddressLng = function(value){
+        return _set("delivery-address-longitude", value);
+    }
+
+    var _getAddressLng = function(value){
+        return _get("delivery-address-longitude");
+    }
+    
+
+
+
     return {
         get: _get,
         set: _set,
@@ -71,6 +90,10 @@ app.service('sessionStorage', ["$window", function($window){
         setSearchProduct: _setSearchProduct,
         setCheckoutUserInfo: _setCheckoutUserInfo,
         setAddress: _setAddress,
-        getAddress: _getAddress
+        getAddress: _getAddress,
+        setAddressLat: _setAddressLat,
+        getAddressLat: _getAddressLat,
+        setAddressLng: _setAddressLng,
+        getAddressLng: _getAddressLng
     }
 }]);

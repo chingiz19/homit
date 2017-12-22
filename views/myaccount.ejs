@@ -4,6 +4,7 @@
     <%- include('partial/imports')%>
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/myaccount.css" rel="stylesheet">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
 </head>
 
 <body ng-controller="myaccountController as myaccount" ng-cloak>
@@ -51,20 +52,21 @@
                     <ng-md-icon icon="keyboard_arrow_left" class="contentRCBAA"></ng-md-icon>
                 </md-button>
                 <div class="contentRCA">
-                    <div ng-if="myaccount.selectedTab != 5" class="contentRCAB" layout="row">
-                        <md-button id="editButton" aria-label="editButton" ng-if="!myaccount.edit" ng-click="myaccount.editButton();" class="contentRCABA">
-                            <ng-md-icon icon="mode_edit" class="contentRCBAA"></ng-md-icon>
-                        </md-button>
-                        <md-button id="cancelEdit" aria-label="cancelEdit" ng-if="myaccount.edit" ng-click="myaccount.cancelEdit()" class="contentRCABA">
-                            <ng-md-icon icon="close" class="contentRCBAB"></ng-md-icon>
-                        </md-button>
-                    </div>
                     <!-- Me -->
                     <div ng-if="myaccount.selectedTab == 0">
+                        <div ng-if="myaccount.selectedTab != 5" class="contentRCAB" layout="row">
+                            <md-button aria-label="editButton_0" ng-if="!myaccount.edit" ng-click="myaccount.editButton(0);" class="contentRCABA">
+                                <ng-md-icon icon="mode_edit" class="contentRCBAA"></ng-md-icon>
+                            </md-button>
+                            <md-button aria-label="cancelEdit_0" ng-if="myaccount.edit" ng-click="myaccount.cancelEdit(0)" class="contentRCABA">
+                                <ng-md-icon icon="close" class="contentRCBAB"></ng-md-icon>
+                            </md-button>
+                        </div>
                         <form name="names" layout="row" layout-align="center" style="margin: 0;">
                             <md-input-container class="md-block" flex="40">
                                 <label>First Name</label>
-                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="myaccount.user.firstName" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.user.firstName,'fname')" type="text" required/>
+                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="myaccount.user.firstName" ng-disabled="!myaccount.edit"
+                                    ng-blur="myaccount.sanitizeInput(myaccount.user.firstName,'fname')" type="text" required/>
                                 <div ng-messages="names.fname.$error">
                                     <div ng-message="pattern" class="ma_inptErMsg">Letters only</div>
                                     <div ng-message="required" class="ma_inptErMsg">Required</div>
@@ -72,7 +74,8 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="40">
                                 <label class="inptLbl">Last Name</label>
-                                <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="myaccount.user.lastName" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.user.lastName,'lname')" type="text" required/>
+                                <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="myaccount.user.lastName" ng-disabled="!myaccount.edit"
+                                    ng-blur="myaccount.sanitizeInput(myaccount.user.lastName,'lname')" type="text" required/>
                                 <div ng-messages="names.lname.$error">
                                     <div ng-message="pattern" class="ma_inptErMsg">Letters only</div>
                                     <div ng-message="required" class="ma_inptErMsg">Required</div>
@@ -102,19 +105,33 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <div class="invInptErrMsg_A"><span class="invInptErrMsg_B">{{myaccount.input_invalid_message}}</span></div>
+                        <div class="invInptErrMsg_A">
+                            <span class="invInptErrMsg_B">{{myaccount.input_invalid_message}}</span>
+                        </div>
                         <div ng-if="myaccount.edit" class="svBtn">
-                            <md-button ng-if="!myaccount.info_updated" aria-label="updateMe" ng-click="myaccount.updateMe()" class="md-raised md-primary" flex="15">Save</md-button>
-                            <div name="success" ng-if="myaccount.info_updated" class="scss_A"><ng-md-icon icon="done" class="scss_B"></ng-md-icon></div>
+                            <md-button ng-if="!myaccount.info_updated" aria-label="updateMe" ng-click="myaccount.updateMe()" class="md-raised md-primary"
+                                flex="15">Save</md-button>
+                            <div name="success" ng-if="myaccount.info_updated" class="scss_A">
+                                <ng-md-icon icon="done" class="scss_B"></ng-md-icon>
+                            </div>
                         </div>
                     </div>
                     <!-- Contact -->
-                    <form name="contact" ng-if="myaccount.selectedTab == 1" layout="column" style="margin: 0;">
+                    <form name="contact" ng-show="myaccount.selectedTab == 1" layout="column" style="margin: 0;">
+                        <div ng-if="myaccount.selectedTab != 5" class="contentRCAB" layout="row">
+                            <md-button aria-label="editButton_1" ng-if="!myaccount.edit" ng-click="myaccount.editButton(1);" class="contentRCABA">
+                                <ng-md-icon icon="mode_edit" class="contentRCBAA"></ng-md-icon>
+                            </md-button>
+                            <md-button aria-label="cancelEdit_1" ng-if="myaccount.edit" ng-click="myaccount.cancelEdit(1)" class="contentRCABA">
+                                <ng-md-icon icon="close" class="contentRCBAB"></ng-md-icon>
+                            </md-button>
+                        </div>
                         <ul layout-align="center">
                             <li class="flxCntrLn">
                                 <md-input-container class="md-block" flex="70">
                                     <label>Email</label>
-                                    <input name="email" ng-pattern="/^.+@.+\..+$/" ng-model="myaccount.user.email" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.user.email,'email')" type="text" required/>
+                                    <input name="email" ng-pattern="/^.+@.+\..+$/" ng-model="myaccount.user.email" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.user.email,'email')"
+                                        type="text" required/>
                                     <div ng-messages="contact.email.$error">
                                         <div ng-message="pattern" class="inptErMsg">Email format only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
@@ -124,88 +141,79 @@
                             <li class="flxCntrLn">
                                 <md-input-container class="md-block" flex="70">
                                     <label class="inptLbl">Phone Number</label>
-                                    <input name="phone" maxlength="14" ng-pattern="/^[0-9()+-]*$/" ng-model="myaccount.user.phoneNumber" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.user.phoneNumber,'phone')" type="text" required/>
+                                    <input id="gP_number" name="phone" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="myaccount.user.phoneNumber" ng-disabled="!myaccount.edit"
+                                        ng-blur="myaccount.sanitizeInput(myaccount.user.phoneNumber,'phone')" type="text" required/>
                                     <div ng-messages="contact.phone.$error">
                                         <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
                                     </div>
                                 </md-input-container>
                             </li>
-                            <li class="invInptErrMsg_A"><span class="invInptErrMsg_B">{{myaccount.input_invalid_message}}</span></li>
+                            
+                            <li class="invInptErrMsg_A">
+                                <span class="invInptErrMsg_B">{{myaccount.input_invalid_message}}</span>
+                            </li>
                             <div ng-if="myaccount.edit" class="svBtn">
-                                <md-button ng-if="!myaccount.info_updated" aria-label="updateContact" class="md-raised md-primary" ng-click="myaccount.updateContact()" flex="15">Save</md-button>
-                                <div name="success" ng-if="myaccount.info_updated" class="scss_A"><ng-md-icon icon="done" class="scss_B"></ng-md-icon></div>
+                                <md-button ng-if="!myaccount.info_updated" aria-label="updateContact" class="md-raised md-primary" ng-click="myaccount.updateContact()"
+                                    flex="15">Save</md-button>
+                                <div name="success" ng-if="myaccount.info_updated" class="scss_A">
+                                    <ng-md-icon icon="done" class="scss_B"></ng-md-icon>
+                                </div>
                             </div>
                         </ul>
                     </form>
                     <!-- Address -->
-                    <div ng-if="myaccount.selectedTab == 2">
-                        <div class="flxCntrLn">
-                            <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true" flex="80">
-                                <md-tab label="Address 1">
-                                    <md-tab-body>
-                                        <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="60">
-                                                <label>Shortname</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address1_shortname" ng-disabled="!myaccount.edit" />
-                                            </md-input-container>
-                                        </div>
-                                        <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="60">
-                                                <label>Address</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address1" ng-disabled="!myaccount.edit" ng-required="myaccount.edit"
-                                                />
-                                            </md-input-container>
-                                        </div>
-                                    </md-tab-body>
-                                </md-tab>
-                                <md-tab label="Address 2" ng-disabled="!myaccount.edit">
-                                    <md-tab-body>
-                                        <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="60">
-                                                <label>Shortname</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address2_shortname" ng-disabled="!myaccount.edit" />
-                                            </md-input-container>
-                                        </div>
-                                        <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="60">
-                                                <label>Address</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address2" ng-disabled="!myaccount.edit" />
-                                            </md-input-container>
-                                        </div>
-                                    </md-tab-body>
-                                </md-tab>
-                                <md-tab label="Address 3" ng-disabled="!myaccount.edit">
-                                    <md-tab-body>
-                                        <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="60">
-                                                <label>Shortname</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address3_shortname" ng-disabled="!myaccount.edit" />
-                                            </md-input-container>
-                                        </div>
-                                        <div layout="row" layout-align="center center">
-                                            <md-input-container class="md-block" flex="60">
-                                                <label>Address</label>
-                                                <input name="address" type="text" ng-model="myaccount.user.address3" ng-disabled="!myaccount.edit" />
-                                            </md-input-container>
-                                        </div>
-                                    </md-tab-body>
-                                </md-tab>
-                            </md-tabs>
+                    <div ng-show="myaccount.selectedTab == 2">
+                        <div ng-if="myaccount.selectedTab != 5" class="contentRCAB" layout="row">
+                            <md-button aria-label="editButton_2" ng-if="!myaccount.edit" ng-click="myaccount.editButton(2);" class="contentRCABA">
+                                <ng-md-icon icon="mode_edit" class="contentRCBAA"></ng-md-icon>
+                            </md-button>
+                            <md-button aria-label="cancelEdit_2" ng-if="myaccount.edit" ng-click="myaccount.cancelEdit(2)" class="contentRCABA">
+                                <ng-md-icon icon="close" class="contentRCBAB"></ng-md-icon>
+                            </md-button>
                         </div>
+                        <div class="flxCntrLn">
+                            <md-input-container class="md-block" flex="70">
+                                <label class="inptLbl">My address</label>
+                                <input name="phone" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="myaccount.user.address" ng-disabled="true" type="text"
+                                    required/>
+                            </md-input-container>
+                        </div>
+                        <form id="address" name="Address" class="flxCntrLn">
+                            <md-input-container class="md-block bigClass" flex="70">
+                                <label class="inptLbl">Current delivery address</label>
+                                <address-autocomplete input-class="adrInpt" icon-class="adrInpt_x_A" button-class="adrInpt_x" autocomplete="autocomplete"
+                                    on-address-selected="gotAddressResults"></address-autocomplete>
+                                <div ng-messages="Address.address.$error">
+                                    <div ng-message="required" class="inptErMsg">Required</div>
+                                </div>
+                                <div ng-if="myaccount.address_valid == false" class="outPlgn_txt">Sorry, we do not deliver to your location at the moment</div>
+                            </md-input-container>
+                        </form>
                         <div ng-if="myaccount.edit" class="svBtn">
                             <md-button aria-label="updateAddress" class="md-raised md-primary" ng-click="myaccount.updateAddress()" flex="15">Save</md-button>
                         </div>
                     </div>
                     <!-- Change password -->
                     <form name="changePassword" ng-show="myaccount.selectedTab == 3" layout="column" style="margin: 0;">
+                        <div ng-if="myaccount.selectedTab != 5" class="contentRCAB" layout="row">
+                            <md-button aria-label="editButton_3" ng-if="!myaccount.edit" ng-click="myaccount.editButton(3);" class="contentRCABA">
+                                <ng-md-icon icon="mode_edit" class="contentRCBAA"></ng-md-icon>
+                            </md-button>
+                            <md-button aria-label="cancelEdit_3" ng-if="myaccount.edit" ng-click="myaccount.cancelEdit(3)" class="contentRCABA">
+                                <ng-md-icon icon="close" class="contentRCBAB"></ng-md-icon>
+                            </md-button>
+                        </div>
                         <ul class="ulMP_0">
                             <li class="flxCntrLn">
                                 <md-input-container class="md-block" flex="70">
                                     <label>Current password</label>
-                                    <input name="crPsswrd" maxlength="30" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" ng-model="myaccount.password" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.password,'crPsswrd')" type="Password" required/>
+                                    <input name="crPsswrd" maxlength="30" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" ng-model="myaccount.password"
+                                        ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.password,'crPsswrd')"
+                                        type="Password" required/>
                                     <div ng-messages="changePassword.cPassword.$error">
-                                        <div ng-message="pattern" class="ma_inptErMsg">"? $ ! ^ % ' / { [ ( < | > ) ] } \ , + ” ; & # @" Can't be used</div>
+                                        <div ng-message="pattern" class="ma_inptErMsg">"? $ ! ^ % ' / { [ (
+                                            < |> ) ] } \ , + ” ; & # @" Can't be used</div>
                                         <div ng-message="required" class="ma_inptErMsg">Required</div>
                                     </div>
                                 </md-input-container>
@@ -213,9 +221,12 @@
                             <li class="flxCntrLn">
                                 <md-input-container class="md-block" flex="70">
                                     <label>New password</label>
-                                    <input name="new1Psswrd" maxlength="30" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" ng-model="myaccount.new_password" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.new_password,'new1Psswrd'); myaccount.checkPassword();" type="password" required/>
+                                    <input name="new1Psswrd" maxlength="30" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" ng-model="myaccount.new_password"
+                                        ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.new_password,'new1Psswrd'); myaccount.checkPassword();"
+                                        type="password" required/>
                                     <div ng-messages="changePassword.new1Psswrd.$error">
-                                        <div ng-message="pattern" class="ma_inptErMsg">"? $ ! ^ % ' / { [ ( < | > ) ] } \ , + ” ; & # @" Can't be used</div>
+                                        <div ng-message="pattern" class="ma_inptErMsg">"? $ ! ^ % ' / { [ (
+                                            < |> ) ] } \ , + ” ; & # @" Can't be used</div>
                                         <div ng-message="required" class="ma_inptErMsg">Required</div>
                                     </div>
                                 </md-input-container>
@@ -223,85 +234,103 @@
                             <li class="flxCntrLn">
                                 <md-input-container class="md-block" flex="70">
                                     <label>Confirm password</label>
-                                    <input name="new2Psswrd" maxlength="30" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" ng-model="myaccount.confirm_password" ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.confirm_password,'new2Psswrd'); myaccount.checkPassword(); " type="password" required/>
+                                    <input name="new2Psswrd" maxlength="30" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" ng-model="myaccount.confirm_password"
+                                        ng-disabled="!myaccount.edit" ng-blur="myaccount.sanitizeInput(myaccount.confirm_password,'new2Psswrd'); myaccount.checkPassword(); "
+                                        type="password" required/>
                                     <div ng-messages="changePassword.new2Psswrd.$error">
-                                        <div ng-message="pattern" class="ma_inptErMsg">"/ { [ ( < | > ) ] } \ ? $ ! ^ % ' , + ” ; & # @" Can't be used</div>
+                                        <div ng-message="pattern" class="ma_inptErMsg">"/ { [ (
+                                            < |> ) ] } \ ? $ ! ^ % ' , + ” ; & # @" Can't be used</div>
                                         <div ng-message="required" class="ma_inptErMsg">Required</div>
                                         <div ng-if="myaccount.passwordError" class="ma_inptErMsg">Don't match</div>
                                     </div>
                                 </md-input-container>
                             </li>
-                            <li class="invInptErrMsg_A"><span class="invInptErrMsg_B">{{myaccount.input_invalid_message}}</span></li>
+                            <li class="invInptErrMsg_A">
+                                <span class="invInptErrMsg_B">{{myaccount.input_invalid_message}}</span>
+                            </li>
                             <div class="svBtn" ng-if="myaccount.edit">
                                 <md-button ng-if="!myaccount.info_updated" class="md-raised md-primary" ng-click="myaccount.changePassword()" flex="15">Save</md-button>
-                                <div name="success" ng-if="myaccount.info_updated" class="scss_A"><ng-md-icon icon="done" class="scss_B"></ng-md-icon></div>
+                                <div name="success" ng-if="myaccount.info_updated" class="scss_A">
+                                    <ng-md-icon icon="done" class="scss_B"></ng-md-icon>
+                                </div>
                             </div>
                         </ul>
                     </form>
                     <!-- Credit Card -->
-                    <div ng-if="myaccount.selectedTab == 4">
-                        <ul layout="column" class="flxCntrLn">
-                            <li layout="row" layout-align="center">
-                                <md-input-container class="md-block" flex="40">
-                                    <label>First Name</label>
-                                    <input required ng-model="myaccount.card.firstName" ng-disabled="!myaccount.edit" type="text" />
-                                </md-input-container>
-                                <md-input-container class="md-block" flex="40">
-                                    <label class="inptLbl">Last Name</label>
-                                    <input required ng-model="myaccount.card.lastName" ng-disabled="!myaccount.edit" type="text" />
-                                </md-input-container>
-                            </li>
-                            <li class="flxCntrLn">
-                                <md-input-container class="md-block" flex="40">
-                                    <label class="inptLbl">Crad Number</label>
-                                    <input required ng-model="myaccount.card.number" ng-disabled="!myaccount.edit" type="text" />
-                                </md-input-container>
-                            </li>
-                            <li layout="row" class="flxCntrLn">
-                                <md-input-container class="md-block extInput" flex="25">
-                                    <label class="inptLbl">Expiry</label>
-                                    <md-select ng-disabled="!myaccount.edit" ng-model="myaccount.card.month">
-                                        <md-option ng-value="0">Month</md-option>
-                                        <md-option ng-value="1">Jan</md-option>
-                                        <md-option ng-value="2">Feb</md-option>
-                                        <md-option ng-value="3">Mar</md-option>
-                                        <md-option ng-value="4">Apr</md-option>
-                                        <md-option ng-value="5">May</md-option>
-                                        <md-option ng-value="6">Jun</md-option>
-                                        <md-option ng-value="7">Jul</md-option>
-                                        <md-option ng-value="8">Aug</md-option>
-                                        <md-option ng-value="9">Sep</md-option>
-                                        <md-option ng-value="10">Oct</md-option>
-                                        <md-option ng-value="11">Nov</md-option>
-                                        <md-option ng-value="12">Dec</md-option>
-                                    </md-select>
-                                </md-input-container>
-                                <md-input-container class="md-block extInput" flex="25">
-                                    <label class="inptLbl">Date</label>
-                                    <md-select ng-disabled="!myaccount.edit" ng-model="myaccount.card.year">
-                                        <md-option ng-value="0">Year</md-option>
-                                        <md-option ng-value="2017">2017</md-option>
-                                        <md-option ng-value="2018">2018</md-option>
-                                        <md-option ng-value="2019">2019</md-option>
-                                        <md-option ng-value="2020">2020</md-option>
-                                        <md-option ng-value="2021">2021</md-option>
-                                        <md-option ng-value="2022">2022</md-option>
-                                        <md-option ng-value="2023">2023</md-option>
-                                        <md-option ng-value="2024">2024</md-option>
-                                        <md-option ng-value="2025">2025</md-option>
-                                        <md-option ng-value="2026">2026</md-option>
-                                        <md-option ng-value="2027">2027</md-option>
-                                    </md-select>
-                                </md-input-container>
-                                <md-input-container class="md-block" flex="25">
-                                    <label>Security Code</label>
-                                    <input ng-disabled="!myaccount.edit" required name="cardSecCode" ng-model="myaccount.card.secCode" type="text" />
-                                </md-input-container>
-                            </li>
-                            <div ng-if="myaccount.edit" class="svBtn">
-                                <md-button aria-label="updateCard" class="md-raised md-primary" ng-click="card.updateCard()" flex="15">Save</md-button>
+                    <div name="CrCd" ng-show="myaccount.selectedTab == 4">
+                        <div ng-if="myaccount.selectedTab != 5" class="contentRCAB" layout="row">
+                            <md-button aria-label="editButton_4" ng-if="!myaccount.edit" ng-click="myaccount.editButton(4);" class="contentRCABA">
+                                <ng-md-icon icon="mode_edit" class="contentRCBAA"></ng-md-icon>
+                            </md-button>
+                            <md-button aria-label="cancelEdit_4" ng-if="myaccount.edit" ng-click="myaccount.cancelEdit(4)" class="contentRCABA">
+                                <ng-md-icon icon="close" class="contentRCBAB"></ng-md-icon>
+                            </md-button>
+                        </div>
+                        <form name="CrCd">
+                            <div layout="row" class="flxCntrLn">
+                                <div>
+                                    <img ng-src="{{'/resources/images/non-homit_images/visa_logo.jpeg'}}" width="50px;" height="32.25px" />
+                                </div>
+
+                                <div>
+                                    <img ng-src="{{'/resources/images/non-homit_images/american-express_logo.jpeg'}}" width="50px;" height="32.25px" />
+                                </div>
+                                <div>
+                                    <img ng-src="{{'/resources/images/non-homit_images/interact_logo.jpeg'}}" width="50px;" height="32.25px" />
+                                </div>
+                                <div>
+                                    <img ng-src="{{'/resources/images/non-homit_images/mastercard_logo.jpeg'}}" width="50px;" height="32.25px" />
+                                </div>
                             </div>
-                        </ul>
+                            <md-input-container class="md-block block_centered" flex="50">
+                                <label>First Name</label>
+                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="myaccount.card.firstName" ng-disabled="!myaccount.edit"
+                                    type="text" required/>
+                                <div ng-messages="CrCd.fname.$error">
+                                    <div ng-message="pattern" class="inptErMsg">Letters only</div>
+                                    <div ng-message="required" class="inptErMsg">Required</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block block_centered" flex="50">
+                                <label class="inptLbl">Last Name</label>
+                                <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="myaccount.card.lastName" ng-disabled="!myaccount.edit"
+                                    type="text" required/>
+                                <div ng-messages="CrCd.lname.$error">
+                                    <div ng-message="pattern" class="inptErMsg">Letters only</div>
+                                    <div ng-message="required" class="inptErMsg">Required</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block block_centered" flex="40">
+                                <label class="inptLbl">Card Number</label>
+                                <input name="num_16" id="cardNumber" ng-pattern="/^[0-9]*$/" maxlength="16" ng-model="cardNumber" ng-blur="sanitizeInput(cardNumber,'cd_1')"
+                                    ng-disabled="!myaccount.edit" type="text" required>
+                                <div ng-messages="CrCd.num_16.$error">
+                                    <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                    <div ng-message="required" class="inptErMsg">Required</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block block_centered" flex="40">
+                                <label class="inptLbl">Expiry Date [MM/YY]</label>
+                                <input name="expiryDate" id="cardExpiry" ng-pattern="/^[0-9]*$/" maxlength="5" ng-model="expirayDate" ng-blur="sanitizeInput(expirayDate,'cd_2')"
+                                    ng-disabled="!myaccount.edit" type="text" required>
+                                <div ng-messages="CrCd.expiryDate.$error">
+                                    <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                    <div ng-message="required" class="inptErMsg">Required</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block block_centered" flex="40">
+                                <label class="inptLbl inptLblSC1">Security Code</label>
+                                <input name="cvv" id="cardCVV" ng-pattern="/^[0-9]*$/" maxlength="4" ng-model="cvv" ng-blur="sanitizeInput(cvv,'cd_3')" ng-disabled="!myaccount.edit"
+                                    type="text" required>
+                                <div ng-messages="CrCd.cvv.$error">
+                                    <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                    <div ng-message="required" class="inptErMsg">Required</div>
+                                </div>
+                            </md-input-container>
+                        </form>
+                        <div ng-if="myaccount.edit" class="svBtn">
+                            <md-button aria-label="updateCard" class="md-raised md-primary" ng-click="card.updateCard()" flex="15">Save</md-button>
+                        </div>
                     </div>
                     <!-- Order History -->
                     <div ng-if="myaccount.selectedTab == 5" class="contentRCorHist">
@@ -350,12 +379,13 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
-    <script src="/resources/services/date.js"></script>
     <script src="/resources/controllers/myaccount.js"></script>
+    <script src="/resources/directives/addressAutocomplete.js"></script>
+    <script src="/resources/services/date.js"></script>
+    <script src="/resources/services/mapServices.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 </body>
 
 </html>

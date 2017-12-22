@@ -52,7 +52,7 @@ footer a:hover{
     height: 120px; width: 120px; 
     border: 1px solid rgba(42,81,145,1); border-radius: 60px;
     background-color: rgba(42,81,145,1);  
-    box-shadow: 0 0px 8px 4px rgba(0,0,0,0.45);
+    box-shadow: 0 0px 8px 4px rgba(0,0,0,0.33);
 }
 .col_3{
     padding: 0;

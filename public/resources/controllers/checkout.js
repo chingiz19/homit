@@ -1,7 +1,7 @@
 // import { clearInterval } from "timers";
 
 app.controller("checkoutController",
-    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, localStorage, cartService, sessionStorage, date) {
+    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, localStorage, cartService, sessionStorage, date, mapServices) {
 
         $scope.localCartName = "bizim_userCart";
         $scope.userCart = localStorage.getUserCart() || {};
@@ -19,6 +19,7 @@ app.controller("checkoutController",
             "cd_1_valid": false,
             "cd_2_valid": false,
             "cd_3_valid": false,
+            "address_valid": undefined,
             "HomeIt": false
         }
         $scope.isUserSigned;
@@ -35,29 +36,35 @@ app.controller("checkoutController",
             $scope.selectedAddress = 0;
             if ($cookies.get("user")) {
                 $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
-                if (!$scope.userInfo.address1_name)
-                    $scope.userInfo.address1_name = "Home";
-                if (!$scope.userInfo.address2_name)
-                    $scope.userInfo.address2_name = "Friend's place";
-                if ($scope.userInfo) {
-                    $scope.isUserSigned = true;
-                }
-                else {
-                    $scope.userInfo = {};
-                    $scope.isUserSigned = false;
-                }
+                //TODO sub if's with for loop
+                if ($scope.userInfo.first_name)
+                    $scope.userInfo.fname_valid = true;
+                if ($scope.userInfo.last_name)
+                    $scope.userInfo.lname_valid = true;
+                if ($scope.userInfo.phone_number)
+                    $scope.userInfo.phone_valid = true;
+                if ($scope.userInfo.user_email)
+                    $scope.userInfo.email_valid = true;
+                if ($scope.userInfo.birth_day && $scope.userInfo.birth_month && $scope.userInfo.birth_year)
+                    $scope.userInfo.dob_valid = true;
+            } else{
+                $scope.isUserSigned = false;
             }
             if (checkout.getCheckoutUserInfo != "undefined" && checkout.getCheckoutUserInfo != null) {
                 $scope.userInfo = checkout.getCheckoutUserInfo;
             }
-            if ($cookies.getObject("homit-address")) {
-                $scope.deliveryAddress = $cookies.getObject("homit-address").name;
-                checkout.deliveryAddress_lat = $cookies.getObject("homit-address").geometry.location['lat'];
-                checkout.deliveryAddress_lng = $cookies.getObject("homit-address").geometry.location['lng'];
-
-                $scope.userInfo.address = $scope.deliveryAddress;
-                $scope.userInfo.address0 = $scope.deliveryAddress;
+            if (sessionStorage.getAddress()) {
+                checkout.address = sessionStorage.getAddress();
+                checkout.address_latitude = sessionStorage.getAddressLat();
+                checkout.address_longitude = sessionStorage.getAddressLng();
+                $scope.userInfo.address_valid = true;
             }
+            mapServices.createCoveragePolygon().then(function (polygon) {
+                if (polygon) {
+                    $scope.coveragePolygon = polygon;
+                }
+            });
+            readyToHomeIt();
         }
 
         cartService.getCart()
@@ -171,15 +178,16 @@ app.controller("checkoutController",
                     var response_id = document.getElementById("response");
                     var response_message = document.getElementById("responseMessage");
                     var transaction_id = document.getElementById("transactionId");
+                    var crd_lst4 = document.getElementById("cardNumber");
                     if (response_id || helcim_message.textContent != "CONNECTING...") {
                         if (response_id) {
                             if (response_id.value == 1) {
-                                callback(response_id.value, response_message.value, transaction_id.value);
+                                callback(response_id.value, response_message.value, transaction_id.value, crd_lst4.value.slice(15, 19));
                             } else if (response_id.value == 0) {
-                                callback(response_id.value, response_message.value, 0);
+                                callback(response_id.value, response_message.value, 0, 0);
                             }
                         } else if (helcim_message.childNodes.length == 1) {
-                            callback(0, 0, 0);
+                            callback(0, 0, 0, 0);
                         }
                     } else {
                         looper();
@@ -196,35 +204,29 @@ app.controller("checkoutController",
         $scope.HomeIt = function () {
             activateCheckoutModal();
             updateCheckoutModal("inProcess");
-            checkPaymentResponse(function (response_id, response_message, transaction_id) {
+            checkPaymentResponse(function (response_id, response_message, transaction_id, crd_lst4) {
                 if (response_id == 1 && transaction_id) {
                     var userInfoToSend = {};
-                    if ($scope.isUserSigned) {
-                        userInfoToSend.email = $scope.userInfo.user_email;
-                        userInfoToSend.phone = $scope.userInfo.phone_number.replace(/[()+-]/g, "");
-                        userInfoToSend.address = $scope.userInfo["address" + $scope.selectedAddress];
-                        userInfoToSend.address_latitude = 51; // TODO: temp fix this
-                        userInfoToSend.address_longitude = -114; // TODO: temp
-                    }
-                    else {
-                        userInfoToSend.fname = $scope.userInfo.first_name;
-                        userInfoToSend.lname = $scope.userInfo.last_name;
-                        userInfoToSend.email = $scope.userInfo.user_email;
-                        userInfoToSend.address = $scope.userInfo.address;
-                        userInfoToSend.address_latitude = checkout.deliveryAddress_lat;
-                        userInfoToSend.address_longitude = checkout.deliveryAddress_lng;
-                        userInfoToSend.phone = $scope.userInfo.phone_number.replace(/[()+-]/g, "");
-                        userInfoToSend.birth_year = $scope.userInfo.birth_year;
-                        userInfoToSend.birth_month = date.convertMonth($scope.userInfo.birth_month);
-                        userInfoToSend.birth_day = $scope.userInfo.birth_day;
-                    }
+                    
+                    userInfoToSend.fname = $scope.userInfo.first_name;
+                    userInfoToSend.lname = $scope.userInfo.last_name;
+                    userInfoToSend.birth_year = $scope.userInfo.birth_year;
+                    userInfoToSend.birth_month = date.convertMonth($scope.userInfo.birth_month);
+                    userInfoToSend.birth_day = $scope.userInfo.birth_day;
+                    userInfoToSend.phone = $scope.userInfo.phone_number.replace(/[() +-]/g, "");
+                    userInfoToSend.email = $scope.userInfo.user_email;
+                    userInfoToSend.address = checkout.address;
+                    userInfoToSend.address_latitude = checkout.address_latitude;
+                    userInfoToSend.address_longitude = checkout.address_longitude;
+                    
                     $http({
                         method: 'POST',
                         url: '/api/checkout/placeorder',
                         data: {
                             user: userInfoToSend,
                             products: $scope.userCart,
-                            transaction_id: transaction_id
+                            transaction_id: transaction_id,
+                            crd_lst4: crd_lst4
                         }
                     }).then(function successCallback(response) {
                         $scope.paymentMessage_1 = "Thank You, ";
@@ -236,7 +238,7 @@ app.controller("checkoutController",
                         updateCheckoutModal("10");
                         console.log("ERROR in order processing");
                     });
-                } else if (response_id == 0 && response_message == 0 && transaction_id == 0) {
+                } else if (response_id == 0 && response_message == 0 && transaction_id == 0 && crd_lst4 == 0) {
                     updateCheckoutModal("0");
                 } else if (response_id == 0 && response_message == "Duplicate Payment") {
                     $scope.paymentMessage_1 = "Thank You, ";
@@ -353,7 +355,7 @@ app.controller("checkoutController",
         }
 
         $scope.sanitizeInput = function (text, type) {
-            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+-]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/ };
+            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+ -]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/ };
             if (text && type) {
                 if (text.match(pattern[type])) {
                     $scope.userInfo[type + "_valid"] = true;
@@ -365,8 +367,32 @@ app.controller("checkoutController",
             readyToHomeIt();
         }
 
+        $scope.gotAddressResults = function () {
+            var latLng = $scope.autocomplete.getLatLng();
+            if (mapServices.isPlaceInsidePolygon(latLng, $scope.coveragePolygon)) {
+                sessionStorage.setAddress($scope.autocomplete.getPlace());
+                sessionStorage.setAddressLat(latLng.lat());
+                sessionStorage.setAddressLng(latLng.lng());
+                checkout.address_latitude = latLng.lat();
+                checkout.address_longitude = latLng.lng();
+                checkout.address = $scope.autocomplete.getText();
+                $scope.userInfo.address_valid = true;
+            } else {
+                $scope.userInfo.address_valid = false;
+            }
+            readyToHomeIt();
+        }
+
+        jQuery(function($){
+            $("#gP_number").mask("(999) 999-9999");
+         });
+
+        $scope.clearText = function () {
+            $scope.userInfo.address_valid = undefined;
+        }
+
         function readyToHomeIt() {
-            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo["hasLiquor"]) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid) {
+            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo["hasLiquor"]) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid) {
                 $scope.userInfo.HomeIt = true;
             } else {
                 $scope.userInfo.HomeIt = false;

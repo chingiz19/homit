@@ -2,8 +2,9 @@
 
 <head ng-cloak>
     <%- include('partial/imports')%>
-        <%- include('partial/header', {title: title, product: tabId}); %>
+        <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/checkout.css" rel="stylesheet">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
 </head>
 
 <body ng-cloak>
@@ -13,7 +14,7 @@
             <div class="col1">
                 <div class="col1ChevRgt">
                     <md-button aria-label="toggleRight" ng-click="toggleRight()" class="glypOpnSN" hide-gt-md>
-                        <ng-md-icon icon="keyboard_arrow_right" class="glypOpnSNsgn" size="25"></ng-md-icon>
+                        <ng-md-icon icon="keyboard_arrow_left" class="glypOpnSNsgn" size="20"></ng-md-icon>
                     </md-button>
                 </div>
                 <div class="userPic">
@@ -52,7 +53,8 @@
                 <form layout="row" layout-align="center" name="names" style="margin: 0;">
                     <md-input-container class="md-block bigClass" flex="40">
                         <label class="inptLbl">First Name</label>
-                        <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.first_name" ng-blur="sanitizeInput(userInfo.first_name,'fname')" type="text" required />
+                        <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.first_name" ng-blur="sanitizeInput(userInfo.first_name,'fname')"
+                            type="text" required />
                         <div ng-messages="names.fname.$error">
                             <div ng-message="pattern" class="inptErMsg">Letters only</div>
                             <div ng-message="required" class="inptErMsg">Required</div>
@@ -60,7 +62,8 @@
                     </md-input-container>
                     <md-input-container class="md-block bigClass" flex="40">
                         <label class="inptLbl">Last Name</label>
-                        <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.last_name" ng-blur="sanitizeInput(userInfo.last_name,'lname')" type="text" required/>
+                        <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.last_name" ng-blur="sanitizeInput(userInfo.last_name,'lname')"
+                            type="text" required/>
                         <div ng-messages="names.lname.$error">
                             <div ng-message="pattern" class="inptErMsg">Letters only</div>
                             <div ng-message="required" class="inptErMsg">Required</div>
@@ -71,7 +74,8 @@
                 <form name="Email" class="inptFrm">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label class="inptLbl">Email</label>
-                        <input name="email" ng-pattern="/^.+@.+\..+$/" ng-model="userInfo.user_email"   ng-blur="sanitizeInput(userInfo.user_email,'email')" type="email" required/>
+                        <input name="email" ng-pattern="/^.+@.+\..+$/" ng-model="userInfo.user_email" ng-blur="sanitizeInput(userInfo.user_email,'email')"
+                            type="email" required/>
                         <div ng-messages="Email.email.$error">
                             <div ng-message="pattern" class="inptErMsg">Email format only</div>
                             <div ng-message="required" class="inptErMsg">Required</div>
@@ -82,7 +86,8 @@
                 <form name="Phone" class="inptFrm">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label for="idCell" class="inptLbl">Phone</label>
-                        <input name="phone" maxlength="14" ng-pattern="/^[0-9()+-]*$/" ng-model="userInfo.phone_number" ng-blur="sanitizeInput(userInfo.phone_number,'phone')" placeholder="+1(403)4046648" type="text" required/>
+                        <input id="gP_number" name="phone" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" ng-blur="sanitizeInput(userInfo.phone_number,'phone')"
+                            placeholder="(403) 404-6648" type="text" required/>
                         <div ng-messages="Phone.phone.$error">
                             <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                             <div ng-message="required" class="inptErMsg">Required</div>
@@ -90,68 +95,34 @@
                     </md-input-container>
                 </form>
                 <!--Delivery Address-->
-                <form name="Address" class="inptFrm" ng-if="!isUserSigned">
+                <form id="address" name="Address" class="inptFrm gu_address">
                     <md-input-container class="md-block bigClass" flex="80">
-                        <label class="inptLbl">Delivery Address</label>
-                        <input name="address" id="addressGuestUser" ng-model="userInfo.address" type="text" required/>
+                        <label class="inptLbl" style="display: none;"></label>
+                        <address-autocomplete style="width: 300px;" input-class="adrInpt" icon-class="adrInpt_x_A" button-class="adrInpt_x" autocomplete="autocomplete"
+                            on-address-selected="gotAddressResults"></address-autocomplete>
                         <div ng-messages="Address.address.$error">
                             <div ng-message="required" class="inptErMsg">Required</div>
                         </div>
+                        <div ng-if="userInfo.address_valid == false" class="outPlgn_txt">Sorry, we do not deliver to your location at the moment</div>
                     </md-input-container>
                 </form>
-                <!--Address-->
-                <div layout="row" layout-align="center" ng-show="isUserSigned">
-                    <md-tabs md-selected="0" md-border-bottom md-autoselect md-center-tabs="true" class="md-block adTb" flex="80">
-                        <md-tab label="New" md-on-select="selectedAddress = 0">
-                            <md-tab-body>
-                                <div layout="row" layout-align="center">
-                                    <md-input-container class="md-block" flex="50">
-                                        <label class="inptLbl">Address</label>
-                                        <input id="newAddressUser" name="address" type="text" ng-model="userInfo.address0" ng-required="selectedAddress == 0" />
-                                    </md-input-container>
-                                </div>
-                            </md-tab-body>
-                        </md-tab>
-                        <md-tab label="{{userInfo.address1_name}}" md-on-select="selectedAddress = 1">
-                            <md-tab-body>
-                                <div layout="row" layout-align="center">
-                                    <md-input-container class="md-block" flex="50">
-                                        <label ng-show="!userInfo.address2" class="inptLbl">Address</label>
-                                        <input name="address" type="text" ng-model="userInfo.address1" ng-required="selectedAddress == 1" />
-                                    </md-input-container>
-                                </div>
-                            </md-tab-body>
-                        </md-tab>
-                        <md-tab label="{{userInfo.address2_name}}" md-on-select="selectedAddress = 2">
-                            <md-tab-body>
-                                <div layout="row" layout-align="center">
-                                    <md-input-container class="md-block" flex="50">
-                                        <label ng-show="!userInfo.address3" class="inptLbl">Address</label>
-                                        <input name="address" type="text" ng-model="userInfo.address2" ng-required="selectedAddress == 2" />
-                                    </md-input-container>
-                                </div>
-                            </md-tab-body>
-                        </md-tab>
-                        <md-tab ng-if="userInfo.address3" label="Address 3" md-on-select="selectedAddress = 3">
-                            <md-tab-body>
-                                <div layout="row" layout-align="center">
-                                    <md-input-container class="md-block" flex="50">
-                                        <label ng-show="!userInfo.address4" class="inptLbl">Address</label>
-                                        <input name="address" type="text" ng-model="userInfo.address3" ng-required="selectedAddress == 3" />
-                                    </md-input-container>
-                                </div>
-                            </md-tab-body>
-                        </md-tab>
-                    </md-tabs>
-                </div>
                 <!--Card Info-->
                 <div class="container cardContainer" flex="80">
                     <div layout="row" layout-align="start center">
-                        <div  class="extBoxTtl" ng-if="userInfo.cardText" ng-style="(userInfo.card == '0') && {'color': 'rgba(209, 58, 58, 0.95)'}">{{userInfo.cardText}}</div>
+                        <div class="extBoxTtl" ng-if="userInfo.cardText" ng-style="(userInfo.card == '0') && {'color': 'rgba(209, 58, 58, 0.95)'}">{{userInfo.cardText}}</div>
                         <div layout="row" ng-if="!userInfo.cardText">
-                            <div><img ng-src="{{'/resources/images/non-homit_images/visa_logo.jpeg'}}" width="25px;" height="15.625px" /></div>
-                            <div><img ng-src="{{'/resources/images/non-homit_images/mastercard_logo.jpeg'}}" width="25px;" height="15.625px" /></div>
-                            <div><img ng-src="{{'/resources/images/non-homit_images/american-express_logo.jpeg'}}" width="25px;" height="15.625px" /></div>
+                            <div>
+                                <img ng-src="{{'/resources/images/non-homit_images/visa_logo.jpeg'}}" width="25px;" height="15.625px" />
+                            </div>
+                            <div>
+                                <img ng-src="{{'/resources/images/non-homit_images/american-express_logo.jpeg'}}" width="25px;" height="15.625px" />
+                            </div>
+                            <div>
+                                <img ng-src="{{'/resources/images/non-homit_images/interact_logo.jpeg'}}" width="25px;" height="15.625px" />
+                            </div>
+                            <div>
+                                <img ng-src="{{'/resources/images/non-homit_images/mastercard_logo.jpeg'}}" width="25px;" height="15.625px" />
+                            </div>
                         </div>
                         <md-button aria-label="ShowHideCardInfo" class="glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown">
                             <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="20"></ng-md-icon>
@@ -196,7 +167,8 @@
                             <div layout="row" layout-align="center">
                                 <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl inptLblSC1">CVV/CVC</label>
-                                    <input name="cvv" id="cardCVV" ng-pattern="/^[0-9]*$/" maxlength="4" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}" ng-model="cvv" ng-blur="sanitizeInput(cvv,'cd_3')" type="text" required>
+                                    <input name="cvv" id="cardCVV" ng-pattern="/^[0-9]*$/" maxlength="4" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}"
+                                        ng-model="cvv" ng-blur="sanitizeInput(cvv,'cd_3')" type="text" required>
                                     <div ng-messages="helcimForm.cvv.$error">
                                         <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
@@ -205,7 +177,8 @@
                             </div>
                         </div>
                         <div class="HomeItBtn">
-                            <button ng-disabled="!userInfo.HomeIt" name="buttonProcess" id="buttonProcess" class="btn btn-success" onclick="javascript:helcimProcess();" ng-click="HomeIt()">Home it</button>
+                            <button ng-disabled="!userInfo.HomeIt" name="buttonProcess" id="buttonProcess" class="btn btn-success" onclick="javascript:helcimProcess();"
+                                ng-click="HomeIt()">Home it</button>
                         </div>
                     </form>
                     <br>
@@ -235,11 +208,11 @@
             </div>
             <!--Order Summary SideNav-->
             <md-sidenav class="md-sidenav-right mdSideNavL1" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
-                <md-content layout-padding style="height: 100%;">
+                <md-content layout-padding>
                     <div class="receiptB1">
                         <div class="summerLnP1">
                             <md-button ng-click="close()" aria-label="HideSideNav" hide-gt-md class="glyClsBtn">
-                                <ng-md-icon icon="keyboard_arrow_left" size="30" style="fill: white;"></ng-md-icon>
+                                <ng-md-icon icon="keyboard_arrow_right" size="30" style="fill: white;"></ng-md-icon>
                             </md-button>
                             <span class="summerLnP2">Order Summary</span>
                         </div>
@@ -353,11 +326,14 @@
                 </div>
             </div>
         </div>
+        <script src="/resources/directives/addressAutocomplete.js"></script>
         <script src="https://secure.myhelcim.com/js/version2.js"></script>
         <script src="/resources/services/localStorage.js"></script>
         <script src="/resources/services/cartService.js"></script>
+        <script src="/resources/services/mapServices.js"></script>
         <script src="/resources/services/date.js"></script>
         <script src="/resources/controllers/checkout.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     </div>
 </body>
 
