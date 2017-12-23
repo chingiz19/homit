@@ -14,6 +14,7 @@ var JWTToken            = require("./models/jwt_token");
 var Logger              = require("./models/logger");
 var SMS                 = require("./models/SMS");
 var MP                  = require("./models/money-processing");
+var CSR                 = require("./models/csr");
 var Email               = require("./models/email");
 
 /**
@@ -34,6 +35,7 @@ class modelFactory {
         global.Logger = Logger;
         global.SMS = SMS;
         global.MP = MP;
+        global.CSR = CSR;
         global.Email = Email;
     }
 }

@@ -58,7 +58,7 @@ pub.sendOrderSlip = function (orderInfo) {
 
 //call this function for CSR's modifed e-mails
 /*
-* @action used to differentiate between 'cancel' order and 'modified' order
+* @action used to differentiate between 'cancel' order, 'refund' and 'modified' order
 */
 pub.sendModifiedOrderSlip = function (orderInfo, action) {
     products = orderInfo.customer.order.products;
@@ -92,8 +92,39 @@ pub.sendModifiedOrderSlip = function (orderInfo, action) {
             };
             sendEmail(mailOptions);
         });
+    } else if (action == "refund") {
+        var html = getRfundedOrderEmailHtml(orderInfo);
+        prepareOrderSlip(orderInfo, function (pdfFileFath) {
+            let mailOptions = {
+                from: '"Homit Orders" <orders@homit.ca>',
+                to: orderInfo.customer_email,
+                subject: orderInfo.customer_name + '\'s order',
+                html: html,
+                attachments: [
+                    {
+                        filename: 'Delivery Slip.pdf',
+                        path: pdfFileFath
+                    },
+                ]
+            };
+            sendEmail(mailOptions);
+        });
     }
 };
+
+/*Working on these*/
+pub.sendRefundEmail = function (orderInfo) {
+    var html = getRfundedOrderEmailHtml(orderInfo);
+    let mailOptions = {
+        from: '"Homit Orders" <orders@homit.ca>',
+        to: orderInfo.customer_email,
+        subject: orderInfo.customer_name + '\'s order',
+        html: html,
+    };
+    sendEmail(mailOptions);
+};
+
+
 
 //FOR MORE EDITING OPTIONS PLEASE REFER TO https://www.npmjs.com/package/cheerio
 var getEmailHtml = function (orderInfo) {
@@ -127,6 +158,18 @@ var getCancelledOrderEmailHtml = function (orderInfo) {
 
     $('#customer').text(orderInfo.customer.first_name);
     $('#order_id').text("#" + orderNumber);
+
+    return $.html();
+};
+
+var getRfundedOrderEmailHtml = function (orderInfo) {
+    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/refundOrder.html", "utf8");
+    var orderNumber = orderInfo.order_id;
+    const $ = cheerio.load(htmlSource);
+
+    $('#customer').text(orderInfo.customer_name);
+    $('#order_id').text("#" + orderNumber);
+    $('#refund_amount').text(orderInfo.refund_amount);
 
     return $.html();
 };

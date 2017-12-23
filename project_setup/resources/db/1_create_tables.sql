@@ -300,6 +300,8 @@ CREATE TABLE orders_cart_info (
 	depot_id INT NOT NULL, 
 	quantity VARCHAR(225) NOT NULL,
 	price_sold DECIMAL(6,2) NOT NULL,
+	modified_quantity INT NULL,
+	tax BOOLEAN NOT NULL,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_orders_cart_info_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -318,4 +320,33 @@ CREATE TABLE drivers_routes (
 	CONSTRAINT fk_drivers_routes_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_drivers_routes_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_drivers_routes_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE			
+) ENGINE = InnoDB;
+
+
+CREATE TABLE csr_actions (
+	id INT NOT NULL AUTO_INCREMENT,
+	csr_id INT NOT NULL,
+	note VARCHAR(225),
+
+	PRIMARY KEY(id),
+	CONSTRAINT fk_csr_actions_csr_id FOREIGN KEY (csr_id) REFERENCES users_employees(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE orders_history_refund (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	id_prefix VARCHAR(3) NOT NULL DEFAULT "r_", 
+	order_id INT NOT NULL,
+	csr_action_id INT NOT NULL,
+	transaction_id INT,
+	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_picked TIMESTAMP NULL,
+	date_refunded TIMESTAMP NULL,
+	driver_id INT,
+	date_scheduled TIMESTAMP NULL,
+	date_scheduled_note VARCHAR(225),	
+	
+	PRIMARY KEY (id),
+	CONSTRAINT fk_orders_history_refund_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
+	CONSTRAINT fk_orders_history_refund_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_orders_history_refund_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE = InnoDB;

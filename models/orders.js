@@ -37,6 +37,7 @@ pub.insertProducts = function (order_id, products) {
             order_id: order_id,
             depot_id: products[key].depot_id,
             quantity: products[key].quantity
+            //TODO: Insert price as well as taxable or not boolean
         };
         db.insertQuery(db.dbTables.orders_cart_info, data).then(function (success) {
             if (!success) {
@@ -305,6 +306,77 @@ pub.checkTransaction = function (transactionId) {
         } else {
             return true;
         }
+    });
+};
+
+pub.isDelivered = function (orderId) {
+    var sqlQuery = `
+        SELECT *
+        FROM orders_history
+        WHERE date_delivered = 0 AND ?`
+
+    var data = { "id": orderId };
+    return db.runQuery(sqlQuery, data).then(function (orders) {
+        if (orders.length > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+};
+
+pub.placeFullRefund = function (orderId, csrActionId, dateScheduled, dateScheduledNote) {
+    var data = {
+        order_id: orderId,
+        csr_action_id: csrActionId
+    };
+
+    if (dateScheduled) {
+        data.date_scheduled = dateScheduled;
+    }
+    if (dateScheduledNote) {
+        data.date_scheduled_note = dateScheduledNote;
+    }
+
+    return db.insertQuery(db.dbTables.orders_history_refund, data).then(function (inserted) {
+        var data = {
+            modified_quantity: 0
+        };
+        var key = {
+            order_id: orderId
+        };
+        return db.updateQuery(db.dbTables.orders_cart_info, [data, key]).then(function (updated) {
+            return true;
+        });
+    });
+};
+
+/**
+ * Calculates modified amount.
+ * If customer owes us, the result will be positive.
+ * If we owe customer, the result will be negative.
+ * 
+ * @param {*} orderId 
+ */
+pub.calculateModifiedAmount = function (orderId) {
+    var albertaGst = 0.05;
+
+    var data = {
+        order_id: orderId
+    };
+
+    return db.selectAllWhere(db.dbTables.orders_cart_info, data).then(function (items) {
+        var refundAmount = 0;
+        for (var i = 0; i < items.length; i++) {
+            var tempAmount = items[i].price_sold * (items[i].quantity - items[i].modified_quantity);
+
+            if (items[i].tax) {
+                tempAmount = tempAmount + tempAmount * albertaGst;
+            }
+            refundAmount = refundAmount + tempAmount;
+        };
+
+        return refundAmount * (-1);
     });
 };
 

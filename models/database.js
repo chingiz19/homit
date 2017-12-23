@@ -31,7 +31,9 @@ const dbTables = {
   users_customers_guest: "users_customers_guest",
   users_customers_history: "users_customers_history",
   users_employees: "users_employees",
-  user_cart_info: "user_cart_info"
+  user_cart_info: "user_cart_info",
+  csr_actions: "csr_actions",
+  orders_history_refund: "orders_history_refund"
 }
 
 
