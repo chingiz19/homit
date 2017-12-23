@@ -12,7 +12,7 @@
  * </address-autocomplete>
  * 
  */
-app.directive("addressAutocomplete", function(sessionStorage, $interval){
+app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeout){
     
         var publicFunctions = {};
         var autoComplete;
@@ -77,39 +77,43 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval){
                         </md-button>
                     `,
             link: function(scope, element, attrs){
-                autoComplete = new google.maps.places.Autocomplete(
-                    document.getElementById("autocompleteAddressInputBox"), {
-                        types: ['geocode'],
-                        componentRestrictions: { country: 'ca' }
+                // waits for DOM load
+                // Need let google APIs to load
+                $timeout(function(){
+                    autoComplete = new google.maps.places.Autocomplete(
+                        document.getElementById("autocompleteAddressInputBox"), {
+                            types: ['geocode'],
+                            componentRestrictions: { country: 'ca' }
+                        }
+                    );
+                            
+                    //variable assignment
+                    scope.autocomplete = publicFunctions;
+                    scope.clearText = clearText;
+                    privScopeAccess = scope;
+    
+                    var addrSelected = sessionStorage.getAddress();
+                    if (addrSelected){
+                        scope._searchedAddress = addrSelected.formatted_address;
+                        // if address is already selected, set that address
+                        setTimeout(function(){
+                            autoComplete.set("place", addrSelected);
+                        }, 500);
                     }
-                );
-                        
-                //variable assignment
-                scope.autocomplete = publicFunctions;
-                scope.clearText = clearText;
-                privScopeAccess = scope;
-
-                var addrSelected = sessionStorage.getAddress();
-                if (addrSelected){
-                    scope._searchedAddress = addrSelected.formatted_address;
-                    // if address is already selected, set that address
-                    setTimeout(function(){
-                        autoComplete.set("place", addrSelected);
+    
+                    // need this interval to make sure map bounds are properly set before assigning to autocomplete
+                    var interval = $interval(function(){
+                        if (scope.bounds){
+                            $interval.cancel(interval);
+                            autoComplete.setBounds(scope.bounds);
+                        }
                     }, 500);
-                }
 
-                // need this interval to make sure map bounds are properly set before assigning to autocomplete
-                var interval = $interval(function(){
-                    if (scope.bounds){
-                        $interval.cancel(interval);
-                        autoComplete.setBounds(scope.bounds);
-                    }
-                }, 500);
-
-                autoComplete.addListener('place_changed', function(){
-                    scope._searchedAddress = publicFunctions.getPlace().formatted_address;
-                    scope.addressChangeEvent();
-                });                
+                    autoComplete.addListener('place_changed', function(){
+                        scope._searchedAddress = publicFunctions.getPlace().formatted_address;
+                        scope.addressChangeEvent();
+                    });
+                }, 0);  
             }            
         }
     });
