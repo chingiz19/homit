@@ -106,7 +106,10 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval){
                     }
                 }, 500);
 
-                autoComplete.addListener('place_changed', scope.addressChangeEvent);                
+                autoComplete.addListener('place_changed', function(){
+                    scope._searchedAddress = publicFunctions.getPlace().formatted_address;
+                    scope.addressChangeEvent();
+                });                
             }            
         }
     });
