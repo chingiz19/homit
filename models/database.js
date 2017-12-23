@@ -39,10 +39,10 @@ const dbTables = {
 
 /* MySQL Connection */
 mysql.createConnection({
-  host: "localhost",
-  user: "db_web_user",
-  password: "gg:(@SH%H3K5^4#P",
-  database: "homit"
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME
 }).then(function (connection) {
   con = connection;
   console.log('Connection to DB established');

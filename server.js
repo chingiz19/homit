@@ -1,3 +1,20 @@
+/* Setup ENV variables */
+var dotenv = require("dotenv");
+switch (process.env.n_mode){
+	case "test":
+		dotenv.config({path: "test.env"});
+		break;
+	case "dev":
+		dotenv.config({path: "dev.env"});
+		break;
+	case "production":
+		dotenv.config({path: "production.env"});
+		break;
+	default:
+		console.log("Missing mode (n_mode) in environment");
+		process.exit(1);
+}
+
 /* Global variables */
 global.express = require('express');
 global.secretKey = "secretSession";

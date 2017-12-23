@@ -12,13 +12,12 @@ var products = {};
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
-    host: 'smtp.zoho.com',
-    port: 465,
-    secure: true, // true for 465, false for other ports
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    secure: true, // should always be true
     auth: {
-        user: 'orders@homit.ca', // generated ethereal user
-        pass: 'chiki&Miki2436'  // generated ethereal password
-        //TODO: make login credentials env module
+        user: process.env.EMAIL_USER, // generated ethereal user
+        pass: process.env.EMAIL_PASS  // generated ethereal password
     }
 });
 

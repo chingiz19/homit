@@ -5,11 +5,12 @@
 
 /* Twilio Credentials, trial values. 
    Shall be switched to real before production  */
-const accountSid = 'ACd01af7b10b7ab88d15f35df2ec6b9f20';
-const authToken = '7590685d91fcb4fff4a1b97b9cc37824';
-const twillioNumber = '+15873176903';   //this number owned by Homit 
+const accountSid = process.env.TWILIO_SID;
+const authToken = process.env.TWILIO_TOKEN;
+const twillioNumber = process.env.TWILIO_NUMBER;   //this number owned by Homit 
 var directors = [];
 
+//TODO: move this out
 const Shabnam = '+14039261177';
 const Elnar = '+14033977020';
 const Chingiz = '+14039262501';

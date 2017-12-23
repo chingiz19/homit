@@ -5,8 +5,8 @@
 var parseString = require('xml2js').parseString;
 var https = require("https");
 var querystring = require('querystring');
-var helcimAccountId = 2500363224;
-var helcimApiToken = "7582Q39f3bxS7X8ScF9EcgAbC";
+var helcimAccountId = parseInt(process.env.HELCIM_ACCOUNT_ID, 10);
+var helcimApiToken = process.env.HELCIM_API_TOKEN;
 var helcimHost = "secure.myhelcim.com";
 var helcimPath = "/api/";
 
