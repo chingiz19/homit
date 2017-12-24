@@ -2,7 +2,6 @@
  * Unit tests for Users model
  * @author Jeyhun Gurbanov
  */
-
 var expect = require("chai").expect;
 // var userModel = require("/models/users.js");
 
