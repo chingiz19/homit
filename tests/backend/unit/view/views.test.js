@@ -54,17 +54,7 @@ describe("Make sure views can be retrieved/loaded", function(){
                 });
         });
 
-        it("'/catalog/liquor/beer' should return 200", function(done){
-            chai.request(host).get('/catalog/liquor/beer')
-                .end(function(err, res){
-                    expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
-                    expect(res.statusCode).to.equal(200); 
-                    expect(res.req.path).to.equal("/catalog/liquor/beer");
-                    done();
-                });
-        });
-
-        it("'/catalog/snackvendor/' should redirect to ", function(done){
+        it("'/catalog/snackvendor/' should redirect to '/catalog/snackvendor/all'", function(done){
             chai.request(host).get('/catalog/snackvendor')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
@@ -142,6 +132,26 @@ describe("Make sure views can be retrieved/loaded", function(){
 
         it("'/invalidpath/main' should return 404 page", function(done){
             chai.request(host).get('/invalidpath/main')
+                .end(function(err, res){
+                    expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
+                    expect(res.statusCode).to.equal(404); 
+                    expect(res.req.path).to.equal(page_404);
+                    done();
+                });
+        });
+
+        it("'/catalog/liquor/beer2' should return 404", function(done){
+            chai.request(host).get('/catalog/liquor/beer2')
+                .end(function(err, res){
+                    expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
+                    expect(res.statusCode).to.equal(404); 
+                    expect(res.req.path).to.equal(page_404);
+                    done();
+                });
+        });
+
+        it("'/catalog/beer' should return 404", function(done){
+            chai.request(host).get('/catalog/beer')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(404); 

@@ -33,7 +33,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             $scope.selectedCategory = "all";
             $scope.loadedStore = "SnackVendor";
         } else {
-            $scope.productUrl = '/api/catalog/notfound';
+            $window.location.href = "/notfound";
         }
 
         $scope.productUrl = '/api' + $scope.selection;
