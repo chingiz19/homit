@@ -19,11 +19,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
             // ignore, address doesn't exist
         }
 
-        if ($window.location.pathname.startsWith("/main") || $window.location.pathname.startsWith("/myaccount")){
-            $scope.showSearchBar = false;
-        } else {
-            $scope.showSearchBar = true;
-        }
+        $scope.showSearchBar = $("#searchBarBoolean").val();
 
         checkUser();
     }

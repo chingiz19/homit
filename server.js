@@ -112,7 +112,7 @@ webServer.use("/", require(path.join(__dirname, "/view_controllers/generic_contr
 
 /* 404 Path */
 webServer.use(function(req, res, next){
-	res.status(404).send("Path not found: " + req.path);
+	res.redirect("/notfound");
 });
 
 /* Error handling */

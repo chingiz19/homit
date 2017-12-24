@@ -1,0 +1,19 @@
+<html ng-app="mainModule">
+
+<head>
+    <%- include('partial/imports')%>
+    <%- include('partial/header', {title: title}); %>
+    <link href="/resources/css/page404.css" rel="stylesheet">
+</head>
+
+<body class="ng-cloak">
+    <div ng-controller="page404Controller">
+        <h1>Sorry not found</h1>
+    </div>
+    <script src="/resources/controllers/page404.js"></script>
+</body>
+
+<footer>
+        <%- include('partial/footer')%>
+</footer>
+</html>

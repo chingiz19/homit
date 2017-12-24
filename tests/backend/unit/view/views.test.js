@@ -119,13 +119,13 @@ describe("Make sure views can be retrieved/loaded", function(){
      * Check that invalid paths are recognized (return 404)
      */
     describe("Check that invalid paths are recognized (return 404)", function(){
-        var page_404 = "/404";
+        var page_404 = "/notfound";
         it("'/invalidPath' should return 404 page", function(done){
             chai.request(host).get('/invalidPath')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(404); 
-                    //expect(res.req.path).to.equal(page_404); //TODO name of 404 page
+                    expect(res.req.path).to.equal(page_404);
                     done();
                 });
         });
@@ -135,7 +135,7 @@ describe("Make sure views can be retrieved/loaded", function(){
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(404); 
-                    //expect(res.req.path).to.equal(page_404); //TODO name of 404 page
+                    expect(res.req.path).to.equal(page_404);
                     done();
                 });
         });
@@ -145,7 +145,7 @@ describe("Make sure views can be retrieved/loaded", function(){
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(404); 
-                    //expect(res.req.path).to.equal(page_404); //TODO name of 404 page
+                    expect(res.req.path).to.equal(page_404);
                     done();
                 });
         });
