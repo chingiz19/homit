@@ -7,7 +7,7 @@ var router = require("express").Router();
 /**
  * Checks if user given exists in the database
  */
-router.post('/userexists', function (req, res, next) {
+router.post('/userexists', async function (req, res, next) {
     var email = req.body.email;
     if (!email) {
         res.status(403).json({
@@ -18,26 +18,25 @@ router.post('/userexists', function (req, res, next) {
             }
         });
     } else {
-        User.findUser(email).then(function (exists) {
-            if (!exists) {
-                res.json({
-                    status: "success",
-                    exists: false
-                });
-            } else {
-                res.json({
-                    status: "success",
-                    exists: true
-                });
-            }
-        });
+        var userExists = await User.findUser(email);
+        if (!userExists) {
+            res.json({
+                status: "success",
+                exists: false
+            });
+        } else {
+            res.json({
+                status: "success",
+                exists: true
+            });
+        }
     }
 });
 
 /**
  * Registers user
  */
-router.post('/signup', function (req, res, next) {
+router.post('/signup', async function (req, res, next) {
     var fname = req.body.fname;
     var lname = req.body.lname;
     var email = req.body.email;
@@ -54,46 +53,42 @@ router.post('/signup', function (req, res, next) {
             }
         });
     } else {
-        Auth.hashPassword(password).then(function (hashedPassword) {
-            User.findUser(email).then(function (exists) {
-                if (!exists) {
-                    var userData = {
-                        user_email: email,
-                        first_name: fname,
-                        last_name: lname,
-                        password: hashedPassword
-                    };
-                    if (birth_year && birth_month && birth_day) {
-                        var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
-                        userData.birth_date = birth_date;
-                    }
-                    User.addUser(userData).then(function (insertedUser) {
-                        //TODO: check for success
-                        User.findUser(email).then(function(user){
-                            Auth.sign(req, res, user);
-                            res.json({
-                                status: "success",
-                                ui_message: "Successfully signed up. You will receive an email with confirmation"
-                            });
-                        });
-                    });
-                } else {
-                    res.json({
-                        error: {
-                            code: "A002",
-                            "ui_message": "User already exists" // TODO update this error message to non obvious one (security)
-                        }
-                    });
+        var hashedPassword = await Auth.hashPassword(password);
+        var userExists = await User.findUser(email);
+        if (!userExists) {
+            var userData = {
+                user_email: email,
+                first_name: fname,
+                last_name: lname,
+                password: hashedPassword
+            };
+            if (birth_year && birth_month && birth_day) {
+                var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
+                userData.birth_date = birth_date;
+            }
+            var insertedUser = await User.addUser(userData);
+            //TODO: check for success
+            var user = await User.findUser(email);
+            Auth.sign(req, res, user);
+            res.json({
+                status: "success",
+                ui_message: "Successfully signed up. You will receive an email with confirmation"
+            });
+        } else {
+            res.json({
+                error: {
+                    code: "A002",
+                    "ui_message": "User already exists" // TODO update this error message to non obvious one (security)
                 }
             });
-        });
+        }
     }
 });
 
 /**
  * Logs the user in
  */
-router.post('/signin', function (req, res, next) {
+router.post('/signin', async function (req, res, next) {
     var email = req.body.email;
     var password = req.body.password;
     if (!(email && password)) {
@@ -104,23 +99,21 @@ router.post('/signin', function (req, res, next) {
             }
         });
     } else {
-        User.authenticateUser(email, password).then(function (user) {
-            var errResponse = {
+        var user = await User.authenticateUser(email, password);
+        if (!user) {
+            res.json({
                 error: {
                     code: "A003",
                     ui_message: "Invalid email, or password"
                 }
-            };
-            if (!user) {
-                res.json(errResponse);
-            } else {
-                Auth.sign(req, res, user);
-                res.json({
-                    status: "success",
-                    ui_message: "Successfully signed in"
-                });
-            }
-        });
+            });
+        } else {
+            Auth.sign(req, res, user);
+            res.json({
+                status: "success",
+                ui_message: "Successfully signed in"
+            });
+        }
     }
 });
 
@@ -128,16 +121,7 @@ router.post('/signin', function (req, res, next) {
  * Sign out the user
  */
 router.all('/signout', function (req, res, next) {
-    if (!req.session) {
-        res.status(200).json({
-            status: "success",
-            ui_message: "Successfully logged out"
-        });
-        return;
-    }
-
     Auth.clear(res);
-    var response = response = { "success": false, "ui_message": "Could not sign out, please try again" };
     res.status(200).json({ "success": true, "ui_message": "Successfully logged out" });
 });
 
@@ -158,20 +142,18 @@ router.post('/changepassword', function (req, res, next) {
 /**
  * Login for CSR
  */
-router.get("/csrlogin", function (req, res, next) {
-    User.authenticateCsrUser(req.query.username, req.query.password).then(function (user) {
-        var errResponse = {
+router.get("/csrlogin", async function (req, res, next) {
+    var user = User.authenticateCsrUser(req.query.username, req.query.password);
+    if (!user) {
+        res.json({
             error: {
                 code: "A003"
             }
-        };
-        if (!user) {
-            res.json(errResponse);
-        } else {
-            Auth.sign(req, res, user);
-            res.redirect("/vieworders");
-        }
-    });
+        });
+    } else {
+        Auth.sign(req, res, user);
+        res.redirect("/vieworders");
+    }
 });
 
 module.exports = router;
