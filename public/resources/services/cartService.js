@@ -39,31 +39,7 @@ app.service('cartService', ["$http", function ($http) {
                 localCart[super_category][depot_id] = product_array[1];
             }
         }
-
-
-        // if remoteCart matches localCart
-
-        // for (var i=0; i < remoteCart.length; i++){
-        //     var tmp = remoteCart[i];
-        //     var super_category = tmp[0];
-        //     var super_category_items = Object.entries(super_category_items[1]);
-        //     for (var j = 0; j < super_category_items.length; j++){
-        //         var product_array = super_category_items[j];
-        //         var depot_id = product_array[0];
-        //         if (localCart.hasOwnProperty(super_category) && localCart[super_category].hasOwnProperty(depot_id)){
-        //             // add to quantity, not exceeding 10
-        //             var tmpQuantity = localCart[super_category][depot_id].quantity;
-        //             tmpQuantity += product_array[1].quantity;
-
-        //             if (tmpQuantity >= 10) tmpQuantity = 10;
-
-        //             localCart[super_category][depot_id].quantity = tmpQuantity;
-        //         } else {
-        //             localCart[super_category][depot_id] = product_array[1];
-        //         }
-        //     }
-        // }
-
+        
         return localCart;
     }
 
@@ -78,10 +54,36 @@ app.service('cartService', ["$http", function ($http) {
         var selected = cart[super_category];
         delete cart[super_category];
 
+        // Item ordering
+        // Implementation expected bubble sort - knowing order (from 0 - n) look expected order 'i' and insert at 'i'
+        // Using this to 
+        // takes O(n^2)
+        var orderedItems = [];
+        if (selected){ // order if there are items to order
+            var keys = Object.keys(selected);
+            for (var expectedOrderIndex = 0; expectedOrderIndex < keys.length; expectedOrderIndex++){
+                var failBack = true;
+                for (var j = 0; j < keys.length; j++){
+                    if (selected[keys[j]]["orderIndex"] == expectedOrderIndex){
+                        orderedItems.splice(expectedOrderIndex, 0, selected[keys[j]]);
+                        failBack = false;
+                        break;
+                    }
+                }
+                // failBack if orderIndex did not match
+                // Add item at second index (good approach as item will be visible, but not first)
+                if (failBack){
+                    console.warn("Cart ordering runs in failBack mode");
+                    orderedItems.splice(1, 0, selected[keys[j]]);
+                }
+            }
+        }
+
         var new_cart = Object.entries(cart);
         if (selected) {
-            new_cart.splice(0, 0, [super_category, selected]);
+            new_cart.splice(0, 0, [super_category, orderedItems]);
         }
+
         return new_cart;
     }
 

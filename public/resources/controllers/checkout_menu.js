@@ -32,7 +32,7 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
         var tmpQuantity = 1;
         var super_category = {};
         if ($scope.userCart.hasOwnProperty(product.super_category)) {
-            var super_category = $scope.userCart[product.super_category];
+            super_category = $scope.userCart[product.super_category];
         }
 
         if (super_category.hasOwnProperty(product.depot_id)){
@@ -46,11 +46,13 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
             $scope.totalAmount = $scope.totalAmount + product.price;
             $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
         } else {
+            increaseCartItemIndexes(product.super_category);
+            product.orderIndex = 0;
             super_category[product.depot_id] = product;
             super_category[product.depot_id]["quantity"] = tmpQuantity;
             $scope.numberOfItemsInCart++;
             $scope.totalAmount = $scope.totalAmount + product.price;
-            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
+            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;            
         }
         $scope.userCart[product.super_category] = super_category;
         updateUserCart($scope.userCart);
@@ -108,8 +110,12 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
 
     $scope.removeFromCart = function (product) {
         if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
+            // delete item and reorder indexes of other items
+            var index = $scope.userCart[product.super_category][product.depot_id]["orderIndex"];
+            var super_c = product.super_category;
             delete $scope.userCart[product.super_category][product.depot_id];
-            
+            decreaseCartItemIndexes(super_c, index);
+
             // if super_category doesn't contain objects, then remove from list
             if (Object.entries($scope.userCart[product.super_category]).length == 0){
                 delete $scope.userCart[product.super_category];
@@ -173,6 +179,47 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
         });
     };
     // End
+
+
+
+    /**
+     * Logic for increase/decrease order indexes of Cart items
+     * @param {*} increase
+     */
+    function updateCartItemIndexes(increase, super_category, deletedItemIndex){
+        if (!$scope.userCart[super_category]){
+            return;
+        }
+
+        var depot_ids = Object.keys($scope.userCart[super_category]);
+        for (var i = 0; i < depot_ids.length; i++){
+            var depot_id = depot_ids[i];
+            var currentIndex = $scope.userCart[super_category][depot_id]["orderIndex"];
+            if (increase){
+                // increase
+                $scope.userCart[super_category][depot_id]["orderIndex"] = currentIndex + 1;
+            } else {
+                // decrease
+                if (currentIndex > deletedItemIndex){
+                    $scope.userCart[super_category][depot_id]["orderIndex"] = currentIndex - 1;
+                }
+            }
+        }
+    }
+
+    /**
+     * Helper method to increase order indexes of Cart items
+     */
+    function increaseCartItemIndexes(super_category){
+        updateCartItemIndexes(true, super_category);
+    }
+
+    /**
+     * Helper method to decrease order indexes of Cart items
+     */
+    function decreaseCartItemIndexes(super_category, deletedItemIndex){
+        updateCartItemIndexes(false, super_category, deletedItemIndex);
+    }
 
 
 });
