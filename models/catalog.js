@@ -294,9 +294,6 @@ pub.getSuperCategoryIdByName = function (superCategory) {
 };
 
 pub.getTotalPriceForProducts = function (products) {
-    var deliveryFee1 = 4.99;
-    var deliveryFee2 = 2.99;
-    var albertaGst = 0.05;
     var depotQuantities = {};
     var depotIds = [];
     for (var superCategory in products) {
@@ -308,33 +305,53 @@ pub.getTotalPriceForProducts = function (products) {
 
 
     var sqlQuery = `
-    SELECT *
+    SELECT id AS depot_id, price AS price
     FROM catalog_depot
     WHERE id in (` + depotIds + `);`
 
     return db.runQuery(sqlQuery).then(function (prices) {
-        var totalAmount = 0;
-        var totalTax = 0;
-        for (var i = 0; i < prices.length; i++) {
-            totalAmount = totalAmount + parseFloat(prices[i].price) * depotQuantities[prices[i].id];
-            if (prices[i].tax) {
-                totalTax = totalTax + parseFloat(prices[i].price) * depotQuantities[prices[i].id] * albertaGst;
-            }
-        }
-         // Calculating math numbers
-         totalAmount = Math.round(totalAmount * 100) / 100;
-         var deliveryFee = deliveryFee1;
-         deliveryFee = deliveryFee1 + parseInt(totalAmount/100)*deliveryFee2;
-         totalTax = Math.round((totalTax + deliveryFee * albertaGst) * 100) / 100;            
-         var totalPrice = totalAmount + deliveryFee + totalTax;
-
-        // Updating display variables
-        totalTax = totalTax.toFixed(2);
-        totalAmount = totalAmount.toFixed(2);
-        totalPrice = totalPrice.toFixed(2);
-
-        return parseFloat(totalPrice);
+        var price = priceCalculator(depotQuantities, prices, false);
+        return price.total_price;
     });
+};
+
+
+pub.priceCalculator = function (depotQuantities, prices, refund) {
+    var deliveryFee1 = 4.99;
+    var deliveryFee2 = 2.99;
+    var albertaGst = 0.05;
+    var totalAmount = 0;
+    var totalTax = 0;
+    for (var i = 0; i < prices.length; i++) {
+        totalAmount = totalAmount + parseFloat(prices[i].price) * depotQuantities[prices[i].depot_id];
+        if (prices[i].tax) {
+            totalTax = totalTax + parseFloat(prices[i].price) * depotQuantities[prices[i].depot_id] * albertaGst;
+        }
+    }
+    // Calculating math numbers
+    totalAmount = Math.round(totalAmount * 100) / 100;
+    var deliveryFee = 0;
+    if (!refund) {
+        deliveryFee = deliveryFee1 + parseInt(totalAmount / 100) * deliveryFee2;
+    }
+
+    totalTax = Math.round((totalTax + deliveryFee * albertaGst) * 100) / 100;
+    var totalPrice = totalAmount + deliveryFee + totalTax;
+
+    // Updating display variables
+    totalTax = totalTax.toFixed(2);
+    totalAmount = totalAmount.toFixed(2);
+
+    totalPrice = parseFloat(totalPrice.toFixed(2));
+
+    var finalPrices = {
+        "cart_amount": totalAmount,
+        "delivery_fee": deliveryFee,
+        "total_tax": totalTax,
+        "total_price": totalPrice
+    };
+
+    return finalPrices;
 };
 
 /**

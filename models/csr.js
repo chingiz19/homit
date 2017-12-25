@@ -6,7 +6,7 @@
 var pub = {};
 
 
-pub.refundAction = function (csrId, note, orderId) {
+pub.recordAction = function (csrId, note, orderId) {
     insertData = {
         csr_id: csrId,
         note: note

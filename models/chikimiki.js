@@ -146,4 +146,21 @@ pub.sendOrder = function (customerId, customerAddress, orderId, storeType) {
     CM.send(newOrder);
 }
 
+pub.cancelOrder = function (orderId, driverId) {
+    var driverIdString = "d_" + driverId;
+    var orderIdString = "o_" + orderId;
+
+    var json = {
+        "action": "driver_status",
+        "details": {
+            "driver_id": driverIdString,
+            "status": "remove_order",
+            "remove_order": {
+                "order_id": orderIdString
+            }
+        }
+    };
+    CM.send(json);
+};
+
 module.exports = pub;

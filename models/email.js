@@ -113,7 +113,29 @@ pub.sendModifiedOrderSlip = function (orderInfo, action) {
 
 /*Working on these*/
 pub.sendRefundEmail = function (orderInfo) {
-    var html = getRfundedOrderEmailHtml(orderInfo);
+    var html = getRefundedOrderEmailHtml(orderInfo);
+    let mailOptions = {
+        from: '"Homit Orders" <orders@homit.ca>',
+        to: orderInfo.customer_email,
+        subject: orderInfo.customer_name + '\'s order',
+        html: html,
+    };
+    sendEmail(mailOptions);
+};
+
+pub.sendPartialRefundEmail = function (orderInfo) {
+    var html = getPartialRefundedOrderEmailHtml(orderInfo);
+    let mailOptions = {
+        from: '"Homit Orders" <orders@homit.ca>',
+        to: orderInfo.customer_email,
+        subject: orderInfo.customer_name + '\'s order',
+        html: html,
+    };
+    sendEmail(mailOptions);
+};
+
+pub.sendCancelEmail = function (orderInfo) {
+    var html = getCancelledOrderEmailHtml(orderInfo);
     let mailOptions = {
         from: '"Homit Orders" <orders@homit.ca>',
         to: orderInfo.customer_email,
@@ -152,16 +174,17 @@ var getModifiedOrderEmailHtml = function (orderInfo) {
 
 var getCancelledOrderEmailHtml = function (orderInfo) {
     var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/cancelledOrder.html", "utf8");
-    var orderNumber = orderInfo.customer.order.id.split('_')[1];
+    var orderNumber = orderInfo.order_id;
     const $ = cheerio.load(htmlSource);
 
-    $('#customer').text(orderInfo.customer.first_name);
+    $('#customer').text(orderInfo.first_name);
     $('#order_id').text("#" + orderNumber);
+    $('#refund_amount').text(orderInfo.refund_amount);
 
     return $.html();
 };
 
-var getRfundedOrderEmailHtml = function (orderInfo) {
+var getRefundedOrderEmailHtml = function (orderInfo) {
     var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/refundOrder.html", "utf8");
     var orderNumber = orderInfo.order_id;
     const $ = cheerio.load(htmlSource);
@@ -169,6 +192,19 @@ var getRfundedOrderEmailHtml = function (orderInfo) {
     $('#customer').text(orderInfo.customer_name);
     $('#order_id').text("#" + orderNumber);
     $('#refund_amount').text(orderInfo.refund_amount);
+
+    return $.html();
+};
+
+var getPartialRefundedOrderEmailHtml = function (orderInfo) {
+    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/refundOrder.html", "utf8");
+    var orderNumber = orderInfo.order_id;
+    const $ = cheerio.load(htmlSource);
+
+    $('#customer').text(orderInfo.customer_name);
+    $('#order_id').text("#" + orderNumber);
+    $('#refund_amount').text(orderInfo.refund_amount);
+    $('#action').text("partially");
 
     return $.html();
 };
@@ -194,7 +230,7 @@ var prepareOrderSlip = function (orderInfo, callback) {
 
 
 //Editing html for .pdf Order Slip that is attached to main e-mail
-var getOrderSlipHtml = function (htmlSource, OI) {
+var getOrderSlipHtml = function (htmlSource, OI) { 
     const $ = cheerio.load(htmlSource);
     const now = new Date();
     const dateArray = now.toString().split(" ");

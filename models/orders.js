@@ -123,6 +123,7 @@ function getOrdersWithQuery(sqlQuery, data) {
 }
 
 pub.getOrderById = function (orderId) {
+    // TODO: 
     var sqlQuery = `
         SELECT
         orders_cart_info.depot_id AS depot_id, super_categories.name AS super_category,
@@ -313,9 +314,9 @@ pub.isDelivered = function (orderId) {
     var sqlQuery = `
         SELECT *
         FROM orders_history
-        WHERE date_delivered = 0 AND ?`
+        WHERE date_delivered IS NULL AND ?`
 
-    var data = { "id": orderId };
+    var data = { id: orderId };
     return db.runQuery(sqlQuery, data).then(function (orders) {
         if (orders.length > 0) {
             return false;
@@ -325,7 +326,15 @@ pub.isDelivered = function (orderId) {
     });
 };
 
-pub.placeFullRefund = function (orderId, csrActionId, dateScheduled, dateScheduledNote) {
+/**
+ * Inserts data into orders_history_refund table.
+ * 
+ * @param {*} orderId 
+ * @param {*} csrActionId 
+ * @param {*} dateScheduled 
+ * @param {*} dateScheduledNote 
+ */
+pub.placeRefundHistory = function (orderId, csrActionId, dateScheduled, dateScheduledNote) {
     var data = {
         order_id: orderId,
         csr_action_id: csrActionId
@@ -339,6 +348,23 @@ pub.placeFullRefund = function (orderId, csrActionId, dateScheduled, dateSchedul
     }
 
     return db.insertQuery(db.dbTables.orders_history_refund, data).then(function (inserted) {
+        return inserted.insertId;
+    });
+
+};
+
+/**
+ * Changes data in orders_cart_info table. 
+ * This is used by full cancel and full refund.
+ * 
+ * @param {*} orderId 
+ */
+pub.placeFullRefundCart = function (orderId) {
+    var selectData = {
+        order_id: orderId
+    };
+
+    return db.selectAllWhere(db.dbTables.orders_cart_info, selectData).then(function (items) {
         var data = {
             modified_quantity: 0
         };
@@ -346,8 +372,92 @@ pub.placeFullRefund = function (orderId, csrActionId, dateScheduled, dateSchedul
             order_id: orderId
         };
         return db.updateQuery(db.dbTables.orders_cart_info, [data, key]).then(function (updated) {
-            return true;
+            return items;
         });
+    });
+};
+
+/**
+ * Changes data in orders_cart_info table. 
+ *
+ * @param {*} orderId 
+ * @param {*} refundItems 
+ */
+pub.placePartialRefundCart = function (orderId, refundItems) {
+    var selectData = {
+        order_id: orderId
+    };
+
+    return db.selectAllWhere(db.dbTables.orders_cart_info, selectData).then(function (items) {
+
+        var queriesToRun = [];
+        var updateFunctions = [];
+        for (var i = 0; i < items.length; i++) {
+            var refundItem = refundItems[items[i].id];
+            if (refundItem != undefined) {
+                if (refundItem.refund_quantity != 0) {
+                    var newQuantity;
+
+                    if (items[i].modified_quantity != undefined) {
+                        newQuantity = parseInt(items[i].modified_quantity) + parseInt(refundItem.refund_quantity);
+                    } else {
+                        newQuantity = parseInt(items[i].quantity) + parseInt(refundItem.refund_quantity);
+                    }
+
+                    if (newQuantity < 0) {
+                        newQuantity = 0;
+                    }
+
+                    var updateData = {
+                        modified_quantity: newQuantity
+                    };
+                    var key = {
+                        id: refundItem.id
+                    };
+
+                    updateFunctions.push(db.updateQuery(db.dbTables.orders_cart_info, [updateData, key]));
+                }
+            }
+        }
+        return Promise.all(updateFunctions).then(function (updated) {
+            return items;
+        });
+    });
+};
+
+/**
+ * Inserts data into orders_history_modify table.
+ * 
+ * @param {*} orderId 
+ * @param {*} csrActionId 
+ */
+pub.placeFullCancelHistory = function (orderId, csrActionId) {
+    var insertData = {
+        order_id: orderId,
+        csr_action_id: csrActionId,
+        action: "FULL CANCEL"
+    };
+
+    return db.insertQuery(db.dbTables.orders_history_modify, insertData).then(function (inserted) {
+        return inserted.insertId;
+    });
+};
+
+/**
+ * Inserts data into orders_history_modify table.
+ * 
+ * @param {*} orderId 
+ * @param {*} csrActionId 
+ */
+pub.placePartialCancelHistory = function (orderId, csrActionId) {
+    var insertData = {
+        order_id: orderId,
+        csr_action_id: csrActionId,
+        action: "CANCEL ITEM"
+    };
+
+    return db.insertQuery(db.dbTables.orders_history_modify, insertData).then(function (inserted) {
+        return inserted.insertId;
     });
 };
 
@@ -358,25 +468,86 @@ pub.placeFullRefund = function (orderId, csrActionId, dateScheduled, dateSchedul
  * 
  * @param {*} orderId 
  */
-pub.calculateModifiedAmount = function (orderId) {
+pub.calculateModifiedAmount = function (orderId, oldItems, refund) {
     var albertaGst = 0.05;
+
+    var depotQuantities = {};
+
 
     var data = {
         order_id: orderId
     };
 
-    return db.selectAllWhere(db.dbTables.orders_cart_info, data).then(function (items) {
-        var refundAmount = 0;
-        for (var i = 0; i < items.length; i++) {
-            var tempAmount = items[i].price_sold * (items[i].quantity - items[i].modified_quantity);
+    var sqlQuery = `
+        SELECT id, order_id, depot_id, quantity, price_sold AS price,
+        modified_quantity, tax
+        FROM orders_cart_info
+        WHERE ?;`
 
-            if (items[i].tax) {
-                tempAmount = tempAmount + tempAmount * albertaGst;
+    return db.runQuery(sqlQuery, data).then(function (items) {
+        if (items.length == oldItems.length) {
+            var refundAmount = 0;
+            for (var i = 0; i < items.length; i++) {
+                var tempQuantity = 0;
+
+                if (items[i].modified_quantity != undefined) {
+                    if (oldItems[i].modified_quantity != undefined) {
+                        tempQuantity = oldItems[i].modified_quantity - items[i].modified_quantity;
+                    } else {
+                        tempQuantity = items[i].quantity - items[i].modified_quantity;
+                    }
+
+                    var tempAmount = items[i].price_sold * tempQuantity;
+
+                    if (items[i].tax) {
+                        tempAmount = tempAmount + tempAmount * albertaGst;
+                    }
+                    refundAmount = refundAmount + tempAmount;
+                }
+                depotQuantities[items[i].depot_id] = tempQuantity;
             }
-            refundAmount = refundAmount + tempAmount;
-        };
 
-        return refundAmount * (-1);
+            price = Catalog.priceCalculator(depotQuantities, items, refund);
+            return price;
+        }
+    });
+};
+
+pub.getOrderInfo = function (orderId) {
+    var data = {
+        id: orderId
+    };
+
+    return db.selectAllWhere(db.dbTables.orders_history, data).then(function (orders) {
+        if (orders.length > 0) {
+            return orders[0];
+        } else {
+            return false;
+        }
+    });
+};
+
+pub.updateRefundAmount = function (refundHistoryId, customerRefundAmount) {
+    var data = {
+        refund_amount: customerRefundAmount
+    };
+    var key = {
+        id: refundHistoryId
+    };
+    return db.updateQuery(db.dbTables.orders_history_refund, [data, key]).then(function (updated) {
+        return updated;
+    });
+};
+
+pub.updateCancelAmount = function (cancelHistoryId, customerRefundAmount) {
+    var data = {
+        refund_amount: customerRefundAmount
+    };
+    var key = {
+        id: cancelHistoryId
+    };
+    return db.updateQuery(db.dbTables.orders_history_modify, [data, key]).then(function (updated) {
+        return updated;
     });
 };
 

@@ -338,6 +338,7 @@ CREATE TABLE orders_history_refund (
 	order_id INT NOT NULL,
 	csr_action_id INT NOT NULL,
 	transaction_id INT,
+	refund_amount DECIMAL(6,2),
 	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	date_picked TIMESTAMP NULL,
 	date_refunded TIMESTAMP NULL,
@@ -349,4 +350,21 @@ CREATE TABLE orders_history_refund (
 	CONSTRAINT fk_orders_history_refund_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
 	CONSTRAINT fk_orders_history_refund_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_orders_history_refund_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
+) ENGINE = InnoDB;
+
+
+CREATE TABLE orders_history_modify (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	id_prefix VARCHAR(3) NOT NULL DEFAULT "c_", 
+	order_id INT NOT NULL,
+	csr_action_id INT NOT NULL,
+	transaction_id INT,
+	action ENUM('FULL CANCEL', 'CANCEL ITEM', 'ADD ITEM', 'NEW ORDER'),
+	refund_amount DECIMAL(6,2),	
+	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_refunded TIMESTAMP NULL,
+	
+	PRIMARY KEY (id),
+	CONSTRAINT fk_orders_history_modify_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
+	CONSTRAINT fk_orders_history_modify_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE = InnoDB;

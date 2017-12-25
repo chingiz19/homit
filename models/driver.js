@@ -267,7 +267,7 @@ var updateOrdersHistory = function (updateColumn, orderIdsString) {
     WHERE id in (` + orderIds + `)`;
 
     return db.runQuery(sqlQuery).then(function (updated) {
-       //TODO: Zaman Zamanli please call SMS.arrivalNotification(number, name) here for arrival notification
+        //TODO: Zaman Zamanli please call SMS.arrivalNotification(number, name) here for arrival notification
         return updated;
     });
 };
@@ -527,6 +527,21 @@ var checkToEndShift = function (driverId) {
             return true;
         }
     });
+};
+
+pub.cancelOrder = function (orderId, driverId) {
+    var driverIdString = "d_" + driverId;
+    var orderIdString = "o_" + orderId;
+
+    var json = {
+        "action": "delete",
+        "details": {
+            "order": {
+                "id": orderIdString
+            }
+        }
+    };
+    Driver.send(driverId, json);
 };
 
 module.exports = pub;
