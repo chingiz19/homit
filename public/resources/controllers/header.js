@@ -1,6 +1,6 @@
 app.controller("LogoSearchController", function ($scope, $http) { });
 
-app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, user) {
+app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, user, notification) {
     $scope.init = function () {
         $scope.storeHub = false;
         $scope.userDropDown = false;
@@ -37,12 +37,13 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 //delete cookie
                 $cookies.remove("user");
                 $rootScope.$broadcast("checkUserLogin");
+                notification.addSuccessMessage("Logged out");
             } else {
                 // TODO: error handling
                 console.log("password not reset");
+                notification.addErrorMessage("Couldn't log out. Please try again");
             }
         }, function errorCallback(response) {
-            $rootScope.$broadcast("addNotification", { type: "alert-danger", message: response.data["ui_message"] });
             console.log("ERROR in password reset");
         });
     }

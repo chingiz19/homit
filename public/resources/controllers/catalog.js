@@ -1,5 +1,5 @@
-app.controller("catalogController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "sessionStorage",
-    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage) {
+app.controller("catalogController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "sessionStorage", "notification",
+    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, notification) {
         var catalogCtrl = this;
 
         $scope.selection = $location.path();
@@ -127,20 +127,8 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             delete p["container"];
 
             $rootScope.$broadcast("addToCart", p);
-            $scope.addItemNotification(p);
+            notification.addCartItem(p);
         };
-
-        $scope.notification = {};
-
-        $scope.addItemNotification = function (product) {
-            $scope.notification.el = document.getElementById('addItem');
-            $scope.notification.el.setAttribute("aria-hidden", "false");
-            clearTimeout($scope.notification.lifeTime);
-            $scope.notification.lifeTime = setTimeout(function () {
-                $scope.notification.el.setAttribute("aria-hidden", "true");
-            }, 1450);
-            $scope.notification.content = product;
-        }
 
         $scope.nextVolume = function (product) {
             $scope.numberOfVolumes = product.product_variants.all_volumes.length;

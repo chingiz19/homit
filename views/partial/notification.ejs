@@ -1,10 +1,32 @@
-<!--<link href="/resources/css/checkout_menu.css" rel="stylesheet">-->
+<link href="/resources/css/notification.css" rel="stylesheet">
 
-<div class="notifications text-center" ng-controller="notificationController as notification">
-    <div class="alert alert-dismissable" ng-class="notification.type" ng-if="notification.show">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        {{notification.message}}
+<div ng-controller="notificationController" ng-cloak>
+    <!-- Product information section -->
+    <div ng-if="product">
+        <div class="notification_box" layout="row">
+            <div layout="column">
+                <li>
+                    <img class="addItem_img" ng-src={{product.image}}>
+                </li>
+            </div>
+            <ul class="addItem_ul">
+                <li class="addItem_ulA">
+                    <span>{{product.brand}}</span>
+                </li>
+                <li class="addItem_ulB">
+                    <span>{{product.volume}} &#8202X{{product.packaging}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Message section -->
+    <div ng-if="message">
+        <div class="notification_box" ng-class="messageType">
+            <p>{{ message }}</p>
+        </div>
     </div>
 </div>
 
+<script src="/resources/services/notification.js"></script>
 <script src="/resources/controllers/notification.js"></script>
