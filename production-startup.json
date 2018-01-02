@@ -1,0 +1,15 @@
+{
+  "apps" : [
+      {
+        "name": "production",
+        "script": "./server.js",
+        "watch": true,
+        "ignore_watch": ["./public", "./views", "./tests", "./node_modules"],
+        "exec_mode": "cluster",
+        "instances": 0,
+        "env": {
+          "n_mode": "production" 
+        }
+      }
+  ]
+}

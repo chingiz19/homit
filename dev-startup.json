@@ -1,0 +1,13 @@
+{
+  "apps" : [
+      {
+        "name": "development",
+        "script": "./server.js",
+        "watch": true,
+        "ignore_watch": ["./public", "./views", "./tests", "./node_modules"],
+        "env": {
+          "n_mode": "dev"
+        }
+      }
+  ]
+}
