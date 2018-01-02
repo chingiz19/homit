@@ -181,18 +181,20 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
     var _forgotPassword = function () {
         $http({
             method: 'POST',
-            url: '/api/authentication/resetpassword',
+            url: '/api/authentication/forgotpassword',
             data: {
-                email: login.forgotPasswordEmail
+                email: login.email
             }
         }).then(function successCallback(response) {
-            if (response.data["success"] === "true") {
-                Logger.log("password reset");
+            if (response.data["success"]) {
+                console.log("Check email");
+                login.reset();
+                login.hideModal();
             } else {
-                Logger.log("password not reset");
+                console.log("password not reset. Try again");
             }
         }, function errorCallback(response) {
-            Logger.log("ERROR in password reset");
+            console.log("ERROR in password reset");
         });
     }
 

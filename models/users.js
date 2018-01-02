@@ -318,4 +318,27 @@ pub.updatePassword = function (userId, oldPassword, newPassword) {
     });
 };
 
+
+pub.getUserPasswordHash = async function(email){
+    var query = "Select password from " + db.dbTables.users_customers + " where ?";
+    var data = {user_email: email};
+    var pHash = await db.runQuery(query, data);
+    if (!pHash[0]){
+        return false;
+    }
+    return pHash[0].password; // hash or undefined
+}
+
+pub.resetPassword = async function (email, newPassword) {
+    var key = { user_email: email };
+    var hashedPassword = await Auth.hashPassword(newPassword);
+    var userData = { password: hashedPassword };
+    var result = await db.updateQuery(db.dbTables.users_customers, [userData, key]);
+    if (result != false) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
 module.exports = pub;

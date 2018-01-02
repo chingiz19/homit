@@ -9,6 +9,8 @@ var pdf = require('html-pdf');
 var pub = {};
 var priceObject = {};
 var products = {};
+var path = require("path");
+var ejs = require("ejs");
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -23,11 +25,13 @@ let transporter = nodemailer.createTransport({
 
 var sendEmail = function (mailOptions) {
     // send e-mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
+    return transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return console.log(error);
+            console.log(error)
+            return false;
         } else {
             console.log('Message sent: %s', info.messageId);  //to be deleted and transfer to Logger
+            return true;
         }
     });
 }
@@ -145,6 +149,16 @@ pub.sendCancelEmail = function (orderInfo) {
     sendEmail(mailOptions);
 };
 
+pub.sendResetPasswordEmail = async function(orderInfo){
+    var html = getResetPasswordHTML(orderInfo.resetLink);
+    let mailOptions = {
+        from: '"noreply" <orders@homit.ca>', //TODO: change to noreply
+        to: orderInfo.customer_email,
+        subject: "Reset password",
+        html: html,
+    };
+    return await sendEmail(mailOptions);
+}
 
 
 //FOR MORE EDITING OPTIONS PLEASE REFER TO https://www.npmjs.com/package/cheerio
@@ -228,6 +242,12 @@ var prepareOrderSlip = function (orderInfo, callback) {
     });
 };
 
+var getResetPasswordHTML = function(link){
+    var file = fs.readFileSync(path.join(process.cwd(), "/project_setup/resources/email-htmls/resetpassword.ejs"), "utf8");
+    return ejs.render(file, {
+        resetLink: link
+    });
+}
 
 //Editing html for .pdf Order Slip that is attached to main e-mail
 var getOrderSlipHtml = function (htmlSource, OI) { 

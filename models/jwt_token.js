@@ -2,16 +2,35 @@
 
 var jwt = require('jsonwebtoken');
 const secretKey = "secretToken";
+var pub = {};
 
 
-var createToken = function(data) {
+pub.createToken = function(data) {
     var token = jwt.sign(data, secretKey, { expiresIn: '10h' });
     return token;
 };
 
-var validateToken = function(token) {
+pub.validateToken = function(token) {
+    return _validateToken(token, secretKey);
+};
+
+pub.createResetPasswordToken = function(data, secret){
+    return jwt.sign(data, secret, { expiresIn: '24h' });
+}
+
+pub.validateResetPasswordToken = function(token, secret) {
+    return _validateToken(token, secret);
+};
+
+var destroyToken = function(token) {
+    //TODO: impement
+    Logger.log("token destroy");
+};
+
+
+function _validateToken(token, secret){
     try {
-        var decoded = jwt.verify(token, secretKey);
+        var decoded = jwt.verify(token, secret);
         return decoded;
     } catch(err) {
         if (err == jwt.TokenExpiredError) {
@@ -21,13 +40,6 @@ var validateToken = function(token) {
             return "wrong";
         }
     }
-};
+}
 
-var destroyToken = function(token) {
-    //TODO: impement
-    Logger.log("token destroy");
-};
-
-module.exports.createToken = createToken;
-module.exports.validateToken = validateToken;
-module.exports.destroyToken = destroyToken;
+module.exports = pub;

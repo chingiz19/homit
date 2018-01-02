@@ -35,6 +35,11 @@ router.get("/sifarish01", function(req, res, next){
 	res.render("csr_login.ejs");
 });
 
+router.get("/resetpassword/:email/:token", function(req, res, next){
+	req.options.ejs["title"] = "Reset password";
+	res.render("reset_password.ejs", req.options.ejs);
+});
+
 router.get("/notfound", function(req, res, next){
 	req.options.ejs["title"] = "404 Not Found";
 	req.options.ejs["showSearchBar"] = false;

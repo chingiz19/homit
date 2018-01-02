@@ -3,6 +3,7 @@
  */
 
 var router = require("express").Router();
+var crypto = require("crypto");
 
 /**
  * Checks if user given exists in the database
@@ -126,17 +127,108 @@ router.all('/signout', function (req, res, next) {
 });
 
 /**
- * Forgot password
+ * Forgot password API
+ * Send user email with reset link
  */
-router.post('/forgotpassword', function (req, res, next) {
-    Logger.log("Not implemented");
+router.post('/forgotpassword', async function (req, res, next) {
+    // Require email in body
+    if (!req.body.email){
+        return res.status(200).json({
+            error:{
+                dev_message: "Missing required parameters"
+            }
+        });
+    }
+
+    // Create jwt token
+    var pHash = await User.getUserPasswordHash(req.body.email);
+    // If user doesn't exist send true anyways (security measure, but wekaness is /userexists call)
+    if (!pHash){
+        return res.status(200).json({
+            success: true,
+            ui_message: "Email has been sent with instructions"
+        });
+    }
+    var token = JWTToken.createResetPasswordToken({
+        email: req.body.email
+    }, pHash);
+    
+    // clean up
+    pHash = crypto.randomBytes(62).toString();
+
+    // send via email ( TODO use noreply )
+    var emailSuccess = await Email.sendResetPasswordEmail({
+        customer_email: req.body.email,
+        resetLink: "http://localhost:8080/resetpassword/" + req.body.email + "/" + token
+    });
+
+    if (emailSuccess){
+        res.status(200).json({
+            success: true,
+            ui_message: "Email has been sent with instructions"
+        });
+    } else {
+        res.status(200).json({
+            success: false,
+            ui_message: "Couldn't send email, make sure email is valid. If persists contact customer service"
+        });
+    }
 });
 
 /**
- * Changes password
+ * Reset password API
  */
-router.post('/changepassword', function (req, res, next) {
-    Logger.log("Not implemented");
+router.post('/resetpassword', async function (req, res, next) {
+    // check for email and token params
+    if (!req.body.email || !req.body.token || !req.body.new_password || !req.body.confirm_password){
+        return res.status(200).json({
+            error:{
+                dev_message: "Missing required parameters"
+            }
+        });
+    }
+
+    // Assert that n_p, c_p match
+    if (req.body.new_password != req.body.confirm_password){
+        return res.status(200).json({
+            error:{
+                dev_message: "new_password should match confirm_password"
+            }
+        });
+    }
+
+    // Check for valid email and token
+    var pHash = await User.getUserPasswordHash(req.body.email);
+    if (!pHash){
+        return res.status(403).json({
+            success: false,
+            ui_message: "Invalid token"
+        });
+    }
+
+    var tokenValue = JWTToken.validateResetPasswordToken(req.body.token, pHash);
+    pHash = crypto.randomBytes(62).toString(); // clean up
+    if (!tokenValue || tokenValue.email != req.body.email){
+        return res.status(200).json({
+            success: false,
+            ui_message: "Invalid token"
+        });
+    }
+
+    // Change password in db
+    var updatedUser = await User.resetPassword(req.body.email, req.body.new_password);
+    if (updatedUser) {
+        res.json({
+            success: true,
+            ui_message: "Password was successfully updated"
+        });
+    } else {
+        res.json({
+            success: false,
+            ui_message: "Something went wrong while updating password, please try again. If error persists contact support@homit.ca"
+        });
+    }
+    // TODO: add email message
 });
 
 /**
