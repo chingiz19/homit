@@ -7,7 +7,7 @@
         var path = $location.path().split("/");
         $scope.user_email = path[2];
         $scope.token = path[3];
-    }
+    };
 
     $scope.resetPassword = function(){
         $http({
@@ -29,7 +29,7 @@
         }, function errorCallback(response) {
             console.log("ERROR in password reset");
         });
-    }
+    };
 
     $scope.init();
 });

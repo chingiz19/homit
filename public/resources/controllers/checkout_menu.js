@@ -8,8 +8,8 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
 
    cartService.getCart()
         .then(function successCallback(response) {
-                if (response.data['success'] === true) {                                
-                    updateUserCart(cartService.mergeCarts($scope.userCart, response.data['cart']))
+                if (response.data.success === true) {                                
+                    updateUserCart(cartService.mergeCarts($scope.userCart, response.data.cart));
                 } else {
                     updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {})); //REQUIRED to convert to new convention with super_category
                 }
@@ -17,8 +17,8 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
 
                 for(var super_category in $scope.userCart){
                     for (var a in $scope.userCart[super_category]){
-                        $scope.totalAmount = $scope.totalAmount + ($scope.userCart[super_category][a]['quantity'] * $scope.userCart[super_category][a]['price']);
-                        $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[super_category][a]['quantity'];
+                        $scope.totalAmount = $scope.totalAmount + ($scope.userCart[super_category][a].quantity * $scope.userCart[super_category][a].price);
+                        $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[super_category][a].quantity;
                         $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
                         $scope.prepareItemForDB(a, $scope.userCart[super_category][a].quantity);
                     }
@@ -36,12 +36,12 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
         }
 
         if (super_category.hasOwnProperty(product.depot_id)){
-            tmpQuantity = super_category[product.depot_id]["quantity"];
+            tmpQuantity = super_category[product.depot_id].quantity;
             tmpQuantity++;
 
             if (tmpQuantity >= 10) tmpQuantity = 10;
 
-            super_category[product.depot_id]["quantity"] = tmpQuantity;
+            super_category[product.depot_id].quantity = tmpQuantity;
             $scope.numberOfItemsInCart++;
             $scope.totalAmount = $scope.totalAmount + product.price;
             $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
@@ -49,7 +49,7 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
             increaseCartItemIndexes(product.super_category);
             product.orderIndex = 0;
             super_category[product.depot_id] = product;
-            super_category[product.depot_id]["quantity"] = tmpQuantity;
+            super_category[product.depot_id].quantity = tmpQuantity;
             $scope.numberOfItemsInCart++;
             $scope.totalAmount = $scope.totalAmount + product.price;
             $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;            
@@ -57,15 +57,15 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
         $scope.userCart[product.super_category] = super_category;
         updateUserCart($scope.userCart);
         $scope.prepareItemForDB(product.depot_id,  $scope.userCart[product.super_category][product.depot_id].quantity);
-    })
+    });
 
     $scope.plusItem = function (product) {
         if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
-            var currentQuantity = $scope.userCart[product.super_category][product.depot_id]["quantity"];
+            var currentQuantity = $scope.userCart[product.super_category][product.depot_id].quantity;
             if (currentQuantity < 10) {              
                 currentQuantity++;
                 
-                $scope.userCart[product.super_category][product.depot_id]["quantity"] = currentQuantity;
+                $scope.userCart[product.super_category][product.depot_id].quantity = currentQuantity;
                 $scope.numberOfItemsInCart++;
                 $scope.totalAmount = $scope.totalAmount + product.price;
                 $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
@@ -74,15 +74,15 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
                 $scope.prepareItemForDB(product.depot_id,  currentQuantity);
             }
         }
-    }
+    };
 
     $scope.minusItem = function (product) {
         if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
-            var currentQuantity = $scope.userCart[product.super_category][product.depot_id]["quantity"];
+            var currentQuantity = $scope.userCart[product.super_category][product.depot_id].quantity;
             if (currentQuantity > 1) {              
                 currentQuantity--;
                 
-                $scope.userCart[product.super_category][product.depot_id]["quantity"] = currentQuantity;
+                $scope.userCart[product.super_category][product.depot_id].quantity = currentQuantity;
                 $scope.numberOfItemsInCart--;
                 $scope.totalAmount = $scope.totalAmount - product.price;
                 $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
@@ -91,7 +91,7 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
                 $scope.prepareItemForDB(product.depot_id,  currentQuantity);
             }
         }
-    }
+    };
 
     $scope.clearCart = function (product) {
         updateUserCart({});
@@ -100,18 +100,18 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
 
         cartService.clearCart()
             .then(function successCallback(response) {
-                if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
+                if (response.data.error && response.data.error.code == "C001") { // use local storage
                     localStorage.setUserCart($scope.userCart);
                 }
             }, function errorCallback(response) {
                 Logger.log("ERROR");
             });
-    }
+    };
 
     $scope.removeFromCart = function (product) {
         if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
             // delete item and reorder indexes of other items
-            var index = $scope.userCart[product.super_category][product.depot_id]["orderIndex"];
+            var index = $scope.userCart[product.super_category][product.depot_id].orderIndex;
             var super_c = product.super_category;
             delete $scope.userCart[product.super_category][product.depot_id];
             decreaseCartItemIndexes(super_c, index);
@@ -127,18 +127,18 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
             $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
             $scope.prepareItemForDB(product.depot_id, 0);
         }
-    }
+    };
 
     $scope.prepareItemForDB = function (depot_id, itemQuantity, action) {
         cartService.modifyCartItem(depot_id, itemQuantity)
             .then(function successCallback(response) {
-                if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
+                if (response.data.error && response.data.error.code == "C001") { // use local storage
                     localStorage.setUserCart($scope.userCart);
                 }
             }, function errorCallback(response) {
                 Logger.log("ERROR");
             });
-    }
+    };
 
     function updateUserCart(cart){
         $scope.userCart = cart;
@@ -194,14 +194,14 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
         var depot_ids = Object.keys($scope.userCart[super_category]);
         for (var i = 0; i < depot_ids.length; i++){
             var depot_id = depot_ids[i];
-            var currentIndex = $scope.userCart[super_category][depot_id]["orderIndex"];
+            var currentIndex = $scope.userCart[super_category][depot_id].orderIndex;
             if (increase){
                 // increase
-                $scope.userCart[super_category][depot_id]["orderIndex"] = currentIndex + 1;
+                $scope.userCart[super_category][depot_id].orderIndex = currentIndex + 1;
             } else {
                 // decrease
                 if (currentIndex > deletedItemIndex){
-                    $scope.userCart[super_category][depot_id]["orderIndex"] = currentIndex - 1;
+                    $scope.userCart[super_category][depot_id].orderIndex = currentIndex - 1;
                 }
             }
         }

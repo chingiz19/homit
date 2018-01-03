@@ -31,7 +31,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
          */
         publicFunctions.getPlace = function(){
             return autoComplete.getPlace();
-        }
+        };
     
         /**
          * Returns Google LatLng object
@@ -49,14 +49,14 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
             }
 
             return new google.maps.LatLng(lat, lng);
-        }
+        };
 
         /**
          * Returns text inside input element
          */
         publicFunctions.getText = function(){
             return privScopeAccess._searchedAddress;
-        }
+        };
     
         return {
             restrict: "E", // restrict to element
@@ -114,5 +114,5 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                     });
                 }, 0);  
             }            
-        }
+        };
     });

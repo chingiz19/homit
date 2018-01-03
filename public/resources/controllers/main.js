@@ -1,5 +1,5 @@
  app.controller("mainController", function($scope, $http, sessionStorage, $cookies, $window, $location, $anchorScroll, mapServices) {
-    $scope.map;
+    $scope.map = undefined;
     $scope.userDropDown = false;
 
     $scope.init = function(){
@@ -21,7 +21,7 @@
 
     $scope.showHideUserDropdown = function () {
         $scope.userDropDown = !$scope.userDropDown;
-    }
+    };
 
     /**
      * This function is called after autocomplete gets the address
@@ -38,11 +38,11 @@
             $scope.addressMessage = "Sorry, we do not deliver to your location at the moment";
             $scope.scrollTo('coverage');
         }
-    }
+    };
     
     $scope.hrefTo = function(path){
         $window.location.href = $window.location.origin + path;
-    }
+    };
 
     /**
      * When called this method will scroll view to the element with 'id'
@@ -58,7 +58,7 @@
             var top = document.getElementById(id).documentOffsetTop();
             animateScrollTo(top, {speed: 1000});
         }
-    }
+    };
 
     $scope.init();
 });

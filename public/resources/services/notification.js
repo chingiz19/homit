@@ -12,7 +12,7 @@ app.service('notification', function($rootScope){
         ADD_CART_ITEM: "add_cart_item",
         SUCCESS_MESSAGE: "success_message",
         ERROR_MESSAGE: "error_message"
-    }
+    };
 
     /**
      * Shows notification for added cart item/product
@@ -23,7 +23,7 @@ app.service('notification', function($rootScope){
             event_type: pub.EventType.ADD_CART_ITEM,
             product: product
         });
-    }
+    };
 
     /**
      * Shows notification for success message
@@ -34,7 +34,7 @@ app.service('notification', function($rootScope){
             event_type: pub.EventType.SUCCESS_MESSAGE,
             message: message
         });
-    }
+    };
 
     /**
      * Shows notification for error message
@@ -45,7 +45,7 @@ app.service('notification', function($rootScope){
             event_type: pub.EventType.ERROR_MESSAGE,
             message: message
         });
-    }
+    };
 
     return pub;
 });

@@ -26,7 +26,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
         login.fname = "";
         login.lname = "";
         login.dob = "";
-    }
+    };
 
     login.reset();
 
@@ -51,7 +51,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                         Logger.error("ERROR");
                     }
                 }
-            })
+            });
         } else {
             $mdToast.show(toast);
         }
@@ -60,13 +60,13 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
     //check Email -> either go to sign in, or prompt sign up
     login.checkState = function () {
         switch (_currentButtonState) {
-            case _nextState: _checkEmail(); break
+            case _nextState: _checkEmail(); break;
             case _signinState: _signIn(); break;
             case _signupState: _signUp(); break;
             case _forgotPasswordState: _forgotPassword(); break;
             default: login.email = "error occured@checkStage";
         }
-    }
+    };
 
     // Used to show sign in form
     login.goToLogInForm = function () {
@@ -77,7 +77,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
         login.modalTitle = "Sign in";
         login.mainButtonText = "Sign in";
         _currentButtonState = _signinState;
-    }
+    };
 
     // Used to show sign up form
     login.goToSignUpForm = function () {
@@ -88,7 +88,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
         login.modalTitle = "Sign up";
         login.mainButtonText = "Sign up";
         _currentButtonState = _signupState;
-    }
+    };
 
     // Used to show forgot password form
     login.goToForgotPasswordForm = function () {
@@ -97,7 +97,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
         login.modalTitle = "Forgot password";
         login.mainButtonText = "Reset";
         _currentButtonState = _forgotPasswordState;
-    }
+    };
 
     // Check email 
     var _checkEmail = function () {
@@ -108,7 +108,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 email: login.email
             }
         }).then(function successCallback(response) {
-            if (response.data["exists"]) {
+            if (response.data.exists) {
                 login.goToLogInForm();
             } else {
                 login.showToast("Login doesn't exist", login.signUpErrorAction);
@@ -129,25 +129,25 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 password: login.password,
             }
         }).then(function successCallback(response) {
-            if (!response.data["error"]) {
+            if (!response.data.error) {
                 $rootScope.$broadcast("checkUserLogin");
                 login.reset();
                 login.hideModal();
                 notification.addSuccessMessage("Logged in");
             } else {
-                login.showToast(response.data["error"].ui_message, login.passwordErrorAction);
+                login.showToast(response.data.error.ui_message, login.passwordErrorAction);
             }
         }, function errorCallback(response) {
             console.log("ERROR");
         });
-    }
+    };
 
     var setLoading = function(message){
         login.reset();
         login.modalTitle = "";
         login.loadingMessage = message;
         login.isLoading = true;
-    }
+    };
 
     //Sign Up
     var _signUp = function () {
@@ -167,18 +167,18 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 birth_year: login.birth_year
             }
         }).then(function successCallback(response) {
-            if (!response.data["error"]) {
+            if (!response.data.error) {
                 $rootScope.$broadcast("checkUserLogin");
                 login.reset();
                 login.hideModal();
                 notification.addSuccessMessage("Signup completed");
             } else {
-                login.showToast(response.data["error"].ui_message);
+                login.showToast(response.data.error.ui_message);
             }
         }, function errorCallback(response) {
             console.log("ERROR");
         });
-    }
+    };
 
     var _forgotPassword = function () {
         $http({
@@ -188,7 +188,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 email: login.email
             }
         }).then(function successCallback(response) {
-            if (response.data["success"]) {
+            if (response.data.success) {
                 console.log("Check email");
                 login.reset();
                 login.hideModal();
@@ -199,9 +199,9 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
         }, function errorCallback(response) {
             console.log("ERROR in password reset");
         });
-    }
+    };
 
     login.hideModal = function () {
         $('#loginModal').modal('hide');
-    }
+    };
 });

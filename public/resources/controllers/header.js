@@ -22,7 +22,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         $scope.showSearchBar = $("#searchBarBoolean").val();
 
         checkUser();
-    }
+    };
 
     $scope.$on("checkUserLogin", function (event, args) {
         checkUser();
@@ -33,7 +33,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
             method: 'POST',
             url: '/api/authentication/signout'
         }).then(function successCallback(response) {
-            if (response.data["success"]) {
+            if (response.data.success) {
                 //delete cookie
                 $cookies.remove("user");
                 $rootScope.$broadcast("checkUserLogin");
@@ -46,12 +46,12 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         }, function errorCallback(response) {
             console.log("ERROR in password reset");
         });
-    }
+    };
 
     function clickedOffBox(e) {
         var el = document.getElementById($scope.id_1).attributes;
         if (el['aria-hidden'].value == "false") {
-            if (event.target['id'] != $scope.id_1 && event.target['id'] != $scope.id_2 && event.target['id'] != $scope.id_3 && event.target['id'] != $scope.id_4) {
+            if (event.target.id != $scope.id_1 && event.target.id != $scope.id_2 && event.target.id != $scope.id_3 && event.target.id != $scope.id_4) {
                 document.getElementById($scope.id_1).setAttribute("aria-hidden", "true");
                 window.removeEventListener('click', clickedOffBox, false);
             }
@@ -79,7 +79,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 window.addEventListener('click',clickedOffBox, false);
             }, 100);
         }
-    }
+    };
 
     // Header right-SideNav functionality
     // Start
@@ -131,19 +131,19 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
 
     this.checkSubcategories = function (subcategory_name) {
         $rootScope.$broadcast("checkSubcategories", subcategory_name);
-    }
+    };
+    
     this.emptySubcategories = function () {
         $rootScope.$broadcast("emptySubcategories");
-    }
+    };
 
     $scope.hrefTo = function (path) {
         $window.location.href = $window.location.origin + path;
-    }
-    $scope.init();
+    };
 
     $scope.showHideUserDropdown = function () {
         $scope.userDropDown = !$scope.userDropDown;
-    }
+    };
 
     $scope.searchRequest = "";
     $scope.searchRequestURL = "";
@@ -189,14 +189,14 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                                     searchRequestURL = "/catalog/" + responseResult[i].super_category;
                                     searchRequestSubcategory = "";
                                 }
-                                showResultNode['result'] = searchRequestResult;
-                                showResultNode['subcategory'] = searchRequestSubcategory;
-                                showResultNode['path'] = searchRequestURL;
+                                showResultNode.result = searchRequestResult;
+                                showResultNode.subcategory = searchRequestSubcategory;
+                                showResultNode.path = searchRequestURL;
                                 $scope.searchResult.push(showResultNode);
                             }
                         } else {
                             var showResultNode = {};
-                            showResultNode['result'] = "No Search Result"
+                            showResultNode.result = "No Search Result";
                             $scope.searchResult.push(showResultNode);
                         }
                     } else {
@@ -205,14 +205,14 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                             var showResultNode = {};
     
                             if (responseResultProduct[i].name != null) {
-                                showResultNode['brandName'] = responseResultProduct[i].brand + " " + responseResultProduct[i].name;
+                                showResultNode.brandName = responseResultProduct[i].brand + " " + responseResultProduct[i].name;
                             } else {
-                                showResultNode['brandName'] = responseResultProduct[i].brand;
+                                showResultNode.brandName = responseResultProduct[i].brand;
                             }
-                            showResultNode['product_id'] = responseResultProduct[i].product_id;
-                            showResultNode['subcategory'] = responseResultProduct[i].subcategory;
-                            showResultNode['image'] = "/resources/images/products/" + responseResultProduct[i].super_category + "/" + responseResultProduct[i].category + "/" + responseResultProduct[i].image;
-                            showResultNode['path'] = "/catalog/" + responseResultProduct[i].super_category + "/" + responseResultProduct[i].category;
+                            showResultNode.product_id = responseResultProduct[i].product_id;
+                            showResultNode.subcategory = responseResultProduct[i].subcategory;
+                            showResultNode.image = "/resources/images/products/" + responseResultProduct[i].super_category + "/" + responseResultProduct[i].category + "/" + responseResultProduct[i].image;
+                            showResultNode.path = "/catalog/" + responseResultProduct[i].super_category + "/" + responseResultProduct[i].category;
     
                             $scope.searchResult.push(showResultNode);
                         }
@@ -222,12 +222,14 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 });
             }
     
+            // TODO: not declared in controller's scope
             $scope.sendSubcategory = function (subcategory, product_id) {
                 sessionStorage.setSearchSubcategory(subcategory);
                 if (product_id) {
                     sessionStorage.setSearchProduct(product_id);
                 }
-            }
+            };
+
             navigateSearchResult(evt, $scope.searchResult);
         }
     
@@ -236,7 +238,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     
             var el = document.querySelectorAll('.srchRslt');
             if (evt.keyCode == 40 && $scope.isArrowPressed == false) {
-                if (searchResult[0]['result']) {
+                if (searchResult[0].result) {
                     // $scope.searchRequest = $scope.searchResult[0]['brandName'];
                     $scope.isArrowPressed = true;
                 } else {
@@ -282,4 +284,6 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
             $scope.username = "";
         }
     }
+
+    $scope.init();
 });

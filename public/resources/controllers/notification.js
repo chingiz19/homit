@@ -3,13 +3,13 @@ app.controller("notificationController", function ($scope, $sce, notification, $
     $scope.init = function(){
         $scope.clearAll();
         $scope.defaultTimeout = 2000; // 2 seconds
-    }
+    };
 
     $scope.clearAll = function () {
         $scope.product = undefined;
         $scope.message = undefined;
         $scope.messageType = "";
-    }
+    };
 
     $scope.$on("addNotification", function (event, args) {
         switch(args.event_type){
@@ -25,7 +25,7 @@ app.controller("notificationController", function ($scope, $sce, notification, $
             default:
                 console.warn("Notification event type not supported");
         }
-    })
+    });
 
 
     /* Private helper methods */

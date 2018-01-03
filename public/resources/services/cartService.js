@@ -4,16 +4,16 @@ app.service('cartService', ["$http", function ($http) {
         return $http.post('/api/cart/modifyitem', {
                 depot_id: depot_id,
                 quantity: itemQuantity,                
-        })
-    }
+        });
+    };
 
     var _clearCart = function () {
         return $http.post('/api/cart/clear');
-    }
+    };
 
     var _getCart = function () {
         return $http.get('/api/cart/usercart');
-    }
+    };
 
     var _mergeCarts = function (lCart, rCart) {
         var localCart = jQuery.extend(true, {}, lCart);
@@ -21,7 +21,7 @@ app.service('cartService', ["$http", function ($http) {
 
         for (var i = 0; i < remoteCart.length; i++) {
             var product_array = remoteCart[i];
-            var super_category = product_array[1]["super_category"];
+            var super_category = product_array[1].super_category;
             var depot_id = product_array[0];
             if (localCart.hasOwnProperty(super_category) && localCart[super_category].hasOwnProperty(depot_id)) {
                 // add to quantity, not exceeding 10
@@ -41,7 +41,7 @@ app.service('cartService', ["$http", function ($http) {
         }
         
         return localCart;
-    }
+    };
 
     /**
      * Puts 'super_category' as first property in cart
@@ -64,7 +64,7 @@ app.service('cartService', ["$http", function ($http) {
             for (var expectedOrderIndex = 0; expectedOrderIndex < keys.length; expectedOrderIndex++){
                 var failBack = true;
                 for (var j = 0; j < keys.length; j++){
-                    if (selected[keys[j]]["orderIndex"] == expectedOrderIndex){
+                    if (selected[keys[j]].orderIndex == expectedOrderIndex){
                         orderedItems.splice(expectedOrderIndex, 0, selected[keys[j]]);
                         failBack = false;
                         break;
@@ -93,5 +93,5 @@ app.service('cartService', ["$http", function ($http) {
         getCart: _getCart,
         mergeCarts: _mergeCarts,
         getViewUserCart: _getViewUserCart
-    }
+    };
 }]);

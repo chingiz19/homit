@@ -15,7 +15,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         $scope.loadedStore = "Store";
 
         // Determine product URL
-        $scope.productUrl;
+        $scope.productUrl = undefined;
         if ($scope.selection == "/catalog/liquor/beer") {
             $scope.isBeers = true;
             $scope.selectedCategory = "beer";
@@ -48,7 +48,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         $scope.searchedBrand = "";
 
         // Get initial list of products
-        $scope.products;
+        $scope.products = undefined;
         $scope.subcategories = [];
         $scope.availableTypes = [];
         $scope.availableBrands = [];
@@ -57,16 +57,16 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             method: 'GET',
             url: $scope.productUrl
         }).then(function successCallback(response) {
-            if (response.data['success']) {
-                $scope.products = response.data['products'];
+            if (response.data.success) {
+                $scope.products = response.data.products;
                 $scope.products.forEach(function (product) {
                     product.selectedVolume = product.product_variants.all_volumes[0];
                     product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
                     product.volumeI = 0;
                     product.packJ = 0;
-                })
-                $scope.subcategories = response.data['subcategories'];
-                $scope.userSelectedSubcategories = $scope.subcategories[0]['subcategory_name'];
+                });
+                $scope.subcategories = response.data.subcategories;
+                $scope.userSelectedSubcategories = $scope.subcategories[0].subcategory_name;
             }
         }, function errorCallback(response) {
 
@@ -75,7 +75,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         function getElementIdByName(subcategory) {
             var result = -1;
             for (i = 0; i < $scope.subcategories.length; i++) {
-                if ($scope.subcategories[i]['subcategory_name'] == subcategory) {
+                if ($scope.subcategories[i].subcategory_name == subcategory) {
                     result = i;
                     break;
                 }
@@ -90,9 +90,9 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             $scope.userSelectedSubcategories = subcategory;
             var i = getElementIdByName(subcategory);
             if (i < 0) {
-                $scope.availableBrands = $scope.subcategories[0]['brands'];
+                $scope.availableBrands = $scope.subcategories[0].brands;
             } else {
-                $scope.availableBrands = $scope.subcategories[i]['brands'];
+                $scope.availableBrands = $scope.subcategories[i].brands;
             }
             $scope.userSelectedBrands = [];
         };
@@ -115,16 +115,17 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             p.price = p.product_variants[p.volume][p.packaging].price;
             p.depot_id = p.product_variants[p.volume][p.packaging].depot_id;
 
-            delete p["description"];
-            delete p["listing_id"];  
-            delete p["product_id"];
-            delete p["product_variants"];
-            delete p["subcategory"];
-            delete p["type"];
-            delete p["selectedVolume"];
-            delete p["selectedPack"];
-            delete p["category"];
-            delete p["container"];
+            //TODO: reverse implementation: assign what is required
+            delete p.description;
+            delete p.listing_id;  
+            delete p.product_id;
+            delete p.product_variants;
+            delete p.subcategory;
+            delete p.type;
+            delete p.selectedVolume;
+            delete p.selectedPack;
+            delete p.category;
+            delete p.container;
 
             $rootScope.$broadcast("addToCart", p);
             notification.addCartItem(p);
@@ -140,7 +141,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             product.selectedVolume = product.product_variants.all_volumes[product.volumeI];
             product.packJ = 0;
             product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
-        }
+        };
 
         $scope.previousVolume = function (product) {
             $scope.volumeI = product.volumeI;
@@ -151,7 +152,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             product.selectedVolume = product.product_variants.all_volumes[product.volumeI];
             product.packJ = 0;
             product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
-        }
+        };
 
         $scope.nextPack = function (product) {
             $scope.numberOfPacks = product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings.length;
@@ -161,7 +162,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             }
             product.packJ = $scope.packJ;
             product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[product.packJ];
-        }
+        };
 
         $scope.previousPack = function (product) {
             $scope.packJ = product.packJ;
@@ -170,7 +171,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             }
             product.packJ = $scope.packJ;
             product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[product.packJ];
-        }
+        };
 
         catalogCtrl.scope = $scope;
 
@@ -190,10 +191,11 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                 $scope.showCategories = true;
                 document.getElementById("show_cat_icon").classList.add('rot180_1');
             }
-        }
+        };
+        
         $scope.emptySubcategories = function () {
             $scope.userSelectedSubcategories = null;
-        }
+        };
 
         // USer Cart right-SideNav functionality
         // Start
@@ -268,7 +270,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                     }
                 }
             }
-        }
+        };
     }
 ]);
 

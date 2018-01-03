@@ -21,15 +21,15 @@ app.filter("capitalize", function(){
             }
         }
         return s;
-    }
+    };
 });
 
 app.filter('totalPrice', function () {
     return function (input) {
         var totalPrice = 0;
         input.forEach(function (cart_item) {
-            var price = cart_item["price"];
-            var quantity = parseInt(cart_item["quantity"]);
+            var price = cart_item.price;
+            var quantity = parseInt(cart_item.quantity);
             totalPrice += (price * quantity);
         });
         return totalPrice;

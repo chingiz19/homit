@@ -9,7 +9,7 @@ app.service('user', ["$cookies", function ($cookies) {
         } else {
             return false;
         }
-    }
+    };
 
 
     publicFunctions.getName = function(){
@@ -19,7 +19,7 @@ app.service('user', ["$cookies", function ($cookies) {
 
         var user = getUser();
         return user.first_name;
-    }
+    };
 
 
 

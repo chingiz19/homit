@@ -16,14 +16,14 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
 
             $scope.user = JSON.parse($cookies.get("user").replace("j:", ""));
 
-            myaccount.user.firstName = $scope.user['first_name'];
-            myaccount.user.lastName = $scope.user['last_name'];
-            myaccount.user.birthYear = $scope.user['birth_date'].slice(0, 4);
-            myaccount.user.birthMonth = new Date(parseInt($scope.user['birth_date'].slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
-            myaccount.user.birthDay = parseInt($scope.user['birth_date'].slice(8, 10), 10);
-            myaccount.user.email = $scope.user['user_email'];
-            myaccount.user.phoneNumber = $scope.user['phone_number'];
-            myaccount.user.address = $scope.user['address'];
+            myaccount.user.firstName = $scope.user.first_name;
+            myaccount.user.lastName = $scope.user.last_name;
+            myaccount.user.birthYear = $scope.user.birth_date.slice(0, 4);
+            myaccount.user.birthMonth = new Date(parseInt($scope.user.birth_date.slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
+            myaccount.user.birthDay = parseInt($scope.user.birth_date.slice(8, 10), 10);
+            myaccount.user.email = $scope.user.user_email;
+            myaccount.user.phoneNumber = $scope.user.phone_number;
+            myaccount.user.address = $scope.user.address;
 
             myaccount.b_years = date.getYears();
             myaccount.b_months = date.getMonths();
@@ -34,7 +34,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     $scope.coveragePolygon = polygon;
                 }
             });
-        }
+        };
 
         myaccount.updateTab = function (tab) {
             myaccount.selectedTab = tab;
@@ -43,7 +43,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 document.getElementById(el.id).classList.remove("selectedTab");
             }
             document.getElementById("myAcTi" + tab).classList.add("selectedTab");
-            var el = document.querySelector('.selectedTabLn');
+            el = document.querySelector('.selectedTabLn');
             if (el) {
                 document.getElementById(el.id).classList.remove("selectedTabLn");
                 document.getElementById(el.id).classList.add("myTabsBtmLn");
@@ -53,7 +53,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             if (myaccount.selectedTab == 5) {
                 myaccount.viewUserOrders();
             }
-        }
+        };
 
         myaccount.editButton = function (type) {
             myaccount.edit = !myaccount.edit;
@@ -67,19 +67,19 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             if(type == 2){
                 myaccount.user.address = sessionStorage.getAddress().formatted_address;
             }
-        }
+        };
 
         myaccount.cancelEdit = function () {
             myaccount.edit = !myaccount.edit;
-            myaccount.user.firstName = $scope.user['first_name'];
-            myaccount.user.lastName = $scope.user['last_name'];
-            myaccount.user.birthYear = $scope.user['birth_date'].slice(0, 4);
-            myaccount.user.birthMonth = new Date(parseInt($scope.user['birth_date'].slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
-            myaccount.user.birthDay = parseInt($scope.user['birth_date'].slice(8, 10), 10);
-            myaccount.user.email = $scope.user['user_email'];
-            myaccount.user.phoneNumber = $scope.user['phone_number'];
-            myaccount.user.address = $scope.user['address'];
-        }
+            myaccount.user.firstName = $scope.user.first_name;
+            myaccount.user.lastName = $scope.user.last_name;
+            myaccount.user.birthYear = $scope.user.birth_date.slice(0, 4);
+            myaccount.user.birthMonth = new Date(parseInt($scope.user.birth_date.slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
+            myaccount.user.birthDay = parseInt($scope.user.birth_date.slice(8, 10), 10);
+            myaccount.user.email = $scope.user.user_email;
+            myaccount.user.phoneNumber = $scope.user.phone_number;
+            myaccount.user.address = $scope.user.address;
+        };
 
         myaccount.updateMe = function () {
             if (myaccount.user.fname_valid || myaccount.user.lname_valid || (myaccount.user.birthDay && myaccount.user.birthMonth && myaccount.user.birthYear) || (!myaccount.user.birthDay && !myaccount.user.birthMonth && !myaccount.user.birthYear)) {
@@ -96,7 +96,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                         }
                     }
                 }).then(function successCallback(response) {
-                    if (response.data["success"] === true) {
+                    if (response.data.success === true) {
                         myaccount.user.fname_valid = false;
                         myaccount.user.lname_valid = false;
                         myaccount.update_success();
@@ -110,7 +110,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             } else {
                 myaccount.input_invalid_message = "Please make sure input data is correct.";
             }
-        }
+        };
 
         myaccount.updateContact = function () {
             if (myaccount.user.email_valid || myaccount.user.phone_valid) {
@@ -124,7 +124,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                         }
                     }
                 }).then(function successCallback(response) {
-                    if (response.data["success"] === true) {
+                    if (response.data.success === true) {
                         myaccount.user.email_valid = false;
                         myaccount.user.phone_valid = false;
                         myaccount.update_success();
@@ -138,7 +138,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             } else {
                 myaccount.input_invalid_message = "Please make sure input data is correct.";
             }
-        }
+        };
 
         myaccount.updateAddress = function () {
             if(myaccount.address_valid){
@@ -153,7 +153,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                         }
                     }
                 }).then(function successCallback(response) {
-                    if (response.data["success"] === true) {
+                    if (response.data.success === true) {
                         console.log("Success: Address updated");
                     } else {
                         console.log("Fail: Address failed to update");
@@ -162,7 +162,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     console.log("ERROR in address update");
                 });
             }
-        }
+        };
 
         myaccount.changePassword = function () {
             if (myaccount.user.crPsswrd_valid && myaccount.user.new1Psswrd_valid && myaccount.user.new2Psswrd_valid && !myaccount.passwordError) {
@@ -174,7 +174,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                         new_password: myaccount.new_password
                     }
                 }).then(function successCallback(response) {
-                    if (response.data["success"] === true) {
+                    if (response.data.success === true) {
                         myaccount.user.crPsswrd_valid = false;
                         myaccount.user.new1Psswrd_valid = false;
                         myaccount.user.new2Psswrd_valid = false;
@@ -190,7 +190,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             } else {
                 myaccount.input_invalid_message = "Please make sure input data is correct.";
             }
-        }
+        };
 
         myaccount.viewUserOrders = function () {
             $http({
@@ -199,15 +199,15 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             }).then(function successCallback(response) {
                 myaccount.foundOrders = response.data.orders;
                 var inDate;
-                for (tmp in myaccount.foundOrders) {
-                    inDate = myaccount.foundOrders[tmp]['date_placed'];
-                    myaccount.foundOrders[tmp]['date_placed'] = myaccount.mm_dd_yyyy(inDate);
-                    myaccount.foundOrders[tmp]['delivery_address'] = myaccount.foundOrders[tmp]['delivery_address'].substring(0, 13) + "..";
+                for (var tmp in myaccount.foundOrders) {
+                    inDate = myaccount.foundOrders[tmp].date_placed;
+                    myaccount.foundOrders[tmp].date_placed = myaccount.mm_dd_yyyy(inDate);
+                    myaccount.foundOrders[tmp].delivery_address = myaccount.foundOrders[tmp].delivery_address.substring(0, 13) + "..";
                 }
             }, function errorCallback(response) {
                 console.log("Error in getting user Orders.");
             });
-        }
+        };
 
         $scope.reqOrderID = 0;
 
@@ -250,7 +250,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             }, function errorCallback(response) {
                 console.log("Error in getting the requested Order");
             });
-        }
+        };
 
         // myAccount Page left-SideNav functionality
         $scope.toggleLeft = buildDelayedToggler('left');
@@ -301,11 +301,11 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             } else {
                 myaccount.address_valid = false;
             }
-        }
+        };
 
         myaccount.updateBDays = function () {
             myaccount.b_days = date.getDays(myaccount.user.birthMonth, myaccount.user.birthYear);
-        }
+        };
 
         myaccount.checkPassword = function () {
             if (myaccount.passwordError == true || myaccount.passwordError == false) {
@@ -314,7 +314,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 myaccount.passwordError = (myaccount.new_password != myaccount.confirm_password);
             }
             return myaccount.passwordError;
-        }
+        };
 
         myaccount.sanitizeInput = function (text, type) {
             var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+ -]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/, "crPsswrd_valid": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, "new1Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, "new2Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9/]*$/, "cd_3": /^[0-9]*$/};
@@ -326,22 +326,22 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     myaccount.user[type + "_valid"] = false;
                 }
             }
-        }
+        };
 
         myaccount.mm_dd_yyyy = function (inDate) {
             return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
-        }
+        };
 
         jQuery(function($){
             $("#gP_number").mask("(999) 999-9999");
          });
         myaccount.update_success = function(){
-            myaccount.info_updated = true;ma
+            myaccount.info_updated = true;
             setTimeout(function(){
                 myaccount.info_updated = false;
                 document.getElementById("cancelEdit").click();
             }, 1500);
-        }
+        };
 
         $scope.$on("checkUserLogin", function (event, args) {
             if (!user.isUserLogged()){

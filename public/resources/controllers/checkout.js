@@ -21,8 +21,9 @@ app.controller("checkoutController",
             "cd_3_valid": false,
             "address_valid": undefined,
             "HomeIt": false
-        }
-        $scope.isUserSigned;
+        };
+
+        $scope.isUserSigned = undefined;
         $scope.orderer = {};
 
         var checkout = this;
@@ -65,12 +66,12 @@ app.controller("checkoutController",
                 }
             });
             readyToHomeIt();
-        }
+        };
 
         cartService.getCart()
             .then(function successCallback(response) {
-                if (response.data['success'] === true) {
-                    $scope.userCart = cartService.mergeCarts($scope.userCart, response.data['cart']);
+                if (response.data.success === true) {
+                    $scope.userCart = cartService.mergeCarts($scope.userCart, response.data.cart);
                 } else {
                     $scope.userCart = cartService.mergeCarts(localStorage.getUserCart(), {}); //REQUIRED to convert to new convention with super_category
                 }
@@ -78,13 +79,13 @@ app.controller("checkoutController",
 
                 for (var super_category in $scope.userCart) {
                     for (var a in $scope.userCart[super_category]) {
-                        $scope.totalAmount = $scope.totalAmount + ($scope.userCart[super_category][a]['quantity'] * $scope.userCart[super_category][a]['price']);
-                        $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[super_category][a]['quantity'];
+                        $scope.totalAmount = $scope.totalAmount + ($scope.userCart[super_category][a].quantity * $scope.userCart[super_category][a].price);
+                        $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[super_category][a].quantity;
                         $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
                         $scope.prepareItemForDB(a, $scope.userCart[super_category][a].quantity);
                     }
                     if (super_category == "liquor") {
-                        $scope.userInfo["hasLiquor"] = true;
+                        $scope.userInfo.hasLiquor = true;
                     }
                 }
 
@@ -99,31 +100,31 @@ app.controller("checkoutController",
         $scope.plusItem = function (product) {
             var tmpQuantity = 1;
             if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
-                var currentQuantity = $scope.userCart[product.super_category][product.depot_id]["quantity"];
+                var currentQuantity = $scope.userCart[product.super_category][product.depot_id].quantity;
                 if (currentQuantity < 10) {
                     currentQuantity++;
-                    $scope.userCart[product.super_category][product.depot_id]["quantity"] = currentQuantity;
+                    $scope.userCart[product.super_category][product.depot_id].quantity = currentQuantity;
                     $scope.numberOfItemsInCart++;
                     $scope.prepareItemForDB(product.depot_id, currentQuantity);
                     $scope.updatePrices($scope.userCart);
                 }
             }
-        }
+        };
 
         $scope.minusItem = function (product) {
             if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
-                var currentQuantity = $scope.userCart[product.super_category][product.depot_id]["quantity"];
+                var currentQuantity = $scope.userCart[product.super_category][product.depot_id].quantity;
                 if (currentQuantity > 1) {
                     currentQuantity--;
 
-                    $scope.userCart[product.super_category][product.depot_id]["quantity"] = currentQuantity;
+                    $scope.userCart[product.super_category][product.depot_id].quantity = currentQuantity;
                     $scope.numberOfItemsInCart--;
                     $scope.prepareItemForDB(product.depot_id, currentQuantity);
 
                     $scope.updatePrices($scope.userCart);
                 }
             }
-        }
+        };
 
         $scope.clearCart = function (product) {
             $scope.userCart = {};
@@ -132,13 +133,13 @@ app.controller("checkoutController",
 
             cartService.clearCart()
                 .then(function successCallback(response) {
-                    if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
+                    if (response.data.error && response.data.error.code == "C001") { // use local storage
                         localStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
                     console.log.log("ERROR");
                 });
-        }
+        };
 
         $scope.removeFromCart = function (product) {
             if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
@@ -154,12 +155,12 @@ app.controller("checkoutController",
 
                 $scope.updatePrices($scope.userCart);
             }
-        }
+        };
 
         $scope.prepareItemForDB = function (depot_id, itemQuantity, action) {
             cartService.modifyCartItem(depot_id, itemQuantity)
                 .then(function successCallback(response) {
-                    if (response.data["error"] && response.data["error"].code == "C001") { // use local storage
+                    if (response.data.error && response.data.error.code == "C001") { // use local storage
                         localStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
@@ -168,7 +169,8 @@ app.controller("checkoutController",
 
             // Calculation For receipt
             $scope.updatePrices($scope.userCart);
-        }
+        };
+
         $scope.userInfo.cardIsShown = false;
 
         function checkPaymentResponse(callback) {
@@ -233,7 +235,7 @@ app.controller("checkoutController",
                         $scope.paymentMessage_2 = "Homit will take care!";
                         updateCheckoutModal("1");
                     }, function errorCallback(response) {
-                        $scope.paymentMessage_1 = "We are sorry, "
+                        $scope.paymentMessage_1 = "We are sorry, ";
                         $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403)40-Homit.";
                         updateCheckoutModal("10");
                         console.log("ERROR in order processing");
@@ -246,7 +248,7 @@ app.controller("checkoutController",
                     updateCheckoutModal("1");
                 }
             });
-        }
+        };
 
         function activateCheckoutModal() {
             $('#checkoutModal').modal('toggle');
@@ -279,6 +281,7 @@ app.controller("checkoutController",
                 }, wait || 10);
             };
         }
+
         function buildDelayedToggler(navID) {
             return debounce(function () {
                 $mdSidenav(navID)
@@ -288,6 +291,7 @@ app.controller("checkoutController",
                     });
             }, 200);
         }
+
         $scope.close = function () {
             $mdSidenav('right').close()
                 .then(function () {
@@ -338,11 +342,11 @@ app.controller("checkoutController",
             $scope.totalAmount = totalAmount;
             $scope.GST = totalTax;
             $scope.receipt = totalPrice;
-        }
+        };
 
         $scope.updateBDays = function () {
             $scope.b_days = date.getDays($scope.userInfo.birth_month, $scope.userInfo.birth_year);
-        }
+        };
 
         $scope.checkUserAge = function () {
             if ($scope.userInfo.birth_day && $scope.userInfo.birth_month && $scope.userInfo.birth_year) {
@@ -352,7 +356,7 @@ app.controller("checkoutController",
                 }
             }
             readyToHomeIt();
-        }
+        };
 
         $scope.sanitizeInput = function (text, type) {
             var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+ -]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/ };
@@ -365,7 +369,7 @@ app.controller("checkoutController",
                 }
             }
             readyToHomeIt();
-        }
+        };
 
         $scope.gotAddressResults = function () {
             var latLng = $scope.autocomplete.getLatLng();
@@ -381,7 +385,7 @@ app.controller("checkoutController",
                 $scope.userInfo.address_valid = false;
             }
             readyToHomeIt();
-        }
+        };
 
         jQuery(function($){
             $("#gP_number").mask("(999) 999-9999");
@@ -389,10 +393,10 @@ app.controller("checkoutController",
 
         $scope.clearText = function () {
             $scope.userInfo.address_valid = undefined;
-        }
+        };
 
         function readyToHomeIt() {
-            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo["hasLiquor"]) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid) {
+            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo.hasLiquor) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid) {
                 $scope.userInfo.HomeIt = true;
             } else {
                 $scope.userInfo.HomeIt = false;
@@ -410,5 +414,4 @@ app.controller("checkoutController",
         }
 
         $scope.init();
-
     });
