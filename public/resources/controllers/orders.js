@@ -1,17 +1,5 @@
-app.filter('totalPrice', function () {
-    return function (input) {
-        var totalPrice = 0;
-        input.forEach(function (cart_item) {
-            var price = cart_item["price"];
-            var quantity = parseInt(cart_item["quantity"]);
-            totalPrice += (price * quantity);
-        });
-        return totalPrice;
-    };
-});
-
 app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "$rootScope", "$window", "mapServices",
-    function ($location, $scope, $cookies, $http, $rootScope, $window, mapServices, ) {
+    function ($location, $scope, $cookies, $http, $rootScope, $window, mapServices) {
 
         $scope.disRoomMap;
         $scope.searchCriteria;
@@ -79,9 +67,9 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                     }
                 }).then(function successCallback(response) {
                     $scope.foundUsers.push(response.data.user);
-                    setTimeout(() => {
+                    setTimeout(function(){
                         document.getElementById("usrRbtn").click();
-                        setTimeout(() => {
+                        setTimeout(function(){
                             document.getElementById($scope.searchCriteria).click();
                         }, 10);
                     }, 10);

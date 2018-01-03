@@ -55,9 +55,12 @@
             </div>
         </div>
     </div>
-    <script src="/resources/directives/addressAutocomplete.js"></script>
-    <script src="/resources/services/mapServices.js"></script>
-    <script src="/resources/controllers/main.js"></script>
+
+    <% if (!production) { %>
+        <script src="/resources/directives/addressAutocomplete.js"></script>
+        <script src="/resources/services/mapServices.js"></script>
+        <script src="/resources/controllers/main.js"></script>
+    <% } %>
 </body>
 
 <footer>

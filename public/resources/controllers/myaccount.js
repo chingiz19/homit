@@ -337,7 +337,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
          });
         myaccount.update_success = function(){
             myaccount.info_updated = true;ma
-            setTimeout(() => {
+            setTimeout(function(){
                 myaccount.info_updated = false;
                 document.getElementById("cancelEdit").click();
             }, 1500);

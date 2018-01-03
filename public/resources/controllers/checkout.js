@@ -173,7 +173,7 @@ app.controller("checkoutController",
 
         function checkPaymentResponse(callback) {
             function looper() {
-                setTimeout(() => {
+                setTimeout(function(){
                     var helcim_message = document.getElementById("helcimResults");
                     var response_id = document.getElementById("response");
                     var response_message = document.getElementById("responseMessage");

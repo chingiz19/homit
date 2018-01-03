@@ -347,8 +347,10 @@
             </md-button>
         </div>
     </div>
-    <script src="/resources/services/mapServices.js"></script>
-    <script src="/resources/controllers/orders.js"></script>
+    <% if (!production) { %>
+        <script src="/resources/services/mapServices.js"></script>
+        <script src="/resources/controllers/orders.js"></script>
+    <% } %>
 </body>
 
 </html>

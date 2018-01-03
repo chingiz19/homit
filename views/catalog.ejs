@@ -189,9 +189,11 @@
                 </div>
             </div>
         </div>
-        <script src="/resources/services/localStorage.js"></script>
-        <script src="/resources/services/cartService.js"></script>
-        <script src="/resources/controllers/catalog.js"></script>
+        <% if (!production) { %>
+            <script src="/resources/services/localStorage.js"></script>
+            <script src="/resources/services/cartService.js"></script>
+            <script src="/resources/controllers/catalog.js"></script>
+        <% } %>
 </body>
 
 </html>

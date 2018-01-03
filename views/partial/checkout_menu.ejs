@@ -76,4 +76,7 @@
         </md-content>
     </md-sidenav>
 </div>
-<script src="/resources/controllers/checkout_menu.js"></script>
+
+<% if (!production) { %>
+    <script src="/resources/controllers/checkout_menu.js"></script>
+<% } %>

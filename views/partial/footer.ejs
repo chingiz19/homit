@@ -69,4 +69,6 @@
     <div class="cpw">Homit © 2018</div>
 </div>
 
-<script src="/resources/controllers/footer.js"></script>
+<% if (!production) { %>
+    <script src="/resources/controllers/footer.js"></script>
+<% } %>

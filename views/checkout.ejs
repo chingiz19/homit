@@ -326,14 +326,15 @@
                 </div>
             </div>
         </div>
-        <script src="/resources/directives/addressAutocomplete.js"></script>
+        <% if (!production) { %>
+            <script src="/resources/directives/addressAutocomplete.js"></script>
+            <script src="/resources/services/localStorage.js"></script>
+            <script src="/resources/services/cartService.js"></script>
+            <script src="/resources/services/mapServices.js"></script>
+            <script src="/resources/services/date.js"></script>
+            <script src="/resources/controllers/checkout.js"></script>
+        <% } %>
         <script src="https://secure.myhelcim.com/js/version2.js"></script>
-        <script src="/resources/services/localStorage.js"></script>
-        <script src="/resources/services/cartService.js"></script>
-        <script src="/resources/services/mapServices.js"></script>
-        <script src="/resources/services/date.js"></script>
-        <script src="/resources/controllers/checkout.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     </div>
 </body>
 

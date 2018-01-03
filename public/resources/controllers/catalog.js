@@ -116,7 +116,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             p.depot_id = p.product_variants[p.volume][p.packaging].depot_id;
 
             delete p["description"];
-            delete p["listing_id"];
+            delete p["listing_id"];  
             delete p["product_id"];
             delete p["product_variants"];
             delete p["subcategory"];
@@ -182,7 +182,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                 $scope.showCategories = false;
                 document.getElementById("show_cat_icon").classList.add('rot180_2');
                 var el = document.getElementById("show_cat_icon").classList;
-                setTimeout(() => {
+                setTimeout(function(){
                     el.remove('rot180_1', 'rot180_2');
                 }, 500);
             }

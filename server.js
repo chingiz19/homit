@@ -24,7 +24,7 @@ require("./model-factory").init();
 var session = require("express-session");
 var webServer = express();
 var path = require("path");
-var webpagePath = path.join(__dirname, "/public");
+var webpagePath = path.join(__dirname, "/www");
 var bodyParser = require("body-parser");
 var cookies = require("cookies");
 var cookieParser = require("cookie-parser");

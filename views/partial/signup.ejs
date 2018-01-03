@@ -107,4 +107,6 @@
   </div>
 </div>
 
-<script src="/resources/controllers/signup.js"></script>
+<% if (!production) { %>
+    <script src="/resources/controllers/signup.js"></script>
+<% } %>

@@ -10,7 +10,9 @@
     <div ng-controller="page404Controller">
         <h1>Sorry not found</h1>
     </div>
-    <script src="/resources/controllers/page404.js"></script>
+    <% if (!production) { %>
+        <script src="/resources/controllers/page404.js"></script>
+    <% } %>
 </body>
 
 <footer>

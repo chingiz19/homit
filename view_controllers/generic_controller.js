@@ -1,3 +1,8 @@
+var isProduction = false;
+if (process.env.n_mode == "production"){
+	isProduction = true;
+}
+
 var router = require("express").Router();
 
 /**
@@ -10,7 +15,8 @@ router.use(function(req,res,next){
 	 */
 	req.options.ejs = {title: "Homit", 
 						catelogies: undefined,
-						showSearchBar: true
+						showSearchBar: true,
+						production: isProduction
 					};
 	next();
 });

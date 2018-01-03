@@ -143,9 +143,11 @@
 
 <%- include('signup')%>
 
-<script src="/resources/services/userInfo.js"></script>    
-<script src="/resources/services/sessionStorage.js"></script>
-<script src="/resources/controllers/header.js"></script>
+<% if (!production) { %>
+    <script src="/resources/services/userInfo.js"></script>    
+    <script src="/resources/services/sessionStorage.js"></script>
+    <script src="/resources/controllers/header.js"></script>
+<% } %>
 <script>
     $(document).ready(function () {
         $(window).resize(function () {
