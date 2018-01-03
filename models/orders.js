@@ -449,6 +449,25 @@ pub.placeCancelHistory = function (orderId, csrActionId) {
 };
 
 /**
+ * Inserts data into orders_history_add table.
+ * 
+ * @param {*} orderId 
+ * @param {*} csrActionId 
+ * @param {*} chargeAmount 
+ */
+pub.placeAddHistory = function (orderId, csrActionId, chargeAmount) {
+    var insertData = {
+        order_id: orderId,
+        csr_action_id: csrActionId,
+        charge_amount: chargeAmount
+    };
+
+    return db.insertQuery(db.dbTables.orders_history_add, insertData).then(function (inserted) {
+        return inserted.insertId;
+    });
+};
+
+/**
  * Calculates modified amount.
  * If customer owes us, the result will be positive.
  * If we owe customer, the result will be negative.

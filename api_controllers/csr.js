@@ -222,6 +222,59 @@ router.post('/cancelitems', Auth.validateAdmin(), function (req, res, next) {
     });
 });
 
+router.post('/additems', Auth.validateAdmin(), function (req, res, next) {
+    // router.post('/additems', function (req, res, next) {
+    var orderId = req.body.order_id;
+    var note = req.body.note;
+    var csrId = Auth.getSignedUser(req).id;
+    // var csrId = 1;
+    var products = req.body.products; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}        
+    var transactionId = req.body.transaction_id;
+
+    CSR.recordAction(csrId, note).then(function (csrActionId) {
+        Orders.getOrderInfo(orderId).then(function (orderInfo) {
+            var userId;
+            var isGuest;
+            if (orderInfo.user_id) {
+                userId = orderInfo.user_id;
+                isGuest = false;
+            } else {
+                userId = orderInfo.guest_id;
+                isGuest = true;
+            }
+            var productKeys = Object.keys(products);
+            var superCategory = productKeys[0];
+            Orders.createOrder(userId, orderInfo.delivery_address, orderInfo.delivery_latitude, orderInfo.delivery_longitude, isGuest, transactionId, superCategory).then(function (orderId) {
+                var inserted = Orders.insertProducts(orderId, products[superCategory]);
+                var userOrder = {
+                    super_category: superCategory,
+                    order_id: orderId
+                };
+
+                var cmUserId = "";
+                var cmOrderId = "o_" + userOrder.order_id;
+                if (isGuest) {
+                    cmUserId = "g_" + userId;
+                } else {
+                    cmUserId = "u_" + userId;
+                }
+                CM.sendOrder(cmUserId, orderInfo.delivery_address, cmOrderId, superCategory);
+
+                Catalog.getTotalPriceForProducts(products).then(function (price) {
+                    Orders.placeAddHistory(orderId, csrActionId, price.total_price).then(function (addHistoryId) {
+                        var response = {
+                            success: true,
+                            order: userOrder,
+                            message: "Order has been placed."
+                        };
+                        res.send(response);
+                    });
+                });
+            });
+        });
+    });
+});
+
 
 
 module.exports = router;
