@@ -353,13 +353,12 @@ CREATE TABLE orders_history_refund (
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE orders_history_modify (
+CREATE TABLE orders_history_cancel (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	id_prefix VARCHAR(3) NOT NULL DEFAULT "c_", 
 	order_id INT NOT NULL,
 	csr_action_id INT NOT NULL,
 	transaction_id INT,
-	action ENUM('FULL CANCEL', 'CANCEL ITEM', 'ADD ITEM', 'NEW ORDER'),
 	refund_amount DECIMAL(6,2),	
 	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	date_refunded TIMESTAMP NULL,

@@ -544,4 +544,30 @@ pub.cancelOrder = function (orderId, driverId) {
     Driver.send(driverId, json);
 };
 
+pub.getInfo = function (driverId) {
+    var sqlQuery = `
+        SELECT 
+
+        employee.id AS employee_id,
+        employee.user_email AS user_email,
+        employee.first_name AS first_name,
+        employee.last_name AS last_name,
+        employee.phone_number AS phone_number
+
+        FROM users_employees AS employee,
+        drivers AS drivers
+
+        WHERE drivers.employee_id = employee.id
+        AND ?
+    `;
+
+    var data = {
+        "drivers.id": 1
+    };
+
+    return db.runQuery(sqlQuery, data).then(function (drivers) {
+        return drivers[0];
+    });
+};
+
 module.exports = pub;

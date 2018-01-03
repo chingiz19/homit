@@ -5,7 +5,7 @@
 var router = require("express").Router();
 
 router.post('/refundorder', Auth.validateAdmin(), function (req, res, next) {
-// router.post('/refundorder', function (req, res, next) {
+    // router.post('/refundorder', function (req, res, next) {
     var orderId = req.body.order_id;
     var note = req.body.note;
     var dateScheduled = req.body.date_scheduled;
@@ -55,7 +55,7 @@ router.post('/refundorder', Auth.validateAdmin(), function (req, res, next) {
 });
 
 router.post('/cancelorder', Auth.validateAdmin(), function (req, res, next) {
-// router.post('/cancelorder', function (req, res, next) {
+    // router.post('/cancelorder', function (req, res, next) {
     var orderId = req.body.order_id;
     var note = req.body.note;
     var csrId = Auth.getSignedUser(req).id;
@@ -66,7 +66,7 @@ router.post('/cancelorder', Auth.validateAdmin(), function (req, res, next) {
             // Put CSR action
             CSR.recordAction(csrId, note).then(function (csrActionId) {
 
-                Orders.placeFullCancelHistory(orderId, csrActionId).then(function (cancelHistoryId) {
+                Orders.placeCancelHistory(orderId, csrActionId).then(function (cancelHistoryId) {
                     Orders.placeFullRefundCart(orderId).then(function (oldItems) {
                         Orders.getUserWithOrderByOrderId(orderId).then(function (orderInfoResult) {
                             Orders.calculateModifiedAmount(orderId, oldItems, false).then(function (refundAmount) {
@@ -110,9 +110,9 @@ router.post('/cancelorder', Auth.validateAdmin(), function (req, res, next) {
 });
 
 router.post('/refunditems', Auth.validateAdmin(), function (req, res, next) {
-// router.post('/refunditems', function (req, res, next) {
+    // router.post('/refunditems', function (req, res, next) {
     var orderId = req.body.order_id;
-    var refundItems = req.body.items; //items = {1: {id:1, depot_id: 2, refund_quantity:2}, {}}
+    var refundItems = req.body.items; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}
     var note = req.body.note;
     var dateScheduled = req.body.date_scheduled;
     var dateScheduledNote = req.body.date_scheduled_note;
@@ -170,11 +170,10 @@ router.post('/refunditems', Auth.validateAdmin(), function (req, res, next) {
     });
 });
 
-
 router.post('/cancelitems', Auth.validateAdmin(), function (req, res, next) {
-    // router.post('/cancelitems', function (req, res, next) {
+// router.post('/cancelitems', function (req, res, next) {
     var orderId = req.body.order_id;
-    var cancelItems = req.body.items; //items = {1: {id:1, depot_id: 2, cancel_quantity:2}, {}}
+    var cancelItems = req.body.items; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}
     var note = req.body.note;
     var csrId = Auth.getSignedUser(req).id;
     // var csrId = 1;
@@ -182,27 +181,32 @@ router.post('/cancelitems', Auth.validateAdmin(), function (req, res, next) {
     Orders.isDelivered(orderId).then(function (delivered) {
         if (!delivered) {
             CSR.recordAction(csrId, note).then(function (csrActionId) {
-                Orders.placePartialCancelHistory(orderId, csrActionId).then(function (cancelHistoryId) {
+                Orders.placeCancelHistory(orderId, csrActionId).then(function (cancelHistoryId) {
                     Orders.placePartialRefundCart(orderId, cancelItems).then(function (oldItems) {
-                        Orders.calculateModifiedAmount(orderId, oldItems).then(function (refundAmount) {
-                            Orders.updateCancelAmount(cancelHistoryId, customerRefundAmount).then(function (refundUpdated) {
-                                var orderEmailInfo = {
-                                    customer_email: orderInfoResult.user.user_email,
-                                    customer_name: orderInfoResult.user.first_name,
-                                    order_id: orderId,
-                                    refund_amount: customerRefundAmount
-                                };
+                        Orders.getUserWithOrderByOrderId(orderId).then(function (orderInfoResult) {
+                            Orders.calculatePartialCancelAmount(orderId, oldItems, false).then(function (refundAmount) {
+                                var customerRefundAmount = refundAmount.cart_amount;
+                                var customerRefundTax = refundAmount.total_tax;
+                                var customerRefundTotal = refundAmount.total_price;
+                                Orders.updateCancelAmount(cancelHistoryId, customerRefundTotal).then(function (refundUpdated) {
+                                    Drivers.getInfo(orderInfoResult.order.driver_id).then(function (driver) {
+                                        var orderEmailInfo = {
+                                            customer_email: orderInfoResult.user.user_email,
+                                            customer_name: orderInfoResult.user.first_name,
+                                            order_id: orderId,
+                                            refund_amount: customerRefundTotal
+                                        };
 
-                                var customerRefundAmount = refundAmount * (-1);
+                                        //TODO: Send sms 
+                                        //TODO: Email                                
 
-                                //TODO: Send sms 
-                                //TODO: Email                                
-
-                                var response = {
-                                    success: true,
-                                    message: "Please refund user's order."
-                                };
-                                res.send(response);
+                                        var response = {
+                                            success: true,
+                                            message: "Please refund user's order."
+                                        };
+                                        res.send(response);
+                                    });
+                                });
                             });
                         });
                     });
