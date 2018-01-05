@@ -12,6 +12,7 @@ var cssnano = require('gulp-cssnano');
 var concatCss = require('gulp-concat-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var chmod = require('gulp-chmod');
 var beep = require('beepbeep');
 var del = require('del');
 var browserSync = require('browser-sync').create();
@@ -70,16 +71,16 @@ gulp.task('js', function(){
         .pipe(jshint.reporter('default'))
         .pipe(production(uglify(uglifyOptions)))
         .pipe(production(concat('resources/js/all.min.js')))
+        .pipe(chmod({write: false}))
         .pipe(plumber.stop())
         .pipe(gulp.dest("www/"))
         .pipe(development(browserSync.reload({stream: true})));
-        // concat
-        // uglify
 });
 
 gulp.task('img', function(){
     return gulp.src(imgFiles)
         .pipe(cache('cssFiles'))
+        .pipe(chmod({write: false}))
         .pipe(gulp.dest("www/"));
 });
 
@@ -91,6 +92,7 @@ gulp.task('css', function(){
         .pipe(cache('imgFiles'))
         // .pipe(production(concatCss('resources/css/all.min.css'))) TODO
         .pipe(production(cssnano()))
+        .pipe(chmod({write: false}))
         .pipe(plumber.stop())
         .pipe(gulp.dest("www/"))
         .pipe(development(browserSync.reload({stream: true})));
