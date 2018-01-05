@@ -282,6 +282,35 @@ pub.searchProducts = function (searchText) {
     });
 };
 
+pub.searchDepotProducts = function (searchText) {
+    var sqlQuery = `
+        SELECT depot.id AS depot_id, depot.product_id AS product_id,
+        listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
+        listing.product_brand AS brand, listing.product_name AS name,
+        listing.product_description AS description, product.product_image AS image,
+        depot.price AS price, depot.tax AS tax, depot.quantity AS quantity, packaging.name AS packaging,
+        container.name AS container, volume.volume_name AS volume, category.name AS category,
+        super_category.name AS super_category
+        
+        FROM catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
+        catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
+        catalog_containers AS container, catalog_packagings AS packaging, catalog_packaging_volumes AS volume,
+        catalog_super_categories AS super_category
+        
+        WHERE depot.product_id = product.id AND product.listing_id = listing.id
+        AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+        AND container.id = product.container_id AND packaging.id = depot.packaging_id
+        AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND
+        category.super_category_id = super_category.id
+
+        AND (listing.product_brand LIKE '%` + searchText + `%' OR listing.product_name LIKE '%` + searchText + `%'
+        OR listing.product_description LIKE '%` + searchText + `%' OR listing.product_country LIKE '%` + searchText + `%')`;
+
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        return dbResult;
+    });
+};
+
 pub.getSuperCategoryIdByName = function (superCategory) {
     var data = { name: superCategory };
     return db.selectAllWhere(db.dbTables.catalog_super_categories, data).then(function (dbResult) {

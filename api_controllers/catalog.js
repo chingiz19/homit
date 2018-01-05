@@ -82,4 +82,25 @@ router.post('/search', function (req, res, next) {
     });
 });
 
+router.post('/searchdepot', function (req, res, next) {
+    var searchText = req.body.search;
+    if (searchText.length < 3) {
+        var response = {
+            success: false
+        };
+        res.send(response);
+    } else {
+        Catalog.searchDepotProducts(searchText).then(function (products) {
+            var resultProducts = {
+                products: products
+            };
+            var response = {
+                success: true,
+                result: resultProducts
+            };
+            res.send(response);
+        });
+    }
+});
+
 module.exports = router;
