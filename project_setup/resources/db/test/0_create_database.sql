@@ -1,9 +1,7 @@
-/*
-* This scripts deletes user and database which we want to create. 
-* Then it creates a database and a user.
-* Grants all privileges for the database to the user.
-*/
-DROP DATABASE IF EXISTS homit;
+/**
+ *  Testing database
+ */
+DROP DATABASE IF EXISTS homit_test;
 DROP USER IF EXISTS 'db_web_user'@'localhost';
 
 CREATE USER 'db_web_user'@'localhost' IDENTIFIED BY 'gg:(@SH%H3K5^4#P';
