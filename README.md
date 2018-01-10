@@ -1,22 +1,34 @@
-# Setting up project
-## 1 .Install all dependencies
-	'npm install'
+# Getting started
+## Get Repo (TODO)
+### 1. Create Bitbucket account
+### 2. Get SSH key
+### 3. Pull repo
 
-## 2. Installing nodemon | pm2
-### Install pm2 process manager
-	'npm install -g pm2'
+## Setting up project
+### 1 .Install all dependencies
+	Run command  'npm install' (might require root/administrative premissions)
+
+### 2. Installing nodemon | pm2 | gulp
+#### Install pm2 process manager
+	Run command 'npm install -g pm2'
 	For more informatino on pm2 visit: http://pm2.keymetrics.io/
 
-### Install nodemon
-	'npm install -g nodemon'	
+#### Install nodemon
+	Run command 'npm install -g nodemon'
 
-## 3. Create ENV variable **n_mode** - dev | test | production
+#### Install gulp
+	Run command 'npm install -g gulp'
 
-## 4. Create .env file for your mode (dev.env | test.env | production.env). This file will be used to load environment variables
-	We use this file for declaring env variables used inside the app
+### 3. Create ENV variable **n_mode** 
+	Valid options - dev | test | production
 
-### Available commands
-Note: no spaces around '='
+### 4. Create .env file for your mode (dev.env | test.env | production.env)
+	This file will be used to load environment variables used inside the server
+#### Valid file names
+	dev.env | test.env | production.env
+
+#### Available commands
+	Note: no spaces around '='
 
 		# Database
 		DB_HOST=
@@ -39,12 +51,21 @@ Note: no spaces around '='
 		HELCIM_ACCOUNT_ID=
 		HELCIM_API_TOKEN=
 
-## 5. Starting App
+## Running project
+### Using gulp
+	We use gulp to automate preprocessing, and pre-run tasks
+
+	1. Run command 'gulp'
+	2. Wait for gulp tasks to finish, connect to localhost:9090 for Front-end development
+
 ### Using nodemon
-	nodemon server.js
+	1. Run command 'gulp --env production'
+	2. 'nodemon server.js'
 
 ### Using pm2 - this is used to monitor CPU/RAM usage mostly on development
 #### Development mode
-	pm2 start dev-startup.json
+	1. Run command 'gulp --env production'
+	2. 'pm2 start dev-startup.json'
 #### Production mode
-	pm2 start production-startup.json
+	1. Run command 'gulp --env production'
+	2. 'pm2 start production-startup.json'
