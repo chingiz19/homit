@@ -1,6 +1,6 @@
 var router = require("express").Router();
 
-router.post('/findusersbyphone', Auth.validateAdmin(), function (req, res, next) {
+router.post('/findusersbyphone', Auth.validateCsr(), function (req, res, next) {
     var phone_number = req.body.phone_number;
     if (!phone_number) {
         res.status(403).json({
@@ -25,7 +25,7 @@ router.post('/findusersbyphone', Auth.validateAdmin(), function (req, res, next)
     }
 });
 
-router.post('/findusersbyemail', Auth.validateAdmin(), function (req, res, next) {
+router.post('/findusersbyemail', Auth.validateCsr(), function (req, res, next) {
     var user_email = req.body.user_email;
     if (!user_email) {
         res.status(403).json({
@@ -50,7 +50,7 @@ router.post('/findusersbyemail', Auth.validateAdmin(), function (req, res, next)
     }
 });
 
-router.post('/vieworders', Auth.validateAdmin(), function (req, res, next) {
+router.post('/vieworders', Auth.validateCsr(), function (req, res, next) {
     var userId = req.body.user_id;
     var guestId = req.body.guest_id;
 
@@ -81,7 +81,7 @@ router.post('/vieworders', Auth.validateAdmin(), function (req, res, next) {
     }
 });
 
-router.post('/getorder', Auth.validateAdmin(), function (req, res, next) {
+router.post('/getorder', Auth.validateCsr(), function (req, res, next) {
     var orderId = req.body.order_id;
 
     if (!orderId) {
@@ -112,7 +112,7 @@ router.post('/getorder', Auth.validateAdmin(), function (req, res, next) {
     }
 });
 
-router.get('/pendingorders', Auth.validateAdmin(), function (req, res, next) {
+router.get('/pendingorders', Auth.validateCsr(), function (req, res, next) {
     Orders.getPendingOrders().then(function (pendingOrders) {
         res.json({
             success: true,

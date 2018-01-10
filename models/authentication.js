@@ -70,9 +70,9 @@ pub.comparePassword = function (plainPassword, hashPassword) {
     });
 }
 
-pub.validateAdmin = function (options) {
+pub.validateCsr = function (options) {
     return function (req, res, next) {
-        if (checkAuthAdmin(req)) {
+        if (checkAuthCsr(req)) {
             next();
             return;
         }
@@ -98,7 +98,7 @@ function checkAuth(req) {
     return false;
 }
 
-function checkAuthAdmin(req) {
+function checkAuthCsr(req) {
     if (req.session) {
         var user = vault.read(req);
         if (user && user.startsWith("{")) {

@@ -4,7 +4,7 @@
 
 var router = require("express").Router();
 
-router.post('/refundorder', Auth.validateAdmin(), function (req, res, next) {
+router.post('/refundorder', Auth.validateCsr(), function (req, res, next) {
     // router.post('/refundorder', function (req, res, next) {
     var orderId = req.body.order_id;
     var note = req.body.note;
@@ -54,7 +54,7 @@ router.post('/refundorder', Auth.validateAdmin(), function (req, res, next) {
     });
 });
 
-router.post('/cancelorder', Auth.validateAdmin(), function (req, res, next) {
+router.post('/cancelorder', Auth.validateCsr(), function (req, res, next) {
     // router.post('/cancelorder', function (req, res, next) {
     var orderId = req.body.order_id;
     var note = req.body.note;
@@ -109,7 +109,7 @@ router.post('/cancelorder', Auth.validateAdmin(), function (req, res, next) {
     });
 });
 
-router.post('/refunditems', Auth.validateAdmin(), function (req, res, next) {
+router.post('/refunditems', Auth.validateCsr(), function (req, res, next) {
     // router.post('/refunditems', function (req, res, next) {
     var orderId = req.body.order_id;
     var refundItems = req.body.items; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}
@@ -170,7 +170,7 @@ router.post('/refunditems', Auth.validateAdmin(), function (req, res, next) {
     });
 });
 
-router.post('/cancelitems', Auth.validateAdmin(), function (req, res, next) {
+router.post('/cancelitems', Auth.validateCsr(), function (req, res, next) {
 // router.post('/cancelitems', function (req, res, next) {
     var orderId = req.body.order_id;
     var cancelItems = req.body.items; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}
@@ -222,7 +222,7 @@ router.post('/cancelitems', Auth.validateAdmin(), function (req, res, next) {
     });
 });
 
-router.post('/additems', Auth.validateAdmin(), function (req, res, next) {
+router.post('/additems', Auth.validateCsr(), function (req, res, next) {
     // router.post('/additems', function (req, res, next) {
     var orderId = req.body.order_id;
     var note = req.body.note;
