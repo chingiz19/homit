@@ -272,13 +272,8 @@ function findUsersWithHistory(data) {
         users_customers.user_email AS user_email, users_customers.first_name AS first_name,
         users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
         users_customers.birth_date AS birth_date, users_customers.address1 AS address1,
-        users_customers.address2 AS address2, users_customers.address3 AS address3,
         users_customers.address1_latitude AS address1_latitude,
-        users_customers.address1_longitude AS address1_longitude,
-        users_customers.address2_latitude AS address2_latitude,
-        users_customers.address2_longitude AS address2_longitude,    
-        users_customers.address3_latitude AS address3_latitude,
-        users_customers.address3_longitude AS address3_longitude
+        users_customers.address1_longitude AS address1_longitude
         
         FROM users_customers
         WHERE ? OR id IN (
