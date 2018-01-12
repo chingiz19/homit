@@ -179,6 +179,20 @@ pub.updateUser = function (userData, key) {
     });
 };
 
+pub.updateCreditCard = function (userKey, cardToken, cardDigits, cardType) {
+    var updateDate = {
+        card_token: cardToken,
+        card_type: cardType,
+        card_digits: cardDigits
+    };
+
+    var data = [updateDate, userKey];
+
+    return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
+        return true;
+    });
+};
+
 /**
  * Authenticate csr user
  */
@@ -314,11 +328,11 @@ pub.updatePassword = function (userId, oldPassword, newPassword) {
 };
 
 
-pub.getUserPasswordHash = async function(email){
+pub.getUserPasswordHash = async function (email) {
     var query = "Select password from " + db.dbTables.users_customers + " where ?";
-    var data = {user_email: email};
+    var data = { user_email: email };
     var pHash = await db.runQuery(query, data);
-    if (!pHash[0]){
+    if (!pHash[0]) {
         return false;
     }
     return pHash[0].password; // hash or undefined

@@ -17,12 +17,20 @@ router.post('/placeorder', function (req, res, next) {
     var birth_year = req.body.user.birth_year;
     var products = req.body.products;
     var transactionId = req.body.transaction_id;
+    var saveCard = req.body.save_card;
+    var cardToken = req.body.card_token;
+    var cardDigits = req.body.card_digits;
+    var cardType = req.body.card_type;
 
 
     var signedUser = Auth.getSignedUser(req);
     if (signedUser != false) {
         var userId = signedUser.id;
-        if (!products || !phone || !address || !address_lat || !address_long || !transactionId) {
+        var cardValid = true;
+        if (saveCard) {
+            cardValid = !cardToken || !cardDigits || !cardType;
+        }
+        if (!products || !phone || !address || !address_lat || !address_long || !transactionId || !cardValid) {
             Logger.log("Missing params");
             res.status(403).json({
                 error: {
@@ -46,12 +54,14 @@ router.post('/placeorder', function (req, res, next) {
                                     };
                                     User.updateUser(data, key).then(function (updatedUser) {
                                         if (updatedUser != false) {
-                                            createOrders(userId, address, address_lat, address_long, false, transactionId, products).then(function (userOrders) {
-                                                var response = {
-                                                    success: true,
-                                                    orders: userOrders
-                                                };
-                                                res.send(response);
+                                            saveCreditCard(key, saveCard, cardToken, cardDigits, cardType).then(function (savedCard) {
+                                                createOrders(userId, address, address_lat, address_long, false, transactionId, products).then(function (userOrders) {
+                                                    var response = {
+                                                        success: true,
+                                                        orders: userOrders
+                                                    };
+                                                    res.send(response);
+                                                });
                                             });
                                         } else {
                                             var response = {
@@ -253,6 +263,16 @@ var createOrders = function (id, address, address_lat, address_long, isGuest, tr
         return userOrders;
     });
 
+};
+
+var saveCreditCard = function (userKey, saveCard, cardToken, cardDigits, cardType) {
+    if (saveCard) {
+        return User.updateCreditCard(userKey, cardToken, cardDigits, cardType).then(function (cardUpdated) {
+            return cardUpdated;
+        });
+    } else {
+        return true;
+    }
 };
 
 module.exports = router;
