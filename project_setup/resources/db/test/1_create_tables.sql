@@ -16,17 +16,12 @@ CREATE TABLE users_customers (
 	phone_number VARCHAR(10),
 	birth_date DATE NULL,
 	address1 VARCHAR(225),
-	address2 VARCHAR(225),
-	address3 VARCHAR(225),
 	address1_name VARCHAR(225),
-	address2_name VARCHAR(225),
-	address3_name VARCHAR(225),
 	address1_latitude DOUBLE,
 	address1_longitude DOUBLE,
-	address2_latitude DOUBLE,
-	address2_longitude DOUBLE,
-	address3_latitude DOUBLE,
-	address3_longitude DOUBLE,
+	card_token VARCHAR(225) NULL,
+	card_type VARCHAR(225) NULL,
+	card_digits VARCHAR(4) NULL,
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_email)
@@ -42,17 +37,9 @@ CREATE TABLE users_customers_history (
 	phone_number VARCHAR(10),
 	birth_date DATE NULL,
 	address1 VARCHAR(225),
-	address2 VARCHAR(225),
-	address3 VARCHAR(225),
 	address1_name VARCHAR(225),
-	address2_name VARCHAR(225),
-	address3_name VARCHAR(225),
 	address1_latitude DOUBLE,
 	address1_longitude DOUBLE,
-	address2_latitude DOUBLE,
-	address2_longitude DOUBLE,
-	address3_latitude DOUBLE,
-	address3_longitude DOUBLE,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_users_customers_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE	
@@ -366,8 +353,8 @@ CREATE TABLE orders_history_cancel (
 	date_refunded TIMESTAMP NULL,
 	
 	PRIMARY KEY (id),
-	CONSTRAINT fk_orders_history_modify_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
-	CONSTRAINT fk_orders_history_modify_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
+	CONSTRAINT fk_orders_history_cancel_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
+	CONSTRAINT fk_orders_history_cancel_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE = InnoDB;
 
 
@@ -378,6 +365,6 @@ CREATE TABLE orders_history_add (
 	charge_amount DECIMAL(6,2),
 	
 	PRIMARY KEY (id),
-	CONSTRAINT fk_orders_history_modify_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
-	CONSTRAINT fk_orders_history_modify_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
+	CONSTRAINT fk_orders_history_add_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
+	CONSTRAINT fk_orders_history_add_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE = InnoDB;
