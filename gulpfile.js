@@ -143,6 +143,7 @@ gulp.task('default', function(cb){
         environments.current(development);
         tasks.push('start', 'watch', 'browserSync');
     }
-
+    tasks = gulpSequence(tasks, 'www-error');
+    
     return gulpSequence('clean:www', tasks)(cb);
 });
