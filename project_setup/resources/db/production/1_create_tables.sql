@@ -122,6 +122,7 @@ CREATE TABLE drivers_location (
 CREATE TABLE catalog_super_categories ( 
 	id INT NOT NULL, 
 	name VARCHAR(225) NOT NULL, 
+	display_name VARCHAR(225) NOT NULL, 
 	
 	PRIMARY KEY (id)
 ) ENGINE = InnoDB;
@@ -229,6 +230,7 @@ CREATE TABLE catalog_stores (
 	address VARCHAR(225) NOT NULL,
 	address_latitude DOUBLE NOT NULL,
 	address_longitude DOUBLE NOT NULL,
+	phone_number VARCHAR(10),	
 	store_type INT NOT NULL,
 	open_time TIME,
 	close_time TIME,
