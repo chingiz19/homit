@@ -10,7 +10,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
 
     var login = this;
     login.reset = function () {
-        login.modalTitle = "";
+        login.modalTitle = "Signin / Signup";
         login.mainButtonText = "Next";
         login.goToSignIn = false;
         login.goToSignUp = false;
@@ -176,7 +176,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 login.showToast(response.data.error.ui_message);
             }
         }, function errorCallback(response) {
-            console.log("ERROR");
+            login.showToast("Something went wrong, try again");
         });
     };
 
@@ -194,7 +194,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 login.hideModal();
                 notification.addSuccessMessage("Reset email has been sent");
             } else {
-                console.log("password not reset. Try again");
+                login.showToast("password not reset. Try again");
             }
         }, function errorCallback(response) {
             console.log("ERROR in password reset");

@@ -12,10 +12,10 @@ var cssnano = require('gulp-cssnano');
 var concatCss = require('gulp-concat-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var chmod = require('gulp-chmod');
 var beep = require('beepbeep');
 var del = require('del');
 var browserSync = require('browser-sync').create();
+var notifier = require('node-notifier');
 
 
 /* Variables */
@@ -71,7 +71,6 @@ gulp.task('js', function(){
         .pipe(jshint.reporter('default'))
         .pipe(production(uglify(uglifyOptions)))
         .pipe(production(concat('resources/js/all.min.js')))
-        .pipe(chmod({write: false}))
         .pipe(plumber.stop())
         .pipe(gulp.dest("www/"))
         .pipe(development(browserSync.reload({stream: true})));
@@ -80,7 +79,6 @@ gulp.task('js', function(){
 gulp.task('img', function(){
     return gulp.src(imgFiles)
         .pipe(cache('cssFiles'))
-        .pipe(chmod({write: false}))
         .pipe(gulp.dest("www/"));
 });
 
@@ -92,7 +90,6 @@ gulp.task('css', function(){
         .pipe(cache('imgFiles'))
         // .pipe(production(concatCss('resources/css/all.min.css'))) TODO
         .pipe(production(cssnano()))
-        .pipe(chmod({write: false}))
         .pipe(plumber.stop())
         .pipe(gulp.dest("www/"))
         .pipe(development(browserSync.reload({stream: true})));
@@ -121,6 +118,16 @@ gulp.task('start', ['js', 'css', 'img'], function(cb){
         setTimeout(function(){
             browserSync.reload({stream: false});
         }, 1000);
+    });
+});
+
+gulp.task('www-error', function(){
+    gulp.watch('www/**/*', function(){
+        notifier.notify({
+            title: 'WWW folder contents has been modified',
+            message: 'Files inside www/ folder have been modified, please apply changes to public/ folder contents'
+          });
+        beep(3, 1000);
     });
 });
 
