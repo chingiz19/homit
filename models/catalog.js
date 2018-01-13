@@ -5,9 +5,43 @@
 var pub = {};
 
 /**
+ * Returns true if any of the stores related to the super category is open
+ * 
+ * @param {*} superCategory 
+ */
+pub.isStoreOpen = function(superCategory) {
+    var sqlQuery = `
+    SELECT *
+
+    FROM catalog_super_categories AS super_categories,
+    catalog_stores AS stores
+    
+    WHERE super_categories.id = stores.store_type
+    AND 
+    (stores.open_time < CURRENT_TIME
+    AND stores.close_time > DATE_ADD(CURRENT_TIME, INTERVAL 30 MINUTE)
+    OR stores.open_time_next < CURRENT_TIME
+    AND stores.close_time_next > DATE_ADD(CURRENT_TIME, INTERVAL 30 MINUTE)
+    )
+    AND ?`;
+
+    var data = {
+        "super_categories.name": superCategory
+    };
+
+    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+};
+
+/**
  * Return all products based on the category provided
  */
-pub.getAllProductsByCategory = function (superCategory, categoryName) {
+pub.getAllProductsByCategory = function (superCategory, categoryName, storeOpen) {
     var sqlQuery = `
         SELECT depot.id AS depot_id, depot.product_id AS product_id,
         listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
@@ -26,15 +60,75 @@ pub.getAllProductsByCategory = function (superCategory, categoryName) {
         AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
         AND container.id = product.container_id AND packaging.id = depot.packaging_id
         AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND
-        category.super_category_id = super_category.id AND category.name = '` + categoryName + `' AND ` +
-        `super_category.name = '` + superCategory + `'
+        category.super_category_id = super_category.id
+        AND ? AND ?
         
         ORDER BY listing_id, product_id, depot_id`;
 
-    // var data = [{ "category.name": categoryName }, { "super_category.name": superCategory }];
-    return db.runQuery(sqlQuery).then(function (dbResult) {
+    var data = [{ "category.name": categoryName }, { "super_category.name": superCategory }];
+    return db.runQuery(sqlQuery, data).then(function (dbResult) {
         if (dbResult != false) {
-            return getFormattedProducts(dbResult);
+            return getFormattedProducts(dbResult, storeOpen);
+        } else {
+            return false;
+        }
+    });
+};
+
+/**
+ * Return all products based on the category provided
+ */
+pub.getCategoryOnlyProducts = function (superCategory, categoryName, storeOpen, superCategory2, categoryName2) {
+    var sqlQuery = `
+        SELECT depot.id AS depot_id, depot.product_id AS product_id,
+        listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
+        listing.product_brand AS brand, listing.product_name AS name,
+        listing.product_description AS description, product.product_image AS image,
+        depot.price AS price, depot.tax AS tax, depot.quantity AS quantity, packaging.name AS packaging,
+        container.name AS container, volume.volume_name AS volume, category.name AS category,
+        super_category.name AS super_category
+        
+        FROM catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
+        catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
+        catalog_containers AS container, catalog_packagings AS packaging, catalog_packaging_volumes AS volume,
+        catalog_super_categories AS super_category
+        
+        WHERE depot.product_id = product.id AND product.listing_id = listing.id
+        AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+        AND container.id = product.container_id AND packaging.id = depot.packaging_id
+        AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND
+        category.super_category_id = super_category.id
+        AND ? AND ?
+
+
+        AND (listing.product_brand, listing.product_name) NOT IN (
+            SELECT 
+            listing2.product_brand AS brand2, listing2.product_name AS name2
+            
+            FROM catalog_depot AS depot2, catalog_products AS product2, catalog_listings AS listing2,
+            catalog_categories AS category2, catalog_types AS type2, catalog_subcategories AS subcategory2,
+            catalog_containers AS container2, catalog_packagings AS packaging2, catalog_packaging_volumes AS volume2,
+            catalog_super_categories AS super_category2
+            
+            WHERE depot2.product_id = product2.id AND product2.listing_id = listing2.id
+            AND type2.id = listing2.type_id AND type2.subcategory_id = subcategory2.id
+            AND container2.id = product2.container_id AND packaging2.id = depot2.packaging_id
+            AND depot2.packaging_volume_id = volume2.id AND category2.id = subcategory2.category_id AND
+            category2.super_category_id = super_category2.id
+            AND ? AND ?
+            
+        )
+        
+        ORDER BY listing_id, product_id, depot_id`;
+
+    var data = [
+        {"category.name": categoryName }, { "super_category.name": superCategory},
+        {"category2.name": categoryName2}, {"super_category2.name": superCategory2}
+    ];
+
+    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+        if (dbResult != false) {
+            return getFormattedProducts(dbResult, storeOpen);
         } else {
             return false;
         }
@@ -148,7 +242,7 @@ var getAllBrandsBySubcategory = function (subcategory, products) {
 /**
  * Return products for front-end
  */
-var getFormattedProducts = function (products) {
+var getFormattedProducts = function (products, storeOpen) {
     var tmpResult = {};
 
     for (var i = 0; i < products.length; i++) {
@@ -192,6 +286,7 @@ var getFormattedProducts = function (products) {
                 product_variants: {
                     all_volumes: []
                 },
+                store_open: storeOpen
             };
             tmpResult[product.product_id].product_variants[p_volume] = {
                 all_packagings: []

@@ -243,6 +243,10 @@ CREATE TABLE catalog_stores (
 	address_latitude DOUBLE NOT NULL,
 	address_longitude DOUBLE NOT NULL,
 	store_type INT NOT NULL,
+	open_time TIME,
+	close_time TIME,
+	open_time_next TIME,
+	close_time_next TIME,
 
 	PRIMARY KEY (id),
 	CONSTRAINT fk_catalog_stores_store_type FOREIGN KEY (store_type) REFERENCES catalog_super_categories(id) ON DELETE RESTRICT ON UPDATE CASCADE		
