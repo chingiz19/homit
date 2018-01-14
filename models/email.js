@@ -149,7 +149,7 @@ pub.sendCancelEmail = function (orderInfo) {
     sendEmail(mailOptions);
 };
 
-pub.sendResetPasswordEmail = async function(orderInfo){
+pub.sendResetPasswordEmail = async function (orderInfo) {
     var html = getResetPasswordHTML(orderInfo.resetLink);
     let mailOptions = {
         from: '"noreply" <orders@homit.ca>', //TODO: change to noreply
@@ -224,9 +224,10 @@ var getPartialRefundedOrderEmailHtml = function (orderInfo) {
 };
 
 var prepareOrderSlip = function (orderInfo, callback) {
+    var orderSlipDir = process.env.ORDER_SLIPS_DIR;
     var orderNumber = orderInfo.customer.order.id.split('_')[1];
     var slipHtmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/order_slip.html", "utf8");
-    var pdfFileFath = process.cwd() + "/OrderSlips/orderSlip#" + orderNumber + ".pdf";
+    var pdfFileFath = orderSlipDir + "order-slip_" + orderNumber + ".pdf";
     var orderSlipHtml = getOrderSlipHtml(slipHtmlSource, orderInfo);
 
     //For now we will use simple options. More options available at https://www.npmjs.com/package/html-pdf
@@ -236,13 +237,12 @@ var prepareOrderSlip = function (orderInfo, callback) {
         if (err) {
             return Logger.log("Error happened while creating .pdf file for OrderSlip: " + err);
         } else {
-            //TODO save file to DB (Zaman Zamanli)
             callback(pdfFileFath);
         }
     });
 };
 
-var getResetPasswordHTML = function(link){
+var getResetPasswordHTML = function (link) {
     var file = fs.readFileSync(path.join(process.cwd(), "/project_setup/resources/email-htmls/resetpassword.ejs"), "utf8");
     return ejs.render(file, {
         resetLink: link
@@ -250,7 +250,7 @@ var getResetPasswordHTML = function(link){
 }
 
 //Editing html for .pdf Order Slip that is attached to main e-mail
-var getOrderSlipHtml = function (htmlSource, OI) { 
+var getOrderSlipHtml = function (htmlSource, OI) {
     const $ = cheerio.load(htmlSource);
     const now = new Date();
     const dateArray = now.toString().split(" ");
@@ -261,7 +261,7 @@ var getOrderSlipHtml = function (htmlSource, OI) {
     $('#order_details').text("#" + OI.customer.order.id.split("_")[1] + " ORDER DETAILS");
     $('#store_name').text(OI.store.name);
     $('#store_address').text(OI.store.address);
-    $('#store_phone').text(OI.store.phone);
+    $('#store_phone').text(OI.store.phone_number);
     $('#customer').text(CustomerName);
     $('#customer_address').text(OI.customer.address);
     $('#customer_phone').text(OI.customer.phone);
@@ -292,46 +292,25 @@ var getOrderSlipHtml = function (htmlSource, OI) {
 };
 
 var getTotalPriceForProducts = function (products) {
-    var deliveryFee1 = 4.99;
-    var deliveryFee2 = 2.99;
-    var albertaGst = 0.05;
     var depotQuantities = {};
-    var depotIds = [];
     var prices = [];
-    var priceObject = {};
-    var totalAmount = 0;
-    var totalTax = 0;
-    var deliveryFee = deliveryFee1;
 
     for (var i = 0; i < products.length; i++) {
-        var product = products[i];
-        var tempObj = {};
-        depotIds.push(product.depot_id);
-        depotQuantities[product.depot_id] = product.quantity;
-        tempObj.price = product.price;
-        tempObj.id = product.depot_id;
-        tempObj.tax = product.tax;
-        prices.push(tempObj);
+        depotQuantities[products[i].depot_id] = products[i].quantity;
+        var currentPrice = {
+            "depot_id": products[i].depot_id,
+            "price": products[i].price_sold,
+            "tax": products[i].tax
+        };
+        prices.push(currentPrice);
     }
 
-    for (var i = 0; i < prices.length; i++) {
-        totalAmount = totalAmount + parseFloat(prices[i].price) * depotQuantities[prices[i].id];
-        if (prices[i].tax) {
-            totalTax = totalTax + parseFloat(prices[i].price) * depotQuantities[prices[i].id] * albertaGst;
-        }
-    }
-    // Calculating math numbers
-    totalAmount = Math.round(totalAmount * 100) / 100;
+    price = Catalog.priceCalculator(depotQuantities, prices, false);
 
-    deliveryFee = deliveryFee1 + parseInt(totalAmount / 100) * deliveryFee2;
-
-    totalTax = Math.round((totalTax + deliveryFee * albertaGst) * 100) / 100;
-    var totalPrice = totalAmount + deliveryFee + totalTax;
-
-    priceObject.deliveryFee = "C$ " + deliveryFee;
-    priceObject.totalTax = "C$ " + totalTax;
-    priceObject.totalAmount = "C$ " + totalAmount;
-    priceObject.totalPrice = "C$ " + totalPrice;
+    priceObject.deliveryFee = "C$ " + price.delivery_fee;
+    priceObject.totalTax = "C$ " + price.total_tax;
+    priceObject.totalAmount = "C$ " + price.cart_amount;
+    priceObject.totalPrice = "C$ " + price.total_price;
 
     return priceObject;
 };

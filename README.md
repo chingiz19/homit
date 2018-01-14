@@ -50,6 +50,9 @@
 		# Helcim
 		HELCIM_ACCOUNT_ID=
 		HELCIM_API_TOKEN=
+		
+		# Order Slips
+		ORDER_SLIPS_DIR=
 
 ## Running project
 ### Using gulp

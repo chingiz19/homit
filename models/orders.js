@@ -32,20 +32,23 @@ pub.createOrder = function (id, address, address_lat, address_long, isGuest, tra
  * Inserts products
  */
 pub.insertProducts = function (order_id, products) {
-    for (var key in products) {
-        var data = {
-            order_id: order_id,
-            depot_id: products[key].depot_id,
-            quantity: products[key].quantity
-            //TODO: Insert price as well as taxable or not boolean
-        };
-        db.insertQuery(db.dbTables.orders_cart_info, data).then(function (success) {
-            if (!success) {
-                return false;
-            }
-        });
-    }
-    return true;
+    return Catalog.getPricesForProducts(products).then(function (prices) {
+        for (var key in products) {
+            var data = {
+                order_id: order_id,
+                depot_id: products[key].depot_id,
+                quantity: products[key].quantity,
+                price_sold: prices[products[key].depot_id].price,
+                tax: prices[products[key].depot_id].tax
+            };
+            db.insertQuery(db.dbTables.orders_cart_info, data).then(function (success) {
+                if (!success) {
+                    return false;
+                }
+            });
+        }
+        return true;
+    });
 };
 
 /**
@@ -123,7 +126,6 @@ function getOrdersWithQuery(sqlQuery, data) {
 }
 
 pub.getOrderById = function (orderId) {
-    // TODO: 
     var sqlQuery = `
         SELECT
         orders_cart_info.depot_id AS depot_id, super_categories.name AS super_category,
@@ -132,7 +134,7 @@ pub.getOrderById = function (orderId) {
         listings.product_description AS description, listings.product_country AS country,
         containers.name, packagings.name AS packaging, volumes.volume_name AS volume,
         depot.price AS price, products.product_image AS image, orders_cart_info.quantity AS quantity,
-        orders_cart_info.price_sold AS price_sold
+        orders_cart_info.price_sold AS price_sold, orders_cart_info.tax AS tax
         
         FROM orders_cart_info AS orders_cart_info, catalog_depot AS depot, catalog_products AS products,
         catalog_listings AS listings, catalog_types AS types, catalog_subcategories AS subcategories,

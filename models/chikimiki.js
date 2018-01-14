@@ -63,10 +63,10 @@ var receiver = function (jsonResponse) {
                 id: storeId
             };
             db.selectAllWhere(db.dbTables.catalog_stores, storeKey).then(function (dbStore) {
-
                 var jsonStore = {
                     id: storeIdString,
                     address: dbStore[0].address,
+                    phone_number: dbStore[0].phone_number,
                     name: dbStore[0].name,
                     nextnodeid: jsonResponse.details.nextnodeid
                 };

@@ -9,7 +9,7 @@ var pub = {};
  * 
  * @param {*} superCategory 
  */
-pub.isStoreOpen = function(superCategory) {
+pub.isStoreOpen = function (superCategory) {
     var sqlQuery = `
     SELECT *
 
@@ -122,8 +122,8 @@ pub.getCategoryOnlyProducts = function (superCategory, categoryName, storeOpen, 
         ORDER BY listing_id, product_id, depot_id`;
 
     var data = [
-        {"category.name": categoryName }, { "super_category.name": superCategory},
-        {"category2.name": categoryName2}, {"super_category2.name": superCategory2}
+        { "category.name": categoryName }, { "super_category.name": superCategory },
+        { "category2.name": categoryName2 }, { "super_category2.name": superCategory2 }
     ];
 
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
@@ -417,7 +417,34 @@ pub.getSuperCategoryIdByName = function (superCategory) {
     });
 };
 
-pub.getTotalPriceForProducts = function (products) {
+pub.getPricesForProducts = function (products) {
+    var prices = {};
+    var depotIds = [];
+    for (var key in products) {
+        depotIds.push(products[key].depot_id);
+    }
+
+    var sqlQuery = `
+    SELECT id AS depot_id, price AS price, tax AS tax
+    FROM catalog_depot
+    WHERE id in (` + depotIds + `);`;
+
+    return db.runQuery(sqlQuery).then(function (pricesList) {
+        for (var i = 0; i < pricesList.length; i++) {
+            var currentPrice = {
+                price: pricesList[i].price,
+                tax: pricesList[i].tax
+            };
+            prices[pricesList[i].depot_id] = currentPrice;
+        }
+
+        return prices;
+    });
+};
+
+pub.getPricesForProductsWithSuperCategories = function (products) {
+    var result = {};
+
     var depotQuantities = {};
     var depotIds = [];
     for (var superCategory in products) {
@@ -427,18 +454,24 @@ pub.getTotalPriceForProducts = function (products) {
         }
     }
 
-
     var sqlQuery = `
-    SELECT id AS depot_id, price AS price
+    SELECT id AS depot_id, price AS price, tax AS tax
     FROM catalog_depot
-    WHERE id in (` + depotIds + `);`
+    WHERE id in (` + depotIds + `);`;
 
     return db.runQuery(sqlQuery).then(function (prices) {
-        var price = Catalog.priceCalculator(depotQuantities, prices, false);
-        return price.total_price;
+        result.quantities = depotQuantities;
+        result.prices = prices;
+        return result;
     });
 };
 
+pub.getTotalPriceForProducts = function (products) {
+    return Catalog.getPricesForProductsWithSuperCategories(products).then(function (productPrices) {
+        var price = Catalog.priceCalculator(productPrices.quantities, productPrices.prices, false);
+        return price.total_price;
+    });
+};
 
 pub.priceCalculator = function (depotQuantities, prices, refund) {
     var deliveryFee1 = 4.99;
