@@ -87,11 +87,29 @@ app.service('cartService', ["$http", function ($http) {
         return new_cart;
     }
 
+    /**
+     * Used to convert userCart object to object consisting of "depot_id: quantity"
+     * @param {*} cart  - user cart
+     */
+    function _parseCartToSend(cart){
+        var parsedCart = {};
+        cart = Object.values(cart);
+        for (var i = 0; i < cart.length; i++){
+            var super_categories = Object.values(cart[i]);
+            for (var j = 0; j < super_categories.length; j++){
+                parsedCart[super_categories[j].depot_id] = super_categories[j].quantity;
+            }
+        }
+
+        return parsedCart;
+    }
+
     return {
         modifyCartItem: _modifyCartItem,
         clearCart: _clearCart,
         getCart: _getCart,
         mergeCarts: _mergeCarts,
-        getViewUserCart: _getViewUserCart
+        getViewUserCart: _getViewUserCart,
+        parseCartToSend: _parseCartToSend
     };
 }]);

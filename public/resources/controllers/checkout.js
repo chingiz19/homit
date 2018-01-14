@@ -226,7 +226,7 @@ app.controller("checkoutController",
                         url: '/api/checkout/placeorder',
                         data: {
                             user: userInfoToSend,
-                            products: $scope.userCart,
+                            products: cartService.parseCartToSend($scope.userCart),
                             transaction_id: transaction_id,
                             crd_lst4: crd_lst4
                         }
