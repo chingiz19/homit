@@ -84,6 +84,27 @@ app.service('cartService', ["$http", function ($http) {
             new_cart.splice(0, 0, [super_category, orderedItems]);
         }
 
+        // WORKAROUND (TODO)
+        // temp workaround for many super_categories
+        var tempObj = {};
+        var indexesToRemove = [];
+        for (var i = 0; i < new_cart.length; i++){
+            var item = new_cart[i];
+            // if not 'liquor', combine under 'snackvendor'
+            if (item[0] != "liquor"){
+                tempObj = Object.assign(tempObj, item[1]);
+                indexesToRemove.splice(0, 0, i);
+            }
+        }
+
+        new_cart.push(['snackvendor', tempObj]);
+
+        // reverse order
+        new_cart = new_cart.filter(function(item){
+            return item[0] == 'liquor' || item[0] == 'snackvendor';
+        });
+        // END WORKAROUND
+
         return new_cart;
     }
 
