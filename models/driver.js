@@ -90,7 +90,7 @@ io.on("connection", function (socket) {
                     console.log("same_receiver: " + driverDetails.drop_off.same_receiver);
                     console.log("receiver_name: " + driverDetails.drop_off.receiver_name);
                     console.log("receiver_age: " + driverDetails.drop_off.receiver_age + "\n");
-                    removeOrderRouteNode(driverIdInt, driverDetails.arrived_store.order_id);
+                    removeOrderRouteNode(driverIdInt, driverDetails.drop_off.order_id);
                     saveDropOff(driverIdInt, driverDetails.drop_off);
                     break;
                 case "location_update":
@@ -100,7 +100,7 @@ io.on("connection", function (socket) {
                     console.log("Data received from driver: arrived_customer");
                     console.log("customer_id: " + driverDetails.arrived_customer.customer_id);
                     console.log("order_ids: " + driverDetails.arrived_customer.order_ids + "\n");
-                    saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids);
+                    saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids, driverDetails.arrived_customer.customer_id);
                     // send text message
                     sendToCm = false;
                     break;
@@ -252,8 +252,25 @@ var saveDropOff = function (driverId, dropOff) {
     });
 };
 
-var saveArrivedCustomer = function (driverId, orderIds) {
-    updateOrdersHistory("date_arrived_customer", orderIds);
+var saveArrivedCustomer = function (driverId, orderIds, customerIdString) {
+    var customerInit = customerIdString.split("_")[0];
+    var customerId = customerIdString.split("_")[1];
+    if (customerInit == "u") {
+        User.findUserById(customerId).then(function (customer) {
+            var name = customer.first_name + " " + customer.last_name;
+            var phone = customer.phone_number;
+            SMS.notifyDriverArrival(phone, name);
+            updateOrdersHistory("date_arrived_customer", orderIds);
+        });
+    } else {
+        User.findGuestUserById(customerId).then(function (customer) {
+            var name = customer.first_name + " " + customer.last_name;
+            var phone = customer.phone_number;
+            SMS.notifyDriverArrival(phone, name);
+            updateOrdersHistory("date_arrived_customer", orderIds);
+        });
+    }
+
 };
 
 var updateOrdersHistory = function (updateColumn, orderIdsString) {
@@ -267,7 +284,6 @@ var updateOrdersHistory = function (updateColumn, orderIdsString) {
     WHERE id in (` + orderIds + `)`;
 
     return db.runQuery(sqlQuery).then(function (updated) {
-        //TODO: Zaman Zamanli please call SMS.arrivalNotification(number, name) here for arrival notification
         return updated;
     });
 };

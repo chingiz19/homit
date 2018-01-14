@@ -434,7 +434,7 @@ pub.getTotalPriceForProducts = function (products) {
     WHERE id in (` + depotIds + `);`
 
     return db.runQuery(sqlQuery).then(function (prices) {
-        var price = priceCalculator(depotQuantities, prices, false);
+        var price = Catalog.priceCalculator(depotQuantities, prices, false);
         return price.total_price;
     });
 };

@@ -27,7 +27,7 @@ const client = require('twilio')(accountSid, authToken);
 var pub = {};
 
 //send regular sms notifying about driver's arrival
-pub.arrivalNotification = function (number, name) { //require number in <+1**********> format and first_name as a name <String>
+pub.notifyDriverArrival = function (number, name) { //require number in <+1**********> format and first_name as a name <String>
 
     client.messages
         .create({
