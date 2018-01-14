@@ -12,6 +12,7 @@ var cssnano = require('gulp-cssnano');
 var concatCss = require('gulp-concat-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var gulpFn  = require('gulp-fn');
 var beep = require('beepbeep');
 var del = require('del');
 var browserSync = require('browser-sync').create();
@@ -21,6 +22,7 @@ var notifier = require('node-notifier');
 /* Variables */
 var development = environments.development;
 var production = environments.production;
+var wwwChangedViaGulp = false;
 
 var jsFiles = [
     './public/**/*.js',
@@ -62,6 +64,9 @@ gulp.task('browserSync', function(){
 
 gulp.task('js', function(){
     return gulp.src(jsFiles)
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = true;
+        }))
         .pipe(plumber({
             errorHandler: errorHandling
         }))
@@ -73,7 +78,10 @@ gulp.task('js', function(){
         .pipe(production(concat('resources/js/all.min.js')))
         .pipe(plumber.stop())
         .pipe(gulp.dest("www/"))
-        .pipe(development(browserSync.reload({stream: true})));
+        .pipe(development(browserSync.reload({stream: true})))
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = false;
+        }));
 });
 
 gulp.task('img', function(){
@@ -123,11 +131,13 @@ gulp.task('start', ['js', 'css', 'img'], function(cb){
 
 gulp.task('www-error', function(){
     gulp.watch('www/**/*', function(){
-        notifier.notify({
-            title: 'WWW folder contents has been modified',
-            message: 'Files inside www/ folder have been modified, please apply changes to public/ folder contents'
-          });
-        beep(3, 1000);
+        if (!wwwChangedViaGulp){
+            notifier.notify({
+                title: 'WWW folder contents has been modified',
+                message: 'Files inside www/ folder have been modified, please apply changes to public/ folder contents'
+            });
+            beep(3, 1000);
+        }
     });
 });
 
