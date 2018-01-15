@@ -51,6 +51,10 @@ router.post('/placeorder', function (req, res, next) {
                                     var data = {
                                         phone_number: phone
                                     };
+                                    if (birth_year && birth_month && birth_day) {
+                                        var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
+                                        data.birth_date = birth_date;
+                                    }
                                     var key = {
                                         id: userId
                                     };
