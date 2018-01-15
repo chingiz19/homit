@@ -442,35 +442,9 @@ pub.getPricesForProducts = function (products) {
     });
 };
 
-pub.getPricesForProductsWithSuperCategories = function (products) {
-    var result = {};
-
-    var depotQuantities = {};
-    var depotIds = [];
-    for (var superCategory in products) {
-        for (var key in products[superCategory]) {
-            depotIds.push(products[superCategory][key].depot_id);
-            depotQuantities[products[superCategory][key].depot_id] = products[superCategory][key].quantity;
-        }
-    }
-
-    var sqlQuery = `
-    SELECT id AS depot_id, price AS price, tax AS tax
-    FROM catalog_depot
-    WHERE id in (` + depotIds + `);`;
-
-    return db.runQuery(sqlQuery).then(function (prices) {
-        result.quantities = depotQuantities;
-        result.prices = prices;
-        return result;
-    });
-};
-
-pub.getTotalPriceForProducts = function (products) {
-    return Catalog.getPricesForProductsWithSuperCategories(products).then(function (productPrices) {
-        var price = Catalog.priceCalculator(productPrices.quantities, productPrices.prices, false);
-        return price.total_price;
-    });
+pub.getTotalPriceForProducts = function (cartProducts, dbProducts) {
+    var price = Catalog.priceCalculator(cartProducts, dbProducts, false);
+    return price.total_price;
 };
 
 pub.priceCalculator = function (depotQuantities, prices, refund) {
@@ -509,6 +483,60 @@ pub.priceCalculator = function (depotQuantities, prices, refund) {
     };
 
     return finalPrices;
+};
+
+pub.getCartProducts = function (cartProducts) {
+    var depotIds = Object.keys(cartProducts);
+    var sqlQuery = `
+        SELECT depot.id AS depot_id,
+        depot.price AS price, depot.tax AS tax,
+        super_category.name AS super_category
+        
+        FROM catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
+        catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
+        catalog_super_categories AS super_category
+        
+        WHERE depot.product_id = product.id AND product.listing_id = listing.id
+        AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+        AND category.id = subcategory.category_id AND
+        category.super_category_id = super_category.id
+        AND depot.id in (` + depotIds + `)
+        
+        ORDER BY super_category`;
+
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        return dbResult;
+    });
+};
+
+pub.getCartProductsWithSuperCategory = function (cartProducts, dbProducts) {
+    var products = {};
+    var currentSuper = {};
+    for (var i = 0; i < dbProducts.length; i++) {
+
+        var currentItem = {
+            depot_id: dbProducts[i].depot_id,
+            price: dbProducts[i].price,
+            tax: dbProducts[i].tax,
+            quantity: cartProducts[dbProducts[i].depot_id]
+        };
+
+        if (i == 0) {
+            currentSuper[dbProducts[i].depot_id] = currentItem;
+        } else {
+            if (dbProducts[i - 1].super_category != dbProducts[i].super_category) {
+                products[dbProducts[i - 1].super_category] = currentSuper;
+                currentSuper = {};
+            }
+            currentSuper[dbProducts[i].depot_id] = currentItem;
+        }
+
+        if (i == dbProducts.length - 1) {
+            products[dbProducts[i].super_category] = currentSuper;
+        }
+    }
+
+    return products;
 };
 
 /**

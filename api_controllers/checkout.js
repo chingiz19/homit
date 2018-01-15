@@ -15,7 +15,7 @@ router.post('/placeorder', function (req, res, next) {
     var birth_day = req.body.user.birth_day;
     var birth_month = req.body.user.birth_month;
     var birth_year = req.body.user.birth_year;
-    var products = req.body.products;
+    var cartProducts = req.body.products;
     var transactionId = req.body.transaction_id;
     var saveCard = req.body.save_card;
     var cardToken = req.body.card_token;
@@ -30,7 +30,7 @@ router.post('/placeorder', function (req, res, next) {
         if (saveCard) {
             cardValid = !cardToken || !cardDigits || !cardType;
         }
-        if (!products || !phone || !address || !address_lat || !address_long || !transactionId || !cardValid) {
+        if (!cartProducts || !phone || !address || !address_lat || !address_long || !transactionId || !cardValid) {
             Logger.log("Missing params");
             res.status(403).json({
                 error: {
@@ -44,7 +44,9 @@ router.post('/placeorder', function (req, res, next) {
                 if (isTransactionFine) {
                     MP.getTransaction(transactionId, function (transactionDetails) {
                         if (transactionDetails.transactions != undefined) {
-                            Catalog.getTotalPriceForProducts(products).then(function (totalPrice) {
+                            Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
+                                var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
+                                var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
                                 if (transactionDetails.transactions.transaction[0].amount >= totalPrice) {
                                     var data = {
                                         phone_number: phone
@@ -110,7 +112,7 @@ router.post('/placeorder', function (req, res, next) {
             });
         }
     } else {
-        if (!email || !phone || !fname || !lname || !address || !address_lat || !address_long || !products) {
+        if (!email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts) {
             Logger.log("Missing params");
             res.status(403).json({
                 error: {
@@ -124,7 +126,9 @@ router.post('/placeorder', function (req, res, next) {
                 if (isTransactionFine) {
                     MP.getTransaction(transactionId, function (transactionDetails) {
                         if (transactionDetails.transactions != undefined) {
-                            Catalog.getTotalPriceForProducts(products).then(function (totalPrice) {
+                            Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
+                                var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
+                                var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
                                 if (transactionDetails.transactions.transaction[0].amount >= totalPrice) {
                                     User.findGuestUser(email).then(function (guestUserFound) {
                                         if (guestUserFound == false) {
@@ -265,7 +269,7 @@ var createOrders = function (id, address, address_lat, address_long, isGuest, tr
 
 };
 
-var saveCreditCard = function (userKey, saveCard, cardToken, cardDigits, cardType) {
+var saveCreditCard = async function (userKey, saveCard, cardToken, cardDigits, cardType) {
     if (saveCard) {
         return User.updateCreditCard(userKey, cardToken, cardDigits, cardType).then(function (cardUpdated) {
             return cardUpdated;

@@ -31,24 +31,22 @@ pub.createOrder = function (id, address, address_lat, address_long, isGuest, tra
 /**
  * Inserts products
  */
-pub.insertProducts = function (order_id, products) {
-    return Catalog.getPricesForProducts(products).then(function (prices) {
-        for (var key in products) {
-            var data = {
-                order_id: order_id,
-                depot_id: products[key].depot_id,
-                quantity: products[key].quantity,
-                price_sold: prices[products[key].depot_id].price,
-                tax: prices[products[key].depot_id].tax
-            };
-            db.insertQuery(db.dbTables.orders_cart_info, data).then(function (success) {
-                if (!success) {
-                    return false;
-                }
-            });
-        }
-        return true;
-    });
+pub.insertProducts = function (orderId, products) {
+    for (var key in products) {
+        var data = {
+            order_id: orderId,
+            depot_id: products[key].depot_id,
+            quantity: products[key].quantity,
+            price_sold: products[key].price,
+            tax: products[key].tax
+        };
+        db.insertQuery(db.dbTables.orders_cart_info, data).then(function (success) {
+            if (!success) {
+                return false;
+            }
+        });
+    }
+    return true;
 };
 
 /**
