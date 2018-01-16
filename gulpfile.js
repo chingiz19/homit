@@ -86,8 +86,14 @@ gulp.task('js', function(){
 
 gulp.task('img', function(){
     return gulp.src(imgFiles)
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = true;
+        }))
         .pipe(cache('cssFiles'))
-        .pipe(gulp.dest("www/"));
+        .pipe(gulp.dest("www/"))
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = false;
+        }));
 });
 
 gulp.task('css', function(){
@@ -95,12 +101,18 @@ gulp.task('css', function(){
         .pipe(plumber({
             errorHandler: errorHandling
         }))
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = true;
+        }))
         .pipe(cache('imgFiles'))
         // .pipe(production(concatCss('resources/css/all.min.css'))) TODO
         .pipe(production(cssnano()))
         .pipe(plumber.stop())
         .pipe(gulp.dest("www/"))
-        .pipe(development(browserSync.reload({stream: true})));
+        .pipe(development(browserSync.reload({stream: true})))
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = false;
+        }));
 });
 
 gulp.task('watch', ['js', 'css', 'img'],function(){
