@@ -7,7 +7,7 @@
 </head>
 
 <body class="ng-cloak">
-    <div ng-controller="adminController">
+    <div ng-controller="adminController as adctrl">
         <div class="adminPtopA">
             <span class="adminPtopAA">{{pageName}}</span>
             <md-button aria-label="logOut" ng-click="logoutBtn()" class="adminPtopAB">
@@ -30,7 +30,7 @@
                         <label></label>
                         <input id="csr_Search" ng-model="searchCriteria" class="adminPtopBBB">
                     </md-input-container>
-                    <md-button aria-label="searchOrClear" class="adminPtopBC" ng-click="searchCriteria = ''; foundUsers = ''; foundOrders = ''; foundOrderContent = '';">
+                    <md-button aria-label="searchOrClear" class="adminPtopBC" ng-click="searchCriteria = ''; foundUsers = ''; foundOrders = ''; foundOrderContent = ''; adctrl.reqeustType = 0">
                         <ng-md-icon ng-if="!searchCriteria" icon="search" class="adminPtopBAA"></ng-md-icon>
                         <ng-md-icon ng-if="searchCriteria" icon="clear" class="adminPtopBCA"></ng-md-icon>
                     </md-button>
@@ -57,7 +57,7 @@
                 <div class="gtDataB">
                     <md-radio-group>
                         <md-radio-button id="{{order.order_id}}" aria-label="selectOrder" class="gtDataBA" ng-value="order" ng-repeat="order in foundOrders"
-                            ng-click="selectedOrderId(order)">
+                            ng-click="selectOrderId(order)">
                             <ul layout="row" class="gtDataBAA">
                                 <li class="gtDataBAAA">Order Id: </li>
                                 <li class="gtDataBAAB">&nbsp{{order.order_id}};&nbsp&nbsp</li>
@@ -77,10 +77,38 @@
                 </div>
                 <div ng-if="foundOrders  != '' " class="gtDataBB"></div>
                 <div aria-label="orderItems" class="gtDataC">
-                    <div class="gtDataCA" ng-if="foundOrderContent  != '' ">Order List</div>
+                    <div ng-if="foundOrderContent  != '' " style="display: flex; justify-content: center; align-items: center;" class="gtDataCA"
+                        layout="column">
+                        <div layout="row">
+                            <div>Order List</div>
+                            <div style="font-size: 14px;">
+                                <md-input-container class="adminPtopBD" style="min-width: 120px; width: 150px;">
+                                    <md-select ng-model="adctrl.reqeustType" placeholder="Request" ng-change="reqeustType_change(adctrl.reqeustType)">
+                                        <md-option ng-value="1" ng-disabled="!selectedOrder.date_arrived_customer">Refund Order</md-option>
+                                        <md-option ng-value="2" ng-disabled="!selectedOrder.date_arrived_customer">Refund Product</md-option>
+                                        <md-option ng-value="3" ng-disabled="selectedOrder.date_arrived_customer">Cancel Order</md-option>
+                                        <md-option ng-value="4" ng-disabled="selectedOrder.date_arrived_customer">Cancel Product</md-option>
+                                        <md-option ng-value="5" ng-disabled="selectedOrder.date_arrived_customer">Add New Item</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
                     <div style="display: flex; justify-content: center; flex-wrap: wrap;">
                         <div ng-value="item" ng-repeat="item in foundOrderContent">
                             <div layout="row" class="gtDataCBA">
+                                <ul ng-show="adctrl.reqeustType == 2 || adctrl.reqeustType == 4">
+                                    <li>
+                                        <md-button ng-click="addItem(item)" aria-label="addItem">
+                                            <ng-md-icon icon="add_circle_outline" style="fill: rgba(5, 26, 25, 0.6);" size="20"></ng-md-icon>
+                                        </md-button>
+                                    </li>
+                                    <li>
+                                        <md-button ng-click="minusItem(item)" aria-label="minusItem">
+                                            <ng-md-icon icon="remove_circle_outline" style="fill: rgba(5, 26, 25, 0.6);" size="20"></ng-md-icon>
+                                        </md-button>
+                                    </li>
+                                </ul>
                                 <ul class="gtDataCBAA" style="margin: 0; padding: 0;">
                                     <img class="gtDataCBAAA" ng-src="{{'/resources/images/products/' + item.super_category + '/' + item.category + '/' + item.image}}">
                                 </ul>
@@ -89,6 +117,8 @@
                                     <li class="gtDataCBABAB">&nbsp{{item.brand}}&nbsp&nbsp</li>
                                     <li class="gtDataCBABAB">{{item.volume}}&nbspX{{item.packaging}}</li>
                                     <li class="gtDataPrCBABAB">C$&nbsp{{item.price}}</li>
+                                    <li class="gtDataPrCBABAB">#{{item.quantity}}</li>
+                                    <li ng-if="adctrl.reqeustType == 2 || adctrl.reqeustType == 4" class="gtDataPrCBABAB" style="color: red; font-weight: 450;">#{{item.modify_number}}</li>
                                 </ul>
                             </div>
                             <div class="gtDataCBB"></div>
@@ -96,9 +126,72 @@
                     </div>
                 </div>
             </div>
+            <div ng-if="adctrl.reqeustType != 5" style="width: 60%;">
+                <ul style="margin: 0; padding: 0; font-size: 14px; color: rgba(0,0,0,0.9);">
+                    <li>
+                        <md-input-container class="md-block">
+                            <label for="idCell" class="inptLbl">Order Comment</label>
+                            <input id="gP_number" name="orderComment" ng-model="req_1.order_comment" type="text" required/>
+                        </md-input-container>
+                    </li>
+                    <li>
+                        <md-datepicker ng-model="req_1.date" md-placeholder="Pick up Date" md-open-on-focus required></md-datepicker>
+                    </li>
+                    <li>
+                        <md-input-container class="md-block bigClass" style="width: 20%;">
+                            <label>Pick up Time</label>
+                            <input maxlength="4" ng-model="req_1.time" type="text" required/>
+                        </md-input-container>
+                    </li>
+                    <li>
+                        <md-input-container class="md-block">
+                            <label for="idCell" class="inptLbl">Time Comment</label>
+                            <input id="gP_number" name="orderComment" ng-model="req_1.time_comment" type="text" required/>
+                        </md-input-container>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="adctrl.reqeustType">
+                <div layout="row">
+                    <div layout="column" ng-if="adctrl.reqeustType != 6 ">
+                        <ul>Charged Money</ul>
+                        <div layout="row">
+                            <ul style="margin: 0; padding: 0;">
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Cart Total</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Delivery Fee</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Gst</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Total Amount</li>
+                            </ul>
+                            <ul style="margin: 0; padding: 0;">
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{selectedOrder.cartTotal}}</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{selectedOrder.delFee}}</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{selectedOrder.GST}}</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{selectedOrder.totAmount}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div layout="column">
+                        <ul ng-if="adctrl.reqeustType == 6 ">Money to be charged</ul>
+                        <ul ng-if="adctrl.reqeustType != 6 ">Money to be refunded</ul>
+                        <div layout="row">
+                            <ul style="margin: 0; padding: 0;">
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Cart Total</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Delivery Fee</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Gst</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Total Amount</li>
+                            </ul>
+                            <ul style="margin: 0; padding: 0;">
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{ref_chr_Money.cartTotal}}</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{ref_chr_Money.delFee}}</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{ref_chr_Money.GST}}</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{ref_chr_Money.totAmount}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <md-button class="md-raised md-primary" ng-click="sendRequest()">Submit</md-button>
+                </div>
+            </div>
         </div>
-        <!-- End -->
-
         <!-- Dispatch Room -->
         <!-- Start -->
         <div ng-show="page == 2" class="container-fluid">
@@ -170,180 +263,13 @@
                 </div>
             </div>
         </div>
-        <!-- End -->
 
-
-
-        <!-- Request Room -->
-        <!-- Start -->
-        <div ng-show="page == 3" class="container">
-            <div flex="100" layout="row">
-                <md-input-container style="margin: 0; margin-top: 10px; min-width: 120px; width: 120px;">
-                    <md-select ng-model="reqeustType" placeholder="Request" ng-change="callSearch()">
-                        <md-option ng-value="1">Add Item</md-option>
-                        <md-option ng-value="2">Cancel Item</md-option>
-                        <md-option ng-value="3">Delete Order</md-option>
-                        <md-option ng-value="4">"Bug" Issue</md-option>
-                        <md-option ng-value="5">Open Tytle</md-option>
-                    </md-select>
-                </md-input-container>
-                <div layout="column" ng-show="reqeustType == 1 || reqeustType == 2 || reqeustType == 3" style="position: relative; left: 30%;">
-                    <div>Has the order been delivered?</div>
-                    <md-radio-group ng-model="isOrderDelivered">
-                        <md-radio-button aria-label="deliveredTrue" ng-value="true">Yes</md-radio-button>
-                        <md-radio-button aria-label="deliveredFalse" ng-value="false">No</md-radio-button>
-                    </md-radio-group>
-                </div>
-                <md-button class="md-accent" style="position: absolute; right: 135; padding: 0; margin: 0;" ng-click="reqeustType = undefined; isOrderDelivered = undefined ">CLEAR</md-button>
-            </div>
-            <div ng-if="reqeustType == 1">
-                <div ng-if="isOrderDelivered == true ">We are sorry, but new items can not be added to your order at this point. Please submit a new order.</div>
-                <div ng-if="isOrderDelivered == false">
-                    <div layout="row" style="display: flex; justify-content: center; align-items: center;">
-                        <md-input-container style="min-width: 150px; width: 200px; margin-bottom: 2px; min-height: 30px; height: 30px;">
-                            <label>First Name</label>
-                            <input required ng-model="customer.first_name" type="text" />
-                        </md-input-container>
-                        <md-input-container style="min-width: 150px; width: 200px; margin-bottom: 2px; min-height: 30px; height: 30px;">
-                            <label>Last Name</label>
-                            <input required ng-model="customer.last_name" type="text" />
-                        </md-input-container>
-                        <md-button aria-label="viewPendingOrder" style="border: 1px solid rgba(42,81,145,0.45); margin: 0; padding: 0; margin-top: 10px; min-height: 40px; height: 40px; min-width: 40px; width: 40px;">
-                            <ng-md-icon icon="search" size="20" ng-click="viewPendingOrder()"></ng-md-icon>
-                        </md-button>
-                        <!-- ng-if="customer.pending_orders" ng-repeat="order in customer.pending_orders" -->
-                        <div flex="15" style="border: 1px grey solid; margin: 0 20px 0 20px;">
-                            <ul>
-                                <li>Store Name</li>
-                                <li>Cart C$</li>
-                                <li>Delivery Fee C$</li>
-                                <li>GST C$</li>
-                                <li>Total C$</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div layout="row">
-                        <div flex="50" style="margin-top: 20px; height: 55%; border: 1px solid rgba(0,0,0,0.25);" layout="row">
-                            <div flex="50">
-                                <md-input-container layout="row" class="srchCntr cusTblLn">
-                                    <md-button aria-label="addItemSearch" class="srchBtn srchBtnCus" ng-click="customer.addItem_search = '' ">
-                                        <ng-md-icon ng-if="!customer.addItem_search" icon="search" size="18"></ng-md-icon>
-                                        <ng-md-icon ng-if="customer.addItem_search" icon="clear" size="18"></ng-md-icon>
-                                    </md-button>
-                                    <label>
-                                    </label>
-                                    <input id="addItemSearch" ng-model="customer.addItem_search" class="srchInpt" placeholder="Search Item">
-                                </md-input-container>
-                            </div>
-                            <div flex="50" style="min-height: 100px;" layout="column">
-                                <div layout="row" style="display: flex; justify-content: center;">
-                                    <div style="display: flex; align-items: center;">Temprory Cart</div>
-                                    <md-button aria-label="3_Next" ng-click="" style="margin: 0; padding: 0; min-width: 40px; width: 40px;">
-                                        <ng-md-icon icon="navigate_next" size="20"></ng-md-icon>
-                                    </md-button>
-                                </div>
-                            </div>
-                        </div>
-                        <div flex="50" layout="column" style="margin-top: 20px; height: 55%; border: 1px solid rgba(0,0,0,0.25); display: flex; align-items: center;">
-                            <ul>
-                                <li>Cart: </li>
-                                <li>Delivery Fee: </li>
-                                <li>GST: </li>
-                                <li>Total: </li>
-                            </ul>
-                            <div layout="row">
-                                <md-input-container style="margin: 0; padding: 0; max-height: 50px; height: 50px;" flex="50">
-                                    <label>First Name</label>
-                                    <input ng-model="customer.first_name">
-                                </md-input-container>
-                                <md-input-container style="margin: 0; padding: 0; margin-left: 5px; max-height: 50px; height: 50px;" flex="50">
-                                    <label>Last Name</label>
-                                    <input ng-model="customer.last_name">
-                                </md-input-container>
-                            </div>
-                            <md-input-container style="margin: 0; padding: 0; max-height: 50px; height: 50px;" flex="50">
-                                <label>Date of Birth</label>
-                                <input ng-model="customer.dob">
-                            </md-input-container>
-                            <div layout="row">
-                                <md-input-container style="margin: 0; padding: 0; max-height: 50px; height: 50px;" flex="50">
-                                    <label>Email</label>
-                                    <input ng-model="customer.email">
-                                </md-input-container>
-                                <md-input-container style="margin: 0; padding: 0; margin-left: 5px; max-height: 50px; height: 50px;" flex="50">
-                                    <label>Phone</label>
-                                    <input ng-model="customer.phone">
-                                </md-input-container>
-                            </div>
-                            <md-input-container style="margin: 0; padding: 0; max-height: 50px; height: 50px;" flex="50">
-                                <label>Address</label>
-                                <input ng-model="customer.address">
-                            </md-input-container>
-                            <md-button class="md-raised md-primary">Submit</md-button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div ng-if="reqeustType == 2"></div>
-            <div ng-if="reqeustType == 3">
-                <div ng-if="isOrderDelivered == true || isOrderDelivered == false">
-                    <div style="display: flex; justify-content: center;">
-                        <md-input-container style="min-width: 150px; width: 200px; margin-bottom: 2px; min-height: 30px; height: 30px;">
-                            <label>First Name</label>
-                            <input required ng-model="customer.first_name" type="text" />
-                        </md-input-container>
-                        <md-input-container style="min-width: 150px; width: 200px; margin-bottom: 2px; min-height: 30px; height: 30px;">
-                            <label>Last Name</label>
-                            <input required ng-model="customer.last_name" type="text" />
-                        </md-input-container>
-                        <md-input-container style="min-width: 100px; width: 100px; margin-bottom: 2px; min-height: 30px; height: 30px;">
-                            <label>Order Id</label>
-                            <input required ng-model="customer.orderID_delete" type="text" />
-                        </md-input-container>
-                        <md-button aria-label="viewPendingOrder" style="border: 1px solid rgba(42,81,145,0.45); margin: 0; padding: 0; margin-top: 10px; min-height: 40px; height: 40px; min-width: 40px; width: 40px;">
-                            <ng-md-icon icon="search" size="20" ng-click="viewPendingOrder()"></ng-md-icon>
-                        </md-button>
-                    </div>
-                    <div style="display: flex; align-items: center;" layout="column">
-                        <div style="display: flex; justify-content: center; margin-top: 20px; border-bottom: 1px solid rgb(172, 39, 39); width: 150px;">Money to Refund</div>
-                        <ul>
-                            <li>Cart: C$</li>
-                            <li>Delivery Fee: C$ 0.00</li>
-                            <li>GST: C$</li>
-                            <li>Total: C$</li>
-                        </ul>
-                    </div>
-                    <div ng-if="isOrderDelivered == true" style="display: flex; align-items: center;" layout="column">
-                        <div style="display: flex; justify-content: center; margin-top: 20px; border-bottom: 1px solid rgb(172, 39, 39); width: 300px;">When to Pick up</div>
-                        <div layout="row" style="display: flex; justify-content: center;">
-                            <md-input-container style="min-width: 150px; width: 150px; margin-bottom: 2px; min-height: 30px; height: 30px;">
-                                <label>dd/mm/yyyy</label>
-                                <input required ng-model="customer.first_name" type="text" />
-                            </md-input-container>
-                            <md-input-container style="min-width: 150px; width: 150px; margin-bottom: 2px; min-height: 30px; height: 30px;">
-                                <label>hh:mm</label>
-                                <input required ng-model="customer.last_name" type="text" />
-                            </md-input-container>
-                        </div>
-                    </div>
-                    <div style="display: flex; justify-content: center;">
-                        <md-button class="md-raised md-primary" style="margin: 0; padding: 0; margin-top: 25px;">Submit</md-button>
-                    </div>
-                </div>
-            </div>
-            <div ng-if="reqeustType == 4"></div>
-            <div ng-if="reqeustType == 5"></div>
-        </div>
-        <!-- End -->
-        <div layout="row" class="doc">
+        <div layout="column" class="doc">
             <md-button aria-label="OH" id="pg_1" ng-click="toPage(1)" flex="33" class="pageDocBtn">
                 <ng-md-icon icon="history" class="pageDocHvrIcon1 pageDocIcon"></ng-md-icon>
             </md-button>
             <md-button aria-label="DR" id="pg_2" ng-click="toPage(2)" flex="33" class="pageDocBtn">
                 <ng-md-icon icon="person_pin_circle" class="pageDocHvrIcon2 pageDocIcon"></ng-md-icon>
-            </md-button>
-            <md-button aria-label="RC" id="pg_3" ng-click="toPage(3)" flex="33" class="pageDocBtn">
-                <ng-md-icon icon="create" class="pageDocHvrIcon3 pageDocIcon"></ng-md-icon>
             </md-button>
         </div>
     </div>

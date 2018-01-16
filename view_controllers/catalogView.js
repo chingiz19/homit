@@ -1,7 +1,7 @@
 var router = require("express").Router();
 
 const categories = {
-    "liquor": ['beer', 'wine', "spirit"],
+    "liquor": ['beer', 'wine', "spirit", "liqueur"],
     "snackvendor": ['all']
 }
 

@@ -109,9 +109,10 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
             }, function errorCallback(response) {
                 Logger.error("error");
             });
-        };
-
-        $scope.selectedOrderId = function (order) {
+        }
+        $scope.selectOrderId = function (order) {
+            $scope.selectedOrder = order;
+            $scope.selectedOrder['cartTotal'] = 0;
             $http({
                 method: 'POST',
                 url: "/api/orders/getorder",
@@ -120,6 +121,13 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 }
             }).then(function successCallback(response) {
                 $scope.foundOrderContent = response.data.orders;
+                for (item in $scope.foundOrderContent) {
+                    $scope.foundOrderContent[item]['modify_number'] = 0;
+                    $scope.selectedOrder['cartTotal'] = Math.round((parseFloat($scope.foundOrderContent[item].price) * parseFloat($scope.foundOrderContent[item].quantity) + $scope.selectedOrder['cartTotal']) * 100) / 100;
+                }
+                $scope.selectedOrder['delFee'] = Math.round((4.99 + parseInt($scope.selectedOrder['cartTotal'] / 100) * 2.99)*100)/100;
+                $scope.selectedOrder['GST'] = Math.round(($scope.selectedOrder['delFee'] + $scope.selectedOrder['cartTotal']) * 0.05*100)/100;
+                $scope.selectedOrder['totAmount'] = Math.round(($scope.selectedOrder['cartTotal'] + $scope.selectedOrder['delFee'] + $scope.selectedOrder['GST'])*100)/100;
             }, function errorCallback(response) {
                 Logger.error("error");
             });
@@ -149,8 +157,122 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
             });
         };
 
-        $scope.page = 2;
-        $scope.pageName = "Dispatch Room";
+        $scope.reqeustType = 0;
+        $scope.ref_chr_Money = {};
+        $scope.refundList = {};
+        $scope.req_1 = {};
+
+        $scope.sendRequest = function (type) {
+            if (type == 1) {
+                $http({
+                    method: 'POST',
+                    url: "/api/orders/refundorder'",
+                    data: {
+                        order_id: $scope.selectedOrder.order_id,
+                        note: $scope.req_1.order_comment,
+                        date_scheduled: $scope.req_1.date + $scope.req_1.time + ":00",
+                        date_scheduled_note: $scope.req_1.time_comment
+                    }
+                }).then(function successCallback(response) {
+                    $scope.ref_chr_Money = response.data;
+                }, function errorCallback(response) {
+                    Logger.error("error");
+                });
+            } else if (type != 1 && type != 5) {
+                var list_to_send = {};
+                for (item_depot_id in $scope.refundList) {
+                    list_to_send[item_depot_id] = {
+                        "id": $scope.refundList.cart_item_id,
+                        "quantity": -$scope.refundList.modify_number
+                    }
+                }
+                $http({
+                    method: 'POST',
+                    url: "/api/orders/refunditems'",
+                    data: {
+                        order_id: $scope.selectedOrder.order_id,
+                        note: $scope.req_1.order_comment,
+                        date_scheduled: $scope.req_1.date + $scope.req_1.time + ":00",
+                        date_scheduled_note: $scope.req_1.time_comment,
+                        items: list_to_send
+                    }
+                }).then(function successCallback(response) {
+                    $scope.ref_chr_Money = response.data;
+                }, function errorCallback(response) {
+                    Logger.error("error");
+                });
+            }
+        }
+
+        $scope.reqeustType_change = function (type) {
+            updateTotals();
+            $scope.reqeustType = type;
+            if (type == 1){
+                $scope.ref_chr_Money['cartTotal'] = $scope.selectedOrder['cartTotal'];
+                $scope.ref_chr_Money['delFee'] = 0;
+                $scope.ref_chr_Money['GST'] = Math.round($scope.selectedOrder['cartTotal'] * 0.05*100)/100;
+                $scope.ref_chr_Money['totAmount'] = $scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['GST'];
+            } else if (type == 3){
+                $scope.ref_chr_Money['cartTotal'] = $scope.selectedOrder['cartTotal'];
+                $scope.ref_chr_Money['delFee'] = $scope.selectedOrder['delFee'];
+                $scope.ref_chr_Money['GST'] = Math.round(($scope.selectedOrder['cartTotal'] + $scope.ref_chr_Money['delFee']) * 0.05*100)/100;
+                $scope.ref_chr_Money['totAmount'] = Math.round(($scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['GST'] + $scope.ref_chr_Money['delFee'])*100)/100;
+            }
+        }
+
+        $scope.addItem = function (item) {
+            if ($scope.refundList.hasOwnProperty(item.depot_id) && item.modify_number <= item.quantity - 1) {
+                item.modify_number = item.modify_number + 1;
+                $scope.refundList[item.depot_id].quantity = item.modify_number;
+            } else if ($scope.refundList.hasOwnProperty(item.depot_id) && item.modify_number >= item.quantity) {
+                item.modify_number = item.modify_number;
+                $scope.refundList[item.depot_id].quantity = item.modify_number;
+            } else {
+                $scope.refundList[item.depot_id] = {
+                    "id": item.cart_item_id,
+                    "price": item.price,
+                    "quantity": item.modify_number + 1
+                }
+            }
+            totCalculator($scope.refundList);
+        }
+
+        $scope.minusItem = function (item) {
+            if ($scope.refundList.hasOwnProperty(item.depot_id) && 0 < item.modify_number) {
+                item.modify_number = item.modify_number - 1;
+                $scope.refundList[item.depot_id].quantity = item.modify_number;
+            } else if ($scope.refundList.hasOwnProperty(item.depot_id) && item.modify_number == 0) {
+                item.modify_number = 0;
+                $scope.refundList[item.depot_id].quantity = item.modify_number;
+            }
+            totCalculator($scope.refundList);
+        }
+
+        function updateTotals() {
+            $scope.ref_chr_Money['cartTotal'] = 0;
+            $scope.ref_chr_Money['delFee'] = 0;
+            $scope.ref_chr_Money['GST'] = 0;
+            $scope.ref_chr_Money['totAmount'] = 0;
+        }
+
+        function totCalculator(list) {
+            var delFee1 = 4.99;
+            var delFee2 = 2.99;
+            updateTotals();
+            for (item in list) {
+                $scope.ref_chr_Money['cartTotal'] = Math.round(($scope.ref_chr_Money['cartTotal'] + list[item].price * list[item].quantity) * 100) / 100;
+            }
+            if ($scope.reqeustType == 3 && $scope.reqeustType == 4) {
+                $scope.ref_chr_Money['delFee'] = (delFee1 + parseInt(($scope.selectedOrder['cartTotal']) / 100) * delFee2) - (delFee1 + parseInt(($scope.selectedOrder['cartTotal'] - $scope.ref_chr_Money['cartTotal']) / 100) * delFee2);
+            } else if($scope.reqeustType == 5){
+                $scope.ref_chr_Money['delFee'] = delFee1 + parseInt(($scope.ref_chr_Money['cartTotal']) / 100) * delFee2;
+            }
+            $scope.ref_chr_Money['GST'] = Math.round(($scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['delFee']) * 0.05 * 100) / 100;
+            $scope.ref_chr_Money['totAmount'] = Math.round(($scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['delFee'] + $scope.ref_chr_Money['GST']) * 100) / 100;
+        }
+
+        $scope.page = 1;
+        $scope.pageName = "Order History";
         $scope.disRoomMap = undefined;
         $scope.reqeustType = undefined;
         $scope.isOrderDelivered = undefined;
