@@ -71,9 +71,9 @@ app.controller("checkoutController",
         cartService.getCart()
             .then(function successCallback(response) {
                 if (response.data.success === true) {
-                    $scope.userCart = cartService.mergeCarts($scope.userCart, response.data.cart);
+                    updateUserCart(cartService.mergeCarts($scope.userCart, response.data.cart));
                 } else {
-                    $scope.userCart = cartService.mergeCarts(localStorage.getUserCart(), {}); //REQUIRED to convert to new convention with super_category
+                    updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {})); //REQUIRED to convert to new convention with super_category
                 }
                 localStorage.setUserCart({});
 
@@ -93,7 +93,7 @@ app.controller("checkoutController",
                 $scope.updatePrices($scope.userCart);
 
             }, function errorCallback(response) {
-                $scope.userCart = localStorage.getUserCart($scope);
+                updateUserCart(localStorage.getUserCart());
                 console.log("error");
             });
 
@@ -105,6 +105,8 @@ app.controller("checkoutController",
                     currentQuantity++;
                     $scope.userCart[product.super_category][product.depot_id].quantity = currentQuantity;
                     $scope.numberOfItemsInCart++;
+
+                    updateUserCart($scope.userCart);
                     $scope.prepareItemForDB(product.depot_id, currentQuantity);
                     $scope.updatePrices($scope.userCart);
                 }
@@ -119,6 +121,7 @@ app.controller("checkoutController",
 
                     $scope.userCart[product.super_category][product.depot_id].quantity = currentQuantity;
                     $scope.numberOfItemsInCart--;
+                    updateUserCart($scope.userCart);
                     $scope.prepareItemForDB(product.depot_id, currentQuantity);
 
                     $scope.updatePrices($scope.userCart);
@@ -127,7 +130,7 @@ app.controller("checkoutController",
         };
 
         $scope.clearCart = function (product) {
-            $scope.userCart = {};
+            updateUserCart({});
             $scope.numberOfItemsInCart = 0;
             $scope.totalAmount = 0;
 
@@ -150,6 +153,7 @@ app.controller("checkoutController",
                     delete $scope.userCart[product.super_category];
                 }
 
+                updateUserCart($scope.userCart);
                 $scope.numberOfItemsInCart = $scope.numberOfItemsInCart - product.quantity;
                 $scope.prepareItemForDB(product.depot_id, 0);
 
@@ -411,6 +415,11 @@ app.controller("checkoutController",
             $scope.GST = 0;
             $scope.receipt = 0;
             location.reload();
+        }
+
+        function updateUserCart(cart){
+            $scope.userCart = cart;
+            $scope.userCartToView = cartService.getViewUserCart($scope.super_category, $scope.userCart);
         }
 
         $scope.init();
