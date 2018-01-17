@@ -35,3 +35,9 @@ app.filter('totalPrice', function () {
         return totalPrice;
     };
 });
+
+app.filter("kebabCase", function(){
+    return function(str){
+        return _.kebabCase(str);
+    };
+});

@@ -48,7 +48,6 @@ router.get("/resetpassword/:email/:token", function(req, res, next){
 
 router.get("/notfound", function(req, res, next){
 	req.options.ejs["title"] = "404 Not Found";
-	req.options.ejs["showSearchBar"] = false;
 	res.status(404).render("page404.ejs", req.options.ejs);
 });
 

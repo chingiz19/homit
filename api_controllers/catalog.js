@@ -8,7 +8,7 @@ router.use('/', function (req, res, next) {
     var superCategory = tempArray[1];
     var categoryName = tempArray[2];
 
-    if (superCategory == "snackvendor") {
+    if (superCategory == "snack-vendor") {
         next();
     } else {
         Catalog.isStoreOpen(superCategory).then(function (storeOpen) {
@@ -33,7 +33,7 @@ router.use('/', function (req, res, next) {
     }
 });
 
-router.use('/snackvendor', function (req, res, next) {
+router.use('/snack-vendor', function (req, res, next) {
     var safewaySuperCategory = "safeway";
     var convenienceSuperCategory = "convenience";
     var tempArray = req.path.split('/');

@@ -12,39 +12,8 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
 
 
         $scope.selectedCategory = undefined;
-        $scope.loadedStore = "Store";
-
-        // Determine product URL
-        $scope.productUrl = undefined;
-        if ($scope.selection == "/catalog/liquor/beer") {
-            $scope.isBeers = true;
-            $scope.selectedCategory = "beer";
-            $scope.loadedStore = "Liquor";
-        } else if ($scope.selection == "/catalog/liquor/wine") {
-            $scope.isWines = true;
-            $scope.selectedCategory = "wine";
-            $scope.loadedStore = "Liquor";
-        } else if ($scope.selection == "/catalog/liquor/spirit") {
-            $scope.isSpirits = true;
-            $scope.selectedCategory = "spirit";
-            $scope.loadedStore = "Liquor";
-        } else if ($scope.selection == "/catalog/snackvendor/all") {
-            $scope.isOthers = true;
-            $scope.selectedCategory = "all";
-            $scope.loadedStore = "SnackVendor";
-        } else {
-            $window.location.href = "/notfound";
-        }
 
         $scope.productUrl = '/api' + $scope.selection;
-
-
-        $scope.selection = $location.search().product;
-        $scope.isBeers = false;
-        $scope.isWines = false;
-        $scope.isSpirits = false;
-        $scope.isOthers = false;
-
         $scope.searchedBrand = "";
 
         // Get initial list of products

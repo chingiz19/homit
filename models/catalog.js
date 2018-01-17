@@ -249,7 +249,13 @@ var getFormattedProducts = function (products, storeOpen) {
         var product = products[i];
         var p_package = product.packaging;
         var p_volume = product.volume;
-        var imageLocation = "/resources/images/products/" + product.super_category.toLowerCase() + "/" + product.category.toLowerCase() + "/";
+
+        var imageCategory = product.super_category.toLowerCase();
+        if (product.super_category.toLowerCase() != 'liquor-station'){
+            imageCategory = "snack-vendor";
+        }
+
+        var imageLocation = "/resources/images/products/" + imageCategory + "/" + product.category.toLowerCase() + "/";
 
         if (tmpResult.hasOwnProperty(product.product_id)) {
             // Add to product variant

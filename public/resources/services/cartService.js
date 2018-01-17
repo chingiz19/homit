@@ -90,18 +90,18 @@ app.service('cartService', ["$http", function ($http) {
         var indexesToRemove = [];
         for (var i = 0; i < new_cart.length; i++){
             var item = new_cart[i];
-            // if not 'liquor', combine under 'snackvendor'
-            if (item[0] != "liquor"){
+            // if not 'liquor-station', combine under 'snack-vendor'
+            if (item[0] != "liquor-station"){
                 tempObj = Object.assign(tempObj, item[1]);
                 indexesToRemove.splice(0, 0, i);
             }
         }
 
-        new_cart.push(['snackvendor', tempObj]);
+        new_cart.push(['snack-vendor', tempObj]);
 
         // reverse order
         new_cart = new_cart.filter(function(item){
-            return item[0] == 'liquor' || item[0] == 'snackvendor';
+            return item[0] == 'liquor-station' || item[0] == 'snack-vendor';
         });
         // END WORKAROUND
 
