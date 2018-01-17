@@ -13,7 +13,7 @@ router.use('/', function (req, res, next) {
     } else {
         Catalog.isStoreOpen(superCategory).then(function (storeOpen) {
             Catalog.getAllProductsByCategory(superCategory, categoryName, storeOpen).then(function (products) {
-                if (products != false) {
+                if (products.length > 0) {
                     var allBrands = Catalog.getAllBrands(products);
                     Catalog.getAllTypes(products).then(function (subcategories) {
                         var response = {
@@ -36,23 +36,25 @@ router.use('/', function (req, res, next) {
 router.use('/snack-vendor', function (req, res, next) {
     var safewaySuperCategory = "safeway";
     var convenienceSuperCategory = "convenience";
+    var homitCarSuperCategory = "homitcar";
     var tempArray = req.path.split('/');
     var categoryName = tempArray[1];
+    var homitCarOpen = true;
 
-    Catalog.isStoreOpen(safewaySuperCategory).then(function (safewayOpen) {
-        if (!safewayOpen) {
-            Catalog.getCategoryOnlyProducts(safewaySuperCategory, categoryName, safewayOpen, convenienceSuperCategory, categoryName).then(function (safewayOnlyProducts) {
-                if (safewayOnlyProducts != false) {
+    Catalog.getAllProductsByCategory(homitCarSuperCategory, categoryName, homitCarOpen).then(function (homitCarProducts) {
+        Catalog.isStoreOpen(safewaySuperCategory).then(function (safewayOpen) {
+            if (!safewayOpen) {
+                Catalog.getCategoryOnlyProducts(safewaySuperCategory, categoryName, safewayOpen, convenienceSuperCategory, categoryName).then(function (safewayOnlyProducts) {
                     Catalog.isStoreOpen(convenienceSuperCategory).then(function (convenienceOpen) {
                         Catalog.getAllProductsByCategory(convenienceSuperCategory, categoryName, convenienceOpen).then(function (convenienceProducts) {
-                            if (convenienceProducts != false) {
-                                var finalProducts = safewayOnlyProducts.concat(convenienceProducts);
+                            var newProducts = safewayOnlyProducts.concat(convenienceProducts);
+                            var finalProducts = newProducts.concat(homitCarProducts);
+                            if (finalProducts.length > 0) {
                                 var allBrands = Catalog.getAllBrands(finalProducts);
                                 Catalog.getAllTypes(finalProducts).then(function (subcategories) {
-
                                     var response = {
                                         success: true,
-                                        store_open: convenienceOpen,
+                                        store_open: convenienceOpen || homitCarOpen,
                                         all_brands: allBrands,
                                         subcategories: subcategories,
                                         products: finalProducts
@@ -64,29 +66,28 @@ router.use('/snack-vendor', function (req, res, next) {
                             }
                         });
                     });
-                } else {
-                    next();
-                }
-            });
-        } else {
-            Catalog.getAllProductsByCategory(safewaySuperCategory, categoryName, safewayOpen).then(function (products) {
-                if (products != false) {
-                    var allBrands = Catalog.getAllBrands(products);
-                    Catalog.getAllTypes(products).then(function (subcategories) {
-                        var response = {
-                            success: true,
-                            store_open: safewayOpen,
-                            all_brands: allBrands,
-                            subcategories: subcategories,
-                            products: products
-                        };
-                        res.send(response);
-                    });
-                } else {
-                    next();
-                }
-            });
-        }
+                });
+            } else {
+                Catalog.getAllProductsByCategory(safewaySuperCategory, categoryName, safewayOpen).then(function (safewayProducts) {
+                    var finalProducts = safewayProducts.concat(homitCarProducts);
+                    if (finalProducts.length > 0) {
+                        var allBrands = Catalog.getAllBrands(finalProducts);
+                        Catalog.getAllTypes(finalProducts).then(function (subcategories) {
+                            var response = {
+                                success: true,
+                                store_open: homitCarOpen || safewayOpen,
+                                all_brands: allBrands,
+                                subcategories: subcategories,
+                                products: finalProducts
+                            };
+                            res.send(response);
+                        });
+                    } else {
+                        next();
+                    }
+                });
+            }
+        });
     });
 });
 

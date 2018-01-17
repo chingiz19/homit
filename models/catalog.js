@@ -67,11 +67,7 @@ pub.getAllProductsByCategory = function (superCategory, categoryName, storeOpen)
 
     var data = [{ "category.name": categoryName }, { "super_category.name": superCategory }];
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
-        if (dbResult != false) {
-            return getFormattedProducts(dbResult, storeOpen);
-        } else {
-            return false;
-        }
+        return getFormattedProducts(dbResult, storeOpen);
     });
 };
 
@@ -127,11 +123,7 @@ pub.getCategoryOnlyProducts = function (superCategory, categoryName, storeOpen, 
     ];
 
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
-        if (dbResult != false) {
-            return getFormattedProducts(dbResult, storeOpen);
-        } else {
-            return false;
-        }
+        return getFormattedProducts(dbResult, storeOpen);
     });
 };
 
