@@ -122,7 +122,6 @@ CREATE TABLE drivers_location (
 CREATE TABLE catalog_super_categories ( 
 	id INT NOT NULL, 
 	name VARCHAR(225) NOT NULL, 
-	display_name VARCHAR(225) NOT NULL, 
 	
 	PRIMARY KEY (id)
 ) ENGINE = InnoDB;
@@ -131,7 +130,6 @@ CREATE TABLE catalog_super_categories (
 CREATE TABLE catalog_categories ( 
 	id INT NOT NULL, 
 	name VARCHAR(225) NOT NULL,
-	display_name VARCHAR(225) NOT NULL, 	
 	super_category_id INT NOT NULL,
 	
 	PRIMARY KEY (id),
