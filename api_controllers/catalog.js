@@ -8,7 +8,7 @@ router.use('/', function (req, res, next) {
     var superCategory = tempArray[1];
     var categoryName = tempArray[2];
 
-    if (superCategory == "snack-vendor") {
+    if (superCategory == Catalog.snackVendorSuperCategory) {
         next();
     } else {
         Catalog.isStoreOpen(superCategory).then(function (storeOpen) {
@@ -34,19 +34,16 @@ router.use('/', function (req, res, next) {
 });
 
 router.use('/snack-vendor', function (req, res, next) {
-    var safewaySuperCategory = "safeway";
-    var convenienceSuperCategory = "convenience";
-    var homitCarSuperCategory = "homitcar";
     var tempArray = req.path.split('/');
     var categoryName = tempArray[1];
     var homitCarOpen = true;
 
-    Catalog.getAllProductsByCategory(homitCarSuperCategory, categoryName, homitCarOpen).then(function (homitCarProducts) {
-        Catalog.isStoreOpen(safewaySuperCategory).then(function (safewayOpen) {
+    Catalog.getAllProductsByCategory(Catalog.homitCarSuperCategory, categoryName, homitCarOpen).then(function (homitCarProducts) {
+        Catalog.isStoreOpen(Catalog.safewaySuperCategory).then(function (safewayOpen) {
             if (!safewayOpen) {
-                Catalog.getCategoryOnlyProducts(safewaySuperCategory, categoryName, safewayOpen, convenienceSuperCategory, categoryName).then(function (safewayOnlyProducts) {
-                    Catalog.isStoreOpen(convenienceSuperCategory).then(function (convenienceOpen) {
-                        Catalog.getAllProductsByCategory(convenienceSuperCategory, categoryName, convenienceOpen).then(function (convenienceProducts) {
+                Catalog.getCategoryOnlyProducts(Catalog.safewaySuperCategory, categoryName, safewayOpen, Catalog.convenienceSuperCategory, categoryName).then(function (safewayOnlyProducts) {
+                    Catalog.isStoreOpen(Catalog.convenienceSuperCategory).then(function (convenienceOpen) {
+                        Catalog.getAllProductsByCategory(Catalog.convenienceSuperCategory, categoryName, convenienceOpen).then(function (convenienceProducts) {
                             var newProducts = safewayOnlyProducts.concat(convenienceProducts);
                             var finalProducts = newProducts.concat(homitCarProducts);
                             if (finalProducts.length > 0) {
@@ -68,7 +65,7 @@ router.use('/snack-vendor', function (req, res, next) {
                     });
                 });
             } else {
-                Catalog.getAllProductsByCategory(safewaySuperCategory, categoryName, safewayOpen).then(function (safewayProducts) {
+                Catalog.getAllProductsByCategory(Catalog.safewaySuperCategory, categoryName, safewayOpen).then(function (safewayProducts) {
                     var finalProducts = safewayProducts.concat(homitCarProducts);
                     if (finalProducts.length > 0) {
                         var allBrands = Catalog.getAllBrands(finalProducts);
@@ -99,7 +96,7 @@ router.post('/search', function (req, res, next) {
         };
         res.send(response);
     }
-    Catalog.searchSuperCategory(searchText).then(function (superCategories) {
+    Catalog.searchSuperCategorySpecial(searchText).then(function (superCategories) {
         if (superCategories != false) {
             var response = {
                 success: true,
@@ -107,7 +104,7 @@ router.post('/search', function (req, res, next) {
             };
             res.send(response);
         } else {
-            Catalog.searchCategory(searchText).then(function (categories) {
+            Catalog.searchCategorySpecial(searchText).then(function (categories) {
                 if (categories != false) {
                     var response = {
                         success: true,
@@ -115,7 +112,7 @@ router.post('/search', function (req, res, next) {
                     };
                     res.send(response);
                 } else {
-                    Catalog.searchSubcategory(searchText).then(function (subcategories) {
+                    Catalog.searchSubcategorySpecial(searchText).then(function (subcategories) {
                         if (subcategories != false) {
                             var response = {
                                 success: true,
@@ -123,7 +120,7 @@ router.post('/search', function (req, res, next) {
                             };
                             res.send(response);
                         } else {
-                            Catalog.searchProducts(searchText).then(function (products) {
+                            Catalog.searchProductsSpecial(searchText).then(function (products) {
                                 if (products != false) {
                                     var resultProducts = {
                                         products: products

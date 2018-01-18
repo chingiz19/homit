@@ -4,6 +4,11 @@
 
 var pub = {};
 
+pub.snackVendorSuperCategory = "snack-vendor";
+pub.safewaySuperCategory = "safeway";
+pub.convenienceSuperCategory = "convenience";
+pub.homitCarSuperCategory = "homitcar";
+
 /**
  * Returns true if any of the stores related to the super category is open
  * 
@@ -243,7 +248,7 @@ var getFormattedProducts = function (products, storeOpen) {
         var p_volume = product.volume;
 
         var imageCategory = product.super_category.toLowerCase();
-        if (product.super_category.toLowerCase() != 'liquor-station'){
+        if (product.super_category.toLowerCase() != 'liquor-station') {
             imageCategory = "snack-vendor";
         }
 
@@ -322,10 +327,50 @@ pub.searchSuperCategory = function (searchText) {
     });
 };
 
+pub.searchSuperCategorySpecial = function (searchText) {
+    var sqlQuery = `
+    SELECT name AS super_category FROM catalog_super_categories 
+    WHERE name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')  
+    AND name LIKE '%` + searchText + `%'`;
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        if (Catalog.snackVendorSuperCategory.indexOf(searchText) !== -1) {
+            dbResult.push(Catalog.snackVendorSuperCategory);
+        }
+        if (dbResult.length > 0) {
+            return dbResult;
+        } else {
+            return false;
+        }
+    });
+};
+
 pub.searchCategory = function (searchText) {
     var sqlQuery = `SELECT catalog_super_categories.name AS super_category, catalog_categories.name AS category
         FROM catalog_categories, catalog_super_categories
         WHERE catalog_categories.super_category_id = catalog_super_categories.id
+        AND catalog_categories.name LIKE '%` + searchText + `%'`;
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return dbResult;
+        } else {
+            return false;
+        }
+    });
+};
+
+pub.searchCategorySpecial = function (searchText) {
+    var sqlQuery = `SELECT catalog_super_categories.name AS super_category, catalog_categories.name AS category
+        FROM catalog_categories, catalog_super_categories
+        WHERE catalog_categories.super_category_id = catalog_super_categories.id
+        AND catalog_super_categories.name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+        AND catalog_categories.name LIKE '%` + searchText + `%'
+        
+        UNION
+        
+        SELECT DISTINCT '` + Catalog.snackVendorSuperCategory + `' AS super_category, catalog_categories.name AS category
+        FROM catalog_categories, catalog_super_categories
+        WHERE catalog_categories.super_category_id = catalog_super_categories.id
+        AND catalog_super_categories.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
         AND catalog_categories.name LIKE '%` + searchText + `%'`;
     return db.runQuery(sqlQuery).then(function (dbResult) {
         if (dbResult.length > 0) {
@@ -342,6 +387,32 @@ pub.searchSubcategory = function (searchText) {
         WHERE catalog_categories.super_category_id = catalog_super_categories.id
         AND catalog_subcategories.category_id = catalog_categories.id
         AND catalog_subcategories.name LIKE '%` + searchText + `%'`;
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return dbResult;
+        } else {
+            return false;
+        }
+    });
+};
+
+pub.searchSubcategorySpecial = function (searchText) {
+    var sqlQuery = `SELECT catalog_super_categories.name AS super_category, catalog_categories.name AS category, catalog_subcategories.name AS subcategory  
+        FROM catalog_categories, catalog_super_categories, catalog_subcategories
+        WHERE catalog_categories.super_category_id = catalog_super_categories.id
+        AND catalog_subcategories.category_id = catalog_categories.id
+        AND catalog_super_categories.name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+        AND catalog_subcategories.name LIKE '%` + searchText + `%'
+        
+        UNION
+
+        SELECT DISTINCT '`+ Catalog.snackVendorSuperCategory + `' AS super_category, catalog_categories.name AS category, catalog_subcategories.name AS subcategory  
+        FROM catalog_categories, catalog_super_categories, catalog_subcategories
+        WHERE catalog_categories.super_category_id = catalog_super_categories.id
+        AND catalog_subcategories.category_id = catalog_categories.id
+        AND catalog_super_categories.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+        AND catalog_subcategories.name LIKE '%` + searchText + `%'
+        `;
     return db.runQuery(sqlQuery).then(function (dbResult) {
         if (dbResult.length > 0) {
             return dbResult;
@@ -372,6 +443,76 @@ pub.searchProducts = function (searchText) {
         } else {
             return false;
         }
+    });
+};
+
+pub.searchProductsSpecial = function (searchText) {
+    var sqlQuery1 = `SELECT product.id AS product_id, listing.id AS listing_id, subcategory.name AS subcategory,
+    type.name AS type, listing.product_brand AS brand, listing.product_name AS name,
+    listing.product_description AS description, product.product_image AS image,
+    container.name AS container,
+    category.name AS category, super_category.name AS super_category
+    FROM catalog_products AS product, catalog_listings AS listing, catalog_categories AS category,
+    catalog_types AS type, catalog_subcategories AS subcategory, catalog_containers AS container,
+    catalog_super_categories AS super_category
+    WHERE product.listing_id = listing.id AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+    AND container.id = product.container_id AND category.id = subcategory.category_id AND
+    category.super_category_id = super_category.id
+    AND super_category.name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+    AND (listing.product_brand LIKE '%` + searchText + `%' OR listing.product_name LIKE '%` + searchText + `%'
+    OR listing.product_description LIKE '%` + searchText + `%' OR listing.product_country LIKE '%` + searchText + `%')`;
+
+
+    var sqlQuery2 = `SELECT product.id AS product_id, listing.id AS listing_id, subcategory.name AS subcategory,
+    type.name AS type, listing.product_brand AS brand, listing.product_name AS name,
+    listing.product_description AS description, product.product_image AS image,
+    container.name AS container,
+    category.name AS category, '`+ Catalog.snackVendorSuperCategory + `' AS super_category
+    FROM catalog_products AS product, catalog_listings AS listing, catalog_categories AS category,
+    catalog_types AS type, catalog_subcategories AS subcategory, catalog_containers AS container,
+    catalog_super_categories AS super_category
+    WHERE product.listing_id = listing.id AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+    AND container.id = product.container_id AND category.id = subcategory.category_id AND
+    category.super_category_id = super_category.id
+    AND super_category.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+    AND (listing.product_brand LIKE '%` + searchText + `%' OR listing.product_name LIKE '%` + searchText + `%'
+    OR listing.product_description LIKE '%` + searchText + `%' OR listing.product_country LIKE '%` + searchText + `%')`;
+
+    var sqlQuery3 = `
+    FROM catalog_products AS product, catalog_listings AS listing, catalog_categories AS category,
+    catalog_types AS type, catalog_subcategories AS subcategory, catalog_containers AS container,
+    catalog_super_categories AS super_category
+    WHERE product.listing_id = listing.id AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+    AND container.id = product.container_id AND category.id = subcategory.category_id AND
+    category.super_category_id = super_category.id
+    AND super_category.name = '` + Catalog.convenienceSuperCategory + `'
+    AND (listing.product_brand LIKE '%` + searchText + `%' OR listing.product_name LIKE '%` + searchText + `%'
+    OR listing.product_description LIKE '%` + searchText + `%' OR listing.product_country LIKE '%` + searchText + `%')`;
+
+    return Catalog.isStoreOpen(Catalog.safewaySuperCategory).then(function (safewayOpen) {
+        var sqlQuery;
+        if (safewayOpen) {
+            sqlQuery = sqlQuery1 + ` UNION ` + sqlQuery2;
+        } else {
+            sqlQuery = sqlQuery1 + ` UNION (`
+                + sqlQuery2 +
+                ` AND (listing.product_brand, listing.product_name) NOT IN ( SELECT listing.product_brand, listing.product_name` + sqlQuery3 + `))`
+                + `
+                 UNION 
+            SELECT product.id AS product_id, listing.id AS listing_id, subcategory.name AS subcategory,
+            type.name AS type, listing.product_brand AS brand, listing.product_name AS name,
+            listing.product_description AS description, product.product_image AS image,
+            container.name AS container,
+            category.name AS category, '`+ Catalog.snackVendorSuperCategory + `' AS super_category` + sqlQuery3;
+        }
+
+        return db.runQuery(sqlQuery).then(function (dbResult) {
+            if (dbResult.length > 0) {
+                return dbResult;
+            } else {
+                return false;
+            }
+        });
     });
 };
 
