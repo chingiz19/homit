@@ -16,48 +16,75 @@ body{
         width: 292px;
     }
 }
-@media (max-width: 1199px) and (min-width: 993px){
+@media (max-width: 1199px) and (min-width: 992px){
     .col1{
-        width: 231px;
-    }
-}
-@media (max-width: 992px) and (min-width: 768px){
-    .col1{
-        width: 176px;
-    }   
-}
-/*End*/
-
-/*Adjust width col1 and col24 when 1 column of items left*/
-/*Start*/
-@media (max-width: 767px) and (min-width: 700px) {
-    .col1{
-        left: 15%;
+        width: 290px;
+        left: 50px;
     }
     .col24{
-        left: 45% !important;
-    }
-    .flex-80, .layout-row>.flex-80{
-        max-width: 60%;
+        padding-left: 70px;
     }
 }
-@media (max-width: 699px) and (min-width: 600px) {
+@media (max-width: 1029px) and (min-width: 992px){
     .col1{
-        left: 10%;
+        width: 290px;
+        left: 50px;
     }
     .col24{
-        left: 45% !important;
+        padding-left: 70px;
     }
-     .flex-80, .layout-row>.flex-80{
-        max-width: 285px;
+}
+@media (max-width: 992px) and (min-width: 860px){
+    .col1{
+        width: 290px;
+        left: 150px;
     }
+    .col24{
+        padding-left: 180px;
+    }  
+}
+@media (max-width: 859px) and (min-width: 768px){
+    .col1{
+        width: 290px;
+        left: 80px;
+    }
+    .col24{
+        padding-left: 160px;
+    }  
+}
+@media (max-width: 767px) and (min-width: 717px){
+    .col1{
+        width: 290px;
+        left: 50px;
+    }
+    .col24{
+        padding-left: 160px;
+    }  
+}
+@media (max-width: 716px) and (min-width: 630px){
+    .col1{
+        width: 290px;
+        left: 25px;
+    }
+    .col24{
+        padding-left: 140px;
+    }  
+}
+@media (max-width: 629px) and (min-width: 600px){
+    .col1{
+        width: 290px;
+        left: 5px;
+    }
+    .col24{
+        padding-left: 130px;
+    }  
 }
 @media (max-width: 599px) and (min-width: 520px) {
     .col1{
-        left: 1%;
+        display: none;
     }
     .col24{
-        left: 40% !important;
+        left: 20% !important;
     }
      .flex-80, .layout-row>.flex-80{
         max-width: 285px;
@@ -69,7 +96,17 @@ body{
     }
     .col24{
         position: relative;
-        left: 12.5% !important;
+        left: 10% !important;
+        margin: 0;
+    }
+}
+@media(max-width: 399px) and (min-width: 200px){
+    .col1{
+        display: none;
+    }
+    .col24{
+        position: relative;
+        left: 2% !important;
         margin: 0;
     }
 }
@@ -128,11 +165,13 @@ body{
     border-left: 1px solid rgba(24, 136, 24, 0.685);
 }
 .category-list span{
-    text-transform: uppercase; 
-    font-size: 23px; font-weight: 400; 
-    color: rgba(0,0,0,0.45); 
     line-height: 43px; 
     margin-left: 40px;
+    text-transform: uppercase; 
+    letter-spacing: 0.024em;
+    font-size: 22px; font-weight: 400; 
+    color: rgba(0,0,0,0.45); 
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
  .col24{
      position: relative;
@@ -304,7 +343,7 @@ body{
     margin-left: 8px;
 }
 .itmPic img{
-    width: 100%; height: auto;
+    width: 225px; height: 225px;
 }
 .addBtn{
     color:gray;
@@ -345,15 +384,14 @@ body{
     display: flex;
     justify-content: center; align-items: center; flex-wrap: wrap; text-align: center; 
     height: 3em; width: 237px;
-    letter-spacing: 0.025em;
-    font-size: 16px; font-weight: bold;
+    font-size: 16px; font-weight: 500;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
-    color: rgba(0,0,0,0.8);
+    color: rgba(0,0,0,1);
 }
 .price{
     display: flex;
     justify-content: center; align-items: center; text-align: center; 
-    font-size: 13px; font-weight: bold;
+    font-size: 12px; font-weight: 500;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
@@ -673,7 +711,7 @@ md-radio-button .md-label{
 .hmtTxt{
     color: rgba(0,0,0,0.66);
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.02em;
     -webkit-font-smoothing: antialiased;
 }
 .rot180_1 svg{
@@ -715,4 +753,19 @@ md-radio-button .md-label{
 .addItem_ulB{
     display: flex; justify-content: center; 
     font-size: 13px;
+}
+
+md-toolbar{
+    background-color: rgba(42,81,145, 0.85) !important;
+}
+
+@media (min-device-width: 601px){
+    .homit-header-bigscreen{
+        border-bottom: 1px solid rgba(42,81,145,1);
+        box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
+    }
+}
+
+.catalog-store-closed{
+    position: absolute; bottom: 118px; background-color: rgba(0,0,0,0.2); z-index: 1;
 }

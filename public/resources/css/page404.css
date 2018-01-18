@@ -8,3 +8,22 @@ footer {
 h1 {
     text-align: center;
 }
+
+.image-404{
+    position: absolute; 
+    top: 160px;
+    width: 100%; 
+    display: flex; justify-content: center; 
+    z-index: 1;
+}
+
+md-toolbar{
+    background-color: rgba(42,81,145, 0.85) !important;
+}
+
+@media (min-device-width: 601px){
+    .homit-header-bigscreen{
+        border-bottom: 1px solid rgba(42,81,145,1);
+        box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
+    }
+}

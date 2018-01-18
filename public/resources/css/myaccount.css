@@ -259,3 +259,14 @@ contentRCABB svg{
 .block_centered{
     margin-left: auto; margin-right: auto;
 }
+
+md-toolbar{
+    background-color: rgba(42,81,145, 0.85) !important;
+}
+
+@media (min-device-width: 601px){
+    .homit-header-bigscreen{
+        border-bottom: 1px solid rgba(42,81,145,1);
+        box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
+    }
+}

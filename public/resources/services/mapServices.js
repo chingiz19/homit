@@ -39,8 +39,14 @@ app.service('mapServices', ["$http", function ($http) {
     pub.createMap = function (elementId, options) {
         if (!options) {
             options = {
-                zoom: 12,
-                center: new google.maps.LatLng(51.074314, -114.094996),
+                zoom: 11,
+                center: new google.maps.LatLng(51.054637, -114.094996),
+                zoomControl: false,
+                scaleControl: false,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+                rotateControl: false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
         }

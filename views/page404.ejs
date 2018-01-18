@@ -8,7 +8,9 @@
 
 <body class="ng-cloak">
     <div ng-controller="page404Controller">
-        <h1>Sorry not found</h1>
+        <div class="image-404">
+            <img ng-src="{{'/resources/images/non-catalog-image/404_1.jpg'}}" width="730px" height="330px" />
+        </div>
     </div>
     <% if (!production) { %>
         <script src="/resources/controllers/page404.js"></script>

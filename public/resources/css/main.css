@@ -1,6 +1,12 @@
 ul {list-style-type: none;}
 li {list-style-type: none;}
-
+.ul-zero-margin-padding{
+    margin: 0; padding: 0;
+}
+body{
+    /* overflow-x: scroll; */
+    min-width: 1400px;
+}
 .full-screen{
     height: 100vh;
     width: 100vw;
@@ -44,13 +50,15 @@ li {list-style-type: none;}
 .signTgAB svg{
     width: 50px; height: 50px;
 }
-.srchAddrs{
-    background-color: #5689DD;
-}
 .srchAddrsC{
-    background-color: rgba(255,255,255,0.93); border: 0; border-radius: 5px; padding: 15px 15px 0 15px; position: relative; height: 76px;
+    width: 730px; display: flex; justify-content: center; align-items: center;
+    height: 60px;
+    background-color: rgba(255,255,255,1);
+    border-radius: 5px;
+    box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.8);
 }
 .srchAddrsCA{
+    position: relative;
     display: flex; align-items: center;
 }
 .srchAddrsCAA{
@@ -64,7 +72,7 @@ li {list-style-type: none;}
 }
 .srchAddrsCAB{
     padding-left: 40px;
-    width: 40vw; height: 46px;
+    width: 716px; height: 46px;
     font-size: 18px;
     color: rgba(0,0,0,0.85);
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
@@ -72,7 +80,9 @@ li {list-style-type: none;}
     outline-width: 0;
 }
 .srchAddrsCAC{
-    position: absolute; right: 15px; top: 17px; min-width: 45px; min-height: 45px; margin: 0;
+    position: absolute; 
+    right: 0;
+    min-width: 45px; min-height: 45px; margin: 0;
 }
 .srchAddrsCACA{
     fill: rgba(0,0,0,0.4);
@@ -80,15 +90,38 @@ li {list-style-type: none;}
 .srchAddrsCACA svg{
     width: 20px; height: 20px;
 }
-.areaMp{
-    background-color: #287AA8;
+.area-map-page{
+    background-color: rgba(236, 236, 236, 0.363);
 }
-.areaMpB{
-    position: absolute; left: 15%; height: 70%; width: 70%;
+.area-map{
+    position: absolute; 
+    left: 15%; height: 60%; width: 70%;
+    box-shadow: 0 0px 10px 0px rgba(0,0,0,0.45);
+    border-radius: 3px;
 }
-
-.hmtHub{
-    background-color: #0D2244;
+.area-map-text-box{
+    position: relative; 
+    top: 310px;
+    margin: 0; padding: 0;
+}
+.area-map-text-A{
+    display: flex; justify-content: center;
+    font-size: 35px; font-weight: 450; 
+}
+.area-map-text-B{
+    display: flex; justify-content: center;
+    font-size: 25px; font-weight: 400; 
+}
+.addressMessage-text{
+    position: relative; 
+    bottom: 280px;
+    font-size: 30px; font-weight: 400;  
+    color: black; 
+    filter: drop-shadow(0 0px 3px rgba(0,0,0,0.4));
+    z-index: 100;
+}
+.homit-hub{
+    background-color: rgba(42,81,145,1);
     color: white;
 }
 .hmtHubTxt{
@@ -107,23 +140,88 @@ li {list-style-type: none;}
     margin: 0; padding: 0; display: flex; justify-content: center; position: relative; top: 40%;
 }
 .hmtHubBA{
-    display: flex; justify-content: center;
+    display: flex; justify-content: center; align-items: center;
 }
 .hmtHubBAA{
     margin: 0; padding: 0;
+    z-index: 100;
 }
 .hmtHubBAAA{
     display: flex; justify-content: center;
 }
-.hmtHubBAAAA{
-    fill: rgba(255,255,255,0.95)
-}
-.hmtHubBAAAA svg{
-    width: 100px; height: 100px;
-}
+
 .hmtHubBA:focus{
     outline: none !important;
 }
 .hmtHubABAB{
     font-weight: 400; font-size: 15px;
+    z-index: 100;
+}
+
+.homit-city-image-box{
+    position: absolute; 
+    top: 0; left: 0;
+    z-index: 0; 
+}
+.homit-city-image{
+    height: 100vh;
+    opacity: 0.75; 
+    background-color: rgba(0,0,0,1); 
+    z-index: 1;
+}
+
+.main-page-address-box{
+    z-index: 1000; width: 730px;
+}
+.main-page-address-box-text{
+    text-align: center; 
+    font-size: 33px; font-weight: 400;
+    color: rgba(255,255,255,1); 
+    letter-spacing: 0.065em; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
+    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+}
+
+md-toolbar{
+    position: fixed;
+    background-color: transparent !important;
+}
+nav{
+    position: fixed;
+    z-index: 1000;
+}
+
+#liquer-station:hover .liquer-station-icon{
+    transform: rotateY(180deg);
+    transition: all 0.95s ease-in-out;
+}
+
+#snack-vendor:hover .snack-vendor-icon{
+    transform: rotateY(180deg);
+    transition: all 0.95s ease-in-out;
+}
+
+.liquer-station-icon{
+    fill: rgba(255,255,255,1);
+    filter: drop-shadow(0 0px 5px rgba(0,0,0,0.7));
+}
+.liquer-station-icon svg{
+    width: 110px; height: 110px;
+}
+
+.snack-vendor-icon{
+    fill: rgba(255,255,255,1);
+    filter: drop-shadow(0 0px 5px rgba(0,0,0,0.7));
+}
+.store-sign-background-box{
+    position: absolute; 
+    top: 27px; 
+    width: 300px; height: 55px; 
+    background-color: #0D2244;
+    box-shadow: 0 0px 4px 0px rgba(0,0,0,0.45); 
+    border-radius: 1px;
+    z-index: 0;
+}
+.snack-vendor-icon svg{
+    width: 110px; height: 110px;
 }

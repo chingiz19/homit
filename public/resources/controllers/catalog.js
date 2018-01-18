@@ -77,7 +77,8 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         };
 
         $scope.addToCart = function (product) {
-            var p = jQuery.extend(true, {}, product);
+            if(product.store_open){
+                var p = jQuery.extend(true, {}, product);
 
             p.volume = p.selectedVolume;
             p.packaging = p.selectedPack;
@@ -98,6 +99,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
 
             $rootScope.$broadcast("addToCart", p);
             notification.addCartItem(p);
+            }
         };
 
         $scope.nextVolume = function (product) {

@@ -7,7 +7,7 @@ app.controller("checkoutController",
         $scope.userCart = localStorage.getUserCart() || {};
         $scope.numberOfItemsInCart = 0;
         $scope.totalAmount = 0;
-        $scope.delFee = 4.99;
+        $scope.delFee = 0;
         $scope.GST = 0;
         $scope.receipt = 0;
         $scope.userInfo = {
@@ -48,7 +48,7 @@ app.controller("checkoutController",
                     $scope.userInfo.email_valid = true;
                 if ($scope.userInfo.birth_day && $scope.userInfo.birth_month && $scope.userInfo.birth_year)
                     $scope.userInfo.dob_valid = true;
-            } else{
+            } else {
                 $scope.isUserSigned = false;
             }
             if (checkout.getCheckoutUserInfo != "undefined" && checkout.getCheckoutUserInfo != null) {
@@ -84,7 +84,7 @@ app.controller("checkoutController",
                         $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
                         $scope.prepareItemForDB(a, $scope.userCart[super_category][a].quantity);
                     }
-                    if (super_category == "liquor") {
+                    if (super_category == "liquor-station") {
                         $scope.userInfo.hasLiquor = true;
                     }
                 }
@@ -179,7 +179,7 @@ app.controller("checkoutController",
 
         function checkPaymentResponse(callback) {
             function looper() {
-                setTimeout(function(){
+                setTimeout(function () {
                     var helcim_message = document.getElementById("helcimResults");
                     var response_id = document.getElementById("response");
                     var response_message = document.getElementById("responseMessage");
@@ -213,7 +213,7 @@ app.controller("checkoutController",
             checkPaymentResponse(function (response_id, response_message, transaction_id, crd_lst4) {
                 if (response_id == 1 && transaction_id) {
                     var userInfoToSend = {};
-                    
+
                     userInfoToSend.fname = $scope.userInfo.first_name;
                     userInfoToSend.lname = $scope.userInfo.last_name;
                     userInfoToSend.birth_year = $scope.userInfo.birth_year;
@@ -224,7 +224,7 @@ app.controller("checkoutController",
                     userInfoToSend.address = checkout.address;
                     userInfoToSend.address_latitude = checkout.address_latitude;
                     userInfoToSend.address_longitude = checkout.address_longitude;
-                    
+
                     $http({
                         method: 'POST',
                         url: '/api/checkout/placeorder',
@@ -245,11 +245,17 @@ app.controller("checkoutController",
                         console.log("ERROR in order processing");
                     });
                 } else if (response_id == 0 && response_message == 0 && transaction_id == 0 && crd_lst4 == 0) {
+                    $scope.paymentMessage_1 = "Sorry, ";
+                    $scope.paymentMessage_2 = "Card error, please try again.";
                     updateCheckoutModal("0");
                 } else if (response_id == 0 && response_message == "Duplicate Payment") {
                     $scope.paymentMessage_1 = "Thank You, ";
                     $scope.paymentMessage_2 = "You order already processed.";
-                    updateCheckoutModal("1");
+                    updateCheckoutModal("11");
+                } else if (response_id == 0 && response_message == "ERROR - TERMINAL ID INACTIVE9405") {
+                    $scope.paymentMessage_1 = "Sorry, ";
+                    $scope.paymentMessage_2 = "Your card has been declined.";
+                    updateCheckoutModal("01");
                 }
             });
         };
@@ -262,12 +268,8 @@ app.controller("checkoutController",
         function updateCheckoutModal(type) {
             $scope.paymentResult = type;
             $('#checkoutModal').modal();
-            if (type == "0") {
-                $('#checkoutModal').click();
-                $scope.userInfo.card = type;
-                $scope.userInfo.cardText = "Credit card error";
+            if (type == "0" || type == "01") {
                 sessionStorage.setCheckoutUserInfo($scope.userInfo);
-                location.reload();
             }
         }
 
@@ -330,9 +332,13 @@ app.controller("checkoutController",
             }
             // Calculating math numbers
             totalAmount = Math.round(totalAmount * 100) / 100;
-            var deliveryFee = deliveryFee1;
+            var deliveryFee;
             if (totalAmount > 100) {
                 deliveryFee = deliveryFee1 + deliveryFee2;
+            } else if (totalAmount > 0 && totalAmount < 100) {
+                deliveryFee = deliveryFee1;
+            } else {
+                deliveryFee = 0.00;
             }
             totalTax = Math.round((totalTax + deliveryFee * albertaGst) * 100) / 100;
             var totalPrice = totalAmount + deliveryFee + totalTax;
@@ -341,6 +347,7 @@ app.controller("checkoutController",
             totalTax = totalTax.toFixed(2);
             totalAmount = totalAmount.toFixed(2);
             totalPrice = totalPrice.toFixed(2);
+            deliveryFee = deliveryFee.toFixed(2);
 
             $scope.delFee = deliveryFee;
             $scope.totalAmount = totalAmount;
@@ -391,9 +398,9 @@ app.controller("checkoutController",
             readyToHomeIt();
         };
 
-        jQuery(function($){
+        jQuery(function ($) {
             $("#gP_number").mask("(999) 999-9999");
-         });
+        });
 
         $scope.clearText = function () {
             $scope.userInfo.address_valid = undefined;
@@ -407,17 +414,17 @@ app.controller("checkoutController",
             }
         }
 
-        function clearPage() {
-            $scope.userInfo = {};
-            $scope.userCart = {};
-            $scope.delFee = 0;
-            $scope.totalAmount = 0;
-            $scope.GST = 0;
-            $scope.receipt = 0;
+        $scope.clearPage = function () {
+            if ($scope.paymentResult != "0") {
+                $scope.userInfo = {};
+                $scope.userCart = {};
+                $scope.clearCart();
+                $scope.delFee = 0;
+            }
             location.reload();
         }
 
-        function updateUserCart(cart){
+        function updateUserCart(cart) {
             $scope.userCart = cart;
             $scope.userCartToView = cartService.getViewUserCart($scope.super_category, $scope.userCart);
         }

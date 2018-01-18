@@ -6,11 +6,12 @@
 <link href="/resources/css/generic.css" rel="stylesheet">
 <nav layout="column" ng-controller="NavigationController" class="navCont" ng-cloak>
         <input id="searchBarBoolean" type="hidden" value="<%= showSearchBar %>">
-    <md-toolbar class="homit-header-bigscreen fixed-header">
+    <md-toolbar class="homit-header-bigscreen fixed-header" ng-style="(showSearchBar == 'false') && {'background-color': 'transparent !important'}">
         <div class="md-toolbar-tools header">
             <div class="header-icon">
                 <a class="mVerHedL2a1" href="/main" target="_self">
-                    <img ng-src="{{'/resources/images/Homit_Logo_white.jpeg'}}" width="42px;" height="75%" />
+                    <img ng-show="showSearchBar == 'true'" ng-src="{{'/resources/images/Homit_Logo_white.jpeg'}}" width="42px" height="42px;" />
+                    <img style="filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));" ng-show="showSearchBar == 'false'" ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" width="107px" height="33px" />
                 </a>
             </div>
             <div class="mnSrch" ng-show="showSearchBar == 'true'">
@@ -33,7 +34,7 @@
                     </ul>
                     <ul ng-if="!searchResult[0].result" id="glbSrchB" class="mnSrchCB">
                         <li ng-repeat="node in searchResult">
-                            <a href="{{node.path}}" target="_self" ng-click="sendSubcategory(node.subcategory, node.product_id)" id="{{$index + 1}}"
+                            <a href="{{node.path}}" target="_self" layout="row" ng-click="sendSubcategory(node.subcategory, node.product_id)" id="{{$index + 1}}"
                                 class="srchRslt mnSrchCBAA">
                                 <span class="mnSrchCBAAA">
                                     <img class="mnSrchImg" ng-src={{node.image}}>
@@ -45,11 +46,11 @@
                 </div>
             </div>
             <div class="hdrRend">
-                <md-button aria-label="header-dashboard" id="dashboardBtn" ng-click="hdrExtBx('hdrHub', 'hdrHub1', 'hdrHub2', 'hdrHub3')" class="hdrRendBtn">
+                <md-button aria-label="header-dashboard" id="dashboardBtn" ng-click="hdrExtBx('hdrHub', 'hdrHub1', 'hdrHub2', 'hdrHub3')" class="hdrRendBtn" ng-show="showSearchBar == 'true'">
                     <ng-md-icon icon="dashboard" class="header-icon"></ng-md-icon>
                 </md-button>
                 <md-button ng-if="!isSignedIn"  aria-label="header-sign" data-toggle="modal" data-target="#loginModal" class="hdrRendBtn">
-                    <ng-md-icon icon="person_outline" class="header-icon"></ng-md-icon>
+                    <ng-md-icon icon="person_outline" style="filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));" class="header-icon"></ng-md-icon>
                 </md-button>
                 <md-button ng-if="isSignedIn" aria-label="myAccExtBox" ng-click="hdrExtBx('hdrMyAcc', 'hdrMyAcc1', 'hdrMyAcc2', 'hdrMyAcc3')" class="hdrRendBtn">
                     <ng-md-icon icon="person" class="header-icon"></ng-md-icon>

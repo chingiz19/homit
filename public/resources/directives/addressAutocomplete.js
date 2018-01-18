@@ -71,7 +71,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                 bounds: "<autocompleteBounds" // autocomplete results in these bounds are shown first
     
             },
-            template: '<input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-disbaled="{{inputDisabled}}" placeholder="Address" type="text" class="{{inputClass}}" required>' +
+            template: '<input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" required>' +
                         '<md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText()">' + 
                             '<ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>' + 
                         '</md-button>',

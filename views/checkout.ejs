@@ -109,19 +109,15 @@
                 <!--Card Info-->
                 <div class="container cardContainer" flex="80">
                     <div layout="row" layout-align="start center">
-                        <div class="extBoxTtl" ng-if="userInfo.cardText" ng-style="(userInfo.card == '0') && {'color': 'rgba(209, 58, 58, 0.95)'}">{{userInfo.cardText}}</div>
-                        <div layout="row" ng-if="!userInfo.cardText">
+                        <div layout="row">
                             <div>
-                                <img ng-src="{{'/resources/images/non-homit_images/visa_logo.jpeg'}}" width="25px;" height="15.625px" />
+                                <img ng-src="{{'/resources/images/non-catalog-image/visa_logo.jpeg'}}" width="25px;" height="15.625px" />
                             </div>
                             <div>
-                                <img ng-src="{{'/resources/images/non-homit_images/american-express_logo.jpeg'}}" width="25px;" height="15.625px" />
+                                <img ng-src="{{'/resources/images/non-catalog-image/mastercard_logo.jpeg'}}" width="25px;" height="15.625px" />
                             </div>
                             <div>
-                                <img ng-src="{{'/resources/images/non-homit_images/interact_logo.jpeg'}}" width="25px;" height="15.625px" />
-                            </div>
-                            <div>
-                                <img ng-src="{{'/resources/images/non-homit_images/mastercard_logo.jpeg'}}" width="25px;" height="15.625px" />
+                                <img ng-src="{{'/resources/images/non-catalog-image/american-express_logo.jpeg'}}" width="25px;" height="15.625px" />
                             </div>
                         </div>
                         <md-button aria-label="ShowHideCardInfo" class="glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown">
@@ -145,8 +141,8 @@
                             <div layout="row" layout-align="center">
                                 <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl">Card Number</label>
-                                    <input name="cardNumber" id="cardNumber" ng-pattern="/^[0-9]*$/" maxlength="16" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}"
-                                        ng-model="cardNumber" ng-blur="sanitizeInput(cardNumber,'cd_1')" type="text" required>
+                                    <input name="cardNumber" id="cardNumber" ng-pattern="/^[0-9]*$/" maxlength="16" ng-model="cardNumber" ng-blur="sanitizeInput(cardNumber,'cd_1')"
+                                        type="text" required>
                                     <div ng-messages="helcimForm.cardNumber.$error">
                                         <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
@@ -156,8 +152,8 @@
                             <div layout="row" layout-align="center">
                                 <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl">Expiry Date [MMYY]</label>
-                                    <input name="expiryDate" id="cardExpiry" ng-pattern="/^[0-9]*$/" maxlength="4" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}"
-                                        ng-model="expirayDate" ng-blur="sanitizeInput(expirayDate,'cd_2')" type="text" required>
+                                    <input name="expiryDate" id="cardExpiry" ng-pattern="/^[0-9]*$/" maxlength="4" ng-model="expirayDate" ng-blur="sanitizeInput(expirayDate,'cd_2')"
+                                        type="text" required>
                                     <div ng-messages="helcimForm.expiryDate.$error">
                                         <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
@@ -167,8 +163,8 @@
                             <div layout="row" layout-align="center">
                                 <md-input-container class="md-block extInput" flex="50">
                                     <label class="inptLbl inptLblSC1">CVV/CVC</label>
-                                    <input name="cvv" id="cardCVV" ng-pattern="/^[0-9]*$/" maxlength="4" ng-style="(userInfo.card == '0') && {'border-bottom': '1px solid rgba(209, 58, 58, 0.95)'}"
-                                        ng-model="cvv" ng-blur="sanitizeInput(cvv,'cd_3')" type="text" required>
+                                    <input name="cvv" id="cardCVV" ng-pattern="/^[0-9]*$/" maxlength="4" ng-model="cvv" ng-blur="sanitizeInput(cvv,'cd_3')" type="text"
+                                        required>
                                     <div ng-messages="helcimForm.cvv.$error">
                                         <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
@@ -245,89 +241,47 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div ng-repeat="(super_category, super_category_items) in userCart" class="cartBItems1">
-                        <div class="strBrk">
-                            <div flex="10" class="strTypeLn"></div>
-                            <span class="strType">{{ super_category }}</span>
-                            <div class="strTypeLn"></div>
-                        </div>
-                        <div ng-repeat="product in super_category_items">
-                            <div layout="row" layout-align="center">
-                                <div class="cartBItems2A" flex="30">
-                                    <ul>
-                                        <li>
-                                            <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
-                                                <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
-                                            </md-button>
-                                        </li>
-                                        <li>
-                                            <md-button aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
-                                                <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
-                                            </md-button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div flex="35" layout="column">
-                                    <li class="cartBItems2B1">
-                                        <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)">
-                                            <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
-                                        </md-button>
-                                    </li>
-                                    <ul class="container cartBItems2B2">
-                                        <li>
-                                            <img ng-src={{product.image}}>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="cartBItems2C" flex="35">
-                                    <ul class="cartBItems2C2">
-                                        <li>{{product.brand}} {{product.name}}</li>
-                                        <li>{{product.volume}}</li>
-                                        <li>{{product.quantity}}X{{product.packaging}}</li>
-                                        <li>{{product.price}}C$</li>
-                                    </ul>
-                                </div>
+                    <div style="margin-top: 130px;">
+                        <div ng-repeat="super_category in userCartToView" class="cartBItems1">
+                            <div class="strBrk">
+                                <div flex="10" class="strTypeLn"></div>
+                                <span class="strType">{{ super_category[0] }}</span>
+                                <div class="strTypeLn"></div>
                             </div>
-                        </div>
-                    </div> -->
-
-                    <div ng-repeat="super_category in userCartToView" class="cartBItems1">
-                        <div class="strBrk">
-                            <div flex="10" class="strTypeLn"></div>
-                            <span class="strType">{{ super_category[0] }}</span>
-                            <div  class="strTypeLn"></div>
-                        </div>
-                        <div ng-repeat="product in super_category[1]">
-                            <div layout="row" layout-align="center">
-                                <div class="cartBItems2A" flex="30">
-                                    <ul>
-                                        <li>
-                                            <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
-                                                <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
+                            <div ng-repeat="product in super_category[1]">
+                                <div layout="row" layout-align="center">
+                                    <div class="cartBItems2A" flex="30">
+                                        <ul>
+                                            <li>
+                                                <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
+                                                    <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
+                                                </md-button>
+                                            </li>
+                                            <li>
+                                                <md-button aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
+                                                    <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
+                                                </md-button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div flex="35" layout="column">
+                                        <li class="cartBItems2B1">
+                                            <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)" class="itemRemoveBtn1">
+                                                <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
                                             </md-button>
                                         </li>
                                         <li>
-                                            <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
-                                                <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
-                                            </md-button>
+                                            <img class="cartBItems2B2" ng-src={{product.image}}>
                                         </li>
-                                    </ul>
-                                </div>
-                                <div flex="35" layout="column" >
-                                    <li class="cartBItems2B1">
-                                        <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)" class="itemRemoveBtn1">
-                                            <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
-                                        </md-button>
-                                    </li>
-                                    <li><img class="cartBItems2B2" ng-src={{product.image}}></li>
-                                </div>
-                                <div class="cartBItems2C" flex="35">
-                                    <ul class="cartBItems2C2">
-                                        <li>{{product.brand}} {{product.name}}</li>
-                                        <li>{{product.volume}}</li>
-                                        <li>{{product.quantity}}&#8202X{{product.packaging}}</li>
-                                        <li>C${{product.price}}</li>
-                                    </ul>
+                                    </div>
+                                    <div class="cartBItems2C" flex="35">
+                                        <ul class="cartBItems2C2">
+                                            <li>{{product.brand}} {{product.name}}</li>
+                                            <li>{{product.volume}}</li>
+                                            <li>{{product.quantity}}&#8202X{{product.packaging}}</li>
+                                            <li>C${{product.price}}</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -336,7 +290,7 @@
             </md-sidenav>
         </div>
         <!-- Payment Modal -->
-        <div id="checkoutModal" class="modal fade" tabindex="-1" role="dialog">
+        <div id="checkoutModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body" id="modalBody">
@@ -349,12 +303,17 @@
                                     <md-progress-circular md-colors="{color: 'primary'}" md-diameter="76" ng-disabled="paymentResult != 'inProcess' "></md-progress-circular>
                                 </div>
                             </div>
-                            <div id="paymentResult" ng-if="paymentResult == '1' || paymentResult == '0' || paymentResult == '10' ">
+                            <div id="paymentResult" ng-if="paymentResult == '1' || paymentResult == '0' || paymentResult == '01' || paymentResult == '10' || paymentResult == '11' ">
                                 <div class="pR_A">
-                                    <md-button ng-if="paymentResult == '1' " ng-click="clearPage()" class="clrPg">
-                                        <ng-md-icon icon="done" class="pR_A1"></ng-md-icon>
+                                    <md-button class="modal-close-button" ng-click="clearPage()">
+                                        <ng-md-icon icon="close" class="modal-close-button-icon"></ng-md-icon>
                                     </md-button>
-                                    <ng-md-icon ng-if="paymentResult == '10' " icon="warning" class="pR_A10"></ng-md-icon>
+                                    <md-button ng-click="clearPage()" class="clrPg">
+                                        <ng-md-icon ng-if="paymentResult == '1' " icon="done" class="pR_A1"></ng-md-icon>
+                                        <ng-md-icon ng-if="paymentResult == '11' " icon="warning" class="pR_A1 pR_A2"></ng-md-icon>
+                                    </md-button>
+                                    <ng-md-icon ng-if="paymentResult == '10' || paymentResult == '0'" icon="warning" class="pR_A10"></ng-md-icon>
+                                    <ng-md-icon ng-if="paymentResult == '01' " icon="sentiment_dissatisfied" class="pR_A11"></ng-md-icon>
                                 </div>
                                 <div class="pR_B">
                                     <span class="pR_BA">{{paymentMessage_1}}{{userInfo.first_name}}</span>
@@ -375,8 +334,8 @@
             <script src="/resources/services/mapServices.js"></script>
             <script src="/resources/services/date.js"></script>
             <script src="/resources/controllers/checkout.js"></script>
-        <% } %>
-        <script src="https://secure.myhelcim.com/js/version2.js"></script>
+            <% } %>
+                <script src="https://secure.myhelcim.com/js/version2.js"></script>
     </div>
 </body>
 

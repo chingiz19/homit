@@ -96,7 +96,7 @@ footer a:hover{
 #fd_tx:hover + #fd_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(27, 27, 27,0.75);
+    border-bottom: 2px solid rgba(42,81,145,1);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 40px; 
@@ -106,7 +106,7 @@ footer a:hover{
 #if_tx:hover + #if_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(27, 27, 27,0.75);
+    border-bottom: 2px solid rgba(42,81,145,1);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 60px; 
@@ -116,7 +116,7 @@ footer a:hover{
 #is_tx:hover + #is_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(27, 27, 27,0.75);
+    border-bottom: 2px solid rgba(42,81,145,1);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 40px; 
@@ -126,7 +126,7 @@ footer a:hover{
 #tw_tx:hover + #tw_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(27, 27, 27,0.75);
+    border-bottom: 2px solid rgba(42,81,145,1);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 20px; 
@@ -137,7 +137,7 @@ footer a:hover{
 #tu_tx:hover + #tu_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(27, 27, 27,0.75);
+    border-bottom: 2px solid rgba(42,81,145,1);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 40px; 
@@ -147,7 +147,7 @@ footer a:hover{
 #pp_tx:hover + #pp_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(27, 27, 27,0.75);
+    border-bottom: 2px solid rgba(42,81,145,1);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 60px; 
@@ -157,7 +157,7 @@ footer a:hover{
 #cu_tx:hover + #cu_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(27, 27, 27,0.75);
+    border-bottom: 2px solid rgba(42,81,145,1);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 40px; 
@@ -167,7 +167,7 @@ footer a:hover{
 #fq_tx:hover + #fq_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(27, 27, 27,0.75);
+    border-bottom: 2px solid rgba(42,81,145,1);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 20px; 

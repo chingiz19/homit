@@ -2,55 +2,60 @@
 
 <head>
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
-    <link href="/resources/css/main.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/main.css" rel="stylesheet">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
 </head>
 
-<body class="ng-cloak">
+<body ng-cloak style="overflow-x:hidden">
     <div ng-controller="mainController">
-        <!-- Getting started page -->
-        <div id="gettingStarted" class="full-screen flex-box getting-started">
-            <md-button class="md-raised button-big brand-button" ng-click="scrollTo('address')">
-                Let's Homit
-            </md-button>`
-        </div>
         <div id="address" class="full-screen flex-box srchAddrs">
-            <h2>Delivery Address</h2>
-            <h3>Please enter delivery address to ensure we provide delivery to your location</h3>
-            <span class="srchAddrsC">
-                <span class="srchAddrsCA">
-                    <i class="srchAddrsCAA">
-                        <ng-md-icon icon="place" class="srchAddrsCAAA"></ng-md-icon>
-                    </i>
-                    <address-autocomplete input-class="srchAddrsCAB" icon-class="srchAddrsCACA" button-class="srchAddrsCAC" 
-                            autocomplete-bounds="map.getBounds()" autocomplete="autocomplete" on-address-selected="gotAddressResults"></address-autocomplete>
+            <div class="homit-city-image-box">
+                <img class="homit-city-image" ng-src="{{'/resources/images/non-catalog-image/calgary.jpg'}}" />
+            </div>
+            <div class="main-page-address-box">
+                <ul class="ul-zero-margin-padding">
+                    <li class="main-page-address-box-text">Order Bevarages and Snacks from Your Local Stores</li>
+                </ul>
+                <span class="srchAddrsC">
+                    <span class="srchAddrsCA">
+                        <i class="srchAddrsCAA">
+                            <ng-md-icon icon="place" class="srchAddrsCAAA"></ng-md-icon>
+                        </i>
+                        <address-autocomplete input-class="srchAddrsCAB" icon-class="srchAddrsCACA" button-class="srchAddrsCAC" autocomplete-bounds="map.getBounds()"
+                            autocomplete="autocomplete" on-address-selected="gotAddressResults"></address-autocomplete>
+                    </span>
                 </span>
-            </span>
+            </div>
         </div>
-        <div id="coverage" class="full-screen flex-box areaMp">
-            <h2>Coverage Map</h2>
-            <div id="map" class="areaMpB"></div>
-            <h3>{{addressMessage}}</h3>
+        <div id="coverage" class="full-screen flex-box area-map-page">
+            <div class="addressMessage-text">{{addressMessage}}</div>
+            <div id="map" class="area-map"></div>
+            <ul class="area-map-text-box">
+                <li class="area-map-text-A">Coverage Map</li>
+                <li class="area-map-text-B">Calgary, AB</li>
+            </ul>
         </div>
-        <div id="homitHub" class="full-screen hmtHub">
+        <div id="homitHub" class="full-screen homit-hub">
             <div class="hmtHubA hmtHubTxt">Homit Hub</div>
             <div layout="row" class="hmtHubB">
-                <div flex="30" ng-click="hrefTo('/catalog/snack-vendor')" class="hmtHubBA">
+                <div flex="30" ng-click="hrefTo('/catalog/snack-vendor')" class="hmtHubBA" id="snack-vendor">
                     <ul layout="column" class="hmtHubBAA">
                         <li class="hmtHubBAAA">
-                            <ng-md-icon icon="panorama_vertical" class="hmtHubBAAAA"></ng-md-icon>
+                            <ng-md-icon icon="panorama_vertical" class="snack-vendor-icon"></ng-md-icon>
                         </li>
                         <li class="hmtHubABAB hmtHubTxt">Snack Vendor</li>
                     </ul>
+                    <div class="store-sign-background-box"></div>
                 </div>
-                <div flex="30" ng-click="hrefTo('/catalog/liquor-station')" class="hmtHubBA">
+                <div flex="30" ng-click="hrefTo('/catalog/liquor-station')" class="hmtHubBA" id="liquer-station">
                     <ul layout="column" class="hmtHubBAA">
                         <li class="hmtHubBAAA">
-                            <ng-md-icon icon="local_bar" class="hmtHubBAAAA"></ng-md-icon>
+                            <ng-md-icon icon="local_bar" class="liquer-station-icon"></ng-md-icon>
                         </li>
                         <li class="hmtHubABAB hmtHubTxt">Liquor Station</li>
                     </ul>
+                    <div class="store-sign-background-box"></div>
                 </div>
             </div>
         </div>
@@ -60,10 +65,11 @@
         <script src="/resources/directives/addressAutocomplete.js"></script>
         <script src="/resources/services/mapServices.js"></script>
         <script src="/resources/controllers/main.js"></script>
-    <% } %>
+        <% } %>
 </body>
 
 <footer>
-        <%- include('partial/footer')%>
+    <%- include('partial/footer')%>
 </footer>
+
 </html>

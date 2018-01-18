@@ -150,7 +150,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.isArrowPressed = false;
     $scope.resListNode = 0;
 
-    if ($scope.showSearchBar){
+    // if ($scope.showSearchBar){
         var searchRequestElement = document.getElementById('glbSearchRequest');
         searchRequestElement.addEventListener('keyup', globalSearch, false);
         function globalSearch(evt) {
@@ -272,7 +272,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 document.getElementById(el[$scope.resListNode].id).click();
             }
         }
-    }
+    // }
 
 
     function checkUser(){

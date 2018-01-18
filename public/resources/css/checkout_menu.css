@@ -351,6 +351,7 @@ md-checkbox.md-checked .md-icon {
     line-height: 1px; margin: 5px 0 5px; 
 } 
 .strType { 
+    width: 205px;
     background:#fff; padding:0 5px; 
     color: 1px solid rgba(0,0,0, 0.866); 
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;

@@ -124,27 +124,47 @@
 @media screen and (min-device-width: 1501px){
     /* Header Search */
     .mnSrch{
-        flex-basis: 25%; 
+        width: 500px; 
     }
 }
 @media screen and (max-device-width: 1500px) and (min-device-width: 601px) {
     /* Header Search */
     .mnSrch{
-        flex-basis: 35%; 
+        width: 465px; 
     }
 }
+@media (max-width: 800px) and (min-width: 700px){
+    .mnSrch{
+        width: 400px; 
+    }
+}
+@media (max-width: 699px) and (min-width: 600px){
+    .mnSrch{
+        width: 300px; 
+    }
+}
+@media (max-width: 599px){
+    .mnSrch{
+        display: none;
+    }
+}
+@media (max-width: 440px){
+    #dashboardBtn{
+        display: none;
+    }
+}
+
 @media (min-device-width: 601px){
     .navCont{
         margin-bottom: 55px;
     }
-    .homit-header-bigscreen{
-        border-bottom: 1px solid rgba(42,81,145,1);
-        box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
-    }
     md-toolbar{
         min-height: 55px !important;
-        height: 55px;
-        background-color: rgba(42,81,145, 0.85) !important;
+        height: 55px !important;
+    }
+    .md-toolbar-tools{
+        max-height: 55px !important;
+        height: 55px !important;
     }
     .md-input-focused .mnSrchAA{
         margin-bottom: 0px;
@@ -185,8 +205,11 @@
         min-width: 100%; 
         margin: 0; padding: 0;
     }
+    .mnSrchCB li{
+        display: flex;
+    }
     .mnSrchCBAA{
-        display: flex; 
+        min-width: 100%; 
         padding-top: 10px; padding-bottom: 10px;
     }
     .mnSrchCBAAA{

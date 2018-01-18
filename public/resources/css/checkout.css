@@ -297,8 +297,6 @@ md-backdrop.md-opaque {
     color: rgb(255,255,255);
 }
 .cartBItems1{
-    position: relative; 
-    top: 140px; 
     padding: 0;
     background-color: rgb(255,255,255);
     padding-bottom: 20px;
@@ -453,6 +451,7 @@ md-backdrop.md-opaque {
     line-height: 1px; margin: 5px 0 5px; 
 } 
 .strType { 
+    width: 200px;
     background:#fff; padding:0 5px; 
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.045em;
@@ -487,11 +486,13 @@ md-backdrop.md-opaque {
     margin-top: 20px; margin-bottom: 10px; 
 }
 .pR_A{
+    position: relative;
     display: flex; justify-content: center;
     width: 100%; 
     margin-top: 10px; margin-bottom: 10px;
 }
 .pR_A1{
+    display: flex; justify-content: center;
     fill: rgba(255,255,255,0.95);
     border-radius: 40px;
     width: 80px; height: 80px; 
@@ -499,13 +500,28 @@ md-backdrop.md-opaque {
 .pR_A1 svg{
     width: 80px; height: 80px;
 }
+.pR_A2 svg{
+    width: 70px; height: 70px;
+}
 .pR_A10{
+    position: absolute;
     fill: rgba(209, 58, 58, 0.95); 
     background-color: rgba(255,255,255,1);
     border-radius: 40px;
+    z-index: 1;
 }
 .pR_A10 svg{
-    width: 80px; height: 80px;
+    width: 85px; height: 85px;
+}
+.pR_A11{
+    position: absolute;
+    fill: rgba(42,81,145,0.95); 
+    background-color: rgba(255,255,255,1);
+    border-radius: 40px;
+    z-index: 1;
+}
+.pR_A11 svg{
+    width: 85px; height: 85px;
 }
 .pR_B{
     display: flex; justify-content: center;
@@ -534,6 +550,25 @@ md-backdrop.md-opaque {
     min-width: 81px; width: 81px; 
     border-radius: 40px; 
     background-color: rgba(0, 189, 149,1);
+}
+
+.modal-close-button{
+    position: absolute;
+    z-index: 100;
+    right: -10px; top: -22;
+    margin: 0; padding: 0; 
+    min-height: 20px; height: 20px; 
+    min-width: 20px; width: 20px; 
+    background-color: transparent;
+}
+.modal-close-button-icon{
+    display: flex; justify-content: center;
+    fill: rgb(173, 173, 173);
+    border-radius: 40px;
+    width: 20px; height: 20px;
+}
+.modal-close-button-icon svg{
+    width: 20px; height: 20px;
 }
 
 .inptErMsg{
@@ -595,4 +630,13 @@ md-backdrop.md-opaque {
 }
 
 
-/*Delete glyClsBtn class after */
+md-toolbar{
+    background-color: rgba(42,81,145, 0.85) !important;
+}
+
+@media (min-device-width: 601px){
+    .homit-header-bigscreen{
+        border-bottom: 1px solid rgba(42,81,145,1);
+        box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
+    }
+}
