@@ -88,11 +88,15 @@ CREATE TABLE users_employees (
 CREATE TABLE drivers (
 	id INT NOT NULL AUTO_INCREMENT, 	
 	id_prefix VARCHAR(3) NOT NULL DEFAULT "d_", 
-	employee_id INT NOT NULL,
+	user_email VARCHAR(225) NOT NULL, 
+	first_name VARCHAR(225) NOT NULL, 
+	last_name VARCHAR(225) NOT NULL, 
+	password VARCHAR(225) NOT NULL,
+	sin_number VARCHAR(9),
+	phone_number VARCHAR(10),
 
 	PRIMARY KEY (id),
-	UNIQUE (employee_id),
-	CONSTRAINT fk_drivers_employee_id FOREIGN KEY (employee_id) REFERENCES users_employees(id) ON DELETE RESTRICT ON UPDATE CASCADE	
+	UNIQUE (user_email)
 ) ENGINE = InnoDB;
 
 

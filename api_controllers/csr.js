@@ -189,7 +189,7 @@ router.post('/cancelitems', Auth.validateCsr(), function (req, res, next) {
                                 var customerRefundTax = refundAmount.total_tax;
                                 var customerRefundTotal = refundAmount.total_price;
                                 Orders.updateCancelAmount(cancelHistoryId, customerRefundTotal).then(function (refundUpdated) {
-                                    Drivers.getInfo(orderInfoResult.order.driver_id).then(function (driver) {
+                                    Drivers.findDriverById(orderInfoResult.order.driver_id).then(function (driver) {
                                         var orderEmailInfo = {
                                             customer_email: orderInfoResult.user.user_email,
                                             customer_name: orderInfoResult.user.first_name,

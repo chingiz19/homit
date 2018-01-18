@@ -131,29 +131,45 @@ io.on("connection", function (socket) {
 
 sockIOServer.listen(SOCKET_PORT);
 
+pub.findDriver = function (email) {
+    var data = { user_email: email };
+    return db.selectAllWhere(db.dbTables.drivers, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return User.sanitizeUserObject(dbResult[0]);
+        } else {
+            return false;
+        }
+    });
+};
+
+pub.findDriverById = function (driverId) {
+    var data = { id: driverId };
+    return db.selectAllWhere(db.dbTables.drivers, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return User.sanitizeUserObject(dbResult[0]);
+        } else {
+            return false;
+        }
+    });
+};
+
 /**
  * Authenticate driver
  */
 pub.authenticateDriver = function (email, password) {
-    var sqlQuery = `
-    SELECT drivers.id_prefix AS id_prefix, drivers.id AS id, employees.user_email AS email, employees.first_name AS first_name, employees.last_name AS last_name, employees.password AS password
-    FROM users_employees AS employees, drivers 
-    WHERE drivers.employee_id = employees.id AND employees.role_id=3 AND ?`;
-
-    var data = {
-        "employees.user_email": email
-    };
-    return db.runQuery(sqlQuery, data).then(function (user) {
-        if (user.length > 0) {
-            return Auth.comparePassword(password, user[0].password).then(function (match) {
+    var data = { user_email: email };
+    return db.selectAllWhere(db.dbTables.drivers, data).then(function (driver) {
+        if (driver.length > 0) {
+            return Auth.comparePassword(password, driver[0].password).then(function (match) {
                 if (match) {
-                    return User.sanitizeUserObject(user[0]);
+                    return User.sanitizeUserObject(driver[0]);
                 } else {
                     return false;
                 }
             });
+        } else {
+            return false;
         }
-        return false;
     });
 };
 
@@ -320,19 +336,17 @@ var saveLocation = function (driverId, location) {
 pub.getOnlineDrivers = function () {
     var sqlQuery = `
     SELECT drivers.id AS driver_id, drivers.id_prefix AS driver_id_prefix,
-    employee.user_email AS email, employee.first_name AS first_name,
-    employee.last_name AS last_name, employee.phone_number AS phone_number,
+    drivers.user_email AS email, drivers.first_name AS first_name,
+    drivers.last_name AS last_name, drivers.phone_number AS phone_number,
     location.latitude AS latitude, location.longitude AS longitude,
     shift.shift_start AS shift_start, shift.online AS is_online
     FROM 
     drivers_shift_history AS shift,
     drivers,
-    users_employees AS employee,
     drivers_location AS location
     WHERE
     shift.shift_end = 0
     AND drivers.id = shift.driver_id
-    AND employee.id = drivers.employee_id
     AND drivers.id = location.driver_id
     `;
 
@@ -558,32 +572,6 @@ pub.cancelOrder = function (orderId, driverId) {
         }
     };
     Driver.send(driverId, json);
-};
-
-pub.getInfo = function (driverId) {
-    var sqlQuery = `
-        SELECT 
-
-        employee.id AS employee_id,
-        employee.user_email AS user_email,
-        employee.first_name AS first_name,
-        employee.last_name AS last_name,
-        employee.phone_number AS phone_number
-
-        FROM users_employees AS employee,
-        drivers AS drivers
-
-        WHERE drivers.employee_id = employee.id
-        AND ?
-    `;
-
-    var data = {
-        "drivers.id": 1
-    };
-
-    return db.runQuery(sqlQuery, data).then(function (drivers) {
-        return drivers[0];
-    });
 };
 
 module.exports = pub;

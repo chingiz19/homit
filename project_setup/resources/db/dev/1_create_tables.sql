@@ -88,11 +88,15 @@ CREATE TABLE users_employees (
 CREATE TABLE drivers (
 	id INT NOT NULL AUTO_INCREMENT, 	
 	id_prefix VARCHAR(3) NOT NULL DEFAULT "d_", 
-	employee_id INT NOT NULL,
+	user_email VARCHAR(225) NOT NULL, 
+	first_name VARCHAR(225) NOT NULL, 
+	last_name VARCHAR(225) NOT NULL, 
+	password VARCHAR(225) NOT NULL,
+	sin_number VARCHAR(9),
+	phone_number VARCHAR(10),
 
 	PRIMARY KEY (id),
-	UNIQUE (employee_id),
-	CONSTRAINT fk_drivers_employee_id FOREIGN KEY (employee_id) REFERENCES users_employees(id) ON DELETE RESTRICT ON UPDATE CASCADE	
+	UNIQUE (user_email)
 ) ENGINE = InnoDB;
 
 
@@ -122,7 +126,6 @@ CREATE TABLE drivers_location (
 CREATE TABLE catalog_super_categories ( 
 	id INT NOT NULL, 
 	name VARCHAR(225) NOT NULL, 
-	display_name VARCHAR(225) NOT NULL, 
 	
 	PRIMARY KEY (id)
 ) ENGINE = InnoDB;
@@ -131,7 +134,6 @@ CREATE TABLE catalog_super_categories (
 CREATE TABLE catalog_categories ( 
 	id INT NOT NULL, 
 	name VARCHAR(225) NOT NULL,
-	display_name VARCHAR(225) NOT NULL, 	
 	super_category_id INT NOT NULL,
 	
 	PRIMARY KEY (id),
@@ -231,7 +233,7 @@ CREATE TABLE catalog_stores (
 	address VARCHAR(225) NOT NULL,
 	address_latitude DOUBLE NOT NULL,
 	address_longitude DOUBLE NOT NULL,
-	phone_number VARCHAR(10),
+	phone_number VARCHAR(10),	
 	store_type INT NOT NULL,
 	open_time TIME,
 	close_time TIME,
