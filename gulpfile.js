@@ -106,7 +106,9 @@ gulp.task('css', function(){
         }))
         .pipe(cache('imgFiles'))
         // .pipe(production(concatCss('resources/css/all.min.css'))) TODO
-        .pipe(production(cssnano()))
+        .pipe(production(cssnano({
+            "zindex": false
+        })))
         .pipe(plumber.stop())
         .pipe(gulp.dest("www/"))
         .pipe(development(browserSync.reload({stream: true})))
