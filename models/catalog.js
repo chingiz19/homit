@@ -23,10 +23,10 @@ pub.isStoreOpen = function (superCategory) {
     
     WHERE super_categories.id = stores.store_type
     AND 
-    (stores.open_time < CURRENT_TIME
-    AND stores.close_time > DATE_ADD(CURRENT_TIME, INTERVAL 30 MINUTE)
-    OR stores.open_time_next < CURRENT_TIME
-    AND stores.close_time_next > DATE_ADD(CURRENT_TIME, INTERVAL 30 MINUTE)
+    (stores.open_time <= CURRENT_TIME
+    AND stores.close_time >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
+    OR stores.open_time_next <= CURRENT_TIME
+    AND stores.close_time_next >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
     )
     AND ?`;
 
@@ -248,8 +248,10 @@ var getFormattedProducts = function (products, storeOpen) {
         var p_volume = product.volume;
 
         var imageCategory = product.super_category.toLowerCase();
-        if (product.super_category.toLowerCase() != 'liquor-station') {
-            imageCategory = "snack-vendor";
+        if (product.super_category.toLowerCase() == Catalog.safewaySuperCategory
+            || product.super_category.toLowerCase() == Catalog.convenienceSuperCategory
+            || product.super_category.toLowerCase() == Catalog.homitCarSuperCategory) {
+            imageCategory = Catalog.snackVendorSuperCategory;
         }
 
         var imageLocation = "/resources/images/products/" + imageCategory + "/" + product.category.toLowerCase() + "/";
@@ -334,7 +336,10 @@ pub.searchSuperCategorySpecial = function (searchText) {
     AND name LIKE '%` + searchText + `%'`;
     return db.runQuery(sqlQuery).then(function (dbResult) {
         if (Catalog.snackVendorSuperCategory.indexOf(searchText) !== -1) {
-            dbResult.push(Catalog.snackVendorSuperCategory);
+            var snackVendorResult = {
+                "super_category": Catalog.snackVendorSuperCategory
+            };
+            dbResult.push(snackVendorResult);
         }
         if (dbResult.length > 0) {
             return dbResult;
