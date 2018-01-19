@@ -53,6 +53,9 @@
 		
 		# Order Slips
 		ORDER_SLIPS_DIR=
+		
+		# Logger
+		DEBUG=
 
 ## Running project
 ### Using gulp
