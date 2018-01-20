@@ -344,10 +344,16 @@
     }
     .header-icon {
         flex-basis: 5%;
-        /* fill: rgb(42,81,145);  */
         fill: rgba(255,255,255,1);
     }
-   
+   .search-line{
+        display: flex; justify-content: center;
+   }
+   .search-line div{
+        width: 90%; 
+        border-bottom: 1px solid rgba(105, 103, 103, 0.15); 
+        line-height: 1px; margin: 5px 0 5px;
+   }
 }
 
 /*For non-computer screen*/

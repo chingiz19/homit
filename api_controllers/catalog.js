@@ -88,6 +88,7 @@ router.use('/snack-vendor', function (req, res, next) {
     });
 });
 
+
 router.post('/search', function (req, res, next) {
     var searchText = req.body.search;
     if (searchText.length < 3) {
@@ -96,53 +97,25 @@ router.post('/search', function (req, res, next) {
         };
         res.send(response);
     }
+
     Catalog.searchSuperCategorySpecial(searchText).then(function (superCategories) {
-        if (superCategories != false) {
-            var response = {
-                success: true,
-                result: superCategories
-            };
-            res.send(response);
-        } else {
-            Catalog.searchCategorySpecial(searchText).then(function (categories) {
-                if (categories != false) {
+        Catalog.searchCategorySpecial(searchText).then(function (categories) {
+            Catalog.searchSubcategorySpecial(searchText).then(function (subcategories) {
+                Catalog.searchProductsSpecial(searchText).then(function (products) {
+                    var finalResult = {
+                        super_category: superCategories,
+                        category: categories,
+                        subcategory: subcategories,
+                        products: products
+                    };
                     var response = {
                         success: true,
-                        result: categories
+                        result: finalResult
                     };
                     res.send(response);
-                } else {
-                    Catalog.searchSubcategorySpecial(searchText).then(function (subcategories) {
-                        if (subcategories != false) {
-                            var response = {
-                                success: true,
-                                result: subcategories
-                            };
-                            res.send(response);
-                        } else {
-                            Catalog.searchProductsSpecial(searchText).then(function (products) {
-                                if (products != false) {
-                                    var resultProducts = {
-                                        products: products
-                                    };
-                                    var response = {
-                                        success: true,
-                                        result: resultProducts
-                                    };
-                                    res.send(response);
-                                } else {
-                                    var response = {
-                                        success: true,
-                                        result: []
-                                    };
-                                    res.send(response);
-                                }
-                            });
-                        }
-                    });
-                }
+                });
             });
-        }
+        });
     });
 });
 

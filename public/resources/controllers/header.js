@@ -12,7 +12,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         } else {
             $scope.screenIsMob = false;
         }
-        
+
         try {
             $scope.deliveryAddress = $cookies.getObject("homit-address").name;
         } catch (e) {
@@ -59,7 +59,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     }
 
     $scope.hdrExtBx = function (id_1, id_2, id_3, id_4) {
-        if($scope.id_1 != undefined && $scope.id_1 != id_1){
+        if ($scope.id_1 != undefined && $scope.id_1 != id_1) {
             document.getElementById($scope.id_1).setAttribute("aria-hidden", "true");
             window.removeEventListener('click', clickedOffBox, false);
         }
@@ -76,7 +76,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         }
         if (el["aria-hidden"].value == "false") {
             setTimeout(function () {
-                window.addEventListener('click',clickedOffBox, false);
+                window.addEventListener('click', clickedOffBox, false);
             }, 100);
         }
     };
@@ -132,7 +132,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     this.checkSubcategories = function (subcategory_name) {
         $rootScope.$broadcast("checkSubcategories", subcategory_name);
     };
-    
+
     this.emptySubcategories = function () {
         $rootScope.$broadcast("emptySubcategories");
     };
@@ -150,133 +150,85 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.isArrowPressed = false;
     $scope.resListNode = 0;
 
-    // if ($scope.showSearchBar){
-        var searchRequestElement = document.getElementById('glbSearchRequest');
-        searchRequestElement.addEventListener('keyup', globalSearch, false);
-        function globalSearch(evt) {
-            if ($scope.searchRequest.length >= 3 && evt.keyCode != 40 && evt.keyCode != 38 && evt.keyCode != 13) {
-                $http({
-                    method: 'POST',
-                    url: "/api/catalog/search",
-                    data: {
-                        search: $scope.searchRequest
-                    }
-                }).then(function successCallback(response) {
-    
-                    var responseResult = response.data.result;
-                    var responseResultProduct = response.data.result.products;
-                    $scope.searchResult = [];
-    
-                    if (!responseResult.products) {
-                        if (responseResult.length > 0) {
-                            for (var i = 0; i < responseResult.length; i++) {
-                                var searchRequestResult;
-                                var searchRequestSubcategory;
-                                var searchRequestURL;
-                                var showResultNode = {};
-                                if (responseResult[i].subcategory) {
-                                    searchRequestResult = responseResult[i].subcategory;
-                                    searchRequestURL = "/catalog/" + responseResult[i].super_category + "/" + responseResult[i].category;
-                                    searchRequestSubcategory = responseResult[i].subcategory;
-                                }
-                                else if (responseResult[i].category) {
-                                    searchRequestResult = responseResult[i].category;
-                                    searchRequestURL = "/catalog/" + responseResult[i].super_category + "/" + responseResult[i].category;
-                                    searchRequestSubcategory = "";
-                                }
-                                else if (responseResult[i].super_category) {
-                                    searchRequestResult = responseResult[i].super_category;
-                                    searchRequestURL = "/catalog/" + responseResult[i].super_category;
-                                    searchRequestSubcategory = "";
-                                }
-                                showResultNode.result = searchRequestResult;
-                                showResultNode.subcategory = searchRequestSubcategory;
-                                showResultNode.path = searchRequestURL;
-                                $scope.searchResult.push(showResultNode);
-                            }
-                        } else {
-                            var showResultNode = {};
-                            showResultNode.result = "No Search Result";
-                            $scope.searchResult.push(showResultNode);
-                        }
-                    } else {
-                        for (var i = 0; i < responseResultProduct.length; i++) {
-    
-                            var showResultNode = {};
-    
-                            if (responseResultProduct[i].name != null) {
-                                showResultNode.brandName = responseResultProduct[i].brand + " " + responseResultProduct[i].name;
-                            } else {
-                                showResultNode.brandName = responseResultProduct[i].brand;
-                            }
-                            showResultNode.product_id = responseResultProduct[i].product_id;
-                            showResultNode.subcategory = responseResultProduct[i].subcategory;
-                            showResultNode.image = "/resources/images/products/" + responseResultProduct[i].super_category + "/" + responseResultProduct[i].category + "/" + responseResultProduct[i].image;
-                            showResultNode.path = "/catalog/" + responseResultProduct[i].super_category + "/" + responseResultProduct[i].category;
-    
-                            $scope.searchResult.push(showResultNode);
-                        }
-                    }
-                }, function errorCallback(response) {
-                    console.error("error");
-                });
-            }
-    
-            // TODO: not declared in controller's scope
-            $scope.sendSubcategory = function (subcategory, product_id) {
-                sessionStorage.setSearchSubcategory(subcategory);
-                if (product_id) {
-                    sessionStorage.setSearchProduct(product_id);
+    var searchRequestElement = document.getElementById('glbSearchRequest');
+    searchRequestElement.addEventListener('keyup', globalSearch, false);
+    function globalSearch(evt) {
+        if ($scope.searchRequest.length >= 3 && evt.keyCode != 40 && evt.keyCode != 38 && evt.keyCode != 13 && evt.keyCode != 27) {
+            $http({
+                method: 'POST',
+                url: "/api/catalog/search",
+                data: {
+                    search: $scope.searchRequest.toLowerCase()
                 }
-            };
+            }).then(function successCallback(response) {
 
-            navigateSearchResult(evt, $scope.searchResult);
+                $scope.searchDisplay = response.data.result;
+                $scope.resultSuperCategory = $scope.searchDisplay.super_category;
+                $scope.resultCategory = $scope.searchDisplay.category;
+                $scope.resultSubcategory = $scope.searchDisplay.subcategory;
+                $scope.resultProducts = $scope.searchDisplay.products;
+
+                $scope.searchResult = $scope.resultSuperCategory.concat($scope.resultCategory.concat($scope.resultSubcategory.concat($scope.resultProducts)));
+
+            }, function errorCallback(response) {
+                console.error("error");
+            });
+        } else if(evt.keyCode == 27){
+            document.getElementById("clear-search").click();
         }
-    
-        function navigateSearchResult(evt, searchResult) {
-            // TODO make arrow selected result node appear in the "input line"
-    
-            var el = document.querySelectorAll('.srchRslt');
-            if (evt.keyCode == 40 && $scope.isArrowPressed == false) {
-                if (searchResult[0].result) {
-                    // $scope.searchRequest = $scope.searchResult[0]['brandName'];
-                    $scope.isArrowPressed = true;
-                } else {
-                    // $scope.searchRequest = $scope.searchResult[0]['brandName'];
-                    $scope.isArrowPressed = true;
-                }
+
+        // TODO: not declared in controller's scope
+        $scope.sendSubcategory = function (subcategory, product_id) {
+            sessionStorage.setSearchSubcategory(subcategory);
+            if (product_id) {
+                sessionStorage.setSearchProduct(product_id);
+            }
+        };
+
+        navigateSearchResult(evt, $scope.searchResult);
+    }
+
+    function navigateSearchResult(evt, searchResult) {
+        // TODO make arrow selected result node appear in the "input line"
+
+        var el = document.querySelectorAll('.srchRslt');
+        if (evt.keyCode == 40 && $scope.isArrowPressed == false) {
+            if (searchResult) {
+                $scope.isArrowPressed = true;
+            } else {
+                $scope.isArrowPressed = true;
+            }
+            document.getElementById(el[0].id).classList.add('srchRsltKEYS');
+        }
+        else if (evt.keyCode == 38) {
+            if ($scope.resListNode == 0) {
+                $scope.resListNode = $scope.searchResult.length - 1;
+                document.getElementById(el[0].id).classList.remove('srchRsltKEYS');
+                document.getElementById(el[$scope.resListNode].id).classList.add('srchRsltKEYS');
+            } else {
+                $scope.resListNode -= 1;
+                document.getElementById(el[$scope.resListNode + 1].id).classList.remove('srchRsltKEYS');
+                document.getElementById(el[$scope.resListNode].id).classList.add('srchRsltKEYS');
+            }
+        } else if (evt.keyCode == 40) {
+            if ($scope.resListNode == $scope.searchResult.length - 1) {
+                $scope.resListNode = 0;
+                document.getElementById(el[$scope.searchResult.length - 1].id).classList.remove('srchRsltKEYS');
                 document.getElementById(el[0].id).classList.add('srchRsltKEYS');
-            } 
-            else if (evt.keyCode == 38) {
-                if($scope.resListNode == 0 ){
-                    $scope.resListNode = $scope.searchResult.length - 1;
-                    document.getElementById(el[0].id).classList.remove('srchRsltKEYS');
-                    document.getElementById(el[$scope.resListNode].id).classList.add('srchRsltKEYS');
-                } else{
-                    $scope.resListNode -= 1;
-                    document.getElementById(el[$scope.resListNode + 1].id).classList.remove('srchRsltKEYS');
-                    document.getElementById(el[$scope.resListNode].id).classList.add('srchRsltKEYS');
-                }
-            } else if (evt.keyCode == 40) {
-                if($scope.resListNode == $scope.searchResult.length - 1){
-                    $scope.resListNode = 0;
-                    document.getElementById(el[$scope.searchResult.length-1].id).classList.remove('srchRsltKEYS');
-                    document.getElementById(el[0].id).classList.add('srchRsltKEYS');
-                } else{
-                    $scope.resListNode += 1;
-                    document.getElementById(el[$scope.resListNode].id).classList.add('srchRsltKEYS');
-                    document.getElementById(el[$scope.resListNode-1].id).classList.remove('srchRsltKEYS');
-                }
-            }
-            if (evt.keyCode == 13 && $scope.isArrowPressed == true) {
-                document.getElementById(el[$scope.resListNode].id).click();
+            } else {
+                $scope.resListNode += 1;
+                document.getElementById(el[$scope.resListNode].id).classList.add('srchRsltKEYS');
+                document.getElementById(el[$scope.resListNode - 1].id).classList.remove('srchRsltKEYS');
             }
         }
-    // }
+        if (evt.keyCode == 13 && $scope.isArrowPressed == true) {
+            document.getElementById(el[$scope.resListNode].id).click();
+        }
+    }
 
 
-    function checkUser(){
-        if (user.isUserLogged()){
+    function checkUser() {
+        if (user.isUserLogged()) {
             $scope.isSignedIn = true;
             $scope.username = user.getName();
         } else {

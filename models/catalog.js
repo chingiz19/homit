@@ -5,9 +5,11 @@
 var pub = {};
 
 pub.snackVendorSuperCategory = "snack-vendor";
+pub.snackVendorDisplayName = "Snack Vendor";
 pub.safewaySuperCategory = "safeway";
 pub.convenienceSuperCategory = "convenience";
 pub.homitCarSuperCategory = "homitcar";
+pub.snackVendorImage = "snack-vendor_store.jpeg";
 
 /**
  * Returns true if any of the stores related to the super category is open
@@ -319,70 +321,61 @@ var getFormattedProducts = function (products, storeOpen) {
 };
 
 pub.searchSuperCategory = function (searchText) {
-    var sqlQuery = `SELECT name AS super_category FROM catalog_super_categories WHERE name LIKE '%` + searchText + `%'`;
+    var sqlQuery = `SELECT name AS super_category, display_name AS super_category_display, image AS super_category_image FROM catalog_super_categories
+    WHERE name LIKE '%` + searchText + `%' OR display_name LIKE '%` + searchText + `%'`;
     return db.runQuery(sqlQuery).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return dbResult;
-        } else {
-            return false;
-        }
+        return dbResult;
     });
 };
 
 pub.searchSuperCategorySpecial = function (searchText) {
     var sqlQuery = `
-    SELECT name AS super_category FROM catalog_super_categories 
+    SELECT name AS super_category, display_name AS super_category_display, image AS super_category_image FROM catalog_super_categories 
     WHERE name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')  
-    AND name LIKE '%` + searchText + `%'`;
+    AND (name LIKE '%` + searchText + `%' OR display_name LIKE '%` + searchText + `%')`;
     return db.runQuery(sqlQuery).then(function (dbResult) {
-        if (Catalog.snackVendorSuperCategory.indexOf(searchText) !== -1) {
+        if (Catalog.snackVendorSuperCategory.indexOf(searchText) !== -1
+            || Catalog.snackVendorDisplayName.toLowerCase().indexOf(searchText) !== -1) {
             var snackVendorResult = {
-                "super_category": Catalog.snackVendorSuperCategory
+                "super_category": Catalog.snackVendorSuperCategory,
+                "super_category_display": Catalog.snackVendorDisplayName,
+                "super_category_image": Catalog.snackVendorImage
             };
             dbResult.push(snackVendorResult);
         }
-        if (dbResult.length > 0) {
-            return dbResult;
-        } else {
-            return false;
-        }
+        return dbResult;
     });
 };
 
 pub.searchCategory = function (searchText) {
-    var sqlQuery = `SELECT catalog_super_categories.name AS super_category, catalog_categories.name AS category
+    var sqlQuery = `SELECT catalog_super_categories.name AS super_category, catalog_categories.name AS category,
+        catalog_categories.display_name AS category_display, catalog_super_categories.display_name AS super_category_display        
         FROM catalog_categories, catalog_super_categories
         WHERE catalog_categories.super_category_id = catalog_super_categories.id
-        AND catalog_categories.name LIKE '%` + searchText + `%'`;
+        AND (catalog_categories.name LIKE '%` + searchText + `%' OR catalog_categories.display_name LIKE '%` + searchText + `%')`;
     return db.runQuery(sqlQuery).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return dbResult;
-        } else {
-            return false;
-        }
+        return dbResult;
     });
 };
 
 pub.searchCategorySpecial = function (searchText) {
-    var sqlQuery = `SELECT catalog_super_categories.name AS super_category, catalog_categories.name AS category
+    var sqlQuery = `SELECT catalog_super_categories.name AS super_category, catalog_categories.name AS category,
+        catalog_categories.display_name AS category_display, catalog_super_categories.display_name AS super_category_display
         FROM catalog_categories, catalog_super_categories
         WHERE catalog_categories.super_category_id = catalog_super_categories.id
         AND catalog_super_categories.name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
-        AND catalog_categories.name LIKE '%` + searchText + `%'
+        AND (catalog_categories.name LIKE '%` + searchText + `%' OR catalog_categories.display_name LIKE '%` + searchText + `%')        
         
         UNION
         
-        SELECT DISTINCT '` + Catalog.snackVendorSuperCategory + `' AS super_category, catalog_categories.name AS category
+        SELECT DISTINCT '` + Catalog.snackVendorSuperCategory + `' AS super_category, catalog_categories.name AS category,
+        catalog_categories.display_name AS category_display, '` + Catalog.snackVendorDisplayName + `' AS super_category_display
         FROM catalog_categories, catalog_super_categories
         WHERE catalog_categories.super_category_id = catalog_super_categories.id
         AND catalog_super_categories.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
-        AND catalog_categories.name LIKE '%` + searchText + `%'`;
+        AND (catalog_categories.name LIKE '%` + searchText + `%' OR catalog_categories.display_name LIKE '%` + searchText + `%')`;        
     return db.runQuery(sqlQuery).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return dbResult;
-        } else {
-            return false;
-        }
+        return dbResult;
     });
 };
 
@@ -393,11 +386,7 @@ pub.searchSubcategory = function (searchText) {
         AND catalog_subcategories.category_id = catalog_categories.id
         AND catalog_subcategories.name LIKE '%` + searchText + `%'`;
     return db.runQuery(sqlQuery).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return dbResult;
-        } else {
-            return false;
-        }
+        return dbResult;
     });
 };
 
@@ -419,11 +408,7 @@ pub.searchSubcategorySpecial = function (searchText) {
         AND catalog_subcategories.name LIKE '%` + searchText + `%'
         `;
     return db.runQuery(sqlQuery).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return dbResult;
-        } else {
-            return false;
-        }
+        return dbResult;
     });
 };
 
@@ -443,11 +428,7 @@ pub.searchProducts = function (searchText) {
         OR listing.product_description LIKE '%` + searchText + `%' OR listing.product_country LIKE '%` + searchText + `%')`;
 
     return db.runQuery(sqlQuery).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return dbResult;
-        } else {
-            return false;
-        }
+        return dbResult;
     });
 };
 
@@ -512,11 +493,7 @@ pub.searchProductsSpecial = function (searchText) {
         }
 
         return db.runQuery(sqlQuery).then(function (dbResult) {
-            if (dbResult.length > 0) {
-                return dbResult;
-            } else {
-                return false;
-            }
+            return dbResult;
         });
     });
 };
