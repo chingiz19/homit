@@ -291,7 +291,13 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 $scope.pageName = "Dispatch Room";
                 $scope.page = 2;
                 if (!$scope.disRoomMap) {
-                    $scope.disRoomMap = mapServices.createMap("drMap");
+                    $scope.disRoomMap = mapServices.createMap("drMap", {
+                        zoom: 11,
+                        center: new google.maps.LatLng(51.054637, -114.094996),
+                        streetViewControl: false,
+                        rotateControl: false,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    });
                 }
             }
             if (num == 3) {

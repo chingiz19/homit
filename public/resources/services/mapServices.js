@@ -47,6 +47,8 @@ app.service('mapServices', ["$http", function ($http) {
                 streetViewControl: false,
                 fullscreenControl: false,
                 rotateControl: false,
+                disableDoubleClickZoom: false,
+                gestureHandling: "none",
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
         }

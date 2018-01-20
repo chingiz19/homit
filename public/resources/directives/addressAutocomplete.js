@@ -111,6 +111,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                     autoComplete.addListener('place_changed', function(){
                         scope._searchedAddress = publicFunctions.getPlace().formatted_address;
                         scope.addressChangeEvent();
+                        scope.$apply();
                     });
                 }, 0);  
             }            
