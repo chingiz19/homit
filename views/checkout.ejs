@@ -99,7 +99,7 @@
                     <md-input-container class="md-block bigClass" flex="80">
                         <label class="inptLbl" style="display: none;"></label>
                         <address-autocomplete style="width: 300px;" input-class="adrInpt" icon-class="adrInpt_x_A" button-class="adrInpt_x" autocomplete="autocomplete"
-                            on-address-selected="gotAddressResults"></address-autocomplete>
+                            on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
                         <div ng-messages="Address.address.$error">
                             <div ng-message="required" class="inptErMsg">Required</div>
                         </div>

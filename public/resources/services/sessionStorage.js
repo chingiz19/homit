@@ -78,7 +78,13 @@ app.service('sessionStorage', ["$window", function($window){
         return _get("delivery-address-longitude");
     };
     
+    var _setCoverageMap = function(value){
+        return _set("coverage-map", value);
+    };
 
+    var _getCoverageMap = function(value){
+        return _get("coverage-map");
+    };
 
 
     return {
@@ -95,6 +101,8 @@ app.service('sessionStorage', ["$window", function($window){
         setAddressLat: _setAddressLat,
         getAddressLat: _getAddressLat,
         setAddressLng: _setAddressLng,
-        getAddressLng: _getAddressLng
+        getAddressLng: _getAddressLng,
+        setCoverageMap: _setCoverageMap,
+        getCoverageMap: _getCoverageMap
     };
 }]);

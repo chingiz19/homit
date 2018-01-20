@@ -5,7 +5,7 @@
  * @copyright Homit (c) 2017
  * @author Jeyhun Gurbanov
  */
-app.service('mapServices', ["$http", function ($http) {
+app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionStorage) {
 
     var pub = {};
 
@@ -13,11 +13,24 @@ app.service('mapServices', ["$http", function ($http) {
      * Retrieves coordinates from backend, and creates Polygon
      */
     pub.createCoveragePolygon = function () {
+        var coverage = sessionStorage.getCoverageMap();
+        if (coverage){
+            return Promise.resolve(new google.maps.Polygon({
+                paths: coverage,
+                strokeColor: '#2a5191',
+                strokeOpacity: 1,
+                strokeWeight: 3,
+                fillColor: '#2a5191',
+                fillOpacity: 0.5,
+                geodesic: true
+            }));
+        }
         return $http({
                 method: 'GET',
                 url: '/api/map/coverage'
             }).then(function successCallback(response) {
                 if (response.data.success) {
+                    sessionStorage.setCoverageMap(response.data.coverage);
                     return new google.maps.Polygon({
                         paths: response.data.coverage,
                         strokeColor: '#2a5191',
@@ -31,7 +44,7 @@ app.service('mapServices', ["$http", function ($http) {
                     Logger.warn("Couldn't get coverage map");
                 }
             }, function errorCallback(response) {
-                Logger.error("Something went wrong while getting coverage map");
+                console.error("Something went wrong while getting coverage map");
                 return false;
             });
     };

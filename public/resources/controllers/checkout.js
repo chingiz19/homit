@@ -3,7 +3,6 @@
 app.controller("checkoutController",
     function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, localStorage, cartService, sessionStorage, date, mapServices) {
 
-        $scope.localCartName = "bizim_userCart";
         $scope.userCart = localStorage.getUserCart() || {};
         $scope.numberOfItemsInCart = 0;
         $scope.totalAmount = 0;
@@ -63,6 +62,8 @@ app.controller("checkoutController",
             mapServices.createCoveragePolygon().then(function (polygon) {
                 if (polygon) {
                     $scope.coveragePolygon = polygon;
+                    //TODO: change to dynamic
+                    $scope.bounds = new google.maps.LatLngBounds({lat: 50.862122, lng: -114.173317}, {lat: 51.172396, lng: -113.925171});
                 }
             });
             readyToHomeIt();
