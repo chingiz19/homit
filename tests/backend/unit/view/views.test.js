@@ -14,62 +14,72 @@ describe("Make sure views can be retrieved/loaded", function(){
      * Check that Public pages are loaded (return 200)
      */
     describe("Check that Public pages are loaded (return 200)", function(){
-        it("'/catalog/liqour/' should redirect to '/catalog/liquor/beer'", function(done){
-            chai.request(host).get('/catalog/liquor')
+        it("'/catalog/liqour-station/' should redirect to '/catalog/liquor-station/beer'", function(done){
+            chai.request(host).get('/catalog/liquor-station')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(200); 
-                    expect(res.req.path).to.equal("/catalog/liquor/beer");
+                    expect(res.req.path).to.equal("/catalog/liquor-station/beer");
                     done();
                 });
         });
 
-        it("'/catalog/liquor/beer' should return 200", function(done){
-            chai.request(host).get('/catalog/liquor/beer')
+        it("'/catalog/liquor-station/beer' should return 200", function(done){
+            chai.request(host).get('/catalog/liquor-station/beer')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(200); 
-                    expect(res.req.path).to.equal("/catalog/liquor/beer");
+                    expect(res.req.path).to.equal("/catalog/liquor-station/beer");
                     done();
                 });
         });
 
-        it("'/catalog/liquor/wine' should return 200", function(done){
-            chai.request(host).get('/catalog/liquor/wine')
+        it("'/catalog/liquor-station/wine' should return 200", function(done){
+            chai.request(host).get('/catalog/liquor-station/wine')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(200); 
-                    expect(res.req.path).to.equal("/catalog/liquor/wine");
+                    expect(res.req.path).to.equal("/catalog/liquor-station/wine");
                     done();
                 });
         });
 
-        it("'/catalog/liquor/spirit' should return 200", function(done){
-            chai.request(host).get('/catalog/liquor/spirit')
+        it("'/catalog/liquor-station/spirit' should return 200", function(done){
+            chai.request(host).get('/catalog/liquor-station/spirit')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(200); 
-                    expect(res.req.path).to.equal("/catalog/liquor/spirit");
+                    expect(res.req.path).to.equal("/catalog/liquor-station/spirit");
+                    done();
+                });
+        });
+        
+        it("'/catalog/liquor-station/liqueur' should return 200", function(done){
+            chai.request(host).get('/catalog/liquor-station/liqueur')
+                .end(function(err, res){
+                    expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
+                    expect(res.statusCode).to.equal(200); 
+                    expect(res.req.path).to.equal("/catalog/liquor-station/liqueur");
                     done();
                 });
         });
 
-        it("'/catalog/snackvendor/' should redirect to '/catalog/snackvendor/all'", function(done){
-            chai.request(host).get('/catalog/snackvendor')
+        it("'/catalog/snack-vendor/' should redirect to '/catalog/snack-vendor/snack'", function(done){
+            chai.request(host).get('/catalog/snack-vendor')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(200); 
-                    expect(res.req.path).to.equal("/catalog/snackvendor/all");
+                    expect(res.req.path).to.equal("/catalog/snack-vendor/snack");
                     done();
                 });
         });
 
-        it("'/catalog/snackvendor/all' should return 200", function(done){
-            chai.request(host).get('/catalog/snackvendor/all')
+        it("'/catalog/snack-vendor/snack' should return 200", function(done){
+            chai.request(host).get('/catalog/snack-vendor/snack')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(200); 
-                    expect(res.req.path).to.equal("/catalog/snackvendor/all");
+                    expect(res.req.path).to.equal("/catalog/snack-vendor/snack");
                     done();
                 });
         });
