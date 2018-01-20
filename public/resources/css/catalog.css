@@ -767,5 +767,9 @@ md-toolbar{
 }
 
 .catalog-store-closed{
-    position: absolute; bottom: 118px; background-color: rgba(0,0,0,0.2); z-index: 1;
+    position: absolute; 
+    top: 0; left: 0;
+    background-color: rgba(0,0,0,0.2); z-index: 1;
+    border-radius: 4px;
+    height: 343px; width: 278px;
 }
