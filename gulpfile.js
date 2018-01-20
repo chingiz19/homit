@@ -13,10 +13,12 @@ var concatCss = require('gulp-concat-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var gulpFn  = require('gulp-fn');
+var mocha = require('gulp-mocha');
 var beep = require('beepbeep');
 var del = require('del');
 var browserSync = require('browser-sync').create();
 var notifier = require('node-notifier');
+var log = require('fancy-log');
 
 
 /* Variables */
@@ -54,6 +56,10 @@ function errorHandling(err){
 }
 
 /* Gulp tasks */
+gulp.task('compile', function(cb){
+    return gulpSequence('clean:www', ['js', 'css', 'img'])(cb);
+});
+
 gulp.task('browserSync', function(){
     browserSync.init({
         proxy: 'localhost:8080',
@@ -119,13 +125,13 @@ gulp.task('css', function(){
         }));
 });
 
-gulp.task('watch', ['js', 'css', 'img'],function(){
+gulp.task('watch', function(){
     gulp.watch(cssFiles, ['css']);
     gulp.watch(jsFiles, ['js']);
     gulp.watch(imgFiles, ['img']);
 })
 
-gulp.task('start', ['js', 'css', 'img'], function(cb){
+gulp.task('start', function(cb){
     var called = false;
     return nodemon({
         script: 'server.js',
@@ -136,7 +142,7 @@ gulp.task('start', ['js', 'css', 'img'], function(cb){
     }).on('start', function(){
         if (!called){
             called = true;
-            cb();
+            setTimeout(cb, 5000); // wait for nodemon to fire 'node server.js'
         }
     }).on('restart', function(){
         setTimeout(function(){
@@ -159,17 +165,40 @@ gulp.task('www-error', function(){
 
 gulp.task('clean:www', function(){
     return del.sync('www');
-})
+});
 
-gulp.task('default', function(cb){
-    var tasks = ['js', 'img', 'css'];
+gulp.task('test-views', ['compile', 'start'], function(){
+    var stream = gulp.src("./tests/view/*.test.js", {watch: false})
+            .pipe(mocha({
+                reporter: "spec",
+            }));
+            //TODO: nodemon doesn't exit with gulp-exit() in here
+    return stream;
+});
+
+gulp.task('run', function(cb){
     if (gutil.env.env == "production"){
         environments.current(production);
+        return gulpSequence('compile')(cb);
     } else {
         environments.current(development);
-        tasks.push('start', 'watch', 'browserSync');
-        tasks = gulpSequence(tasks, 'www-error');
-    }
-    
-    return gulpSequence('clean:www', tasks)(cb);
+        return gulpSequence('compile', 'start', 'watch', 'browserSync', 'www-error')(cb);
+    }    
+});
+
+gulp.task('default', function(){
+    var gulpTasksList = `\n
+(to run tasks use 'gulp <task>')
+    TASKS                  DESCRIPTION
+
+    run         |  for front-end development (copies files to www folder, starts nodemon, browserSync, www-error watch)
+    compile     |  cleans www folder then copies files to that folder (js, css, img)
+    clean:www   |  deletes www folder
+    js          |  copy js files to www folder
+    css         |  copy css files to www folder
+    img         |  copy img files to www folder
+
+    test-views  |  run test for views\n`;
+
+    log(gulpTasksList);
 });

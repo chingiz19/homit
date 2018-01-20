@@ -78,3 +78,14 @@
 #### Production mode
 	1. Run command 'gulp --env production'
 	2. 'pm2 start production-startup.json'
+
+
+## Running tests 
+### Back-end (In Progress)
+	gulp test-backend
+
+### Front-end (In Progress)
+	gulp test-frontend
+
+### Run views (200/404 for front pages)
+	gulp test-views
