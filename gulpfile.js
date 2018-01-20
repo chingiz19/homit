@@ -72,7 +72,9 @@ gulp.task('js', function(){
         }))
         .pipe(cache('jsFiles'))
         .pipe(ngAnnotate())
-        .pipe(jshint())
+        .pipe(jshint({
+            sub: true
+        }))
         .pipe(jshint.reporter('default'))
         .pipe(production(uglify(uglifyOptions)))
         .pipe(production(concat('resources/js/all.min.js')))

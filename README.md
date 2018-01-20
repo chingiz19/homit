@@ -57,6 +57,9 @@
 		# Logger
 		DEBUG=
 
+		# Keys
+		SESSION_KEY=
+
 ## Running project
 ### Using gulp
 	We use gulp to automate preprocessing, and pre-run tasks

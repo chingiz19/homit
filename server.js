@@ -21,7 +21,7 @@ global.secretKey = "secretSession";
 require("./model-factory").init();
 
 /* Variables */
-var session = require("express-session");
+var session = require("cookie-session");
 var webServer = express();
 var path = require("path");
 var webpagePath = path.join(__dirname, "/www");
@@ -53,19 +53,17 @@ var sslOptions = {
 	key: fs.readFileSync('./ssl/server.enc.key'),
 	cert: fs.readFileSync('./ssl/server.crt'),
 	passphrase: 'test'
-}
+};
 
 /* Server Middleware */
+//TODO: move to db sessions
 webServer.use(session({
-	key: "session",
-	secret: secretKey,
-	resave: false,
-	saveUninitialized: true,
-	httpOnly: false,
-	cookie: {
-		expires: new Date(Date.now() + (60 * 60 * 1000)),
-		maxAge: 60 * 60 * 1000  // 1 hour
-	}
+	name: "session", 
+	keys: [process.env.SESSION_KEY],
+	httpOnly: true,
+	secure: true,
+	expires: new Date(Date.now() + (60 * 60 * 1000)),
+	maxAge: 1 * 60 * 60 * 1000  // 1 hour
 }));
 
 
@@ -81,7 +79,9 @@ webServer.use(helmet());
 webServer.use("/api/app", require(path.join(__dirname, "/api_controllers/app/app_controller")));
 
 
-webServer.use(csurf());
+webServer.use(csurf({
+	cookie: true
+}));
 
 webServer.use(function(req, res, next){
 	// Set CSRF token per request
