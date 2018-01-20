@@ -44,8 +44,8 @@ router.use('/snack-vendor', function (req, res, next) {
                 Catalog.getCategoryOnlyProducts(Catalog.safewaySuperCategory, categoryName, safewayOpen, Catalog.convenienceSuperCategory, categoryName).then(function (safewayOnlyProducts) {
                     Catalog.isStoreOpen(Catalog.convenienceSuperCategory).then(function (convenienceOpen) {
                         Catalog.getAllProductsByCategory(Catalog.convenienceSuperCategory, categoryName, convenienceOpen).then(function (convenienceProducts) {
-                            var newProducts = safewayOnlyProducts.concat(convenienceProducts);
-                            var finalProducts = newProducts.concat(homitCarProducts);
+                            var newProducts = convenienceProducts.concat(homitCarProducts);
+                            var finalProducts = newProducts.concat(safewayOnlyProducts);
                             if (finalProducts.length > 0) {
                                 var allBrands = Catalog.getAllBrands(finalProducts);
                                 Catalog.getAllTypes(finalProducts).then(function (subcategories) {
