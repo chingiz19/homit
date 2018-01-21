@@ -7,7 +7,7 @@ var pub = {};
 /**
  * Creates order in orders_history table
  */
-pub.createOrder = function (id, address, address_lat, address_long, isGuest, transactionId, superCategory) {
+pub.createOrder = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, superCategory) {
     return Catalog.getSuperCategoryIdByName(superCategory).then(function (superCategoryId) {
         var data = {
             delivery_address: address,
@@ -21,6 +21,9 @@ pub.createOrder = function (id, address, address_lat, address_long, isGuest, tra
         } else {
             data.user_id = id;
         }
+        if (driverInstruction) {
+            data.driver_instruction = driverInstruction;
+        };
 
         return db.insertQuery(db.dbTables.orders_history, data).then(function (inserted) {
             return inserted.insertId;

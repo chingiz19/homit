@@ -171,7 +171,7 @@ router.post('/refunditems', Auth.validateCsr(), function (req, res, next) {
 });
 
 router.post('/cancelitems', Auth.validateCsr(), function (req, res, next) {
-// router.post('/cancelitems', function (req, res, next) {
+    // router.post('/cancelitems', function (req, res, next) {
     var orderId = req.body.order_id;
     var cancelItems = req.body.items; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}
     var note = req.body.note;
@@ -228,8 +228,9 @@ router.post('/additems', Auth.validateCsr(), function (req, res, next) {
     var note = req.body.note;
     var csrId = Auth.getSignedUser(req).id;
     // var csrId = 1;
-    var products = req.body.products; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}        
+    var cartProducts = req.body.products; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}        
     var transactionId = req.body.transaction_id;
+    var driverInstruction = req.body.driver_instruction;
 
     CSR.recordAction(csrId, note).then(function (csrActionId) {
         Orders.getOrderInfo(orderId).then(function (orderInfo) {
@@ -242,39 +243,41 @@ router.post('/additems', Auth.validateCsr(), function (req, res, next) {
                 userId = orderInfo.guest_id;
                 isGuest = true;
             }
-            var productKeys = Object.keys(products);
-            var superCategory = productKeys[0];
-            Orders.createOrder(userId, orderInfo.delivery_address, orderInfo.delivery_latitude, orderInfo.delivery_longitude, isGuest, transactionId, superCategory).then(function (orderId) {
-                var inserted = Orders.insertProducts(orderId, products[superCategory]);
-                var userOrder = {
-                    super_category: superCategory,
-                    order_id: orderId
-                };
+            Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
+                var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
 
-                var cmUserId = "";
-                var cmOrderId = "o_" + userOrder.order_id;
-                if (isGuest) {
-                    cmUserId = "g_" + userId;
-                } else {
-                    cmUserId = "u_" + userId;
-                }
-                CM.sendOrder(cmUserId, orderInfo.delivery_address, cmOrderId, superCategory);
+                var productKeys = Object.keys(products);
+                var superCategory = productKeys[0];
+                Orders.createOrder(userId, orderInfo.delivery_address, orderInfo.delivery_latitude, orderInfo.delivery_longitude, driverInstruction, isGuest, transactionId, superCategory).then(function (orderId) {
+                    var inserted = Orders.insertProducts(orderId, products[superCategory]);
+                    var userOrder = {
+                        super_category: superCategory,
+                        order_id: orderId
+                    };
 
-                Catalog.getTotalPriceForProducts(products).then(function (price) {
-                    Orders.placeAddHistory(orderId, csrActionId, price.total_price).then(function (addHistoryId) {
-                        var response = {
-                            success: true,
-                            order: userOrder,
-                            message: "Order has been placed."
-                        };
-                        res.send(response);
+                    var cmUserId = "";
+                    var cmOrderId = "o_" + userOrder.order_id;
+                    if (isGuest) {
+                        cmUserId = "g_" + userId;
+                    } else {
+                        cmUserId = "u_" + userId;
+                    }
+                    CM.sendOrder(cmUserId, orderInfo.delivery_address, cmOrderId, superCategory);
+
+                    Catalog.getTotalPriceForProducts(products).then(function (price) {
+                        Orders.placeAddHistory(orderId, csrActionId, price.total_price).then(function (addHistoryId) {
+                            var response = {
+                                success: true,
+                                order: userOrder,
+                                message: "Order has been placed."
+                            };
+                            res.send(response);
+                        });
                     });
                 });
             });
         });
     });
 });
-
-
 
 module.exports = router;

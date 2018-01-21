@@ -276,6 +276,7 @@ CREATE TABLE orders_history (
 	delivery_address VARCHAR(225) NOT NULL,
 	delivery_latitude DOUBLE NOT NULL,
 	delivery_longitude DOUBLE NOT NULL,
+	driver_instruction VARCHAR(225),
 	store_type INT NOT NULL,
 	store_id INT,
 	driver_id INT,

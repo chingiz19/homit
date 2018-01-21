@@ -640,3 +640,17 @@ md-toolbar{
         box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
     }
 }
+
+#driver-instruction md-input-container{
+    margin: 0 10% 0 0;
+}
+#driver-instruction md-input-container label{
+    display: none;
+}
+#driver-instruction md-input-container input{
+    margin: 0; padding: 0;
+}
+
+#address md-input-container label{
+    display: none;
+}

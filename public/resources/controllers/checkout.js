@@ -1,5 +1,3 @@
-// import { clearInterval } from "timers";
-
 app.controller("checkoutController",
     function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, localStorage, cartService, sessionStorage, date, mapServices) {
 
@@ -9,6 +7,7 @@ app.controller("checkoutController",
         $scope.delFee = 0;
         $scope.GST = 0;
         $scope.receipt = 0;
+        $scope.userSignedIn = false;
         $scope.userInfo = {
             "fname_valid": false,
             "lname_valid": false,
@@ -18,6 +17,7 @@ app.controller("checkoutController",
             "cd_1_valid": false,
             "cd_2_valid": false,
             "cd_3_valid": false,
+            "drInstruction_valid": undefined,
             "address_valid": undefined,
             "HomeIt": false
         };
@@ -33,9 +33,9 @@ app.controller("checkoutController",
 
         $scope.init = function () {
             checkout.getCheckoutUserInfo = sessionStorage.getCheckoutUserInfo();
-            $scope.selectedAddress = 0;
             if ($cookies.get("user")) {
                 $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
+                $scope.userSignedIn = true;
                 //TODO sub if's with for loop
                 if ($scope.userInfo.first_name)
                     $scope.userInfo.fname_valid = true;
@@ -63,7 +63,7 @@ app.controller("checkoutController",
                 if (polygon) {
                     $scope.coveragePolygon = polygon;
                     //TODO: change to dynamic
-                    $scope.bounds = new google.maps.LatLngBounds({lat: 50.862122, lng: -114.173317}, {lat: 51.172396, lng: -113.925171});
+                    $scope.bounds = new google.maps.LatLngBounds({ lat: 50.862122, lng: -114.173317 }, { lat: 51.172396, lng: -113.925171 });
                 }
             });
             readyToHomeIt();
@@ -225,6 +225,7 @@ app.controller("checkoutController",
                     userInfoToSend.address = checkout.address;
                     userInfoToSend.address_latitude = checkout.address_latitude;
                     userInfoToSend.address_longitude = checkout.address_longitude;
+                    userInfoToSend.driver_instruction = $scope.userInfo.drInstruction;
 
                     $http({
                         method: 'POST',
@@ -371,7 +372,7 @@ app.controller("checkoutController",
         };
 
         $scope.sanitizeInput = function (text, type) {
-            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+ -]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/ };
+            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+ -]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/, "drInstruction": /^[a-zA-Z0-9]*$/ };
             if (text && type) {
                 if (text.match(pattern[type])) {
                     $scope.userInfo[type + "_valid"] = true;
@@ -408,7 +409,7 @@ app.controller("checkoutController",
         };
 
         function readyToHomeIt() {
-            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo.hasLiquor) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid) {
+            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo.hasLiquor) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid && $scope.userInfo.drInstruction_valid == false) {
                 $scope.userInfo.HomeIt = true;
             } else {
                 $scope.userInfo.HomeIt = false;

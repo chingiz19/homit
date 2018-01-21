@@ -18,7 +18,7 @@
                     </md-button>
                 </div>
                 <div class="userPic">
-                    <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="135" height="135" />
+                    <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100" />
                 </div>
                 <!--DoB-->
                 <div layout="column" ng-if="userInfo.hasLiquor">
@@ -74,7 +74,7 @@
                 <form name="Email" class="inptFrm">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label class="inptLbl">Email</label>
-                        <input name="email" ng-pattern="/^.+@.+\..+$/" ng-model="userInfo.user_email" ng-blur="sanitizeInput(userInfo.user_email,'email')"
+                        <input name="email" ng-pattern="/^.+@.+\..+$/" ng-diabled="userSignedIn" ng-model="userInfo.user_email" ng-blur="sanitizeInput(userInfo.user_email,'email')"
                             type="email" required/>
                         <div ng-messages="Email.email.$error">
                             <div ng-message="pattern" class="inptErMsg">Email format only</div>
@@ -86,24 +86,36 @@
                 <form name="Phone" class="inptFrm">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label for="idCell" class="inptLbl">Phone</label>
-                        <input id="gP_number" name="phone" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" ng-blur="sanitizeInput(userInfo.phone_number,'phone')"
+                        <input id="gP_number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" ng-blur="sanitizeInput(userInfo.phone_number,'phone')"
                             placeholder="(403) 404-6648" type="text" required/>
                         <div ng-messages="Phone.phone.$error">
                             <div ng-message="pattern" class="inptErMsg">Numbers only</div>
-                            <div ng-message="required" class="inptErMsg">Required</div>
+                            <div ng-message="minlength" class="inptErMsg">Required</div>
                         </div>
                     </md-input-container>
                 </form>
                 <!--Delivery Address-->
                 <form id="address" name="Address" class="inptFrm gu_address">
                     <md-input-container class="md-block bigClass" flex="80">
-                        <label class="inptLbl" style="display: none;"></label>
+                        <label></label>
                         <address-autocomplete style="width: 300px;" input-class="adrInpt" icon-class="adrInpt_x_A" button-class="adrInpt_x" autocomplete="autocomplete"
                             on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
                         <div ng-messages="Address.address.$error">
                             <div ng-message="required" class="inptErMsg">Required</div>
                         </div>
                         <div ng-if="userInfo.address_valid == false" class="outPlgn_txt">Sorry, we do not deliver to your location at the moment</div>
+                    </md-input-container>
+                </form>
+                <!-- Deliver Instruction -->
+                <form id="driver-instruction" name="driverInstruction" class="inptFrm gu_address" style="display: flex; justify-content: flex-end;">
+                    <md-input-container class="md-block bigClass" flex="50">
+                        <label></label>
+                        <input name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="userInfo.drInstruction" ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')" placeholder="Driver Instruction" type="text"/>
+                        <div ng-messages="driverInstruction.drInstruction.$error">
+                            <div ng-message="pattern" class="inptErMsg">Number and letter only</div>
+                            <div ng-message="maxlength" class="inptErMsg">Maximum 60 characters</div>
+                        </div>
+                        <div  class="outPlgn_txt"></div>
                     </md-input-container>
                 </form>
                 <!--Card Info-->
@@ -121,8 +133,8 @@
                             </div>
                         </div>
                         <md-button aria-label="ShowHideCardInfo" class="glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown">
-                            <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="20"></ng-md-icon>
-                            <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="20"></ng-md-icon>
+                            <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="25"></ng-md-icon>
+                            <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="25"></ng-md-icon>
                         </md-button>
                     </div>
                 </div>
