@@ -61,40 +61,40 @@ var runQuery = function (query) {
 };
 
 var runQuery = function (query, data) {
-  return con.query(query, data);
+  return con.query(query, data).then(function(data){
+    return data;
+  }).catch(function(error){
+    //TODO: Logger?
+    return error;
+  });
 };
 
 var insertQuery = function (table, data) {
-  var tableName = table;
-  return con.query('INSERT INTO ' + tableName + ' SET ?', data);
+  return runQuery('INSERT INTO ' + table + ' SET ?', data);
 };
 
 var selectColumnsWhere = function(columns, table, data) {
-  return con.query('SELECT ' + columns + ' FROM ' + table + ' WHERE ?', data);
+  return runQuery('SELECT ' + columns + ' FROM ' + table + ' WHERE ?', data);
 };
 
 var selectAllWhere = function (table, data) {
-  var tableName = table;
-  return con.query('SELECT * FROM ' + tableName + ' WHERE ?', data);
+  return runQuery('SELECT * FROM ' + table + ' WHERE ?', data);
 };
 
 var selectAllFromTable = function (table) {
-  return con.query('SELECT * FROM ' + table);
+  return runQuery('SELECT * FROM ' + table);
 };
 
 var updateQuery = function (table, data) {
-  var tableName = table;
-  return con.query('UPDATE ' + tableName + ' SET ? WHERE ?', data);
+  return runQuery('UPDATE ' + table + ' SET ? WHERE ?', data);
 };
 
 var updateQueryWhereIn = function (table, data) {
-  var tableName = table;
-  return con.query('UPDATE ' + tableName + ' SET ? WHERE ? in ?', data);
+  return runQuery('UPDATE ' + table + ' SET ? WHERE ? in ?', data);
 };
 
 var deleteQuery = function (table, data) {
-  var tableName = table;
-  return con.query('DELETE FROM ' + tableName + ' WHERE ?', data);
+  return runQuery('DELETE FROM ' + table + ' WHERE ?', data);
 };
 
 var end = function () {
