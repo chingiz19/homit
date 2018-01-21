@@ -1,5 +1,5 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 const nodemailer = require('nodemailer');
@@ -12,34 +12,78 @@ var products = {};
 var path = require("path");
 var ejs = require("ejs");
 
-// create reusable transporter object using the default SMTP transport
-let transporter = nodemailer.createTransport({
+/* Create reusable transporter object for orders */
+let orderTransporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
-    secure: true, // should always be true
+    secure: true, 
     auth: {
-        user: process.env.EMAIL_USER, // generated ethereal user
-        pass: process.env.EMAIL_PASS  // generated ethereal password
+        user: process.env.ORDER_EMAIL_USER, 
+        pass: process.env.ORDER_EMAIL_PASS  
     }
 });
 
-var sendEmail = function (mailOptions) {
-    // send e-mail with defined transport object
-    return transporter.sendMail(mailOptions, (error, info) => {
+/* Create reusable transporter object for no-reply */
+let noReplyTransporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    secure: true, 
+    auth: {
+        user: process.env.NOREPLY_EMAIL_USER, 
+        pass: process.env.NOREPLY_EMAIL_PASS  
+    }
+});
+
+
+/* Send order emails using order transporter object.
+ * <orders@homit.ca> account 
+ * Includes cancelled, refunded and modified orders. 
+*/
+var sendEmailViaOrders = function (mailOptions) {
+    return orderTransporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            console.log(error)
+            var metaData = {
+                directory: __filename,
+                error_message: error.message,
+            }
+            Logger.log.error("Could not send an ORDER email with " + info.messageId + "ID.", metaData)
             return false;
         } else {
-            console.log('Message sent: %s', info.messageId);  //to be deleted and transfer to Logger
+            Logger.log.debug('ORDER email was sent with ' + info.messageId + "ID."); 
             return true;
         }
     });
 }
 
+
+/* Send reset password emails using no-reply transporter object. 
+ * <no-reply@homit.ca> account 
+ * Includes cancelled, refunded and modified orders. 
+*/
+var sendEmailViaNoReply = function (mailOptions) {
+    return noReplyTransporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            var metaData = {
+                directory: __filename,
+                error_message: error.message,
+            }
+            Logger.log.error("Could not send an RESET PASSWORD email with " + info.messageId + "ID.", metaData)
+            return false;
+        } else {
+            Logger.log.debug('RESET PASSWORD email was sent with ' + info.messageId + "ID."); 
+            return true;
+        }
+    });
+}
+
+
+/** 
+* Orders modifed by CSR
+* @action is used to differentiate between 'cancel' order, 'refund' and 'modified' order
+*/
 pub.sendOrderSlip = function (orderInfo) {
     products = orderInfo.customer.order.products;
     priceObject = getTotalPriceForProducts(products);
-
     var html = getEmailHtml(orderInfo);
 
     prepareOrderSlip(orderInfo, function (pdfFileFath) {
@@ -55,14 +99,10 @@ pub.sendOrderSlip = function (orderInfo) {
                 },
             ]
         };
-        sendEmail(mailOptions);
+        sendEmailViaOrders(mailOptions);
     });
 };
 
-//call this function for CSR's modifed e-mails
-/*
-* @action used to differentiate between 'cancel' order, 'refund' and 'modified' order
-*/
 pub.sendModifiedOrderSlip = function (orderInfo, action) {
     products = orderInfo.customer.order.products;
     priceObject = getTotalPriceForProducts(products);
@@ -76,7 +116,7 @@ pub.sendModifiedOrderSlip = function (orderInfo, action) {
                 subject: orderInfo.customer.first_name + '\'s order',
                 html: html,
             };
-            sendEmail(mailOptions);
+            sendEmailViaOrders(mailOptions);
         });
     } else if (action == "modified") {
         var html = getModifiedOrderEmailHtml(orderInfo);
@@ -93,10 +133,10 @@ pub.sendModifiedOrderSlip = function (orderInfo, action) {
                     },
                 ]
             };
-            sendEmail(mailOptions);
+            sendEmailViaOrders(mailOptions);
         });
     } else if (action == "refund") {
-        var html = getRfundedOrderEmailHtml(orderInfo);
+        var html = getRefundedOrderEmailHtml(orderInfo);
         prepareOrderSlip(orderInfo, function (pdfFileFath) {
             let mailOptions = {
                 from: '"Homit Orders" <orders@homit.ca>',
@@ -110,12 +150,13 @@ pub.sendModifiedOrderSlip = function (orderInfo, action) {
                     },
                 ]
             };
-            sendEmail(mailOptions);
+            sendEmailViaOrders(mailOptions);
         });
     }
 };
 
-/*Working on these*/
+
+/* Prepare mail options and send notification email to customer, respectively */
 pub.sendRefundEmail = function (orderInfo) {
     var html = getRefundedOrderEmailHtml(orderInfo);
     let mailOptions = {
@@ -124,7 +165,7 @@ pub.sendRefundEmail = function (orderInfo) {
         subject: orderInfo.customer_name + '\'s order',
         html: html,
     };
-    sendEmail(mailOptions);
+    sendEmailViaOrders(mailOptions);
 };
 
 pub.sendPartialRefundEmail = function (orderInfo) {
@@ -135,7 +176,7 @@ pub.sendPartialRefundEmail = function (orderInfo) {
         subject: orderInfo.customer_name + '\'s order',
         html: html,
     };
-    sendEmail(mailOptions);
+    sendEmailViaOrders(mailOptions);
 };
 
 pub.sendCancelEmail = function (orderInfo) {
@@ -146,24 +187,28 @@ pub.sendCancelEmail = function (orderInfo) {
         subject: orderInfo.customer_name + '\'s order',
         html: html,
     };
-    sendEmail(mailOptions);
+    sendEmailViaOrders(mailOptions);
 };
 
 pub.sendResetPasswordEmail = async function (orderInfo) {
     var html = getResetPasswordHTML(orderInfo.resetLink);
     let mailOptions = {
-        from: '"noreply" <orders@homit.ca>', //TODO: change to noreply
+        from: '"noreply" <no-reply@homit.ca>', 
         to: orderInfo.customer_email,
         subject: "Reset password",
         html: html,
     };
-    return await sendEmail(mailOptions);
+    return await sendEmailViaNoReply(mailOptions);
 }
 
 
-//FOR MORE EDITING OPTIONS PLEASE REFER TO https://www.npmjs.com/package/cheerio
+/** Follwings are <html> retrievers.
+ *  For more editing options please refer to https://www.npmjs.com/package/cheerio 
+*/
+
+/* Retrieving <html> to further edit */
 var getEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/order.html", "utf8");
+    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/order.html", "utf8");
     const $ = cheerio.load(htmlSource);
 
     $('#user_greeting').text("Hello, " + orderInfo.customer.first_name);
@@ -172,11 +217,13 @@ var getEmailHtml = function (orderInfo) {
     $('#gst').text(priceObject.totalTax);
     $('#total_price').text(priceObject.totalPrice);
     $('#delivery_fee').text(priceObject.deliveryFee);
+
     return $.html();
 };
 
+/* Retrieving <html> and loading it to variable for further edit */
 var getModifiedOrderEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/modifiedOrder.html", "utf8");
+    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/modifiedOrder.html", "utf8");
     var orderNumber = orderInfo.customer.order.id.split('_')[1];
     const $ = cheerio.load(htmlSource);
 
@@ -187,7 +234,7 @@ var getModifiedOrderEmailHtml = function (orderInfo) {
 };
 
 var getCancelledOrderEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/cancelledOrder.html", "utf8");
+    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/cancelledOrder.html", "utf8");
     var orderNumber = orderInfo.order_id;
     const $ = cheerio.load(htmlSource);
 
@@ -199,7 +246,7 @@ var getCancelledOrderEmailHtml = function (orderInfo) {
 };
 
 var getRefundedOrderEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/refundOrder.html", "utf8");
+    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/refundOrder.html", "utf8");
     var orderNumber = orderInfo.order_id;
     const $ = cheerio.load(htmlSource);
 
@@ -211,7 +258,7 @@ var getRefundedOrderEmailHtml = function (orderInfo) {
 };
 
 var getPartialRefundedOrderEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/refundOrder.html", "utf8");
+    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/refundOrder.html", "utf8");
     var orderNumber = orderInfo.order_id;
     const $ = cheerio.load(htmlSource);
 
@@ -223,33 +270,14 @@ var getPartialRefundedOrderEmailHtml = function (orderInfo) {
     return $.html();
 };
 
-var prepareOrderSlip = function (orderInfo, callback) {
-    var orderSlipDir = process.env.ORDER_SLIPS_DIR;
-    var orderNumber = orderInfo.customer.order.id.split('_')[1];
-    var slipHtmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email-htmls/order_slip.html", "utf8");
-    var pdfFileFath = orderSlipDir + "order-slip_" + orderNumber + ".pdf";
-    var orderSlipHtml = getOrderSlipHtml(slipHtmlSource, orderInfo);
-
-    //For now we will use simple options. More options available at https://www.npmjs.com/package/html-pdf
-    var options = { format: 'Letter' };
-
-    pdf.create(orderSlipHtml, options).toFile(pdfFileFath, function (err, res) {
-        if (err) {
-            return Logger.log("Error happened while creating .pdf file for OrderSlip: " + err);
-        } else {
-            callback(pdfFileFath);
-        }
-    });
-};
-
 var getResetPasswordHTML = function (link) {
-    var file = fs.readFileSync(path.join(process.cwd(), "/project_setup/resources/email-htmls/resetpassword.ejs"), "utf8");
+    var file = fs.readFileSync(path.join(process.cwd(), "/project_setup/resources/email_htmls/resetpassword.ejs"), "utf8");
     return ejs.render(file, {
         resetLink: link
     });
 }
 
-//Editing html for .pdf Order Slip that is attached to main e-mail
+/* Edit html for .pdf Order Slip that is attached to main e-mail */
 var getOrderSlipHtml = function (htmlSource, OI) {
     const $ = cheerio.load(htmlSource);
     const now = new Date();
@@ -257,8 +285,7 @@ var getOrderSlipHtml = function (htmlSource, OI) {
     var timeStamp = dateArray[0] + " " + dateArray[1] + " " + dateArray[2] + " " + dateArray[3] + " at " + dateArray[4];
     var CustomerName = OI.customer.first_name + " " + OI.customer.last_name
 
-
-    $('#order_details').text("#" + OI.customer.order.id.split("_")[1] + " ORDER DETAILS");
+    $('#order_details').text("# " + OI.customer.order.id.split("_")[1] + " ORDER DETAILS");
     $('#store_name').text(OI.store.name);
     $('#store_address').text(OI.store.address);
     $('#store_phone').text(OI.store.phone_number);
@@ -288,9 +315,38 @@ var getOrderSlipHtml = function (htmlSource, OI) {
             "<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;text-align:center;line-height:normal'>" +
             "<span style='font-size:10.0pt;font-family:'Arial',sans-serif'>" + Price + "</span></p></td></tr>");
     }
+
     return $.html();
 };
 
+/* Creating .pdf from given <html> */
+var prepareOrderSlip = function (orderInfo, callback) {
+    var orderSlipDir = process.env.ORDER_SLIPS_DIR;
+    var orderNumber = orderInfo.customer.order.id.split('_')[1];
+    var slipHtmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/orderSlip.html", "utf8");
+    var pdfFileFath = orderSlipDir + "order-slip_" + orderNumber + ".pdf";
+    var orderSlipHtml = getOrderSlipHtml(slipHtmlSource, orderInfo);
+
+    //For more editing options please refer to https://www.npmjs.com/package/html-pdf
+    var options = { format: 'Letter' };
+
+    pdf.create(orderSlipHtml, options).toFile(pdfFileFath, function (err, res) {
+        if (error) {
+            var metaData = {
+                directory: __filename,
+                error_message: error.message,
+            }
+            return Logger.log.error("Error happened while creating .pdf file for Order Slip" + metaData);
+        } else {
+            callback(pdfFileFath);
+        }
+    });
+};
+
+/**
+ * Prepare received products array for catalog price calculator. 
+ * @param {*Array} products - Products recieved after dispatch [array of product objecs] 
+ */
 var getTotalPriceForProducts = function (products) {
     var depotQuantities = {};
     var prices = [];
@@ -306,7 +362,6 @@ var getTotalPriceForProducts = function (products) {
     }
 
     price = Catalog.priceCalculator(depotQuantities, prices, false);
-
     priceObject.deliveryFee = "C$ " + price.delivery_fee;
     priceObject.totalTax = "C$ " + price.total_tax;
     priceObject.totalAmount = "C$ " + price.cart_amount;

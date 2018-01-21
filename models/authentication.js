@@ -1,11 +1,13 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var cookiee = require('cookie-encryption');
 var bcrypt = require('bcrypt');
+var pub = {};
 const saltRounds = 10;
 
+/* Constructing cookie */
 global.vault = cookiee(global.secretKey, {
     cookie: "homit",
     maxAge: 60 * 60 * 1000, // 1 hour
@@ -13,15 +15,24 @@ global.vault = cookiee(global.secretKey, {
     httpOnly: true
 });
 
-var pub = {};
+/* Building metadata for log */                                   
+var logMeta = {
+    directory: __filename
+  }
 
+/* Signing user cookie */
 pub.sign = function (req, res, obj) {
     try {
         res.cookie("user", obj, { maxAge: 60 * 60 * 1000, httpOnly: false });
         vault.write(req, JSON.stringify(obj));
         return true;
     } catch (e) {
-        Logger.log(e);
+        var metaData = {
+        directory: __filename,
+        error_path: req.path, 
+        error_message: e.message
+    }
+        Logger.log.error("Error while signing user cookie", metaData);
         return false;
     }
 };
@@ -32,38 +43,30 @@ pub.clear = function (res) {
     vault.flush();
 };
 
-
-
 pub.validate = function (options) {
     return function (req, res, next) {
         if (checkAuth(req)) {
-            Logger.log("authenticated");
+            Logger.log.verbose("Authenticated", logMeta);
             return next();
         }
         if (options && options.redirect) {
-            Logger.log("redirect");
-
+            Logger.log.verbose("Redirected", logMeta);
             res.redirect("/");
         } else {
-            Logger.log("r400");
-
-            res.status(400).send("Not Authorized");
+            Logger.log.verbose("R400");
+            res.status(400).send("Not Authorized", logMeta);
         }
     }
 };
 
-/**
- * Converts plain password into hashed password
- */
+/* Converts plain password into hashed password */
 pub.hashPassword = function (plainPassword) {
     return bcrypt.hash(plainPassword, saltRounds).then(function (hash) {
         return hash;
     });
 };
 
-/**
- * Compares plain password to hashed password
- */
+/* Compares plain password to hashed password */
 pub.comparePassword = function (plainPassword, hashPassword) {
     return bcrypt.compare(plainPassword, hashPassword).then(function (match) {
         return match;
@@ -79,8 +82,7 @@ pub.validateCsr = function (options) {
         if (options && options.redirect) {
             res.redirect("/");
         } else {
-            // TODO: Not found should be generic
-            res.status(404).send("Not Found");
+            res.redirect("/notfound");
         }
     }
 };

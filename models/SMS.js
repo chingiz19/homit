@@ -1,14 +1,17 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
-
-/* Twilio Credentials, trial values. 
-   Shall be switched to real before production  */
+/* Getting Twilio Credentials */
 const accountSid = process.env.TWILIO_SID;
 const authToken = process.env.TWILIO_TOKEN;
 const twillioNumber = process.env.TWILIO_NUMBER;   //this number owned by Homit 
 var directors = [];
+
+/*Building metadata for log*/
+var logMeta = {
+    directory: __filename
+}
 
 //TODO: move this out
 const Shabnam = '+14039261177';
@@ -26,34 +29,47 @@ directors.push(Zaman);
 const client = require('twilio')(accountSid, authToken);
 var pub = {};
 
-//send regular sms notifying about driver's arrival
-pub.notifyDriverArrival = function (number, name) { //require number in <+1**********> format and first_name as a name <String>
-
+/**
+ * Sends regular sms notifying customer about driver's arrival
+ * @param {*String} number -in <+1**********> format
+ * @param {*String} name 
+ */
+pub.notifyDriverArrival = function (number, name) { 
     client.messages
         .create({
             to: number,
             from: twillioNumber,
             body: 'Hey ' + name + ', your Homit delivery is minutes away!',
         })
-        .then((message) => console.log(message.sid));
+        .then((message) => Logger.log.debug('Sent text message with ID: ' + message.sid), logMeta);;
 }
 
-
-//send waring message to all directors with message body
-pub.alertDirectors = function (message) { //require waring message body <String> format, it will be send to all directors automatically
-    for (director in directors) {
-        client.messages
-            .create({
-                to: director,
-                from: twillioNumber,
-                body: message,
-            })
-            .then((message) => console.log(message.sid));
+/**
+ * Sends waring message to all directors with message body.
+ * @param {*String} message 
+ */
+pub.alertDirectors = function (message) {
+    if (process.env.n_mode == "production") {
+        for (director in directors) {
+            client.messages
+                .create({
+                    to: director,
+                    from: twillioNumber,
+                    body: message,
+                })
+                .then((message) => Logger.log.debug('Alerted all directors, message ID: ' + message.sid), logMeta);
+        }
     }
 }
 
-pub.notifyDriver = function (message, name, number, callback) { //require message, number and name of driver. All fields required in <String> 
-
+/**
+ * Sends custom made text message to driver.
+ * @param {*String} message  
+ * @param {*String} name 
+ * @param {*String} number -in <+1**********> format
+ * @param {*String} callback 
+ */
+pub.notifyDriver = function (message, name, number, callback) { 
     client.messages
         .create({
             to: number,
@@ -62,6 +78,5 @@ pub.notifyDriver = function (message, name, number, callback) { //require messag
         })
         .then((message) => { callback(true) });
 }
-
 
 module.exports = pub;

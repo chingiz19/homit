@@ -1,5 +1,5 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var pub = {};
@@ -15,7 +15,7 @@ function addIsGuest(user) {
 };
 
 /**
- * Finds user based on the email
+ * Find user based on email
  */
 pub.findUser = function (email) {
     var data = { user_email: email };
@@ -29,7 +29,7 @@ pub.findUser = function (email) {
 };
 
 /**
- * Finds user based on the id
+ * Find user based on id
  */
 pub.findUserById = function (id) {
     var data = { id: id };
@@ -43,7 +43,7 @@ pub.findUserById = function (id) {
 };
 
 /**
- * Adds user to database based on the data
+ * Add user to database based on data
  */
 pub.addUser = function (userData) {
     return db.insertQuery(db.dbTables.users_customers, userData).then(function (dbResult) {
@@ -52,7 +52,7 @@ pub.addUser = function (userData) {
 };
 
 /**
- * Authenticates a user based on the email and password
+ * Authenticate a user based on the email and password
  */
 pub.authenticateUser = function (email, password) {
     var data = { user_email: email };
@@ -72,7 +72,7 @@ pub.authenticateUser = function (email, password) {
 };
 
 /**
- * Finds guest user based on the email
+ * Find guest user based on the email
  */
 pub.findGuestUser = function (email) {
     var data = { user_email: email };
@@ -86,7 +86,7 @@ pub.findGuestUser = function (email) {
 };
 
 /**
- * Finds guest user based on the id
+ * Find guest user based on the id
  */
 pub.findGuestUserById = function (id) {
     var data = { id: id };
@@ -100,7 +100,7 @@ pub.findGuestUserById = function (id) {
 };
 
 /**
- * Adds guest user to database based on the data
+ * Add guest user to database based on the data
  */
 pub.addGuestUser = function (userData) {
     return db.insertQuery(db.dbTables.users_customers_guest, userData).then(function (dbResult) {
@@ -109,7 +109,7 @@ pub.addGuestUser = function (userData) {
 };
 
 /**
- * Updates guest user data
+ * Update guest user data
  */
 pub.updateGuestUser = function (userData, key) {
     var data = [userData, key];
@@ -141,7 +141,7 @@ function isHistoryNull(user) {
 }
 
 /**
- * Updates user data
+ * Update user data
  */
 pub.updateUser = function (userData, key) {
     var data = [userData, key];
@@ -219,7 +219,7 @@ pub.authenticateCsrUser = function (email, password) {
 };
 
 /**
- * Finds users by phone number
+ * Find users by phone number
  */
 pub.findUsersByPhone = function (phone_number) {
     var data = { phone_number: phone_number };
@@ -233,7 +233,7 @@ pub.findUsersByPhone = function (phone_number) {
 };
 
 /**
- * Finds guest users by phone number
+ * Find guest users by phone number
  */
 pub.findGuestUsersByPhone = function (phone_number) {
     var data = { phone_number: phone_number };
@@ -258,7 +258,7 @@ pub.findUsersByPhoneWithHistory = function (phone_number) {
 };
 
 /**
- * Finds guest users by email
+ * Find guest users by email
  */
 pub.findGuestUsersByEmail = function (user_email) {
     var result = [];
@@ -328,6 +328,10 @@ pub.updatePassword = function (userId, oldPassword, newPassword) {
 };
 
 
+/**
+ * Returns hash or undefined
+ * @param {*String} email 
+ */
 pub.getUserPasswordHash = async function (email) {
     var query = "Select password from " + db.dbTables.users_customers + " where ?";
     var data = { user_email: email };
@@ -335,7 +339,7 @@ pub.getUserPasswordHash = async function (email) {
     if (!pHash[0]) {
         return false;
     }
-    return pHash[0].password; // hash or undefined
+    return pHash[0].password; 
 }
 
 pub.resetPassword = async function (email, newPassword) {

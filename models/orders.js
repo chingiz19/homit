@@ -1,12 +1,10 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var pub = {};
 
-/**
- * Creates order in orders_history table
- */
+/* Creates order in orders_history table */
 pub.createOrder = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, superCategory) {
     return Catalog.getSuperCategoryIdByName(superCategory).then(function (superCategoryId) {
         var data = {
@@ -31,9 +29,7 @@ pub.createOrder = function (id, address, address_lat, address_long, driverInstru
     });
 };
 
-/**
- * Inserts products
- */
+/* Inserts products */
 pub.insertProducts = function (orderId, products) {
     for (var key in products) {
         var data = {
@@ -52,9 +48,7 @@ pub.insertProducts = function (orderId, products) {
     return true;
 };
 
-/**
- * Get user's order by user id 
- */
+/* Get user's order by user id */
 pub.getOrdersByUserId = function (user_id) {
     var sqlQuery = `
         SELECT
@@ -86,9 +80,7 @@ pub.getOrdersByUserId = function (user_id) {
     return getOrdersWithQuery(sqlQuery, data);
 };
 
-/**
- * Get guest user's order by guest user id 
- */
+/* Get guest user's order by guest user id */
 pub.getOrdersByGuestId = function (user_id) {
     var sqlQuery = `
         SELECT
@@ -329,13 +321,13 @@ pub.isDelivered = function (orderId) {
     });
 };
 
+
 /**
  * Inserts data into orders_history_refund table.
- * 
- * @param {*} orderId 
- * @param {*} csrActionId 
- * @param {*} dateScheduled 
- * @param {*} dateScheduledNote 
+ * @param {*Number} orderId 
+ * @param {*Number} csrActionId 
+ * @param {*Number} dateScheduled 
+ * @param {*Number} dateScheduledNote 
  */
 pub.placeRefundHistory = function (orderId, csrActionId, dateScheduled, dateScheduledNote) {
     var data = {
@@ -356,11 +348,11 @@ pub.placeRefundHistory = function (orderId, csrActionId, dateScheduled, dateSche
 
 };
 
+
 /**
- * Changes data in orders_cart_info table. 
- * This is used by full cancel and full refund.
- * 
- * @param {*} orderId 
+ * Change data in orders_cart_info table. 
+ * Used by full cancel and full refund.
+ * @param {*Number} orderId 
  */
 pub.placeFullRefundCart = function (orderId) {
     var selectData = {
@@ -380,11 +372,11 @@ pub.placeFullRefundCart = function (orderId) {
     });
 };
 
+
 /**
- * Changes data in orders_cart_info table. 
- *
- * @param {*} orderId 
- * @param {*} refundItems 
+ * Change data in orders_cart_info table. 
+ * @param {*Number} orderId 
+ * @param {*Number} refundItems 
  */
 pub.placePartialRefundCart = function (orderId, refundItems) {
     var selectData = {
@@ -434,9 +426,9 @@ pub.placePartialRefundCart = function (orderId, refundItems) {
     });
 };
 
+
 /**
- * Inserts data into orders_history_cancel table.
- * 
+ * Insert data into orders_history_cancel table.
  * @param {*} orderId 
  * @param {*} csrActionId 
  */
@@ -453,10 +445,9 @@ pub.placeCancelHistory = function (orderId, csrActionId) {
 
 /**
  * Inserts data into orders_history_add table.
- * 
- * @param {*} orderId 
- * @param {*} csrActionId 
- * @param {*} chargeAmount 
+ * @param {*Number} orderId 
+ * @param {*Number} csrActionId 
+ * @param {*Number} chargeAmount 
  */
 pub.placeAddHistory = function (orderId, csrActionId, chargeAmount) {
     var insertData = {
@@ -470,12 +461,12 @@ pub.placeAddHistory = function (orderId, csrActionId, chargeAmount) {
     });
 };
 
+
 /**
  * Calculates modified amount.
  * If customer owes us, the result will be positive.
  * If we owe customer, the result will be negative.
- * 
- * @param {*} orderId 
+ * @param {*Number} orderId 
  */
 pub.calculateModifiedAmount = function (orderId, oldItems, refund) {
     var depotQuantities = {};
@@ -510,12 +501,12 @@ pub.calculateModifiedAmount = function (orderId, oldItems, refund) {
     });
 };
 
+
 /**
  * Calculates modified amount.
  * If customer owes us, the result will be positive.
  * If we owe customer, the result will be negative.
- * 
- * @param {*} orderId 
+ * @param {*Number} orderId 
  */
 pub.calculatePartialCancelAmount = function (orderId, oldItems, refund) {
     var oldDepotQuantities = {};

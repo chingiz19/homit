@@ -1,11 +1,10 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
-
 
 var pub = {};
 
-
+/* Saving record from CSR to database */
 pub.recordAction = function (csrId, note, orderId) {
     insertData = {
         csr_id: csrId,

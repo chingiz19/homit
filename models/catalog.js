@@ -1,5 +1,5 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var pub = {};
@@ -14,7 +14,7 @@ pub.snackVendorImage = "snack-vendor_store.jpeg";
 /**
  * Returns true if any of the stores related to the super category is open
  * 
- * @param {*} superCategory 
+ * @param {*String} superCategory 
  */
 pub.isStoreOpen = function (superCategory) {
     var sqlQuery = `
@@ -45,9 +45,7 @@ pub.isStoreOpen = function (superCategory) {
     });
 };
 
-/**
- * Return all products based on the category provided
- */
+/* Return all products based on the category provided */
 pub.getAllProductsByCategory = function (superCategory, categoryName, storeOpen) {
     var sqlQuery = `
         SELECT depot.id AS depot_id, depot.product_id AS product_id,
@@ -78,9 +76,7 @@ pub.getAllProductsByCategory = function (superCategory, categoryName, storeOpen)
     });
 };
 
-/**
- * Return all products based on the category provided
- */
+/* Return all products based on the category provided */
 pub.getCategoryOnlyProducts = function (superCategory, categoryName, storeOpen, superCategory2, categoryName2) {
     var sqlQuery = `
         SELECT depot.id AS depot_id, depot.product_id AS product_id,
@@ -134,9 +130,7 @@ pub.getCategoryOnlyProducts = function (superCategory, categoryName, storeOpen, 
     });
 };
 
-/**
- * Gets all brands for the products provided
- */
+/* Gets all brands for the products provided */
 pub.getAllBrands = function (products) {
     var result = [];
     for (i = 0; i < products.length; i++) {
@@ -147,9 +141,7 @@ pub.getAllBrands = function (products) {
     return result.sort();
 };
 
-/**
- * Get all types based for the category provided
- */
+/* Get all types based for the category provided */
 pub.getAllTypes = function (products) {
     var result = [];
     if (products.length <= 0) {
@@ -206,9 +198,7 @@ pub.getAllTypes = function (products) {
     });
 };
 
-/**
- * Gets all packagings for the products provided
- */
+/* Gets all packagings for the products provided */
 var getAllPackagings = function (products) {
     var result = [];
     if (typeof products != 'undefined') {
@@ -221,9 +211,7 @@ var getAllPackagings = function (products) {
     return result.sort(sortAlphaNum);
 };
 
-/**
- * Returns all available brands by provided subcateory
- */
+/* Returns all available brands by provided subcateory */
 var getAllBrandsBySubcategory = function (subcategory, products) {
     var result = [];
     if (typeof products != 'undefined') {
@@ -238,9 +226,7 @@ var getAllBrandsBySubcategory = function (subcategory, products) {
     return result.sort();
 };
 
-/**
- * Return products for front-end
- */
+/* Return products for front-end */
 var getFormattedProducts = function (products, storeOpen) {
     var tmpResult = {};
 
@@ -259,7 +245,7 @@ var getFormattedProducts = function (products, storeOpen) {
         var imageLocation = "/resources/images/products/" + imageCategory + "/" + product.category.toLowerCase() + "/";
 
         if (tmpResult.hasOwnProperty(product.product_id)) {
-            // Add to product variant
+            // Adding to product variant
             if (tmpResult[product.product_id].product_variants.hasOwnProperty(p_volume)) {
                 tmpResult[product.product_id].product_variants[p_volume][p_package] = {
                     "depot_id": product.depot_id,
@@ -275,7 +261,7 @@ var getFormattedProducts = function (products, storeOpen) {
                 }
             }
         } else {
-            // Add to tmpResult
+            // Adding to tmpResult
             tmpResult[product.product_id] = {
                 product_id: products[i].product_id,
                 listing_id: products[i].listing_id,
@@ -310,7 +296,7 @@ var getFormattedProducts = function (products, storeOpen) {
             tmpResult[product.product_id].product_variants[p_volume].all_packagings.push(p_package);
     };
 
-    // convert object of objects to array of objects
+    // Converting object of objects to array of objects
     var results = [];
     for (var r in tmpResult) {
         if (tmpResult.hasOwnProperty(r)) {
@@ -662,7 +648,6 @@ pub.getCartProductsWithSuperCategory = function (cartProducts, dbProducts) {
 
 /**
  * Custom function to do alphanumeric sort
- * 
  * Source: http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
  */
 var reA = /[^a-zA-Z]/g;

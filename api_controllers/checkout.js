@@ -1,8 +1,13 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var router = require("express").Router();
+
+/* Building metadata for log */
+var metaData = {
+    directory: __filename
+}
 
 router.post('/placeorder', function (req, res, next) {
     var email = req.body.user.email;
@@ -32,7 +37,6 @@ router.post('/placeorder', function (req, res, next) {
             cardValid = !cardToken || !cardDigits || !cardType;
         }
         if (!cartProducts || !phone || !address || !address_lat || !address_long || !transactionId || !cardValid) {
-            Logger.log("Missing params");
             res.status(403).json({
                 error: {
                     "code": "U000",
@@ -44,7 +48,7 @@ router.post('/placeorder', function (req, res, next) {
             Orders.checkTransaction(transactionId).then(function (isTransactionFine) {
                 if (isTransactionFine) {
                     MP.getTransaction(transactionId, function (transactionDetails) {
-                        if (transactionDetails.transactions != undefined) {
+                        if (transactionDetails != 'empty' && transactionDetails.transactions != undefined) {
                             Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
                                 var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
                                 var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
@@ -79,46 +83,53 @@ router.post('/placeorder', function (req, res, next) {
                                                 }
                                             };
                                             res.send(response);
+                                            Logger.log.warn("Something went wrong while updating the user (USER)", metaData);
                                         }
                                     });
                                 } else {
                                     var response = {
                                         success: false,
                                         error: {
-                                            dev_message: "Something went wrong while updating the user",
+                                            dev_message: "Paid and claimed amount does not match",
                                             ui_message: "Error happened while checkout. Please try again"
                                         }
                                     };
                                     res.send(response);
+                                    var specMetaData = {
+                                        directory: __filename,
+                                        requester_ip: req.connection.remoteAddress,
+                                        user_id: userId
+                                    }
+                                    Logger.log.warn("Paid and claimed amount does not match (USER)", specMetaData);
                                 }
                             });
                         } else {
                             var response = {
                                 success: false,
                                 error: {
-                                    dev_message: "Something went wrong while updating the user",
+                                    dev_message: "Could not get transaction details from Helcim",
                                     ui_message: "Error happened while checkout. Please try again"
                                 }
                             };
                             res.send(response);
+                            Logger.log.error("Could not get transaction details from Helcim (USER)", metaData);
                         }
-
                     });
                 } else {
                     var response = {
                         success: false,
                         error: {
-                            dev_message: "Something went wrong while updating the user",
+                            dev_message: "Transaction ID already exists in database",
                             ui_message: "Error happened while checkout. Please try again"
                         }
                     };
                     res.send(response);
+                    Logger.log.warn("Transaction ID already exists in database (USER)", metaData);
                 }
             });
         }
     } else {
         if (!email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts) {
-            Logger.log("Missing params");
             res.status(403).json({
                 error: {
                     "code": "U000",
@@ -130,7 +141,7 @@ router.post('/placeorder', function (req, res, next) {
             Orders.checkTransaction(transactionId).then(function (isTransactionFine) {
                 if (isTransactionFine) {
                     MP.getTransaction(transactionId, function (transactionDetails) {
-                        if (transactionDetails.transactions != undefined) {
+                        if (transactionDetails != 'empty' && transactionDetails.transactions != undefined) {
                             Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
                                 var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
                                 var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
@@ -165,6 +176,7 @@ router.post('/placeorder', function (req, res, next) {
                                                         }
                                                     };
                                                     res.send(response);
+                                                    Logger.log.error("Something went wrong while adding the user (GUEST)", metaData);
                                                 }
                                             });
                                         } else {
@@ -198,6 +210,7 @@ router.post('/placeorder', function (req, res, next) {
                                                         }
                                                     };
                                                     res.send(response);
+                                                    Logger.log.error("Something went wrong while adding the user (GUEST)", metaData);
                                                 }
                                             });
                                         }
@@ -206,33 +219,40 @@ router.post('/placeorder', function (req, res, next) {
                                     var response = {
                                         success: false,
                                         error: {
-                                            dev_message: "Something went wrong while updating the user",
+                                            dev_message: "Paid and claimed amount does not match",
                                             ui_message: "Error happened while checkout. Please try again"
                                         }
                                     };
                                     res.send(response);
+                                    var specMetaData = {
+                                        directory: __filename,
+                                        requester_ip: req.connection.remoteAddress
+                                    }
+                                    Logger.log.warn("Paid and claimed amount does not match (GUEST)", specMetaData);
                                 }
                             });
                         } else {
                             var response = {
                                 success: false,
                                 error: {
-                                    dev_message: "Something went wrong while updating the user",
+                                    dev_message: "Could not get transaction details from Helcim",
                                     ui_message: "Error happened while checkout. Please try again"
                                 }
                             };
                             res.send(response);
+                            Logger.log.error("Could not get transaction details from Helcim (GUEST)", metaData);
                         }
                     });
                 } else {
                     var response = {
                         success: false,
                         error: {
-                            dev_message: "Something went wrong while updating the user",
+                            dev_message: "Transaction ID already exists in database",
                             ui_message: "Error happened while checkout. Please try again"
                         }
                     };
                     res.send(response);
+                    Logger.log.warn("Transaction ID already exists in database (GUEST)", metaData);
                 }
             });
         }

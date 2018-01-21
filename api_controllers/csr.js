@@ -1,17 +1,15 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var router = require("express").Router();
 
 router.post('/refundorder', Auth.validateCsr(), function (req, res, next) {
-    // router.post('/refundorder', function (req, res, next) {
     var orderId = req.body.order_id;
     var note = req.body.note;
     var dateScheduled = req.body.date_scheduled;
     var dateScheduledNote = req.body.date_scheduled_note;
     var csrId = Auth.getSignedUser(req).id;
-    // var csrId = 1;
 
     Orders.isDelivered(orderId).then(function (delivered) {
         if (delivered) {
@@ -44,7 +42,6 @@ router.post('/refundorder', Auth.validateCsr(), function (req, res, next) {
                 });
             });
         } else {
-            // Cannot refund non delivered order
             var response = {
                 success: false,
                 message: "Order has not been delivered. You cannot refund non-delivered order. Please use cancel order."
@@ -55,15 +52,13 @@ router.post('/refundorder', Auth.validateCsr(), function (req, res, next) {
 });
 
 router.post('/cancelorder', Auth.validateCsr(), function (req, res, next) {
-    // router.post('/cancelorder', function (req, res, next) {
     var orderId = req.body.order_id;
     var note = req.body.note;
     var csrId = Auth.getSignedUser(req).id;
-    // var csrId = 1;
 
     Orders.isDelivered(orderId).then(function (delivered) {
         if (!delivered) {
-            // Put CSR action
+            // Putting CSR action
             CSR.recordAction(csrId, note).then(function (csrActionId) {
 
                 Orders.placeCancelHistory(orderId, csrActionId).then(function (cancelHistoryId) {
@@ -110,14 +105,12 @@ router.post('/cancelorder', Auth.validateCsr(), function (req, res, next) {
 });
 
 router.post('/refunditems', Auth.validateCsr(), function (req, res, next) {
-    // router.post('/refunditems', function (req, res, next) {
     var orderId = req.body.order_id;
-    var refundItems = req.body.items; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}
+    var refundItems = req.body.items;
     var note = req.body.note;
     var dateScheduled = req.body.date_scheduled;
     var dateScheduledNote = req.body.date_scheduled_note;
     var csrId = Auth.getSignedUser(req).id;
-    // var csrId = 1;
 
     Orders.isDelivered(orderId).then(function (delivered) {
         if (delivered) {
@@ -155,6 +148,10 @@ router.post('/refunditems', Auth.validateCsr(), function (req, res, next) {
                                 message: "Something is really wrong."
                             };
                             res.send(response);
+                            var metaData = {
+                                directory: __filename
+                            }
+                            Logger.log.warn("Delivered items don't match requested, by CSR, items",metaData);
                         }
                     });
                 });
@@ -171,12 +168,10 @@ router.post('/refunditems', Auth.validateCsr(), function (req, res, next) {
 });
 
 router.post('/cancelitems', Auth.validateCsr(), function (req, res, next) {
-    // router.post('/cancelitems', function (req, res, next) {
     var orderId = req.body.order_id;
-    var cancelItems = req.body.items; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}
+    var cancelItems = req.body.items;
     var note = req.body.note;
     var csrId = Auth.getSignedUser(req).id;
-    // var csrId = 1;
 
     Orders.isDelivered(orderId).then(function (delivered) {
         if (!delivered) {
@@ -196,9 +191,16 @@ router.post('/cancelitems', Auth.validateCsr(), function (req, res, next) {
                                             order_id: orderId,
                                             refund_amount: customerRefundTotal
                                         };
+                                        Email.sendCancelEmail(orderEmailInfo);
 
-                                        //TODO: Send sms 
-                                        //TODO: Email                                
+                                        //TODO: Make list of cancelled items. Need Zaman's help 
+                                        var message = "Please do not deliver following items: \n";
+                                        SMS.notifyDriver(message, driver.first_name, driver.phone_number, function (response) {
+                                            if (!response) {
+                                                Logger.log.warn("Could NOT send notification sms to " + driver.first_name + " " + driver.last_name 
+                                                + "(DRIVER) to cancel item(s) delivery in order(ID: " + orderId + ")");
+                                            }
+                                        });
 
                                         var response = {
                                             success: true,
@@ -223,12 +225,10 @@ router.post('/cancelitems', Auth.validateCsr(), function (req, res, next) {
 });
 
 router.post('/additems', Auth.validateCsr(), function (req, res, next) {
-    // router.post('/additems', function (req, res, next) {
     var orderId = req.body.order_id;
     var note = req.body.note;
     var csrId = Auth.getSignedUser(req).id;
-    // var csrId = 1;
-    var cartProducts = req.body.products; //items = {1: {id:1, depot_id: 2, modify_quantity:2}, {}}        
+    var cartProducts = req.body.products;     
     var transactionId = req.body.transaction_id;
     var driverInstruction = req.body.driver_instruction;
 
@@ -278,6 +278,11 @@ router.post('/additems', Auth.validateCsr(), function (req, res, next) {
             });
         });
     });
+});
+
+/* View logs from CSR's browser */
+router.post('/streamlog', Auth.validateCsr(), function (req, res, next) {
+   Logger.stream (res);
 });
 
 module.exports = router;

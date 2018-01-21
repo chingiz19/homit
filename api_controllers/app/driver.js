@@ -1,5 +1,5 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var router = require("express").Router();
@@ -32,7 +32,6 @@ router.post('/signin', function (req, res, next) {
                     driver: driver,
                     jwt_token: jwt_token,
                     connection: {
-                        //host: "70.72.208.119",
                         host: ip.address(),
                         port: portId
                     }

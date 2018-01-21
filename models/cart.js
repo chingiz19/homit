@@ -1,12 +1,10 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var pub = {};
 
-/**
- * Get user's cart based on user_id
- */
+/* Get user's cart based on user_id */
 pub.getUserCart = function (user_id) {
     var sqlQuery = `SELECT 
                         usercart.user_id AS user_id, usercart.quantity AS quantity,
@@ -34,9 +32,7 @@ pub.getUserCart = function (user_id) {
     });
 };
 
-/**
- * Modify products in cart
- */
+/* Modify products in cart */
 pub.modifyProductInCart = function (user_id, depot_id, quantity) {
     if (quantity == 0) {
         return getCartProduct(user_id, depot_id).then(function (cart) {
@@ -75,9 +71,7 @@ pub.modifyProductInCart = function (user_id, depot_id, quantity) {
 
 };
 
-/**
- * Clear cart in database
- */
+/* Clear cart in database */
 pub.clearCart = function (user_id) {
     var data = {
         user_id: user_id
@@ -88,9 +82,7 @@ pub.clearCart = function (user_id) {
 };
 
 
-/**
- * Return quantity based on the user id, depot id provided
- */
+/* Return quantity based on the user id, depot id provided */
 var getCartProduct = function (user_id, depot_id) {
     var sqlQuery = `
     SELECT *
@@ -106,9 +98,8 @@ var getCartProduct = function (user_id, depot_id) {
     });
 };
 
-/**
+/** 
  * Returns formatted products
- * 
  * @param {*} products 
  */
 var getFormattedProducts = function (products) {
@@ -116,7 +107,7 @@ var getFormattedProducts = function (products) {
     for (var i = 0; i < products.length; i++) {
         var product = products[i];
         var imageLocation = "/resources/images/products/" + product.super_category.toLowerCase() + "/" + product.category.toLowerCase() + "/";
-        // Add to tmpResult
+        // Adding to tmpResult
         tmpResult[product.depot_id] = {
             depot_id: product.depot_id,
             packaging: product.packaging,

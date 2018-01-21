@@ -1,5 +1,5 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var parseString = require('xml2js').parseString;
@@ -9,9 +9,15 @@ var helcimAccountId = parseInt(process.env.HELCIM_ACCOUNT_ID, 10);
 var helcimApiToken = process.env.HELCIM_API_TOKEN;
 var helcimHost = "secure.myhelcim.com";
 var helcimPath = "/api/";
-
 var pub = {};
 
+
+/**
+ * Requesting from Helcim to view transcation 
+ * and confirm it with data recieved from front-end 
+ * @param {*Number} transactionId 
+ * @param {*Function} callback 
+ */
 pub.getTransaction = function (transactionId, callback) {
     var post_data = querystring.stringify({
         action: "transactionView",
@@ -20,8 +26,7 @@ pub.getTransaction = function (transactionId, callback) {
         transactionId: transactionId
     });
 
-
-    // An object of options to indicate where to post to
+    // Options object for post request
     var post_options = {
         host: helcimHost,
         port: '443',
@@ -33,7 +38,7 @@ pub.getTransaction = function (transactionId, callback) {
         }
     };
 
-    // Set up the request
+    // Creating request
     var post_req = https.request(post_options, function (res) {
         // res.setEncoding('utf8');
         res.on('data', function (chunk) {
@@ -43,14 +48,18 @@ pub.getTransaction = function (transactionId, callback) {
         });
     });
 
-    post_req.on('error', (e) => {
-        console.error(`problem with request: ${e.message}`);
+    post_req.on('error', (error) => {
+        var logMeta = {
+            directory: __filename,
+            error_message:error.message
+          }
+        Logger.log.info(`Could not get 'transactionView' from helcim (POST)`, logMeta);
+        callback('empty');
     });
 
-    // post the data
+    // Posting the data
     post_req.write(post_data);
     post_req.end();
-
 };
 
 module.exports = pub;

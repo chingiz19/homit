@@ -1,5 +1,5 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var mysql = require("promise-mysql");
@@ -38,6 +38,10 @@ const dbTables = {
   orders_history_add: "orders_history_add"
 }
 
+/*Building metadata for log*/
+var logMeta = {
+  directory: __filename
+}
 
 /* MySQL Connection */
 mysql.createConnection({
@@ -47,15 +51,19 @@ mysql.createConnection({
   database: process.env.DB_NAME
 }).then(function (connection) {
   con = connection;
-  console.log('Connection to DB established');
+  Logger.log.debug('Connection to DB established', logMeta);
 }).catch(function (err) {
   if (err) {
-    console.log(err);
-    console.log('Error connecting to DB');
+    var specMetaData = {
+      directory: __filename,
+      error_message: err.message
+    }
+    Logger.log.error('Error connecting to DB', specMetaData);
     return;
   }
 });
 
+/*Database query functions*/
 var runQuery = function (query) {
   return con.query(query);
 };
@@ -64,7 +72,11 @@ var runQuery = function (query, data) {
   return con.query(query, data).then(function(data){
     return data;
   }).catch(function(error){
-    //TODO: Logger?
+    var metadata = {
+      directory: __filename,
+      error_message: error.message
+    }
+    Logger.log.error('Could not run Query',metadata);
     return error;
   });
 };
@@ -97,12 +109,14 @@ var deleteQuery = function (table, data) {
   return runQuery('DELETE FROM ' + table + ' WHERE ?', data);
 };
 
+/**
+ * Ends database connection in ethical/gracefull way, ensuring
+ * all previously enqueued queries are still before sending
+ * COM_QUIT packet to the MySQL server.
+ */
 var end = function () {
   con.end(function (err) {
-    // The connection is terminated gracefully
-    // Ensures all previously enqueued queries are still
-    // before sending a COM_QUIT packet to the MySQL server.
-    Logger.log("ended DB connection");
+    Logger.log.debug("Ended connection to DB in an elegant way.", logMeta);
   });
 };
 

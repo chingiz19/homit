@@ -1,13 +1,11 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var router = require("express").Router();
 var crypto = require("crypto");
 
-/**
- * Checks if user given exists in the database
- */
+/* Check if user given exists in the database */
 router.post('/userexists', async function (req, res, next) {
     var email = req.body.email;
     if (!email) {
@@ -34,9 +32,7 @@ router.post('/userexists', async function (req, res, next) {
     }
 });
 
-/**
- * Registers user
- */
+/* Register user */
 router.post('/signup', async function (req, res, next) {
     var fname = req.body.fname;
     var lname = req.body.lname;
@@ -86,9 +82,7 @@ router.post('/signup', async function (req, res, next) {
     }
 });
 
-/**
- * Logs the user in
- */
+/* Logs the user in */
 router.post('/signin', async function (req, res, next) {
     var email = req.body.email;
     var password = req.body.password;
@@ -118,9 +112,7 @@ router.post('/signin', async function (req, res, next) {
     }
 });
 
-/**
- * Sign out the user
- */
+/* Sign out the user */
 router.all('/signout', function (req, res, next) {
     Auth.clear(res);
     res.status(200).json({ "success": true, "ui_message": "Successfully logged out" });
@@ -132,9 +124,9 @@ router.all('/signout', function (req, res, next) {
  */
 router.post('/forgotpassword', async function (req, res, next) {
     // Require email in body
-    if (!req.body.email){
+    if (!req.body.email) {
         return res.status(200).json({
-            error:{
+            error: {
                 dev_message: "Missing required parameters"
             }
         });
@@ -143,7 +135,7 @@ router.post('/forgotpassword', async function (req, res, next) {
     // Create jwt token
     var pHash = await User.getUserPasswordHash(req.body.email);
     // If user doesn't exist send true anyways (security measure, but wekaness is /userexists call)
-    if (!pHash){
+    if (!pHash) {
         return res.status(200).json({
             success: true,
             ui_message: "Email has been sent with instructions"
@@ -152,17 +144,17 @@ router.post('/forgotpassword', async function (req, res, next) {
     var token = JWTToken.createResetPasswordToken({
         email: req.body.email
     }, pHash);
-    
+
     // clean up
     pHash = crypto.randomBytes(62).toString();
 
-    // send via email ( TODO use noreply )
+    // send via email 
     var emailSuccess = await Email.sendResetPasswordEmail({
         customer_email: req.body.email,
-        resetLink: "http://localhost:8080/resetpassword/" + req.body.email + "/" + token
+        resetLink: "https://www.homit.ca/resetpassword/" + req.body.email + "/" + token
     });
 
-    if (emailSuccess){
+    if (emailSuccess) {
         res.status(200).json({
             success: true,
             ui_message: "Email has been sent with instructions"
@@ -170,28 +162,26 @@ router.post('/forgotpassword', async function (req, res, next) {
     } else {
         res.status(200).json({
             success: false,
-            ui_message: "Couldn't send email, make sure email is valid. If persists contact customer service"
+            ui_message: "Couldn't send email, make sure email is valid. If persists contact customer service at at info@homit.ca or 403.800.3460"
         });
     }
 });
 
-/**
- * Reset password API
- */
+/* Reset password API */
 router.post('/resetpassword', async function (req, res, next) {
-    // check for email and token params
-    if (!req.body.email || !req.body.token || !req.body.new_password || !req.body.confirm_password){
+    // Check for email and token params
+    if (!req.body.email || !req.body.token || !req.body.new_password || !req.body.confirm_password) {
         return res.status(200).json({
-            error:{
+            error: {
                 dev_message: "Missing required parameters"
             }
         });
     }
 
     // Assert that n_p, c_p match
-    if (req.body.new_password != req.body.confirm_password){
+    if (req.body.new_password != req.body.confirm_password) {
         return res.status(200).json({
-            error:{
+            error: {
                 dev_message: "new_password should match confirm_password"
             }
         });
@@ -199,7 +189,7 @@ router.post('/resetpassword', async function (req, res, next) {
 
     // Check for valid email and token
     var pHash = await User.getUserPasswordHash(req.body.email);
-    if (!pHash){
+    if (!pHash) {
         return res.status(403).json({
             success: false,
             ui_message: "Invalid token"
@@ -208,7 +198,7 @@ router.post('/resetpassword', async function (req, res, next) {
 
     var tokenValue = JWTToken.validateResetPasswordToken(req.body.token, pHash);
     pHash = crypto.randomBytes(62).toString(); // clean up
-    if (!tokenValue || tokenValue.email != req.body.email){
+    if (!tokenValue || tokenValue.email != req.body.email) {
         return res.status(200).json({
             success: false,
             ui_message: "Invalid token"
@@ -225,15 +215,13 @@ router.post('/resetpassword', async function (req, res, next) {
     } else {
         res.json({
             success: false,
-            ui_message: "Something went wrong while updating password, please try again. If error persists contact support@homit.ca"
+            ui_message: "Something went wrong while updating password, please try again. If error persists contact us at info@homit.ca or 403.800.3460"
         });
     }
     // TODO: add email message
 });
 
-/**
- * Login for CSR
- */
+/* Login for CSR */
 router.get("/csrlogin", async function (req, res, next) {
     var user = User.authenticateCsrUser(req.query.username, req.query.password);
     if (!user) {

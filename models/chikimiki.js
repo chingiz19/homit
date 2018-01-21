@@ -1,5 +1,5 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var SECRET_KEY = "hF)Zf:NR2W+gBGF]"
@@ -8,7 +8,12 @@ var pub = {};
 var outputStream;
 var cmConnection = new connector.Socket();
 
-//CM is listening at port 6262 on localhost only!
+/* Building metadata for log */
+var logMeta = {
+    directory: __filename
+}
+
+/* CM is listening at port 6262 on only localhost! */
 cmConnection.connect(6262, '127.0.0.1', function () {
     var verification = {
         "action": "verify_server",
@@ -16,23 +21,24 @@ cmConnection.connect(6262, '127.0.0.1', function () {
     }
     cmConnection.write(" " + JSON.stringify(verification) + "\n");
     outputStream = cmConnection;
-    Logger.log("Connection to CM established");
+    Logger.log.debug("Connection to CM established", logMeta);
 });
 
+/* Listener for incoming data */
 cmConnection.on('data', function (data) {
     receiver(JSON.parse(data));
 });
 
+/* Lost connection listener */
 cmConnection.on('close', function (data) {
-    Logger.log("ChikiMiki has been disconnected.");
-    //it is a serious issue alert all directors
+    Logger.log.warn("Connection to CM has been lost", logMeta);
     SMS.alertDirectors("CM is down!!!");
 });
 
+/* Connection error listener */ 
 cmConnection.on('error', function (data) {
-    Logger.log("Error has been occurred. Here - in CM connection");
+    Logger.log.error("CM connection is experiencing issues", logMeta);
 })
-
 
 var receiver = function (jsonResponse) {
     if (jsonResponse.action == "chikimiki_response_to_driver") {
@@ -55,10 +61,10 @@ var receiver = function (jsonResponse) {
             id: orderId
         };
 
-        // Update orders_history table
+        // Updating orders_history table
         db.updateQuery(db.dbTables.orders_history, [data, key]).then(function (updated) {
 
-            // Build json
+            // Building json
             var storeKey = {
                 id: storeId
             };
@@ -114,17 +120,16 @@ var receiver = function (jsonResponse) {
             });
         });
     } else {
-        Logger.log("Something went wrong, while receiving order from CM");
+        Logger.log.error("Error while processing order from CM due to wrong 'action' value received from CM", logMeta);
     }
-
 };
 
 pub.send = function (json) {
-    Logger.log(JSON.stringify(json) + "\n");
+    Logger.log.debug('Sending order to CM' + json + "\n", logMeta);
     if (outputStream) {
         outputStream.write(" " + JSON.stringify(json) + "\n");
     } else {
-        Logger.log("Chikimiki is disconnected. Cannot send.");
+        Logger.log.error("Could not send order to CM", logMeta);
     }
 };
 
@@ -142,7 +147,6 @@ pub.sendOrder = function (customerId, customerAddress, orderId, storeType) {
             }
         }
     };
-
     CM.send(newOrder);
 }
 

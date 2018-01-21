@@ -8,7 +8,6 @@ router.use("/cart", require(path.join(__dirname, "./cart")));
 router.use("/orders", require(path.join(__dirname, "./orders")));
 router.use("/checkout", require(path.join(__dirname, "./checkout")));
 router.use("/map", require(path.join(__dirname, "./map")));
-router.use("/mockmobile", require(path.join(__dirname, "./mockmobile")));
 router.use("/driver", require(path.join(__dirname, "./driver")));
 router.use("/sms", require(path.join(__dirname, "./sms")));
 router.use("/csr", require(path.join(__dirname, "./csr")));

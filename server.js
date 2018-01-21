@@ -1,14 +1,16 @@
 /* Setup ENV variables */
 var dotenv = require("dotenv");
-switch (process.env.n_mode){
+switch (process.env.n_mode) {
 	case "test":
-		dotenv.config({path: "test.env"});
+		dotenv.config({ path: "test.env" });
+		console.log("Running in test mode \nVisit log at " + process.env.LOG_FILE_PATH);
 		break;
 	case "dev":
-		dotenv.config({path: "dev.env"});
+		dotenv.config({ path: "dev.env" });
+		console.log("Running in development mode \nVisit log at " + process.env.LOG_FILE_PATH);
 		break;
 	case "production":
-		dotenv.config({path: "production.env"});
+		dotenv.config({ path: "production.env" });
 		break;
 	default:
 		console.log("Missing mode (n_mode) in environment");
@@ -19,6 +21,11 @@ switch (process.env.n_mode){
 global.express = require('express');
 global.secretKey = "secretSession";
 require("./model-factory").init();
+
+/*Building metadata for log*/
+var logMeta = {
+	directory: __filename
+}
 
 /* Variables */
 var session = require("cookie-session");
@@ -34,16 +41,15 @@ var fs = require('fs');
 
 /* make logs folder */
 var errorLog = ".logs/error_log";
-if (!fs.existsSync('.logs')){
+if (!fs.existsSync('.logs')) {
 	fs.mkdirSync('.logs');
 }
 
-
-/* security and other related stuff */
+/* Security and other related stuff */
 var helmet = require("helmet");
 var csurf = require("csurf");
 var limiter = require("express-rate-limit")({ // alternative - bottleneck
-	windowMs: 60*1000, // every minute
+	windowMs: 60 * 1000, // every minute
 	max: 500, // max 500 requests
 	delayMs: 0
 });
@@ -83,15 +89,14 @@ webServer.use(csurf({
 	cookie: true
 }));
 
-webServer.use(function(req, res, next){
-	// Set CSRF token per request
+/* Setting CSRF token per request*/
+webServer.use(function (req, res, next) {
 	res.cookie("csrf-token", req.csrfToken());
 	res.setHeader("Keep-Alive", "timeout: 60, max: 1000");
 	return next();
 })
 
-
-/* Redirect all HTTP to HTTPS */
+/* Redirecting all HTTP to HTTPS */
 webServer.all('*', function (req, res, next) {
 	// if (req.secure) {
 	// 	return next();
@@ -110,37 +115,38 @@ webServer.use("/api", require(path.join(__dirname, "/api_controllers/generic_con
 webServer.use("/", require(path.join(__dirname, "/view_controllers/generic_controller")));
 
 
-/* 404 Path */
-webServer.use(function(req, res, next){
+/*Redirecting to 404 path */
+webServer.use(function (req, res, next) {
 	res.redirect("/notfound");
 });
 
-/* Error handling */
-webServer.use(function(err, req, res, next){
-	var message = "<date>" + new Date().toLocaleString() + "</date>\n";
-	message += "\t<error path>\n\t\t" + req.path + "\n\t</error path>\n";
-	message += "\t<error message>" + err.message + "\n\t</error message>\n\n";
-	fs.writeFile(errorLog, message, {encoding: 'utf-8', flag: 'a'}, 
-		function(err){
-			if (err){
-				Logger.log("-- > Error occured, but couldn't write to " + errorLog);
-			}
-		});
-	Logger.log("[ERROR] For more information, please visit .logs/error_log file");
-	if (err.code === 'EBADCSRFTOKEN'){
+/* Error handling for web page serving portion */
+webServer.use(function (err, req, res, next) {
+	var message = "error path:" + req.path;
+	message += ", error message:" + err.message;
+	Logger.log.error(message, logMeta);
+
+	if (err.code === 'EBADCSRFTOKEN') {
 		res.status(403).send("Forbidden");
 	} else {
 		//res.status(404).send("Path not found: " + req.path);
-		res.status(err.status || 500).send("<h1>Path Not Found</h1><h2>" + req.path + "</h2><h3> Status:" + 
-		err.status || 500 + "</h3>");
+		res.status(err.status || 500).send("<h1>Path Not Found</h1><h2>" + req.path + "</h2><h3> Status:" +
+			err.status || 500 + "</h3>");
 	}
 });
 
-/* Start web server */
+/* Web server
+* Set error listener
+* Listen to 8080 (http) and 8081 (https)
+*/
+webServer.on('error', function (e) {
+	Logger.log.error("Error happened during server launch. " + e.message, logMeta);
+});
+
 webServer.listen(8080, '0.0.0.0', function () {
-	console.log("Listening at http://any host:8080");
+	Logger.log.debug("Listening to http port 8080", logMeta);
 });
 
 https.createServer(sslOptions, webServer).listen(8081, function () {
-	console.log("Listening at https://localhost:8081");
+	Logger.log.debug("Listening to https port 8081", logMeta);
 });

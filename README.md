@@ -44,8 +44,10 @@
 		# Email
 		EMAIL_HOST=
 		EMAIL_PORT=
-		EMAIL_USER=
-		EMAIL_PASS=
+		ORDER_EMAIL_USER=
+		ORDER_EMAIL_PASS=
+		NOREPLY_EMAIL_USER=
+		NOREPLY_EMAIL_PASS=
 
 		# Helcim
 		HELCIM_ACCOUNT_ID=
@@ -55,6 +57,9 @@
 		ORDER_SLIPS_DIR=
 		
 		# Logger
+		LOG_FILE_NAME=
+		DEBUG_LEVEL=  #error | warn | info | verbose | debug | silly 
+		LOG_FILE_PATH=
 		DEBUG=
 
 		# Keys

@@ -1,11 +1,9 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 var router = require("express").Router();
 
-/**
- * Gets user's cart
- */
+/* Get user's cart */
 router.get('/usercart', function (req, res, next) {
     if (!req.cookies.user) {
         res.json({
@@ -26,9 +24,8 @@ router.get('/usercart', function (req, res, next) {
     }
 });
 
-/**
- * Modifies item in user's cart
- */
+
+/* Modify item in user's cart */
 router.post('/modifyitem', function (req, res, next) {
     var depot_id = req.body.depot_id;
     var quantity = req.body.quantity;
@@ -54,9 +51,7 @@ router.post('/modifyitem', function (req, res, next) {
     }
 });
 
-/**
- * Clears user's cart
- */
+/* Clears user's cart */
 router.post('/clear', function (req, res, next) {
     if (!req.cookies.user) {
         res.json({

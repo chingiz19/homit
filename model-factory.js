@@ -1,5 +1,5 @@
 /**
- * @copyright Homit 2017 
+ * @copyright Homit 2018
  */
 
 var Users               = require("./models/users");
@@ -18,7 +18,9 @@ var CSR                 = require("./models/csr");
 var Email               = require("./models/email");
 
 /**
- * This class uses 
+ * This class uses initiator that 
+ * initiates all models and saves 
+ * them as global variable
  */
 class modelFactory {
 
@@ -39,6 +41,5 @@ class modelFactory {
         global.Email = Email;
     }
 }
-
 
 module.exports = modelFactory;

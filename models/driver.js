@@ -1,5 +1,5 @@
 /**
- * @copyright Homit 2017
+ * @copyright Homit 2018
  */
 
 var sockIOServer = require("http").createServer();
@@ -8,15 +8,19 @@ var io = require("socket.io")(sockIOServer, {
     pingTimeout: 2000
 });
 var driverConnector = require("net");
-
 var pub = {};
 var driverConnections = {};
 var driverTempStorage = {};
 var SOCKET_PORT = 3000;
 var DEFAULT_EMIT = "data";
 
+/* Building metadata for log */
+var logMeta = {
+    directory: __filename
+}
+
 io.on("connection", function (socket) {
-    console.log(socket.id + " app has been connected to server");
+    Logger.log.verbose(socket.id + " app has been connected to server", logMeta);
     socket.isVerified = false;
 
     setTimeout(function () {
@@ -54,9 +58,9 @@ io.on("connection", function (socket) {
             socket.disconnect();
         }
         var receivedJson = JSON.parse(data);
-        console.log("--------------------------------------------------------");
-        console.log(receivedJson);
-        console.log("--------------------------------------------------------");
+        Logger.log.verbose("--------------------------------------------------------");
+        Logger.log.verbose(receivedJson);
+        Logger.log.verbose("--------------------------------------------------------");
         if (receivedJson.action == "driver_status") {
             var driverDetails = receivedJson.details;
             var driverIdString = driverDetails.driver_id;
@@ -71,25 +75,25 @@ io.on("connection", function (socket) {
                     saveOffline(driverIdInt);
                     break;
                 case "arrived_store":
-                    console.log("Data received from driver: arrived_store");
-                    console.log("store_id: " + driverDetails.arrived_store.store_id);
-                    console.log("order_ids: " + driverDetails.arrived_store.order_ids + "\n");
+                    Logger.log.verbose("Data received from driver: arrived_store");
+                    Logger.log.verbose("store_id: " + driverDetails.arrived_store.store_id);
+                    Logger.log.verbose("order_ids: " + driverDetails.arrived_store.order_ids + "\n");
                     saveArrivedStore(driverIdInt, driverDetails.arrived_store.order_ids);
                     removeStoreRouteNode(driverIdInt, driverDetails.arrived_store.store_id);
                     break;
                 case "pick_up":
-                    console.log("Data received from driver: pick_up");
-                    console.log("store_id: " + driverDetails.pick_up.store_id);
-                    console.log("order_ids: " + driverDetails.pick_up.order_ids + "\n");
+                    Logger.log.verbose("Data received from driver: pick_up");
+                    Logger.log.verbose("store_id: " + driverDetails.pick_up.store_id);
+                    Logger.log.verbose("order_ids: " + driverDetails.pick_up.order_ids + "\n");
                     savePickUp(driverIdInt, driverDetails.pick_up.order_ids);
                     break;
                 case "drop_off":
-                    console.log("Data received from driver: drop_off");
-                    console.log("order_id: " + driverDetails.drop_off.order_id);
-                    console.log("refused: " + driverDetails.drop_off.refused);
-                    console.log("same_receiver: " + driverDetails.drop_off.same_receiver);
-                    console.log("receiver_name: " + driverDetails.drop_off.receiver_name);
-                    console.log("receiver_age: " + driverDetails.drop_off.receiver_age + "\n");
+                    Logger.log.verbose("Data received from driver: drop_off");
+                    Logger.log.verbose("order_id: " + driverDetails.drop_off.order_id);
+                    Logger.log.verbose("refused: " + driverDetails.drop_off.refused);
+                    Logger.log.verbose("same_receiver: " + driverDetails.drop_off.same_receiver);
+                    Logger.log.verbose("receiver_name: " + driverDetails.drop_off.receiver_name);
+                    Logger.log.verbose("receiver_age: " + driverDetails.drop_off.receiver_age + "\n");
                     removeOrderRouteNode(driverIdInt, driverDetails.drop_off.order_id);
                     saveDropOff(driverIdInt, driverDetails.drop_off);
                     break;
@@ -97,39 +101,42 @@ io.on("connection", function (socket) {
                     saveLocation(driverIdInt, driverDetails.location);
                     break;
                 case "arrived_customer":
-                    console.log("Data received from driver: arrived_customer");
-                    console.log("customer_id: " + driverDetails.arrived_customer.customer_id);
-                    console.log("order_ids: " + driverDetails.arrived_customer.order_ids + "\n");
+                    Logger.log.verbose("Data received from driver: arrived_customer");
+                    Logger.log.verbose("customer_id: " + driverDetails.arrived_customer.customer_id);
+                    Logger.log.verbose("order_ids: " + driverDetails.arrived_customer.order_ids + "\n");
                     saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids, driverDetails.arrived_customer.customer_id);
-                    // send text message
                     sendToCm = false;
                     break;
                 default:
-                    console.log("Error has been occurred ");
+                    Logger.log.error("Wrong 'status' received from driver app. Received data: " + receivedJson.stringify(), logMeta);
             }
             if (sendToCm) {
                 CM.send(receivedJson);
             }
         } else {
-            console.log("Error has been occurred ");
+            Logger.log.error("Wrong 'action' received from driver app. Received data: " + receivedJson.stringify(), logMeta);
         }
     });
 
     socket.on("disconnect", function () {
         delete driverConnections[socket.id];
-        console.log(socket.id + " app has been disconnected from server");
+        Logger.log.verbose(socket.id + " app has been disconnected from server");
     });
 
     socket.on("connect_error", function (data) {
-        console.log("Connect error has been occurred " + data);
+        Logger.log.verbose("Connect error has been occurred " + data);
     });
 
     socket.on("connect_timeout", function (data) {
-        console.log("Conenct timeout has been occurred " + data);
+        Logger.log.verbose("Conenction timeout with driver has been occurred " + data);
     });
 });
 
-sockIOServer.listen(SOCKET_PORT);
+try {
+    sockIOServer.listen(SOCKET_PORT);
+} catch (err) {
+    Logger.log.error("Can't listen to port " + SOCKET_PORT + "Please close other apps that might be using the same port", logMeta);
+}
 
 pub.findDriver = function (email) {
     var data = { user_email: email };
@@ -142,6 +149,7 @@ pub.findDriver = function (email) {
     });
 };
 
+/* Find driver from database*/
 pub.findDriverById = function (driverId) {
     var data = { id: driverId };
     return db.selectAllWhere(db.dbTables.drivers, data).then(function (dbResult) {
@@ -153,9 +161,7 @@ pub.findDriverById = function (driverId) {
     });
 };
 
-/**
- * Authenticate driver
- */
+/* Authenticate driver */
 pub.authenticateDriver = function (email, password) {
     var data = { user_email: email };
     return db.selectAllWhere(db.dbTables.drivers, data).then(function (driver) {
@@ -173,9 +179,7 @@ pub.authenticateDriver = function (email, password) {
     });
 };
 
-/**
- * Get connection info for driver
- */
+/* Get connection info for driver */
 pub.getConnectionPort = function () {
     return SOCKET_PORT;
 };
