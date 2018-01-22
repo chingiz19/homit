@@ -12,7 +12,7 @@ const dbTables = {
   catalog_categories: "catalog_categories",
   catalog_containers: "catalog_containers",
   catalog_depot: "catalog_depot",
-  catalog_stores: "catalog_stores",  
+  catalog_stores: "catalog_stores",
   catalog_listings: "catalog_listings",
   catalog_packagings: "catalog_packagings",
   catalog_packaging_volumes: "catalog_packaging_volumes",
@@ -69,14 +69,14 @@ var runQuery = function (query) {
 };
 
 var runQuery = function (query, data) {
-  return con.query(query, data).then(function(data){
+  return con.query(query, data).then(function (data) {
     return data;
-  }).catch(function(error){
+  }).catch(function (error) {
     var metadata = {
       directory: __filename,
       error_message: error.message
     }
-    Logger.log.error('Could not run Query',metadata);
+    Logger.log.error('Could not run Query', metadata);
     return error;
   });
 };
@@ -85,12 +85,17 @@ var insertQuery = function (table, data) {
   return runQuery('INSERT INTO ' + table + ' SET ?', data);
 };
 
-var selectColumnsWhere = function(columns, table, data) {
+var selectColumnsWhere = function (columns, table, data) {
   return runQuery('SELECT ' + columns + ' FROM ' + table + ' WHERE ?', data);
 };
 
 var selectAllWhere = function (table, data) {
   return runQuery('SELECT * FROM ' + table + ' WHERE ?', data);
+};
+
+var selectAllWhere2 = function (table, data) {
+  var tableName = table;
+  return con.query('SELECT * FROM ' + tableName + ' WHERE ? AND ?', data);
 };
 
 var selectAllFromTable = function (table) {
@@ -109,6 +114,11 @@ var deleteQuery = function (table, data) {
   return runQuery('DELETE FROM ' + table + ' WHERE ?', data);
 };
 
+var deleteQuery2 = function (table, data) {
+  var tableName = table;
+  return con.query('DELETE FROM ' + tableName + ' WHERE ? AND ?', data);
+};
+
 /**
  * Ends database connection in ethical/gracefull way, ensuring
  * all previously enqueued queries are still before sending
@@ -124,7 +134,9 @@ module.exports.runQuery = runQuery;
 module.exports.insertQuery = insertQuery;
 module.exports.selectColumnsWhere = selectColumnsWhere;
 module.exports.selectAllWhere = selectAllWhere;
+module.exports.selectAllWhere2 = selectAllWhere2;
 module.exports.updateQuery = updateQuery;
 module.exports.selectAllFromTable = selectAllFromTable;
 module.exports.deleteQuery = deleteQuery;
+module.exports.deleteQuery2 = deleteQuery2;
 module.exports.dbTables = dbTables;

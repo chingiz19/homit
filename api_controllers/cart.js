@@ -5,7 +5,9 @@ var router = require("express").Router();
 
 /* Get user's cart */
 router.get('/usercart', function (req, res, next) {
-    if (!req.cookies.user) {
+    var signedUser = Auth.getSignedUser(req);
+
+    if (!signedUser) {
         res.json({
             error: {
                 code: "C001",
@@ -13,8 +15,8 @@ router.get('/usercart', function (req, res, next) {
             }
         });
     } else {
-        var user_id = req.cookies.user.id;
-        Cart.getUserCart(user_id).then(function (cart) {
+        var userId = signedUser.id;
+        Cart.getUserCart(userId).then(function (cart) {
             var response = {
                 success: true,
                 cart: cart
@@ -27,9 +29,10 @@ router.get('/usercart', function (req, res, next) {
 
 /* Modify item in user's cart */
 router.post('/modifyitem', function (req, res, next) {
-    var depot_id = req.body.depot_id;
+    var depotId = req.body.depot_id;
     var quantity = req.body.quantity;
-    if (!req.cookies.user) {
+    var signedUser = Auth.getSignedUser(req);
+    if (!signedUser) {
         res.json({
             error: {
                 code: "C001",
@@ -37,8 +40,8 @@ router.post('/modifyitem', function (req, res, next) {
             }
         });
     } else {
-        var user_id = req.cookies.user.id;
-        Cart.modifyProductInCart(user_id, depot_id, quantity).then(function (result) {
+        var userId = signedUser;
+        Cart.modifyProductInCart(userId, depotId, quantity).then(function (result) {
             var isSuccess = false;
             if (result != false) {
                 isSuccess = true;
@@ -53,7 +56,8 @@ router.post('/modifyitem', function (req, res, next) {
 
 /* Clears user's cart */
 router.post('/clear', function (req, res, next) {
-    if (!req.cookies.user) {
+    var signedUser = Auth.getSignedUser(req);
+    if (!signedUser) {
         res.json({
             error: {
                 code: "C001",
@@ -61,9 +65,9 @@ router.post('/clear', function (req, res, next) {
             }
         });
     } else {
-        var user_id = req.cookies.user.id;
-        
-        Cart.clearCart(user_id).then(function (result) {
+        var userId = signedUser.id;
+
+        Cart.clearCart(userId).then(function (result) {
             var isSuccess = false;
             if (result != false) {
                 isSuccess = true;
