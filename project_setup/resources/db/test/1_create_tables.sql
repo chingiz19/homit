@@ -3,7 +3,7 @@
 */
 
 
-use homit_test;
+use test_homit;
 
 
 CREATE TABLE users_customers ( 

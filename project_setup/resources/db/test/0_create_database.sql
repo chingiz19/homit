@@ -1,11 +1,11 @@
 /**
  *  Testing database
  */
-DROP DATABASE IF EXISTS homit_test;
-DROP USER IF EXISTS 'db_web_user'@'localhost';
+DROP DATABASE IF EXISTS test_homit;
+DROP USER IF EXISTS 'db_web_user_test'@'localhost';
 
-CREATE USER 'db_web_user'@'localhost' IDENTIFIED BY 'gg:(@SH%H3K5^4#P';
+CREATE USER 'db_web_user_test'@'localhost' IDENTIFIED BY 'gg:(@SH%H3K5^4#P';
 
-CREATE DATABASE homit_test;
+CREATE DATABASE test_homit;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON `homit_test`.* TO 'db_web_user'@'localhost' WITH GRANT OPTION;
+GRANT SELECT, INSERT, UPDATE, DELETE ON `test_homit`.* TO 'db_web_user_test'@'localhost' WITH GRANT OPTION;
