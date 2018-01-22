@@ -4,15 +4,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.init = function () {
         $scope.storeHub = false;
         $scope.userDropDown = false;
-        $scope.screenIsMob = false;
-
         var screen_width = $(window).width();
-        if (screen_width < 901) {
-            $scope.screenIsMob = true;
-        } else {
-            $scope.screenIsMob = false;
-        }
-
         try {
             $scope.deliveryAddress = $cookies.getObject("homit-address").name;
         } catch (e) {

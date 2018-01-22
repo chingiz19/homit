@@ -3,12 +3,10 @@ li {list-style-type: none;}
 .ul-zero-margin-padding{
     margin: 0; padding: 0;
 }
-body{
-    /* overflow-x: scroll; */
-    min-width: 1400px;
-}
+
 .full-screen{
-    height: 100vh;
+    min-height: 800px;
+    height: 100%;
     width: 100vw;
 }
 
@@ -27,6 +25,12 @@ body{
     width: 100%; 
     display: flex; 
     align-items: center;
+}
+#address{
+    background-size: auto 100%; 
+    background-image: url('/resources/images/non-catalog-image/calgary.jpg'); 
+    /* opacity: 0.75; background-color: rgba(0,0,0,1);  */
+    /* z-index: -1; */
 }
 .logoTg{
     margin-left: 15px;
@@ -95,13 +99,13 @@ body{
 }
 .area-map{
     position: absolute; 
-    left: 15%; height: 60%; width: 70%;
+    height: 60%; width: 70%;
     box-shadow: 0 0px 10px 0px rgba(0,0,0,0.45);
     border-radius: 3px;
 }
 .area-map-text-box{
     position: relative; 
-    top: 310px;
+    top: 40%;
     margin: 0; padding: 0;
 }
 .area-map-text-A{
@@ -129,7 +133,7 @@ body{
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.065em;
     -webkit-font-smoothing: antialiased;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    filter: drop-shadow(0 0px 8px rgba(0,0,0, 1));
 }
 .hmtHubA{
     position: relative; top: 20%; 
@@ -137,7 +141,11 @@ body{
     font-weight: 300; font-size: 40px; 
 }
 .hmtHubB{
-    margin: 0; padding: 0; display: flex; justify-content: center; position: relative; top: 40%;
+    top: 40%;
+    margin: 0; padding: 0; 
+    display: flex; 
+    flex-direction: row;
+    justify-content: center; position: relative; 
 }
 .hmtHubBA{
     display: flex; justify-content: center; align-items: center;
@@ -154,21 +162,10 @@ body{
     outline: none !important;
 }
 .hmtHubABAB{
-    font-weight: 400; font-size: 15px;
+    font-weight: 400; font-size: 16px;
     z-index: 100;
 }
 
-.homit-city-image-box{
-    position: absolute; 
-    top: 0; left: 0;
-    z-index: 0; 
-}
-.homit-city-image{
-    height: 100vh;
-    opacity: 0.75; 
-    background-color: rgba(0,0,0,1); 
-    z-index: 1;
-}
 
 .main-page-address-box{
     z-index: 1000; width: 730px;
@@ -193,12 +190,12 @@ nav{
 
 #liquer-station:hover .liquer-station-icon{
     transform: rotateY(180deg);
-    transition: all 0.95s ease-in-out;
+    transition: all 0.75s ease-in;
 }
 
 #snack-vendor:hover .snack-vendor-icon{
     transform: rotateY(180deg);
-    transition: all 0.95s ease-in-out;
+    transition: all 0.75s ease-in;
 }
 
 .liquer-station-icon{
@@ -224,4 +221,213 @@ nav{
 }
 .snack-vendor-icon svg{
     width: 110px; height: 110px;
+}
+
+@media (max-width: 750px) and (min-width: 600px){
+    .main-page-address-box{
+        width: 500px;
+    }
+    .main-page-address-box-text{
+        font-size: 28px;
+    }
+    .srchAddrsC{
+        width: 500px;
+    }
+    .srchAddrsCAB{
+        width: 486px;
+    }
+}
+
+@media (max-width: 599px) and (min-width: 400px){
+    .main-page-address-box{
+        width: 400px;
+    }
+    .main-page-address-box-text{
+        font-size: 22px;
+    }
+    .srchAddrsC{
+        width: 400px;
+    }
+    .srchAddrsCAB{
+        width: 386px;
+    }
+}
+
+@media (max-width: 1000px) and (min-width: 550px){
+    .area-map{
+        height: 50%;
+    }
+    .hmtHubA{
+        position: relative; top: 25%; 
+    }
+    .hmtHubA{
+        font-size: 35px;
+    }
+    .hmtHubBA{
+        max-width: 20%;
+    }
+    .store-sign-background-box{
+        top: 20px;
+        max-width: 20%;
+        height: 40px;
+    }
+    .liquer-station-icon svg{
+        width: 80px; height: 80px;
+    }
+    .snack-vendor-icon svg{
+        width: 80px; height: 80px;
+    }
+    #snack-vendor{
+        margin-right: 3%;
+    }
+    #liquer-station{
+        margin-left: 3%;
+    }
+    .hmtHubABAB{
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 549px) and (min-width: 300px){
+    .area-map{
+        height: 45%;
+    }
+    .hmtHubA{
+        position: relative; top: 40%; 
+    }
+    .hmtHubA{
+        font-size: 35px;
+    }
+    .hmtHubB{
+        top: 50%;
+    }
+    .hmtHubBA{
+        max-width: 20%;
+    }
+    .store-sign-background-box{
+        top: 17px;
+        max-width: 20%;
+        height: 25px;
+    }
+    .liquer-station-icon svg{
+        width: 60px; height: 60px;
+    }
+    .snack-vendor-icon svg{
+        width: 60px; height: 60px;
+    }
+    #snack-vendor{
+        margin-right: 5%;
+    }
+    #liquer-station{
+        margin-left: 5%;
+    }
+    .hmtHubABAB{
+        font-size: 11px;
+    }
+}
+
+/* Mobile Devices */
+@media screen and (max-device-width: 500px) {
+    .full-screen{
+        height: 100vh !important;
+    }
+    #address{
+        height: 100% !important;
+    }
+    .area-map-text-box{
+        top: 600px;
+    }
+    .hmtHubA{
+        font-size: 60px;
+    }
+    .hmtHubB{
+        top: 45%;
+    }
+    .store-sign-background-box{
+        top: 25px;
+        max-width: 27%;
+        height: 50px;
+    }
+    .liquer-station-icon svg{
+        width: 100px; height: 100px;
+    }
+    .snack-vendor-icon svg{
+        width: 100px; height: 100px;
+    }
+    #snack-vendor{
+        margin-right: 5%;
+    }
+    #liquer-station{
+        margin-left: 5%;
+    }
+    .hmtHubABAB{
+        font-size: 15px;
+    }
+    .addressMessage-text{
+        bottom: 600px;
+        font-size: 35px;
+    }
+    md-toolbar{
+        margin-top: 15px;
+    }
+    .srchAddrsC{
+        width: 800px;
+        height: 100px;
+        background-color: rgba(255,255,255,1);
+        border-radius: 5px;
+        box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.8);
+    }
+    .srchAddrsCA{
+        position: relative;
+        display: flex; align-items: center;
+    }
+    .srchAddrsCAA{
+        position: absolute; padding-left: 5px;
+    }
+    .srchAddrsCAAA{
+        fill: rgba(42,81,245,0.9);
+    }
+    .srchAddrsCAAA svg{
+        width: 60px; height: 60px;
+    }
+    .srchAddrsCAB{
+        padding-left: 70px;
+        width: 780px; height: 80px;
+        font-size: 35px;
+        color: rgba(0,0,0,0.85);
+        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+        border: 1px solid rgba(200,200,200,0.8); border-radius: 2px;
+        outline-width: 0;
+    }
+    .srchAddrsCAC{
+        position: absolute; 
+        right: 0;
+        min-width: 80px; min-height: 80px; margin: 0;
+    }
+    .srchAddrsCACA{
+        fill: rgba(0,0,0,0.4);
+    }
+    .srchAddrsCACA svg{
+        width: 50px; height: 50px;
+    }
+    .pac-container{
+        font-size: 20px !important;
+    }
+    .pac-container {
+        line-height: 40px !important;
+    }
+    .pac-icon{
+        height: 20px; width: 20px;
+    }
+    .pac-matched{
+        font-size: 20px;
+    }
+    .pac-item {
+        font-size: 20px;
+    }
+    .main-page-address-box-text{
+        font-size: 45px;
+    }
+    
+
 }

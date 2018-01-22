@@ -7,12 +7,9 @@
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
 </head>
 
-<body ng-cloak style="overflow-x:hidden">
+<body ng-cloak>
     <div ng-controller="mainController">
-        <div id="address" class="full-screen flex-box srchAddrs">
-            <div class="homit-city-image-box">
-                <img class="homit-city-image" ng-src="{{'/resources/images/non-catalog-image/calgary.jpg'}}" />
-            </div>
+        <div id="address" class="full-screen flex-box">
             <div class="main-page-address-box">
                 <ul class="ul-zero-margin-padding">
                     <li class="main-page-address-box-text">Order Bevarages and Snacks from Your Local Stores</li>
@@ -38,7 +35,7 @@
         </div>
         <div id="homitHub" class="full-screen homit-hub">
             <div class="hmtHubA hmtHubTxt">Homit Hub</div>
-            <div layout="row" class="hmtHubB">
+            <div  class="hmtHubB">
                 <div flex="30" ng-click="hrefTo('/catalog/snack-vendor')" class="hmtHubBA" id="snack-vendor">
                     <ul layout="column" class="hmtHubBAA">
                         <li class="hmtHubBAAA">

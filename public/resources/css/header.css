@@ -18,6 +18,10 @@
   width: 100%  !important;
   z-index: 2;
 }
+.homit-logo-tm-image{
+    width: 107px; height: 33px;
+    filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));
+}
 .header-category{
     bottom: auto !important;
     top: 100%; left: 37%;
@@ -339,9 +343,6 @@
         box-shadow: 0 0px 10px rgba(0,0,0,0.2);
         z-index: 1000;
     }
-    .homit-header-smallscreen{
-        display: none;
-    }
     .header-icon {
         flex-basis: 5%;
         fill: rgba(255,255,255,1);
@@ -358,99 +359,14 @@
 
 /*For non-computer screen*/
 @media screen and (max-device-width: 600px) {
-    /*Disables Header web version */
-    .mnSrch{
-        display: none;
-    }
-    .expBtn{
-        display: none;
-    }
-    /*Header*/
-    .mVerHedL1{
-        max-width: 1150px;
-        height: 150px;
-    }
-    .mVerHedL2{
-        display: flex; align-items: center;
-    }
-    .mVerHedL2a{
-        display: flex; align-items: center; 
-        height: 100%; margin-left: 40px;
-    }
-    .mVerHedL2a1{
-        display: flex; align-items: center;
-        padding: 0; 
-    }
-    .mVerHedL2b{
-        display: flex; 
-        margin-left: auto;
-    }
-    /*User information DropDown*/
-    .infoDrDwnA{
-        position: fixed;
-        display: flex; 
-        justify-content: center; align-items: flex-start;  
-        top: 135px; right: 5px; 
-        height: 15vh; width: 26vw; 
-        border: 1.5px rgba(220,220,220,0.99) solid; border-radius: 5px; 
-        background-color: rgba(250,250,250,0.99);  
-        margin: 0; padding: 0;
-        z-index: 2000;
-    }
-    .infoDrDwnAA{
-        display: flex; 
-        padding-left: 18px;
-        margin-bottom: 10px;
-        font-size: 28px; color: rgba(150,150,150,0.8);
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif; 
-    }
-    .infoDrDwnAB{
-        display: flex; 
-        padding-left: 20px;
-        font-size: 28px; color: rgba(150,150,150,0.8);
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;  
-    }
-    .infoDrDwnAAA{
-        display: flex; align-items: center;
-    }
-    /*List Icon*/
-    .lstIcnBtn{
-        margin:0; padding: 0;
-    }
-    .lstIcn{
-        width: 150px; height: 150px; 
-        margin:0; padding: 0;
-    }
-    /*Fixes backDrop of SideNav*/
-    .md-sidenav-backdrop {
-        position: fixed;
-    }
-    /*Fill ALL google Icon color*/
-    .header{
-        display: flex; align-items: center;
-        max-height: 150px !important;
-        height: 100%;
-        padding: 0;
-    }
-      .homit-header-smallscreen{
-        display: inherit;
-        height: 130px;
-        min-width: 100vw !important;
-        background-color: rgba(254,254,254,0.95) !important;
-    }
-
-    .homit-header-bigscreen {
-        display: none;
-    }
-    .header-icon {
-        fill: rgba(42,81,145,1);
-    }
-    .storeHub{
-        position: fixed; 
-        top: 135px; right: 10px; 
-        height: 40vh; width: 48.5vw;  
-        border: 2px rgba(220,220,220,0.99) solid; 
-        background-color: rgba(250,250,250,0.99);
-        z-index: 1000;
+   .homit-logo-tm-image{
+        width: 185px; height: 55px;
+        filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));
+   }
+   .hdrRendBtn{
+       fill: rgba(255,255,255,1);
+   }
+   .hdrRendBtn svg {
+        width: 60px; height: 60px;
     }
 }

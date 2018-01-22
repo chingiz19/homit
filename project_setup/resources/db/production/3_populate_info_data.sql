@@ -1,9 +1,8 @@
 /* Insert super categories */
-INSERT INTO `homit`.`catalog_super_categories`(id, name, display_name) VALUES(1 ,"safeway" ,"Snack Vendor");
-INSERT INTO `homit`.`catalog_super_categories`(id, name, display_name, image) VALUES(2 ,"liquor-station", "Liquor Station", "liquor-station_store.jpeg");
-INSERT INTO `homit`.`catalog_super_categories`(id, name, display_name) VALUES(3 ,"convenience" ,"Snack Vendor");
-INSERT INTO `homit`.`catalog_super_categories`(id, name, display_name) VALUES(4 ,"homitcar" ,"Snack Vendor");
-
+INSERT INTO `homit`.`catalog_super_categories`(id, name, display_name, image) VALUES(1 ,"safeway" ,"Snack Vendor" ,"snack-vendor_icon.jpeg");
+INSERT INTO `homit`.`catalog_super_categories`(id, name, display_name, image) VALUES(2 ,"liquor-station" ,"Liquor Station" ,"liquor-station_icon.jpeg");
+INSERT INTO `homit`.`catalog_super_categories`(id, name, display_name, image) VALUES(3 ,"convenience" ,"Snack Vendor" ,"snack-vendor_icon.jpeg");
+INSERT INTO `homit`.`catalog_super_categories`(id, name, display_name, image) VALUES(4 ,"homitcar" ,"Snack Vendor" ,"snack-vendor_icon.jpeg");
 
 /* Insert stores */
 INSERT INTO `homit`.`catalog_stores` (id, name, address, address_latitude, address_longitude, store_type, open_time, close_time, open_time_next, close_time_next) VALUES (1, "Liquor Depot", "3630 Brentwood Rd NW, Calgary, AB T2L 1K8", "51.0869109", "-114.1277174", "2", "10:00:00", "23:59:59", "00:00:00", "02:00:00");
@@ -41,10 +40,10 @@ INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id
 INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(6, "snack", "Snack", 3);
 INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(7, "bevarage", "Bevarage", 1);
 INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(8, "bevarage", "Bevarage", 3);
-INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(9, "party-supply", "Party-Supply", 1);
-INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(10, "party-supply", "Party-Supply", 3);
+INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(9, "party-supply", "Party-supply", 1);
+INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(10, "party-supply", "Party-supply", 3);
 INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(11, "bevarage", "Bevarage", 4);
-INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(12, "party-supply", "Party-Supply", 4);
+INSERT INTO `homit`.`catalog_categories`(id,name,display_name, super_category_id) VALUES(12, "party-supply", "Party-supply", 4);
 
 /* Insert subcategories*/
 INSERT INTO `homit`.`catalog_subcategories`(id,name,category_id) VALUES(1, "Lager", 1);

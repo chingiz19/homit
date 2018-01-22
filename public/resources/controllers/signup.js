@@ -10,7 +10,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
 
     var login = this;
     login.reset = function () {
-        login.modalTitle = "Signin / Signup";
+        login.modalTitle = "Sign";
         login.mainButtonText = "Next";
         login.goToSignIn = false;
         login.goToSignUp = false;
@@ -37,8 +37,8 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 .highlightClass("md-accent")
                 .toastClass("toast-white")
                 .parent($("notification"))
-                .position('top right');
-
+                .position('top right')
+                .hideDelay(40000);
         if (action) {
             toast.action(action);
             $mdToast.show(toast).then(function(response){

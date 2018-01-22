@@ -35,7 +35,7 @@
             sessionStorage.setAddressLng(latLng.lng());
             $scope.scrollTo('homitHub');
         } else {
-            $scope.addressMessage = "Sorry, we do not deliver to your location at the moment";
+            $scope.addressMessage = "Sorry, we do not deliver to your location at the moment.";
             $scope.scrollTo('coverage');
         }
     };

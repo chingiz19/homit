@@ -180,8 +180,7 @@
                                             <img ng-src={{product.image}}>
                                         </li>
 
-                                        <img ng-if="!product.store_open" class="catalog-store-closed" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
-
+                                        <img  ng-if="!product.store_open" class="catalog-store-closed" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
                                         <li class="brand hmtTxt">{{product.brand}} {{product.name}}</li>
                                         <li class="price">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</li>
                                     </ul>

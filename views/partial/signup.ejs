@@ -7,11 +7,11 @@
         <div class="modal-header">
             <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
             <section layout="row" layout-wrap>
-                <md-button class="md-fab md-mini md-primary" ng-click="login.reset();"  aria-label="loginReset"
-                    ng-show ="login.goToSignUp || login.goToSignIn || login.goToForgotPassword">
-                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                </md-button>
-                <h3>{{login.modalTitle}}</h3>
+                <div id="signHeader" layout="row">
+                    <img ng-src="{{'/resources/images/globe.svg'}}">
+                    <div>{{login.modalTitle}}</div>
+                </div>
+                <h3></h3>
             </section>
         </div>
         <div class="modal-body">
@@ -19,12 +19,12 @@
                 <h2 md-colors="{color: 'primary'}">{{ login.loadingMessage }}</h2>
                 <md-progress-circular md-colors="{color: 'primary'}" ng-disabled="!login.isLoading" md-diameter="96"></md-progress-circular>
             </div>
-            <div layout="column" ng-if="!login.isLoading">
-                <form name="loginSignupForm">
+            <div id="inputForm" ng-if="!login.isLoading">
+                <div name="loginSignupForm" layout="column" flex="90" >
                     <!-- Universal Email -->
-                    <md-input-container class="md-block">
+                    <md-input-container id="emailInput">
                         <label>Email</label>
-                        <input required name="email" type="email" ng-model="login.email"/>
+                        <input name="email" ng-model="login.email" type="email" required/>
                         <div ng-messages="loginSignupForm.email.$error">
                             <div ng-message="required">This is required!</div>
                             <div ng-message="email">Invalid email</div>
@@ -32,7 +32,7 @@
                     </md-input-container>
 
                     <!-- First name -->
-                    <md-input-container class="md-block" ng-if="login.goToSignUp">
+                    <md-input-container id="fname-input" class="md-block" ng-if="login.goToSignUp">
                         <label>First name</label>
                         <input name="firstname" type="text" ng-model="login.fname" required/>
                         <div ng-messages="loginSignupForm.firstname.$error">
@@ -41,7 +41,7 @@
                     </md-input-container>
 
                     <!-- Last name -->
-                    <md-input-container class="md-block" ng-if="login.goToSignUp">
+                    <md-input-container id="lname-input" class="md-block" ng-if="login.goToSignUp">
                         <label>Last name</label>
                         <input name="lastname" type="text" ng-model="login.lname" required/>
                         <div ng-messages="loginSignupForm.lastname.$error">
@@ -50,64 +50,13 @@
                     </md-input-container>
 
                     <!-- Password -->
-                    <md-input-container class="md-block" ng-if="login.goToSignIn || login.goToSignUp">
+                    <md-input-container id="password-input" class="md-block" ng-if="login.goToSignIn || login.goToSignUp">
                         <label>Password</label>
                         <input name="password" type="password" ng-model="login.password" required/>
                         <div ng-messages="loginSignupForm.password.$error">
                             <div ng-message="required">This is required!</div>
                         </div>
                     </md-input-container>
-
-                    <div layout="row" layout-align="space-between" ng-if="login.goToSignUp">
-                        <!-- Date of birth -->
-                        <md-input-container>
-                            <label>Day</label>
-                            <md-select name="day" ng-model="login.birth_day" required>
-                                <md-option ng-value="1">1</md-option>
-                                <md-option ng-value="2">2</md-option>
-                                <md-option ng-value="3">3</md-option>
-                                <md-option ng-value="4">4</md-option>
-                                <md-option ng-value="5">5</md-option>
-                                <md-option ng-value="6">6</md-option>
-                                <md-option ng-value="7">7</md-option>
-                                <md-option ng-value="8">8</md-option>
-                                <md-option ng-value="9">9</md-option>
-                            </md-select>
-                            <div ng-messages="loginSignupForm.day.$error">
-                                <div ng-message="required">This is required!</div>
-                            </div>
-                        </md-input-container>
-
-                        <!--Date of birth -->
-                        <md-input-container>
-                            <label>Month</label>
-                            <md-select name="month" ng-model="login.birth_month" required>
-                                <md-option ng-value="1">January</md-option>
-                                <md-option ng-value="2">February</md-option>
-                                <md-option ng-value="3">March</md-option>
-                                <md-option ng-value="4">April</md-option>
-                            </md-select>
-                            <div ng-messages="loginSignupForm.month.$error">
-                                <div ng-message="required">This is required!</div>
-                            </div>
-                        </md-input-container>
-
-                        <!--Date of birth -->
-                        <md-input-container >
-                            <label>Year</label>
-                            <md-select name="year" ng-model="login.birth_year" required>
-                                <md-option ng-value="2014">2014</md-option>
-                                <md-option ng-value="2015">2015</md-option>
-                                <md-option ng-value="2016">2016</md-option>
-                                <md-option ng-value="2017">2017</md-option>
-                            </md-select>
-                            <div ng-messages="loginSignupForm.year.$error">
-                                <div ng-message="required">This is required!</div>
-                            </div>
-                        </md-input-container>
-                    </div>
-
-                    
                     <!-- Forgot password -->
                     <div layout="column" layout-align="start">
                             <md-button class="md-primary" ng-click="login.goToForgotPasswordForm()" ng-if="login.goToSignIn">Forgot Password</md-button>
@@ -115,9 +64,9 @@
                     
                     <!-- Main Button -->
                     <div layout="column" layout-align="start">
-                        <md-button class="md-raised md-primary" ng-click="login.checkState();">{{login.mainButtonText}}</md-button>
+                        <md-button id="nextButton" class="md-raised md-primary" ng-click="login.checkState();">{{login.mainButtonText}}</md-button>
                     </div>
-                </form>
+                </div>
             </div>
             <notification layout="column" layout-align="center center"></notification>
         </div>
