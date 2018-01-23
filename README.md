@@ -60,7 +60,6 @@
 		LOG_FILE_NAME=
 		DEBUG_LEVEL=  #error | warn | info | verbose | debug | silly 
 		LOG_FILE_PATH=
-		DEBUG=
 
 		# Keys
 		SESSION_KEY=
