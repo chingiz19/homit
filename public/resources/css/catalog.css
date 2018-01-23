@@ -525,8 +525,8 @@ body{
     }
     .navigateMobIconA svg{
         fill:rgba(255,255,255,1);
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
     }
     /*Side Nav*/
     .mdSideNavL1{
@@ -610,7 +610,7 @@ body{
     }
     .col24{
         display: flex; justify-content: center;
-        left: 0px; top: 25px;
+        left: 0px; top: 11px;
         min-width: 900px;width: 100%;
         margin-left: 0;
         }
@@ -620,10 +620,10 @@ body{
         min-height: 520px;
     }
     .itemBoxL2{
-        padding: 37px 20px 0 20px;
+        /* padding: 0px 20px 0 20px; */
+        padding:0 ;
         margin-bottom: 0;
     }
-    /*item Price and Brand*/
     .brand{
         height: 3em; width: 360px;
         font-size: 26px;
@@ -631,7 +631,6 @@ body{
     .price{
         font-size: 23px;
     }
-    /*Item Picture*/
     .itmPic{
         display: flex;
         justify-content: center;
@@ -641,12 +640,11 @@ body{
     .itmPic img{
         width: 100%; height: auto;
     }
-    /*Add to Cart button*/
     .addToCrtBtn{
-        width: 96%; height: 4em;
-        margin-left: 2%; 
-        letter-spacing: 0.025em;
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
+        position: relative;
+        width: 300px;
+        height: 50px;
+        margin: 0px 50px 10px 50px;
     }
     .add-shopping-cart svg{
         height: 50px; width: 50px;
@@ -660,6 +658,22 @@ body{
     }
     .shopping_cart{
         padding-top: 1px;
+    }
+    .pvChangeBx{
+        display: none;
+    }
+    .price{
+        position: absolute;
+        bottom: 5px;
+        width: 100%;
+    }
+    .price-volume-pack-mobile{
+        position: absolute; 
+        bottom: 45px; 
+        width: 100%; 
+        padding: 0; margin: 0; 
+        display: flex; justify-content: center; 
+        font-size: 25px;
     }
 }
 

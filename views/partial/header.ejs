@@ -6,20 +6,25 @@
 <link href="/resources/css/generic.css" rel="stylesheet">
 <nav layout="column" ng-controller="NavigationController" class="navCont" ng-cloak>
     <input id="searchBarBoolean" type="hidden" value="<%= showSearchBar %>">
-    <md-toolbar class="homit-header-bigscreen fixed-header" ng-style="(showSearchBar == 'false') && {'background-color': 'transparent !important'}">
+    <md-toolbar class="fixed-header" ng-style="(showSearchBar == 'false') && {'background-color': 'transparent !important'}">
         <div class="md-toolbar-tools header">
             <div class="header-icon">
                 <a class="mVerHedL2a1" href="/main" target="_self">
-                    <img ng-show="showSearchBar == 'true'" ng-src="{{'/resources/images/Homit_Logo_white.jpeg'}}" width="42px" height="42px;"
-                    />
-                    <img class="homit-logo-tm-image" ng-show="showSearchBar == 'false'" ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}"/>
+                    <img class="homit-logo-white-image" ng-show="showSearchBar == 'true'" ng-src="{{'/resources/images/Homit_Logo_white.jpeg'}}"
+                        width="42px" height="42px;" />
+                    <img class="homit-logo-tm-image" ng-show="showSearchBar == 'false'" ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" />
                 </a>
             </div>
-            <div class="mnSrch" ng-show="showSearchBar == 'true'">
+            <!-- Search button, mobile device -->
+            <md-button id="clear-search-mobile" aria-label="searchOrClear-mobile" ng-show="showSearchBar == 'true'" ng-click="searchRequest = '' ; searchDisplay = ''; mobileSearchShow = !mobileSearchShow">
+                <ng-md-icon ng-if="!mobileSearchShow" icon="search"></ng-md-icon>
+                <ng-md-icon ng-if="mobileSearchShow" icon="clear"></ng-md-icon>
+            </md-button>
+            <div class="header-search" ng-show="showSearchBar == 'true'">
                 <md-input-container class="mnSrchA" layout="row">
-                    <md-button id="clear-search" aria-label="searchOrClear" class="mnSrchB" ng-click="searchRequest = '' ; searchDisplay = ''; ">
-                        <ng-md-icon ng-if="!searchRequest" icon="search" class="header-search-icon" size="25"></ng-md-icon>
-                        <ng-md-icon ng-if="searchRequest" icon="clear" class="header-search-icon" size="25"></ng-md-icon>
+                    <md-button id="clear-search" class="mnSrchB" aria-label="searchOrClear" ng-click="searchRequest = '' ; searchDisplay = ''; ">
+                        <ng-md-icon ng-if="!searchRequest" icon="search" class="header-search-icon"></ng-md-icon>
+                        <ng-md-icon ng-if="searchRequest" icon="clear" class="header-search-icon"></ng-md-icon>
                     </md-button>
                     <label class="mnSrchAA">
                     </label>
@@ -70,31 +75,30 @@
                     class="hdrRendBtn" ng-show="showSearchBar == 'true'">
                     <ng-md-icon icon="dashboard" class="header-icon"></ng-md-icon>
                 </md-button>
-                <md-button ng-if="!isSignedIn" aria-label="header-sign" data-toggle="modal" data-target="#loginModal" class="hdrRendBtn">
+                <md-button id="sign-button" ng-if="!isSignedIn" aria-label="header-sign" data-toggle="modal" data-target="#loginModal" class="hdrRendBtn">
                     <ng-md-icon icon="person_outline" style="filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));" class="header-icon"></ng-md-icon>
                 </md-button>
-                <md-button ng-if="isSignedIn" aria-label="myAccExtBox" ng-click="hdrExtBx('hdrMyAcc', 'hdrMyAcc1', 'hdrMyAcc2', 'hdrMyAcc3')"
-                    class="hdrRendBtn">
+                <md-button id="signed-in-button" ng-if="isSignedIn" aria-label="myAccExtBox" ng-click="hdrExtBx('hdrMyAcc', 'hdrMyAcc1', 'hdrMyAcc2', 'hdrMyAcc3')" class="hdrRendBtn">
                     <ng-md-icon icon="person" class="header-icon"></ng-md-icon>
                 </md-button>
                 <div id="hdrMyAcc" aria-hidden="true" ng-if="isSignedIn" class="myAccnt fdIn">
                     <div id="hdrMyAcc1" class="bxExtn"></div>
                     <div id="hdrMyAcc" class="storeHubA">
-                        <ul id="hdrMyAcc3" class="myAccntAA" layout="column">
-                            <li class="myAccntBAA myAccntFCS" ng-click="hrefTo('/myaccount')">
+                        <ul id="my-account-ul" class="myAccntAA" layout="column">
+                            <li id="myaccount-li" class="my-account-box myAccntFCS" ng-click="hrefTo('/myaccount')">
                                 <div>
-                                    <span class="hmtHubTxt myAccntBAAAA">{{ username }}</span>
+                                    <span class="hmtHubTxt my-account-text">{{ username }}</span>
                                 </div>
                             </li>
-                            <li class="myAccntBAB myAccntFCS" ng-click="hrefTo('/checkout')">
+                            <li id="checkout-li" class="my-account-box myAccntFCS" ng-click="hrefTo('/checkout')">
                                 <div>
-                                    <span class="hmtHubTxt myAccntBAAAA">Check Out</span>
+                                    <span class="hmtHubTxt my-account-text">Check Out</span>
                                 </div>
                             </li>
                             <li class="myAccntBAC"></li>
-                            <li class="myAccntBAD myAccntFCS" ng-click="logout()">
+                            <li class="my-account-signout myAccntFCS" ng-click="logout()">
                                 <div>
-                                    <span class="hmtHubTxt myAccntBADAA">Sign Out
+                                    <span class="hmtHubTxt my-account-signout-text">Sign Out
                                         <span>
                                 </div>
                             </li>
@@ -104,6 +108,53 @@
             </div>
         </div>
     </md-toolbar>
+
+    <!-- Mobile Search Start -->
+    <md-input-container id="mobile-search-container" ng-show="mobileSearchShow" layout="row">
+        <label></label>
+        <input id="glbSearchRequest-mobile" ng-model="searchRequest" placeholder="Search to Homit...">
+        <ng-md-icon icon="search" class="searchIconInput" class="searchIconHeader"></ng-md-icon>
+    </md-input-container>
+    <div ng-if="searchDisplay && screenIsMob" id="search-result-mobile">
+        <ul ng-if="resultSuperCategory.length">
+            <li ng-repeat="node in resultSuperCategory" class="supercategory" class="flex-li">
+                <a href="/catalog/{{node.super_category}}/" target="_self" id="super_category_ + {{$index + 1}}">
+                    <span>{{node.super_category_display}}</span>
+                </a>
+            </li>
+            <li ng-if="resultCategory.length || resultSubcategory.length || resultProducts.length" class="search-line">
+                <div></div>
+            </li>
+        </ul>
+        <ul ng-if="resultCategory.length || resultSubcategory.length">
+            <li ng-repeat="node in resultCategory" class="flex-li">
+                <a href="/catalog/{{node.super_category}}/{{node.category}}" target="_self" id="category_ + {{$index + 1}}">
+                    <span>{{node.category_display}}</span>
+                </a>
+            </li>
+            <li ng-repeat="node in resultSubcategory" class="flex-li">
+                <a href="/catalog/{{node.super_category}}/{{node.category}}" target="_self" ng-click="sendSubcategory(node.subcategory, 0)"
+                    id="subcategory_ + {{$index + 1}}">
+                    <span>{{node.subcategory}}</span>
+                </a>
+            </li>
+            <li ng-if="resultProducts.length" class="search-line">
+                <div></div>
+            </li>
+        </ul>
+        <ul ng-if="resultProducts.length" class="searched-product-mobile">
+            <li ng-repeat="node in resultProducts">
+                <a href="/catalog/{{node.super_category}}/{{node.category}}" target="_self" layout="row" ng-click="sendSubcategory(node.subcategory, node.product_id)"
+                    id="product_ + {{$index + 1}}">
+                    <span>
+                        <img ng-src="/resources/images/products/{{node.super_category}}/{{node.category}}/{{node.image}}">
+                    </span>
+                    <span class="product-brand-text-mobile">{{node.brand}} {{node.name}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- End -->
     <!-- Dashboard -->
     <div id="hdrHub" aria-hidden="true" class="storeHub fdIn">
         <div id="hdrHub1" class="bxExtn"></div>
@@ -111,15 +162,15 @@
             <ul id="hdrHub3" class="storeHubAA" layout="column">
                 <li flex="20" class="storeHubAAA" ng-click="hrefTo('/catalog/snack-vendor')">
                     <div class="storeHubAAAA">
-                        <ng-md-icon icon="panorama_vertical" class="storeHubAAAAA" size="40">
+                        <ng-md-icon icon="panorama_vertical" class="store-hub-icon">
                     </div>
-                    <div class="hmtHubTxt storeHubAAAAB">Snack Vendor</div>
+                    <div class="store-hub-text">Snack Vendor</div>
                 </li>
                 <li flex="20" class="storeHubAAA" class="text-center" ng-click="hrefTo('/catalog/liquor-station')">
                     <div class="storeHubAAAA">
-                        <ng-md-icon icon="local_bar" class="storeHubAAAAA" size="40">
+                        <ng-md-icon icon="local_bar" class="store-hub-icon">
                     </div>
-                    <div class="hmtHubTxt storeHubAAAAB">Liqour Station</div>
+                    <div class="store-hub-text">Liqour Station</div>
                 </li>
             </ul>
         </div>

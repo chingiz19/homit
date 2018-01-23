@@ -372,7 +372,7 @@ app.controller("checkoutController",
         };
 
         $scope.sanitizeInput = function (text, type) {
-            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+ -]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/, "drInstruction": /^[a-zA-Z0-9]*$/ };
+            var pattern = { "fname": /^[a-zA-Z]*$/, "lname": /^[a-zA-Z]*$/, "email": /^.+@.+\..+$/, "phone": /^[0-9()+ -]*$/, "cd_1": /^[0-9]*$/, "cd_2": /^[0-9]*$/, "cd_3": /^[0-9]*$/, "drInstruction": /^[a-zA-Z0-9 -]*$/ };
             if (text && type) {
                 if (text.match(pattern[type])) {
                     $scope.userInfo[type + "_valid"] = true;
@@ -380,6 +380,8 @@ app.controller("checkoutController",
                 else {
                     $scope.userInfo[type + "_valid"] = false;
                 }
+            }else if(text == undefined){
+                $scope.userInfo[type + "_valid"] = false;
             }
             readyToHomeIt();
         };
@@ -409,7 +411,7 @@ app.controller("checkoutController",
         };
 
         function readyToHomeIt() {
-            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo.hasLiquor) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid && $scope.userInfo.drInstruction_valid == false) {
+            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo.hasLiquor) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid && ($scope.userInfo.drInstruction_valid == false || $scope.userInfo.drInstruction_valid == undefined)) {
                 $scope.userInfo.HomeIt = true;
             } else {
                 $scope.userInfo.HomeIt = false;

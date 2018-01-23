@@ -26,7 +26,7 @@ Columns-2 consist of items and items' info*/
         transform: translateZ(0);-webkit-transform: translateZ(0);
         z-index: 5;
     }
-    .glyClsBtn{
+    .sidNav-close-button{
         margin-right: auto !important;
     }
     .summerLnP2{
@@ -131,27 +131,24 @@ navbar{
     justify-content: center; 
     margin-top: 25px;
 }
-.glypOpnSN
+.open-btn
 {   
     margin: 0; padding: 0;
     max-height: 60px !important; height: 60px !important;
-    max-width: 30px !important; min-width: 15px !important; width: 15px;
+    max-width: 30px !important; min-width: 25px !important; width: 25px;
     background-color: rgba(245,245,245,1);
     border: 1px solid rgba(200,200,200,1);
     border-right-width: 0px;
-    border-radius: 4px 0 0 4px; 
-}
-.glypOpnSN:hover{
-    background-color: rgba(245,245,245,1) !important;
-    border-radius: 25px 0 0 25px;
-    width: 25px;
-    transition: all 0.3s ease, background-color .3s ease;
+    border-radius: 25px 0 0 25px; 
 }
 .col1ChevRgt .md-button:not([disabled]).md-focused {
     background-color: rgba(245,245,245,1) !important;
 }
-.glypOpnSNsgn{
+.open-btn-icon{
     fill: rgb(63,81,181);
+}
+.open-btn-icon svg{
+    width: 20px; height: 20px;
 }
 .bigClass{
     margin-bottom: 0px;
@@ -218,10 +215,14 @@ md-backdrop.md-opaque {
     background-color: rgba(33,33,33,0.7);
     z-index:1;
 }
-.glyClsBtn{
+.sidNav-close-button{
+    fill: rgba(255,255,255,1);
     margin: 0; padding: 0;
 }
-.glyClsBtnSgn{
+.sidNav-close-button svg{
+    width: 30px; height: 30px;
+}
+.sidNav-close-button-icon{
     color: rgb(254,254,254);
     font-size: 14px;
 }
@@ -296,6 +297,9 @@ md-backdrop.md-opaque {
     font-size: 19px; font-weight: bold;
     color: rgb(255,255,255);
 }
+#product-list{
+    margin-top: 130px;
+}
 .cartBItems1{
     padding: 0;
     background-color: rgb(255,255,255);
@@ -347,15 +351,27 @@ md-backdrop.md-opaque {
 }
 
 /*Mobile screens*/
-@media screen and (max-device-width: 480px) {
+@media screen and (max-device-width: 600px) {
+    body{
+        font-size: 23px
+    }
     .mdSideNavL1{
         max-width: 800px !important;
         width: 60% !important; height: 96% !important;
     }
+    .container{
+        margin: 0 !important;
+        width: 100% !important;
+    }
     .col1{
-        width: 100% !important; height: 96% !important;
-        line-height: 1.6em;
-        font-size: 150% !important;
+        width: 100% !important;
+        top: 111px;
+    }
+    .inptFrm{
+        height: 90px;
+    }
+    .inptFrm input{
+        font-size: 80px;
     }
     .extBoxTtl{
         font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
@@ -372,7 +388,7 @@ md-backdrop.md-opaque {
     .summerLnP2{
         font-size: 26px;
     }
-    .glyClsBtnSgn{
+    .sidNav-close-button-icon{
         font-size: 20px;
     }
     .receiptB2a{
@@ -435,6 +451,35 @@ md-backdrop.md-opaque {
     .inptLblSC2{
         height: 37px !important;
         padding-top: 0 !important; padding-bottom: 0 !important;
+    }
+    .cardContainer{
+        margin: 0 auto 0 auto !important;
+    }
+    .open-btn{   
+        margin: 0; padding: 0;
+        max-height: 80px !important; height: 80px !important;
+        max-width: 50px !important; width: 50px;
+        background-color: rgba(245,245,245,1);
+        border: 1px solid rgba(200,200,200,1);
+        border-right-width: 0px;
+        border-radius: 45px 0 0 45px; 
+    }
+    .open-btn:hover{
+    }
+    .open-btn svg{
+        height: 40px; width: 40px;
+    }
+    .mdSideNavL1{
+        top: 0;
+        margin: 0;
+        height: 100% !important;
+        z-index: 10;
+    }
+    .sidNav-close-button svg{
+        height: 40px; width: 40px;
+    }
+    #product-list{
+        margin-top: 15px;
     }
 }
 md-backdrop.md-opaque {
@@ -629,16 +674,8 @@ md-backdrop.md-opaque {
     font-weight: 400;
 }
 
-
 md-toolbar{
     background-color: rgba(42,81,145, 0.85) !important;
-}
-
-@media (min-device-width: 601px){
-    .homit-header-bigscreen{
-        border-bottom: 1px solid rgba(42,81,145,1);
-        box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
-    }
 }
 
 #driver-instruction md-input-container{

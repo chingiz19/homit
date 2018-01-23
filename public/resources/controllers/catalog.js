@@ -204,7 +204,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         // End
         $window.onload = function () {
             var screen_width = $(window).width();
-            if (screen_width < 901) {
+            if (screen_width < 1000) {
                 $scope.screenIsMob = true;
             } else {
                 $scope.screenIsMob = false;

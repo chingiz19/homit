@@ -8,7 +8,6 @@
 .header .md-button:not([disabled]).md-focused {
     background-color: transparent;
 }
-
 [aria-hidden="true"] { visibility: hidden; }
   
 .fixed-header {
@@ -55,12 +54,11 @@
 .storeHubAAAA{
     background-color: rgba(42,81,145,0.9);
 }
-.storeHubAAAAA{
+.store-hub-icon{
     fill: rgba(250,250,250,0.99);
 }
-.storeHubAAAAB{
-    font-size: 15px;
-    margin: 0;
+.store-hub-icon svg{
+    width: 40px; height: 40px;
 }
 .bxExtn{
     position: absolute; 
@@ -71,11 +69,13 @@
     -webkit-transform: rotate(45deg); 
     z-index: 1;
 }
-.hmtHubTxt{
+.store-hub-text{
     color: rgba(0,0,0,1);
     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.045em;
     -webkit-font-smoothing: antialiased;
+    font-size: 15px;
+    margin: 0;
 }
 .myAccntAA{
     margin-top: 10px;
@@ -83,30 +83,26 @@
     width: 100%;
     margin: 0; padding: 0;
 }
-.myAccntBAA{
-    padding: 5px 0 0px 20;
-}
-.myAccntBAB{
+.my-account-box{
     padding: 5px 0 5px 20;
 }
-.myAccntBAD{
+.my-account-signout{
     margin-top: 5px;
     padding: 5px 0 0px 20; 
 }
-.myAccntBAAAA{
+.my-account-text{
     color: black; font-size: 16px; font-weight: 500;
 }
-.myAccntBADAA{
+.my-account-signout-text{
     color: black; font-size: 14px;
 }
-.myAccntBAB:hover .myAccntBAAAA{
+.my-account-box:hover .my-account-text{
     text-decoration-line: underline;
 }
-
 .myAccntBAA:hover .myAccntBAAAA{
     text-decoration-line: underline;
 }
-.myAccntBAD:hover .myAccntBADAA{
+.my-account-signout:hover .my-account-signout-text{
     text-decoration-line: underline;
 }
 .myAccntBAC{
@@ -127,28 +123,28 @@
 /*Start*/
 @media screen and (min-device-width: 1501px){
     /* Header Search */
-    .mnSrch{
+    .header-search{
         width: 500px; 
     }
 }
 @media screen and (max-device-width: 1500px) and (min-device-width: 601px) {
     /* Header Search */
-    .mnSrch{
+    .header-search{
         width: 465px; 
     }
 }
 @media (max-width: 800px) and (min-width: 700px){
-    .mnSrch{
+    .header-search{
         width: 400px; 
     }
 }
 @media (max-width: 699px) and (min-width: 600px){
-    .mnSrch{
+    .header-search{
         width: 300px; 
     }
 }
 @media (max-width: 599px){
-    .mnSrch{
+    .header-search{
         display: none;
     }
 }
@@ -157,8 +153,11 @@
         display: none;
     }
 }
-
+/* Non-mobile devices */
 @media (min-device-width: 601px){
+    #mobile-search-container, #clear-search-mobile{
+        display: none;
+    }
     .navCont{
         margin-bottom: 55px;
     }
@@ -235,7 +234,7 @@
         border: 1px inset;
     }
     /*Header Search*/
-    .mnSrch{
+    .header-search{
         position: relative;
         left: 7%;
     }
@@ -330,7 +329,7 @@
         border: 1px rgba(220,220,220,0.99) solid; 
         border-radius: 2px;
         background-color: rgba(255,255,255,1);
-        box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+        box-shadow: 0 0px 10px rgba(0,0,0,0.3);
         z-index: 1000;
     }
     .myAccnt{
@@ -359,14 +358,185 @@
 
 /*For non-computer screen*/
 @media screen and (max-device-width: 600px) {
+    md-toolbar{
+        height: 110px;
+    }
+    .md-toolbar-tools{
+        max-height: 110px;
+        height: 110px;
+    }
+    .homit-logo-white-image{
+        width: 88px; height: 88px;
+    }
+    #dashboardBtn, #sign-button, #clear-search-mobile, #signed-in-button{
+        min-height: 100px; height: 100px;
+        min-width: 90px; width: 90px;
+        fill: rgba(255,255,255,1);
+    }
+    #dashboardBtn{
+        margin-right: 5px;
+    }
+    #sign-button{
+        margin-left: 5px;
+    }
+    #sign-button svg{
+        height: 90px; width: 90px;
+    }
+    #signed-in-button svg{
+        height: 90px; width: 90px;
+    }
+    #dashboardBtn svg{
+        height: 90px; width: 90px;
+    }
+    #clear-search-mobile{
+        fill: rgba(255,255,255,1);
+    }
+    #clear-search-mobile svg{
+        height: 70px; width: 70px;
+    }
+    .header-search{
+        display: none;
+    }
    .homit-logo-tm-image{
         width: 185px; height: 55px;
         filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));
    }
-   .hdrRendBtn{
-       fill: rgba(255,255,255,1);
+   .header-search-icon-mobile{
+        fill: rgba(255,255,255,1);
    }
-   .hdrRendBtn svg {
-        width: 60px; height: 60px;
+   .header-search-icon-mobile svg{
+       height: 40px; width: 40px;
+   }
+    #mobile-search-container svg{
+        height: 50px; width: 50px;
+        fill: rgba(0,0,0,0.8);
+        margin-top: 10px;
+    }
+    #mobile-search-container .md-input{
+        border-width: 0 !important;
+    }
+    #mobile-search-container.md-input-focused .md-input{
+        border-color: rgba(0,0,0,0.12) !important;
+        border-width: 0 !important;
+    }
+    #glbSearchRequest{
+        display: none;
+    }
+    .search-line{
+        display: flex; justify-content: center;
+   }
+   .search-line div{
+        width: 90%; 
+        border-bottom: 2px solid rgba(105, 103, 103, 0.15); 
+        line-height: 2px; margin: 5px 0 5px;
+        margin: 10px auto 10px auto;
+   }
+   #search-result-mobile a{
+       text-decoration: none;
+   }
+   #mobile-search-container{
+       position: fixed; 
+       top: 92px; 
+       height: 90px; width: 100%;
+       background-color: rgba(254,254,254,1);
+       border-bottom: 1px solid rgba(0,0,0,0.4);
+       z-index: 1000;
+   }
+   #mobile-search-container lable{
+       display: none;
+   }
+   #mobile-search-container input{
+       height: 80%; width: 100%; 
+       font-size: 45px; 
+       padding-top: 20px;
+   }
+   .searchIconInput{
+       height: 69px; width: 80px; 
+       display: flex; justify-content: center; align-items: center;
+   }
+   #search-result-mobile{
+       position: fixed; 
+       top: 201px; 
+       max-height: 70%; width: 100%; 
+       border-width: 0 1px 2px 1px; border-style: solid; border-color: rgba(0,0,0,0.4); 
+       background-color: rgba(240,240,240,1);
+       overflow-y: scroll; 
+       z-index: 1000;
+   }
+   #search-result-mobile ul{
+       margin: 15px 0 15px 0;
+   }
+   .flex-li{
+       display: flex; align-items: center; 
+       padding-top: 10px;
+   }
+   .flex-li span{
+       font-size: 40px; 
+       color: rgba(0,0,0,0.95);
+   }
+   .flex-li a{
+       width: 100%;
+   }
+   .searched-product-mobile li{
+        margin: 20px 0 20px 0;
+   }
+   .searched-product-mobile img{
+       height: 150px; width: 150px;
+   }
+   .product-brand-text-mobile{
+       display: flex; align-items: center; 
+       font-size: 35px; color: rgba(0,0,0,0.95); 
+       margin-left: 15px;
+   }
+   .storeHub{
+        position: fixed; 
+        top: 110px; right: 50px;; 
+        height: 650px; width: 440px;  
+        border: 1px rgba(220,220,220,0.99) solid; 
+        border-radius: 2px;
+        background-color: rgba(255,255,255,1);
+        box-shadow: 0 0px 10px rgba(0,0,0,0.3);
+        z-index: 1000;
+    }
+    .store-hub-icon svg{
+        height: 80px; width: 80px;
+    }
+    .store-hub-text{
+        font-size: 20px;
+    }
+    .col24{
+        padding-left: 80px !important;
+    }
+    .myAccnt{
+        position: fixed; 
+        top: 111px; right: 35px;
+        height: 210px; width: 300px;  
+        border: 1px rgba(220,220,220,0.99) solid; 
+        border-radius: 2px;
+        background-color: rgba(255,255,255,1);
+        box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    #hdrMyAcc1{
+        left: 90%;
+    }
+    #my-account-ul{
+        height: 100%;
+    }
+    .my-account-signout-text{
+        font-size: 30px;
+    }
+    .my-account-checkout-text{
+        font-size: 33px;
+    }
+    .my-account-text{
+        font-size: 34px;
+    }
+    #myaccount-li{
+        padding-top: 15px;
+    }
+    #checkout-li{
+        padding-top: 5px;
+        padding-bottom: 15px;
     }
 }

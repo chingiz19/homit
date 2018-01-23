@@ -19,7 +19,7 @@
                 <h2 md-colors="{color: 'primary'}">{{ login.loadingMessage }}</h2>
                 <md-progress-circular md-colors="{color: 'primary'}" ng-disabled="!login.isLoading" md-diameter="96"></md-progress-circular>
             </div>
-            <div id="inputForm" ng-if="!login.isLoading">
+            <div id="signInputForm" ng-if="!login.isLoading">
                 <div name="loginSignupForm" layout="column" flex="90" >
                     <!-- Universal Email -->
                     <md-input-container id="emailInput">

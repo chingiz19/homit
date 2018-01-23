@@ -13,15 +13,15 @@
         <div layout="row" layout-align="center" class="container">
             <div class="col1">
                 <div class="col1ChevRgt">
-                    <md-button aria-label="toggleRight" ng-click="toggleRight()" class="glypOpnSN" hide-gt-md>
-                        <ng-md-icon icon="keyboard_arrow_left" class="glypOpnSNsgn" size="20"></ng-md-icon>
+                    <md-button aria-label="toggleRight" ng-click="toggleRight()" class="open-btn" hide-gt-md>
+                        <ng-md-icon icon="keyboard_arrow_left" class="open-btn-icon"></ng-md-icon>
                     </md-button>
                 </div>
                 <div class="userPic">
                     <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100" />
                 </div>
                 <!--DoB-->
-                <div layout="column" ng-if="userInfo.hasLiquor">
+                <div id="dob" layout="column" ng-if="userInfo.hasLiquor">
                     <div layout="row" layout-align="center">
                         <md-input-container class="md-block bigClass">
                             <label class="inptLbl">Date</label>
@@ -110,7 +110,7 @@
                 <form id="driver-instruction" name="driverInstruction" class="inptFrm gu_address" style="display: flex; justify-content: flex-end;">
                     <md-input-container class="md-block bigClass" flex="50">
                         <label></label>
-                        <input name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="userInfo.drInstruction" ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')" placeholder="Driver Instruction" type="text"/>
+                        <input name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction" ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')" placeholder="Driver Instruction" type="text"/>
                         <div ng-messages="driverInstruction.drInstruction.$error">
                             <div ng-message="pattern" class="inptErMsg">Number and letter only</div>
                             <div ng-message="maxlength" class="inptErMsg">Maximum 60 characters</div>
@@ -219,8 +219,8 @@
                 <md-content layout-padding>
                     <div class="receiptB1">
                         <div class="summerLnP1">
-                            <md-button ng-click="close()" aria-label="HideSideNav" hide-gt-md class="glyClsBtn">
-                                <ng-md-icon icon="keyboard_arrow_right" size="30" style="fill: white;"></ng-md-icon>
+                            <md-button ng-click="close()" aria-label="HideSideNav" hide-gt-md class="sidNav-close-button">
+                                <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
                             </md-button>
                             <span class="summerLnP2">Order Summary</span>
                         </div>
@@ -253,7 +253,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="margin-top: 130px;">
+                    <div id="product-list">
                         <div ng-repeat="super_category in userCartToView" class="cartBItems1">
                             <div class="strBrk">
                                 <div flex="10" class="strTypeLn"></div>

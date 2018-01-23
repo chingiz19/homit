@@ -4,15 +4,24 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.init = function () {
         $scope.storeHub = false;
         $scope.userDropDown = false;
+        $scope.mobileSearchShow = false;
+        $scope.screenIsMob = false;
         var screen_width = $(window).width();
         try {
             $scope.deliveryAddress = $cookies.getObject("homit-address").name;
         } catch (e) {
             // ignore, address doesn't exist
         }
-
+        var screen_width = $(window).width();
+        console.log(screen_width);
+        if (screen_width < 1000) {
+            $scope.screenIsMob = true;
+        } else {
+            $scope.screenIsMob = false;
+        }
         $scope.showSearchBar = $("#searchBarBoolean").val();
 
+        addEvLisToSearch();
         checkUser();
     };
 
@@ -142,8 +151,17 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.isArrowPressed = false;
     $scope.resListNode = 0;
 
-    var searchRequestElement = document.getElementById('glbSearchRequest');
-    searchRequestElement.addEventListener('keyup', globalSearch, false);
+    function addEvLisToSearch(){
+        console.log($scope.screenIsMob);
+        if($scope.screenIsMob){
+            var searchRequestElement = document.getElementById('glbSearchRequest-mobile');    
+        } else{
+            var searchRequestElement = document.getElementById('glbSearchRequest');
+        }
+        searchRequestElement.addEventListener('keyup', globalSearch, false);
+        console.log("burda " + searchRequestElement.id);
+    }
+
     function globalSearch(evt) {
         if ($scope.searchRequest.length >= 3 && evt.keyCode != 40 && evt.keyCode != 38 && evt.keyCode != 13 && evt.keyCode != 27) {
             $http({

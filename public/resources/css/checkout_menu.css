@@ -156,13 +156,17 @@ li {
 }
 
 /*Order Summaty Buttons*/
-.ClsBtn{
+.close-button{
     display: flex; align-items: center; justify-content: center;
     min-width: 50px !important; width: 50px;
+    fill: rgba(5, 26, 25, 0.6);
     margin-right: auto;
     height: 100%;
     margin-left: 0;
     padding: 0;
+}
+.close-button svg{
+    width: 25px; height: 25px;
 }
 .glyClsBtnSgn{
     color: rgb(0,94,92);
@@ -208,7 +212,8 @@ li {
 /*Mobile screens*/
 @media screen and (max-device-width: 600px) {
     .shopping-cart svg{
-        height: 85px; width: 85px;
+        padding-top: 5px;
+        height: 80px; width: 80px;
         fill: rgba(0,94,92,0.8);
     }
     .cart1{
@@ -281,19 +286,12 @@ li {
         padding-right: 60px;
         font-size: 30px;
     }
-    /*Buttons*/
-    /* .ClsBtn{
-        display: flex; justify-content: flex-start;
-        padding: 0;
-        margin: 0 ;
-    } */
     .glyClsBtnSgn{
         font-size: 20px;
     }
     .ClsBtnCart{
         width: 50px; height: 50px;
     }
-    
     .chckOut{
         padding: 0;
         margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 30%;
@@ -301,7 +299,7 @@ li {
         font-size: 40px; font-weight: 600;
     }
     .clrCart{
-        top: 115px;
+        top: 135px;
         min-height: 50px !important;
     }
     .clrCartbtn{
@@ -331,6 +329,9 @@ li {
     .cartBItems2C2{
         font-size: 22px;
         margin: 0; padding: 0;
+    }
+    .close-button svg{
+        width: 50px; height: 50px;
     }
 }
 md-checkbox.md-checked .md-ink-ripple {

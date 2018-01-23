@@ -7,7 +7,7 @@ md-toast.toast-white .md-toast-content {
     color: #3f51b5;
     width: 400px;
 }
-#inputForm{
+#signInputForm{
     display: flex; 
     align-items: center; justify-content: center;
 }
@@ -49,10 +49,11 @@ md-toast.toast-white .md-toast-content {
         height: 30px; width: 30px;
         font-size: 30;
     }
-    #emailInput, #fname-input, #lname-input, #password-input{
+    #signInputForm md-input-container{
         height: 80px;
-        font-size: 25px;
-        font-weight: 400;
+    }
+    #signInputForm{
+        font-size: 20px;
     }
     .modal-header{
         margin-bottom: 10px;
