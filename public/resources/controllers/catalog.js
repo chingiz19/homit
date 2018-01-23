@@ -98,7 +98,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             delete p.container;
 
             $rootScope.$broadcast("addToCart", p);
-            notification.addCartItem(p);
+            // notification.addCartItem(p);
             }
         };
 

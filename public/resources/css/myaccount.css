@@ -270,3 +270,39 @@ md-toolbar{
         box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
     }
 }
+@media screen and (max-device-width: 600px) {
+    .content{
+        top: 111px;
+        height: 90%;
+    }
+    .contentLC{
+        max-width: 60% !important; width: 60% !important; 
+    }
+    .contentRC{
+        position: relative;
+        top: 5px;
+    }
+    md-input-container{
+        font-size: 30px;
+    }
+    .myTabs{
+        font-size: 35px;
+    }
+    .tglLbtn{
+        right: 49px;
+        min-width: 10px; width: 50px; height: 80px;
+        margin: 0; padding: 0; 
+        background-color: rgb(221, 233, 253); 
+        border:1px solid rgba(0,0,0,0.15); border-radius: 15px 0 0 15px; border-right-color: rgba(255,255,255,1);
+    }
+    .tglLbtn svg{
+        width: 45px; height: 45px;
+        padding-right: 3px;
+    }
+    .md-button.tglLbtn:not([disabled]):hover{
+        background-color: rgb(221, 233, 253);
+    }
+    .md-button.tglLbtn:not([disabled]).md-focused{
+        background-color: rgb(221, 233, 253);
+    }
+}

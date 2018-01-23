@@ -2,7 +2,7 @@ app.controller("notificationController", function ($scope, $sce, notification, $
 
     $scope.init = function(){
         $scope.clearAll();
-        $scope.defaultTimeout = 2000; // 2 seconds
+        $scope.defaultTimeout = 3000; // 2 seconds
     };
 
     $scope.clearAll = function () {

@@ -1,5 +1,5 @@
 app.controller("cartController", 
-function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $mdSidenav, $log, $location) {
+function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $mdSidenav, $log, $location, notification) {
 
     $scope.userCart = localStorage.getUserCart() || {};
     $scope.numberOfItemsInCart = 0;
@@ -39,10 +39,14 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
             tmpQuantity = super_category[product.depot_id].quantity;
             tmpQuantity++;
 
-            if (tmpQuantity >= 10) tmpQuantity = 10;
-
+            if (tmpQuantity > 10) {
+                tmpQuantity = 10;
+                $scope.numberOfItemsInCart = $scope.numberOfItemsInCart;
+            } else{
+                $scope.numberOfItemsInCart ++;
+                notification.addCartItem(product);
+            }
             super_category[product.depot_id].quantity = tmpQuantity;
-            $scope.numberOfItemsInCart++;
             $scope.totalAmount = $scope.totalAmount + product.price;
             $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
         } else {
@@ -52,7 +56,8 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
             super_category[product.depot_id].quantity = tmpQuantity;
             $scope.numberOfItemsInCart++;
             $scope.totalAmount = $scope.totalAmount + product.price;
-            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;            
+            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;   
+            notification.addCartItem(product);         
         }
         $scope.userCart[product.super_category] = super_category;
         updateUserCart($scope.userCart);

@@ -13,7 +13,6 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
             // ignore, address doesn't exist
         }
         var screen_width = $(window).width();
-        console.log(screen_width);
         if (screen_width < 1000) {
             $scope.screenIsMob = true;
         } else {
@@ -152,14 +151,12 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.resListNode = 0;
 
     function addEvLisToSearch(){
-        console.log($scope.screenIsMob);
         if($scope.screenIsMob){
             var searchRequestElement = document.getElementById('glbSearchRequest-mobile');    
         } else{
             var searchRequestElement = document.getElementById('glbSearchRequest');
         }
         searchRequestElement.addEventListener('keyup', globalSearch, false);
-        console.log("burda " + searchRequestElement.id);
     }
 
     function globalSearch(evt) {

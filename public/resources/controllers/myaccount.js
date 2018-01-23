@@ -1,6 +1,7 @@
 app.controller("myaccountController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "sessionStorage", "$mdToast", "date", "user", "mapServices",
     function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, $mdToast, date, user, mapServices) {
 
+        $scope.showSearchBar = true;
         var myaccount = this;
         myaccount.init = function () {
             myaccount.user = {};
@@ -18,9 +19,11 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
 
             myaccount.user.firstName = $scope.user.first_name;
             myaccount.user.lastName = $scope.user.last_name;
-            myaccount.user.birthYear = $scope.user.birth_date.slice(0, 4);
-            myaccount.user.birthMonth = new Date(parseInt($scope.user.birth_date.slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
-            myaccount.user.birthDay = parseInt($scope.user.birth_date.slice(8, 10), 10);
+            if($scope.user.birth_date){
+                myaccount.user.birthYear = $scope.user.birth_date.slice(0, 4);
+                myaccount.user.birthMonth = new Date(parseInt($scope.user.birth_date.slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
+                myaccount.user.birthDay = parseInt($scope.user.birth_date.slice(8, 10), 10);
+            }
             myaccount.user.email = $scope.user.user_email;
             myaccount.user.phoneNumber = $scope.user.phone_number;
             myaccount.user.address = $scope.user.address;
