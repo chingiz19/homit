@@ -176,6 +176,14 @@ gulp.task('test-views', ['compile', 'start'], function(){
     return stream;
 });
 
+gulp.task('test-db', function(){
+    var stream = gulp.src("./tests/db/*.test.js", {watch: false})
+            .pipe(mocha({
+                reporter: "spec",
+            }));
+    return stream;
+});
+
 gulp.task('run', function(cb){
     if (gutil.env.env == "production"){
         environments.current(production);
@@ -198,7 +206,8 @@ gulp.task('default', function(){
     css         |  copy css files to www folder
     img         |  copy img files to www folder
 
-    test-views  |  run test for views\n`;
+    test-views  |  run test for views
+    test-db     |  run test for db\n`;
 
     log(gulpTasksList);
 });
