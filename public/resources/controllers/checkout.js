@@ -273,6 +273,9 @@ app.controller("checkoutController",
             if (type == "0" || type == "01") {
                 sessionStorage.setCheckoutUserInfo($scope.userInfo);
             }
+            setTimeout(function(){
+                $scope.$apply();            
+            }, 100);
         }
 
         // Checkout Page right-SideNav functionality
