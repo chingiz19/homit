@@ -1,5 +1,8 @@
 app.controller("checkoutController",
     function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, localStorage, cartService, sessionStorage, date, mapServices) {
+        // Setting up Helcim test mode
+        $scope.helcimToken = "505e8387dfa8085c20be9b";
+        $scope.helcimTestMode = 1;
 
         $scope.userCart = localStorage.getUserCart() || {};
         $scope.numberOfItemsInCart = 0;
@@ -273,8 +276,8 @@ app.controller("checkoutController",
             if (type == "0" || type == "01") {
                 sessionStorage.setCheckoutUserInfo($scope.userInfo);
             }
-            setTimeout(function(){
-                $scope.$apply();            
+            setTimeout(function () {
+                $scope.$apply();
             }, 100);
         }
 
@@ -383,7 +386,7 @@ app.controller("checkoutController",
                 else {
                     $scope.userInfo[type + "_valid"] = false;
                 }
-            }else if(text == undefined){
+            } else if (text == undefined) {
                 $scope.userInfo[type + "_valid"] = false;
             }
             readyToHomeIt();

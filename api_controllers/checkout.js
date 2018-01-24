@@ -52,7 +52,8 @@ router.post('/placeorder', function (req, res, next) {
                             Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
                                 var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
                                 var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
-                                if (transactionDetails.transactions.transaction[0].amount >= totalPrice) {
+                                var transactionValid = MP.validateTransaction(transactionDetails, totalPrice);
+                                if (transactionValid) {
                                     var data = {
                                         phone_number: phone
                                     };
@@ -145,7 +146,8 @@ router.post('/placeorder', function (req, res, next) {
                             Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
                                 var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
                                 var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
-                                if (transactionDetails.transactions.transaction[0].amount >= totalPrice) {
+                                var transactionValid = MP.validateTransaction(transactionDetails, totalPrice);
+                                if (transactionValid) {
                                     User.findGuestUser(email).then(function (guestUserFound) {
                                         if (guestUserFound == false) {
                                             var data = {

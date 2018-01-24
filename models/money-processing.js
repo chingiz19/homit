@@ -11,6 +11,9 @@ var helcimHost = "secure.myhelcim.com";
 var helcimPath = "/api/";
 var pub = {};
 
+var statusApproved = "approved";
+var typePurchase = "purchase";
+var responseMessageApproved = "approved";
 
 /**
  * Requesting from Helcim to view transcation 
@@ -51,8 +54,8 @@ pub.getTransaction = function (transactionId, callback) {
     post_req.on('error', (error) => {
         var logMeta = {
             directory: __filename,
-            error_message:error.message
-          }
+            error_message: error.message
+        }
         Logger.log.info(`Could not get 'transactionView' from helcim (POST)`, logMeta);
         callback('empty');
     });
@@ -60,6 +63,19 @@ pub.getTransaction = function (transactionId, callback) {
     // Posting the data
     post_req.write(post_data);
     post_req.end();
+};
+
+pub.validateTransaction = function (transactionDetails, amountRequired) {
+    var transaction = transactionDetails.transactions.transaction[0];
+    if (transaction.amount[0] >= amountRequired
+        && transaction.type[0].toLowerCase() == typePurchase
+        && transaction.status[0].toLowerCase() == statusApproved
+        && transaction.responseMessage[0].toLowerCase() == responseMessageApproved
+        && transaction.test[0] == process.env.HELCIM_TEST_MODE) {
+        return true;
+    } else {
+        return false;
+    }
 };
 
 module.exports = pub;

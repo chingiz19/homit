@@ -52,6 +52,7 @@
 		# Helcim
 		HELCIM_ACCOUNT_ID=
 		HELCIM_API_TOKEN=
+		HELCIM_TEST_MODE=
 		
 		# Order Slips
 		ORDER_SLIPS_DIR=
