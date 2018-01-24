@@ -1,44 +1,58 @@
 /**
  * @copyright Homit 2018
  */
+var pub = {};
 
 var SECRET_KEY = "hF)Zf:NR2W+gBGF]"
 var connector = require('net');
-var pub = {};
-var outputStream;
-var cmConnection = new connector.Socket();
+var CM_DEFAULT_EMIT = "message";
+var cmSocketIOServer = require("http").createServer();
+var SocketIO = require("socket.io")(cmSocketIOServer, {
+    pingInterval: 2100,
+    pingTimeout: 2000
+});
+
 
 /* Building metadata for log */
 var logMeta = {
     directory: __filename
 }
 
-/* CM is listening at port 6262 on only localhost! */
-cmConnection.connect(6262, '127.0.0.1', function () {
+
+/* 
+*  Socke.io has it is own hand - shaker
+*  Connection listener that iniates all other listeners 
+*  once connection is established
+*/
+SocketIO.on('connection', function (client) {
     var verification = {
         "action": "verify_server",
         "key": SECRET_KEY
     }
-    cmConnection.write(" " + JSON.stringify(verification) + "\n");
-    outputStream = cmConnection;
+    CM.send(verification);
     Logger.log.debug("Connection to CM established", logMeta);
+
+    client.on('data', function (data) {
+        receiver(JSON.parse(data));
+    });
+
+    client.on('disconnect', function () {
+        Logger.log.warn("Connection to CM has been lost", logMeta);
+        SMS.alertDirectors("CM is down!!!");
+    });
+
+    /* CM error listener that will be logged here as well */
+    client.on('error', function (data) {
+        Logger.log.error("CM connection is experiencing issues", logMeta);
+    })
 });
 
-/* Listener for incoming data */
-cmConnection.on('data', function (data) {
-    receiver(JSON.parse(data));
+
+/* CM is listening at port 6262 on only localhost! */
+cmSocketIOServer.listen(6262, function () {
+    Logger.log.verbose('Listening for CM at 6262');
 });
 
-/* Lost connection listener */
-cmConnection.on('close', function (data) {
-    Logger.log.warn("Connection to CM has been lost", logMeta);
-    SMS.alertDirectors("CM is down!!!");
-});
-
-/* Connection error listener */ 
-cmConnection.on('error', function (data) {
-    Logger.log.error("CM connection is experiencing issues", logMeta);
-})
 
 var receiver = function (jsonResponse) {
     if (jsonResponse.action == "chikimiki_response_to_driver") {
@@ -97,7 +111,7 @@ var receiver = function (jsonResponse) {
                             dob: user.birth_date,
                             phone: user.phone_number,
                             address: orderDetails.delivery_address,
-                            // comments: orderDetails.comments,      //TODO: Elnar and Zaman add them in FE and BE
+                            comments: orderDetails.comments,      //TODO: Elnar and Zaman    << Pleae confirm this as well before we merge this branch >>
                             order: jsonOrder
                         };
 
@@ -124,14 +138,12 @@ var receiver = function (jsonResponse) {
     }
 };
 
+
 pub.send = function (json) {
     Logger.log.debug('Sending order to CM' + json + "\n", logMeta);
-    if (outputStream) {
-        outputStream.write(" " + JSON.stringify(json) + "\n");
-    } else {
-        Logger.log.error("Could not send order to CM", logMeta);
-    }
+    SocketIO.emit(CM_DEFAULT_EMIT, json);
 };
+
 
 pub.sendOrder = function (customerId, customerAddress, orderId, storeType) {
     var newOrder = {
@@ -149,6 +161,7 @@ pub.sendOrder = function (customerId, customerAddress, orderId, storeType) {
     };
     CM.send(newOrder);
 }
+
 
 pub.cancelOrder = function (orderId, driverId) {
     var driverIdString = "d_" + driverId;
