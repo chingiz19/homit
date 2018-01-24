@@ -157,6 +157,14 @@ var getFormattedProducts = function (products) {
     var tmpResult = {};
     for (var i = 0; i < products.length; i++) {
         var product = products[i];
+
+        var customSuperCategory = product.super_category.toLowerCase();
+        if (product.super_category.toLowerCase() == Catalog.safewaySuperCategory
+            || product.super_category.toLowerCase() == Catalog.convenienceSuperCategory
+            || product.super_category.toLowerCase() == Catalog.homitCarSuperCategory) {
+            customSuperCategory = Catalog.snackVendorSuperCategory;
+        }
+
         var imageLocation = "/resources/images/products/" + product.super_category.toLowerCase() + "/" + product.category.toLowerCase() + "/";
         // Adding to tmpResult
         tmpResult[product.depot_id] = {
@@ -165,7 +173,7 @@ var getFormattedProducts = function (products) {
             volume: product.volume,
             price: product.price,
             tax: product.tax,
-            super_category: product.super_category,
+            super_category: customSuperCategory,
             brand: products[i].brand,
             name: products[i].name,
             image: imageLocation + products[i].image,

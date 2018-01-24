@@ -235,14 +235,14 @@ var getFormattedProducts = function (products, storeOpen) {
         var p_package = product.packaging;
         var p_volume = product.volume;
 
-        var imageCategory = product.super_category.toLowerCase();
+        var customSuperCategory = product.super_category.toLowerCase();
         if (product.super_category.toLowerCase() == Catalog.safewaySuperCategory
             || product.super_category.toLowerCase() == Catalog.convenienceSuperCategory
             || product.super_category.toLowerCase() == Catalog.homitCarSuperCategory) {
-            imageCategory = Catalog.snackVendorSuperCategory;
+            customSuperCategory = Catalog.snackVendorSuperCategory;
         }
 
-        var imageLocation = "/resources/images/products/" + imageCategory + "/" + product.category.toLowerCase() + "/";
+        var imageLocation = "/resources/images/products/" + customSuperCategory + "/" + product.category.toLowerCase() + "/";
 
         if (tmpResult.hasOwnProperty(product.product_id)) {
             // Adding to product variant
@@ -269,7 +269,7 @@ var getFormattedProducts = function (products, storeOpen) {
                 type: products[i].type,
                 brand: products[i].brand,
                 name: products[i].name,
-                super_category: product.super_category,
+                super_category: customSuperCategory,
                 description: products[i].description,
                 image: imageLocation + products[i].image,
                 quantity: products[i].quantity,

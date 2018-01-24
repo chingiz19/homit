@@ -40,7 +40,7 @@ router.post('/modifyitem', function (req, res, next) {
             }
         });
     } else {
-        var userId = signedUser;
+        var userId = signedUser.id;
         Cart.modifyProductInCart(userId, depotId, quantity).then(function (result) {
             var isSuccess = false;
             if (result != false) {
