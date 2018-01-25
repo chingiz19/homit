@@ -180,6 +180,7 @@ gulp.task('test-db', function(){
     var stream = gulp.src("./tests/db/*.test.js", {watch: false})
             .pipe(mocha({
                 reporter: "spec",
+                exit: true
             }));
     return stream;
 });
