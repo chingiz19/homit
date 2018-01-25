@@ -66,13 +66,11 @@ li {
 }
 .sdNavFB3{
     line-height: 1.3;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 15px; color: rgb(105,105,105);
 }
 .sdNavFB3a{
     width: 150px;
     padding-top: 5px; padding-bottom: 5px; padding-left: 50px;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px; color: rgb(95,95,95);
     font-weight: bold;
     background-color: rgb(236,253,231);
@@ -81,7 +79,6 @@ li {
 .sdNavFB3b{
     width: 150px;
     padding-top: 5px; padding-bottom: 5px; padding-left: 40px;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px; color: rgb(95,95,95);
     font-weight: bold;
     background-color: rgb(236,253,231);
@@ -115,7 +112,6 @@ li {
     width: 30%; height: 20px;
     background-color: orangered;
     color: ghostwhite;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     font-size: 12px; font-weight: 700;
     border: solid 2px rgb(255,255,255); border-radius: 3px;
     z-index: 20;
@@ -179,8 +175,7 @@ li {
     height: 100%;
     color: rgb(255,255,255) !important; 
     margin-right: 36%; 
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 19px; font-weight: 550;
+    font-size: 19px; font-weight: 650;
 }
 .orBtnSz{
     height: 25px;
@@ -205,7 +200,6 @@ li {
     width: 100%; 
     display: flex; 
     justify-content: center; align-content: center; 
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 
 
@@ -237,7 +231,6 @@ li {
         width: 28%; height: 35px;
         background-color: orangered;
         color: ghostwhite;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         font-size: 20px; font-weight: 700;
         border: solid 2px rgb(255,255,255); border-radius: 3px;
         z-index: 20;
@@ -304,7 +297,6 @@ li {
     }
     .clrCartbtn{
         font-size: 20px;
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     }
     /*Cart Items*/
     .orBtnSz{
@@ -355,7 +347,6 @@ md-checkbox.md-checked .md-icon {
     width: 205px;
     background:#fff; padding:0 5px; 
     color: 1px solid rgba(0,0,0, 0.866); 
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.045em;
     -webkit-font-smoothing: antialiased;
     font-size: 13px;

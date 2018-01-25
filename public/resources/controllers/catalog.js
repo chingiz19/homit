@@ -77,28 +77,28 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
         };
 
         $scope.addToCart = function (product) {
-            if(product.store_open){
+            if (product.store_open) {
                 var p = jQuery.extend(true, {}, product);
 
-            p.volume = p.selectedVolume;
-            p.packaging = p.selectedPack;
-            p.price = p.product_variants[p.volume][p.packaging].price;
-            p.depot_id = p.product_variants[p.volume][p.packaging].depot_id;
+                p.volume = p.selectedVolume;
+                p.packaging = p.selectedPack;
+                p.price = p.product_variants[p.volume][p.packaging].price;
+                p.depot_id = p.product_variants[p.volume][p.packaging].depot_id;
 
-            //TODO: reverse implementation: assign what is required
-            delete p.description;
-            delete p.listing_id;  
-            delete p.product_id;
-            delete p.product_variants;
-            delete p.subcategory;
-            delete p.type;
-            delete p.selectedVolume;
-            delete p.selectedPack;
-            delete p.category;
-            delete p.container;
+                //TODO: reverse implementation: assign what is required
+                delete p.description;
+                delete p.listing_id;
+                delete p.product_id;
+                delete p.product_variants;
+                delete p.subcategory;
+                delete p.type;
+                delete p.selectedVolume;
+                delete p.selectedPack;
+                delete p.category;
+                delete p.container;
 
-            $rootScope.$broadcast("addToCart", p);
-            // notification.addCartItem(p);
+                $rootScope.$broadcast("addToCart", p);
+                // notification.addCartItem(p);
             }
         };
 
@@ -154,7 +154,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                 $scope.showCategories = false;
                 document.getElementById("show_cat_icon").classList.add('rot180_2');
                 var el = document.getElementById("show_cat_icon").classList;
-                setTimeout(function(){
+                setTimeout(function () {
                     el.remove('rot180_1', 'rot180_2');
                 }, 500);
             }
@@ -163,7 +163,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                 document.getElementById("show_cat_icon").classList.add('rot180_1');
             }
         };
-        
+
         $scope.emptySubcategories = function () {
             $scope.userSelectedSubcategories = null;
         };
@@ -202,6 +202,17 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                 });
         };
         // End
+
+        function rippleCatButton() {
+            var el = document.getElementById("category-button");
+            if (el.classList.contains("add-ripplle-affect")) {
+                el.classList.remove("add-ripplle-affect");
+            }
+            setTimeout(() => {
+                el.classList.add("add-ripplle-affect");
+            }, 1000);
+        }
+
         $window.onload = function () {
             var screen_width = $(window).width();
             if (screen_width < 1000) {
@@ -241,7 +252,9 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                     }
                 }
             }
+
         };
+        setInterval(rippleCatButton, 3000)
     }
 ]);
 

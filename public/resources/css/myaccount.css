@@ -6,6 +6,8 @@ html{
 body{
     background-color: rgb(252, 252, 252);
     letter-spacing: 0.01em;
+    font-family: 'Nunito', sans-serif;
+    
 }
 .md-button.tglLbtn:not([disabled]):hover{
     background-color: rgba(255,255,255,1);
@@ -50,7 +52,6 @@ body{
 .myTabsA{
     cursor: pointer; color: rgba(42,81,145, 0.9);
     letter-spacing: 0.025em;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .myTabsBtmLn{
 	height: 3px;
@@ -142,7 +143,6 @@ contentRCABB svg{
 .ordCntTxt{
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .cntBxA{
     display: flex; justify-content: center; flex-wrap: wrap;
@@ -171,7 +171,6 @@ contentRCABB svg{
     letter-spacing: 0.025em;
     color: rgba(0,0,0,0.65);
     -webkit-font-smoothing: antialiased;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .cntBx{
     margin: auto;
@@ -210,7 +209,6 @@ contentRCABB svg{
 .invInptErrMsg_B{
     font-size: 14px; font-weight: 400;
     color: rgba(209, 58, 58, 0.95);
-    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 .scss_A{
@@ -227,7 +225,6 @@ contentRCABB svg{
     width: 100%; height: 30px;
     font-size: 15px;
     color: rgba(0,0,0,0.85);
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     border: 1px solid rgba(0,0,0,0.12);
     border-top-width: 0px;
     border-left-width: 0px;

@@ -71,7 +71,6 @@
 }
 .store-hub-text{
     color: rgba(0,0,0,1);
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.045em;
     -webkit-font-smoothing: antialiased;
     font-size: 15px;
@@ -172,7 +171,6 @@
     .md-input-focused .mnSrchAA{
         margin-bottom: 0px;
         font-size: 15px;
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     }
     .mnSrchA.md-input-focused input{
         padding-bottom: 4px;
@@ -180,7 +178,6 @@
     }
     .mnSrchA input::-webkit-input-placeholder{
         color: rgba(42,81,145,0.6) !important;
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
         font-size: 17px;
     }
     .mnSrchC{
@@ -227,7 +224,6 @@
         align-items: center; 
         position: relative; 
         left: 35px; 
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
         font-size: 16px; font-weight: 500; color: rgba(0,0,0, 0.55);
     }
     .button-press-feel{
@@ -244,7 +240,6 @@
     }
     .srchRsltKEYS{
         background-color: rgba(0,0,0,0.08) !important;
-        /* transition: 0.4s; */
     }
     .mnSrchA{
         margin: 0;
@@ -266,7 +261,6 @@
         margin: 0;
         bottom: 35px !important;
         font-size: 18px;
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     }
     .mnSrchB{
         left: 1px;
@@ -298,13 +292,11 @@
         display: flex; 
         padding-left: 18px;
         font-size: 17px; color: rgba(150,150,150,0.8);
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif; 
     }
     .infoDrDwnAB{
         display: flex; 
         padding-left: 20px;
         font-size: 17px; color: rgba(150,150,150,0.8);
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;  
     }
     .infoDrDwnAAA{
         display: flex; align-items: center;

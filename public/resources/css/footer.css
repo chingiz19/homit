@@ -142,7 +142,6 @@ main{
     font-size: 13;
     color: rgba(28, 38, 87, 0.85);
     font-weight: 500;
-    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 .lnk_ln{
@@ -155,5 +154,4 @@ main{
     margin: 0 5px 0px 0px;
     font-size: 12px; font-weight: 400; color: rgb(27, 27, 27);
     -webkit-font-smoothing: antialiased;
-    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
 }

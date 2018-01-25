@@ -3,7 +3,7 @@ var _ = require("lodash");
 
 const categories = {
     "liquor-station": ['beer', 'wine', "spirit", "liqueur"],
-    "snack-vendor": ['snack', 'bevarage', 'party-supply']
+    "snack-vendor": ['snack', 'beverage', 'party-supply']
 }
 
 router.get('/:parent/', function(req, res, next){

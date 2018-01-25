@@ -7,6 +7,7 @@ html{
 body{
     background-color: rgb(252, 252, 252);
     letter-spacing: 0.01em;
+    font-family: 'Nunito', sans-serif;
 }
 
 /*Adjust width col1 and col24 when 2 and 3 columns of items left*/
@@ -171,7 +172,6 @@ body{
     letter-spacing: 0.024em;
     font-size: 22px; font-weight: 400; 
     color: rgba(0,0,0,0.45); 
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
  .col24{
      position: relative;
@@ -190,7 +190,6 @@ body{
      border-radius: 5px;
      background-color: rgb(254,254,254);
      overflow-y: scroll;
-     font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
  }
  .sizeStage
 {   
@@ -200,7 +199,6 @@ body{
     color: rgba(0,0,0,0.69);
     font-size: 22px;
     font-weight: 600;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 /*Subcategories CSS*/
 .SubcategoryName{
@@ -226,21 +224,18 @@ body{
 }
 .srchBxA input::-webkit-input-placeholder{
     color: rgba(0,0,0,0.22) !important;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px;
 }
 .srchBxAA{
     margin-bottom: 0; 
     font-weight: 350 !important; font-size: 14px;
     color: rgba(0,0,0,0.22) !important;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .srchBxAB{
     font-size: 14px;
     color: rgba(0,0,0,0.82) !important;
     font-weight: 500;
     border-bottom: rgba(0,0,0,0.12) solid 1px !important;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .srchBxAAA{
     width: 20px; height: 20px;
@@ -356,28 +351,23 @@ body{
     font-size: 11px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .nHighltdVol{
     color: rgba(0,0,0,0.4);
-    /* font-weight: 500; */
     font-size: 7px; font-weight: bold;
     letter-spacing: 0.025em;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .highltdPack{
     color: rgba(0,0,0,0.6);
     font-size: 13px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 .nHighltdPack{
     color: rgba(0,0,0,0.4);
     font-size: 7px; font-weight: bold;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
 }
 
 .brand{
@@ -385,7 +375,6 @@ body{
     justify-content: center; align-items: center; flex-wrap: wrap; text-align: center; 
     height: 3em; width: 237px;
     font-size: 16px; font-weight: 500;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     color: rgba(0,0,0,1);
 }
 .price{
@@ -394,7 +383,6 @@ body{
     font-size: 12px; font-weight: 500;
     letter-spacing: 0.025em;
     -webkit-font-smoothing: antialiased;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     color: rgba(0,0,0,0.55);
 }
 
@@ -425,7 +413,7 @@ body{
     fill: rgba(0, 189, 149, 1);
 }
 
-@media screen and (min-device-width: 500px){
+@media screen and (min-device-width: 601px){
     .typesSdNB1{
         display: none;
     }
@@ -434,6 +422,37 @@ body{
     }
     .volPackMob{
         display: none;
+    }
+    /* Adds ripple affect to category button */
+    .add-ripplle-affect:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(42,81,145,0.1);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+    }
+    @keyframes ripple {
+        0% {
+        transform: scale(0, 0);
+        opacity: 1;
+        }
+        20% {
+        transform: scale(25, 25);
+        opacity: 1;
+        }
+        100% {
+        opacity: 0;
+        transform: scale(40, 40);
+        }
+    }
+    .add-ripplle-affect:after {
+        animation: ripple 3s ease-out;
     }
 }
 
@@ -653,7 +672,6 @@ body{
         margin-left: 5%;
         font-size: 45px; font-weight: bold;
         letter-spacing: 0.025em;
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     }
     .shopping_cart{
         padding-top: 1px;
@@ -723,7 +741,6 @@ md-radio-button .md-label{
 }
 .hmtTxt{
     color: rgba(0,0,0,0.66);
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.02em;
     -webkit-font-smoothing: antialiased;
 }
@@ -786,3 +803,6 @@ md-toolbar{
     border-radius: 4px;
     height: 343px; width: 278px;
 }
+
+
+  

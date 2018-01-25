@@ -9,7 +9,6 @@
 
 <body ng-cloak>
     <div ng-controller="checkoutController">
-
         <div layout="row" layout-align="center" class="container">
             <div class="col1">
                 <div class="col1ChevRgt">
@@ -86,8 +85,8 @@
                 <form name="Phone" class="inptFrm">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label for="idCell" class="inptLbl">Phone</label>
-                        <input id="gP_number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" ng-blur="sanitizeInput(userInfo.phone_number,'phone')"
-                            placeholder="(403) 404-6648" type="text" required/>
+                        <input id="gP_number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number"
+                            ng-blur="sanitizeInput(userInfo.phone_number,'phone')" placeholder="(403) 404-6648" type="text" required/>
                         <div ng-messages="Phone.phone.$error">
                             <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                             <div ng-message="minlength" class="inptErMsg">Required</div>
@@ -110,33 +109,30 @@
                 <form id="driver-instruction" name="driverInstruction" class="inptFrm gu_address" style="display: flex; justify-content: flex-end;">
                     <md-input-container class="md-block bigClass" flex="50">
                         <label></label>
-                        <input name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction" ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')" placeholder="Driver Instruction" type="text"/>
+                        <input name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction" ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')"
+                            placeholder="Driver Instruction" type="text" />
                         <div ng-messages="driverInstruction.drInstruction.$error">
                             <div ng-message="pattern" class="inptErMsg">Number and letter only</div>
                             <div ng-message="maxlength" class="inptErMsg">Maximum 60 characters</div>
                         </div>
-                        <div  class="outPlgn_txt"></div>
+                        <div class="outPlgn_txt"></div>
                     </md-input-container>
                 </form>
                 <!--Card Info-->
                 <div class="container cardContainer" flex="80">
-                    <div layout="row" layout-align="start center">
-                        <div layout="row">
-                            <div>
-                                <img ng-src="{{'/resources/images/non-catalog-image/visa_logo.jpeg'}}" width="25px;" height="15.625px" />
-                            </div>
-                            <div>
-                                <img ng-src="{{'/resources/images/non-catalog-image/mastercard_logo.jpeg'}}" width="25px;" height="15.625px" />
-                            </div>
-                            <div>
-                                <img ng-src="{{'/resources/images/non-catalog-image/american-express_logo.jpeg'}}" width="25px;" height="15.625px" />
-                            </div>
+                    <md-button aria-label="ShowHideCardInfo" class="glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown" layout="row">
+                        <div>
+                            <img ng-src="{{'/resources/images/non-catalog-image/visa_logo.jpeg'}}" width="25px;" height="15.625px" />
                         </div>
-                        <md-button aria-label="ShowHideCardInfo" class="glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown">
-                            <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="25"></ng-md-icon>
-                            <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="25"></ng-md-icon>
-                        </md-button>
-                    </div>
+                        <div>
+                            <img ng-src="{{'/resources/images/non-catalog-image/mastercard_logo.jpeg'}}" width="25px;" height="15.625px" />
+                        </div>
+                        <div>
+                            <img ng-src="{{'/resources/images/non-catalog-image/american-express_logo.jpeg'}}" width="25px;" height="15.625px" />
+                        </div>
+                        <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="25"></ng-md-icon>
+                        <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="25"></ng-md-icon>
+                    </md-button>
                 </div>
                 <!--Card Info Hidden Box-->
                 <div id="helcimResults">

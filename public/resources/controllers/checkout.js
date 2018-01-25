@@ -216,8 +216,8 @@ app.controller("checkoutController",
             updateCheckoutModal("inProcess");
             checkPaymentResponse(function (response_id, response_message, transaction_id, crd_lst4) {
                 if (response_id == 1 && transaction_id) {
+                    
                     var userInfoToSend = {};
-
                     userInfoToSend.fname = $scope.userInfo.first_name;
                     userInfoToSend.lname = $scope.userInfo.last_name;
                     userInfoToSend.birth_year = $scope.userInfo.birth_year;
@@ -247,7 +247,6 @@ app.controller("checkoutController",
                         $scope.paymentMessage_1 = "We are sorry, ";
                         $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403)40-Homit.";
                         updateCheckoutModal("10");
-                        console.log("ERROR in order processing");
                     });
                 } else if (response_id == 0 && response_message == 0 && transaction_id == 0 && crd_lst4 == 0) {
                     $scope.paymentMessage_1 = "Sorry, ";
@@ -425,15 +424,17 @@ app.controller("checkoutController",
         }
 
         $scope.clearPage = function () {
-            if ($scope.paymentResult != "0") {
+            if ($scope.paymentResult == "11" || $scope.paymentResult == "1") {
                 $scope.userInfo = {};
                 $scope.userCart = {};
                 $scope.clearCart();
                 $scope.delFee = 0;
+                $window.location.href = $window.location.origin + "/main";
+            } else{
+                location.reload();
             }
-            location.reload();
         }
-
+        
         function updateUserCart(cart) {
             $scope.userCart = cart;
             $scope.userCartToView = cartService.getViewUserCart($scope.super_category, $scope.userCart);

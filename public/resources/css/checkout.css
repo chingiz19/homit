@@ -1,3 +1,9 @@
+body{
+    background-color: rgb(252, 252, 252);
+    letter-spacing: 0.01em;
+    font-family: 'Nunito', sans-serif;
+}
+
 /*Column-1 consists of User Info
 Columns-2 consist of items and items' info*/
 @media(min-width: 495px){
@@ -185,7 +191,6 @@ md-tabs-wrapper{
 .extBoxTtl{
     position: relative;
     left: 12%;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 13px;
     font-weight: 700;
     color: #333;
@@ -195,7 +200,8 @@ md-tabs-wrapper{
     margin:0px 2px 0px 2px;
     background-color: white !important;
     min-width: 1px !important; min-height: 1px !important; 
-    height: 50px; width: 50px !important; 
+    height: 40px; 
+    /* width: 50px !important;  */
     box-shadow: none !important;
 }
 .opnCIsgn{
@@ -246,7 +252,6 @@ md-backdrop.md-opaque {
     padding-left: 50px;
     margin-bottom: 0;
     width: 150px; line-height: 1.3;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 15px; color: rgb(105,105,105);
     border-bottom: 1px solid rgb(195,195,195);
     border-top-left-radius: 5px;
@@ -255,20 +260,17 @@ md-backdrop.md-opaque {
     padding-left: 40px;
     margin-bottom: 0;
     width: 150px; line-height: 1.3;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 15px; color: rgb(105,105,105);
     border-bottom: 1px solid rgb(195,195,195);
     border-top-right-radius: 5px; 
 }
 .receiptB3{
     line-height: 1.3;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 15px; color: rgb(105,105,105);
 }
 .receiptB3a{
     width: 150px;
     padding-top: 5px; padding-bottom: 5px; padding-left: 50px;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px; color: rgb(95,95,95);
     font-weight: bold;
     background-color: rgb(224,234,248);
@@ -277,7 +279,6 @@ md-backdrop.md-opaque {
 .receiptB3b{
     width: 150px;
     padding-top: 5px; padding-bottom: 5px; padding-left: 40px;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px; color: rgb(95,95,95);
     font-weight: bold;
     background-color: rgb(224,234,248);
@@ -374,7 +375,6 @@ md-backdrop.md-opaque {
         font-size: 80px;
     }
     .extBoxTtl{
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
         font-size: 18px;
         font-weight: 500;
     }
@@ -425,7 +425,6 @@ md-backdrop.md-opaque {
         width: 100%; height: auto;
     }
     .cartBItems2C2{
-        font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
         font-size: 18px;
         color: rgb(95,95,95);
         letter-spacing: 0.02em;
@@ -498,7 +497,6 @@ md-backdrop.md-opaque {
 .strType { 
     width: 200px;
     background:#fff; padding:0 5px; 
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.045em;
     -webkit-font-smoothing: antialiased;
     font-size: 13px;
@@ -522,7 +520,6 @@ md-backdrop.md-opaque {
 .inPr_AA{
     font-size: 29px; font-weight: 500; 
     color: rgba(0,0,0,0.78); 
-    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased; 
 }
 .inPr_B{
@@ -575,7 +572,6 @@ md-backdrop.md-opaque {
 .pR_BA{
     font-size: 25px; font-weight: 500; 
     color: rgba(0,0,0,0.78);
-    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 .pR_C{
@@ -586,7 +582,6 @@ md-backdrop.md-opaque {
     display: flex; justify-content: center; align-items: center; 
     font-size: 14px; font-weight: 400; 
     color: rgba(0,0,0,0.78);
-    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 .clrPg{
@@ -631,7 +626,6 @@ md-backdrop.md-opaque {
 .bodErrMsg_B{
     font-size: 14px; font-weight: 400;
     color: rgba(209, 58, 58, 0.95);
-    font-family: 'adobe-clean', 'adobe-clean-han-japanese', 'Helvetica Neue', Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -640,7 +634,6 @@ md-backdrop.md-opaque {
     width: 100%; height: 30px;
     font-size: 15px;
     color: rgba(0,0,0,0.85);
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     border: 1px solid rgba(0,0,0,0.12);
     border-top-width: 0px;
     border-left-width: 0px;
