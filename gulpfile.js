@@ -199,15 +199,17 @@ gulp.task('default', function(){
 (to run tasks use 'gulp <task>')
     TASKS                  DESCRIPTION
 
-    run         |  for front-end development (copies files to www folder, starts nodemon, browserSync, www-error watch)
-    compile     |  cleans www folder then copies files to that folder (js, css, img)
-    clean:www   |  deletes www folder
-    js          |  copy js files to www folder
-    css         |  copy css files to www folder
-    img         |  copy img files to www folder
+    run                     |  for front-end development (copies files to www folder, starts nodemon, browserSync, www-error watch)
+    compile                 |  cleans www folder then copies files to that folder (js, css, img)
+    clean:www               |  deletes www folder
+    js                      |  copy js files to www folder
+    css                     |  copy css files to www folder
+    img                     |  copy img files to www folder
 
-    test-views  |  run test for views
-    test-db     |  run test for db\n`;
+    test-views              |  run test for views
+    test-db                 |  run test for db
+    
+    run --env production    | compiles everything for production environment\n`;
 
     log(gulpTasksList);
 });

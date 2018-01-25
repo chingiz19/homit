@@ -69,19 +69,19 @@
 ### Using gulp
 	We use gulp to automate preprocessing, and pre-run tasks
 
-	1. Run command 'gulp'
+	1. Run command 'gulp run'
 	2. Wait for gulp tasks to finish, connect to localhost:9090 for Front-end development
 
 ### Using nodemon
-	1. Run command 'gulp --env production'
+	1. Run command 'gulp run --env production'
 	2. 'nodemon server.js'
 
 ### Using pm2 - this is used to monitor CPU/RAM usage mostly on development
 #### Development mode
-	1. Run command 'gulp --env production'
+	1. Run command 'gulp run --env production'
 	2. 'pm2 start dev-startup.json'
 #### Production mode
-	1. Run command 'gulp --env production'
+	1. Run command 'gulp run --env production'
 	2. 'pm2 start production-startup.json'
 
 
@@ -91,6 +91,9 @@
 
 ### Front-end (In Progress)
 	gulp test-frontend
+
+### Database structure
+	gulp test-db
 
 ### Run views (200/404 for front pages)
 	gulp test-views
