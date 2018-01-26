@@ -111,7 +111,7 @@ var receiver = function (jsonResponse) {
                             dob: user.birth_date,
                             phone: user.phone_number,
                             address: orderDetails.delivery_address,
-                            comments: orderDetails.comments,      //TODO: Elnar and Zaman    << Pleae confirm this as well before we merge this branch >>
+                            comments: orderDetails.driver_instruction,
                             order: jsonOrder
                         };
 

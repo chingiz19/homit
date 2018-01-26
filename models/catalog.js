@@ -359,7 +359,7 @@ pub.searchCategorySpecial = function (searchText) {
         FROM catalog_categories, catalog_super_categories
         WHERE catalog_categories.super_category_id = catalog_super_categories.id
         AND catalog_super_categories.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
-        AND (catalog_categories.name LIKE '%` + searchText + `%' OR catalog_categories.display_name LIKE '%` + searchText + `%')`;        
+        AND (catalog_categories.name LIKE '%` + searchText + `%' OR catalog_categories.display_name LIKE '%` + searchText + `%')`;
     return db.runQuery(sqlQuery).then(function (dbResult) {
         return dbResult;
     });
@@ -606,6 +606,36 @@ pub.getCartProducts = function (cartProducts) {
         WHERE depot.product_id = product.id AND product.listing_id = listing.id
         AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
         AND category.id = subcategory.category_id AND
+        category.super_category_id = super_category.id
+        AND depot.id in (` + depotIds + `)
+        
+        ORDER BY super_category`;
+
+    return db.runQuery(sqlQuery).then(function (dbResult) {
+        return dbResult;
+    });
+};
+
+pub.getCartProductsWithInfo = function (cartProducts) {
+    var depotIds = Object.keys(cartProducts);
+    var sqlQuery = `
+        SELECT depot.id AS depot_id, depot.product_id AS product_id,
+        listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
+        listing.product_brand AS brand, listing.product_name AS name,
+        listing.product_description AS description, product.product_image AS image,
+        depot.price AS price, depot.tax AS tax, depot.quantity AS quantity, packaging.name AS packaging,
+        container.name AS container, volume.volume_name AS volume, category.name AS category,
+        super_category.name AS super_category
+        
+        FROM catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
+        catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
+        catalog_containers AS container, catalog_packagings AS packaging, catalog_packaging_volumes AS volume,
+        catalog_super_categories AS super_category
+        
+        WHERE depot.product_id = product.id AND product.listing_id = listing.id
+        AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+        AND container.id = product.container_id AND packaging.id = depot.packaging_id
+        AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND
         category.super_category_id = super_category.id
         AND depot.id in (` + depotIds + `)
         

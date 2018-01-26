@@ -151,7 +151,7 @@ router.post('/refunditems', Auth.validateCsr(), function (req, res, next) {
                             var metaData = {
                                 directory: __filename
                             }
-                            Logger.log.warn("Delivered items don't match requested, by CSR, items",metaData);
+                            Logger.log.warn("Delivered items don't match requested, by CSR, items", metaData);
                         }
                     });
                 });
@@ -193,20 +193,21 @@ router.post('/cancelitems', Auth.validateCsr(), function (req, res, next) {
                                         };
                                         Email.sendCancelEmail(orderEmailInfo);
 
-                                        //TODO: Make list of cancelled items. Need Zaman's help 
-                                        var message = "Please do not deliver following items: \n";
-                                        SMS.notifyDriver(message, driver.first_name, driver.phone_number, function (response) {
-                                            if (!response) {
-                                                Logger.log.warn("Could NOT send notification sms to " + driver.first_name + " " + driver.last_name 
-                                                + "(DRIVER) to cancel item(s) delivery in order(ID: " + orderId + ")");
-                                            }
-                                        });
+                                        Catalog.getCartProductsWithInfo(cancelItems).then(function (cancelItemsWithInfo) {
+                                            var message = "Please do not deliver following items: \n";
+                                            SMS.notifyDriver(message, driver.first_name, driver.phone_number, function (response) {
+                                                if (!response) {
+                                                    Logger.log.warn("Could NOT send notification sms to " + driver.first_name + " " + driver.last_name
+                                                        + "(DRIVER) to cancel item(s) delivery in order(ID: " + orderId + ")");
+                                                }
+                                            });
 
-                                        var response = {
-                                            success: true,
-                                            message: "Please refund user's order."
-                                        };
-                                        res.send(response);
+                                            var response = {
+                                                success: true,
+                                                message: "Please refund user's order."
+                                            };
+                                            res.send(response);
+                                        });
                                     });
                                 });
                             });
@@ -228,7 +229,7 @@ router.post('/additems', Auth.validateCsr(), function (req, res, next) {
     var orderId = req.body.order_id;
     var note = req.body.note;
     var csrId = Auth.getSignedUser(req).id;
-    var cartProducts = req.body.products;     
+    var cartProducts = req.body.products;
     var transactionId = req.body.transaction_id;
     var driverInstruction = req.body.driver_instruction;
 
@@ -282,7 +283,7 @@ router.post('/additems', Auth.validateCsr(), function (req, res, next) {
 
 /* View logs from CSR's browser */
 router.post('/streamlog', Auth.validateCsr(), function (req, res, next) {
-   Logger.stream (res);
+    Logger.stream(res);
 });
 
 module.exports = router;

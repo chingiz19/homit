@@ -62,6 +62,7 @@ pub.getOrdersByUserId = function (user_id) {
         orders_history.date_delivered AS date_delivered,
         orders_history.delivery_address AS delivery_address,
         orders_history.store_id AS store_id,
+        orders_history.driver_instruction AS driver_instruction,        
         super_categories.name AS super_category,    
         orders_history.driver_id AS driver_id,
         orders_history.refused AS refused,
@@ -94,6 +95,7 @@ pub.getOrdersByGuestId = function (user_id) {
         orders_history.date_delivered AS date_delivered,
         orders_history.delivery_address AS delivery_address,
         orders_history.store_id AS store_id,
+        orders_history.driver_instruction AS driver_instruction,
         super_categories.name AS super_category,    
         orders_history.driver_id AS driver_id,
         orders_history.refused AS refused,
@@ -203,6 +205,7 @@ pub.getPendingOrders = function () {
     history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
     history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
     history.delivery_latitude AS delivery_latitude, history.delivery_longitude AS delivery_longitude,
+    history.driver_instruction AS driver_instruction,
     history.driver_id AS driver_id, history.store_id AS store_id,
     stores.id_prefix AS store_id_prefix, stores.name AS store_name,
     stores.address AS store_address, super_categories.name AS super_category,
@@ -227,7 +230,9 @@ pub.getPendingOrders = function () {
     history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
     history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
     history.delivery_latitude AS delivery_latitude, history.delivery_longitude AS delivery_longitude,    
-    history.driver_id AS driver_id, history.store_id AS store_id, stores.id_prefix AS store_id_prefix,
+    history.driver_instruction AS driver_instruction,
+    history.driver_id AS driver_id, history.store_id AS store_id,
+    stores.id_prefix AS store_id_prefix,
     stores.name AS store_name, stores.address AS store_address, super_categories.name AS super_category,
     guests.id AS user_id, guests.id_prefix AS user_id_prefix, guests.user_email AS user_email,
     guests.first_name AS first_name, guests.last_name AS last_name, guests.phone_number AS user_phone_number,
@@ -250,6 +255,7 @@ pub.getPendingOrders = function () {
     history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
     history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
     history.delivery_latitude AS delivery_latitude, history.delivery_longitude AS delivery_longitude,        
+    history.driver_instruction AS driver_instruction,
     history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
     NULL AS store_address, super_categories.name AS super_category, users.id AS user_id, users.id_prefix AS user_id_prefix,
     users.user_email AS user_email, users.first_name AS first_name, users.last_name AS last_name,
@@ -271,6 +277,7 @@ pub.getPendingOrders = function () {
     history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
     history.date_delivered AS date_delivered, history.delivery_address AS delivery_address,
     history.delivery_latitude AS delivery_latitude, history.delivery_longitude AS delivery_longitude,        
+    history.driver_instruction AS driver_instruction,
     history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
     NULL AS store_address, super_categories.name AS super_category, guests.id AS user_id, guests.id_prefix AS user_id_prefix,
     guests.user_email AS user_email, guests.first_name AS first_name, guests.last_name AS last_name,
@@ -394,7 +401,7 @@ pub.placePartialRefundCart = function (orderId, refundItems) {
         var queriesToRun = [];
         var updateFunctions = [];
         for (var i = 0; i < items.length; i++) {
-            var refundItem = refundItems[items[i].id];
+            var refundItem = refundItems[items[i].id]; //TODO: ZZ - might cause an error
             if (refundItem != undefined) {
                 if (refundItem.modify_quantity != 0) {
                     var newQuantity;
