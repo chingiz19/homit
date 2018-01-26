@@ -46,6 +46,24 @@ router.get("/resetpassword/:email/:token", function(req, res, next){
 	res.render("reset_password.ejs", req.options.ejs);
 });
 
+router.get("/about", function(req, res, next){
+	req.options.ejs["title"] = "About";
+	req.options.ejs["showSearchBar"] = false;
+	res.render("about.ejs", req.options.ejs);
+});
+
+router.get("/privacy", function(req, res, next){
+	req.options.ejs["title"] = "Privacy Policy";
+	req.options.ejs["showSearchBar"] = false;
+	res.render("privacy.ejs", req.options.ejs);
+});
+
+router.get("/terms-of-use", function(req, res, next){
+	req.options.ejs["title"] = "Terms of Use";
+	req.options.ejs["showSearchBar"] = false;
+	res.render("terms_of_use.ejs", req.options.ejs);
+});
+
 router.get("/notfound", function(req, res, next){
 	req.options.ejs["title"] = "404 Not Found";
 	res.status(404).render("page404.ejs", req.options.ejs);
