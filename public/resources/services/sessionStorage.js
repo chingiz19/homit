@@ -86,6 +86,14 @@ app.service('sessionStorage', ["$window", function($window){
         return _get("coverage-map");
     };
 
+    var _setCategoryClicked = function(value){
+        return _set("category-clicked", value);
+    };
+
+    var _getCategoryClicked = function(value){
+        return _get("category-clicked");
+    };
+
 
     return {
         get: _get,
@@ -103,6 +111,8 @@ app.service('sessionStorage', ["$window", function($window){
         setAddressLng: _setAddressLng,
         getAddressLng: _getAddressLng,
         setCoverageMap: _setCoverageMap,
-        getCoverageMap: _getCoverageMap
+        getCoverageMap: _getCoverageMap,
+        setCategoryClicked: _setCategoryClicked,
+        getCategoryClicked: _getCategoryClicked
     };
 }]);

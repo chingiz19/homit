@@ -157,8 +157,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                 setTimeout(function () {
                     el.remove('rot180_1', 'rot180_2');
                 }, 500);
-            }
-            else {
+            } else {
                 $scope.showCategories = true;
                 document.getElementById("show_cat_icon").classList.add('rot180_1');
             }
@@ -208,14 +207,15 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             if (el.classList.contains("add-ripplle-affect")) {
                 el.classList.remove("add-ripplle-affect");
             }
-            setTimeout(() => {
+            setTimeout(function(){
                 el.classList.add("add-ripplle-affect");
             }, 1000);
         }
 
         $window.onload = function () {
-            var screen_width = $(window).width();
-            if (screen_width < 1000) {
+            var screen_width = window.screen.width;
+            var isCategoryClicked = sessionStorage.getCategoryClicked();
+            if (screen_width < 500) {
                 $scope.screenIsMob = true;
             } else {
                 $scope.screenIsMob = false;
@@ -223,7 +223,6 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             var subcad = sessionStorage.getSearchSubcategory();
             var prodID = sessionStorage.getSearchProduct();
             if (subcad != 'undefined' && subcad != null) {
-
                 var x = document.querySelectorAll(".SubcategoryName");
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].textContent.trim() == subcad) {
@@ -231,20 +230,27 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                         $scope.filterCategories();
                     }
                 }
-            } else {
+            } else if(isCategoryClicked == "true"){
+                $scope.filterCategories();
+                document.getElementById('radio_1').click();
+            } else if(isCategoryClicked == "store-switched"){
+                sessionStorage.setCategoryClicked(true);
+                document.getElementById('radio_1').click();
+            }else{
+                sessionStorage.setCategoryClicked(true);
                 document.getElementById('radio_1').click();
             }
             if (prodID != 'undefined') {
-                var x = document.querySelectorAll(".itemBoxL1");
-                for (var i = 0; i < x.length; i++) {
-                    if (x[i].id == prodID) {
+                var y = document.querySelectorAll(".itemBoxL1");
+                for (var j = 0; j < y.length; j++) {
+                    if (y[j].id == prodID) {
                         Element.prototype.documentOffsetTop = function () {
                             return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0);
                         };
-                        var top = document.getElementById(x[i].id).documentOffsetTop() - ($window.innerHeight / 5);
+                        var top = document.getElementById(y[j].id).documentOffsetTop() - ($window.innerHeight / 5);
                         animateScrollTo(top, 1600);
                         document.getElementById(prodID).classList.add('highlighted');
-                        setTimeout(function () {
+                        setTimeout(function() {
                             document.getElementById(prodID).classList.remove('highlighted');
                         }, 2500);
                         if (subcad == 'undefined' && subcad == null)
@@ -252,9 +258,8 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                     }
                 }
             }
-
         };
-        setInterval(rippleCatButton, 3000)
+        setInterval(rippleCatButton, 3000);
     }
 ]);
 

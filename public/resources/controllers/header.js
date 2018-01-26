@@ -139,6 +139,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
 
     $scope.hrefTo = function (path) {
         $window.location.href = $window.location.origin + path;
+        sessionStorage.setCategoryClicked("store-switched");
     };
 
     $scope.showHideUserDropdown = function () {
