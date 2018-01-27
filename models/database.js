@@ -64,19 +64,16 @@ mysql.createConnection({
 });
 
 /*Database query functions*/
-var runQuery = function (query) {
-  return con.query(query);
-};
 
 var runQuery = function (query, data) {
-  return con.query(query, data).then(function (data) {
-    return data;
+  return con.query(query, data).then(function (result) {
+    return result;
   }).catch(function (error) {
     var metadata = {
       directory: __filename,
       error_message: error.message
     }
-    Logger.log.error('Could not run Query', metadata);
+    Logger.log.error('Could not run query', metadata);
     return error;
   });
 };
@@ -94,8 +91,7 @@ var selectAllWhere = function (table, data) {
 };
 
 var selectAllWhere2 = function (table, data) {
-  var tableName = table;
-  return con.query('SELECT * FROM ' + tableName + ' WHERE ? AND ?', data);
+  return runQuery('SELECT * FROM ' + table + ' WHERE ? AND ?', data);
 };
 
 var selectAllFromTable = function (table) {
@@ -115,8 +111,7 @@ var deleteQuery = function (table, data) {
 };
 
 var deleteQuery2 = function (table, data) {
-  var tableName = table;
-  return con.query('DELETE FROM ' + tableName + ' WHERE ? AND ?', data);
+  return runQuery('DELETE FROM ' + table + ' WHERE ? AND ?', data);
 };
 
 /**
@@ -126,7 +121,7 @@ var deleteQuery2 = function (table, data) {
  */
 var end = function () {
   con.end(function (err) {
-    Logger.log.debug("Ended connection to DB in an elegant way.", logMeta);
+    Logger.log.debug("Ended connection to DB.", logMeta);
   });
 };
 

@@ -130,7 +130,7 @@ router.post('/placeorder', function (req, res, next) {
             });
         }
     } else {
-        if (!email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts) {
+        if (!email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts || !transactionId) {
             res.status(403).json({
                 error: {
                     "code": "U000",
@@ -162,7 +162,7 @@ router.post('/placeorder', function (req, res, next) {
                                             }
                                             User.addGuestUser(data).then(function (guestUserId) {
                                                 if (guestUserId != false) {
-                                                    createOrders(guestUserId, address, address_lat, address_long, driverInstruction, true, driverInstruction, transactionId, products).then(function (userOrders) {
+                                                    createOrders(guestUserId, address, address_lat, address_long, driverInstruction, true, transactionId, products).then(function (userOrders) {
                                                         var response = {
                                                             success: true,
                                                             orders: userOrders
@@ -286,11 +286,10 @@ var createOrders = function (id, address, address_lat, address_long, driverInstr
                 cmUserId = "u_" + id;
             }
             CM.sendOrder(cmUserId, address, cmOrderId, superCategory);
-
+            //TODO: Email directors
             userOrders.push(userOrder);
             i++;
         }
-
         return userOrders;
     });
 
