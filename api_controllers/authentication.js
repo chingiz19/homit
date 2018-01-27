@@ -223,7 +223,7 @@ router.post('/resetpassword', async function (req, res, next) {
 
 /* Login for CSR */
 router.get("/csrlogin", async function (req, res, next) {
-    var user = User.authenticateCsrUser(req.query.username, req.query.password);
+    var user = await User.authenticateCsrUser(req.query.username, req.query.password);
     if (!user) {
         res.json({
             error: {

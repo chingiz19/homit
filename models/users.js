@@ -200,7 +200,7 @@ pub.authenticateCsrUser = function (email, password) {
     var sqlQuery = `
     SELECT *
     FROM users_employees
-    WHERE role_id = 2 AND ?`
+    WHERE role_id = 2 AND ?`;
     var data = {
         user_email: email,
     };
