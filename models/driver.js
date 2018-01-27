@@ -2,7 +2,13 @@
  * @copyright Homit 2018
  */
 
-var sockIOServer = require("http").createServer();
+var fs = require("fs");
+
+var sockIOServer = require("https").createServer({
+	key: fs.readFileSync("ssl/server.key"), //TODO: Chingiz, normalize
+	cert: fs.readFileSync("ssl/server.crt")
+});
+
 var io = require("socket.io")(sockIOServer, {
     pingInterval: 2100,
     pingTimeout: 2000
@@ -181,7 +187,8 @@ pub.authenticateDriver = function (email, password) {
 
 /* Get connection info for driver */
 pub.getConnectionPort = function () {
-    return SOCKET_PORT;
+    //TODO: Why not remove this method
+    return 443;
 };
 
 pub.send = function (id, json) {
