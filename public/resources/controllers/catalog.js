@@ -207,7 +207,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             if (el.classList.contains("add-ripplle-affect")) {
                 el.classList.remove("add-ripplle-affect");
             }
-            setTimeout(function(){
+            setTimeout(function () {
                 el.classList.add("add-ripplle-affect");
             }, 1000);
         }
@@ -222,42 +222,44 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
             }
             var subcad = sessionStorage.getSearchSubcategory();
             var prodID = sessionStorage.getSearchProduct();
-            if (subcad != 'undefined' && subcad != null) {
-                var x = document.querySelectorAll(".SubcategoryName");
-                for (var i = 0; i < x.length; i++) {
-                    if (x[i].textContent.trim() == subcad) {
-                        document.getElementById(x[i].id).click();
-                        $scope.filterCategories();
-                    }
-                }
-            } else if(isCategoryClicked == "true"){
-                $scope.filterCategories();
-                document.getElementById('radio_1').click();
-            } else if(isCategoryClicked == "store-switched"){
-                sessionStorage.setCategoryClicked(true);
-                document.getElementById('radio_1').click();
-            }else{
-                sessionStorage.setCategoryClicked(true);
-                document.getElementById('radio_1').click();
-            }
-            if (prodID != 'undefined') {
-                var y = document.querySelectorAll(".itemBoxL1");
-                for (var j = 0; j < y.length; j++) {
-                    if (y[j].id == prodID) {
-                        Element.prototype.documentOffsetTop = function () {
-                            return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0);
-                        };
-                        var top = document.getElementById(y[j].id).documentOffsetTop() - ($window.innerHeight / 5);
-                        animateScrollTo(top, 1600);
-                        document.getElementById(prodID).classList.add('highlighted');
-                        setTimeout(function() {
-                            document.getElementById(prodID).classList.remove('highlighted');
-                        }, 2500);
-                        if (subcad == 'undefined' && subcad == null)
+            setTimeout(function () {
+                if (subcad != 'undefined' && subcad != null) {
+                    var x = document.querySelectorAll(".SubcategoryName");
+                    for (var i = 0; i < x.length; i++) {
+                        if (x[i].textContent.trim() == subcad) {
+                            document.getElementById(x[i].id).click();
                             $scope.filterCategories();
+                        }
+                    }
+                } else if (isCategoryClicked == "true") {
+                    $scope.filterCategories();
+                    document.getElementById('radio_1').click();
+                } else if (isCategoryClicked == "store-switched") {
+                    sessionStorage.setCategoryClicked(true);
+                    document.getElementById('radio_1').click();
+                } else {
+                    sessionStorage.setCategoryClicked(true);
+                    document.getElementById('radio_1').click();
+                }
+                if (prodID != 'undefined') {
+                    var y = document.querySelectorAll(".itemBoxL1");
+                    for (var j = 0; j < y.length; j++) {
+                        if (y[j].id == prodID) {
+                            Element.prototype.documentOffsetTop = function () {
+                                return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0);
+                            };
+                            var top = document.getElementById(y[j].id).documentOffsetTop() - ($window.innerHeight / 5);
+                            animateScrollTo(top, 1600);
+                            document.getElementById(prodID).classList.add('highlighted');
+                            setTimeout(function () {
+                                document.getElementById(prodID).classList.remove('highlighted');
+                            }, 2500);
+                            if (subcad == 'undefined' && subcad == null)
+                                $scope.filterCategories();
+                        }
                     }
                 }
-            }
+            }, 10);
         };
         setInterval(rippleCatButton, 3000);
     }

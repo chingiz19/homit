@@ -64,6 +64,18 @@ router.get("/terms-of-use", function(req, res, next){
 	res.render("terms_of_use.ejs", req.options.ejs);
 });
 
+router.get("/refund", function(req, res, next){
+	req.options.ejs["title"] = "Refund Policy";
+	req.options.ejs["showSearchBar"] = false;
+	res.render("refund.ejs", req.options.ejs);
+});
+
+router.get("/contactus", function(req, res, next){
+	req.options.ejs["title"] = "Contact Us";
+	req.options.ejs["showSearchBar"] = false;
+	res.render("contact_us.ejs", req.options.ejs);
+});
+
 router.get("/notfound", function(req, res, next){
 	req.options.ejs["title"] = "404 Not Found";
 	res.status(404).render("page404.ejs", req.options.ejs);

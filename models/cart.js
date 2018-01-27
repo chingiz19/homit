@@ -165,7 +165,7 @@ var getFormattedProducts = function (products) {
             customSuperCategory = Catalog.snackVendorSuperCategory;
         }
 
-        var imageLocation = "/resources/images/products/" + product.super_category.toLowerCase() + "/" + product.category.toLowerCase() + "/";
+        var imageLocation = "/resources/images/products/" + customSuperCategory + "/" + product.category.toLowerCase() + "/";
         // Adding to tmpResult
         tmpResult[product.depot_id] = {
             depot_id: product.depot_id,

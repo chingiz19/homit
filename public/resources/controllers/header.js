@@ -37,7 +37,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 //delete cookie
                 $cookies.remove("user");
                 $rootScope.$broadcast("checkUserLogin");
-                notification.addSuccessMessage("Logged out");
+                $window.location.reload();
             } else {
                 // TODO: error handling
                 console.log("password not reset");

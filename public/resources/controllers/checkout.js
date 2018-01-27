@@ -25,7 +25,6 @@ app.controller("checkoutController",
             "HomeIt": false
         };
 
-        $scope.isUserSigned = undefined;
         $scope.orderer = {};
 
         var checkout = this;
@@ -51,7 +50,7 @@ app.controller("checkoutController",
                 if ($scope.userInfo.birth_day && $scope.userInfo.birth_month && $scope.userInfo.birth_year)
                     $scope.userInfo.dob_valid = true;
             } else {
-                $scope.isUserSigned = false;
+                $scope.userSignedIn = false;
             }
             if (checkout.getCheckoutUserInfo != "undefined" && checkout.getCheckoutUserInfo != null) {
                 $scope.userInfo = checkout.getCheckoutUserInfo;
@@ -416,7 +415,7 @@ app.controller("checkoutController",
         };
 
         function readyToHomeIt() {
-            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo.hasLiquor) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid && ($scope.userInfo.drInstruction_valid == false || $scope.userInfo.drInstruction_valid == undefined)) {
+            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo.hasLiquor) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid && ($scope.userInfo.drInstruction_valid == true || $scope.userInfo.drInstruction_valid == undefined)) {
                 $scope.userInfo.HomeIt = true;
             } else {
                 $scope.userInfo.HomeIt = false;

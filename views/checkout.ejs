@@ -73,7 +73,7 @@
                 <form name="Email" class="inptFrm">
                     <md-input-container class="md-block bigClass" flex="80">
                         <label class="inptLbl">Email</label>
-                        <input name="email" ng-pattern="/^.+@.+\..+$/" ng-diabled="userSignedIn" ng-model="userInfo.user_email" ng-blur="sanitizeInput(userInfo.user_email,'email')"
+                        <input name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn" ng-model="userInfo.user_email" ng-blur="sanitizeInput(userInfo.user_email,'email')"
                             type="email" required/>
                         <div ng-messages="Email.email.$error">
                             <div ng-message="pattern" class="inptErMsg">Email format only</div>

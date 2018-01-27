@@ -80,7 +80,7 @@ main{
 #fd_tx:hover + #fd_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,1);
+    border-bottom: 2px solid rgba(42,81,145,0.5);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 40px; 
@@ -90,7 +90,7 @@ main{
 #if_tx:hover + #if_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,1);
+    border-bottom: 2px solid rgba(42,81,145,0.5);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 60px; 
@@ -100,7 +100,7 @@ main{
 #is_tx:hover + #is_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,1);
+    border-bottom: 2px solid rgba(42,81,145,0.5);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     left: 40px; 
@@ -111,7 +111,7 @@ main{
 #tu_tx:hover + #tu_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,1);
+    border-bottom: 2px solid rgba(42,81,145,0.5);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 40px; 
@@ -121,7 +121,7 @@ main{
 #pp_tx:hover + #pp_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,1);
+    border-bottom: 2px solid rgba(42,81,145,0.5);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 60px; 
@@ -131,7 +131,7 @@ main{
 #cu_tx:hover + #cu_ln{
 	margin: auto;
     width: 100%;
-    border-bottom: 2px solid rgba(42,81,145,1);
+    border-bottom: 2px solid rgba(42,81,145,0.5);
     transition: width .6s ease, background-color .5s ease;
     position: relative; 
     right: 40px; 
@@ -154,4 +154,7 @@ main{
     margin: 0 5px 0px 0px;
     font-size: 12px; font-weight: 400; color: rgb(27, 27, 27);
     -webkit-font-smoothing: antialiased;
+}
+a{
+    text-decoration: none !important;
 }

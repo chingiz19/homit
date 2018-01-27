@@ -1,4 +1,4 @@
-app.controller("LoginController", function ($scope, $http, $sce, $route, $rootScope, $mdToast, notification) {
+app.controller("LoginController", function ($scope, $http, $sce, $route, $rootScope, $mdToast, notification, $window) {
     $rootScope.isSigned = false; 
     
     var _nextState = "next",
@@ -133,7 +133,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 $rootScope.$broadcast("checkUserLogin");
                 login.reset();
                 login.hideModal();
-                notification.addSuccessMessage("Logged in");
+                $window.location.reload();
             } else {
                 login.showToast(response.data.error.ui_message, login.passwordErrorAction);
             }

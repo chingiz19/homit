@@ -1,0 +1,81 @@
+md-toolbar{
+    background-color: rgba(42,81,145,0.95) !important;
+}
+body{
+    background-color: rgba(250,250,250,1); 
+    font-family: 'Nunito', sans-serif; 
+    color: rgba(70,70,70,1);
+    letter-spacing: 0.025em;
+}
+.content{
+    padding-right: 130px;
+}
+.top-header{
+    font-weight: 500; font-size: 45px; 
+    margin-top: 35px; margin-bottom: 30px;
+}
+.top-header-contact{
+    display: flex; justify-content: center; margin-bottom: 15px;
+}
+.contact-top-subhead{
+    display: flex; justify-content: center; 
+    font-size: 18px;
+}
+.contact-info-box{
+    display: flex; justify-content: center; align-items: center;
+    margin-top: 15%;
+    margin-bottom: 40px;
+}
+.icon-box{
+    margin-left: 0px; margin-right: 20px;
+}
+.email-icon{
+    margin-bottom: 10px;
+}
+.icon{
+    fill: rgba(150,150,150,0.8);
+}
+.icon svg{
+    width: 40px; height: 40px;
+}
+.email{
+    margin-bottom: 10px; margin-left: 30px;
+    font-size: 31px; 
+}
+.phone{
+    font-size: 30px;
+}
+a {
+    text-decoration: none !important;
+}
+footer{
+    position: absolute;
+    bottom: 0;
+}
+@media (max-height: 530px){
+    footer{
+        position: relative;
+    }
+}
+@media (max-width: 640px){
+    .content{
+        padding-right: 15px;
+    }
+}
+
+@media (max-width: 530px){
+    .icon-box{
+        display: none;
+    }
+    .content{
+        padding-right: 15px;
+    }
+    .content h1{
+        font-size: 32px !important;
+    }
+}
+@media screen and (max-device-width: 600px) {
+    body{
+        padding-top: 125px;
+    }
+}
