@@ -311,7 +311,7 @@
                                     <md-progress-circular md-colors="{color: 'primary'}" md-diameter="76" ng-disabled="paymentResult != 'inProcess' "></md-progress-circular>
                                 </div>
                             </div>
-                            <div id="paymentResult" ng-if="paymentResult == '1' || paymentResult == '0' || paymentResult == '01' || paymentResult == '10' || paymentResult == '11' ">
+                            <div id="paymentResult" ng-if="paymentResult == '1' || paymentResult == '02' || paymentResult == '0' || paymentResult == '01' || paymentResult == '10' || paymentResult == '11' ">
                                 <div class="pR_A">
                                     <md-button class="modal-close-button" ng-click="clearPage()">
                                         <ng-md-icon icon="close" class="modal-close-button-icon"></ng-md-icon>
@@ -321,13 +321,13 @@
                                         <ng-md-icon ng-if="paymentResult == '11' " icon="warning" class="pR_A1 pR_A2"></ng-md-icon>
                                     </md-button>
                                     <ng-md-icon ng-if="paymentResult == '10' || paymentResult == '0'" icon="warning" class="pR_A10"></ng-md-icon>
-                                    <ng-md-icon ng-if="paymentResult == '01' " icon="sentiment_dissatisfied" class="pR_A11"></ng-md-icon>
+                                    <ng-md-icon ng-if="paymentResult == '01' || paymentResult == '02' " icon="sentiment_dissatisfied" class="pR_A11"></ng-md-icon>
                                 </div>
                                 <div class="pR_B">
                                     <span class="pR_BA">{{paymentMessage_1}}{{userInfo.first_name}}</span>
                                 </div>
                                 <div class="pR_C">
-                                    <span class="pR_CA">{{paymentMessage_2}}</span>
+                                    <span class="pR_CA" ng-bind-html="paymentMessage_2"></span>
                                 </div>
                             </div>
                         </div>

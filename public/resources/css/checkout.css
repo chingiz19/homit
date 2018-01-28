@@ -684,3 +684,7 @@ md-toolbar{
 #address md-input-container label{
     display: none;
 }
+
+.response-02-text{
+    text-align: center;
+}

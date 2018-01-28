@@ -1,5 +1,6 @@
 app.controller("checkoutController",
-    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, $log, localStorage, cartService, sessionStorage, date, mapServices) {
+    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, 
+        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce) {
         // Setting up Helcim test mode
         $scope.helcimToken = "505e8387dfa8085c20be9b";
         $scope.helcimTestMode = 1;
@@ -244,7 +245,7 @@ app.controller("checkoutController",
                         updateCheckoutModal("1");
                     }, function errorCallback(response) {
                         $scope.paymentMessage_1 = "We are sorry, ";
-                        $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403)40-Homit.";
+                        $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403) 800-3460.";
                         updateCheckoutModal("10");
                     });
                 } else if (response_id == 0 && response_message == 0 && transaction_id == 0 && crd_lst4 == 0) {
@@ -259,7 +260,12 @@ app.controller("checkoutController",
                     $scope.paymentMessage_1 = "Sorry, ";
                     $scope.paymentMessage_2 = "Your card has been declined.";
                     updateCheckoutModal("01");
+                }else{
+                    $scope.paymentMessage_1 = "Sorry, ";
+                    $scope.paymentMessage_2 = $sce.trustAsHtml("<div layout='row' class='response-02-text'>Something went wrong, please let us know at <a class='email' href='mailto:info@homit.ca'>info@homit.ca</a> </div>");
+                    updateCheckoutModal("02");
                 }
+                
             });
         };
 
@@ -271,7 +277,7 @@ app.controller("checkoutController",
         function updateCheckoutModal(type) {
             $scope.paymentResult = type;
             $('#checkoutModal').modal();
-            if (type == "0" || type == "01") {
+            if (type == "0" || type == "01" || type == "02") {
                 sessionStorage.setCheckoutUserInfo($scope.userInfo);
             }
             setTimeout(function () {
