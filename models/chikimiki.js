@@ -38,7 +38,7 @@ SocketIO.on('connection', function (client) {
 
     client.on('disconnect', function () {
         Logger.log.warn("Connection to CM has been lost", logMeta);
-        SMS.alertDirectors("CM is down!!!");
+        SMS.alertDirectors("\u26A0 CM is down \u26A0");
     });
 
     /* CM error listener that will be logged here as well */

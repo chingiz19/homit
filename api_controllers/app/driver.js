@@ -18,7 +18,7 @@ router.post('/signin', function (req, res, next) {
         });
     } else {
         Driver.authenticateDriver(email, password).then(function (driver) {
-            if (driver != false) {
+            if (driver != false) { 
                 var driverId = driver.id_prefix + driver.id;
                 var portId = Driver.getConnectionPort();
                 var jwt_token = JWTToken.createToken({

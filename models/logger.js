@@ -7,7 +7,8 @@ var winston = require('winston');
 require('winston-daily-rotate-file');
 var dateFormat = require('dateformat');
 var fs = require('fs');
-var filename = process.env.LOG_FILE_PATH + process.env.LOG_FILE_NAME;
+const path = require('path');
+var filename = path.normalize(process.env.LOG_FILE_PATH + process.env.LOG_FILE_NAME);
 var nameDate = dateFormat(new Date().setUTCHours(13), "isoDateTime").split('T')[0];
 var activeLogLocation = process.env.LOG_FILE_PATH + nameDate + "." + process.env.LOG_FILE_NAME;
 

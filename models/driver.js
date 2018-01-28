@@ -3,10 +3,13 @@
  */
 
 var fs = require("fs");
-
+const path = require('path');
+var KEY_PATH = path.normalize(process.cwd() + "/ssl/server.enc.key");
+var CERTIFICATE_PATH =path.normalize(process.cwd() + "/ssl/server.crt");
 var sockIOServer = require("https").createServer({
-	key: fs.readFileSync("ssl/server.key"), //TODO: Chingiz, normalize
-	cert: fs.readFileSync("ssl/server.crt")
+	key: fs.readFileSync(KEY_PATH), 
+    cert: fs.readFileSync(CERTIFICATE_PATH),
+    passphrase: 'test'
 });
 
 var io = require("socket.io")(sockIOServer, {

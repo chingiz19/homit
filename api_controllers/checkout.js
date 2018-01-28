@@ -286,7 +286,7 @@ var createOrders = function (id, address, address_lat, address_long, driverInstr
                 cmUserId = "u_" + id;
             }
             CM.sendOrder(cmUserId, address, cmOrderId, superCategory);
-            //TODO: Email directors
+            SMS.alertDirectors("\u1F6A9 Order placed, ID: " + cmOrderId);
             userOrders.push(userOrder);
             i++;
         }

@@ -7,34 +7,37 @@ const accountSid = process.env.TWILIO_SID;
 const authToken = process.env.TWILIO_TOKEN;
 const twillioNumber = process.env.TWILIO_NUMBER;   //this number owned by Homit 
 var directors = [];
+const path = require('path');
+var jsonfile = require('jsonfile');
+var file = path.normalize('directors.json');
+const client = require('twilio')(accountSid, authToken);
+var pub = {};
 
 /*Building metadata for log*/
 var logMeta = {
     directory: __filename
 }
 
-//TODO: move this out
-const Shabnam = '+14039261177';
-const Elnar = '+14033977020';
-const Chingiz = '+14039262501';
-const Jeyhun = '+14039185792';
-const Zaman = '+14034733973';
-
-directors.push(Shabnam);
-directors.push(Elnar);
-directors.push(Chingiz);
-directors.push(Jeyhun);
-directors.push(Zaman);
-
-const client = require('twilio')(accountSid, authToken);
-var pub = {};
+jsonfile.readFile(file, function (err, obj) {
+    if (err) {
+        Logger.log.error("Could not read director.json file" + err.message, logMeta);
+    } else if (obj) {
+        directors.push(obj.Shabnam);
+        directors.push(obj.Elnar);
+        directors.push(obj.Chingiz);
+        directors.push(obj.Jeyhun);
+        directors.push(obj.Zaman);
+    } else {
+        Logger.log.error("Unknown issue happened during director.json read", logMeta);
+    }
+});
 
 /**
  * Sends regular sms notifying customer about driver's arrival
  * @param {*String} number -in <+1**********> format
  * @param {*String} name 
  */
-pub.notifyDriverArrival = function (number, name) { 
+pub.notifyDriverArrival = function (number, name) {
     client.messages
         .create({
             to: number,
@@ -49,8 +52,8 @@ pub.notifyDriverArrival = function (number, name) {
  * @param {*String} message 
  */
 pub.alertDirectors = function (message) {
-    if (process.env.n_mode == "production") {
-        for (director in directors) {
+    if (process.env.n_mode == "dev") {//process.env.n_mode == "production"
+        for (director of directors) {
             client.messages
                 .create({
                     to: director,
@@ -69,7 +72,7 @@ pub.alertDirectors = function (message) {
  * @param {*String} number -in <+1**********> format
  * @param {*String} callback 
  */
-pub.notifyDriver = function (message, name, number, callback) { 
+pub.notifyDriver = function (message, name, number, callback) {
     client.messages
         .create({
             to: number,
