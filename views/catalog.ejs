@@ -51,8 +51,7 @@
                 </div>
                 <!--End-->
                 <md-container class="col1">
-                    <div class="sizeStage col1A">{{'
-                        <%= selectedCategory %>' | capitalize}}</div>
+                    <div class="sizeStage col1A"><%= selectedCategory %></div>
                     <span>
                         <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
                             <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"

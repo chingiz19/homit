@@ -17,6 +17,11 @@
                 $scope.coveragePolygon.setMap($scope.map);
             }
         });
+
+        // add listener for resize
+        google.maps.event.addDomListener(window, 'resize', function() {
+            $scope.map.setCenter(new google.maps.LatLng(51.054637, -114.094996));
+        });
     };
 
     $scope.showHideUserDropdown = function () {
@@ -42,6 +47,7 @@
     
     $scope.hrefTo = function(path){
         $window.location.href = $window.location.origin + path;
+        sessionStorage.setCategoryClicked("store-switched");
     };
 
     /**
