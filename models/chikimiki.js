@@ -65,18 +65,21 @@ var receiver = function (jsonResponse) {
         var orderId = orderIdString.split("_")[1];
         var storeId = storeIdString.split("_")[1];
 
-        var data = {
-            driver_id: driverId,
-            store_id: storeId,
-            date_assigned: new Date(Date.now()).toISOString()
-        };
+        var sqlQuery = `
+            UPDATE orders_history
+            SET 
+            driver_id = `+ driverId + `,
+            store_id = ` + storeId + `,
+            date_assigned = CURRENT_TIMESTAMP
+            WHERE ?
+        `;
 
         var key = {
             id: orderId
         };
 
         // Updating orders_history table
-        db.updateQuery(db.dbTables.orders_history, [data, key]).then(function (updated) {
+        db.runQuery(sqlQuery, key).then(function (updated) {
 
             // Building json
             var storeKey = {
