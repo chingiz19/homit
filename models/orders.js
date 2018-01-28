@@ -3,7 +3,6 @@
  */
 
 var pub = {};
-
 /* Creates order in orders_history table */
 pub.createOrder = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, superCategory) {
     return Catalog.getSuperCategoryIdByName(superCategory).then(function (superCategoryId) {
@@ -63,7 +62,8 @@ pub.getOrdersByUserId = function (user_id) {
         orders_history.delivery_address AS delivery_address,
         orders_history.store_id AS store_id,
         orders_history.driver_instruction AS driver_instruction,        
-        super_categories.name AS super_category,    
+        super_categories.name AS super_category, 
+        super_categories.name AS super_category_custom, 
         orders_history.driver_id AS driver_id,
         orders_history.refused AS refused,
         orders_history.receiver_name AS receiver_name,
@@ -73,6 +73,34 @@ pub.getOrdersByUserId = function (user_id) {
         catalog_super_categories AS super_categories
         WHERE super_categories.id = orders_history.store_type
         AND orders_history.user_id = users.id AND ?
+        AND super_categories.name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+
+        UNION
+
+        SELECT
+        orders_history.id AS order_id,
+        orders_history.id_prefix AS order_id_prefix,
+        orders_history.date_placed AS date_placed,
+        orders_history.date_assigned AS date_assigned,
+        orders_history.date_arrived_store AS date_arrived_store,
+        orders_history.date_picked AS date_picked,
+        orders_history.date_arrived_customer AS date_arrived_customer,
+        orders_history.date_delivered AS date_delivered,
+        orders_history.delivery_address AS delivery_address,
+        orders_history.store_id AS store_id,
+        orders_history.driver_instruction AS driver_instruction,  
+        super_categories.name AS super_category,               
+        ` + Catalog.snackVendorSuperCategory + ` AS super_category_custom,   
+        orders_history.driver_id AS driver_id,
+        orders_history.refused AS refused,
+        orders_history.receiver_name AS receiver_name,
+        orders_history.receiver_age AS receiver_age
+
+        FROM orders_history, users_customers as users,
+        catalog_super_categories AS super_categories
+        WHERE super_categories.id = orders_history.store_type
+        AND orders_history.user_id = users.id AND ?
+        AND super_categories.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
         
         ORDER BY date_placed`;
 
@@ -97,6 +125,7 @@ pub.getOrdersByGuestId = function (user_id) {
         orders_history.store_id AS store_id,
         orders_history.driver_instruction AS driver_instruction,
         super_categories.name AS super_category,    
+        super_categories.name AS super_category_custom,    
         orders_history.driver_id AS driver_id,
         orders_history.refused AS refused,
         orders_history.receiver_name AS receiver_name,
@@ -106,6 +135,35 @@ pub.getOrdersByGuestId = function (user_id) {
         catalog_super_categories AS super_categories
         WHERE super_categories.id = orders_history.store_type
         AND orders_history.guest_id = guests.id AND ?
+        AND super_categories.name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+
+        UNION
+
+        SELECT
+        orders_history.id AS order_id,
+        orders_history.id_prefix AS order_id_prefix,
+        orders_history.date_placed AS date_placed,
+        orders_history.date_assigned AS date_assigned,
+        orders_history.date_arrived_store AS date_arrived_store,
+        orders_history.date_picked AS date_picked,
+        orders_history.date_arrived_customer AS date_arrived_customer,
+        orders_history.date_delivered AS date_delivered,
+        orders_history.delivery_address AS delivery_address,
+        orders_history.store_id AS store_id,
+        orders_history.driver_instruction AS driver_instruction,
+        super_categories.name AS super_category, 
+        ` + Catalog.snackVendorSuperCategory + ` AS super_category_custom,
+        orders_history.driver_id AS driver_id,
+        orders_history.refused AS refused,
+        orders_history.receiver_name AS receiver_name,
+        orders_history.receiver_age AS receiver_age
+
+        FROM orders_history, users_customers_guest AS guests,
+        catalog_super_categories AS super_categories
+        WHERE super_categories.id = orders_history.store_type
+        AND orders_history.guest_id = guests.id AND ?
+        AND super_categories.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+
 
         ORDER BY date_placed`;
 
@@ -124,6 +182,7 @@ pub.getOrderById = function (orderId) {
     var sqlQuery = `
         SELECT
         orders_cart_info.depot_id AS depot_id, super_categories.name AS super_category,
+        super_categories.name AS super_category_custom,
         categories.name AS category, subcategories.name AS subcategory, types.name AS type,
         listings.product_brand AS brand, listings.product_name AS name,
         listings.product_description AS description, listings.product_country AS country,
@@ -142,7 +201,35 @@ pub.getOrderById = function (orderId) {
         types.subcategory_id = subcategories.id AND subcategories.category_id = categories.id
         AND categories.super_category_id = super_categories.id AND depot.packaging_id = packagings.id
         AND depot.packaging_volume_id = volumes.id AND products.container_id = containers.id
-        AND ?`
+        AND ?
+        AND super_categories.name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+        
+        UNION
+        
+        SELECT
+        orders_cart_info.depot_id AS depot_id, super_categories.name AS super_category,
+        ` + Catalog.snackVendorSuperCategory + ` AS super_category_custom,
+        categories.name AS category, subcategories.name AS subcategory, types.name AS type,
+        listings.product_brand AS brand, listings.product_name AS name,
+        listings.product_description AS description, listings.product_country AS country,
+        containers.name, packagings.name AS packaging, volumes.volume_name AS volume,
+        depot.price AS price, products.product_image AS image, orders_cart_info.quantity AS quantity,
+        orders_cart_info.price_sold AS price_sold, orders_cart_info.tax AS tax
+        
+        FROM orders_cart_info AS orders_cart_info, catalog_depot AS depot, catalog_products AS products,
+        catalog_listings AS listings, catalog_types AS types, catalog_subcategories AS subcategories,
+        catalog_categories AS categories, catalog_super_categories AS super_categories,
+        catalog_packagings AS packagings, catalog_packaging_volumes AS volumes,
+        catalog_containers AS containers
+        
+        WHERE depot.id = orders_cart_info.depot_id AND depot.product_id = products.id
+        AND products.listing_id = listings.id AND listings.type_id = types.id AND
+        types.subcategory_id = subcategories.id AND subcategories.category_id = categories.id
+        AND categories.super_category_id = super_categories.id AND depot.packaging_id = packagings.id
+        AND depot.packaging_volume_id = volumes.id AND products.container_id = containers.id
+        AND ?
+        AND super_categories.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+        `
 
     var data = { "orders_cart_info.order_id": orderId };
     return db.runQuery(sqlQuery, data).then(function (dbResult) {
