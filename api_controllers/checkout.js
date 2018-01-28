@@ -101,7 +101,7 @@ router.post('/placeorder', function (req, res, next) {
                                         requester_ip: req.connection.remoteAddress,
                                         user_id: userId
                                     }
-                                    Logger.log.warn("Paid and claimed amount does not match (USER)", specMetaData);
+                                    Logger.log.warn("Transaction details mismatch (USER)", specMetaData);
                                 }
                             });
                         } else {
@@ -230,7 +230,7 @@ router.post('/placeorder', function (req, res, next) {
                                         directory: __filename,
                                         requester_ip: req.connection.remoteAddress
                                     }
-                                    Logger.log.warn("Paid and claimed amount does not match (GUEST)", specMetaData);
+                                    Logger.log.warn("Transaction details mismatch (GUEST)", specMetaData);
                                 }
                             });
                         } else {

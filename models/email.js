@@ -46,10 +46,10 @@ var sendEmailViaOrders = function (mailOptions) {
                 directory: __filename,
                 error_message: error.message,
             }
-            Logger.log.error("Could not send an ORDER email with " + info.messageId + "ID.", metaData)
+            Logger.log.error("Could not send an ORDER email with " + error.message + "ID.", metaData)
             return false;
         } else {
-            Logger.log.debug('ORDER email was sent with ' + info.messageId + "ID."); 
+            Logger.log.debug('ORDER email was sent with ' + error.message + "ID."); 
             return true;
         }
     });
@@ -331,7 +331,7 @@ var prepareOrderSlip = function (orderInfo, callback) {
     var options = { format: 'Letter' };
 
     pdf.create(orderSlipHtml, options).toFile(pdfFileFath, function (err, res) {
-        if (error) {
+        if (err) {
             var metaData = {
                 directory: __filename,
                 error_message: error.message,

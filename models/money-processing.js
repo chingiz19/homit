@@ -74,6 +74,7 @@ pub.validateTransaction = function (transactionDetails, amountRequired) {
         && transaction.test[0] == process.env.HELCIM_TEST_MODE) {
         return true;
     } else {
+        Logger.log.error("Transaction is not valid.", transactionDetails);
         return false;
     }
 };
