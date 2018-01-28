@@ -52,7 +52,7 @@ pub.notifyDriverArrival = function (number, name) {
  * @param {*String} message 
  */
 pub.alertDirectors = function (message) {
-    if (process.env.n_mode == "dev") {//process.env.n_mode == "production"
+    if (process.env.n_mode == "production") {
         for (director of directors) {
             client.messages
                 .create({
