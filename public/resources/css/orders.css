@@ -2,6 +2,12 @@ ul {list-style-type: none;}
 li {list-style-type: none;}
 html{background-color: white;}
 
+body{
+    background-color: rgba(253,253,253,1); 
+    font-family: 'Nunito', sans-serif; 
+    letter-spacing: 0.025em;
+}
+
 /*Changes default border color*/
 md-radio-button .md-off{
     border-color: rgba(0,0,0,0.4);
@@ -53,7 +59,6 @@ md-select .md-select-value{
 }
 .adminPtopAA{
     font-size: 25px; color: rgba(255,255,255,1); font-weight: 650;
-    font-family: "adobe-clean", "adobe-clean-han-japanese", "Helvetica Neue", Helvetica, sans-serif;
     letter-spacing: 0.065em;
     -webkit-font-smoothing: antialiased;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);

@@ -252,7 +252,7 @@ app.controller("checkoutController",
                     $scope.paymentMessage_1 = "Thank You, ";
                     $scope.paymentMessage_2 = "You order already processed.";
                     updateCheckoutModal("11");
-                } else if (response_id == 0 && response_message == "ERROR - TERMINAL ID INACTIVE9405") {
+                } else if (response_id == 0 && (response_message == "ERROR - TERMINAL ID INACTIVE9405" || response_message == "DECLINED")) {
                     $scope.paymentMessage_1 = "Sorry, ";
                     $scope.paymentMessage_2 = "Your card has been declined.";
                     updateCheckoutModal("01");

@@ -90,7 +90,7 @@ pub.getOrdersByUserId = function (user_id) {
         orders_history.store_id AS store_id,
         orders_history.driver_instruction AS driver_instruction,  
         super_categories.name AS super_category,               
-        ` + Catalog.snackVendorSuperCategory + ` AS super_category_custom,   
+        '` + Catalog.snackVendorSuperCategory + `' AS super_category_custom,   
         orders_history.driver_id AS driver_id,
         orders_history.refused AS refused,
         orders_history.receiver_name AS receiver_name,
@@ -152,7 +152,7 @@ pub.getOrdersByGuestId = function (user_id) {
         orders_history.store_id AS store_id,
         orders_history.driver_instruction AS driver_instruction,
         super_categories.name AS super_category, 
-        ` + Catalog.snackVendorSuperCategory + ` AS super_category_custom,
+        '` + Catalog.snackVendorSuperCategory + `' AS super_category_custom,
         orders_history.driver_id AS driver_id,
         orders_history.refused AS refused,
         orders_history.receiver_name AS receiver_name,
@@ -173,7 +173,7 @@ pub.getOrdersByGuestId = function (user_id) {
 };
 
 function getOrdersWithQuery(sqlQuery, data) {
-    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+    return db.runQuery(sqlQuery, [data, data]).then(function (dbResult) {
         return dbResult;
     });
 }
@@ -208,7 +208,7 @@ pub.getOrderById = function (orderId) {
         
         SELECT
         orders_cart_info.depot_id AS depot_id, super_categories.name AS super_category,
-        ` + Catalog.snackVendorSuperCategory + ` AS super_category_custom,
+        '` + Catalog.snackVendorSuperCategory + `' AS super_category_custom,
         categories.name AS category, subcategories.name AS subcategory, types.name AS type,
         listings.product_brand AS brand, listings.product_name AS name,
         listings.product_description AS description, listings.product_country AS country,
@@ -232,7 +232,7 @@ pub.getOrderById = function (orderId) {
         `
 
     var data = { "orders_cart_info.order_id": orderId };
-    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+    return db.runQuery(sqlQuery, [data, data]).then(function (dbResult) {
         return dbResult;
     });
 };

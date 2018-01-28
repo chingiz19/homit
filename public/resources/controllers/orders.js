@@ -1,5 +1,4 @@
-app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "$rootScope", "$window", "mapServices",
-    function ($location, $scope, $cookies, $http, $rootScope, $window, mapServices) {
+app.controller("adminController", function ($location, $scope, $cookies, $http, $rootScope, $window, mapServices, notification) {
 
         $scope.disRoomMap = undefined;
         $scope.searchCriteria = undefined;
@@ -141,23 +140,16 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
                 if (response.data.success) {
                     //delete cookie
                     $cookies.remove("user");
-                    $rootScope.$broadcast("addNotification", {
-                        type: "alert-success",
-                        message: response.data.ui_message,
-                        href: "/",
-                        reload: true
-                    });
+                    $window.location.href = "/main";
                 } else {
-                    // TODO: error handling
-                    Logger.log("password not reset");
+                    notification.errorMessage("Logout failed, please try again");
                 }
             }, function errorCallback(response) {
-                $rootScope.$broadcast("addNotification", { type: "alert-danger", message: response.data.ui_message });
-                Logger.log("ERROR in password reset");
+                notification.errorMessage(response.data.ui_message);
             });
         };
 
-        $scope.reqeustType = 0;
+        $scope.reqeustType = null;
         $scope.ref_chr_Money = {};
         $scope.refundList = {};
         $scope.req_1 = {};
@@ -271,8 +263,8 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
             $scope.ref_chr_Money['totAmount'] = Math.round(($scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['delFee'] + $scope.ref_chr_Money['GST']) * 100) / 100;
         }
 
-        $scope.page = 1;
-        $scope.pageName = "Order History";
+        $scope.page = 2;
+        $scope.pageName = "Dispatch Room";
         $scope.disRoomMap = undefined;
         $scope.reqeustType = undefined;
         $scope.isOrderDelivered = undefined;
@@ -451,4 +443,4 @@ app.controller("adminController", ["$location", "$scope", "$cookies", "$http", "
         $(document).ready(function () {
             $scope.init();
         });
-    }]);
+    });
