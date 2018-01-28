@@ -139,8 +139,10 @@ var receiver = function (jsonResponse) {
 };
 
 
-pub.send = function (json) {
-    Logger.log.debug('Sending order to CM' + json + "\n", logMeta);
+pub.send = function (json, isOrder) {
+    if (isOrder) {
+        Logger.log.debug('Sending order to CM \n', logMeta);
+    }
     SocketIO.emit(CM_DEFAULT_EMIT, json);
 };
 
@@ -159,7 +161,7 @@ pub.sendOrder = function (customerId, customerAddress, orderId, storeType) {
             }
         }
     };
-    CM.send(newOrder);
+    CM.send(newOrder, true);
 }
 
 
