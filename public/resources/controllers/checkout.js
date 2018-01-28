@@ -1,10 +1,6 @@
 app.controller("checkoutController",
     function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, 
         $log, localStorage, cartService, sessionStorage, date, mapServices, $sce) {
-        // Setting up Helcim test mode
-        $scope.helcimToken = "505e8387dfa8085c20be9b";
-        $scope.helcimTestMode = 1;
-
         $scope.userCart = localStorage.getUserCart() || {};
         $scope.numberOfItemsInCart = 0;
         $scope.totalAmount = 0;

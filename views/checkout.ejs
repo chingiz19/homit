@@ -138,9 +138,9 @@
                 <div id="helcimResults">
                     <form name="helcimForm" id="helcimForm" method="POST" novalidate>
                         <div ng-show="userInfo.cardIsShown">
-                            <input type="hidden" id="token" value="{{helcimToken}}">
+                            <input type="hidden" id="token" value="<%= helcimToken %>">
                             <input type="hidden" id="language" value="en">
-                            <input type="hidden" id="test" value={{helcimTestMode}}>
+                            <input type="hidden" id="test" value="<%= helcimTestMode %>">
                             <input type="hidden" id="amount" value={{receipt}}>
                             <input type="hidden" id="amountShipping" value={{delFee}}>
                             <input type="hidden" id="amountTax" value={{GST}}>

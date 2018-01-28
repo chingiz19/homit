@@ -4,20 +4,24 @@ if (process.env.n_mode == "production"){
 }
 
 var router = require("express").Router();
+var ejsOptions = {
+	title: "Homit", 
+	catelogies: undefined,
+	showSearchBar: true,
+	production: isProduction,
+	helcimToken: process.env.HELCIM_JS_TOKEN,
+	helcimTestMode: process.env.HELCIM_TEST_MODE
+};
 
 /**
  * Assings default options
  */
-router.use(function(req,res,next){
+router.use(function(req, res, next){
 	req.options = {};
 	/**
 	 * EJS rendering options
 	 */
-	req.options.ejs = {title: "Homit", 
-						catelogies: undefined,
-						showSearchBar: true,
-						production: isProduction
-					};
+	req.options.ejs = Object.assign({}, ejsOptions); // deep copy
 	next();
 });
 
