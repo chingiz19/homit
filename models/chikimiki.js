@@ -144,7 +144,7 @@ var receiver = function (jsonResponse) {
 
 pub.send = function (json, isOrder) {
     if (isOrder) {
-        Logger.log.debug('Sending order to CM \n', logMeta);
+        Logger.log.debug('Sending order to CM \n Super category: ' + json.details.order.store_type, logMeta);
     }
     SocketIO.emit(CM_DEFAULT_EMIT, json);
 };
