@@ -68,7 +68,7 @@ var receiver = function (jsonResponse) {
         var data = {
             driver_id: driverId,
             store_id: storeId,
-            date_assigned: Date.now()
+            date_assigned: new Date(Date.now()).toISOString()
         };
 
         var key = {
