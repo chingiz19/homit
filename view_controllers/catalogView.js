@@ -22,7 +22,7 @@ router.get('/:parent/:category', function(req, res, next){
     try{
         req.options.ejs.categories = convertArrayToString(categories[req.params.parent]);
         req.options.ejs.loadedStore = _.startCase(req.params.parent);
-        req.options.ejs.selectedCategory = _.capitalize(req.params.category);
+        req.options.ejs.selectedCategory = req.params.category;
         res.render("catalog.ejs", req.options.ejs);
     } catch(e){
         next()
