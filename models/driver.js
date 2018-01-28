@@ -214,7 +214,7 @@ pub.send = function (id, json) {
 
 var saveOnline = function (driverId) {
     var sqlQuery = `
-    SELECT * FROM drivers_shift_history WHERE shift_end = 0    
+    SELECT * FROM drivers_shift_history WHERE shift_end IS NULL   
     AND ?`
 
     var data = { "driver_id": driverId };
@@ -236,7 +236,7 @@ var saveOnline = function (driverId) {
 
 var saveOffline = function (driverId) {
     var sqlQuery = `
-    SELECT * FROM drivers_shift_history WHERE shift_end = 0    
+    SELECT * FROM drivers_shift_history WHERE shift_end IS NULL     
     AND ?`
 
     var data = { "driver_id": driverId };
@@ -359,7 +359,7 @@ pub.getOnlineDrivers = function () {
     drivers,
     drivers_location AS location
     WHERE
-    shift.shift_end = 0
+    shift.shift_end IS NULL 
     AND drivers.id = shift.driver_id
     AND drivers.id = location.driver_id
     `;
@@ -558,7 +558,7 @@ var endShift = function (rowId, driverId) {
 
 var checkToEndShift = function (driverId) {
     var sqlQuery = `
-    SELECT * FROM drivers_shift_history WHERE shift_end = 0    
+    SELECT * FROM drivers_shift_history WHERE shift_end IS NULL    
     AND online = false AND ?`
 
     var data = { "driver_id": driverId };

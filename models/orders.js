@@ -221,7 +221,7 @@ pub.getPendingOrders = function () {
     history.store_id = stores.id
     AND history.store_type = super_categories.id
     AND history.user_id = users.id
-    AND history.date_delivered = 0
+    AND history.date_delivered IS NULL
     
     UNION
     
@@ -246,7 +246,7 @@ pub.getPendingOrders = function () {
     history.store_id = stores.id
     AND history.store_type = super_categories.id
     AND history.guest_id = guests.id
-    AND history.date_delivered = 0
+    AND history.date_delivered IS NULL
     
     UNION
     
@@ -267,7 +267,7 @@ pub.getPendingOrders = function () {
     WHERE
     history.store_id IS NULL
     AND history.store_type = super_categories.id    
-    AND history.date_delivered = 0
+    AND history.date_delivered IS NULL
     AND history.user_id = users.id
     
     UNION
@@ -289,7 +289,7 @@ pub.getPendingOrders = function () {
     WHERE
     history.store_id IS NULL
     AND history.store_type = super_categories.id        
-    AND history.date_delivered = 0
+    AND history.date_delivered IS NULL
     AND history.guest_id = guests.id
     `;
 
