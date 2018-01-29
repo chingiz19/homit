@@ -567,10 +567,10 @@
 					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
 	  normal'>
 						<b>
-							<span style='font-size:10.0pt; font-family:"Arial",sans-serif;color:black'>Sold by</span>
+							<span style='font-size:10.0pt; font-family:"Arial",sans-serif;color:black'>Sold </span>
 						</b>
 						<span style='font-size:10.0pt; font-family:"Arial",sans-serif;color:black'>
-							<b>Name</b>:</span>
+							<b>by</b>:</span>
 					</p>
 				</td>
 				<td width=590 valign=top style='width:442.45pt;border:none;padding:0in 5.4pt 0in 5.4pt;
@@ -581,6 +581,8 @@
 					</p>
 				</td>
 			</tr>
+
+			<% if (showStoreInfo) { %>
 			<tr style='height:15.9pt'>
 				<td width=120 valign=top style='width:90.25pt;border:none;padding:0in 5.4pt 0in 5.4pt;
 	  height:15.9pt'>
@@ -622,22 +624,25 @@
 					</p>
 				</td>
 			</tr>
+			<% } %>
 		</table>
 
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
+		<% if (showStoreInfo) { %>
+			<p class=MsoNormal>
+				<span style='font-size:10.0pt;line-height:107%;font-family:
+		"Arial",sans-serif'>&nbsp;</span>
+			</p>
 
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
+			<p class=MsoNormal>
+				<span style='font-size:10.0pt;line-height:107%;font-family:
+		"Arial",sans-serif'>&nbsp;</span>
+			</p>
+		<% } %>
+			
+			<p class=MsoNormal>
+				<span style='font-size:10.0pt;line-height:107%;font-family:
+		"Arial",sans-serif'>&nbsp;</span>
+			</p>
 
 		<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 align=left width=712 style='width:534.2pt;border-collapse:collapse;border:none;
 	 margin-left:6.75pt;margin-right:6.75pt'>
@@ -787,7 +792,7 @@
 	"Arial",sans-serif'>&nbsp;</span>
 		</p>
 
-		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=275 style='width:206.6pt;border-collapse:collapse; margin-left:auto;'>
+		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=275 style='width:216.6pt;border-collapse:collapse; margin-left:auto;'>
 			<tr style='height:16.5pt'>
 				<td width=137 nowrap valign=bottom style='width:103.1pt;padding:0in 5.4pt 0in 5.4pt;
 	  height:16.5pt'>
@@ -813,7 +818,7 @@
 					<p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
 	  text-align:right;line-height:normal'>
 						<b>
-							<span style='font-family:"Arial",sans-serif'>Delivery Charge
+							<span style='font-family:"Arial",sans-serif'>Delivery Charge*
 							</span>
 						</b>
 					</p>
@@ -885,4 +890,7 @@
 
 </body>
 
+<footer style="font-size: 14px; position: fixed; bottom: 0; left: 0;">
+	*Delivery fee shown here is applied to all suborders submitted at the same time. This is only charged once per order.
+</footer>
 </html>

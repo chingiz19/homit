@@ -211,6 +211,9 @@ var getEmailHtml = function (orderInfo) {
     var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/order.html", "utf8");
     const $ = cheerio.load(htmlSource);
 
+    if (orderInfo.customer.card_digits){
+        $('#credit_card').text("**** **** **** " + orderInfo.customer.card_digits);                
+    }
     $('#user_greeting').text("Hello, " + orderInfo.customer.first_name);
     $('#credit_card').text(orderInfo.customer.credit_card);
     $('#total_amount').text(priceObject.totalAmount);
@@ -323,7 +326,25 @@ var getOrderSlipHtml = function (htmlSource, OI) {
 var prepareOrderSlip = function (orderInfo, callback) {
     var orderSlipDir = process.env.ORDER_SLIPS_DIR;
     var orderNumber = orderInfo.customer.order.id.split('_')[1];
-    var slipHtmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/orderSlip.html", "utf8");
+    var slipEjsSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/orderSlip.ejs", "utf8");
+
+    var showStoreInfo = true;
+    if (orderInfo.store.name.toLowerCase().includes("safeway")){
+        showStoreInfo = false;
+        orderInfo.store.name = "Safeway";
+    } else if(orderInfo.store.name.toLowerCase().includes("7-eleven")){
+        showStoreInfo = false;
+        orderInfo.store.name = "7-Eleven";
+    } else if (orderInfo.store.name.toLowerCase().includes("homit")){
+        showStoreInfo = false;
+        orderInfo.store.name = "Homit";
+    } else {
+        showStoreInfo = true;
+    }
+    
+    var slipHtmlSource = ejs.render(slipEjsSource, {
+                                showStoreInfo: showStoreInfo
+                            });
     var pdfFileFath = orderSlipDir + "order-slip_" + orderNumber + ".pdf";
     var orderSlipHtml = getOrderSlipHtml(slipHtmlSource, orderInfo);
 

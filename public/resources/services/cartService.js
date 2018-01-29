@@ -1,4 +1,4 @@
-app.service('cartService', ["$http", function ($http) {
+app.service('cartService', function ($http, $localStorage) {
 
     var _modifyCartItem = function (depot_id, itemQuantity) {
         return $http.post('/api/cart/modifyitem', {
@@ -8,6 +8,7 @@ app.service('cartService', ["$http", function ($http) {
     };
 
     var _clearCart = function () {
+        localStorage.setUserCart({});
         return $http.post('/api/cart/clear');
     };
 
@@ -160,4 +161,4 @@ app.service('cartService', ["$http", function ($http) {
         getViewUserCart: _getViewUserCart,
         parseCartToSend: _parseCartToSend
     };
-}]);
+});

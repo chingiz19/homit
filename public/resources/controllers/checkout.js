@@ -133,7 +133,8 @@ app.controller("checkoutController",
             updateUserCart({});
             $scope.numberOfItemsInCart = 0;
             $scope.totalAmount = 0;
-
+            
+            sessionStorage.setAddress(undefined);
             cartService.clearCart()
                 .then(function successCallback(response) {
                     if (response.data.error && response.data.error.code == "C001") { // use local storage
