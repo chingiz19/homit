@@ -246,35 +246,43 @@ router.post('/additems', Auth.validateCsr(), function (req, res, next) {
             }
             Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
                 var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
-
                 var productKeys = Object.keys(products);
                 var superCategory = productKeys[0];
-                Orders.createOrder(userId, orderInfo.delivery_address, orderInfo.delivery_latitude, orderInfo.delivery_longitude, driverInstruction, isGuest, transactionId, superCategory).then(function (orderId) {
-                    var inserted = Orders.insertProducts(orderId, products[superCategory]);
-                    var userOrder = {
-                        super_category: superCategory,
-                        order_id: orderId
-                    };
 
-                    var cmUserId = "";
-                    var cmOrderId = "o_" + userOrder.order_id;
-                    if (isGuest) {
-                        cmUserId = "g_" + userId;
-                    } else {
-                        cmUserId = "u_" + userId;
-                    }
-                    CM.sendOrder(cmUserId, orderInfo.delivery_address, cmOrderId, superCategory);
+                MP.getTransaction(transactionId, function (transactionDetails) {
+                    if (transactionDetails != 'empty' && transactionDetails.transactions != undefined) {
+                        var cardDigits = MP.getUserCardLastDigits(transactionDetails);
 
-                    Catalog.getTotalPriceForProducts(products).then(function (price) {
-                        Orders.placeAddHistory(orderId, csrActionId, price.total_price).then(function (addHistoryId) {
-                            var response = {
-                                success: true,
-                                order: userOrder,
-                                message: "Order has been placed."
+                        Orders.createOrder(userId, orderInfo.delivery_address, orderInfo.delivery_latitude, orderInfo.delivery_longitude, driverInstruction, isGuest, transactionId, cardDigits, superCategory).then(function (orderId) {
+                            var inserted = Orders.insertProducts(orderId, products[superCategory]);
+                            var userOrder = {
+                                super_category: superCategory,
+                                order_id: orderId
                             };
-                            res.send(response);
+
+                            var cmUserId = "";
+                            var cmOrderId = "o_" + userOrder.order_id;
+                            if (isGuest) {
+                                cmUserId = "g_" + userId;
+                            } else {
+                                cmUserId = "u_" + userId;
+                            }
+                            CM.sendOrder(cmUserId, orderInfo.delivery_address, cmOrderId, superCategory);
+
+                            Catalog.getTotalPriceForProducts(products).then(function (price) {
+                                Orders.placeAddHistory(orderId, csrActionId, price.total_price).then(function (addHistoryId) {
+                                    var response = {
+                                        success: true,
+                                        order: userOrder,
+                                        message: "Order has been placed."
+                                    };
+                                    res.send(response);
+                                });
+                            });
                         });
-                    });
+                    } else {
+                        //TODO Logger
+                    }
                 });
             });
         });
