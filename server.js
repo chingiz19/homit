@@ -77,7 +77,7 @@ webServer.use(limiter);
 webServer.use(bodyParser.json());
 webServer.use(cookieParser(secretKey));
 webServer.use(bodyParser.urlencoded({ extended: true }));
-webServer.use('/resources', express.static(webpagePath));
+webServer.use(express.static(webpagePath));
 webServer.set('view engine', 'ejs');
 
 webServer.use(helmet());

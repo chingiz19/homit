@@ -214,33 +214,3 @@ gulp.task('default', function(){
 
     log(gulpTasksList);
 });
-
-
-/* Fun tasks */
-gulp.task('#lines', function(cb){
-    return gulp.src([
-        './api_controllers/**/*.js',
-        './api_controllers/*.js',
-        './models/**/*.js',
-        './models/*.js',
-        './public/**/*.js',
-        './public/**/services/*.js',
-        './public/**/directives/*.js',
-        './public/**/controllers/*.js',
-        './public/**/*.css',
-        './public/*.css',
-        './tests/**/*.js',
-        './tests/*.js',
-        './view_controllers/**/*.js',
-        './view_controllers/*.js',
-        './views/**/*.ejs',
-        './views/*.ejs',
-        './*.js'
-        ])
-        .pipe(plumber({
-            errorHandler: errorHandling
-        }))
-        .pipe(concat('all.txt'))
-        .pipe(plumber.stop())
-        .pipe(gulp.dest("./"));    
-});
