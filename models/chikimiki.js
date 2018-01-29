@@ -115,6 +115,7 @@ var receiver = function (jsonResponse) {
                             phone: user.phone_number,
                             address: orderDetails.delivery_address,
                             comments: orderDetails.driver_instruction,
+                            card_digits: orderDetails.card_digits,
                             order: jsonOrder
                         };
 

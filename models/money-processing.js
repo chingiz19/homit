@@ -79,4 +79,20 @@ pub.validateTransaction = function (transactionDetails, amountRequired) {
     }
 };
 
+pub.getUserCardLastDigits = function (transactionDetails) {
+    var transaction = transactionDetails.transactions.transaction[0];
+    var cardNumber = transaction.card[0].cardNumber[0];
+    return cardNumber.substring(12, 16);
+};
+
+pub.getUserCardToken = function (transactionDetails) {
+    var transaction = transactionDetails.transactions.transaction[0];
+    return transaction.card[0].cardType[0];
+};
+
+pub.getUserCardType = function (transactionDetails) {
+    var transaction = transactionDetails.transactions.transaction[0];
+    return transaction.card[0].cardToken[0];
+};
+
 module.exports = pub;

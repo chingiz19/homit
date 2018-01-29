@@ -24,19 +24,13 @@ router.post('/placeorder', function (req, res, next) {
     var cartProducts = req.body.products;
     var transactionId = req.body.transaction_id;
     var saveCard = req.body.save_card;
-    var cardToken = req.body.card_token;
-    var cardDigits = req.body.card_digits;
-    var cardType = req.body.card_type;
-
+    
 
     var signedUser = Auth.getSignedUser(req);
     if (signedUser != false) {
         var userId = signedUser.id;
-        var cardValid = true;
-        if (saveCard) {
-            cardValid = !cardToken || !cardDigits || !cardType;
-        }
-        if (!cartProducts || !phone || !address || !address_lat || !address_long || !transactionId || !cardValid) {
+
+        if (!cartProducts || !phone || !address || !address_lat || !address_long || !transactionId) {
             res.status(403).json({
                 error: {
                     "code": "U000",
@@ -54,6 +48,7 @@ router.post('/placeorder', function (req, res, next) {
                                 var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
                                 var transactionValid = MP.validateTransaction(transactionDetails, totalPrice);
                                 if (transactionValid) {
+                                    var cardDigits = MP.getUserCardLastDigits(transactionDetails);                                    
                                     var data = {
                                         phone_number: phone
                                     };
@@ -66,8 +61,10 @@ router.post('/placeorder', function (req, res, next) {
                                     };
                                     User.updateUser(data, key).then(function (updatedUser) {
                                         if (updatedUser != false) {
+                                            var cardToken = MP.getUserCardToken(transactionDetails);
+                                            var cardType = MP.getUserCardType(transactionDetails);
                                             saveCreditCard(key, saveCard, cardToken, cardDigits, cardType).then(function (savedCard) {
-                                                createOrders(userId, address, address_lat, address_long, driverInstruction, false, transactionId, products).then(function (userOrders) {
+                                                createOrders(userId, address, address_lat, address_long, driverInstruction, false, transactionId, cardDigits, products).then(function (userOrders) {
                                                     var response = {
                                                         success: true,
                                                         orders: userOrders
@@ -148,6 +145,7 @@ router.post('/placeorder', function (req, res, next) {
                                 var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
                                 var transactionValid = MP.validateTransaction(transactionDetails, totalPrice);
                                 if (transactionValid) {
+                                    var cardDigits = MP.getUserCardLastDigits(transactionDetails);
                                     User.findGuestUser(email).then(function (guestUserFound) {
                                         if (guestUserFound == false) {
                                             var data = {
@@ -162,7 +160,7 @@ router.post('/placeorder', function (req, res, next) {
                                             }
                                             User.addGuestUser(data).then(function (guestUserId) {
                                                 if (guestUserId != false) {
-                                                    createOrders(guestUserId, address, address_lat, address_long, driverInstruction, true, transactionId, products).then(function (userOrders) {
+                                                    createOrders(guestUserId, address, address_lat, address_long, driverInstruction, true, transactionId, cardDigits, products).then(function (userOrders) {
                                                         var response = {
                                                             success: true,
                                                             orders: userOrders
@@ -196,7 +194,7 @@ router.post('/placeorder', function (req, res, next) {
                                             };
                                             User.updateGuestUser(data, key).then(function (guestUser) {
                                                 if (guestUser != false) {
-                                                    createOrders(guestUserFound.id, address, address_lat, address_long, driverInstruction, true, transactionId, products).then(function (userOrders) {
+                                                    createOrders(guestUserFound.id, address, address_lat, address_long, driverInstruction, true, transactionId, cardDigits, products).then(function (userOrders) {
                                                         var response = {
                                                             success: true,
                                                             orders: userOrders
@@ -261,12 +259,12 @@ router.post('/placeorder', function (req, res, next) {
     }
 });
 
-var createOrders = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, products) {
+var createOrders = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, products) {
     var createFunctions = [];
     var userOrders = [];
 
     for (var superCategory in products) {
-        createFunctions.push(Orders.createOrder(id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, superCategory));
+        createFunctions.push(Orders.createOrder(id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, superCategory));
     }
 
     return Promise.all(createFunctions).then(function (orderIds) {

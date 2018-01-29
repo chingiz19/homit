@@ -4,14 +4,15 @@
 
 var pub = {};
 /* Creates order in orders_history table */
-pub.createOrder = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, superCategory) {
+pub.createOrder = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardNumber, superCategory) {
     return Catalog.getSuperCategoryIdByName(superCategory).then(function (superCategoryId) {
         var data = {
             delivery_address: address,
             store_type: superCategoryId,
             delivery_latitude: address_lat,
             delivery_longitude: address_long,
-            transaction_id: transactionId
+            transaction_id: transactionId,
+            card_digits: cardNumber
         };
         if (isGuest) {
             data.guest_id = id;
