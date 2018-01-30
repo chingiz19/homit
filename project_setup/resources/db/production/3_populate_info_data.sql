@@ -1,7 +1,7 @@
 use homit;
 
 /* Insert super categories */
-INSERT INTO `catalog_super_categories`(id, name, display_name, image) VALUES(1 ,"liquor-station" ,"Liquer Station" ,"liquor-station_store.jpeg");
+INSERT INTO `catalog_super_categories`(id, name, display_name, image) VALUES(1 ,"liquor-station" ,"Liquor Station" ,"liquor-station_store.jpeg");
 INSERT INTO `catalog_super_categories`(id, name, display_name, image) VALUES(2 ,"safeway" ,"Snack Vendor" ,"snack-vendor_store.jpeg");
 INSERT INTO `catalog_super_categories`(id, name, display_name, image) VALUES(3 ,"convenience" ,"Snack Vendor" ,"snack-vendor_store.jpeg");
 INSERT INTO `catalog_super_categories`(id, name, display_name, image) VALUES(4 ,"homitcar" ,"Snack Vendor" ,"snack-vendor_store.jpeg");
