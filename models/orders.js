@@ -697,4 +697,23 @@ pub.updateCancelAmount = function (cancelHistoryId, customerRefundAmount) {
     });
 };
 
+pub.areAllDispatched = function (transactionId) {
+    var sqlQuery = `
+        SELECT *
+        FROM orders_history
+        WHERE ?
+        AND date_assigned IS NULL
+    `;
+
+    var data = { transaction_id: transactionId };
+
+    return db.runQuery(sqlQuery, data).then(function (dbResult) {
+        if (dbResult.length > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+};
+
 module.exports = pub;

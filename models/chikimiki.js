@@ -12,6 +12,7 @@ var SocketIO = require("socket.io")(cmSocketIOServer, {
     pingTimeout: 2000
 });
 
+var emailTempStorage = {};
 
 /* Building metadata for log */
 var logMeta = {
@@ -91,6 +92,7 @@ var receiver = function (jsonResponse) {
                     address: dbStore[0].address,
                     phone_number: dbStore[0].phone_number,
                     name: dbStore[0].name,
+                    store_type: dbStore[0].store_type,
                     nextnodeid: jsonResponse.details.nextnodeid
                 };
 
@@ -131,7 +133,39 @@ var receiver = function (jsonResponse) {
                         Driver.dispatchOrder(
                             driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded)
                             .then(function (dispatched) {
-                                Email.sendOrderSlip(jsonFinal.details);
+
+                                //Add to email temp
+                                var emailTransaction = {};
+                                var emailOrders = {};
+                                var emailOrder = {};
+
+                                if (emailTempStorage[orderDetails.transaction_id]) {
+                                    emailTransaction = emailTempStorage[orderDetails.transaction_id];
+
+                                    if (emailTransaction.orders) {
+                                        emailOrders = emailTransaction.orders;
+                                    }
+                                }
+
+                                emailOrder = jsonOrder;
+                                emailOrder.store = jsonStore;
+                                Catalog.getSuperCategoryById(jsonStore.store_type).then(function (superCategory) {
+                                    emailOrder.super_category_display = superCategory.display_name;
+                                    emailOrder.super_category_custom = superCategory.custom_name;
+
+                                    emailOrders[superCategory.name] = emailOrder;
+                                    emailTransaction.orders = emailOrders;
+                                    emailTempStorage[orderDetails.transaction_id] = emailTransaction;
+
+                                    // Check if email is ready to send
+                                    Orders.areAllDispatched(orderDetails.transaction_id).then(function (allAssigned) {
+                                        if (allAssigned) {
+                                            emailTransaction.customer = jsonCustomer;
+                                            Email.sendOrderSlip(emailTransaction);
+                                            delete emailTempStorage[orderDetails.transaction_id];
+                                        }
+                                    });
+                                });
                             });
                     });
                 });

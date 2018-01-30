@@ -676,6 +676,34 @@ pub.getCartProductsWithSuperCategory = function (cartProducts, dbProducts) {
     return products;
 };
 
+pub.getSuperCategoryById = function (superId) {
+    var sqlQuery = `
+        SELECT name,
+        display_name,
+        image,
+        name AS custom_name
+        FROM catalog_super_categories
+        WHERE ?
+        AND name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+
+        UNION
+
+        SELECT name,
+        '` + Catalog.snackVendorDisplayName + `'AS display_name,
+        '` + Catalog.snackVendorImage + `' AS image,
+        '` + Catalog.snackVendorSuperCategory + `' AS custom_name
+        FROM catalog_super_categories
+        WHERE ?
+        AND name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
+    `;
+
+    var data = { id: superId };
+
+    return db.runQuery(sqlQuery, [data, data]).then(function (dbResult) {
+        return dbResult[0];
+    });
+};
+
 /**
  * Custom function to do alphanumeric sort
  * Source: http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
