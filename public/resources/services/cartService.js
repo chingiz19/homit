@@ -1,4 +1,4 @@
-app.service('cartService', function ($http, $localStorage) {
+app.service('cartService', function ($http, localStorage) {
 
     var _modifyCartItem = function (depot_id, itemQuantity) {
         return $http.post('/api/cart/modifyitem', {
