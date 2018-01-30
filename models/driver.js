@@ -5,9 +5,9 @@
 var fs = require("fs");
 const path = require('path');
 var KEY_PATH = path.normalize(process.cwd() + "/ssl/server.enc.key");
-var CERTIFICATE_PATH =path.normalize(process.cwd() + "/ssl/server.crt");
+var CERTIFICATE_PATH = path.normalize(process.cwd() + "/ssl/server.crt");
 var sockIOServer = require("https").createServer({
-	key: fs.readFileSync(KEY_PATH), 
+    key: fs.readFileSync(KEY_PATH),
     cert: fs.readFileSync(CERTIFICATE_PATH),
     passphrase: 'test'
 });
@@ -320,8 +320,9 @@ var updateOrdersHistory = function (updateColumn, orderIdsString) {
 
 var saveLocation = function (driverId, location) {
     var data = { driver_id: driverId };
-    return db.selectAllWhere(db.dbTables.drivers_location, data).then(function (dbResult) {
-        if (dbResult.length > 0) {
+    return db.selectAllWhere(db.dbTables.drivers_location, data).then(function (driversLocations) {
+        Logger.log.debug("Updating driver " + driverId + " location with received database location length: " + driversLocations.length, logMeta);
+        if (driversLocations.length > 0 || true) {
             var updateData = {
                 longitude: location.longitude,
                 latitude: location.latitude
