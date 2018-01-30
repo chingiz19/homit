@@ -344,7 +344,7 @@ var getOrderSlipHtml = function (htmlSource, OI) {
         $('#delivery_fee').text(priceObject.deliveryFee);
         for (var k = 0; k < orders[sub_order].products.length; k++) {
             var product = orders[sub_order].products[k];
-            var Description = product.product_brand + " " + product.product_name + " " + product.volume + " " + " x" + product.packaging;
+            var Description = product.brand + " " + product.name + " " + product.volume + " " + " x" + product.packaging;
             var Quantity = product.quantity;
             var Price = product.price_sold;
             $('#table').append(
