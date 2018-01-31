@@ -9,9 +9,9 @@
 <body ng-cloak>
     <div class="container">
         <div class="col-md-8 col-md-offset-3 content">
-            <section>
-                <h1 class="top-header top-header-contact">Question or Feedback?</h1>
-                <article class="contact-top-subhead">
+            <section itemscope itemtype="http://schema.org/ContactPage">
+                <h1 class="top-header top-header-contact" itemprop="name">Question or Feedback?</h1>
+                <article class="contact-top-subhead" itemprop="description">
                     Help us to Homit better.
                 </article>
                 <article layout="row" class="contact-info-box">
@@ -20,8 +20,8 @@
                         <ng-md-icon class="icon" icon="local_phone"></ng-md-icon>
                     </div>
                     <div layout="column">
-                        <a class="email" href="mailto:info@homit.ca">info@homit.ca</a>
-                        <div class="phone">+1(403) 800-3460</div>
+                        <a class="email" href="mailto:info@homit.ca" itemprop="email">info@homit.ca</a>
+                        <div class="phone" itemprop="telephone">+1(403) 800-3460</div>
                     </div>
                 </article>
             </section>

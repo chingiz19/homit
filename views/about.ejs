@@ -2,12 +2,24 @@
 
 <head>
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
-    <link href="/resources/css/about.css" rel="stylesheet">
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/about.css" rel="stylesheet">
 </head>
 
-<body>
-    
+<body ng-cloak>
+    <div class="container">
+        <div class="col-md-8 col-md-offset-2 content">
+            <section>
+                <h1 class="top-header top-header-about">Who is Homit and How It Works?</h1>
+                <article class="about-top-subhead">
+                    Homit is Calgary based delivery company...
+                </article>
+                <article class="center">
+                    <img width="80%" height="auto" src="/resources/images/non-catalog-image/facebook banner.png">
+                </article>
+            </section>
+        </div>
+    </div>
 </body>
 
 <footer>

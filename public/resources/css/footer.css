@@ -151,7 +151,7 @@ main{
 .homit-copyright{
     width: 100vw;
     display: flex; justify-content: flex-end; 
-    margin: 0 5px 0px 0px;
+    padding: 0 5px 5px 0px;
     font-size: 12px; font-weight: 400; color: rgb(27, 27, 27);
     -webkit-font-smoothing: antialiased;
 }
