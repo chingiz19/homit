@@ -109,7 +109,7 @@
                 <form id="driver-instruction" name="driverInstruction" class="inptFrm gu_address" style="display: flex; justify-content: flex-end;">
                     <md-input-container class="md-block bigClass" flex="50">
                         <label></label>
-                        <input name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction" ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')"
+                        <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction" ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')"
                             placeholder="Driver Instruction" type="text" />
                         <div ng-messages="driverInstruction.drInstruction.$error">
                             <div ng-message="pattern" class="inptErMsg">Number and letter only</div>

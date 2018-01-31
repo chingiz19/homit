@@ -215,8 +215,8 @@
                                         <md-radio-button aria-label="seeDriverRoute" id="{{driver.order_id}}" ng-value="{{driver}}" ng-click="showDriverRoute(driver)"
                                             ng-repeat="driver in online_driverList | orderBy : '-on_shift' | filter : {driver_id : adl_Search}">
                                             <ul layout="row">
-                                                <li>Driver ID: {{driver.driver_id}}&nbsp</li>
-                                                <li>Active: {{driver.on_shift}}</li>
+                                                <li>ID: {{driver.driver_id}}&nbsp</li>
+                                                <li>On-line: {{driver.on_shift}}</li>
                                             </ul>
                                         </md-radio-button>
                                     </md-radio-group>
@@ -263,6 +263,14 @@
                 </div>
             </div>
         </div>
+        <!-- Log Stream -->
+        <!-- Start -->
+        <div ng-show="page == 3" style="background-color: rgba(253,253,253,1);">
+            <div class="container">
+                <div style="color: rgba(0,0,0,0.85); font-weight: 500;">{{logStreamPrevious}}</div>
+                <div style="color: rgba(0,0,0,1); font-weight: 550;">{{logStreamNew}}</div>
+            </div>
+        </div>
 
         <div layout="column" class="doc">
             <md-button aria-label="OH" id="pg_1" ng-click="toPage(1)" flex="33" class="pageDocBtn">
@@ -270,6 +278,9 @@
             </md-button>
             <md-button aria-label="DR" id="pg_2" ng-click="toPage(2)" flex="33" class="pageDocBtn">
                 <ng-md-icon icon="person_pin_circle" class="pageDocHvrIcon2 pageDocIcon"></ng-md-icon>
+            </md-button>
+            <md-button aria-label="DR" id="pg_3" ng-click="toPage(3)" flex="33" class="pageDocBtn">
+                <ng-md-icon icon="insert_comment" class="pageDocHvrIcon3 pageDocIcon"></ng-md-icon>
             </md-button>
         </div>
     </div>

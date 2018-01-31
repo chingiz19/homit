@@ -10,6 +10,8 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         $scope.isSearchLisenerOn = false;
         $scope.driverRouteNodes = [];
         $scope.routeNodesMarkers = [];
+        $scope.logStreamPrevious = "";
+        $scope.logStreamNew = "";
 
         $scope.callSearch = function () {
             $scope.searchCriteria = "";
@@ -293,7 +295,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 }
             }
             if (num == 3) {
-                $scope.pageName = "Request Center";
+                $scope.pageName = "Log Stream";
                 $scope.page = 3;
             }
         };
@@ -349,6 +351,19 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 mapServices.addMarkerToMap($scope.ADL_POL_markers, $scope.disRoomMap);
             }, function errorCallback(response) {
                 console.error("error");
+            });
+        }
+
+        function getLogs(){
+            $scope.logStreamPrevious = $scope.logStreamPrevious + $scope.logStreamNew;
+            $http({
+                method: 'POST',
+                url: "/api/csr/streamlog",
+            }).then(function successCallback(response) {
+                $scope.logStreamNew = response.data.replace($scope.logStreamPrevious, '');
+                $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+            }, function errorCallback(response) {
+                console.log("Error occured in get logs");
             });
         }
 
@@ -436,8 +451,9 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         $scope.init = function () {
             $scope.toPage($scope.page);
             getListActiveDriverCustomer();
+            getLogs();
+            setInterval(getLogs, 15000);
             $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 15000);
-
         };
 
         $(document).ready(function () {

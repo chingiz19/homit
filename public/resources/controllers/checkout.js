@@ -388,7 +388,13 @@ app.controller("checkoutController",
                     $scope.userInfo[type + "_valid"] = false;
                 }
             } else if (text == undefined) {
-                $scope.userInfo[type + "_valid"] = false;
+                if ($("#driverInstruction").val() == ""){
+                    $scope.userInfo[type + "_valid"] = true;    
+                } else {
+                    $scope.userInfo[type + "_valid"] = false;
+                }
+            } else if (text == "" && type == "drInstruction"){
+                $scope.userInfo[type + "_valid"] = true;
             }
             readyToHomeIt();
         };
