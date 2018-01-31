@@ -187,7 +187,7 @@ pub.getOrderById = function (orderId) {
         categories.name AS category, subcategories.name AS subcategory, types.name AS type,
         listings.product_brand AS brand, listings.product_name AS name,
         listings.product_description AS description, listings.product_country AS country,
-        containers.name, packagings.name AS packaging, volumes.volume_name AS volume,
+        containers.name AS container, packagings.name AS packaging, volumes.volume_name AS volume,
         depot.price AS price, products.product_image AS image, orders_cart_info.quantity AS quantity,
         orders_cart_info.price_sold AS price_sold, orders_cart_info.tax AS tax
         
@@ -213,7 +213,7 @@ pub.getOrderById = function (orderId) {
         categories.name AS category, subcategories.name AS subcategory, types.name AS type,
         listings.product_brand AS brand, listings.product_name AS name,
         listings.product_description AS description, listings.product_country AS country,
-        containers.name, packagings.name AS packaging, volumes.volume_name AS volume,
+        containers.name AS container, packagings.name AS packaging, volumes.volume_name AS volume,
         depot.price AS price, products.product_image AS image, orders_cart_info.quantity AS quantity,
         orders_cart_info.price_sold AS price_sold, orders_cart_info.tax AS tax
         
