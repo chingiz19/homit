@@ -1,6 +1,6 @@
 footer{
     color: white;
-    background-color: #afbdca57;
+    /* background-color: #afbdca57; */
 }
 footer a {
     cursor: pointer;
@@ -12,6 +12,7 @@ footer a:hover{
 }
 main{
     width: 100vw;
+    background-color: #afbdca57;
 }
 .col_1{
     padding: 0;
@@ -151,9 +152,10 @@ main{
 .homit-copyright{
     width: 100vw;
     display: flex; justify-content: flex-end; 
-    padding: 0 5px 5px 0px;
+    margin: auto;
     font-size: 12px; font-weight: 400; color: rgb(27, 27, 27);
     -webkit-font-smoothing: antialiased;
+    background-color: #afbdca57;
 }
 a{
     text-decoration: none !important;

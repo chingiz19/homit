@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">   
+    <url>
+        <loc>https://www.homit.ca/main</loc> 
+        <changefreq>monthly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/catalog/liquor-station/beer</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/catalog/liquor-station/wine</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/catalog/liquor-station/spirit</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/catalog/liquor-station/liqueur</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/catalog/snack-vendor/snack</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/catalog/snack-vendor/beverage</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/catalog/snack-vendor/party-supply</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/about</loc> 
+        <changefreq>montly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/privacy</loc> 
+        <changefreq>montly</changefreq>
+        <priority>0.2</priority>
+    </url>
+    
+    <url>
+        <loc>https://www.homit.ca/contactus</loc> 
+        <changefreq>montly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/refund</loc> 
+        <changefreq>montly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/terms-of-use</loc> 
+        <changefreq>montly</changefreq>
+        <priority>0.2</priority>
+    </url>
+    
+</urlset>

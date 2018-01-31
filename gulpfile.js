@@ -35,6 +35,9 @@ var jsFiles = [
 ];
 var cssFiles = './public/**/*.css';
 var imgFiles = './public/**/*.+(png|svg|jpg|jpeg|ico)';
+var miscFiles = [
+    './public/*.*'
+]
 var uglifyOptions = {
     output: {
         comments: false
@@ -57,7 +60,7 @@ function errorHandling(err){
 
 /* Gulp tasks */
 gulp.task('compile', function(cb){
-    return gulpSequence('clean:www', ['js', 'css', 'img'])(cb);
+    return gulpSequence('clean:www', ['js', 'css', 'img', 'misc'])(cb);
 });
 
 gulp.task('browserSync', function(){
@@ -98,6 +101,17 @@ gulp.task('img', function(){
             wwwChangedViaGulp = true;
         }))
         .pipe(cache('cssFiles'))
+        .pipe(gulp.dest("www/"))
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = false;
+        }));
+});
+
+gulp.task('misc', function(){
+    return gulp.src(miscFiles)
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = true;
+        }))
         .pipe(gulp.dest("www/"))
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = false;
@@ -206,6 +220,7 @@ gulp.task('default', function(){
     js                      |  copy js files to www folder
     css                     |  copy css files to www folder
     img                     |  copy img files to www folder
+    misc                    |  copy files inside public folder (doesn't include subfolders)
 
     test-views              |  run test for views
     test-db                 |  run test for db
