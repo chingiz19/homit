@@ -7,6 +7,12 @@ body{
     color: rgba(70,70,70,1);
     letter-spacing: 0.025em;
 }
+ul {
+    list-style-type: none;
+}
+li {
+    list-style-type: none;
+}
 .top-header{
     font-weight: 500; font-size: 45px; 
     margin-top: 35px; margin-bottom: 30px;
@@ -17,6 +23,10 @@ body{
 .about-top-subhead{
     display: flex; justify-content: center; 
     font-size: 18px;
+    font-size: 20px; margin-top: 25px; text-align: center;
+}
+.about-top-subhead span{
+    width: 70%;   
 }
 .center{
     margin-top: 20px;
@@ -32,5 +42,21 @@ footer{
 @media screen and (max-device-width: 600px) {
     body{
         padding-top: 125px;
+    }
+}
+@media (max-height: 630px){
+    footer{
+        position: relative;
+    }
+}
+@media (max-width: 640px){
+    .content{
+        padding-right: 15px;
+    }
+}
+@media (max-width: 480px){
+    .about-top-subhead span{
+        width: 100%;
+        /* text-align: inherit; */
     }
 }

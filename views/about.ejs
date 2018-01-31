@@ -9,13 +9,16 @@
 <body ng-cloak>
     <div class="container">
         <div class="col-md-8 col-md-offset-2 content">
-            <section>
-                <h1 class="top-header top-header-about">Who is Homit and How It Works?</h1>
-                <article class="about-top-subhead">
-                    Homit is Calgary based delivery company...
-                </article>
+            <section itemscope itemtype="http://schema.org/Thing">
+                <h1 class="top-header top-header-about">Who is&nbsp<span itemprop="name">Homit</span>&nbspand How It Works?</h1>
                 <article class="center">
-                    <img width="80%" height="auto" src="/resources/images/non-catalog-image/homit_banner.png">
+                    <img width="80%" height="auto" itemprop="image" src="/resources/images/non-catalog-image/homit_banner.png">
+                </article>
+                <article class="about-top-subhead">
+                    <span itemprop="description">
+                        Ever craved late night munches, or forgot to stock your bar before party, or simply didn't have time to grab necessities... Let
+                        us "Home It" for you and liberate your precious time. Place order online and watch for us to appear at your door, shortly after.
+                    </span>
                 </article>
             </section>
         </div>

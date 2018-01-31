@@ -455,11 +455,21 @@ body{
         animation: ripple 3s ease-out;
     }
 }
-
+.catalog-store-closed{
+    position: absolute; 
+    top: 0; left: 0;
+    background-color: rgba(0,0,0,0.2); z-index: 1;
+    border-radius: 4px;
+    height: 343px; width: 278px;
+}
 /*Small Screens*/
 @media screen and (max-device-width: 600px) {
     body{
         margin-top: 100px !important;
+    }
+    .catalog-store-closed{
+        width: 400px; height: 520px;
+        z-index: 0;
     }
     .pvChange1{
         display: none;
@@ -796,13 +806,6 @@ md-toolbar{
     }
 }
 
-.catalog-store-closed{
-    position: absolute; 
-    top: 0; left: 0;
-    background-color: rgba(0,0,0,0.2); z-index: 1;
-    border-radius: 4px;
-    height: 343px; width: 278px;
-}
 
 
   

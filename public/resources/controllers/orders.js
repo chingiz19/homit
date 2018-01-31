@@ -297,6 +297,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             if (num == 3) {
                 $scope.pageName = "Log Stream";
                 $scope.page = 3;
+                $("html, body").animate({ scrollTop: $(document).height() }, 1000);
             }
         };
 
