@@ -9,6 +9,7 @@ var dateFormat = require('dateformat');
 var fs = require('fs');
 const path = require('path');
 var filename = path.normalize(process.env.LOG_FILE_PATH + process.env.LOG_FILE_NAME);
+var filename_error = path.normalize(process.env.LOG_FILE_PATH + "_error_" + process.env.LOG_FILE_NAME);
 var nameDate = dateFormat(new Date().setUTCHours(13), "isoDateTime").split('T')[0];
 var activeLogLocation = process.env.LOG_FILE_PATH + nameDate + "." + process.env.LOG_FILE_NAME;
 
@@ -18,7 +19,6 @@ var activeLogLocation = process.env.LOG_FILE_PATH + nameDate + "." + process.env
  * Therefore we are using custom timestamp
  */
 pub.log = new (winston.Logger)({
-    level: process.env.DEBUG_LEVEL,
     exitOnError: false,
     handleExceptions: true,
     humanReadableUnhandledException: true,
@@ -27,10 +27,24 @@ pub.log = new (winston.Logger)({
             timestamp: true,
             maxFiles: 365,
             eol: ",\n",
+            level: process.env.DEBUG_LEVEL,
             tailable: true,
             prepend: true,
             colorize: true,
+            name: "file.combined",
             filename: filename,
+            prettyPrint: true,
+        }),
+        new (winston.transports.DailyRotateFile)({
+            timestamp: true,
+            maxFiles: 365,
+            eol: ",\n",
+            tailable: true,
+            prepend: true,
+            colorize: true,
+            level: "error",
+            name: "file.error",
+            filename: filename_error,
             prettyPrint: true,
         })
     ]

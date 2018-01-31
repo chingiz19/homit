@@ -129,15 +129,19 @@ io.on("connection", function (socket) {
 
     socket.on("disconnect", function () {
         delete driverConnections[socket.id];
-        Logger.log.verbose(socket.id + " app has been disconnected from server");
+        Logger.log.verbose(socket.id + " app has been disconnected from server", logMeta);
     });
 
     socket.on("connect_error", function (data) {
-        Logger.log.verbose("Connect error has been occurred " + data);
+        Logger.log.verbose("Connect error has been occurred " + data, logMeta);
     });
 
     socket.on("connect_timeout", function (data) {
-        Logger.log.verbose("Conenction timeout with driver has been occurred " + data);
+        Logger.log.verbose("Conenction timeout with driver has been occurred " + data, logMeta);
+    });
+
+    socket.on("error", function (data) {
+        Logger.log.error("Conenction error with driver occurred " + data, logMeta);
     });
 });
 
@@ -200,6 +204,7 @@ pub.send = function (id, json) {
         if (driverConnections[sockId].driver_id == id) {
             driverConnections[sockId].socket.emit(DEFAULT_EMIT, JSON.stringify(json) + "\n");
             driverOffline = false;
+            Logger.log.verbose("Sending order to " + id);
             break;
         }
     }
@@ -209,6 +214,7 @@ pub.send = function (id, json) {
             driverTempStorage[id] = [];
         }
         driverTempStorage[id].push(json);
+        Logger.log.warn("Could not send order to offline driver " + id);
     }
 };
 
