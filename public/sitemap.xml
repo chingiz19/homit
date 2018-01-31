@@ -50,31 +50,31 @@
 
     <url>
         <loc>https://www.homit.ca/about</loc> 
-        <changefreq>montly</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
 
     <url>
         <loc>https://www.homit.ca/privacy</loc> 
-        <changefreq>montly</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.2</priority>
     </url>
     
     <url>
         <loc>https://www.homit.ca/contactus</loc> 
-        <changefreq>montly</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
 
     <url>
         <loc>https://www.homit.ca/refund</loc> 
-        <changefreq>montly</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://www.homit.ca/terms-of-use</loc> 
-        <changefreq>montly</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.2</priority>
     </url>
     
