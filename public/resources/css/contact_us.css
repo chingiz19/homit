@@ -7,9 +7,6 @@ body{
     color: rgba(70,70,70,1);
     letter-spacing: 0.025em;
 }
-.content{
-    padding-right: 130px;
-}
 .top-header{
     font-weight: 500; font-size: 45px; 
     margin-top: 35px; margin-bottom: 30px;
@@ -23,7 +20,7 @@ body{
 }
 .contact-info-box{
     display: flex; justify-content: center; align-items: center;
-    margin-top: 15%;
+    margin-top: 80px;
     margin-bottom: 40px;
 }
 .icon-box{
@@ -55,11 +52,6 @@ footer{
 @media (max-height: 530px){
     footer{
         position: relative;
-    }
-}
-@media (max-width: 640px){
-    .content{
-        padding-right: 15px;
     }
 }
 

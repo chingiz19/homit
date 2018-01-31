@@ -5,6 +5,13 @@
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/checkout.css" rel="stylesheet">
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
+            <meta property="og:title" content="Homit" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://www.homit.ca" />
+            <meta property="og:description" content="Ever craved late night munches, or forgot to stock your bar before party, or simply didn't have time to grab necessities... Let
+                us 'Home It' for you and liberate your precious time. Place order online and watch for us to appear at your door, shortly after."
+            />
+            <meta property="og:image" content="https://www.homit.ca/resources/images/Circle%20H%20blue.jpeg" />
 </head>
 
 <body ng-cloak>
@@ -109,8 +116,9 @@
                 <form id="driver-instruction" name="driverInstruction" class="inptFrm gu_address" style="display: flex; justify-content: flex-end;">
                     <md-input-container class="md-block bigClass" flex="50">
                         <label></label>
-                        <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction" ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')"
-                            placeholder="Driver Instruction" type="text" />
+                        <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction"
+                            ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')" placeholder="Driver Instruction"
+                            type="text" />
                         <div ng-messages="driverInstruction.drInstruction.$error">
                             <div ng-message="pattern" class="inptErMsg">Number and letter only</div>
                             <div ng-message="maxlength" class="inptErMsg">Maximum 60 characters</div>
@@ -342,8 +350,8 @@
             <script src="/resources/services/mapServices.js"></script>
             <script src="/resources/services/date.js"></script>
             <script src="/resources/controllers/checkout.js"></script>
-        <% } %>
-        <script src="https://secure.myhelcim.com/js/version2.js"></script>
+            <% } %>
+                <script src="https://secure.myhelcim.com/js/version2.js"></script>
     </div>
 </body>
 

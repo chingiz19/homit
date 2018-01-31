@@ -2,19 +2,25 @@
 
 <head>
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
-    <link href="/resources/css/main.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
-    <meta name="description" content="Snacks and Beverage Delivery in Calgary. Let us Home It and liberate your precious time."/>
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/main.css" rel="stylesheet">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
+            <meta property="og:title" content="Homit" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://www.homit.ca" />
+            <meta property="og:description" content="Ever craved late night munches, or forgot to stock your bar before party, or simply didn't have time to grab necessities... Let
+                us 'Home It' for you and liberate your precious time. Place order online and watch for us to appear at your door, shortly after."
+            />
+            <meta property="og:image" content="https://www.homit.ca/resources/images/Circle%20H%20blue.jpeg" />
 </head>
 
 <body ng-cloak>
     <div ng-controller="mainController">
         <div id="address" class="full-screen flex-box">
             <div class="main-page-address-box">
-                <ul class="ul-zero-margin-padding">
-                    <li class="main-page-address-box-text">Order Beverages and Snacks from Your Local Stores</li>
-                </ul>
+                <div class="ul-zero-margin-padding">
+                    <h1 class="main-page-address-box-text">Order Snacks and Beverage from Your Local Stores</h1>
+                </div>
                 <span class="srchAddrsC">
                     <span class="srchAddrsCA">
                         <i class="srchAddrsCAA">
@@ -29,20 +35,27 @@
         <div id="coverage" class="full-screen flex-box area-map-page">
             <div class="addressMessage-text">{{addressMessage}}</div>
             <div id="map" class="area-map"></div>
-            <ul class="area-map-text-box" itemscope itemtype="http://schema.org/LocalBusiness">
-                <li class="area-map-text-A">Coverage Map</li>
-                <li class="area-map-text-B"><span itemprop="name" content="Homit"></span><span itemprop="logo" content="https://homit.ca/resources/images/Homit_Logo_TM.jpeg"></span><span itemprop="addressLocality">Calgary</span>, <span itemprop="addressRegion">AB</span></li>
-            </ul>
+            <div class="area-map-text-box" itemscope itemtype="http://schema.org/LocalBusiness">
+                <h2 class="area-map-text-A">Coverage Map</h2>
+                <h2 class="area-map-text-B">
+                    <span itemprop="name" content="Homit"></span>
+                    <span itemprop="logo" content="https://homit.ca/resources/images/Homit_Logo_TM.jpeg"></span>
+                    <span itemprop="addressLocality">Calgary</span>,
+                    <span itemprop="addressRegion">AB</span>
+                </h2>
+            </div>
         </div>
         <div id="homitHub" class="full-screen homit-hub">
-            <div class="hmtHubA hmtHubTxt">Homit Hub</div>
-            <div  class="hmtHubB">
+            <h2 class="hmtHubA hmtHubTxt">Homit Hub</h2>
+            <div class="hmtHubB">
                 <div flex="30" ng-click="hrefTo('/catalog/snack-vendor')" class="hmtHubBA" id="snack-vendor">
                     <ul layout="column" class="hmtHubBAA">
                         <li class="hmtHubBAAA">
                             <ng-md-icon icon="panorama_vertical" class="snack-vendor-icon"></ng-md-icon>
                         </li>
-                        <li><a class="hmtHubABAB hmtHubTxt" href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a></li>
+                        <li>
+                            <a class="hmtHubABAB hmtHubTxt" href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a>
+                        </li>
                     </ul>
                     <div class="store-sign-background-box"></div>
                 </div>
@@ -51,7 +64,9 @@
                         <li class="hmtHubBAAA">
                             <ng-md-icon icon="local_bar" class="liquer-station-icon"></ng-md-icon>
                         </li>
-                        <li><a class="hmtHubABAB hmtHubTxt" href="https://homit.ca/catalog/liquor-station">Liquor Station</a></li>
+                        <li>
+                            <a class="hmtHubABAB hmtHubTxt" href="https://homit.ca/catalog/liquor-station">Liquor Station</a>
+                        </li>
                     </ul>
                     <div class="store-sign-background-box"></div>
                 </div>

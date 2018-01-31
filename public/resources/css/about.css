@@ -57,6 +57,5 @@ footer{
 @media (max-width: 480px){
     .about-top-subhead span{
         width: 100%;
-        /* text-align: inherit; */
     }
 }

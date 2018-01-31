@@ -259,7 +259,7 @@ app.controller("catalogController", ["$location", "$scope", "$cookies", "$window
                         }
                     }
                 }
-            }, 10);
+            }, 20);
         };
         setInterval(rippleCatButton, 3000);
     }

@@ -2,8 +2,15 @@
 
 <head>
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
-    <link href="/resources/css/page404.css" rel="stylesheet">
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/page404.css" rel="stylesheet">
+            <meta property="og:title" content="Homit" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://www.homit.ca" />
+            <meta property="og:description" content="Ever craved late night munches, or forgot to stock your bar before party, or simply didn't have time to grab necessities... Let
+                us 'Home It' for you and liberate your precious time. Place order online and watch for us to appear at your door, shortly after."
+            />
+            <meta property="og:image" content="https://www.homit.ca/resources/images/Circle%20H%20blue.jpeg" />
 </head>
 
 <body class="ng-cloak">
@@ -14,10 +21,11 @@
     </div>
     <% if (!production) { %>
         <script src="/resources/controllers/page404.js"></script>
-    <% } %>
+        <% } %>
 </body>
 
 <footer>
-        <%- include('partial/footer')%>
+    <%- include('partial/footer')%>
 </footer>
+
 </html>
