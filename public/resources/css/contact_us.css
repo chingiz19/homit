@@ -47,6 +47,7 @@ a {
 }
 footer{
     position: absolute;
+    width: 100%;
     bottom: 0;
 }
 @media (max-height: 530px){

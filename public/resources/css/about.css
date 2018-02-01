@@ -38,8 +38,9 @@ li {
     box-shadow: 0 0px 7px 3px rgba(0,0,0,0.35);
 }
 footer{
-    position: relative;
+    position: absolute;
     bottom: -133px;
+    width: 100%;
 }
 @media screen and (max-device-width: 600px) {
     body{
