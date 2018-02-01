@@ -31,7 +31,7 @@ router.route('/')
 	});
 
 router.get('/main', function(req, res, next){
-	req.options.ejs["title"] = "Late Night Snacks and Liquor Delivery in Calgary - Order Online Now from Homit";
+	req.options.ejs["title"] = "Homit | Order Late Night Snacks and Liquor Delivery in Calgary";
 	req.options.ejs["showSearchBar"] = false;
 	res.render("main.ejs", req.options.ejs);
 });

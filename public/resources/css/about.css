@@ -18,7 +18,8 @@ li {
     margin-top: 35px; margin-bottom: 30px;
 }
 .top-header-about{
-    display: flex; justify-content: center; margin-bottom: 15px;
+    margin-bottom: 15px;
+    width: 100%; display: inline-block; text-align: center
 }
 .about-top-subhead{
     display: flex; justify-content: center; 
