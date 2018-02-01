@@ -5,6 +5,7 @@
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/main.css" rel="stylesheet">
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
+            <meta name="description" content="Snacks and Beverage Delivery in Calgary. Let us Home It and liberate your precious time. " />
 </head>
 
 <body ng-cloak>
@@ -28,13 +29,13 @@
         <div id="coverage" class="full-screen flex-box area-map-page">
             <div class="addressMessage-text">{{addressMessage}}</div>
             <div id="map" class="area-map"></div>
-            <div class="area-map-text-box" itemscope itemtype="http://schema.org/LocalBusiness">
+            <div class="area-map-text-box" itemscope itemtype="http://schema.org/Thing">
                 <h2 class="area-map-text-A">Coverage Map</h2>
                 <h2 class="area-map-text-B">
                     <span itemprop="name" content="Homit"></span>
-                    <span itemprop="logo" content="https://homit.ca/resources/images/Homit_Logo_TM.jpeg"></span>
-                    <span itemprop="addressLocality">Calgary</span>,
-                    <span itemprop="addressRegion">AB</span>
+                    <span itemprop="image" content="https://homit.ca/resources/images/Homit_Logo_TM.jpeg"></span>
+                    <span itemprop="description" content="Snacks and Beverage Delivery in Calgary. Let us Home It and liberate your precious time.">Calgary</span>,
+                    <span>AB</span>
                 </h2>
             </div>
         </div>
