@@ -23,14 +23,15 @@ li {
 }
 .about-top-subhead{
     display: flex; justify-content: center; 
-    font-size: 18px;
+    font-size: 20px;
     font-size: 20px; margin-top: 25px; text-align: center;
 }
 .about-top-subhead span{
     width: 70%;   
 }
 .center{
-    margin-top: 20px;
+    margin-top: 30px;
+    margin-bottom: 40px;
     text-align: center;
 }
 .center img{
@@ -38,7 +39,7 @@ li {
 }
 footer{
     position: absolute;
-    bottom: 0;
+    bottom: -133px;
 }
 @media screen and (max-device-width: 600px) {
     body{

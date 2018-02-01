@@ -7,7 +7,7 @@ li {list-style-type: none;}
 .full-screen{
     min-height: 800px;
     height: 100%;
-    width: 100vw;
+    width: 100%;
 }
 body{
     letter-spacing: 0.01em;
@@ -32,6 +32,9 @@ body{
 #address{
     background-size: auto 100%; 
     background-image: url('/resources/images/non-catalog-image/calgary.png'); 
+}
+h2.hmtHubA{
+    margin: 0;
 }
 .logoTg{
     margin-left: 15px;
@@ -137,7 +140,7 @@ body{
 .hmtHubA{
     position: relative; top: 20%; 
     display: flex; justify-content: center;
-    font-weight: 300; font-size: 40px; 
+    font-weight: 400; font-size: 40px; 
 }
 .hmtHubB{
     top: 40%;
@@ -161,7 +164,7 @@ body{
     outline: none !important;
 }
 .hmtHubABAB{
-    font-weight: 400; font-size: 16px;
+    font-weight: 400; font-size: 20px;
     z-index: 100;
 }
 a.hmtHubABAB:hover{
@@ -170,7 +173,9 @@ a.hmtHubABAB:hover{
 a .hmtHubTxt{
     margin: 0;
 }
-
+li h3 {
+    margin: 0;
+}
 
 .main-page-address-box{
     z-index: 1000; width: 730px;
@@ -242,7 +247,7 @@ nav{
     }
 }
 
-@media (max-width: 599px) and (min-width: 400px){
+@media (max-width: 599px) and (min-width: 300px){
     .main-page-address-box{
         width: 400px;
     }
@@ -292,7 +297,53 @@ nav{
     }
 }
 
-@media (max-width: 549px) and (min-width: 300px){
+@media (max-width: 549px) and (min-width: 430px){
+    .area-map{
+        height: 45%;
+    }
+    .hmtHubA{
+        position: relative; top: 40%; 
+    }
+    .hmtHubA{
+        font-size: 35px;
+    }
+    .hmtHubB{
+        top: 50%;
+    }
+    .hmtHubBA{
+        max-width: 20%;
+    }
+    .store-sign-background-box{
+        top: 17px;
+        max-width: 20%;
+        height: 25px;
+    }
+    .liquer-station-icon svg{
+        width: 60px; height: 60px;
+    }
+    .snack-vendor-icon svg{
+        width: 60px; height: 60px;
+    }
+    #snack-vendor{
+        margin-right: 5%;
+    }
+    #liquer-station{
+        margin-left: 5%;
+    }
+    .hmtHubABAB{
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 429px){
+    footer{
+        width: 430px;
+        overflow-x: scroll !important;
+    }
+    .full-screen{
+        width: 430px;
+        overflow-x: scroll !important;
+    }
     .area-map{
         height: 45%;
     }

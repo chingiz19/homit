@@ -71,10 +71,10 @@
                             <div class="sizeStage col1EAA">
                                 <%= loadedStore %>
                             </div>
-                            <ul class="col1EAB" layout="column">
+                            <ul class="col1EAB" layout="column" itemscope itemtype="http://schema.org/ListItem">
                                 <li ng-repeat='category in <%= categories %> track by $index'>
                                     <a href="/catalog/{{'<%= loadedStore %>' | kebabCase }}/{{category}}" target="_self" class="category-list" ng-style="(('<%= selectedCategory %>' == category)) && {'background-color': 'rgba(0,189,149,0.7)'}">
-                                        <span ng-style="(('<%= selectedCategory %>' == category)) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}">{{ category }}</span>
+                                        <span ng-style="(('<%= selectedCategory %>' == category)) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}" itemprop="category">{{ category }}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -86,7 +86,7 @@
                     <div flex="80" layout-wrap class="col24" id="col24">
                         <div ng-repeat="product in products">
                             <div ng-if="isInSelectedSubcategories(product.subcategory)">
-                                <div class="itemBoxL1" id="{{product.product_id}}">
+                                <div class="itemBoxL1" id="{{product.product_id}}" itemscope itemtype="http://schema.org/Thing">
                                     <ul class="itemBoxL2">
                                         <md-button aria-label="addToCart" class="addToCrtBtn" ng-click="addToCart(product, v_index)">
                                             <ng-md-icon icon="shopping_cart" class="add-shopping-cart"></ng-md-icon>
@@ -104,7 +104,7 @@
                                                     <span class="pvChange1AAB">
                                                         <span layout="row" class="pvChange1AABA">
                                                             <!-- <li class="nHighltdVol" style="width: 2ch; overflow: hidden; white-space: nowrap;">{{product.product_variants.all_volumes[product.volumeI-1]}}</li> -->
-                                                            <li class="highltdVol">&#8198{{product.product_variants.all_volumes[product.volumeI]}}&#8198</li>
+                                                            <li class="highltdVol" itemprop="description">&#8198{{product.product_variants.all_volumes[product.volumeI]}}&#8198</li>
                                                             <!-- <li class="nHighltdVol" style="width: 2ch; overflow: hidden; white-space: nowrap;">{{product.product_variants.all_volumes[product.volumeI+1]}}</li> -->
                                                         </span>
                                                     </span>
@@ -125,7 +125,7 @@
                                                     <span class="pvChange1ABB">
                                                         <span layout="row" class="pvChange1ABBA">
                                                             <!-- <li class="nHighltdPack">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ-1]}}</li> -->
-                                                            <li class="highltdPack">&#8198X{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]}}&#8198</li>
+                                                            <li class="highltdPack" itemprop="description">&#8198X{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]}}&#8198</li>
                                                             <!-- <li class="nHighltdPack">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ+1]}}</li> -->
                                                         </span>
                                                     </span>
@@ -168,12 +168,11 @@
                                         </div>
                                         <!-- End -->
                                         <li class="container itmPic">
-                                            <img ng-src={{product.image}}>
+                                            <img itemprop="photo" ng-src={{product.image}}>
                                         </li>
-
                                         <img ng-if="!product.store_open" class="catalog-store-closed" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
-                                        <li class="brand hmtTxt">{{product.brand}} {{product.name}}</li>
-                                        <li class="price">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</li>
+                                        <li class="brand hmtTxt" itemprop="name">{{product.brand}} {{product.name}}</li>
+                                        <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span itemprop="price">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</span></li>
                                     </ul>
                                 </div>
                             </div>
