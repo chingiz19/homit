@@ -54,14 +54,14 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
             options = {
                 zoom: 11,
                 center: new google.maps.LatLng(51.054637, -114.094996),
-                zoomControl: false,
-                scaleControl: false,
+                // zoomControl: false,
+                // scaleControl: false,
                 mapTypeControl: false,
                 streetViewControl: false,
                 fullscreenControl: false,
                 rotateControl: false,
                 disableDoubleClickZoom: false,
-                gestureHandling: "none",
+                // gestureHandling: "none",
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
         }
