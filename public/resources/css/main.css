@@ -393,21 +393,16 @@ nav{
         top: 600px;
     }
     .hmtHubA{
-        font-size: 60px;
+        font-size: 90px;
     }
     .hmtHubB{
         top: 45%;
     }
-    .store-sign-background-box{
-        top: 25px;
-        max-width: 27%;
-        height: 50px;
-    }
     .liquer-station-icon svg{
-        width: 100px; height: 100px;
+        width: 200px; height: 200px;
     }
     .snack-vendor-icon svg{
-        width: 100px; height: 100px;
+        width: 200px; height: 200px;
     }
     #snack-vendor{
         margin-right: 5%;
@@ -415,26 +410,46 @@ nav{
     #liquer-station{
         margin-left: 5%;
     }
+    .hmtHubBA{
+        max-width: 400px !important; width: 350px;
+        height: 250px;
+    }
+    .store-sign-background-box{
+        top: 50px;
+        max-width: 400px !important; width: 350px;
+        height: 100px;
+    }
+    .area-map{
+        width: 90%;
+    }
     .hmtHubABAB{
-        font-size: 15px;
+        font-size: 35px;
     }
     .addressMessage-text{
-        bottom: 600px;
-        font-size: 35px;
+        bottom: 500px;
+        font-size: 55px;
+        text-align: center;
     }
     md-toolbar{
         margin-top: 15px;
     }
+    .main-page-address-box{
+        width: 95%;
+    }
+    .srchAddrsCAB{
+        padding-left: 85px;
+        width: 92vw; height: 100px;
+        font-size: 45px;
+        color: rgba(0,0,0,0.85);
+        border: 1px solid rgba(200,200,200,0.8); border-radius: 2px;
+        outline-width: 0;
+    }
     .srchAddrsC{
-        width: 800px;
-        height: 100px;
+        width: 100%;
+        height: 130px;
         background-color: rgba(255,255,255,1);
         border-radius: 5px;
         box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.8);
-    }
-    .srchAddrsCA{
-        position: relative;
-        display: flex; align-items: center;
     }
     .srchAddrsCAA{
         position: absolute; padding-left: 5px;
@@ -443,44 +458,68 @@ nav{
         fill: rgba(42,81,245,0.9);
     }
     .srchAddrsCAAA svg{
-        width: 60px; height: 60px;
-    }
-    .srchAddrsCAB{
-        padding-left: 70px;
-        width: 780px; height: 80px;
-        font-size: 35px;
-        color: rgba(0,0,0,0.85);
-        border: 1px solid rgba(200,200,200,0.8); border-radius: 2px;
-        outline-width: 0;
+        width: 80px; height: 80px;
     }
     .srchAddrsCAC{
         position: absolute; 
         right: 0;
-        min-width: 80px; min-height: 80px; margin: 0;
+        min-width: 100px; min-height: 100px; margin: 0;
     }
     .srchAddrsCACA{
-        fill: rgba(0,0,0,0.4);
+        fill: rgba(0,0,0,0.3);
     }
     .srchAddrsCACA svg{
-        width: 50px; height: 50px;
+        width: 60px; height: 60px;
     }
     .pac-container{
-        font-size: 20px !important;
-    }
-    .pac-container {
-        line-height: 40px !important;
+        max-height: 450px;
+        color: rgb(0,0,0,0.2) !important;
     }
     .pac-icon{
-        height: 20px; width: 20px;
+        display: none;
     }
     .pac-matched{
-        font-size: 20px;
+        padding-left: 20px;
+        font-size: 32px;
+        color: rgb(0,0,0,0.2) !important;
     }
     .pac-item {
-        font-size: 20px;
+        display: flex; align-items: center;
+        letter-spacing: 0.03ex;
+        line-height: 70px;
+        font-size: 32px;
+        color: rgb(0,0,0,0.2) !important;
+        font-weight: 400 !important;
+    }
+    .pac-item-query{
+        font-size: 32px !important;
+        color: rgb(0,0,0,0.2);
+        font-weight: 400;
+    }
+    .pac-matched{
+        font-size: 32px !important;
+        color: rgb(0,0,0,0.2) !important;
+        font-weight: 400;
+    }
+    .pac-container:after{
+        height: 60px;
+        background-size:  240px 30px;
+        margin-right: 10px;
     }
     .main-page-address-box-text{
-        font-size: 45px;
+        font-size: 65px;
+        margin-bottom: 30px;
     }
+    .area-map-text-A{
+        font-size: 55px;
+        font-weight: 500;
+        text-shadow: 0 2px 4px rgba(0,0,0,1);
+    }
+    .area-map-text-B{
+        font-size: 35px;
+        font-weight: 200;
+        /* text-shadow: 0 0px 4px rgba(0,0,0,1); */
+    }
+    
 
 }

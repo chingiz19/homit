@@ -160,3 +160,18 @@ main{
 a{
     text-decoration: none !important;
 }
+/* Mobile Devices */
+@media screen and (max-device-width: 500px) {
+    .text{
+        font-size: 20px;
+    }
+    .col_2{
+        height: 110px; width: 110px;
+    }
+    .col_2 img{
+        width: 75px; height: 75px;
+    }
+    .homit-copyright{
+        font-size: 20px;
+    }
+}
