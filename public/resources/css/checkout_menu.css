@@ -12,15 +12,24 @@ ul {
 li {
     list-style-type: none;
 }
+/* Store Break Line */
+.store-break{
+    display: flex; align-items: center; 
+    margin: 15px 0 0px 0;
+}
 
-@media(max-width: 1280px){
-    .sdNavFB1{
-        position: fixed;
-        border-width: 0 0 1px 0 !important;
-        /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
-        transform: translateZ(0); -webkit-transform: translateZ(0);
-        z-index: 5;
-    }
+.store-break-line { 
+    width: 100%; 
+    border-bottom: 1px solid rgba(0,0,0, 0.866); 
+    line-height: 1px; margin: 5px 0 5px; 
+} 
+.store-type { 
+    width: 205px;
+    background:#fff; padding:0 5px; 
+    letter-spacing: 0.045em;
+    -webkit-font-smoothing: antialiased;
+    font-size: 13px;
+    text-transform: uppercase; 
 }
 
 @media(min-width: 400px){
@@ -90,6 +99,7 @@ li {
     right: 5px;
     top: 30%; 
     z-index: 1;
+    font-family: 'Nunito', sans-serif;
 }
 .cart2a{
     position: relative; 
@@ -177,23 +187,15 @@ li {
     margin-right: 36%; 
     font-size: 19px; font-weight: 650;
 }
-.orBtnSz{
-    height: 25px;
-    width: 25px;
-}
-.plusItem{
+.item-button{
     padding: 0 !important;
     margin: 0 !important;
 }
-.minusItem{
-    padding: 0 !important;
-    margin: 0 !important;
+.item-button svg{
+    width: 25px; height: 25px;
 }
-.itemRemoveBtn1{
-    padding: 0; margin: 0;
-}
-.itemRemoveBtn2{
-    font-size: 20px;
+#item-remove-button ng-md-icon{
+    fill: rgb(198,70,5);
 }
 .clrCart{
     position: relative; top: 80px;
@@ -207,33 +209,45 @@ li {
 @media screen and (max-device-width: 600px) {
     .shopping-cart svg{
         padding-top: 5px;
-        height: 80px; width: 80px;
-        fill: rgba(0,94,92,0.8);
+        height: 90px; width: 90px;
+        fill: rgba(0,94,92,0.7);
+    }
+    .sdNavFB1{
+        position: fixed !important;
+        top: 0;
+        border-width: 0 0 1px 0 !important;
+        /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
+        transform: translateZ(0) !important; -webkit-transform: translateZ(0) !important;
+        z-index: 5;
     }
     .cart1{
         top: 35%; right: 0;
     }
     .md-button.md-fab{
-        width: 115px; height: 115px;
+        width: 140px; height: 140px;
     }
     .cart2a{
         background-color: rgba(63,222,17,1) !important;
-        border: 4px solid rgba(255,255,255,0.7);
+        border: 7px solid rgba(255,255,255,0.9);
         box-shadow: none !important;
     }
     .cart2aa{
-        width: 85px !important; height: 85px !important;
-        margin-left: 7px; margin-top: 7px;
+        width: 120px !important; height: 120px !important;
+        margin-top: 17px; padding-right: 10px;
     }
     .cartNotificationNumber{
         position: relative;
-        bottom: 125px; left: 85px;
-        width: 28%; height: 35px;
+        bottom: 155px; left: 90px;
+        min-width: 45px; height: 45px;
         background-color: orangered;
-        color: ghostwhite;
-        font-size: 20px; font-weight: 700;
+        color: rgba(255,255,255,1);
+        font-size: 32px; font-weight: 600;
         border: solid 2px rgb(255,255,255); border-radius: 3px;
         z-index: 20;
+    }
+    .store-type{
+        width: 290px;
+        font-size: 20px;
     }
     /*SideNav*/
     .mdSideNavR1{
@@ -254,30 +268,26 @@ li {
         background-color: rgba(33,33,33,0.7);
     }
     /*SideNav fixed box, i.e. "Checkout" btn, close btn, "Cart Tot"*/
-    .sdNavFB1{
-        position: fixed;
-        /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
-        transform: translateZ(0);-webkit-transform: translateZ(0);
-    }
     .sdNavFB2{
         padding: 0;
         margin-top: 0; margin-bottom: 0;
         height: 5em;
     }
     .sdNavFB3{
-        line-height: 2.5em;
+        line-height: 3em;
     }
     .sdNavFB3a{
         width: 220px;
         padding-left: 70px;
         font-size: 30px;
-        font-weight: bold;
+        font-weight: 500;
     }
     .sdNavFB3b{
         width: 220px;
         padding-left: 15px;
         padding-right: 60px;
         font-size: 30px;
+        font-weight: 500;
     }
     .glyClsBtnSgn{
         font-size: 20px;
@@ -289,24 +299,26 @@ li {
         padding: 0;
         margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 30%;
         color: rgb(255,255,255) !important; 
-        font-size: 40px; font-weight: 600;
+        font-size: 40px; font-weight: 500;
     }
     .clrCart{
-        top: 135px;
-        min-height: 50px !important;
+        top: 160px;
+        min-height: 70px !important;
     }
     .clrCartbtn{
-        font-size: 20px;
+        font-size: 30px;
     }
     /*Cart Items*/
-    .orBtnSz{
-        font-size: 45px;
+    .item-button svg{
+        width: 50px; height: 50px;
     }
-    .itemRemoveBtn2{
-        font-size: 40px;
-    }
+    
     .cartBItems1{
-        top: 130px; 
+        position: relative;
+        top: 140px; 
+    }
+    .sdNavFB1{
+        border-bottom: rgba(63,222,17,1) solid 3px;
     }
     .cartBItems2B2{
         width: 200px ; height: 200px;
@@ -333,23 +345,4 @@ md-checkbox.md-checked .md-icon {
     background-color: rgba(63,222,17,0.87);
 }
 
-.strBrk{
-    display: flex; align-items: center; 
-    margin: 15px 0 0px 0;
-}
-
-.strTypeLn { 
-    width: 100%; 
-    border-bottom: 1px solid rgba(0,0,0, 0.866); 
-    line-height: 1px; margin: 5px 0 5px; 
-} 
-.strType { 
-    width: 205px;
-    background:#fff; padding:0 5px; 
-    color: 1px solid rgba(0,0,0, 0.866); 
-    letter-spacing: 0.045em;
-    -webkit-font-smoothing: antialiased;
-    font-size: 13px;
-    text-transform: uppercase; 
-}
 

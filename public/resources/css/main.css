@@ -232,6 +232,40 @@ nav{
     width: 110px; height: 110px;
 }
 
+/* Google Search autocomplete non-mobile */
+.pac-container{
+    margin-top: 1px;
+    background: #fff;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid #ccc;
+    max-height: 250px;
+}
+.pac-icon{
+    display: none;
+}
+.pac-item {
+    display: flex; align-items: center;
+    padding-left: 20px;
+    letter-spacing: 0.03ex;
+    line-height: 40px;
+    font-size: 17px;
+    font-weight: 300 !important;
+}
+.pac-item-query{
+    font-size: 17px !important;
+    color: rgba(0,0,0,0.5);
+    font-weight: 300;
+}
+.pac-matched{
+    font-size: 17px !important;
+    color: rgba(0,0,0,1);
+    font-weight: 300;
+}
+.pac-container:after{
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
 @media (max-width: 750px) and (min-width: 600px){
     .main-page-address-box{
         width: 500px;
@@ -429,6 +463,7 @@ nav{
         bottom: 500px;
         font-size: 55px;
         text-align: center;
+        padding: 5px;
     }
     md-toolbar{
         margin-top: 15px;
@@ -473,33 +508,31 @@ nav{
     }
     .pac-container{
         max-height: 450px;
-        color: rgb(0,0,0,0.2) !important;
+        margin-top: 5px;
+        background: #fff;
+        border-radius: 0 0 5px 5px;
+        border: 1px solid #ccc;
     }
     .pac-icon{
         display: none;
     }
-    .pac-matched{
-        padding-left: 20px;
-        font-size: 32px;
-        color: rgb(0,0,0,0.2) !important;
-    }
     .pac-item {
         display: flex; align-items: center;
+        padding-left: 20px;
         letter-spacing: 0.03ex;
         line-height: 70px;
         font-size: 32px;
-        color: rgb(0,0,0,0.2) !important;
-        font-weight: 400 !important;
+        font-weight: 300 !important;
     }
     .pac-item-query{
         font-size: 32px !important;
-        color: rgb(0,0,0,0.2);
-        font-weight: 400;
+        color: rgb(0,0,0,0.5);
+        font-weight: 300;
     }
     .pac-matched{
         font-size: 32px !important;
-        color: rgb(0,0,0,0.2) !important;
-        font-weight: 400;
+        color: rgba(0,0,0,1);
+        font-weight: 300;
     }
     .pac-container:after{
         height: 60px;
@@ -520,6 +553,4 @@ nav{
         font-weight: 200;
         /* text-shadow: 0 0px 4px rgba(0,0,0,1); */
     }
-    
-
 }

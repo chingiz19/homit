@@ -546,16 +546,16 @@ body{
         top: 209px; right: 0;
     }
     /*End*/
-    .navigateMobIcon{
+    .navigate-mob-icon{
         position: fixed; 
         left: 0; top: 70%;
-        border: 4px solid rgba(255,255,255,0.7);
+        border: 7px solid rgba(255,255,255,0.9);
         box-shadow: none !important;
     }
-    .navigateMobIconA svg{
+    .navigate-mob-icon svg{
         fill:rgba(255,255,255,1);
-        width: 80px;
-        height: 80px;
+        width: 95px;
+        height: 95px;
     }
     /*Side Nav*/
     .mdSideNavL1{

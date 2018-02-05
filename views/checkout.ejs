@@ -121,7 +121,7 @@
                 </form>
                 <!--Card Info-->
                 <div class="container cardContainer" flex="80">
-                    <md-button aria-label="ShowHideCardInfo" class="glypOpnCI" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown" layout="row">
+                    <md-button aria-label="ShowHideCardInfo" class="card-info-btn" ng-click="userInfo.cardIsShown = !userInfo.cardIsShown" layout="row">
                         <div>
                             <img ng-src="{{'/resources/images/non-catalog-image/visa_logo.jpeg'}}" width="25px;" height="15.625px" />
                         </div>
@@ -252,31 +252,31 @@
                     </div>
                     <div id="product-list">
                         <div ng-repeat="super_category in userCartToView" class="cartBItems1">
-                            <div class="strBrk">
-                                <div flex="10" class="strTypeLn"></div>
-                                <span class="strType">{{ super_category[0] }}</span>
-                                <div class="strTypeLn"></div>
+                            <div class="store-break">
+                                <div flex="10" class="store-break-line"></div>
+                                <span class="store-type">{{ super_category[0] }}</span>
+                                <div class="store-break-line"></div>
                             </div>
                             <div ng-repeat="product in super_category[1]">
                                 <div layout="row" layout-align="center">
                                     <div class="cartBItems2A" flex="30">
                                         <ul>
                                             <li>
-                                                <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
-                                                    <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
+                                                <md-button aria-label="plusItem" ng-click="plusItem(product)" class="item-button">
+                                                    <ng-md-icon  icon="add_circle_outline"></ng-md-icon>
                                                 </md-button>
                                             </li>
                                             <li>
-                                                <md-button aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
-                                                    <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
+                                                <md-button aria-label="minusItem" ng-click="minusItem(product)" class="item-button">
+                                                    <ng-md-icon  icon="remove_circle_outline"></ng-md-icon>
                                                 </md-button>
                                             </li>
                                         </ul>
                                     </div>
                                     <div flex="35" layout="column">
-                                        <li class="cartBItems2B1">
-                                            <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)" class="itemRemoveBtn1">
-                                                <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
+                                        <li class="clear-item-li">
+                                            <md-button id="item-remove-button" aria-label="removeFromCart" ng-click="removeFromCart(product)" class="item-button">
+                                                <ng-md-icon  icon="clear"></ng-md-icon>
                                             </md-button>
                                         </li>
                                         <li>

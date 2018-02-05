@@ -20,6 +20,7 @@
 .addItem_ulA{
     display: flex; justify-content: center; 
     font-weight: 500;
+    font-size: 15px;
 }
 .addItem_ulB{
     display: flex; justify-content: center; 
@@ -39,4 +40,21 @@
 .error_msg {
     background-color: red;
     color: black;
+}
+
+/*Mobile screens*/
+@media screen and (max-device-width: 600px) {
+    .notification_box{
+        bottom: 30px; left: 30px; 
+        height: 120px; width: 400px;
+    }
+    .addItem_img{
+        height: 100px !important; width: 100px !important;
+    }
+    .addItem_ulA{
+        font-size: 22px !important;
+    }
+    .addItem_ulB{
+        font-size: 22px !important;
+    }
 }

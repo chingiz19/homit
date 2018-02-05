@@ -11,7 +11,7 @@
             <div class="sdNavFB1">
                 <div class="sdNavFB2">
                     <md-button ng-click="close()" aria-label="HideSideNav" class="close-button" >
-                        <ng-md-icon  icon="keyboard_arrow_right"></ng-md-icon>
+                        <ng-md-icon  icon="keyboard_arrow_left"></ng-md-icon>
                     </md-button>
                     <md-button onclick="location.href='/checkout'" class="md-primary chckOut">Check Out</md-button>
                 </div>
@@ -30,31 +30,31 @@
             </div>
             <!--Order Summary - Cart Items-->
             <div ng-repeat="super_category in userCartToView track by $index" class="cartBItems1">
-                <div class="strBrk">
-                    <div flex="10" class="strTypeLn"></div>
-                    <span class="strType">{{ super_category[0] }}</span>
-                    <div  class="strTypeLn"></div>
+                <div class="store-break">
+                    <div flex="10" class="store-break-line"></div>
+                    <span class="store-type">{{ super_category[0] }}</span>
+                    <div  class="store-break-line"></div>
                 </div>
                 <div ng-repeat="product in super_category[1] track by $index">
                     <div layout="row" layout-align="center">
                         <div class="cartBItems2A" flex="30">
                             <ul>
                                 <li>
-                                    <md-button aria-label="plusItem" ng-click="plusItem(product)" class="plusItem">
-                                        <img class="orBtnSz" ng-src="{{'/resources/images/plusItem_Icon.svg'}}">
+                                    <md-button aria-label="plusItem" ng-click="plusItem(product)" class="item-button">
+                                        <ng-md-icon  icon="add_circle_outline"></ng-md-icon>
                                     </md-button>
                                 </li>
                                 <li>
-                                    <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="minusItem">
-                                        <img class="orBtnSz" ng-src="{{'/resources/images/minusItem_Icon.svg'}}">
+                                    <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="item-button">
+                                        <ng-md-icon  icon="remove_circle_outline"></ng-md-icon>
                                     </md-button>
                                 </li>
                             </ul>
                         </div>
                         <div flex="35" layout="column" >
                             <li class="cartBItems2B1">
-                                <md-button aria-label="removeFromCart" ng-click="removeFromCart(product)" class="itemRemoveBtn1">
-                                    <img class="itemRemoveBtn2" ng-src="{{'/resources/images/clearItem_Icon.svg'}}">
+                                <md-button id="item-remove-button" aria-label="removeFromCart" ng-click="removeFromCart(product)" class="item-button">
+                                    <ng-md-icon  icon="clear"></ng-md-icon>
                                 </md-button>
                             </li>
                             <li><img class="cartBItems2B2" ng-src={{product.image}}></li>

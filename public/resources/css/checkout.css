@@ -3,6 +3,58 @@ body{
     letter-spacing: 0.01em;
     font-family: 'Nunito', sans-serif;
 }
+/* Store Break Line */
+.store-break{
+    display: flex; align-items: center; 
+    margin: 15px 0 0px 0;
+}
+
+.store-break-line { 
+    width: 100%; 
+    border-bottom: 1px solid rgba(0,0,0, 0.866); 
+    line-height: 1px; margin: 5px 0 5px; 
+} 
+.store-type { 
+    width: 205px;
+    background:#fff; padding:0 5px; 
+    letter-spacing: 0.045em;
+    -webkit-font-smoothing: antialiased;
+    font-size: 13px;
+    text-transform: uppercase; 
+}
+/* Google Search autocomplete non-mobile */
+.pac-container{
+    margin-top: 1px;
+    background: #fff;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid #ccc;
+    max-height: 250px;
+}
+.pac-icon{
+    display: none;
+}
+.pac-item {
+    display: flex; align-items: center;
+    padding-left: 20px;
+    letter-spacing: 0.03ex;
+    line-height: 40px;
+    font-size: 15px;
+    font-weight: 300 !important;
+}
+.pac-item-query{
+    font-size: 15px !important;
+    color: rgba(0,0,0,0.5);
+    font-weight: 300;
+}
+.pac-matched{
+    font-size: 15px !important;
+    color: rgba(0,0,0,1);
+    font-weight: 300;
+}
+.pac-container:after{
+    margin-right: 5px;
+    margin-top: 5px;
+}
 
 /*Column-1 consists of User Info
 Columns-2 consist of items and items' info*/
@@ -195,13 +247,12 @@ md-tabs-wrapper{
     font-weight: 700;
     color: #333;
 }
-.glypOpnCI
+.card-info-btn
 {   
     margin:0px 2px 0px 2px;
     background-color: white !important;
     min-width: 1px !important; min-height: 1px !important; 
     height: 40px; 
-    /* width: 50px !important;  */
     box-shadow: none !important;
 }
 .opnCIsgn{
@@ -312,9 +363,18 @@ md-backdrop.md-opaque {
     align-items: center;
     margin-top: 4em;
 }
-.cartBItems2B1{
-    display: flex; 
-    justify-content: flex-end;
+.clear-item-li{
+    text-align: right;
+}
+.item-button{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.item-button svg{
+    width: 25px; height: 25px;
+}
+#item-remove-button ng-md-icon{
+    fill: rgb(198,70,5);
 }
 .cartBItems2B2{
     width: 125px !important; height: 125px !important;
@@ -338,14 +398,6 @@ md-backdrop.md-opaque {
 .orBtnSz{
     font-size: 25px;
 }
-.plusItem{
-    padding: 0 !important;
-    margin: 0 !important;
-}
-.minusItem{
-    padding: 0 !important;
-    margin: 0 !important;
-}
 .itemRemoveBtn{
     background-color: rgb(255,255,255); color: red;
     font-size: 20px;
@@ -357,8 +409,13 @@ md-backdrop.md-opaque {
         font-size: 23px
     }
     .mdSideNavL1{
-        max-width: 800px !important;
-        width: 60% !important; height: 96% !important;
+        min-width: 65% !important; min-height: 100% !important;
+        width: 65%;
+        margin-top: 0;
+        top: 1px;
+        border: rgba(180,180,180,0.5) solid 2px ;border-radius: 5px; 
+        box-shadow: none;
+        z-index: 100; 
     }
     .container{
         margin: 0 !important;
@@ -378,45 +435,59 @@ md-backdrop.md-opaque {
         font-size: 18px;
         font-weight: 500;
     }
-    .glypOpnCIsgn{
-        font-size: 19px;
-        color: rgb(63,81,181);
+    .card-info-btn{
+        height: 80px;
+    }
+    .card-info-btn img{
+        height: 31.25px; width: 50px;
+    }
+    .card-info-btn svg{
+        height: 40px; width: 40px;
     }
     .summerLnP1{
-        height: 3.5em;
+        height: 3em;
     }
     .summerLnP2{
-        font-size: 26px;
+        color: rgb(255,255,255) !important; 
+        font-size: 40px; font-weight: 500;
     }
     .sidNav-close-button-icon{
         font-size: 20px;
     }
     .receiptB2a{
-        padding-left: 65px;
-        width: 200px; line-height: 1.6;
-        font-size: 19px;
+        padding-left: 45px;
+        width: 220px; line-height: 1.5;
+        font-size: 25px;
+        font-weight: 500;
     }
     .receiptB2b{
         padding-left: 55px;
-        width: 200px; line-height: 1.6;
-        font-size: 19px;
+        width: 200px; line-height: 1.5;
+        font-size: 25px;
+        font-weight: 500;
     }
     .receiptB3a{
         padding-left: 65px;
         width: 200px;
-        font-size: 20px;
+        font-size: 30px;
+        font-weight: 500;
     }
     .receiptB3b{
         padding-left: 55px;
         width: 200px;
+        font-size: 30px;
+        font-weight: 500;
+    }
+    .store-type{
+        width: 300px;
         font-size: 20px;
     }
     .cartBItems1{
         position: relative; 
-        top: 195px; 
+        top: 230px; 
     }
     .cartBItems2B2{
-        width: 175px !important; height: 175px !important;
+        width: 200px !important; height: 200px !important;
         margin: 0; padding: 0;
         display: flex; 
         justify-content: center;
@@ -425,7 +496,7 @@ md-backdrop.md-opaque {
         width: 100%; height: auto;
     }
     .cartBItems2C2{
-        font-size: 18px;
+        font-size: 22px;
         color: rgb(95,95,95);
         letter-spacing: 0.02em;
     }
@@ -475,10 +546,13 @@ md-backdrop.md-opaque {
         z-index: 10;
     }
     .sidNav-close-button svg{
-        height: 40px; width: 40px;
+        height: 60px; width: 60px;
     }
     #product-list{
         margin-top: 15px;
+    }
+    .item-button svg{
+        width: 50px; height: 50px;
     }
 }
 md-backdrop.md-opaque {
@@ -591,7 +665,6 @@ md-backdrop.md-opaque {
     border-radius: 40px; 
     background-color: rgba(0, 189, 149,1);
 }
-
 .modal-close-button{
     position: absolute;
     z-index: 100;
