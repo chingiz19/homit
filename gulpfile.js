@@ -36,7 +36,8 @@ var jsFiles = [
 var cssFiles = './public/**/*.css';
 var imgFiles = './public/**/*.+(png|svg|jpg|jpeg|ico)';
 var miscFiles = [
-    './public/*.*'
+    './public/*.*',
+    './public/**/templates/*.html'
 ]
 var uglifyOptions = {
     output: {
@@ -144,6 +145,7 @@ gulp.task('watch', function(){
     gulp.watch(cssFiles, ['css']);
     gulp.watch(jsFiles, ['js']);
     gulp.watch(imgFiles, ['img']);
+    gulp.watch(miscFiles, ['misc']);
 })
 
 gulp.task('start', function(cb){

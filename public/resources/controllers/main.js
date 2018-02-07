@@ -3,6 +3,7 @@
     $scope.userDropDown = false;
 
     $scope.init = function(){
+
         // always scroll to the top, then later to defined hash
         var currentHash = $location.hash();
         if (!sessionStorage.getAddress()){
@@ -65,6 +66,5 @@
             animateScrollTo(top, {speed: 1000});
         }
     };
-
     $scope.init();
 });

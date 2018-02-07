@@ -88,7 +88,7 @@ h2.hmtHubA{
 }
 .srchAddrsCAC{
     position: absolute; 
-    right: 0;
+    right: 0; top: 0;
     min-width: 45px; min-height: 45px; margin: 0;
 }
 .srchAddrsCACA{
@@ -127,6 +127,7 @@ h2.hmtHubA{
     filter: drop-shadow(0 0px 3px rgba(0,0,0,0.4));
     z-index: 100;
 }
+
 .homit-hub{
     background-color: rgba(42,81,145,1);
     color: white;
@@ -178,6 +179,7 @@ li h3 {
 }
 
 .main-page-address-box{
+    position: relative;
     z-index: 1000; width: 730px;
 }
 .main-page-address-box-text{
@@ -506,39 +508,6 @@ nav{
     .srchAddrsCACA svg{
         width: 60px; height: 60px;
     }
-    .pac-container{
-        max-height: 450px;
-        margin-top: 5px;
-        background: #fff;
-        border-radius: 0 0 5px 5px;
-        border: 1px solid #ccc;
-    }
-    .pac-icon{
-        display: none;
-    }
-    .pac-item {
-        display: flex; align-items: center;
-        padding-left: 20px;
-        letter-spacing: 0.03ex;
-        line-height: 70px;
-        font-size: 32px;
-        font-weight: 300 !important;
-    }
-    .pac-item-query{
-        font-size: 32px !important;
-        color: rgb(0,0,0,0.5);
-        font-weight: 300;
-    }
-    .pac-matched{
-        font-size: 32px !important;
-        color: rgba(0,0,0,1);
-        font-weight: 300;
-    }
-    .pac-container:after{
-        height: 60px;
-        background-size:  240px 30px;
-        margin-right: 10px;
-    }
     .main-page-address-box-text{
         font-size: 65px;
         margin-bottom: 30px;
@@ -551,6 +520,5 @@ nav{
     .area-map-text-B{
         font-size: 35px;
         font-weight: 200;
-        /* text-shadow: 0 0px 4px rgba(0,0,0,1); */
     }
 }

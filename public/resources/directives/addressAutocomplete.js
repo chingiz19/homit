@@ -17,6 +17,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
         var publicFunctions = {};
         var autoComplete;
         var privScopeAccess;
+        var selectedPlace;
 
         /**
          * Clear input box, also remove selected address from session storage
@@ -30,16 +31,16 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
          * Returns Google Place object
          */
         publicFunctions.getPlace = function(){
-            return autoComplete.getPlace();
+            return selectedPlace;
         };
     
         /**
          * Returns Google LatLng object
          */
         publicFunctions.getLatLng = function(){
-            if (!autoComplete.getPlace()) return false;
-            var lat = autoComplete.getPlace().geometry.location.lat, 
-                lng = autoComplete.getPlace().geometry.location.lng;
+            if (!selectedPlace) return false;
+            var lat = selectedPlace.geometry.location.lat, 
+                lng = selectedPlace.geometry.location.lng;
             if (typeof lat !== "number"){
                 lat = lat();
             }
@@ -69,22 +70,15 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                 inputDisabled: "@?inputDisabled", // optional input element
                 buttonClass: "@?buttonClass", // optional x button class(es) (as is biding)
                 bounds: "<autocompleteBounds" // autocomplete results in these bounds are shown first
-    
             },
-            template: '<input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" required>' +
-                        '<md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText()">' + 
-                            '<ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>' + 
-                        '</md-button>',
+            templateUrl: '/resources/templates/addressAutocomplete.html',
             link: function(scope, element, attrs){
                 // waits for DOM load
                 // Need let google APIs to load
                 $timeout(function(){
-                    autoComplete = new google.maps.places.Autocomplete(
-                        document.getElementById("autocompleteAddressInputBox"), {
-                            types: ['geocode'],
-                            componentRestrictions: { country: 'ca' }
-                        }
-                    );
+                    scope._predictions = [];
+                    var service = new google.maps.places.AutocompleteService();
+                    var places = new google.maps.places.PlacesService(document.getElementById('placesServiceNode'));
                             
                     //variable assignment
                     scope.autocomplete = publicFunctions;
@@ -95,24 +89,62 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                     if (addrSelected){
                         scope._searchedAddress = addrSelected.formatted_address;
                         // if address is already selected, set that address
-                        setTimeout(function(){
-                            autoComplete.set("place", addrSelected);
-                        }, 500);
+                        selectedPlace = addrSelected;
+                        
                     }
-    
-                    // need this interval to make sure map bounds are properly set before assigning to autocomplete
-                    var interval = $interval(function(){
-                        if (scope.bounds){
-                            $interval.cancel(interval);
-                            autoComplete.setBounds(scope.bounds);
-                        }
-                    }, 500);
+                      
+                    /* Helper functions */
+                    
 
-                    autoComplete.addListener('place_changed', function(){
-                        scope._searchedAddress = publicFunctions.getPlace().formatted_address;
-                        scope.addressChangeEvent();
-                        scope.$apply();
-                    });
+                    /**
+                     * Called on keypress event in address input box
+                     */
+                    scope._addressTyped = function(){           
+                        if (!scope._searchedAddress){ 
+                            scope._predictions = [];
+                            return;
+                        }
+
+
+                        service.getPlacePredictions({ 
+                                input: scope._searchedAddress,
+                                bounds: scope.bounds,
+                                types: ['geocode'],
+                                componentRestrictions: { country: 'ca' }
+                            }, function(predictions, status){
+
+                            var cut_characters = 0;
+                            
+                            // Takes into account characters of each word in the input
+                            for(var j = 0; j < predictions[0].matched_substrings.length; j++){
+                                cut_characters = cut_characters + predictions[0].matched_substrings[j].length;
+                            }
+                            // Takes into account 'space' in the input
+                            cut_characters = cut_characters + (predictions[0].matched_substrings.length - 1 );
+
+                            for (var i = 0; i < predictions.length; i++){
+                                predictions[i].description = predictions[i].description.substring(cut_characters);
+                            }
+                            scope._matched_part = _.startCase(_.toLower(scope._searchedAddress));
+                            scope._predictions = predictions;
+                            scope.$apply();
+                        });
+                    }
+
+                    /**
+                     * Called when dropdown item is selected
+                     * @param {GooglePredictionValue} address 
+                     */
+                    scope._addressSelected = function(address){
+                        places.getDetails({placeId: address.place_id}, function(place, status){
+                            scope._searchedAddress = place.formatted_address;
+                            selectedPlace = place;
+                            scope._predictions = []; // clean predictions
+                            scope.addressChangeEvent();
+                            scope.$apply();
+                        });
+                    }
+
                 }, 0);  
             }            
         };
