@@ -125,7 +125,6 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
         clearMap();
         for (var i = 0; i < markers.length; i++) {
             var icon;
-            var marker = {};
             if (markers[i].type == "customer") {
                 icon = icon_customer;
             } else if(markers[i].type == "driver") {
@@ -133,14 +132,14 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
             } else{
                 icon = icon_store;
             }
-            marker = new google.maps.Marker({
+            var marker = new google.maps.Marker({
                 position: markers[i].latLng,
                 map: map,
                 icon: icon,
             });
-            var infowindow = new google.maps.InfoWindow();
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
+                    var infowindow = new google.maps.InfoWindow();                    
                     infowindow.setContent('<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
@@ -163,10 +162,13 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
     };
 
     function clearMap(){
-        for (var i = 0; i < all_markers.length; i++) {
+        for (let i = 0; i < all_markers.length; i++) {
             all_markers[i].setMap(null);
         } 
-        for(var i=0; i < polyline_latLng.length; i++){
+
+        all_markers = [];
+
+        for(let i=0; i < polyline_latLng.length; i++){
             polyline_latLng = [];
             routePath.setMap(null);
             break;

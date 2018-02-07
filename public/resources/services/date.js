@@ -14,11 +14,11 @@ app.service('date', [function(){
      * Initializes variables for this service
      */
     function init(){
-        for (var i = new Date().getUTCFullYear(); i >= 1900; i--){
+        for (let i = new Date().getUTCFullYear(); i >= 1900; i--){
             arr_years.push(i);    
         }   
 
-        for (var i = 1; i < 29; i++){
+        for (let i = 1; i < 29; i++){
             arr_days_28.push(i);
         }
     }

@@ -20,7 +20,7 @@ app.service('notification', function(){
         } else {
             gtag('event', eventName);
         }
-    }
+    };
 
     return pub;
 });

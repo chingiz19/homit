@@ -82,7 +82,8 @@ gulp.task('js', function(){
         .pipe(cache('jsFiles'))
         .pipe(ngAnnotate())
         .pipe(jshint({
-            sub: true
+            sub: true,
+            esversion: 6
         }))
         .pipe(jshint.reporter('default'))
         .pipe(production(uglify(uglifyOptions)))

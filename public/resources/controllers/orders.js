@@ -110,7 +110,8 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             }, function errorCallback(response) {
                 Logger.error("error");
             });
-        }
+        };
+
         $scope.selectOrderId = function (order) {
             $scope.selectedOrder = order;
             $scope.selectedOrder['cartTotal'] = 0;
@@ -122,7 +123,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 }
             }).then(function successCallback(response) {
                 $scope.foundOrderContent = response.data.orders;
-                for (item in $scope.foundOrderContent) {
+                for (let item in $scope.foundOrderContent) {
                     $scope.foundOrderContent[item]['modify_number'] = 0;
                     $scope.selectedOrder['cartTotal'] = Math.round((parseFloat($scope.foundOrderContent[item].price) * parseFloat($scope.foundOrderContent[item].quantity) + $scope.selectedOrder['cartTotal']) * 100) / 100;
                 }
@@ -174,11 +175,11 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 });
             } else if (type != 1 && type != 5) {
                 var list_to_send = {};
-                for (item_depot_id in $scope.refundList) {
+                for (let item_depot_id in $scope.refundList) {
                     list_to_send[item_depot_id] = {
                         "id": $scope.refundList.cart_item_id,
                         "quantity": -$scope.refundList.modify_number
-                    }
+                    };
                 }
                 $http({
                     method: 'POST',
@@ -196,7 +197,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                     Logger.error("error");
                 });
             }
-        }
+        };
 
         $scope.reqeustType_change = function (type) {
             updateTotals();
@@ -212,7 +213,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 $scope.ref_chr_Money['GST'] = Math.round(($scope.selectedOrder['cartTotal'] + $scope.ref_chr_Money['delFee']) * 0.05*100)/100;
                 $scope.ref_chr_Money['totAmount'] = Math.round(($scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['GST'] + $scope.ref_chr_Money['delFee'])*100)/100;
             }
-        }
+        };
 
         $scope.addItem = function (item) {
             if ($scope.refundList.hasOwnProperty(item.depot_id) && item.modify_number <= item.quantity - 1) {
@@ -226,10 +227,10 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                     "id": item.cart_item_id,
                     "price": item.price,
                     "quantity": item.modify_number + 1
-                }
+                };
             }
             totCalculator($scope.refundList);
-        }
+        };
 
         $scope.minusItem = function (item) {
             if ($scope.refundList.hasOwnProperty(item.depot_id) && 0 < item.modify_number) {
@@ -240,7 +241,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 $scope.refundList[item.depot_id].quantity = item.modify_number;
             }
             totCalculator($scope.refundList);
-        }
+        };
 
         function updateTotals() {
             $scope.ref_chr_Money['cartTotal'] = 0;
@@ -253,7 +254,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             var delFee1 = 4.99;
             var delFee2 = 2.99;
             updateTotals();
-            for (item in list) {
+            for (let item in list) {
                 $scope.ref_chr_Money['cartTotal'] = Math.round(($scope.ref_chr_Money['cartTotal'] + list[item].price * list[item].quantity) * 100) / 100;
             }
             if ($scope.reqeustType == 3 && $scope.reqeustType == 4) {

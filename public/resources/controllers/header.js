@@ -12,7 +12,6 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         } catch (e) {
             // ignore, address doesn't exist
         }
-        var screen_width = $(window).width();
         if (screen_width < 1000) {
             $scope.screenIsMob = true;
         } else {
@@ -152,10 +151,11 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.resListNode = 0;
 
     function addEvLisToSearch(){
+        var searchRequestElement;
         if($scope.screenIsMob){
-            var searchRequestElement = document.getElementById('glbSearchRequest-mobile');    
+            searchRequestElement = document.getElementById('glbSearchRequest-mobile');    
         } else{
-            var searchRequestElement = document.getElementById('glbSearchRequest');
+            searchRequestElement = document.getElementById('glbSearchRequest');
         }
         searchRequestElement.addEventListener('keyup', globalSearch, false);
     }

@@ -441,7 +441,7 @@ app.controller("checkoutController",
             } else{
                 location.reload();
             }
-        }
+        };
         
         function updateUserCart(cart) {
             $scope.userCart = cart;
