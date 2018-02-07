@@ -414,7 +414,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 clearInterval($scope.setInterval_ADL_POL);
             } else {
                 markers = []; //TODO: already empty?
-                $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 15000);
+                $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 5000);
                 getListActiveDriverCustomer();
             }
             mapServices.addMarkerToMap(markers, $scope.disRoomMap);
@@ -454,8 +454,8 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             $scope.toPage($scope.page);
             getListActiveDriverCustomer();
             getLogs();
-            setInterval(getLogs, 15000);
-            $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 15000);
+            setInterval(getLogs, 5000);
+            $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 5000);
         };
 
         $(document).ready(function () {

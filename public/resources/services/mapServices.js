@@ -5,7 +5,7 @@
  * @copyright Homit (c) 2017
  * @author Jeyhun Gurbanov
  */
-app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionStorage) {
+app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionStorage, $window) {
 
     var pub = {};
 
@@ -18,9 +18,9 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
             return Promise.resolve(new google.maps.Polygon({
                 paths: coverage,
                 strokeColor: '#2a5191',
-                strokeOpacity: 1,
+                strokeOpacity: 0.9,
                 strokeWeight: 3,
-                fillColor: '#2a5191',
+                fillColor: 'rgba(42,81,145,0.5)',
                 fillOpacity: 0.5,
                 geodesic: true
             }));
@@ -50,9 +50,16 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
     };
 
     pub.createMap = function (elementId, options) {
+        var screen_width = window.screen.width;
+        var zoom_scale;
+        if(screen_width < 500){
+            zoom_scale = 11;
+        } else{
+            zoom_scale = 10; 
+        }
         if (!options) {
             options = {
-                zoom: 11,
+                zoom: zoom_scale,
                 center: new google.maps.LatLng(51.054637, -114.094996),
                 // zoomControl: false,
                 // scaleControl: false,
