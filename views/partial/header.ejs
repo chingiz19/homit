@@ -68,6 +68,11 @@
                             </a>
                         </li>
                     </ul>
+                    <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultSuperCategory.length" id="glbSrchC" class="mnSrchCB serach-not-found">
+                        <li>
+                            <span>Not Found Yet...</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="hdrRend">

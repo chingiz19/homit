@@ -538,3 +538,17 @@ a.store-hub-text:hover{
         padding-bottom: 15px;
     }
 }
+.serach-not-found{
+    height: 35px; 
+    display: flex;
+    align-content: center;
+}
+.serach-not-found span{
+    font-size: 20px !important;
+    font-weight: 500 !important;
+    display: flex; 
+    align-items: center; 
+    position: relative; 
+    left: 35px; 
+    font-size: 15px; font-weight: 500; color: rgba(0,0,0, 0.55);
+}
