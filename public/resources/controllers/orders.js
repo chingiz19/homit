@@ -123,7 +123,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 }
             }).then(function successCallback(response) {
                 $scope.foundOrderContent = response.data.orders;
-                for (let item in $scope.foundOrderContent) {
+                for (item in $scope.foundOrderContent) {
                     $scope.foundOrderContent[item]['modify_number'] = 0;
                     $scope.selectedOrder['cartTotal'] = Math.round((parseFloat($scope.foundOrderContent[item].price) * parseFloat($scope.foundOrderContent[item].quantity) + $scope.selectedOrder['cartTotal']) * 100) / 100;
                 }
@@ -175,7 +175,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 });
             } else if (type != 1 && type != 5) {
                 var list_to_send = {};
-                for (let item_depot_id in $scope.refundList) {
+                for (item_depot_id in $scope.refundList) {
                     list_to_send[item_depot_id] = {
                         "id": $scope.refundList.cart_item_id,
                         "quantity": -$scope.refundList.modify_number
@@ -254,7 +254,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             var delFee1 = 4.99;
             var delFee2 = 2.99;
             updateTotals();
-            for (let item in list) {
+            for (item in list) {
                 $scope.ref_chr_Money['cartTotal'] = Math.round(($scope.ref_chr_Money['cartTotal'] + list[item].price * list[item].quantity) * 100) / 100;
             }
             if ($scope.reqeustType == 3 && $scope.reqeustType == 4) {
