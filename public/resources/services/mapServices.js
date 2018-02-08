@@ -169,13 +169,13 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
     };
 
     function clearMap(){
-        for (var j = 0; j < all_markers.length; j++) {
-            all_markers[j].setMap(null);
+        for (let i = 0; i < all_markers.length; i++) {
+            all_markers[i].setMap(null);
         } 
 
         all_markers = [];
 
-        for(var k=0; k < polyline_latLng.length; k++){
+        for(let i=0; i < polyline_latLng.length; i++){
             polyline_latLng = [];
             routePath.setMap(null);
             break;
