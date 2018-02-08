@@ -43,6 +43,9 @@
         text-overflow: ellipsis; 
         white-space: nowrap;
     }
+    .address-selected{
+        background-color: rgba(196, 217, 255,0.3) !important;
+    }
 
     @media (max-width: 750px) and (min-width: 600px){
         .predictions-container{
@@ -98,14 +101,14 @@
 <div id="placesServiceNode" style="display: none;"></div>
 
 <input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocorrect="off" spellcheck="false" required>
-<md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText()">
+<md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0 ">
     <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
 </md-button>
 
 <!-- Google Address prediction dropdown -->
 <!-- Start --> 
 <ul class="predictions-container" ng-if="_predictions.length != 0" ng-cloak>
-    <li ng-repeat="address in _predictions" class="predictions-item" ng-click="_addressSelected(address)">
+    <li ng-repeat="address in _predictions" id="prediction_{{$index + 1}}" class="predictions-item" ng-click="_addressSelected(address)">
         <div><span>{{_matched_part}}</span>{{address.description}}</div>
     </li>
     <li class="powered-by-google"><img ng-src="{{'/resources/images/non-catalog-image/powered_by_google.png'}}" /></li>

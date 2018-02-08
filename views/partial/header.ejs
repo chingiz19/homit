@@ -158,6 +158,11 @@
                 </a>
             </li>
         </ul>
+        <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultSuperCategory.length">
+            <li>
+                <span class="product-brand-text-mobile">Not Found Yet...</span>
+            </li>
+        </ul>
     </div>
     <!-- End -->
     <!-- Dashboard -->

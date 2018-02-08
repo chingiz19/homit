@@ -66,5 +66,6 @@
             animateScrollTo(top, {speed: 1000});
         }
     };
+
     $scope.init();
 });

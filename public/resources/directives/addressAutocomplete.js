@@ -99,13 +99,13 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                     /**
                      * Called on keypress event in address input box
                      */
-                    scope._addressTyped = function(){           
+                    scope._addressTyped = function(){   
                         if (!scope._searchedAddress){ 
                             scope._predictions = [];
+                            lisenerIsOn = false;
+                            removeEvLisToAddressInput();
                             return;
-                        }
-
-
+                        } 
                         service.getPlacePredictions({ 
                                 input: scope._searchedAddress,
                                 bounds: scope.bounds,
@@ -114,7 +114,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                             }, function(predictions, status){
 
                             var cut_characters = 0;
-                            
+
                             // Takes into account characters of each word in the input
                             for(var j = 0; j < predictions[0].matched_substrings.length; j++){
                                 cut_characters = cut_characters + predictions[0].matched_substrings[j].length;
@@ -131,6 +131,69 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                         });
                     }
 
+                    var elementNumber = 0;
+
+                    function navigatePredictions(evt){
+                        //event key "down"
+                        if(evt.keyCode == 40){
+                            if(elementNumber == 0){
+                                elementNumber = elementNumber + 1;
+                                document.getElementById("prediction_" + (elementNumber)).classList.add('address-selected');
+                                updateAddressinput(elementNumber);
+                            } else if(elementNumber == scope._predictions.length){
+                                document.getElementById("prediction_" + (elementNumber)).classList.remove('address-selected');
+                                elementNumber = 1;
+                                document.getElementById("prediction_" + (elementNumber)).classList.add('address-selected');
+                                updateAddressinput(elementNumber);
+                            } else{
+                                document.getElementById("prediction_" + (elementNumber)).classList.remove('address-selected');
+                                elementNumber = elementNumber + 1;                                
+                                document.getElementById("prediction_" + (elementNumber)).classList.add('address-selected');
+                                updateAddressinput(elementNumber);
+                            }
+                        } 
+                        //event key "up"
+                        else if(evt.keyCode == 38){
+                            if(elementNumber == 0){
+                                elementNumber = scope._predictions.length;
+                                document.getElementById("prediction_" + (elementNumber)).classList.add('address-selected');
+                                updateAddressinput(elementNumber);
+                            } else if(elementNumber == 1){
+                                document.getElementById("prediction_" + (1)).classList.remove('address-selected');
+                                elementNumber = scope._predictions.length;
+                                document.getElementById("prediction_" + (elementNumber)).classList.add('address-selected');
+                                updateAddressinput(elementNumber);
+                            } else{
+                                document.getElementById("prediction_" + (elementNumber)).classList.remove('address-selected');
+                                elementNumber = elementNumber - 1;                                
+                                document.getElementById("prediction_" + (elementNumber)).classList.add('address-selected');
+                                updateAddressinput(elementNumber);
+                            }
+                        }
+                        //event key "enter"
+                        else if(evt.keyCode == 13){
+                            scope._addressSelected(scope._predictions[elementNumber - 1]);
+                        }
+                        //event key "escape"
+                        else if(evt.keyCode == 27){
+                            scope._searchedAddress = "";
+                            scope._predictions = [];
+                            scope.$apply();
+                        }
+                    };
+
+                    function updateAddressinput(elementNumber){
+                        scope._searchedAddress = scope._matched_part + scope._predictions[elementNumber - 1].description;
+                        scope.$apply();
+                    }
+
+                    function addEvLisToAddressInput(){
+                        var addressInput = document.getElementById('autocompleteAddressInputBox');
+                        addressInput.addEventListener('keyup', navigatePredictions, false);
+                    };
+
+                    addEvLisToAddressInput();
+                    
                     /**
                      * Called when dropdown item is selected
                      * @param {GooglePredictionValue} address 
