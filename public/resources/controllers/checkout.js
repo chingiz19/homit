@@ -440,6 +440,7 @@ app.controller("checkoutController",
 
                 if (response_id || helcim_message.textContent != "CONNECTING...") {
                     $interval.cancel(interval); // Cancel interval loop
+                    
                     if (response_id) {
                         if (response_id.value == 1) {
                             callback(response_id.value, response_message.value, transaction_id.value, crd_lst4.value.slice(15, 19));
