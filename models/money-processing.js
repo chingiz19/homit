@@ -13,7 +13,6 @@ var pub = {};
 
 var statusApproved = "approved";
 var typePurchase = "purchase";
-var responseMessageApproved = "approved";
 
 /**
  * Requesting from Helcim to view transcation 
@@ -70,7 +69,6 @@ pub.validateTransaction = function (transactionDetails, amountRequired) {
     if (transaction.amount[0] >= amountRequired
         && transaction.type[0].toLowerCase() == typePurchase
         && transaction.status[0].toLowerCase() == statusApproved
-        && transaction.responseMessage[0].toLowerCase() == responseMessageApproved
         && transaction.test[0] == process.env.HELCIM_TEST_MODE) {
         return true;
     } else {

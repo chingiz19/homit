@@ -8,4 +8,4 @@ CREATE USER 'homit_dev_web_user'@'localhost' IDENTIFIED BY 'gg:(@SH%H3K5^4#P';
 
 CREATE DATABASE homit_dev;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON `homit_dev_web_user`.* TO 'db_web_user'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `homit_dev`.* TO 'homit_dev_web_user'@'localhost';
