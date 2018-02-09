@@ -237,9 +237,15 @@ app.controller("checkoutController",
                             crd_lst4: crd_lst4
                         }
                     }).then(function successCallback(response) {
-                        $scope.paymentMessage_1 = "Thank You, ";
-                        $scope.paymentMessage_2 = "Homit will take care!";
-                        updateCheckoutModal("1");
+                        if (response.data.success){
+                            $scope.paymentMessage_1 = "Thank You, ";
+                            $scope.paymentMessage_2 = "Homit will take care!";
+                            updateCheckoutModal("1");                            
+                        } else{
+                            $scope.paymentMessage_1 = "We are sorry, ";
+                            $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403) 800-3460.";
+                            updateCheckoutModal("10");    
+                        } 
                     }, function errorCallback(response) {
                         $scope.paymentMessage_1 = "We are sorry, ";
                         $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403) 800-3460.";

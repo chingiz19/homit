@@ -24,12 +24,22 @@ router.post('/placeorder', function (req, res, next) {
     var cartProducts = req.body.products;
     var transactionId = req.body.transaction_id;
     var saveCard = req.body.save_card;
-    
 
+    // TODO: Debug, for current testing
+    Logger.log.info("Order has been placed", {
+        email: email,
+        fname: fname,
+        phone: phone,
+        address: address,
+        driverInstruction: driverInstruction,
+        cartProducts: cartProducts
+    });
+    
     var signedUser = Auth.getSignedUser(req);
     if (signedUser != false) {
         var userId = signedUser.id;
 
+        //TODO: check all items
         if (!cartProducts || !phone || !address || !address_lat || !address_long || !transactionId) {
             res.status(403).json({
                 error: {
@@ -39,6 +49,8 @@ router.post('/placeorder', function (req, res, next) {
                 }
             });
         } else {
+
+            // TODO: rewrite if-else in reverse order ('==' => '!=', and return error in if body)
             Orders.checkTransaction(transactionId).then(function (isTransactionFine) {
                 if (isTransactionFine) {
                     MP.getTransaction(transactionId, function (transactionDetails) {
