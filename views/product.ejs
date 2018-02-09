@@ -1,0 +1,22 @@
+<html ng-app="mainModule">
+
+<head>
+    <%- include('partial/imports')%>
+    <%- include('partial/header', {title: title}); %>
+    <link href="/resources/css/product.css" rel="stylesheet">
+</head>
+
+<body ng-cloak>
+    <div ng-controller="productController">
+    </div>
+
+    <% if (!production) { %>
+        <script src="/resources/controllers/product.js"></script>
+    <% } %>
+</body>
+
+<footer>
+    <%- include('partial/footer')%>
+</footer>
+
+</html>

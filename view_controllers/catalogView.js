@@ -6,13 +6,17 @@ const categories = {
     "snack-vendor": ['beverage', 'everyday-needs', 'party-supply', 'snack']
 }
 
+router.get("/product/:productId", function(req, res, next){
+    res.render("product.ejs", req.options.ejs);
+});
+
 router.get('/:parent/', function(req, res, next){
     try{
         res.redirect("/catalog/" + req.params.parent + "/" + categories[req.params.parent][0]);
     } catch(e){
         next()
     }
-})
+});
 
 router.get('/:parent/:category', function(req, res, next){
     if (!_.includes(categories[req.params.parent], req.params.category)){
@@ -27,7 +31,7 @@ router.get('/:parent/:category', function(req, res, next){
     } catch(e){
         next()
     }
-})
+});
 
 function convertArrayToString(array){
     return "[\"" + array.join("\",\"") + "\"]";
