@@ -349,6 +349,8 @@ app.controller("checkoutController",
             totalAmount = Math.round(totalAmount * 100) / 100;
             var deliveryFee;
             if (totalAmount > 100) {
+                //TODO Should be calculated this way
+                // deliveryFee = deliveryFee1 + deliveryFee2*Math.floor(totalAmount/100)
                 deliveryFee = deliveryFee1 + deliveryFee2;
             } else if (totalAmount > 0 && totalAmount < 100) {
                 deliveryFee = deliveryFee1;
