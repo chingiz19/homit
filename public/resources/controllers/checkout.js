@@ -53,7 +53,7 @@ app.controller("checkoutController",
                 $scope.userInfo = checkout.getCheckoutUserInfo;
             }
             if (sessionStorage.getAddress()) {
-                checkout.address = sessionStorage.getAddress();
+                checkout.address = sessionStorage.getAddress().formatted_address;
                 checkout.address_latitude = sessionStorage.getAddressLat();
                 checkout.address_longitude = sessionStorage.getAddressLng();
                 $scope.userInfo.address_valid = true;
