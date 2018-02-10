@@ -11,9 +11,9 @@
             <div class="sdNavFB1">
                 <div class="sdNavFB2">
                     <md-button ng-click="close()" aria-label="HideSideNav" class="close-button" >
-                        <ng-md-icon  icon="keyboard_arrow_left"></ng-md-icon>
+                        <ng-md-icon  icon="keyboard_arrow_right"></ng-md-icon>
                     </md-button>
-                    <md-button onclick="location.href='/checkout'" class="md-primary chckOut">Check Out</md-button>
+                    <span class="my-cart">MY CART</span>
                 </div>
                 <div layout="row" layout-align="center">
                     <div class="sdNavFB3">
@@ -26,6 +26,9 @@
                             <li>C${{totalAmount}}</li>
                         </ul>
                     </div>
+                </div>
+                <div class="div-checkout">
+                    <md-button onclick="location.href='/checkout'" class="md-primary checkout cart-button">CHECK OUT</md-button>
                 </div>
             </div>
             <!--Order Summary - Cart Items-->
@@ -71,7 +74,7 @@
                 </div>
             </div>
             <div class="clrCart">
-                <md-button class="md-raised clrCartbtn"  ng-click="clearCart()"> Clear Cart </md-button>
+                <md-button class="md-raised clrCartbtn cart-button"  ng-click="clearCart()"> Clear Cart </md-button>
             </div>
         </md-content>
     </md-sidenav>
