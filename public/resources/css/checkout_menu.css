@@ -219,13 +219,6 @@ li {
 #item-remove-button ng-md-icon{
     fill: rgb(198,70,5);
 }
-.clrCart{
-    position: relative; top: 80px;
-    width: 100%; 
-    display: flex; 
-    justify-content: center; align-content: center; 
-}
-
 
 /*Mobile screens*/
 @media screen and (max-device-width: 600px) {
@@ -324,10 +317,6 @@ li {
         margin: 10px 35% 0 0;
         color: rgb(255,255,255) !important; 
         font-size: 44px; font-weight: 600;
-    }
-    .clrCart{
-        top: 220px;
-        min-height: 70px !important;
     }
     /*Cart Items*/
     .item-button svg{
