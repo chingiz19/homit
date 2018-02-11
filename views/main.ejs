@@ -9,6 +9,7 @@
 
 <body ng-cloak>
     <div ng-controller="mainController">
+        <div id="calgary-image" class="full-screen"></div>
         <div id="address" class="full-screen flex-box">
             <div class="main-page-address-box">
                 <div class="ul-zero-margin-padding">
@@ -23,6 +24,13 @@
                             autocomplete="autocomplete" on-address-selected="gotAddressResults"></address-autocomplete>
                     </span>
                 </span>
+            </div>
+            <div class="go-to-homit-hub">
+                <button ng-click="scrollTo('homitHub')">
+                    <div layout="column">
+                        <ng-md-icon icon="keyboard_arrow_down" class="go-to-homit-hub-icon"></ng-md-icon>
+                    </div>
+                </button>
             </div>
         </div>
         <div id="coverage" class="full-screen flex-box area-map-page">

@@ -10,6 +10,7 @@ li {list-style-type: none;}
     width: 100%;
 }
 body{
+    background-color: transparent;
     letter-spacing: 0.01em;
     font-family: 'Nunito', sans-serif;
 }
@@ -29,11 +30,13 @@ body{
     display: flex; 
     align-items: center;
 }
-#address{
-    background-size: auto 100%; 
+#calgary-image{
+    position: fixed;
+    background-size: cover; 
     background-image: url('/resources/images/non-catalog-image/calgary_20.png'); 
     background-position: center;
     background-repeat:no-repeat;
+    z-index: -1;
 }
 h2.hmtHubA{
     margin: 0;
@@ -100,7 +103,7 @@ h2.hmtHubA{
     width: 20px; height: 20px;
 }
 .area-map-page{
-    background-color: rgba(236, 236, 236, 0.363);
+    background-color: rgba(236, 236, 236, 1) !important;
 }
 .area-map{
     position: absolute; 
@@ -129,7 +132,6 @@ h2.hmtHubA{
     filter: drop-shadow(0 0px 3px rgba(0,0,0,0.4));
     z-index: 100;
 }
-
 .homit-hub{
     background-color: rgba(42,81,145,1);
     color: white;
@@ -179,7 +181,6 @@ a .hmtHubTxt{
 li h3 {
     margin: 0;
 }
-
 .main-page-address-box{
     position: relative;
     z-index: 1000; width: 730px;
@@ -268,6 +269,13 @@ nav{
 .pac-container:after{
     margin-right: 5px;
     margin-top: 5px;
+}
+.go-to-homit-hub button{
+    background-color: transparent; border: transparent;
+}
+.go-to-homit-hub-icon svg{
+    width: 40px; height: 40px;
+    fill: rgba(50,50,50,1)
 }
 
 @media (max-width: 750px) and (min-width: 600px){
@@ -523,4 +531,32 @@ nav{
         font-size: 35px;
         font-weight: 200;
     }
+    .go-to-homit-hub{
+        height: 100px; width: 100px;
+    }
+    .go-to-homit-hub-icon svg{
+        height: 80px; width: 80px;
+        fill: rgba(50,50,50,1)
+    }
 }
+
+.go-to-homit-hub {
+    outline:0;
+    filter: drop-shadow(0 0px 1px rgba(0,0,0,1));
+    animation: MoveUpDown 2s linear infinite;
+    position: absolute;
+    left: 48%;
+  }
+  button:focus {outline:0;}
+  
+  @keyframes MoveUpDown {
+    0% {
+      bottom: 0;
+    }
+    50% {
+      bottom: 20px;
+    }
+    100% {
+      bottom: 0;
+    }
+  }

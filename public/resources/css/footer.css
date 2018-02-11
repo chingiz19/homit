@@ -1,5 +1,6 @@
 footer{
-    color: white;
+    background-color: white !important;
+    z-index: 100;
     /* background-color: #afbdca57; */
 }
 footer a {
@@ -153,9 +154,10 @@ main{
     width: 100%;
     display: flex; justify-content: flex-end; 
     margin: auto;
-    font-size: 12px; font-weight: 400; color: rgb(27, 27, 27);
+    font-size: 12px; font-weight: 400; 
+    color: rgb(27, 27, 27);
     -webkit-font-smoothing: antialiased;
-    background-color: #afbdca57;
+    background-color: #e4e8ed !important;
 }
 a{
     text-decoration: none !important;
