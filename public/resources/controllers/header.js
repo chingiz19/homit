@@ -6,13 +6,13 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         $scope.userDropDown = false;
         $scope.mobileSearchShow = false;
         $scope.screenIsMob = false;
-        var screen_width = $(window).width();
+        var screen_width = window.screen.width;
         try {
             $scope.deliveryAddress = $cookies.getObject("homit-address").name;
         } catch (e) {
             // ignore, address doesn't exist
         }
-        if (screen_width < 1000) {
+        if (screen_width < 500) {
             $scope.screenIsMob = true;
         } else {
             $scope.screenIsMob = false;
@@ -234,7 +234,13 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         }
     }
 
-
+    $scope.focusSearchInput = function(){
+        if(!$scope.mobileSearchShow){
+            setTimeout(function () {
+                document.getElementById("glbSearchRequest-mobile").focus();
+            }, 0.1);
+        } 
+    }
     function checkUser() {
         if (user.isUserLogged()) {
             $scope.isSignedIn = true;

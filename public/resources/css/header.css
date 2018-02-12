@@ -361,6 +361,9 @@ a.store-hub-text:hover{
     md-toolbar{
         height: 110px;
     }
+    .navCont{
+        position: absolute;
+    }
     .md-toolbar-tools{
         max-height: 110px;
         height: 110px;
@@ -368,13 +371,10 @@ a.store-hub-text:hover{
     .homit-logo-white-image{
         width: 88px; height: 88px;
     }
-    #dashboardBtn, #sign-button, #clear-search-mobile, #signed-in-button{
+    #sign-button, #clear-search-mobile, #signed-in-button{
         min-height: 100px; height: 100px;
         min-width: 90px; width: 90px;
         fill: rgba(255,255,255,1);
-    }
-    #dashboardBtn{
-        margin-right: 5px;
     }
     #sign-button{
         margin-left: 5px;
@@ -383,9 +383,6 @@ a.store-hub-text:hover{
         height: 90px; width: 90px;
     }
     #signed-in-button svg{
-        height: 90px; width: 90px;
-    }
-    #dashboardBtn svg{
         height: 90px; width: 90px;
     }
     #clear-search-mobile{
@@ -408,9 +405,8 @@ a.store-hub-text:hover{
        height: 40px; width: 40px;
    }
     #mobile-search-container svg{
-        height: 50px; width: 50px;
+        height: 70px; width: 70px;
         fill: rgba(0,0,0,0.8);
-        margin-top: 10px;
     }
     #mobile-search-container .md-input{
         border-width: 0 !important;
@@ -424,6 +420,7 @@ a.store-hub-text:hover{
     }
     .search-line{
         display: flex; justify-content: center;
+        margin-top: 20px;
    }
    .search-line div{
         width: 90%; 
@@ -436,8 +433,8 @@ a.store-hub-text:hover{
    }
    #mobile-search-container{
        position: fixed; 
-       top: 92px; 
-       height: 90px; width: 100%;
+       top: 110px; 
+       height: 110px; width: 100%;
        background-color: rgba(254,254,254,1);
        border-bottom: 1px solid rgba(0,0,0,0.4);
        z-index: 1000;
@@ -446,64 +443,50 @@ a.store-hub-text:hover{
        display: none;
    }
    #mobile-search-container input{
-       height: 80%; width: 100%; 
-       font-size: 45px; 
-       padding-top: 20px;
+       width: 90%; font-size: 50px;
+       padding-left: 10px;
+       border: 0;
    }
    .searchIconInput{
-       height: 69px; width: 80px; 
+       height: 108px; width: 100px; 
        display: flex; justify-content: center; align-items: center;
+       background-color: rgba(255,255,255,1);
    }
    #search-result-mobile{
        position: fixed; 
-       top: 201px; 
+       top: 220px; 
        max-height: 70%; width: 100%; 
        border-width: 0 1px 2px 1px; border-style: solid; border-color: rgba(0,0,0,0.4); 
-       background-color: rgba(240,240,240,1);
-       overflow-y: scroll; 
+       background-color: rgba(253,253, 253,1);
+       overflow-y: scroll;
+       -webkit-overflow-scrolling: touch;
        z-index: 1000;
    }
    #search-result-mobile ul{
-       margin: 15px 0 15px 0;
+       margin: 15px 0 30px 0;
    }
    .flex-li{
        display: flex; align-items: center; 
-       padding-top: 10px;
+       padding-top: 20px;
    }
    .flex-li span{
-       font-size: 40px; 
+       font-size: 50px; 
        color: rgba(0,0,0,0.95);
    }
    .flex-li a{
        width: 100%;
    }
    .searched-product-mobile li{
-        margin: 20px 0 20px 0;
+        margin: 50px 0 50px 0;
    }
    .searched-product-mobile img{
        height: 150px; width: 150px;
    }
    .product-brand-text-mobile{
        display: flex; align-items: center; 
-       font-size: 35px; color: rgba(0,0,0,0.95); 
+       font-size: 44px; color: rgba(0,0,0,0.95); 
        margin-left: 15px;
    }
-   .storeHub{
-        position: fixed; 
-        top: 110px; right: 50px;; 
-        height: 650px; width: 440px;  
-        border: 1px rgba(220,220,220,0.99) solid; 
-        border-radius: 2px;
-        background-color: rgba(255,255,255,1);
-        box-shadow: 0 0px 10px rgba(0,0,0,0.3);
-        z-index: 1000;
-    }
-    .store-hub-icon svg{
-        height: 80px; width: 80px;
-    }
-    .store-hub-text{
-        font-size: 20px;
-    }
     .col24{
         padding-left: 80px !important;
     }

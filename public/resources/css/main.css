@@ -13,6 +13,8 @@ body{
     background-color: transparent;
     letter-spacing: 0.01em;
     font-family: 'Nunito', sans-serif;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 .flex-box{
     display: flex;
@@ -519,7 +521,7 @@ nav{
         width: 60px; height: 60px;
     }
     .main-page-address-box-text{
-        font-size: 65px;
+        font-size: 63px;
         margin-bottom: 30px;
     }
     .area-map-text-A{

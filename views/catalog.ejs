@@ -19,24 +19,52 @@
                     </md-button>
                     <md-sidenav class="mdSideNavL1" md-component-id="navigateMobSN" md-whiteframe="4">
                         <md-content layout-padding class="mdSideNavL1A">
-                            <div layout="row" class="navgtLn1">
-                                <div class="navgtLn1A">NAVIGATE</div>
-                                <md-button ng-click="close()" class="md-primary navgtLn1B" hide-gt-md aria-label="closeNavigate">
-                                    <ng-md-icon icon="chevron_right" class="navgtClBtn"></ng-md-icon>
+                            <div layout="row" class="section-1">
+                                <div class="section-1-A">NAVIGATE</div>
+                                <md-button ng-click="close()" class="md-primary section-1-B" hide-gt-md aria-label="closeNavigate">
+                                    <ng-md-icon icon="chevron_left" class="section-1-button"></ng-md-icon>
                                 </md-button>
                             </div>
                             <div class="navgtLn3">
+                                <div class="box-center section-2-header" layout="row">
+                                    <div class="section-border section-2-border"></div>
+                                    <div class="section-header-text section-2-header-text">STORE</div>
+                                    <div class="section-border section-2-border"></div>
+                                </div>
+                                <ul style="margin: 0; padding: 0;">
+                                    <li class="navgtLn3AAA" ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '0px'} || {'margin-left': '70px'}">
+                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Liquor Station')" icon="shopping_cart" style="fill: rgba(42,81,145,0.9);"
+                                            size="50"></ng-md-icon>
+                                        <a ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '20px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '0px'}"
+                                            href="/catalog/liquor-station" target="_self" class="navgtLn3AAAB">Liquor Station</a>
+                                    </li>
+                                    <li class="navgtLn3AAA" ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '0px'} || {'margin-left': '70px'}">
+                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Snack Vendor')" icon="shopping_cart" style="fill: rgba(42,81,145,0.9);" size="50"></ng-md-icon>
+                                        <a ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '20px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '0px'}"
+                                            href="/catalog/liquor-station" target="_self" class="navgtLn3AAAB">Snack Vendor</a>
+                                    </li>
+                                </ul>
+                                <div class="box-center section-3-header" layout="row">
+                                    <div class="section-border section-3-border"></div>
+                                    <div class="section-header-text section-3-header-text">STORE AISLE</div>
+                                    <div class="section-border section-3-border"></div>
+                                </div>
                                 <ul class="navgtLn3A">
                                     <ul ng-repeat="category in <%= categories %> track by $index" class="navgtLn3AA">
                                         <li class="navgtLn3AAA" ng-style="('<%= selectedCategory %>' == category) && {'margin-left': '0px'} || {'margin-left': '70px'}">
-                                            <ng-md-icon ng-show="('<%= selectedCategory %>' == category)" icon="shopping_cart" style="fill: rgba(42,81,145,0.9);" size="50"></ng-md-icon>
+                                            <ng-md-icon ng-show="('<%= selectedCategory %>' == category)" icon="label" style="fill: rgba(42,81,145,0.9); margin-left: 10px;"
+                                                size="40"></ng-md-icon>
                                             <a ng-style="('<%= selectedCategory %>' == category) && {'margin-left': '20px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '0px'}"
                                                 href="/catalog/{{'<%= loadedStore %>' | kebabCase}}/{{category}}" target="_self"
                                                 class="navgtLn3AAAB">{{category | capitalize}}</a>
                                         </li>
                                     </ul>
-                                    <li class="navgtLn3AB"></li>
                                 </ul>
+                                <div class="box-center section-4-header" layout="row">
+                                    <div class="section-border section-4-border"></div>
+                                    <div class="section-header-text section-4-header-text">CATEGORY</div>
+                                    <div class="section-border section-4-border"></div>
+                                </div>
                                 <span>
                                     <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
                                         <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"
@@ -51,7 +79,8 @@
                 </div>
                 <!--End-->
                 <md-container class="col1">
-                    <div class="sizeStage col1A">{{'<%= selectedCategory %>' | capitalize}}</div>
+                    <div class="sizeStage col1A">{{'
+                        <%= selectedCategory %>' | capitalize}}</div>
                     <span>
                         <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
                             <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"
@@ -74,7 +103,8 @@
                             <ul class="col1EAB" layout="column" itemscope itemtype="http://schema.org/ListItem">
                                 <li ng-repeat='category in <%= categories %> track by $index'>
                                     <a href="/catalog/{{'<%= loadedStore %>' | kebabCase }}/{{category}}" target="_self" class="category-list" ng-style="(('<%= selectedCategory %>' == category)) && {'background-color': 'rgba(0,189,149,0.7)'}">
-                                        <span ng-style="(('<%= selectedCategory %>' == category)) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}" itemprop="category">{{ category }}</span>
+                                        <span ng-style="(('<%= selectedCategory %>' == category)) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}"
+                                            itemprop="category">{{ category }}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -172,7 +202,9 @@
                                         </li>
                                         <img ng-if="!product.store_open" class="catalog-store-closed" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
                                         <li class="brand hmtTxt" itemprop="name">{{product.brand}} {{product.name}}</li>
-                                        <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span itemprop="price">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</span></li>
+                                        <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                            <span itemprop="price">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

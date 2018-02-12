@@ -298,7 +298,6 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             if (num == 3) {
                 $scope.pageName = "Log Stream";
                 $scope.page = 3;
-                $("html, body").animate({ scrollTop: $(document).height() }, 1000);
             }
         };
 
@@ -363,7 +362,6 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 url: "/api/csr/streamlog",
             }).then(function successCallback(response) {
                 $scope.logStreamNew = response.data.replace($scope.logStreamPrevious, '');
-                $("html, body").animate({ scrollTop: $(document).height() }, 1000);
             }, function errorCallback(response) {
                 console.log("Error occured in get logs");
             });
@@ -414,7 +412,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 clearInterval($scope.setInterval_ADL_POL);
             } else {
                 markers = []; //TODO: already empty?
-                $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 5000);
+                $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 2000);
                 getListActiveDriverCustomer();
             }
             mapServices.addMarkerToMap(markers, $scope.disRoomMap);
@@ -454,8 +452,8 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             $scope.toPage($scope.page);
             getListActiveDriverCustomer();
             getLogs();
-            setInterval(getLogs, 5000);
-            $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 5000);
+            setInterval(getLogs, 2000);
+            $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 2000);
         };
 
         $(document).ready(function () {

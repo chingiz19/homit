@@ -126,8 +126,7 @@ li {
 .cart2a{
     position: relative; 
     top: 5px;
-    /* background-color: rgba(63,222,17,0.8) !important; */
-    background-color: rgba(33, 211, 172, 0.7) !important;
+    background-color: rgba(33, 211, 172, 0.9) !important;
     box-shadow: 0 0px 10px 0px rgba(0,0,0,.26) !important;
 }
 .cart2aa{
@@ -182,7 +181,6 @@ li {
     margin: 0; padding: 0;
     font-size: 14px;
 }
-
 /*Order Summaty Buttons*/
 .close-button{
     display: flex; align-items: center; justify-content: center;
@@ -190,7 +188,7 @@ li {
     fill: rgba(5, 26, 25, 0.6);
     margin-right: auto;
     height: 100%;
-    margin-left: 0;
+    margin-left: 10px;
     padding: 0;
 }
 .close-button svg{
@@ -223,8 +221,8 @@ li {
 /*Mobile screens*/
 @media screen and (max-device-width: 600px) {
     .shopping-cart svg{
-        padding-top: 5px;
-        height: 90px; width: 90px;
+        padding-top: 5px; padding-left: 7px;
+        height: 100px; width: 100px;
         fill: rgba(0,94,92,0.7);
     }
     .sdNavFB1{
@@ -240,11 +238,6 @@ li {
     }
     .md-button.md-fab{
         width: 140px; height: 140px;
-    }
-    .cart2a{
-        background-color: rgba(63,222,17,1) !important;
-        border: 7px solid rgba(255,255,255,0.9);
-        box-shadow: none !important;
     }
     .cart2aa{
         width: 120px !important; height: 120px !important;
@@ -324,7 +317,7 @@ li {
     }
     /* Cart Buttons */
     .div-checkout{
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
     .checkout{
         min-height: 100%; 
@@ -335,10 +328,10 @@ li {
     }
     .cartBItems1{
         position: relative;
-        top: 200px; 
+        top: 210px; 
     }
     .sdNavFB1{
-        border-bottom: rgba(63,222,17,1) solid 3px;
+        border-bottom: rgba(63,222,17,0.8) solid 3px;
     }
     .cartBItems2B2{
         width: 200px ; height: 200px;
@@ -353,6 +346,9 @@ li {
     .cartBItems2C2{
         font-size: 22px;
         margin: 0; padding: 0;
+    }
+    .close-button{
+        margin-left: 20px; 
     }
     .close-button svg{
         width: 50px; height: 50px;

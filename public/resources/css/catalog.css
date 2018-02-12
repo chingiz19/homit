@@ -9,7 +9,10 @@ body{
     letter-spacing: 0.01em;
     font-family: 'Nunito', sans-serif;
 }
-
+.box-center{
+    display: flex; 
+    justify-content: center; align-items: center;
+}
 /*Adjust width col1 and col24 when 2 and 3 columns of items left*/
 /*Start*/
 @media (min-width: 1200px){
@@ -462,7 +465,20 @@ body{
     border-radius: 4px;
     height: 343px; width: 278px;
 }
-/*Small Screens*/
+/*Non computer - Tablet screens*/
+@media screen and (min-device-width: 700px) and (max-device-width: 780px) {
+    .container{
+        margin: 0 !important;
+        width: 100%;
+    }
+    .col1{
+        left: 80px;
+    }
+    .col24{
+        padding-left: 120px;
+    }
+}
+/*Non computer screens*/
 @media screen and (max-device-width: 600px) {
     body{
         margin-top: 100px !important;
@@ -474,7 +490,6 @@ body{
     .pvChange1{
         display: none;
     }
-    /*Start*/
     .highltdVol{
         font-size: 28px;
     }
@@ -549,8 +564,7 @@ body{
     .navigate-mob-icon{
         position: fixed; 
         left: 0; top: 70%;
-        border: 7px solid rgba(255,255,255,0.9);
-        box-shadow: none !important;
+        background-color: rgba(42,81,145,0.9) !important;
     }
     .navigate-mob-icon svg{
         fill:rgba(255,255,255,1);
@@ -579,23 +593,59 @@ body{
     md-radio-button .md-off {
         height: 40px; width: 40px;
     }
-    /*Navigation Line 1 - "Navigation" and Close Btn*/
-    .navgtLn1{
+    /* Navigation Sections */
+    .section-1{
         display: flex; align-items: center;
     }
-    .navgtLn1A{
+    .section-1-A{
         display: flex; 
         margin-left: auto; 
         font-size: 35px; font-weight: 600; 
         color: rgb(42,81,145);
     }
-    .navgtLn1B{
+    .section-1-B{
         display: flex; margin-left: auto;
     }
-    .navgtClBtn svg{
+    .section-1-button svg{
         fill:rgba(42,81,145,1);
         width: 50px;
         height: 50px;
+    }
+    .section-header-text{
+        margin-left: 5px; margin-right: 5px; 
+        color: rgba(0, 0, 0, 0.45); 
+        font-weight: 600; 
+    }
+    .section-2-header-text{
+        font-size: 35px;
+    }
+    .section-3-header-text{
+        font-size: 33px;
+    }   
+    .section-4-header-text{
+        font-size: 30px;
+    }
+    .section-2-header{
+        margin-top: 10px; margin-bottom: 5px;
+    }
+    .section-3-header{
+        margin-top: 50px; margin-bottom: 5px;
+    }
+    .section-4-header{
+        margin-top: 10px; margin-bottom: 0px;
+    }
+    .section-border{
+        height: 3px; 
+        border-bottom: solid 3px rgba(0, 0, 0, 0.35);
+    }
+    .section-2-border{
+        width: 40%;
+    }
+    .section-3-border{
+        width: 29%;
+    }
+    .section-4-border{
+        width: 33%;
     }
     /*Navigation Line 3 - All Categories and Types/Subcategories*/
     .navgtLn3{

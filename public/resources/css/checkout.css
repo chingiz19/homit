@@ -428,9 +428,6 @@ md-backdrop.md-opaque {
     .inptFrm{
         height: 90px;
     }
-    .inptFrm input{
-        font-size: 80px;
-    }
     .extBoxTtl{
         font-size: 18px;
         font-weight: 500;
@@ -728,17 +725,12 @@ md-backdrop.md-opaque {
 .adrInpt_x_A svg{
     width: 20px; height: 20px;
 }
-.inptFrm input{
-    font-size: 15px;
-}
-
 .outPlgn_txt{
     font-size: 12px;
     color: #d44444;
     -webkit-font-smoothing: antialiased;
     font-weight: 400;
 }
-
 /* Google Search autocomplete non-mobile */
 .predictions-container{
     background: rgba(255,255,255,1) !important;
