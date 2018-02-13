@@ -704,6 +704,83 @@ pub.getSuperCategoryById = function (superId) {
     });
 };
 
+pub.getSuperCategoryByListing = async function (listingId) {
+    var sqlQuery = `
+        SELECT
+        super_category.name AS super_category
+        
+        FROM catalog_products AS product, catalog_listings AS listing,
+        catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
+        catalog_super_categories AS super_category
+        
+        WHERE product.listing_id = listing.id
+        AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+        AND category.id = subcategory.category_id AND
+        category.super_category_id = super_category.id
+        AND ?`;
+
+    var data = { "listing.id": listingId };
+    var dbResult = await db.runQuery(sqlQuery, data);
+    return dbResult[0].super_category;
+}
+
+pub.getProductsByListingId = async function (listingId, isStoreOpen) {
+    var sqlQuery = `
+    SELECT depot.id AS depot_id, depot.product_id AS product_id,
+    listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
+    listing.product_brand AS brand, listing.product_name AS name,
+    listing.product_description AS description, product.product_image AS image,
+    depot.price AS price, depot.tax AS tax, depot.quantity AS quantity, packaging.name AS packaging,
+    container.name AS container, volume.volume_name AS volume, category.name AS category,
+    super_category.name AS super_category
+    
+    FROM catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
+    catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
+    catalog_containers AS container, catalog_packagings AS packaging, catalog_packaging_volumes AS volume,
+    catalog_super_categories AS super_category
+    
+    WHERE depot.product_id = product.id AND product.listing_id = listing.id
+    AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+    AND container.id = product.container_id AND packaging.id = depot.packaging_id
+    AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND
+    category.super_category_id = super_category.id
+    AND ?
+    
+    ORDER BY listing_id, product_id, depot_id`;
+
+    var data = { "product.listing_id": listingId };
+
+    var dbResult = await db.runQuery(sqlQuery, data);
+
+    return getFormattedProducts(dbResult, isStoreOpen);
+}
+
+pub.findAlternativeListing = async function (listingId) {
+    var sqlQuery = `
+    SELECT listing.id AS listing_id
+        
+    FROM catalog_products AS product, catalog_listings AS listing,
+    catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
+    catalog_super_categories AS super_category
+    
+    WHERE product.listing_id = listing.id
+    AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
+    AND category.id = subcategory.category_id AND
+    category.super_category_id = super_category.id
+    AND listing.id !=` + listingId + `
+    
+    AND (product_name, product_brand) IN (
+        SELECT listing2.product_name, listing2.product_brand
+        FROM catalog_listings AS listing2
+        WHERE ?
+    )`;
+
+    var data = { "listing2.id": listingId };
+    var dbResult = await db.runQuery(sqlQuery, data);
+
+    return dbResult[0].listing_id;
+}
+
 /**
  * Custom function to do alphanumeric sort
  * Source: http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
