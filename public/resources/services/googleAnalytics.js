@@ -5,8 +5,13 @@
  * @copyright Homit
  * @author Jeyhun Gurbanov
  */
-app.service('notification', function(){
+app.service('googleAnalytics', function(){
     var pub = {};
+
+    pub.eventCategories = {
+        cart_actions: "cart_actions",
+        catalog_actions: "catalog_actions"
+    }
 
      /**
      * Registers event with Google Analytics

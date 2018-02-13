@@ -1,5 +1,5 @@
 app.controller("cartController", 
-function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $mdSidenav, $log, $location, notification) {
+function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $mdSidenav, $log, $location, notification, googleAnalytics) {
 
     $scope.userCart = localStorage.getUserCart() || {};
     $scope.numberOfItemsInCart = 0;
@@ -62,6 +62,20 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
         $scope.userCart[product.super_category] = super_category;
         updateUserCart($scope.userCart);
         $scope.prepareItemForDB(product.depot_id,  $scope.userCart[product.super_category][product.depot_id].quantity);
+        googleAnalytics.addEvent('add_to_cart', {
+            "event_label": product.brand + " " + product.name,
+            "event_category": googleAnalytics.eventCategories.cart_actions,
+            "items": [
+                {
+                    name: product.name,
+                    brand: product.brand,
+                    quantity: tmpQuantity,
+                    price: product.price,
+                    category: product.packaging,
+                    variant: product.volume,
+                }
+            ]
+        });
     });
 
     $scope.plusItem = function (product) {
@@ -77,6 +91,10 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
                 
                 updateUserCart($scope.userCart);
                 $scope.prepareItemForDB(product.depot_id,  currentQuantity);
+                googleAnalytics.addEvent('plus_cart_item', {
+                    "event_label": product.brand + " " + product.name,
+                    "event_category": googleAnalytics.eventCategories.cart_actions
+                });
             }
         }
     };
@@ -94,6 +112,10 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
                 
                 updateUserCart($scope.userCart);
                 $scope.prepareItemForDB(product.depot_id,  currentQuantity);
+                googleAnalytics.addEvent('minus_cart_item', {
+                    "event_label": product.brand + " " + product.name,
+                    "event_category": googleAnalytics.eventCategories.cart_actions
+                });
             }
         }
     };
@@ -131,6 +153,20 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
             $scope.totalAmount = $scope.totalAmount - (product.price * product.quantity);
             $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
             $scope.prepareItemForDB(product.depot_id, 0);
+
+            googleAnalytics.addEvent('remove_from_cart', {
+                "event_label": product.brand + " " + product.name,
+                "event_category": googleAnalytics.eventCategories.cart_actions,
+                "items": [
+                    {
+                        name: product.name,
+                        brand: product.brand,
+                        price: product.price,
+                        category: product.packaging,
+                        variant: product.volume,
+                    }
+                ]
+            });
         }
     };
 
