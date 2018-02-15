@@ -158,14 +158,16 @@ h2.hmtHubA{
 }
 .store-window{
     height: 300px; width: 250px; 
-    background-color: rgba(255,255,255,0.1); 
     border: 1px solid black;
     border-radius: 5px; 
     outline: none;
     box-shadow: 0 0px 5px 2px rgba(0,0,0,0.5);
     -webkit-transition: background-color 0.3s;
 }
-.store-window:hover{
+.store-background-image{
+    background-color: rgba(255,255,255,0.1);
+}
+.store-window:hover .store-background-image{
     background-color: rgba(255,255,255,0.8); 
     transition: all 0.3s ease;
 }
@@ -177,8 +179,8 @@ h2.hmtHubA{
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.85;
-    z-index: 0;
+    opacity: 0.9;
+    z-index: -1;
 }
 #snack-vendor-icon{
     background-image: url('/resources/images/non-catalog-image/snack-vendor_icon.png'); 
@@ -207,11 +209,6 @@ h2.hmtHubA{
     color: rgba(255,255,255,1); text-transform: uppercase; 
     box-shadow: none;
     -webkit-transition: background-color 0.3s;
-}
-.store-window:hover button{
-    background-color: rgba(15, 40, 82,1); 
-    border: 1px solid rgba(15, 40, 82,1);
-    transition: all 0.3s ease;
 }
 .store-name-text{
     color: rgba(0,0,0,1); font-weight: 600;
