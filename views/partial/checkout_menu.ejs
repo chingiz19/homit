@@ -13,22 +13,13 @@
                     <md-button ng-click="close()" aria-label="HideSideNav" class="close-button" >
                         <ng-md-icon  icon="keyboard_arrow_right"></ng-md-icon>
                     </md-button>
-                    <span class="my-cart">MY CART</span>
-                </div>
-                <div layout="row" layout-align="center">
-                    <div class="sdNavFB3">
-                        <ul class="sdNavFB3a">
-                            <li>Cart Total:</li>
-                        </ul>
-                    </div>
-                    <div class="sdNavFB3">
-                        <ul class="sdNavFB3b">
-                            <li>C${{totalAmount}}</li>
-                        </ul>
-                    </div>
+                    <ul layout="row" class="cart-total">
+                        <li>Cart Total:</li>
+                        <li>&nbsp &nbspC${{totalAmount}}</li>
+                    </ul>
                 </div>
                 <div class="div-checkout">
-                    <md-button onclick="location.href='/checkout'" class="md-primary checkout cart-button">CHECK OUT</md-button>
+                    <button onclick="location.href='/checkout'" class="md-primary checkout cart-button">Proceed to Checkout</button>
                 </div>
             </div>
             <!--Order Summary - Cart Items-->

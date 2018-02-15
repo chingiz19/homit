@@ -80,31 +80,30 @@
                 <!--End-->
                 <md-container class="col1">
                     <div class="sizeStage col1A">{{'
-                        <%= selectedCategory %>' | capitalize}}</div>
-                    <span>
+                        <%= selectedCategory %>'}}</div>
+                    <div style="margin-top: 16px;">
                         <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
                             <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"
                                 class="SubcategoryName">
                                 <span>{{variant.subcategory_name}}</span>
                             </md-radio-button>
                         </md-radio-group>
-                    </span>
+                    </div>
                     <!--Category Box start-->
                     <span class="col1D">
-                        <md-button aria-label="filterCategories" id="category-button" ng-click="filterCategoriesViaButton()" class="fltCategoryBtn">
-                            <ng-md-icon id="show_cat_icon" icon="loop"></ng-md-icon>
+                        <md-button aria-label="filterCategories" id="category-button" ng-click="filterCategories()" class="fltCategoryBtn">
+                            <ng-md-icon id="show_cat_icon" icon="flip"></ng-md-icon>
                         </md-button>
                     </span>
                     <div id="category_box" class="col1E">
                         <div layout="column">
-                            <div class="sizeStage col1EAA">
+                            <div class="sizeStage col1EAA same-line">
                                 <%= loadedStore %>
                             </div>
-                            <ul class="col1EAB" layout="column" itemscope itemtype="http://schema.org/ListItem">
+                            <ul class="col1EAB same-line" layout="column">
                                 <li ng-repeat='category in <%= categories %> track by $index'>
                                     <a href="/catalog/{{'<%= loadedStore %>' | kebabCase }}/{{category}}" target="_self" class="category-list" ng-style="(('<%= selectedCategory %>' == category)) && {'background-color': 'rgba(0,189,149,0.7)'}">
-                                        <span ng-style="(('<%= selectedCategory %>' == category)) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}"
-                                            itemprop="category">{{ category }}</span>
+                                        <span ng-style="(('<%= selectedCategory %>' == category)) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}">{{ category }}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -134,7 +133,7 @@
                                                     <span class="pvChange1AAB">
                                                         <span layout="row" class="pvChange1AABA">
                                                             <!-- <li class="nHighltdVol" style="width: 2ch; overflow: hidden; white-space: nowrap;">{{product.product_variants.all_volumes[product.volumeI-1]}}</li> -->
-                                                            <li class="highltdVol" itemprop="description">&#8198{{product.product_variants.all_volumes[product.volumeI]}}&#8198</li>
+                                                            <li class="highltdVol">&#8198{{product.product_variants.all_volumes[product.volumeI]}}&#8198</li>
                                                             <!-- <li class="nHighltdVol" style="width: 2ch; overflow: hidden; white-space: nowrap;">{{product.product_variants.all_volumes[product.volumeI+1]}}</li> -->
                                                         </span>
                                                     </span>
@@ -155,7 +154,7 @@
                                                     <span class="pvChange1ABB">
                                                         <span layout="row" class="pvChange1ABBA">
                                                             <!-- <li class="nHighltdPack">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ-1]}}</li> -->
-                                                            <li class="highltdPack" itemprop="description">&#8198X{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]}}&#8198</li>
+                                                            <li class="highltdPack">&#8198X{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]}}&#8198</li>
                                                             <!-- <li class="nHighltdPack">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ+1]}}</li> -->
                                                         </span>
                                                     </span>
@@ -198,12 +197,12 @@
                                         </div>
                                         <!-- End -->
                                         <li class="container itmPic">
-                                            <img itemprop="photo" ng-src={{product.image}}>
+                                            <img ng-src={{product.image}}>
                                         </li>
                                         <img ng-if="!product.store_open" class="catalog-store-closed" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
-                                        <li class="brand hmtTxt" itemprop="name">{{product.brand}} {{product.name}}</li>
-                                        <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                            <span itemprop="price">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</span>
+                                        <li class="brand hmtTxt">{{product.brand}} {{product.name}}</li>
+                                        <li class="price" itemscope itemtype="http://schema.org/Offer">
+                                            <span>{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</span>
                                         </li>
                                     </ul>
                                 </div>

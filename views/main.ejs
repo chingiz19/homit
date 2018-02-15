@@ -1,6 +1,6 @@
 <html ng-app="mainModule">
 
-<head>
+<head ng-cloak>
     <%- include('partial/imports')%>
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/main.css" rel="stylesheet">
@@ -9,6 +9,8 @@
 
 <body ng-cloak>
     <div ng-controller="mainController">
+        <img class="none" src="/resources/images/non-catalog-image/calgary.jpg">
+        <img class="none" src="/resources/images/non-catalog-image/homit-hub-cover.png">
         <div id="calgary-image" class="full-screen"></div>
         <div id="address" class="full-screen flex-box">
             <div class="main-page-address-box">
@@ -20,8 +22,8 @@
                         <i class="srchAddrsCAA">
                             <ng-md-icon icon="place" class="srchAddrsCAAA"></ng-md-icon>
                         </i>
-                        <address-autocomplete input-class="srchAddrsCAB" icon-class="srchAddrsCACA" button-class="srchAddrsCAC" autocomplete-bounds="map.getBounds()"
-                            autocomplete="autocomplete" on-address-selected="gotAddressResults"></address-autocomplete>
+                            <address-autocomplete input-class="srchAddrsCAB" icon-class="srchAddrsCACA" button-class="srchAddrsCAC" autocomplete="autocomplete"
+                            on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
                     </span>
                 </span>
             </div>
@@ -39,7 +41,7 @@
             <!--googleon: snippet-->
             <div id="map" class="area-map"></div>
             <div class="area-map-text-box" itemscope itemtype="http://schema.org/Thing">
-                <h2 class="area-map-text-A">Coverage Map</h2>
+                <h2 class="area-map-text-A">See If We There Yet</h2>
                 <h2 class="area-map-text-B">
                     <span itemprop="name" content="Homit"></span>
                     <span itemprop="image" content="https://homit.ca/resources/images/Homit_Logo_TM.jpeg"></span>
@@ -49,32 +51,25 @@
             </div>
         </div>
         <div id="homitHub" class="full-screen homit-hub">
-            <h2 class="hmtHubA hmtHubTxt">Homit Hub</h2>
-            <div class="hmtHubB">
-                <div flex="30" ng-click="hrefTo('/catalog/snack-vendor')" class="hmtHubBA" id="snack-vendor">
-                    <ul layout="column" class="hmtHubBAA">
-                        <li class="hmtHubBAAA">
-                            <ng-md-icon icon="panorama_vertical" class="snack-vendor-icon"></ng-md-icon>
-                        </li>
-                        <li>
-                            <h3><a class="hmtHubABAB hmtHubTxt" href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a></h3>
-                        </li>
-                    </ul>
-                    <div class="store-sign-background-box"></div>
+            <h2 class="homit-hub-header homit-hub-text">Homit Hub</h2>
+            <div class="homit-hub-stores">
+                <div id="snack-vendor" class="store-window snack-vendor" ng-click="hrefTo('/catalog/snack-vendor')">
+                    <div id="snack-vendor-icon" class="store-window store-background-image"></div>
+                    <h3>
+                        <a class="homit-hub-text store-name-text" href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a>
+                    </h3>
+                    <button class="homit-hub-text">Shop Now</button>
                 </div>
-                <div flex="30" ng-click="hrefTo('/catalog/liquor-station')" class="hmtHubBA" id="liquer-station">
-                    <ul layout="column" class="hmtHubBAA">
-                        <li class="hmtHubBAAA">
-                            <ng-md-icon icon="local_bar" class="liquer-station-icon"></ng-md-icon>
-                        </li>
-                        <li>
-                            <h3><a class="hmtHubABAB hmtHubTxt" href="https://homit.ca/catalog/liquor-station">Liquor Station</a></h3>
-                        </li>
-                    </ul>
-                    <div class="store-sign-background-box"></div>
+                <div class="store-window liquor-station" ng-click="hrefTo('/catalog/liquor-station')">
+                    <div id="liquor-station-icon" class="store-window store-background-image"></div>
+                    <h3>
+                        <a class="homit-hub-text store-name-text" href="https://homit.ca/catalog/liquor-station">Liquor Station</a>
+                    </h3>
+                    <button class="homit-hub-text">Shop Now</button>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <% if (!production) { %>

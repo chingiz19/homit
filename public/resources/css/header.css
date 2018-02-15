@@ -41,46 +41,94 @@
     display: flex; align-items: center;
     height: 100%; width: 100%; 
 }
-.storeHubAA{
-    margin-top: 10px;
-    list-style: none;  
-    width: 100%;
-    margin: 0; padding: 0;
+#hub-background-image{
+    position: fixed;
+    width: 270px; height: 400px;
+    background-size: cover; 
+    background-image: url('/resources/images/non-catalog-image/homit-hub-cover.png'); 
+    background-position: center;
+    background-repeat:no-repeat;
+    z-index: 0;
 }
-.storeHubAAA{
-    max-height: 300px;
-    text-align: center;
-}
-.storeHubAAAA{
-    background-color: rgba(42,81,145,0.9);
-}
-.store-hub-icon{
-    fill: rgba(250,250,250,0.99);
-}
-.store-hub-icon svg{
-    width: 40px; height: 40px;
-}
-.bxExtn{
+.box-extension{
     position: absolute; 
     left: 73%; top: -7; 
     width: 13px; height: 13px; 
     background-color: rgba(255,255,255,1); 
     border: 1px rgba(220,220,220,0.99) solid; border-right-color: rgba(255,255,255,1); border-bottom-color: rgba(255,255,255,1); 
     -webkit-transform: rotate(45deg); 
-    z-index: 1;
+    z-index: 0;
 }
-.store-hub-text{
-    color: rgba(0,0,0,1);
+#hdrHub1{
+    background-image: url('/resources/images/non-catalog-image/homit-hub-cover.png');
+}
+
+.homit-hub-text-dashboard{
+    color: rgba(255,255,255,0.95);
     letter-spacing: 0.045em;
     -webkit-font-smoothing: antialiased;
-    font-size: 15px;
-    margin: 0;
 }
-a.store-hub-text{
-    text-decoration: none !important;
+.homit-hub-header-dashboard{
+    position: relative; 
+    display: flex; justify-content: center;
+    font-weight: 400; font-size: 30px; 
 }
-a.store-hub-text:hover{
-    color: rgba(0,0,0,1) !important;
+.homit-hub-stores-box-dasgboard{
+    position: relative; 
+    top: 10%; width: 100%;
+}
+#snack-vendor-dashboard{
+    margin-top: 10px;
+}
+#liquor-store-dashboard{
+    margin-top: 30px;
+}
+.store-window-dashboard{
+    height: 70px; width: 260px;
+    margin-left: 5px; 
+    background-color: rgba(255,255,255,1); 
+    border-radius: 2px; 
+    outline: none;
+    box-shadow: 0 0px 2px 1px rgba(0,0,0,0.5);
+}
+.store-window-dashboard h3{
+    margin: 0; 
+    padding-top: 5px;
+    text-align: center; 
+}
+.store-window-dashboard a:hover{
+    text-decoration-line: none;
+    color: rgba(0,0,0,1);
+}
+.store-window-dashboard:focus {
+    outline: 0;
+}
+.store-name-text-dashboard{
+    color: rgba(0,0,0,1); font-weight: 600;
+    font-size: 20px;
+}
+.store-window-dashboard button{
+    position: absolute; 
+    width: 220px;
+    height: 30px; 
+    margin-left: 20px;
+    font-size: 17px !important; font-weight: 500; 
+    background-color: rgba(42,81,145,1); 
+    border: 1px solid rgba(42,81,145,1); border-radius: 3px; 
+    color: rgba(255,255,255,1); text-transform: uppercase; 
+    box-shadow: none;
+    -webkit-transition: background-color 0.3s;
+}
+#snack-vendor-dashboard button{
+    bottom: 105px;
+}
+#liquor-store-dashboard button{
+    bottom: 5px;
+}
+.store-window-dashboard:hover button{
+    background-color: rgba(15, 40, 82,1); 
+    border: 1px solid rgba(15, 40, 82,1);
+    transition: all 0.3s ease;
 }
 .myAccntAA{
     margin-top: 10px;
@@ -115,12 +163,9 @@ a.store-hub-text:hover{
 }
 
 /* To make Homit-Hub box appear more smoothly */
-.fdIn{ -webkit-animation: fadein 0.09s; }
+.fdIn{ -webkit-animation: fadein 1s; }
 @-webkit-keyframes fadein { from {opacity:0;} to {opacity:1;} }
 
-.storeHubAAA:focus{
-    outline: none !important;
-}
 .myAccntFCS:focus{
     outline: none !important;
 }

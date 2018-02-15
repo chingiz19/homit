@@ -132,6 +132,7 @@ body{
 }
 .col1A{
     display: flex; justify-content: center; 
+    text-transform: capitalize;
 }
 .col1D{
     position: absolute; 
@@ -185,8 +186,7 @@ body{
      flex-grow: 2;
      flex-shrink: 2;
  }
-  .brandBox
- {  
+  .brandBox{  
      overflow-x: scroll;
      height: 25vh; width: 105%;
      margin-left: 1px;
@@ -194,14 +194,18 @@ body{
      background-color: rgb(254,254,254);
      overflow-y: scroll;
  }
- .sizeStage
-{   
+ .sizeStage{   
     position: relative;
     margin: 0px 0 5px 0;
     padding: 10px 0 10px 20px;
     color: rgba(0,0,0,0.69);
     font-size: 22px;
     font-weight: 600;
+}
+.same-line{
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
 }
 /*Subcategories CSS*/
 .SubcategoryName{
@@ -407,12 +411,15 @@ body{
     background-color: white !important;
 }
 .fltCategoryBtn{
+    background-color: white;
+    transform: rotateY(-180deg);
     min-width: 68px;
     margin-left: 0; margin-right: 0;
     padding-left: 0; padding-right: 0;
+    z-index: 100;
 }
 .fltCategoryBtn svg{
-    width: 30px; height: 30px;
+    width: 35px; height: 35px;
     fill: rgba(0, 189, 149, 1);
 }
 
@@ -434,7 +441,7 @@ body{
         left: 50%;
         width: 5px;
         height: 5px;
-        background: rgba(42,81,145,0.1);
+        background: rgba(0,0,0,0.05);
         opacity: 0;
         border-radius: 100%;
         transform: scale(1, 1) translate(-50%);
@@ -599,12 +606,9 @@ body{
     }
     .section-1-A{
         display: flex; 
-        margin-left: auto; 
+        margin-left: auto; margin-right: 100px;
         font-size: 35px; font-weight: 600; 
         color: rgb(42,81,145);
-    }
-    .section-1-B{
-        display: flex; margin-left: auto;
     }
     .section-1-button svg{
         fill:rgba(42,81,145,1);
@@ -805,15 +809,16 @@ md-radio-button .md-label{
     -webkit-font-smoothing: antialiased;
 }
 .rot180_1 svg{
-    transform: rotate(-180deg);
+    transform: rotateY(-180deg);
     transition: 0.5s;
     fill: rgba(42,81,145, 0.95);
 }
 .rot180_2 svg{
-    transform: rotate(-360deg);
+    transform: rotateY(0deg);
     transition: 0.5s;
     fill: rgba(0, 189, 149, 1);
 }
+
 
 #addItem [aria-hidden="true"] { visibility: hidden; }
 

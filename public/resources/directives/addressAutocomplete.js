@@ -94,12 +94,11 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                     }
                       
                     /* Helper functions */
-                    
 
                     /**
                      * Called on keypress event in address input box
                      */
-                    scope._addressTyped = function(){   
+                    scope._addressTyped = function(){
                         if (!scope._searchedAddress){ 
                             scope._predictions = [];
                             lisenerIsOn = false;
@@ -207,7 +206,6 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                             scope.$apply();
                         });
                     }
-
                 }, 0);  
             }            
         };

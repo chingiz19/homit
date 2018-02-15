@@ -163,6 +163,23 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     // TODO switch to Subcategories box when Category selected
     $scope.showCategories = false;
 
+        // TODO switch to Subcategories box when Category selected
+        $scope.showCategories = false;
+        $scope.filterCategories = function () {
+            // $('#category_box').slideToggle(500);
+            $('#category_box').animate({width: 'toggle'});
+            if ($scope.showCategories) {
+                $scope.showCategories = false;
+                document.getElementById("show_cat_icon").classList.add('rot180_2');
+                var el = document.getElementById("show_cat_icon").classList;
+                setTimeout(function () {
+                    el.remove('rot180_1', 'rot180_2');
+                }, 500);
+            } else {
+                $scope.showCategories = true;
+                document.getElementById("show_cat_icon").classList.add('rot180_1');
+            }
+        };
     $scope.filterCategoriesViaButton = function(){
         $scope.filterCategories();
         googleAnalytics.addEvent('filter_categories', {

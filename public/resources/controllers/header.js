@@ -1,6 +1,6 @@
 app.controller("LogoSearchController", function ($scope, $http) { });
 
-app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, user, notification) {
+app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $mdSidenav, $log, sessionStorage, user, notification) {
     $scope.init = function () {
         $scope.storeHub = false;
         $scope.userDropDown = false;
@@ -80,54 +80,6 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         }
     };
 
-    // Header right-SideNav functionality
-    // Start
-    $scope.toggleTop = buildTogglerTop('top');
-    $scope.toggleLeft = buildTogglerLeft('left');
-    function debounce(func, wait, context) {
-        var timer;
-        return function debounced() {
-            var context = $scope,
-                args = Array.prototype.slice.call(arguments);
-            $timeout.cancel(timer);
-            timer = $timeout(function () {
-                timer = undefined;
-                func.apply(context, args);
-            }, wait || 10);
-        };
-    }
-    function buildTogglerTop(navID) {
-        return function () {
-            $mdSidenav(navID)
-                .toggle()
-                .then(function () {
-                    $log.debug("toggle " + navID + " is done");
-                });
-        };
-    }
-    function buildTogglerLeft(navID) {
-        return function () {
-            $mdSidenav(navID)
-                .toggle()
-                .then(function () {
-                    $log.debug("toggle " + navID + " is done");
-                });
-        };
-    }
-    $scope.close = function () {
-        $mdSidenav('top').close()
-            .then(function () {
-                $log.debug("close TOP is done");
-            });
-    };
-    $scope.close = function () {
-        $mdSidenav('left').close()
-            .then(function () {
-                $log.debug("close LEFT is done");
-            });
-    };
-    // End
-
     this.checkSubcategories = function (subcategory_name) {
         $rootScope.$broadcast("checkSubcategories", subcategory_name);
     };
@@ -138,6 +90,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
 
     $scope.hrefTo = function (path) {
         $window.location.href = $window.location.origin + path;
+        $(".homit-hub-text-dashboard").css("display","none")
         sessionStorage.setCategoryClicked("store-switched");
     };
 

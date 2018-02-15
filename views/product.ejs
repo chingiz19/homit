@@ -2,17 +2,140 @@
 
 <head>
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
-    <link href="/resources/css/product.css" rel="stylesheet">
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/product.css" rel="stylesheet">
 </head>
 
 <body ng-cloak>
-    <div ng-controller="productController">
+    <div ng-controller="productController" layout="column" class="container">
+        <div layout="row">
+            <div class="col-md-6 product-img">
+                <img src="/resources/images/products/liquor-station/beer/b_1038.jpeg" width="420" height="470">
+            </div>
+            <div class="col-md-6">
+                <h2>Corona Extra</h2>
+                <section layout="column">
+                    <!--googleoff: snippet-->
+                    <ul layout="row" style="width: 100%; display: flex; justify-content: center; list-style-type: none;">
+                        <li>
+                            <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+                        </li>
+                        <li>330ml</li>
+                        <li>500ml</li>
+                        <li>1L</li>
+                        <li>
+                            <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
+                        </li>
+                    </ul>
+                    <ul layout="row" style="width: 100%; display: flex; justify-content: center; list-style-type: none;">
+                        <li>
+                            <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+                        </li>
+                        <li>1</li>
+                        <li>X6</li>
+                        <li>12</li>
+                        <li>
+                            <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
+                        </li>
+                    </ul>
+                    <div style="display: flex; justify-content: center;">29.99C$</div>
+                    <!--googleon: snippet-->
+                    <md-button class="md-raised md-primary">Add To Cart</md-button>
+                </section>
+                <div layout="column">
+                    <div style="padding: 5px 0 5px 5px; width: 100%; border: 1px solid rgba(200,200,200, 1); border-left-width: 0; border-right-width: 0;">Product Details</div>
+                    <ul style="list-style-type: none;">
+                        <!--googleoff: snippet-->
+                        <li>6 x 500ml bottle</li>
+                        <!--googleon: snippet-->
+                        <li>Made In: Mexico</li>
+                        <li>By: Cerveceria Modelo Sa De Cv</li>
+                        <li>Alcohol/Vol: 4.6%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <section class="col-md-12" layout="row" style="display: flex; justify-content: center; align-items: center; margin-top: 20px; margin-bottom: 10px;">
+            <div style="height: 2px; border-bottom: 1px solid rgba(200,200,200, 1); width: 40%;"></div>
+            <div style="font-size: 23px;">People also Homit</div>
+            <div style="height: 2px; border-bottom: 1px solid rgba(200,200,200, 1); width: 40%;"></div>
+        </section>
+        <section class="col-md-12" layout="row" style="display: flex; justify-content: center; align-content: center; ">
+            <md-button class="md-raised md-primary" style="height: 130px; min-width: 40px !important; width: 30px;">
+                <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+            </md-button>
+            <ul>
+                <li>
+                    <img src="/resources/images/products/snack-vendor/party-supply/o_10002.jpeg" width="100" height="100">
+                </li>
+                <li>1X7in</li>
+                <li>2.99</li>
+                <li>
+                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
+                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
+                    </md-button>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <img src="/resources/images/products/snack-vendor/snack/p_9002.jpeg" width="100" height="100">
+                </li>
+                <li>1Xregular</li>
+                <li>3.24</li>
+                <li>
+                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
+                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
+                    </md-button>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <img src="/resources/images/products/snack-vendor/snack/p_9055.jpeg" width="100" height="100">
+                </li>
+                <li>1x200gm</li>
+                <li>4.99</li>
+                <li>
+                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
+                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
+                    </md-button>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <img src="/resources/images/products/liquor-station/wine/b_3005.jpeg" width="100" height="100">
+                </li>
+                <li>1x750ml</li>
+                <li>12.99</li>
+                <li>
+                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
+                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
+                    </md-button>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <img src="/resources/images/products/liquor-station/spirit/b_5000.jpeg" width="100" height="100">
+                </li>
+                <li>1x750ml</li>
+                <li>28.99</li>
+                <li>
+                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
+                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
+                    </md-button>
+                </li>
+            </ul>
+            <md-button class="md-raised md-primary" style="height: 130px; min-width: 40px !important; width: 30px;">
+                <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
+            </md-button>
+        </section>
+        <section class="col-md-12" layout="row" style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+            <div style="height: 2px; border-bottom: 1px solid rgba(200,200,200, 1); width: 100%;"></div>
+        </section>
     </div>
 
     <% if (!production) { %>
         <script src="/resources/controllers/product.js"></script>
-    <% } %>
+        <% } %>
 </body>
 
 <footer>

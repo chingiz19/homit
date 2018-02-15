@@ -3,7 +3,9 @@ li {list-style-type: none;}
 .ul-zero-margin-padding{
     margin: 0; padding: 0;
 }
-
+.none{
+    display: none;
+}
 .full-screen{
     min-height: 800px;
     height: 100%;
@@ -35,7 +37,7 @@ body{
 #calgary-image{
     position: fixed;
     background-size: cover; 
-    background-image: url('/resources/images/non-catalog-image/calgary_20.png'); 
+    background-image: url('/resources/images/non-catalog-image/calgary.jpg'); 
     background-position: center;
     background-repeat:no-repeat;
     z-index: -1;
@@ -135,53 +137,90 @@ h2.hmtHubA{
     z-index: 100;
 }
 .homit-hub{
-    background-color: rgba(42,81,145,1);
     color: white;
 }
-.hmtHubTxt{
+.homit-hub-text{
     color: rgba(255,255,255,0.95);
     letter-spacing: 0.065em;
     -webkit-font-smoothing: antialiased;
-    filter: drop-shadow(0 0px 8px rgba(0,0,0, 1));
 }
-.hmtHubA{
+.homit-hub-header{
     position: relative; top: 20%; 
     display: flex; justify-content: center;
-    font-weight: 400; font-size: 40px; 
+    font-weight: 400; font-size: 50px; 
 }
-.hmtHubB{
-    top: 40%;
+.homit-hub-stores{
+    position: relative;
+    top: 30%;
     margin: 0; padding: 0; 
     display: flex; 
-    flex-direction: row;
-    justify-content: center; position: relative; 
+    justify-content: center; 
 }
-.hmtHubBA{
-    display: flex; justify-content: center; align-items: center;
+.store-window{
+    height: 300px; width: 250px; 
+    background-color: rgba(255,255,255,0.1); 
+    border: 1px solid black;
+    border-radius: 5px; 
+    outline: none;
+    box-shadow: 0 0px 5px 2px rgba(0,0,0,0.5);
+    -webkit-transition: background-color 0.3s;
 }
-.hmtHubBAA{
-    margin: 0; padding: 0;
-    z-index: 100;
+.store-window:hover{
+    background-color: rgba(255,255,255,0.8); 
+    transition: all 0.3s ease;
 }
-.hmtHubBAAA{
-    display: flex; justify-content: center;
+.store-window:focus {
+    outline: 0;
 }
-
-.hmtHubBA:focus{
-    outline: none !important;
+.store-background-image{
+    position: absolute;
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.85;
+    z-index: 0;
 }
-.hmtHubABAB{
-    font-weight: 400; font-size: 20px;
-    z-index: 100;
+#snack-vendor-icon{
+    background-image: url('/resources/images/non-catalog-image/snack-vendor_icon.png'); 
 }
-a.hmtHubABAB:hover{
-    color: rgba(255,255,255,0.95) !important;
+#liquor-station-icon{
+    background-image: url('/resources/images/non-catalog-image/liquor-station_icon.png'); 
 }
-a .hmtHubTxt{
-    margin: 0;
+.store-window a:hover{
+    color: rgba(0,0,0,1);
 }
-li h3 {
-    margin: 0;
+.store-window h3{
+    margin-top: 15px;
+    font-weight: 400; font-size: 20px; 
+    text-align: center;
+    text-transform: uppercase;
+}
+.store-window button{
+    position: absolute; 
+    bottom: 10px; 
+    width: 220px;
+    height: 40px; 
+    margin-left: 15px;
+    font-size: 20px !important; font-weight: 500; 
+    background-color: rgba(42,81,145,1); 
+    border: 1px solid rgba(42,81,145,1); border-radius: 3px; 
+    color: rgba(255,255,255,1); text-transform: uppercase; 
+    box-shadow: none;
+    -webkit-transition: background-color 0.3s;
+}
+.store-window:hover button{
+    background-color: rgba(15, 40, 82,1); 
+    border: 1px solid rgba(15, 40, 82,1);
+    transition: all 0.3s ease;
+}
+.store-name-text{
+    color: rgba(0,0,0,1); font-weight: 600;
+}
+.snack-vendor{
+    margin-right: 5%;
+}
+.liquor-station{
+    margin-left: 5%;
 }
 .main-page-address-box{
     position: relative;
@@ -194,7 +233,6 @@ li h3 {
     letter-spacing: 0.065em; 
     text-shadow: 0 2px 10px rgba(0,0,0,1); 
 }
-
 md-toolbar{
     position: fixed;
     background-color: transparent !important;
@@ -203,42 +241,6 @@ nav{
     position: fixed;
     z-index: 1000;
 }
-
-#liquer-station:hover .liquer-station-icon{
-    transform: rotateY(180deg);
-    transition: all 0.75s ease-in;
-}
-
-#snack-vendor:hover .snack-vendor-icon{
-    transform: rotateY(180deg);
-    transition: all 0.75s ease-in;
-}
-
-.liquer-station-icon{
-    fill: rgba(255,255,255,1);
-    filter: drop-shadow(0 0px 5px rgba(0,0,0,0.7));
-}
-.liquer-station-icon svg{
-    width: 110px; height: 110px;
-}
-
-.snack-vendor-icon{
-    fill: rgba(255,255,255,1);
-    filter: drop-shadow(0 0px 5px rgba(0,0,0,0.7));
-}
-.store-sign-background-box{
-    position: absolute; 
-    top: 27px; 
-    width: 300px; height: 55px; 
-    background-color: #0D2244;
-    box-shadow: 0 0px 4px 0px rgba(0,0,0,0.45); 
-    border-radius: 1px;
-    z-index: 0;
-}
-.snack-vendor-icon svg{
-    width: 110px; height: 110px;
-}
-
 /* Google Search autocomplete non-mobile */
 .pac-container{
     margin-top: 1px;
@@ -308,40 +310,29 @@ nav{
     .srchAddrsCAB{
         width: 386px;
     }
+    .homit-hub-header{
+        top: 15%; 
+        font-size: 40px; 
+    }
+    .homit-hub-stores{
+        top: 30%;
+    }
+    .store-window{
+        height: 200px; width: 150px; 
+    }
+    .store-window h3{
+        font-size: 15px; 
+    }
+    .store-window button{
+        width: 120px;
+        height: 30px; 
+        font-size: 15px !important; 
+    }
 }
 
 @media (max-width: 1000px) and (min-width: 550px){
     .area-map{
         height: 50%;
-    }
-    .hmtHubA{
-        position: relative; top: 25%; 
-    }
-    .hmtHubA{
-        font-size: 35px;
-    }
-    .hmtHubBA{
-        max-width: 20%;
-    }
-    .store-sign-background-box{
-        top: 20px;
-        max-width: 20%;
-        height: 40px;
-    }
-    .liquer-station-icon svg{
-        width: 80px; height: 80px;
-    }
-    .snack-vendor-icon svg{
-        width: 80px; height: 80px;
-    }
-    #snack-vendor{
-        margin-right: 3%;
-    }
-    #liquer-station{
-        margin-left: 3%;
-    }
-    .hmtHubABAB{
-        font-size: 13px;
     }
 }
 
@@ -349,83 +340,21 @@ nav{
     .area-map{
         height: 45%;
     }
-    .hmtHubA{
-        position: relative; top: 40%; 
-    }
-    .hmtHubA{
+    .homit-hub-header {
         font-size: 35px;
-    }
-    .hmtHubB{
-        top: 50%;
-    }
-    .hmtHubBA{
-        max-width: 20%;
-    }
-    .store-sign-background-box{
-        top: 17px;
-        max-width: 20%;
-        height: 25px;
-    }
-    .liquer-station-icon svg{
-        width: 60px; height: 60px;
-    }
-    .snack-vendor-icon svg{
-        width: 60px; height: 60px;
-    }
-    #snack-vendor{
-        margin-right: 5%;
-    }
-    #liquer-station{
-        margin-left: 5%;
-    }
-    .hmtHubABAB{
-        font-size: 11px;
     }
 }
 
 @media (max-width: 429px){
-    footer{
-        width: 430px;
-        overflow-x: scroll !important;
-    }
     .full-screen{
-        width: 430px;
+        width: 400px;
         overflow-x: scroll !important;
     }
     .area-map{
         height: 45%;
     }
-    .hmtHubA{
-        position: relative; top: 40%; 
-    }
-    .hmtHubA{
-        font-size: 35px;
-    }
-    .hmtHubB{
-        top: 50%;
-    }
-    .hmtHubBA{
-        max-width: 20%;
-    }
-    .store-sign-background-box{
-        top: 17px;
-        max-width: 20%;
-        height: 25px;
-    }
-    .liquer-station-icon svg{
-        width: 60px; height: 60px;
-    }
-    .snack-vendor-icon svg{
-        width: 60px; height: 60px;
-    }
-    #snack-vendor{
-        margin-right: 5%;
-    }
-    #liquer-station{
-        margin-left: 5%;
-    }
-    .hmtHubABAB{
-        font-size: 11px;
+    .homit-hub-header {
+        font-size: 30px;
     }
 }
 
@@ -440,38 +369,8 @@ nav{
     .area-map-text-box{
         top: 600px;
     }
-    .hmtHubA{
-        font-size: 90px;
-    }
-    .hmtHubB{
-        top: 45%;
-    }
-    .liquer-station-icon svg{
-        width: 200px; height: 200px;
-    }
-    .snack-vendor-icon svg{
-        width: 200px; height: 200px;
-    }
-    #snack-vendor{
-        margin-right: 5%;
-    }
-    #liquer-station{
-        margin-left: 5%;
-    }
-    .hmtHubBA{
-        max-width: 400px !important; width: 350px;
-        height: 250px;
-    }
-    .store-sign-background-box{
-        top: 50px;
-        max-width: 400px !important; width: 350px;
-        height: 100px;
-    }
     .area-map{
         width: 90%;
-    }
-    .hmtHubABAB{
-        font-size: 35px;
     }
     .addressMessage-text{
         bottom: 500px;
@@ -540,14 +439,38 @@ nav{
         height: 80px; width: 80px;
         fill: rgba(50,50,50,1)
     }
+    .homit-hub-header{
+        top: 20%; 
+        font-size: 80px; 
+    }
+    .homit-hub-stores{
+        top: 35%;
+    }
+    .store-window{
+        height: 450px; width: 350px; 
+        box-shadow: 0 0px 10px 5px rgba(0,0,0,0.5);
+    }
+    .store-name-text{
+        font-weight: 400;
+    }
+    .store-window h3{
+        font-size: 33px; 
+    }
+    .store-window button{
+        width: 310px;
+        height: 80px;
+        margin-left: 20px; 
+        font-size: 30px !important; 
+    }
+
 }
 
 .go-to-homit-hub {
     outline:0;
-    filter: drop-shadow(0 0px 1px rgba(0,0,0,1));
+    filter: drop-shadow(0 0px 1px rgba(0,0,0,0.7));
     animation: MoveUpDown 2s linear infinite;
     position: absolute;
-    left: 48%;
+    margin: 0 auto 0 auto;
   }
   button:focus {outline:0;}
   

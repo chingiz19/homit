@@ -16,7 +16,7 @@
                 </a>
             </div>
             <!-- Search button, mobile device -->
-            <md-button id="clear-search-mobile" aria-label="searchOrClear-mobile" ng-show="showSearchBar == 'true'" ng-click = "focusSearchInput(searchRequest); searchRequest = '' ; searchDisplay = ''; mobileSearchShow = !mobileSearchShow;">
+            <md-button id="clear-search-mobile" aria-label="searchOrClear-mobile" ng-show="showSearchBar == 'true'" ng-click="focusSearchInput(searchRequest); searchRequest = '' ; searchDisplay = ''; mobileSearchShow = !mobileSearchShow;">
                 <ng-md-icon ng-if="!mobileSearchShow" icon="search"></ng-md-icon>
                 <ng-md-icon ng-if="mobileSearchShow" icon="clear"></ng-md-icon>
             </md-button>
@@ -68,7 +68,8 @@
                             </a>
                         </li>
                     </ul>
-                    <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultSuperCategory.length" id="glbSrchC" class="mnSrchCB serach-not-found">
+                    <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultSuperCategory.length"
+                        id="glbSrchC" class="mnSrchCB serach-not-found">
                         <li>
                             <span>Not Found Yet...</span>
                         </li>
@@ -83,11 +84,12 @@
                 <md-button id="sign-button" ng-if="!isSignedIn" aria-label="header-sign" data-toggle="modal" data-target="#loginModal" class="hdrRendBtn">
                     <ng-md-icon icon="person_outline" style="filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));" class="header-icon"></ng-md-icon>
                 </md-button>
-                <md-button id="signed-in-button" ng-if="isSignedIn" aria-label="myAccExtBox" ng-click="hdrExtBx('hdrMyAcc', 'hdrMyAcc1', 'hdrMyAcc2', 'hdrMyAcc3')" class="hdrRendBtn">
+                <md-button id="signed-in-button" ng-if="isSignedIn" aria-label="myAccExtBox" ng-click="hdrExtBx('hdrMyAcc', 'hdrMyAcc1', 'hdrMyAcc2', 'hdrMyAcc3')"
+                    class="hdrRendBtn">
                     <ng-md-icon icon="person" class="header-icon"></ng-md-icon>
                 </md-button>
                 <div id="hdrMyAcc" aria-hidden="true" ng-if="isSignedIn" class="myAccnt fdIn">
-                    <div id="hdrMyAcc1" class="bxExtn"></div>
+                    <div id="hdrMyAcc1" class="box-extension"></div>
                     <div id="hdrMyAcc" class="storeHubA">
                         <ul id="my-account-ul" class="myAccntAA" layout="column">
                             <li id="myaccount-li" class="my-account-box myAccntFCS" ng-click="hrefTo('/myaccount')">
@@ -164,22 +166,24 @@
     <!-- End -->
     <!-- Dashboard -->
     <div id="hdrHub" aria-hidden="true" class="storeHub fdIn">
-        <div id="hdrHub1" class="bxExtn"></div>
-        <div id="hdrHub2" class="storeHubA">
-            <ul id="hdrHub3" class="storeHubAA" layout="column">
-                <li flex="20" class="storeHubAAA" ng-click="hrefTo('/catalog/snack-vendor')">
-                    <div class="storeHubAAAA">
-                        <ng-md-icon icon="panorama_vertical" class="store-hub-icon">
-                    </div>
-                    <div><a class="store-hub-text" href="https://homit.ca/catalog/liquor-station">Snack Vendor</a></div>
-                </li>
-                <li flex="20" class="storeHubAAA" class="text-center" ng-click="hrefTo('/catalog/liquor-station')">
-                    <div class="storeHubAAAA">
-                        <ng-md-icon icon="local_bar" class="store-hub-icon">
-                    </div>
-                    <div><a class="store-hub-text" href="https://homit.ca/catalog/liquor-station">Liqour Station</a></div>
-                </li>
-            </ul>
+        <div id="hdrHub1" class="box-extension"></div>
+        <div id="hub-background-image"></div>
+        <div id="hdrHub2" class="storeHubA" layout="column">
+            <h2 class="homit-hub-header-dashboard homit-hub-text-dashboard">Homit Hub</h2>
+            <div class="homit-hub-stores-box-dasgboard" layout="column">
+                <div id="snack-vendor-dashboard" class="store-window-dashboard" ng-click="hrefTo('/catalog/snack-vendor')">
+                    <h3>
+                        <a class="homit-hub-text-dashboard store-name-text-dashboard" href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a>
+                    </h3>
+                    <button class="homit-hub-text-dashboard">Shop</button>
+                </div>
+                <div id="liquor-store-dashboard" class="store-window-dashboard" ng-click="hrefTo('/catalog/liquor-station')">
+                    <h3>
+                        <a class="homit-hub-text-dashboard store-name-text-dashboard" href="https://homit.ca/catalog/liquor-station">Liquor Station</a>
+                    </h3>
+                    <button class="homit-hub-text-dashboard">Shop</button>
+                </div>
+            </div>
         </div>
     </div>
 </nav>

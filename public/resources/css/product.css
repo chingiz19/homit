@@ -1,0 +1,19 @@
+md-toolbar{
+    background-color: rgba(42,81,145,0.95) !important;
+}
+body{
+    font-family: 'Nunito', sans-serif; 
+    color: rgba(70,70,70,1);
+    letter-spacing: 0.025em;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    list-style-type: none;
+}
+footer{
+    position: absolute;
+    bottom: -133px;
+    width: 100%;
+}
