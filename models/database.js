@@ -22,7 +22,7 @@ const dbTables = {
   catalog_types: "catalog_types",
   drivers: "drivers",
   drivers_shift_history: "drivers_shift_history",
-  drivers_location: "drivers_location",
+  drivers_status: "drivers_status",
   drivers_routes: "drivers_routes",
   employee_roles: "employee_roles",
   orders_cart_info: "orders_cart_info",
@@ -35,7 +35,8 @@ const dbTables = {
   csr_actions: "csr_actions",
   orders_history_refund: "orders_history_refund",
   orders_history_cancel: "orders_history_cancel",
-  orders_history_add: "orders_history_add"
+  orders_history_add: "orders_history_add",
+  drivers_request: "drivers_request"
 }
 
 /*Building metadata for log*/

@@ -105,22 +105,25 @@ CREATE TABLE drivers_shift_history (
 	driver_id INT NOT NULL,
 	shift_start TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	shift_end TIMESTAMP NULL,
-	online BOOLEAN DEFAULT TRUE,
 
 	PRIMARY KEY (id),
 	CONSTRAINT fk_drivers_shift_history_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE drivers_location (
+CREATE TABLE drivers_status (
 	id INT NOT NULL AUTO_INCREMENT,
 	driver_id INT NOT NULL,
+	socket_id VARCHAR(225),
 	latitude DOUBLE,
 	longitude DOUBLE,
+	online BOOLEAN DEFAULT FALSE,
+	connected BOOLEAN DEFAULT TRUE,
 
 	PRIMARY KEY(id),
-	CONSTRAINT fk_drivers_location_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE	
-) ENGINE = InnoDB;
+	UNIQUE(driver_id),
+	UNIQUE(socket_id)
+) ENGINE = Memory;
 
 
 CREATE TABLE catalog_super_categories ( 
@@ -169,7 +172,7 @@ CREATE TABLE catalog_containers (
 	name VARCHAR(225) NOT NULL ,
 	
 	PRIMARY KEY (id)
-	) ENGINE = InnoDB;
+) ENGINE = InnoDB;
 
 
 CREATE TABLE catalog_packaging_volumes (
@@ -177,7 +180,7 @@ CREATE TABLE catalog_packaging_volumes (
 	volume_name VARCHAR(225) NOT NULL ,
 	
 	PRIMARY KEY (id)
-	) ENGINE = InnoDB;
+) ENGINE = InnoDB;
 
 
 CREATE TABLE catalog_packagings ( 
@@ -317,11 +320,8 @@ CREATE TABLE drivers_routes (
 	order_id INT,
 	position INT NOT NULL,
 
-	PRIMARY KEY(id),
-	CONSTRAINT fk_drivers_routes_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_drivers_routes_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_drivers_routes_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE			
-) ENGINE = InnoDB;
+	PRIMARY KEY(id)
+) ENGINE = Memory;
 
 
 CREATE TABLE csr_actions (
@@ -377,4 +377,13 @@ CREATE TABLE orders_history_add (
 	PRIMARY KEY (id),
 	CONSTRAINT fk_orders_history_add_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
 	CONSTRAINT fk_orders_history_add_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
+) ENGINE = InnoDB;
+
+
+CREATE TABLE drivers_request (
+	id INT NOT NULL AUTO_INCREMENT,
+	driver_id INT NOT NULL,
+	order_info JSON NOT NULL,
+
+	PRIMARY KEY(id)
 ) ENGINE = InnoDB;
