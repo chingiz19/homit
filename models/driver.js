@@ -52,9 +52,10 @@ io.on("connection", function (socket) {
         if (!tokenData || tokenData.driver_id != receivedJson.driver_id) {
             socket.disconnect();
         } else {
+            var driverId = tokenData.driver_id.split("_")[1];
             socket.isVerified = true;
             driverConnections[socket.id].driver_id = tokenData.driver_id;
-            await updateDriverStatusConnected(tokenData.driver_id, socket.id);
+            await updateDriverStatusConnected(driverId, socket.id);
             if (driverTempStorage[tokenData.driver_id]) {
                 for (var i = 0; i < driverTempStorage[tokenData.driver_id].length; i++) {
                     Driver.send(tokenData.driver_id, driverTempStorage[tokenData.driver_id][i]);
@@ -62,11 +63,11 @@ io.on("connection", function (socket) {
                 driverTempStorage[tokenData.driver_id] = [];
             }
 
-            var requests = await getDriversRequest(tokenData.driver_id);
+            var requests = await getDriversRequest(driverId);
 
             // TODO: Chingiz uncommenct this
             // for (var i = 0; i < requests.length; i++) {
-            //     Driver.send(requests[i].driver_id,  JSON.parse(requests[i].order_info));
+            //     Driver.send("d_" + requests[i].driver_id,  JSON.parse(requests[i].order_info));
             // }
         }
     });
