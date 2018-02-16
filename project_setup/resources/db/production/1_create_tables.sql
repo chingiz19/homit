@@ -271,6 +271,7 @@ CREATE TABLE orders_history (
 	guest_id INT,
 	transaction_id INT NOT NULL,
 	card_digits VARCHAR(4) NOT NULL,
+	total_price DECIMAL(6,2) NOT NULL,
 	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	date_assigned TIMESTAMP NULL,
 	date_arrived_store TIMESTAMP NULL,

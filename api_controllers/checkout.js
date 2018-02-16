@@ -76,7 +76,7 @@ router.post('/placeorder', function (req, res, next) {
                                             var cardToken = MP.getUserCardToken(transactionDetails);
                                             var cardType = MP.getUserCardType(transactionDetails);
                                             saveCreditCard(key, saveCard, cardToken, cardDigits, cardType).then(function (savedCard) {
-                                                createOrders(userId, address, address_lat, address_long, driverInstruction, false, transactionId, cardDigits, products).then(function (userOrders) {
+                                                createOrders(userId, address, address_lat, address_long, driverInstruction, false, transactionId, cardDigits, totalPrice, products).then(function (userOrders) {
                                                     var response = {
                                                         success: true,
                                                         orders: userOrders
@@ -172,7 +172,7 @@ router.post('/placeorder', function (req, res, next) {
                                             }
                                             User.addGuestUser(data).then(function (guestUserId) {
                                                 if (guestUserId != false) {
-                                                    createOrders(guestUserId, address, address_lat, address_long, driverInstruction, true, transactionId, cardDigits, products).then(function (userOrders) {
+                                                    createOrders(guestUserId, address, address_lat, address_long, driverInstruction, true, transactionId, cardDigits, totalPrice, products).then(function (userOrders) {
                                                         var response = {
                                                             success: true,
                                                             orders: userOrders
@@ -206,7 +206,7 @@ router.post('/placeorder', function (req, res, next) {
                                             };
                                             User.updateGuestUser(data, key).then(function (guestUser) {
                                                 if (guestUser != false) {
-                                                    createOrders(guestUserFound.id, address, address_lat, address_long, driverInstruction, true, transactionId, cardDigits, products).then(function (userOrders) {
+                                                    createOrders(guestUserFound.id, address, address_lat, address_long, driverInstruction, true, transactionId, cardDigits, totalPrice, products).then(function (userOrders) {
                                                         var response = {
                                                             success: true,
                                                             orders: userOrders
@@ -271,12 +271,12 @@ router.post('/placeorder', function (req, res, next) {
     }
 });
 
-var createOrders = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, products) {
+var createOrders = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, totalPrice, products) {
     var createFunctions = [];
     var userOrders = [];
 
     for (var superCategory in products) {
-        createFunctions.push(Orders.createOrder(id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, superCategory));
+        createFunctions.push(Orders.createOrder(id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, totalPrice, superCategory));
     }
 
     return Promise.all(createFunctions).then(function (orderIds) {
