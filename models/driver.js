@@ -714,7 +714,7 @@ pub.getRoutes = async function (driverId) {
         "routes.driver_id": driverId
     };
 
-    var routes = await db.runQuery(sqlQuery, data);
+    var routes = await db.runQuery(sqlQuery, [data, data]);
     return routes;
 }
 
