@@ -13,8 +13,8 @@ var sockIOServer = require("https").createServer({
 });
 
 var io = require("socket.io")(sockIOServer, {
-    pingInterval: 2100,
-    pingTimeout: 2000
+    pingInterval: 2000,
+    pingTimeout: 5000
 });
 var driverConnector = require("net");
 var pub = {};
@@ -324,10 +324,18 @@ var updateDriverStatusDisconnected = async function (driverId) {
     var key = {
         driver_id: driverId
     };
-    var dataUpdate = {
-        connected: false
-    };
-    await db.updateQuery(db.dbTables.drivers_status, [dataUpdate, key]);
+
+    var started = await shiftStarted(driverId);
+    var online = await isOnline(driverId);
+
+    if (!online && !started) {
+        await db.deleteQuery(db.dbTables.drivers_status, key);
+    } else {
+        var dataUpdate = {
+            connected: false
+        };
+        await db.updateQuery(db.dbTables.drivers_status, [dataUpdate, key]);
+    }
 }
 
 var isConnected = async function (driverId) {
@@ -351,7 +359,7 @@ var shiftStarted = async function (driverId) {
         AND ?`
     var data = { driver_id: driverId };
     var dbResult = await db.runQuery(sqlQuery, data);
-    return dbResult != 0;
+    return dbResult.length != 0;
 }
 
 /**
@@ -433,7 +441,6 @@ var endShift = async function (driverId) {
         };
 
         await db.runQuery(sqlQuery, key);
-        await db.deleteQuery(db.dbTables.drivers_status, key);
     }
 }
 
