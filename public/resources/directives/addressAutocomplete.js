@@ -101,8 +101,6 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                     scope._addressTyped = function(){
                         if (!scope._searchedAddress){ 
                             scope._predictions = [];
-                            lisenerIsOn = false;
-                            removeEvLisToAddressInput();
                             return;
                         } 
                         service.getPlacePredictions({ 

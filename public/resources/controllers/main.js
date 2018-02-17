@@ -1,6 +1,7 @@
 app.controller("mainController", function ($scope, $http, sessionStorage, $cookies, $window, $location, $anchorScroll, mapServices) {
     $scope.map = undefined;
     $scope.userDropDown = false;
+    $scope.bounds = undefined;
 
     $scope.init = function () {
 
@@ -11,6 +12,9 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
         }
 
         $scope.map = mapServices.createMap("map");
+
+        //TODO: change to dynamic
+        $scope.bounds = new google.maps.LatLngBounds({ lat: 50.862122, lng: -114.173317 }, { lat: 51.172396, lng: -113.925171 });
 
         mapServices.createCoveragePolygon().then(function (polygon) {
             if (polygon) {
