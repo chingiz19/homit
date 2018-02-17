@@ -320,10 +320,13 @@ var updateDriverStatusConnected = async function (driverId, socketId) {
  * 
  * @param {*} socketId 
  */
-var updateDriverStatusDisconnected = async function (driverId) {
+var updateDriverStatusDisconnected = async function (socketId) {
     var key = {
-        driver_id: driverId
+        socket_id: socketId
     };
+
+    var driverStatus = await db.selectAllWhere(db.dbTables.drivers_status, key);
+    var driverId = driverStatus[0].driver_id;
 
     var started = await shiftStarted(driverId);
     var online = await isOnline(driverId);
