@@ -577,9 +577,9 @@ pub.priceCalculator = function (depotQuantities, prices, refund) {
     var totalPrice = totalAmount + deliveryFee + totalTax;
 
     // Updating display variables
-    totalTax = totalTax.toFixed(2);
-    totalAmount = totalAmount.toFixed(2);
-
+    totalTax = parseFloat(totalTax.toFixed(2));
+    totalAmount = parseFloat(totalAmount.toFixed(2));
+    deliveryFee = parseFloat(deliveryFee.toFixed(2));
     totalPrice = parseFloat(totalPrice.toFixed(2));
 
     var finalPrices = {
