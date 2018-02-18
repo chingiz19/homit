@@ -291,41 +291,41 @@ var getOrderSlipHtml = function (htmlSource, OI) {
 
     for (sub_order in orders) {
         $('#table').append(
-            "<tr style='width: 100vw;'><table>"+
-            "<tr style='text-align: left;'><td style='width: 100%; font-size: 11px;'>"+OI.orders[sub_order].super_category_display+"</td></tr>"+
-            "<tr style='text-align: left;'><td style='width: 100%; font-size: 11px; padding-bottom: 4pt; border-bottom: 1px solid black;'>"+"Order ID: " + OI.orders[sub_order].id.split('_')[1] +"</td></tr>"+
-            "<tr style='height:8pt'></tr>"+
-            "</table></tr>"+
-            "<tr style='height:13.85pt'>"+
-            "<td width=407 valign=top style='width:305.6pt;padding:0in 5.4pt 0in 5.4pt;"+
-            "height:13.85pt'>"+
-            "<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:"+
-            "normal'>"+
-            "<b>"+
-            "<span style='font-size:10.0pt;font-family:'Arial',sans-serif'>DESCRIPTION</span>"+
-            "</b>"+
-            "</p>"+
-            "</td>"+
-            "<td width=150 valign=top style='width:112.5pt;padding:0in 5.4pt 0in 5.4pt;"+
-            "height:13.85pt'>"+
-            "<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;"+
-            "text-align:center;line-height:normal'>"+
-            "<b>"+
-            "<span style='font-size:10.0pt;"+
-            "font-family:'Arial',sans-serif'>QUANTITY</span>"+
-            "</b>"+
-            "</p>"+
-            "</td>"+
-            "<td width=159 valign=top style='width:119.15pt;padding:0in 5.4pt 0in 5.4pt;"+
-            "height:13.85pt'>"+
-            "<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;"+
-            "text-align:center;line-height:normal'>"+
-            "<b>"+
-            "<span style='font-size:10.0pt;"+
-            "font-family:'Arial',sans-serif'>PRICE</span>"+
-            "</b>"+
-            "</p>"+
-            "</td>"+
+            "<tr style='width: 100vw;'><table>" +
+            "<tr style='text-align: left;'><td style='width: 100%; font-size: 11px;'>" + OI.orders[sub_order].super_category_display + "</td></tr>" +
+            "<tr style='text-align: left;'><td style='width: 100%; font-size: 11px; padding-bottom: 4pt; border-bottom: 1px solid black;'>" + "Order ID: " + OI.orders[sub_order].id.split('_')[1] + "</td></tr>" +
+            "<tr style='height:8pt'></tr>" +
+            "</table></tr>" +
+            "<tr style='height:13.85pt'>" +
+            "<td width=407 valign=top style='width:305.6pt;padding:0in 5.4pt 0in 5.4pt;" +
+            "height:13.85pt'>" +
+            "<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:" +
+            "normal'>" +
+            "<b>" +
+            "<span style='font-size:10.0pt;font-family:'Arial',sans-serif'>DESCRIPTION</span>" +
+            "</b>" +
+            "</p>" +
+            "</td>" +
+            "<td width=150 valign=top style='width:112.5pt;padding:0in 5.4pt 0in 5.4pt;" +
+            "height:13.85pt'>" +
+            "<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;" +
+            "text-align:center;line-height:normal'>" +
+            "<b>" +
+            "<span style='font-size:10.0pt;" +
+            "font-family:'Arial',sans-serif'>QUANTITY</span>" +
+            "</b>" +
+            "</p>" +
+            "</td>" +
+            "<td width=159 valign=top style='width:119.15pt;padding:0in 5.4pt 0in 5.4pt;" +
+            "height:13.85pt'>" +
+            "<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;" +
+            "text-align:center;line-height:normal'>" +
+            "<b>" +
+            "<span style='font-size:10.0pt;" +
+            "font-family:'Arial',sans-serif'>PRICE</span>" +
+            "</b>" +
+            "</p>" +
+            "</td>" +
             "</tr>"
         );
         if (OI.orders[sub_order].store.name.toLowerCase().includes("liquor")) {
@@ -420,5 +420,56 @@ var getTotalPriceForProducts = function (orders) {
 
     return priceObject;
 };
+
+/**
+ * Get transaction email json
+ * 
+ * @param {*} transactionId 
+ */
+pub.getTransactionEmail = async function (transactionId) {
+    var data = {
+        transaction_id: transactionId
+    };
+    var transactionEmail = await db.selectAllWhere(db.dbTables.orders_emails, data);
+    if (transactionEmail.length > 0) {
+        return transactionEmail[0].email;
+    } else {
+        return undefined;
+    }
+}
+
+/**
+ * Save transaction email json
+ * 
+ * @param {*} transactionId 
+ * @param {*} json 
+ */
+pub.saveTransactionEmail = async function (transactionId, json) {
+    var key = {
+        transaction_id: transactionId
+    };
+    var transactionEmail = await Email.getTransactionEmail(transactionId);
+    if (transactionEmail) {
+        var dataUpdate = {
+            email: JSON.stringify(json)
+        };
+        await db.updateQuery(db.dbTables.orders_emails, [dataUpdate, key]);
+    } else {
+        key.email = JSON.stringify(json);
+        await db.insertQuery(db.dbTables.orders_emails, key);
+    }
+}
+
+/**
+ * Delete transaction email 
+ * 
+ * @param {*} transactionId 
+ */
+pub.deleteTransactionEmail = async function (transactionId) {
+    var data = {
+        transaction_id: transactionId
+    };
+    await db.deleteQuery(db.dbTables.orders_emails, data);
+}
 
 module.exports = pub;

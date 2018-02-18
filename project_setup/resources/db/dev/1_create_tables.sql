@@ -388,3 +388,12 @@ CREATE TABLE drivers_request (
 
 	PRIMARY KEY(id)
 ) ENGINE = InnoDB;
+
+
+CREATE TABLE order_emails (
+	id INT NOT NULL AUTO_INCREMENT,
+	transaction_id INT NOT NULL,
+	email JSON NOT NULL,
+
+	PRIMARY KEY(id)
+) ENGINE = InnoDB;

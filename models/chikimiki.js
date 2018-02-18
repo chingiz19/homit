@@ -55,7 +55,7 @@ cmSocketIOServer.listen(6262, function () {
 });
 
 
-var receiver = function (jsonResponse) {
+var receiver = async function (jsonResponse) {
     if (jsonResponse.action == "chikimiki_response_to_driver") {
         var driverIdString = jsonResponse.details.driver_id;
         var orderIdString = jsonResponse.details.order_id;
@@ -80,97 +80,130 @@ var receiver = function (jsonResponse) {
         };
 
         // Updating orders_history table
-        db.runQuery(sqlQuery, key).then(function (updated) {
+        await db.runQuery(sqlQuery, key);
 
-            // Building json
-            var storeKey = {
-                id: storeId
-            };
-            db.selectAllWhere(db.dbTables.catalog_stores, storeKey).then(function (dbStore) {
-                var jsonStore = {
-                    id: storeIdString,
-                    address: dbStore[0].address,
-                    phone_number: dbStore[0].phone_number,
-                    name: dbStore[0].name,
-                    store_type: dbStore[0].store_type,
-                    nextnodeid: jsonResponse.details.nextnodeid
-                };
+        // Building json
+        var storeKey = {
+            id: storeId
+        };
+        var dbStore = await db.selectAllWhere(db.dbTables.catalog_stores, storeKey);
+        var jsonStore = {
+            id: storeIdString,
+            address: dbStore[0].address,
+            phone_number: dbStore[0].phone_number,
+            name: dbStore[0].name,
+            store_type: dbStore[0].store_type,
+            nextnodeid: jsonResponse.details.nextnodeid
+        };
 
-                Orders.getOrderById(orderId).then(function (products) {
+        var products = await Orders.getOrderById(orderId);
 
-                    var jsonOrder = {
-                        id: orderIdString,
-                        store: storeIdString,
-                        products: products
-                    };
+        var jsonOrder = {
+            id: orderIdString,
+            store: storeIdString,
+            products: products
+        };
 
-                    Orders.getUserWithOrderByOrderId(orderId).then(function (result) {
-                        var user = result.user;
-                        var orderDetails = result.order;
+        var result = await Orders.getUserWithOrderByOrderId(orderId);
+        var user = result.user;
+        var orderDetails = result.order;
 
-                        var jsonCustomer = {
-                            id: user.id_prefix + user.id,
-                            email: user.user_email,
-                            first_name: user.first_name,
-                            last_name: user.last_name,
-                            dob: user.birth_date,
-                            phone: user.phone_number,
-                            address: orderDetails.delivery_address,
-                            comments: orderDetails.driver_instruction,
-                            card_digits: orderDetails.card_digits,
-                            order: jsonOrder
-                        };
+        var jsonCustomer = {
+            id: user.id_prefix + user.id,
+            email: user.user_email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            dob: user.birth_date,
+            phone: user.phone_number,
+            address: orderDetails.delivery_address,
+            comments: orderDetails.driver_instruction,
+            card_digits: orderDetails.card_digits,
+            order: jsonOrder
+        };
 
-                        var jsonFinal = {
-                            action: "dispatch",
-                            details: {
-                                store: jsonStore,
-                                customer: jsonCustomer
-                            }
-                        };
-                        Driver.send(driverIdString, jsonFinal);
+        var jsonFinal = {
+            action: "dispatch",
+            details: {
+                store: jsonStore,
+                customer: jsonCustomer
+            }
+        };
+        Driver.send(driverIdString, jsonFinal);
 
-                        Driver.dispatchOrder(
-                            driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded)
-                            .then(function (dispatched) {
+        await Driver.dispatchOrder(driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded);
 
-                                //Add to email temp
-                                var emailTransaction = {};
-                                var emailOrders = {};
-                                var emailOrder = {};
+        //Add to email temp
 
-                                if (emailTempStorage[orderDetails.transaction_id]) {
-                                    emailTransaction = emailTempStorage[orderDetails.transaction_id];
+        // Old to be removed
+        var emailTransactionOld = {};
+        var emailOrdersOld = {};
+        var emailOrderOld = {};
 
-                                    if (emailTransaction.orders) {
-                                        emailOrders = emailTransaction.orders;
-                                    }
-                                }
+        // New
+        var emailTransaction = {};
+        var emailOrders = {};
+        var emailOrder = {};
 
-                                emailOrder = jsonOrder;
-                                emailOrder.store = jsonStore;
-                                Catalog.getSuperCategoryById(jsonStore.store_type).then(function (superCategory) {
-                                    emailOrder.super_category_display = superCategory.display_name;
-                                    emailOrder.super_category_custom = superCategory.custom_name;
 
-                                    emailOrders[superCategory.name] = emailOrder;
-                                    emailTransaction.orders = emailOrders;
-                                    emailTempStorage[orderDetails.transaction_id] = emailTransaction;
+        // Old to be removed
+        if (emailTempStorage[orderDetails.transaction_id]) {
+            emailTransactionOld = emailTempStorage[orderDetails.transaction_id];
 
-                                    // Check if email is ready to send
-                                    Orders.areAllDispatched(orderDetails.transaction_id).then(function (allAssigned) {
-                                        if (allAssigned) {
-                                            emailTransaction.customer = jsonCustomer;
-                                            Email.sendOrderSlip(emailTransaction);
-                                            delete emailTempStorage[orderDetails.transaction_id];
-                                        }
-                                    });
-                                });
-                            });
-                    });
-                });
-            });
-        });
+            if (emailTransactionOld.orders) {
+                emailOrdersOld = emailTransactionOld.orders;
+            }
+        }
+
+        // New
+        var emailTransactionTemp = await Email.getTransactionEmail(orderDetails.transaction_id);
+        if (emailTransactionTemp) {
+            emailTransaction = JSON.parse(emailTransactionTemp);
+
+            if (emailTransaction.orders) {
+                emailOrders = emailTransaction.orders;
+            }
+        }
+
+        var superCategory = await Catalog.getSuperCategoryById(jsonStore.store_type);
+
+        // Old to be removed
+        emailOrderOld = jsonOrder;
+        emailOrderOld.store = jsonStore;
+        emailOrderOld.super_category_display = superCategory.display_name;
+        emailOrderOld.super_category_custom = superCategory.custom_name;
+
+        // New
+        emailOrder = jsonOrder;
+        emailOrder.store = jsonStore;
+        emailOrder.super_category_display = superCategory.display_name;
+        emailOrder.super_category_custom = superCategory.custom_name;
+
+        // Old to be removed
+        emailOrdersOld[superCategory.name] = emailOrderOld;
+        emailTransactionOld.orders = emailOrdersOld;
+        emailTempStorage[orderDetails.transaction_id] = emailTransactionOld;
+
+        // New
+        emailOrders[superCategory.name] = emailOrder;
+        emailTransaction.orders = emailOrders;
+
+        // Check if email is ready to send
+        var allAssigned = await Orders.areAllDispatched(orderDetails.transaction_id);
+        if (allAssigned) {
+            emailTransactionOld.customer = jsonCustomer;
+            emailTransaction.customer = jsonCustomer;
+
+            Logger.log.debug("email Old JSON is ", JSON.stringify(emailTransactionOld));
+            Logger.log.debug("email New JSON is ", JSON.stringify(emailTransaction));
+
+            Email.sendOrderSlip(emailTransactionOld);
+            // Email.sendOrderSlip(emailTransaction);
+
+            delete emailTempStorage[orderDetails.transaction_id];
+            await Email.deleteTransactionEmail(orderDetails.transaction_id);
+        } else {
+            await Email.saveTransactionEmail(orderDetails.transaction_id, emailTransaction);
+        }
     } else {
         Logger.log.error("Error while processing order from CM due to wrong 'action' value received from CM", logMeta);
     }

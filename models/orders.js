@@ -698,7 +698,7 @@ pub.updateCancelAmount = function (cancelHistoryId, customerRefundAmount) {
     });
 };
 
-pub.areAllDispatched = function (transactionId) {
+pub.areAllDispatched = async function (transactionId) {
     var sqlQuery = `
         SELECT *
         FROM orders_history
@@ -708,13 +708,8 @@ pub.areAllDispatched = function (transactionId) {
 
     var data = { transaction_id: transactionId };
 
-    return db.runQuery(sqlQuery, data).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return false;
-        } else {
-            return true;
-        }
-    });
-};
+    var dbResult = await db.runQuery(sqlQuery, data);
+    return dbResult.length == 0;
+}
 
 module.exports = pub;
