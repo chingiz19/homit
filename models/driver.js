@@ -254,7 +254,7 @@ pub.cancelOrder = function (orderId, driverId) {
     Driver.send(driverId, json);
 }
 
-pub.getOnlineDrivers = async function () {
+pub.getActiveDrivers = async function () {
     var sqlQuery = `
         SELECT
         drivers.id AS driver_id,
@@ -273,8 +273,8 @@ pub.getOnlineDrivers = async function () {
         WHERE drivers.id = status.driver_id
     `;
 
-    var onlineDrivers = await db.runQuery(sqlQuery);
-    return onlineDrivers;
+    var activeDrivers = await db.runQuery(sqlQuery);
+    return activeDrivers;
 }
 
 /**
