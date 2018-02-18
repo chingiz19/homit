@@ -1,5 +1,5 @@
 app.controller("checkoutController",
-    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, 
+    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav,
         $log, localStorage, cartService, sessionStorage, date, mapServices, $sce) {
         $scope.userCart = localStorage.getUserCart() || {};
         $scope.numberOfItemsInCart = 0;
@@ -133,7 +133,7 @@ app.controller("checkoutController",
             updateUserCart({});
             $scope.numberOfItemsInCart = 0;
             $scope.totalAmount = 0;
-            
+
             sessionStorage.setAddress(undefined);
             cartService.clearCart()
                 .then(function successCallback(response) {
@@ -213,7 +213,7 @@ app.controller("checkoutController",
             updateCheckoutModal("inProcess");
             checkPaymentResponse(function (response_id, response_message, transaction_id, crd_lst4) {
                 if (response_id == 1 && transaction_id) {
-                    
+
                     var userInfoToSend = {};
                     userInfoToSend.fname = $scope.userInfo.first_name;
                     userInfoToSend.lname = $scope.userInfo.last_name;
@@ -237,15 +237,15 @@ app.controller("checkoutController",
                             crd_lst4: crd_lst4
                         }
                     }).then(function successCallback(response) {
-                        if (response.data.success){
+                        if (response.data.success) {
                             $scope.paymentMessage_1 = "Thank You, ";
                             $scope.paymentMessage_2 = "Homit will take care!";
-                            updateCheckoutModal("1");                            
-                        } else{
+                            updateCheckoutModal("1");
+                        } else {
                             $scope.paymentMessage_1 = "We are sorry, ";
                             $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403) 800-3460.";
-                            updateCheckoutModal("10");    
-                        } 
+                            updateCheckoutModal("10");
+                        }
                     }, function errorCallback(response) {
                         $scope.paymentMessage_1 = "We are sorry, ";
                         $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403) 800-3460.";
@@ -263,12 +263,12 @@ app.controller("checkoutController",
                     $scope.paymentMessage_1 = "Sorry, ";
                     $scope.paymentMessage_2 = "Your card has been declined.";
                     updateCheckoutModal("01");
-                }else{
+                } else {
                     $scope.paymentMessage_1 = "Sorry, ";
                     $scope.paymentMessage_2 = $sce.trustAsHtml("<div layout='row' class='response-02-text'>Something went wrong, please let us know at <a class='email' href='mailto:info@homit.ca'>info@homit.ca</a> </div>");
                     updateCheckoutModal("02");
                 }
-                
+
             });
         };
 
@@ -349,9 +349,7 @@ app.controller("checkoutController",
             totalAmount = Math.round(totalAmount * 100) / 100;
             var deliveryFee;
             if (totalAmount > 100) {
-                //TODO Should be calculated this way
-                // deliveryFee = deliveryFee1 + deliveryFee2*Math.floor(totalAmount/100)
-                deliveryFee = deliveryFee1 + deliveryFee2;
+                deliveryFee = deliveryFee1 + Math.floor(parseInt(totalAmount / 100)) * deliveryFee2;
             } else if (totalAmount > 0 && totalAmount < 100) {
                 deliveryFee = deliveryFee1;
             } else {
@@ -396,12 +394,12 @@ app.controller("checkoutController",
                     $scope.userInfo[type + "_valid"] = false;
                 }
             } else if (text == undefined) {
-                if ($("#driverInstruction").val() == ""){
-                    $scope.userInfo[type + "_valid"] = true;    
+                if ($("#driverInstruction").val() == "") {
+                    $scope.userInfo[type + "_valid"] = true;
                 } else {
                     $scope.userInfo[type + "_valid"] = false;
                 }
-            } else if (text == "" && type == "drInstruction"){
+            } else if (text == "" && type == "drInstruction") {
                 $scope.userInfo[type + "_valid"] = true;
             }
             readyToHomeIt();
@@ -446,11 +444,11 @@ app.controller("checkoutController",
                 $scope.clearCart();
                 $scope.delFee = 0;
                 $window.location.href = $window.location.origin + "/main";
-            } else{
+            } else {
                 location.reload();
             }
         };
-        
+
         function updateUserCart(cart) {
             $scope.userCart = cart;
             $scope.userCartToView = cartService.getViewUserCart($scope.super_category, $scope.userCart);

@@ -570,7 +570,7 @@ pub.priceCalculator = function (depotQuantities, prices, refund) {
     totalAmount = Math.round(totalAmount * 100) / 100;
     var deliveryFee = 0;
     if (!refund) {
-        deliveryFee = deliveryFee1 + parseInt(totalAmount / 100) * deliveryFee2;
+        deliveryFee = deliveryFee1 + Math.floor(parseInt(totalAmount / 100)) * deliveryFee2;
     }
 
     totalTax = Math.round((totalTax + deliveryFee * albertaGst) * 100) / 100;
