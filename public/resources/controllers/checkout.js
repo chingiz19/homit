@@ -1,6 +1,6 @@
 app.controller("checkoutController",
-    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav,
-        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce) {
+    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, 
+        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval) {
         $scope.userCart = localStorage.getUserCart() || {};
         $scope.numberOfItemsInCart = 0;
         $scope.totalAmount = 0;
@@ -177,32 +177,6 @@ app.controller("checkoutController",
         };
 
         $scope.userInfo.cardIsShown = false;
-
-        function checkPaymentResponse(callback) {
-            function looper() {
-                setTimeout(function () {
-                    var helcim_message = document.getElementById("helcimResults");
-                    var response_id = document.getElementById("response");
-                    var response_message = document.getElementById("responseMessage");
-                    var transaction_id = document.getElementById("transactionId");
-                    var crd_lst4 = document.getElementById("cardNumber");
-                    if (response_id || helcim_message.textContent != "CONNECTING...") {
-                        if (response_id) {
-                            if (response_id.value == 1) {
-                                callback(response_id.value, response_message.value, transaction_id.value, crd_lst4.value.slice(15, 19));
-                            } else if (response_id.value == 0) {
-                                callback(response_id.value, response_message.value, 0, 0);
-                            }
-                        } else if (helcim_message.childNodes.length == 1) {
-                            callback(0, 0, 0, 0);
-                        }
-                    } else {
-                        looper();
-                    }
-                }, 500);
-            }
-            looper();
-        }
 
         $scope.paymentResult = "";
         $scope.paymentMessage_1 = "";
@@ -448,10 +422,35 @@ app.controller("checkoutController",
                 location.reload();
             }
         };
+        
+        /* Helper functions */
 
         function updateUserCart(cart) {
             $scope.userCart = cart;
             $scope.userCartToView = cartService.getViewUserCart($scope.super_category, $scope.userCart);
+        }
+
+        function checkPaymentResponse(callback) {
+            var interval = $interval(function () {
+                var helcim_message = document.getElementById("helcimResults");
+                var response_id = document.getElementById("response");
+                var response_message = document.getElementById("responseMessage");
+                var transaction_id = document.getElementById("transactionId");
+                var crd_lst4 = document.getElementById("cardNumber");
+
+                if (response_id || helcim_message.textContent != "CONNECTING...") {
+                    $interval.cancel(interval); // Cancel interval loop
+                    if (response_id) {
+                        if (response_id.value == 1) {
+                            callback(response_id.value, response_message.value, transaction_id.value, crd_lst4.value.slice(15, 19));
+                        } else if (response_id.value == 0) {
+                            callback(response_id.value, response_message.value, 0, 0);
+                        }
+                    } else if (helcim_message.childNodes.length == 1) {
+                        callback(0, 0, 0, 0);
+                    }
+                }
+            }, 500);
         }
 
         $scope.init();
