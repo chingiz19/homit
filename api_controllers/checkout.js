@@ -34,7 +34,9 @@ router.post('/placeorder', function (req, res, next) {
         driverInstruction: driverInstruction,
         cartProducts: cartProducts
     });
-    
+
+    SMS.alertDirectors("Order has been placed. Processing.");
+
     var signedUser = Auth.getSignedUser(req);
     if (signedUser != false) {
         var userId = signedUser.id;
@@ -60,7 +62,7 @@ router.post('/placeorder', function (req, res, next) {
                                 var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
                                 var transactionValid = MP.validateTransaction(transactionDetails, totalPrice);
                                 if (transactionValid) {
-                                    var cardDigits = MP.getUserCardLastDigits(transactionDetails);                                    
+                                    var cardDigits = MP.getUserCardLastDigits(transactionDetails);
                                     var data = {
                                         phone_number: phone
                                     };
@@ -296,7 +298,7 @@ var createOrders = function (id, address, address_lat, address_long, driverInstr
                 cmUserId = "u_" + id;
             }
             CM.sendOrder(cmUserId, address, cmOrderId, superCategory);
-            SMS.alertDirectors("Order placed, ID: " + cmOrderId);
+            SMS.alertDirectors("Order has been placed. Processed. Order ID is: " + cmOrderId);
             userOrders.push(userOrder);
             i++;
         }
