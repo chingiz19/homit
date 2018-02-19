@@ -468,7 +468,7 @@ app.controller("checkoutController",
                 "event_label": "Card info button pressed",
                 "event_category": googleAnalytics.eventCategories.checkout_actions
             });
-            showCardInfo();
+            $scope.showCardInfo();
         }
         
         /* Helper functions */
