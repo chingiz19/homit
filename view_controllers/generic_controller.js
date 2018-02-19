@@ -9,6 +9,7 @@ var ejsOptions = {
 	catelogies: undefined,
 	showSearchBar: true,
 	production: isProduction,
+	og_image: undefined,
 	helcimToken: process.env.HELCIM_JS_TOKEN,
 	helcimTestMode: process.env.HELCIM_TEST_MODE
 };

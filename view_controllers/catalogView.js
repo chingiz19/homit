@@ -451,6 +451,10 @@ router.get("/product/:productName/ls/:listingId", async function (req, res, next
     req.options.ejs.recommended_products = JSON.stringify(recommended_products[_.lowerCase(product.category)]);
     req.options.ejs.see_more_url = "https://homit.ca/catalog/" + product.super_category + "/" + product.category;
 
+    if (Object.values(product.products).length > 0){
+        req.options.ejs.og_image = Object.values(product.products)[0].image;
+    }
+
     for (key in product.products) {
         product.products[key].selectedVolume = 0;
         product.products[key].selectedPack = 0;
