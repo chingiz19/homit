@@ -390,7 +390,7 @@ CREATE TABLE drivers_request (
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE order_emails (
+CREATE TABLE orders_emails (
 	id INT NOT NULL AUTO_INCREMENT,
 	transaction_id INT NOT NULL,
 	email JSON NOT NULL,
