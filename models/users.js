@@ -21,7 +21,7 @@ pub.findUser = function (email) {
     var data = { user_email: email };
     return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
         if (dbResult.length > 0) {
-            return User.sanitizeUserObject(dbResult[0]);
+            return pub.sanitizeUserObject(dbResult[0]);
         } else {
             return false;
         }
@@ -35,7 +35,7 @@ pub.findUserById = function (id) {
     var data = { id: id };
     return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
         if (dbResult.length > 0) {
-            return User.sanitizeUserObject(dbResult[0]);
+            return pub.sanitizeUserObject(dbResult[0]);
         } else {
             return false;
         }
@@ -47,6 +47,9 @@ pub.findUserById = function (id) {
  */
 pub.addUser = function (userData) {
     return db.insertQuery(db.dbTables.users_customers, userData).then(function (dbResult) {
+        if (dbResult.errno && typeof dbResult.errno === "number"){
+            return false;
+        }
         return dbResult.insertId;
     });
 };
@@ -60,7 +63,7 @@ pub.authenticateUser = function (email, password) {
         if (user.length > 0) {
             return Auth.comparePassword(password, user[0].password).then(function (match) {
                 if (match) {
-                    return User.sanitizeUserObject(user[0]);
+                    return pub.sanitizeUserObject(user[0]);
                 } else {
                     return false;
                 }
@@ -78,7 +81,7 @@ pub.findGuestUser = function (email) {
     var data = { user_email: email };
     return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
         if (dbResult.length > 0) {
-            return addIsGuest(User.sanitizeUserObject(dbResult[0]));
+            return addIsGuest(pub.sanitizeUserObject(dbResult[0]));
         } else {
             return false;
         }
@@ -92,7 +95,7 @@ pub.findGuestUserById = function (id) {
     var data = { id: id };
     return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
         if (dbResult.length > 0) {
-            return addIsGuest(User.sanitizeUserObject(dbResult[0]));
+            return addIsGuest(pub.sanitizeUserObject(dbResult[0]));
         } else {
             return false;
         }
@@ -104,6 +107,9 @@ pub.findGuestUserById = function (id) {
  */
 pub.addGuestUser = function (userData) {
     return db.insertQuery(db.dbTables.users_customers_guest, userData).then(function (dbResult) {
+        if (dbResult.errno && typeof dbResult.errno === "number"){
+            return false;
+        }
         return dbResult.insertId;
     });
 };
@@ -208,7 +214,7 @@ pub.authenticateCsrUser = function (email, password) {
         if (user.length > 0) {
             return Auth.comparePassword(password, user[0].password).then(function (match) {
                 if (match) {
-                    return User.sanitizeUserObject(user[0]);
+                    return pub.sanitizeUserObject(user[0]);
                 } else {
                     return false;
                 }
@@ -226,7 +232,7 @@ pub.findUsersByPhone = function (phone_number) {
     var result = [];
     return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
         for (i = 0; i < dbResult.length; i++) {
-            result.push(User.sanitizeUserObject(dbResult[i]));
+            result.push(pub.sanitizeUserObject(dbResult[i]));
         }
         return result;
     });
@@ -240,7 +246,7 @@ pub.findGuestUsersByPhone = function (phone_number) {
     var result = [];
     return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
         for (i = 0; i < dbResult.length; i++) {
-            result.push(addIsGuest(User.sanitizeUserObject(dbResult[i])));
+            result.push(addIsGuest(pub.sanitizeUserObject(dbResult[i])));
         }
         return result;
     });

@@ -8,7 +8,7 @@ var pub = {};
 const saltRounds = 10;
 
 /* Constructing cookie */
-global.vault = cookiee(global.secretKey, {
+global.vault = cookiee(global.secretKey, { //TODO: Improve secret key selection
     cookie: "homit",
     maxAge: 60 * 60 * 1000, // 1 hour
     signed: true,

@@ -135,5 +135,6 @@ module.exports.selectAllWhere2 = selectAllWhere2;
 module.exports.updateQuery = updateQuery;
 module.exports.selectAllFromTable = selectAllFromTable;
 module.exports.deleteQuery = deleteQuery;
-module.exports.deleteQuery2 = deleteQuery2;
+module.exports.deleteQuery2 = deleteQuery2; //TODO: can this be combined with deleteQuery?
 module.exports.dbTables = dbTables;
+module.exports.endConnection = end;

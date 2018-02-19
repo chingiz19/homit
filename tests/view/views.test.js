@@ -113,6 +113,16 @@ describe("Make sure views can be retrieved/loaded", function(){
                     done();
                 });
         });
+
+        it("'/catalog/liquor/beer2' should return 200", function(done){
+            chai.request(host).get('/catalog/liquor/beer2')
+                .end(function(err, res){
+                    expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
+                    expect(res.statusCode).to.equal(200); 
+                    expect(res.req.path).to.equal('/catalog/liquor/beer2');
+                    done();
+                });
+        });
     }); // end Check public pages
 
     /**
@@ -142,16 +152,6 @@ describe("Make sure views can be retrieved/loaded", function(){
 
         it("'/invalidpath/main' should return 404 page", function(done){
             chai.request(host).get('/invalidpath/main')
-                .end(function(err, res){
-                    expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
-                    expect(res.statusCode).to.equal(404); 
-                    expect(res.req.path).to.equal(page_404);
-                    done();
-                });
-        });
-
-        it("'/catalog/liquor/beer2' should return 404", function(done){
-            chai.request(host).get('/catalog/liquor/beer2')
                 .end(function(err, res){
                     expect(res, "Message - " + err + "\n\t").to.not.equal(undefined); 
                     expect(res.statusCode).to.equal(404); 
