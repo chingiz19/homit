@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">   
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
     <url>
-        <loc>https://www.homit.ca/main</loc> 
+       <loc>https://www.homit.ca/main</loc> 
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
@@ -48,6 +50,12 @@
         <priority>0.8</priority>
     </url>
 
+     <url>
+        <loc>https://www.homit.ca/catalog/snack-vendor/everyday-needs</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
     <url>
         <loc>https://www.homit.ca/about</loc> 
         <changefreq>monthly</changefreq>
@@ -55,27 +63,9 @@
     </url>
 
     <url>
-        <loc>https://www.homit.ca/privacy</loc> 
-        <changefreq>monthly</changefreq>
-        <priority>0.2</priority>
-    </url>
-    
-    <url>
         <loc>https://www.homit.ca/contactus</loc> 
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
 
-    <url>
-        <loc>https://www.homit.ca/refund</loc> 
-        <changefreq>monthly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/terms-of-use</loc> 
-        <changefreq>monthly</changefreq>
-        <priority>0.2</priority>
-    </url>
-    
 </urlset>
