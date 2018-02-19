@@ -180,7 +180,7 @@ h2.hmtHubA{
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0.9;
-    z-index: -1;
+    z-index: 0;
 }
 #snack-vendor-icon{
     background-image: url('/resources/images/non-catalog-image/snack-vendor_icon.png'); 
@@ -192,10 +192,12 @@ h2.hmtHubA{
     color: rgba(0,0,0,1);
 }
 .store-window h3{
+    position: relative;
     margin-top: 15px;
     font-weight: 400; font-size: 20px; 
     text-align: center;
     text-transform: uppercase;
+    z-index: 100;
 }
 .store-window button{
     position: absolute; 

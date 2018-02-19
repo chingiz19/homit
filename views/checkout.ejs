@@ -138,7 +138,7 @@
                 <!--Card Info Hidden Box-->
                 <div id="helcimResults">
                     <form name="helcimForm" id="helcimForm" method="POST" novalidate>
-                        <div ng-show="userInfo.cardIsShown || (userInfo.fname_valid && userInfo.lname_valid && (userInfo.dob_valid || userInfo.hasLiquor) && userInfo.email_valid && userInfo.phone_valid)">
+                        <div ng-show="userInfo.cardIsShown || (userInfo.fname_valid && userInfo.lname_valid && userInfo.email_valid && userInfo.phone_valid)">
                             <input type="hidden" id="token" value="<%= helcimToken %>">
                             <input type="hidden" id="language" value="en">
                             <input type="hidden" id="test" value="<%= helcimTestMode %>">

@@ -7,135 +7,161 @@
 </head>
 
 <body ng-cloak>
-    <div ng-controller="productController" layout="column" class="container">
-        <div layout="row">
-            <div class="col-md-6 product-img">
-                <img src="/resources/images/products/liquor-station/beer/b_1038.jpeg" width="420" height="470">
-            </div>
-            <div class="col-md-6">
-                <h2>Corona Extra</h2>
-                <section layout="column">
-                    <!--googleoff: snippet-->
-                    <ul layout="row" style="width: 100%; display: flex; justify-content: center; list-style-type: none;">
-                        <li>
-                            <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
-                        </li>
-                        <li>330ml</li>
-                        <li>500ml</li>
-                        <li>1L</li>
-                        <li>
-                            <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
-                        </li>
-                    </ul>
-                    <ul layout="row" style="width: 100%; display: flex; justify-content: center; list-style-type: none;">
-                        <li>
-                            <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
-                        </li>
-                        <li>1</li>
-                        <li>X6</li>
-                        <li>12</li>
-                        <li>
-                            <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
-                        </li>
-                    </ul>
-                    <div style="display: flex; justify-content: center;">29.99C$</div>
-                    <!--googleon: snippet-->
-                    <md-button class="md-raised md-primary">Add To Cart</md-button>
-                </section>
-                <div layout="column">
-                    <div style="padding: 5px 0 5px 5px; width: 100%; border: 1px solid rgba(200,200,200, 1); border-left-width: 0; border-right-width: 0;">Product Details</div>
-                    <ul style="list-style-type: none;">
+    <%- include('partial/checkout_menu')%>
+        <div ng-controller="productController" layout="column">
+            <div class="container">
+                <input id="recommendedProducts" style="display: none;" value="<%= recommended_products %>">
+                <input id="product" style="display: none;" value="<%= product %>">
+                <input id="default_container" style="display: none;" value="<%= default_container %>">
+                <div layout="column" itemscope itemtype="http://schema.org/Product">
+                    <h1 style="text-align: center;">
+                        <span itemprop="brand">
+                            <%= product_name %>
+                        </span>
+                        <span itemprop="name">
+                            <%= product_brand %>
+                        </span> - Delivered by Homit</h1>
+                    <section>
                         <!--googleoff: snippet-->
-                        <li>6 x 500ml bottle</li>
+                        <div class="col-md-6 product-img product-image" layout="column">
+                            <img class="product-image-selected" ng-src="{{ container_info.image }}">
+                            <div class="store-colosed-image" ng-if="!product.store_open">
+                                <img ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
+                            </div>
+                            <div class="product-image-line"></div>
+                            <div layout="row">
+                                <div ng-repeat="(key, value) in product.products">
+                                    <img class="product-image-to-select" ng-style="((key == selected_container)) && {'border':'1px solid rgba(0,0,0,0.2)'}" ng-click="updateContainer(key)"
+                                        ng-src="{{ value.image}}">
+                                </div>
+                            </div>
+                        </div>
                         <!--googleon: snippet-->
-                        <li>Made In: Mexico</li>
-                        <li>By: Cerveceria Modelo Sa De Cv</li>
-                        <li>Alcohol/Vol: 4.6%</li>
-                    </ul>
+                        <div class="col-md-6 product-property">
+                            <% if (product_description) {%>
+                                <section>
+                                    <p itemprop="description">
+                                        Description:
+                                        <%= product_description %>
+                                    </p>
+                                </section>
+                                <% } %>
+                                    <section layout="column" class="section-box">
+                                        <!--googleoff: snippet-->
+                                        <div layout="row" class="size-section">
+                                            <div class="size-buttons" layout="row">
+                                                <button class="size-button-left" ng-click="volumeLeft(product.products[selected_container])">
+                                                    <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+                                                </button>
+                                                <button class="size-button-right" ng-click="volumeRight(product.products[selected_container])">
+                                                    <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
+                                                </button>
+                                            </div>
+                                            <ul layout="row">
+                                                <li class="size-box-left text-verflow">
+                                                    {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume
+                                                    - 1] }}
+                                                </li>
+                                                <li class="size-box-middle">
+                                                    {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]
+                                                    }}
+                                                </li>
+                                                <li class="size-box-right text-verflow">
+                                                    {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume
+                                                    + 1] }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="size-section" layout="row">
+                                            <div class="size-buttons" layout="row">
+                                                <button class="size-button-left" ng-click="packLeft(product.products[selected_container])">
+                                                    <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+                                                </button>
+                                                <button class="size-button-right" ng-click="packRight(product.products[selected_container])">
+                                                    <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
+                                                </button>
+                                            </div>
+                                            <ul layout="row">
+                                                <li class="size-box-left text-verflow">
+                                                    {{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack
+                                                    -1 ] + ' '}}
+                                                </li>
+                                                <li class="size-box-middle">
+                                                    {{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]
+                                                    }}
+                                                </li>
+                                                <li class="size-box-right text-verflow">
+                                                    {{ ' ' + product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack
+                                                    + 1] }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="selected-product-price">C${{' ' + product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]][product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]].price
+                                            }}
+                                        </div>
+                                        <button class="add-to-cart" ng-click="addToCart(product)">Add To Cart</button>
+                                    </section>
+                                    <div layout="column">
+                                        <h3 class="product-details-header">Product Details</h3>
+                                        <ul class="bullet-description">
+                                            <li>{{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]
+                                                }} x {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]
+                                                }}
+                                                <span class="product-details-container">{{ selected_container}}</span>
+                                            </li>
+                                            <!--googleon: snippet-->
+                                            <li ng-click="hrefTo()">
+                                                <a href="<%= see_more_url %>">See More Products</a>
+                                            </li>
+                                            <% if (product_origin_country) {%>
+                                                <li itemprop="description">Country of Origin:
+                                                    <%= product_origin_country %>
+                                                </li>
+                                                <li itemprop="description">Made by:
+                                                    <%= product_made_by %>
+                                                </li>
+
+                                                <% if (showAlcoholVolume) {%>
+                                                    <li itemprop="description">Alcohol/Vol:
+                                                        <%= product_alcohol_volume %>
+                                                    </li>
+                                                    <% } %>
+                                                        <% } %>
+                                        </ul>
+                                    </div>
+                        </div>
+                    </section>
                 </div>
             </div>
+            <div class="recomended-products">
+                <!--googleoff: snippet-->
+                <section layout="row" class="recomended-products-header">
+                    <div class="recomended-products-header-line"></div>
+                    <div class="recomended-products-header-text">People also Homit</div>
+                </section>
+                <section layout="row" class="recomended-item">
+                    <div ng-repeat="item in recommended_products">
+                        <ul ng-click="hrefTo(item.url)">
+                            <li>
+                                <img ng-src="{{item.image}}">
+                            </li>
+                            <li class="recomended-item-text">{{ item.packaging + " X " + item.size }}</li>
+                            <li class="recomended-item-text">C${{ item.price }}</li>
+                        </ul>
+                    </div>
+                </section>
+                <section layout="row" class="recomended-products-footer">
+                    <div class="recomended-products-header-line"></div>
+                </section>
+                <!--googleoff: snippet-->
+            </div>
         </div>
-        <section class="col-md-12" layout="row" style="display: flex; justify-content: center; align-items: center; margin-top: 20px; margin-bottom: 10px;">
-            <div style="height: 2px; border-bottom: 1px solid rgba(200,200,200, 1); width: 40%;"></div>
-            <div style="font-size: 23px;">People also Homit</div>
-            <div style="height: 2px; border-bottom: 1px solid rgba(200,200,200, 1); width: 40%;"></div>
-        </section>
-        <section class="col-md-12" layout="row" style="display: flex; justify-content: center; align-content: center; ">
-            <md-button class="md-raised md-primary" style="height: 130px; min-width: 40px !important; width: 30px;">
-                <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
-            </md-button>
-            <ul>
-                <li>
-                    <img src="/resources/images/products/snack-vendor/party-supply/o_10002.jpeg" width="100" height="100">
-                </li>
-                <li>1X7in</li>
-                <li>2.99</li>
-                <li>
-                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
-                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
-                    </md-button>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <img src="/resources/images/products/snack-vendor/snack/p_9002.jpeg" width="100" height="100">
-                </li>
-                <li>1Xregular</li>
-                <li>3.24</li>
-                <li>
-                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
-                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
-                    </md-button>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <img src="/resources/images/products/snack-vendor/snack/p_9055.jpeg" width="100" height="100">
-                </li>
-                <li>1x200gm</li>
-                <li>4.99</li>
-                <li>
-                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
-                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
-                    </md-button>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <img src="/resources/images/products/liquor-station/wine/b_3005.jpeg" width="100" height="100">
-                </li>
-                <li>1x750ml</li>
-                <li>12.99</li>
-                <li>
-                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
-                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
-                    </md-button>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <img src="/resources/images/products/liquor-station/spirit/b_5000.jpeg" width="100" height="100">
-                </li>
-                <li>1x750ml</li>
-                <li>28.99</li>
-                <li>
-                    <md-button class="md-raised" style="min-height: 30px !important; height: 30px; margin: 0; padding: 0;">
-                        <ng-md-icon icon="shopping_cart" size="20"></ng-md-icon>
-                    </md-button>
-                </li>
-            </ul>
-            <md-button class="md-raised md-primary" style="height: 130px; min-width: 40px !important; width: 30px;">
-                <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
-            </md-button>
-        </section>
-        <section class="col-md-12" layout="row" style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-            <div style="height: 2px; border-bottom: 1px solid rgba(200,200,200, 1); width: 100%;"></div>
-        </section>
-    </div>
 
-    <% if (!production) { %>
-        <script src="/resources/controllers/product.js"></script>
-        <% } %>
+        <% if (!production) { %>
+            <script src="/resources/services/localStorage.js"></script>
+            <script src="/resources/services/cartService.js"></script>
+            <script src="/resources/controllers/product.js"></script>
+            <% } %>
 </body>
 
 <footer>

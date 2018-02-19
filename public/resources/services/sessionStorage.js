@@ -94,6 +94,14 @@ app.service('sessionStorage', ["$window", function($window){
         return _get("category-clicked");
     };
 
+    var _setProductContainerSelected = function(value){
+        return _set("container-selected", value);
+    };
+
+    var _getProductContainerSelected = function(){
+        return _get("container-selected");
+    };
+
 
     return {
         get: _get,
@@ -113,6 +121,8 @@ app.service('sessionStorage', ["$window", function($window){
         setCoverageMap: _setCoverageMap,
         getCoverageMap: _getCoverageMap,
         setCategoryClicked: _setCategoryClicked,
-        getCategoryClicked: _getCategoryClicked
+        getCategoryClicked: _getCategoryClicked,
+        setProductContainerSelected: _setProductContainerSelected,
+        getProductContainerSelected: _getProductContainerSelected
     };
 }]);

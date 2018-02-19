@@ -721,7 +721,13 @@ pub.getSuperCategoryByListing = async function (listingId) {
 
     var data = { "listing.id": listingId };
     var dbResult = await db.runQuery(sqlQuery, data);
-    return dbResult[0].super_category;
+
+    // TODO: check for returned error, etc.
+    if (dbResult && dbResult.length > 0) {
+        return dbResult[0].super_category;
+    } else {
+        return false;
+    }
 }
 
 pub.getProductsByListingId = async function (listingId, isStoreOpen) {
@@ -781,6 +787,37 @@ pub.findAlternativeListing = async function (listingId) {
     return dbResult[0].listing_id;
 }
 
+pub.getProductPageProductsByListingId = async function (listingId) {
+    // Get super category for listing
+    var superCategory = await Catalog.getSuperCategoryByListing(listingId);
+
+    // ListingId in URL might be wrong, need to check that
+    if (!superCategory) {
+        return false;
+    }
+
+    // get store open
+    var isStoreOpen = await Catalog.isStoreOpen(superCategory);
+    var products;
+    // if store open or not safeway
+    if (isStoreOpen || (superCategory != Catalog.safewaySuperCategory)) {
+        products = await Catalog.getProductsByListingId(listingId, isStoreOpen);
+    } else {
+        // else super category is safeway and store is closed
+
+        // find alternative listing
+        var altListingId = await Catalog.findAlternativeListing(listingId);
+        var altSuperCategory = await Catalog.getSuperCategoryByListing(altListingId);
+
+        // get store open
+        var altIsStoreOpen = await Catalog.isStoreOpen(altSuperCategory);
+        // get products
+        products = await Catalog.getProductsByListingId(altListingId, altIsStoreOpen);
+    }
+
+    return convertToProductPageItem(products);
+};
+
 /**
  * Custom function to do alphanumeric sort
  * Source: http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
@@ -798,5 +835,50 @@ function sortAlphaNum(a, b) {
         return aA > bA ? 1 : -1;
     }
 };
+
+/**
+ * 
+ * @param {*} products - array of products
+ */
+function convertToProductPageItem(products) {
+    var tmpPr = products[0];
+
+    // Extract common fields of products
+    var finalResult = {
+        "super_category": tmpPr.super_category,
+        "category": tmpPr.category,
+        "subcategory": tmpPr.subcategory,
+        "type": tmpPr.type,
+        "brand": tmpPr.brand,
+        "name": tmpPr.name,
+        "description": tmpPr.description,
+        "store_open": tmpPr.store_open,
+        "tax": tmpPr.tax,
+        "origin_country": tmpPr.origin_country,
+        "made_by": tmpPr.made_by,
+        "alcohol_volume": tmpPr.alcohol_volume,
+        "products": {}
+    };
+
+    if (!finalResult.name) {
+        finalResult.name = "";
+    }
+
+    if (!finalResult.brand) {
+        finalResult.brand = "";
+    }
+
+    // Add product variants
+    // We expect not to have duplicate containers in the array
+    for (let i = 0; i < products.length; i++) {
+        let product = products[i];
+        finalResult.products[product.container] = {
+            "image": product.image,
+            "product_variants": product.product_variants
+        }
+    }
+
+    return finalResult;
+}
 
 module.exports = pub;

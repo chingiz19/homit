@@ -140,36 +140,4 @@ router.post('/searchdepot', function (req, res, next) {
     }
 });
 
-router.post('/getlisting', async function (req, res, next) {
-    var listingId = req.body.listing_id;
-
-    // Get super category for listing
-    var superCategory = await Catalog.getSuperCategoryByListing(listingId);
-
-    // get store open
-    var isStoreOpen = await Catalog.isStoreOpen(superCategory);
-    var products;
-    // if store open or not safeway
-    if (isStoreOpen || (superCategory != Catalog.safewaySuperCategory)) {
-        products = await Catalog.getProductsByListingId(listingId, isStoreOpen);
-    } else {
-        // else super category is safeway and store is closed
-
-        // find alternative listing
-        var altListingId = await Catalog.findAlternativeListing(listingId);
-        var altSuperCategory = await Catalog.getSuperCategoryByListing(altListingId);
-
-        // get store open
-        var altIsStoreOpen = await Catalog.isStoreOpen(altSuperCategory);
-        // get products
-        products = await Catalog.getProductsByListingId(altListingId, altIsStoreOpen);
-    }
-
-    var response = {
-        success: true,
-        result: products
-    };
-    res.send(response);
-});
-
 module.exports = router;
