@@ -20,125 +20,135 @@
                     <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100" />
                 </div>
                 <!--DoB-->
-                <div id="dob" layout="column" ng-if="userInfo.hasLiquor">
-                    <div layout="row" layout-align="center">
-                        <md-input-container class="md-block bigClass">
-                            <label class="inptLbl">Date</label>
-                            <md-select ng-model="userInfo.birth_day" ng-change="updateBDays(); checkUserAge()">
-                                <md-option ng-value="-1" ng-disabled="true">Day</md-option>
-                                <md-option ng-value="day" ng-repeat="day in b_days">{{ day }}</md-option>
-                            </md-select>
+                <form name="checkoutInput" id="helcimForm" ng-submit="HomeIt()">
+                    <div id="dob" layout="column" ng-if="userInfo.hasLiquor">
+                        <div layout="row" layout-align="center">
+                            <md-input-container class="md-block bigClass">
+                                <label class="inptLbl">Date</label>
+                                <md-select name="date_day" ng-model="userInfo.birth_day" ng-change="updateBDays(); checkUserAge()" required>
+                                    <md-option ng-value="-1" ng-disabled="true">Day</md-option>
+                                    <md-option ng-value="day" ng-repeat="day in b_days">{{ day }}</md-option>
+                                </md-select>
+                                <div ng-messages="checkoutInput.date_day.$error">
+                                    <div ng-message="required" class="inptErMsg">Required</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block bigClass">
+                                <label class="inptLbl">of</label>
+                                <md-select name="date_month" ng-model="userInfo.birth_month" ng-change="updateBDays(); checkUserAge()" required>
+                                    <md-option ng-value="-1" ng-disabled="true">Month</md-option>
+                                    <md-option ng-value="month" ng-repeat="month in b_months">{{ month }}</md-option>
+                                </md-select>
+                                <div ng-messages="checkoutInput.date_month.$error">
+                                    <div ng-message="required" class="inptErMsg">Required</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block bigClass">
+                                <label class="inptLbl">Birth</label>
+                                <md-select name="date_year" ng-model="userInfo.birth_year" ng-change="updateBDays(); checkUserAge()" required>
+                                    <md-option ng-value="-1" ng-disabled="true">Year</md-option>
+                                    <md-option ng-value="year" ng-repeat="year in b_years">{{ year }}</md-option>
+                                </md-select>
+                                <div ng-messages="checkoutInput.date_year.$error">
+                                    <div ng-message="required" class="inptErMsg">Required</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div ng-if="userInfo.dob_valid == false" class="bodErrMsg_A">
+                            <span class="bodErrMsg_B">Homit liquor in {{userInfo.dob_diff}}&#8198days</span>
+                        </div>
+                    </div>
+                    <!--First & Last Name-->
+                    <div layout="row" layout-align="center" style="margin: 0;">
+                        <md-input-container class="md-block bigClass" flex="40">
+                            <label class="inptLbl">First Name</label>
+                            <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.first_name" ng-blur="sanitizeInput(userInfo.first_name,'fname')"
+                                type="text" required />
+                            <div ng-messages="checkoutInput.fname.$error">
+                                <div ng-message="pattern" class="inptErMsg">Letters only</div>
+                                <div ng-message="required" class="inptErMsg">Required</div>
+                            </div>
                         </md-input-container>
-                        <md-input-container class="md-block bigClass">
-                            <label class="inptLbl">of</label>
-                            <md-select ng-model="userInfo.birth_month" ng-change="updateBDays(); checkUserAge()">
-                                <md-option ng-value="-1" ng-disabled="true">Month</md-option>
-                                <md-option ng-value="month" ng-repeat="month in b_months">{{ month }}</md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-input-container class="md-block bigClass">
-                            <label class="inptLbl">Birth</label>
-                            <md-select ng-model="userInfo.birth_year" ng-change="updateBDays(); checkUserAge()">
-                                <md-option ng-value="-1" ng-disabled="true">Year</md-option>
-                                <md-option ng-value="year" ng-repeat="year in b_years">{{ year }}</md-option>
-                            </md-select>
+                        <md-input-container class="md-block bigClass" flex="40">
+                            <label class="inptLbl">Last Name</label>
+                            <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.last_name" ng-blur="sanitizeInput(userInfo.last_name,'lname')"
+                                type="text" required/>
+                            <div ng-messages="checkoutInput.lname.$error">
+                                <div ng-message="pattern" class="inptErMsg">Letters only</div>
+                                <div ng-message="required" class="inptErMsg">Required</div>
+                            </div>
                         </md-input-container>
                     </div>
-                    <div ng-if="userInfo.dob_valid == false" class="bodErrMsg_A">
-                        <span class="bodErrMsg_B">Homit liquor in {{userInfo.dob_diff}}&#8198days</span>
+                    <!--Email-->
+                    <div class="inptFrm">
+                        <md-input-container class="md-block bigClass" flex="80">
+                            <label class="inptLbl">Email</label>
+                            <input name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn" ng-model="userInfo.user_email" ng-blur="sanitizeInput(userInfo.user_email,'email')"
+                                type="email" required/>
+                            <div ng-messages="checkoutInput.email.$error">
+                                <div ng-message="pattern" class="inptErMsg">Email format only</div>
+                                <div ng-message="required" class="inptErMsg">Required</div>
+                            </div>
+                        </md-input-container>
                     </div>
-                </div>
-                <!--First & Last Name-->
-                <form layout="row" layout-align="center" name="names" style="margin: 0;">
-                    <md-input-container class="md-block bigClass" flex="40">
-                        <label class="inptLbl">First Name</label>
-                        <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.first_name" ng-blur="sanitizeInput(userInfo.first_name,'fname')"
-                            type="text" required />
-                        <div ng-messages="names.fname.$error">
-                            <div ng-message="pattern" class="inptErMsg">Letters only</div>
-                            <div ng-message="required" class="inptErMsg">Required</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container class="md-block bigClass" flex="40">
-                        <label class="inptLbl">Last Name</label>
-                        <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.last_name" ng-blur="sanitizeInput(userInfo.last_name,'lname')"
-                            type="text" required/>
-                        <div ng-messages="names.lname.$error">
-                            <div ng-message="pattern" class="inptErMsg">Letters only</div>
-                            <div ng-message="required" class="inptErMsg">Required</div>
-                        </div>
-                    </md-input-container>
-                </form>
-                <!--Email-->
-                <form name="Email" class="inptFrm">
-                    <md-input-container class="md-block bigClass" flex="80">
-                        <label class="inptLbl">Email</label>
-                        <input name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn" ng-model="userInfo.user_email" ng-blur="sanitizeInput(userInfo.user_email,'email')"
-                            type="email" required/>
-                        <div ng-messages="Email.email.$error">
-                            <div ng-message="pattern" class="inptErMsg">Email format only</div>
-                            <div ng-message="required" class="inptErMsg">Required</div>
-                        </div>
-                    </md-input-container>
-                </form>
-                <!--Phone Number-->
-                <form name="Phone" class="inptFrm">
-                    <md-input-container class="md-block bigClass" flex="80">
-                        <label for="idCell" class="inptLbl">Phone</label>
-                        <input id="gP_number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number"
-                            ng-blur="sanitizeInput(userInfo.phone_number,'phone')" placeholder="(403) 404-6648" type="text" required/>
-                        <div ng-messages="Phone.phone.$error">
-                            <div ng-message="pattern" class="inptErMsg">Numbers only</div>
-                            <div ng-message="minlength" class="inptErMsg">Required</div>
-                        </div>
-                    </md-input-container>
-                </form>
-                <!--Delivery Address-->
-                <form id="address" name="Address" class="inptFrm gu_address">
-                    <md-input-container class="md-block bigClass" flex="80">
-                        <label></label>
-                        <address-autocomplete style="width: 300px;" input-class="adrInpt" icon-class="adrInpt_x_A" button-class="adrInpt_x" autocomplete="autocomplete"
-                            on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
-                        <div ng-messages="Address.address.$error">
-                            <div ng-message="required" class="inptErMsg">Required</div>
-                        </div>
-                        <div ng-if="userInfo.address_valid == false" class="outPlgn_txt">Sorry, we do not deliver to your location at the moment</div>
-                    </md-input-container>
-                </form>
-                <!-- Deliver Instruction -->
-                <form id="driver-instruction" name="driverInstruction" class="inptFrm gu_address" style="display: flex; justify-content: flex-end;">
-                    <md-input-container class="md-block bigClass" flex="50">
-                        <label></label>
-                        <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction"
-                            ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')" placeholder="Driver Instruction"
-                            type="text" />
-                        <div ng-messages="driverInstruction.drInstruction.$error">
-                            <div ng-message="pattern" class="inptErMsg">Number and letter only</div>
-                            <div ng-message="maxlength" class="inptErMsg">Maximum 60 characters</div>
-                        </div>
-                        <div class="outPlgn_txt"></div>
-                    </md-input-container>
-                </form>
-                <!--Card Info-->
-                <div class="container cardContainer" flex="80">
-                    <md-button aria-label="ShowHideCardInfo" class="card-info-btn" ng-click="toggleCardInfo()" layout="row">
-                        <div>
-                            <img ng-src="{{'/resources/images/non-catalog-image/visa_logo.jpeg'}}" width="25px;" height="15.625px" />
-                        </div>
-                        <div>
-                            <img ng-src="{{'/resources/images/non-catalog-image/mastercard_logo.jpeg'}}" width="25px;" height="15.625px" />
-                        </div>
-                        <div>
-                            <img ng-src="{{'/resources/images/non-catalog-image/american-express_logo.jpeg'}}" width="25px;" height="15.625px" />
-                        </div>
-                        <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="25"></ng-md-icon>
-                        <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="25"></ng-md-icon>
-                    </md-button>
-                </div>
-                <!--Card Info Hidden Box-->
-                <div id="helcimResults">
-                    <form name="helcimForm" id="helcimForm" method="POST" novalidate>
-                        <div ng-show="userInfo.cardIsShown || (userInfo.fname_valid && userInfo.lname_valid && userInfo.email_valid && userInfo.phone_valid)">
+                    <!--Phone Number-->
+                    <div class="inptFrm">
+                        <md-input-container class="md-block bigClass" flex="80">
+                            <label for="idCell" class="inptLbl">Phone</label>
+                            <input id="gP_number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number"
+                                ng-blur="sanitizeInput(userInfo.phone_number,'phone')" placeholder="(403) 404-6648" type="text"
+                                required/>
+                            <div ng-messages="checkoutInput.phone.$error">
+                                <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                <div ng-message="minlength" class="inptErMsg">Required</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <!--Delivery Address-->
+                    <div id="address" class="inptFrm gu_address">
+                        <md-input-container class="md-block bigClass" flex="80">
+                            <label></label>
+                            <address-autocomplete style="width: 300px;" input-class="adrInpt" icon-class="adrInpt_x_A" button-class="adrInpt_x" autocomplete="autocomplete"
+                                on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
+                            <div ng-messages="checkoutInput.address.$error">
+                                <div ng-message="required" class="inptErMsg">Required</div>
+                            </div>
+                            <div ng-if="userInfo.address_valid == false" class="outPlgn_txt">Sorry, we do not deliver to your location at the moment</div>
+                        </md-input-container>
+                    </div>
+                    <!-- Deliver Instruction -->
+                    <div id="driver-instruction" class="inptFrm gu_address" style="display: flex; justify-content: flex-end;">
+                        <md-input-container class="md-block bigClass" flex="50">
+                            <label></label>
+                            <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction"
+                                ng-blur="sanitizeInput(userInfo.drInstruction,'drInstruction')" placeholder="Driver Instruction"
+                                type="text" />
+                            <div ng-messages="checkoutInput.drInstruction.$error">
+                                <div ng-message="pattern" class="inptErMsg">Number and letter only</div>
+                                <div ng-message="maxlength" class="inptErMsg">Maximum 60 characters</div>
+                            </div>
+                            <div class="outPlgn_txt"></div>
+                        </md-input-container>
+                    </div>
+                    <!--Card Info-->
+                    <div class="container cardContainer" flex="80">
+                        <md-button aria-label="ShowHideCardInfo" class="card-info-btn" ng-click="toggleCardInfo()" layout="row">
+                            <div>
+                                <img ng-src="{{'/resources/images/non-catalog-image/visa_logo.jpeg'}}" width="25px;" height="15.625px" />
+                            </div>
+                            <div>
+                                <img ng-src="{{'/resources/images/non-catalog-image/mastercard_logo.jpeg'}}" width="25px;" height="15.625px" />
+                            </div>
+                            <div>
+                                <img ng-src="{{'/resources/images/non-catalog-image/american-express_logo.jpeg'}}" width="25px;" height="15.625px" />
+                            </div>
+                            <ng-md-icon ng-if="!userInfo.cardIsShown" icon="keyboard_arrow_down" class="opnCIsgn" size="25"></ng-md-icon>
+                            <ng-md-icon ng-if="userInfo.cardIsShown" icon="keyboard_arrow_up" class="opnCIsgn" size="25"></ng-md-icon>
+                        </md-button>
+                    </div>
+                    <!--Card Info Hidden Box-->
+                    <div id="helcimResults">
+                        <div id="cardInfoBox">
                             <input type="hidden" id="token" value="<%= helcimToken %>">
                             <input type="hidden" id="language" value="en">
                             <input type="hidden" id="test" value="<%= helcimTestMode %>">
@@ -152,7 +162,7 @@
                                     <label class="inptLbl">Card Number</label>
                                     <input name="cardNumber" id="cardNumber" ng-pattern="/^[0-9]*$/" maxlength="16" ng-model="cardNumber" ng-blur="sanitizeInput(cardNumber,'cd_1')"
                                         type="text" required>
-                                    <div ng-messages="helcimForm.cardNumber.$error">
+                                    <div ng-messages="checkoutInput.cardNumber.$error">
                                         <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
                                     </div>
@@ -163,7 +173,7 @@
                                     <label class="inptLbl">Expiry Date [MMYY]</label>
                                     <input name="expiryDate" id="cardExpiry" ng-pattern="/^[0-9]*$/" maxlength="4" ng-model="expirayDate" ng-blur="sanitizeInput(expirayDate,'cd_2')"
                                         type="text" required>
-                                    <div ng-messages="helcimForm.expiryDate.$error">
+                                    <div ng-messages="checkoutInput.expiryDate.$error">
                                         <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
                                     </div>
@@ -174,41 +184,41 @@
                                     <label class="inptLbl inptLblSC1">CVV/CVC</label>
                                     <input name="cvv" id="cardCVV" ng-pattern="/^[0-9]*$/" maxlength="4" ng-model="cvv" ng-blur="sanitizeInput(cvv,'cd_3')" type="text"
                                         required>
-                                    <div ng-messages="helcimForm.cvv.$error">
+                                    <div ng-messages="checkoutInput.cvv.$error">
                                         <div ng-message="pattern" class="inptErMsg">Numbers only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
                                     </div>
                                 </md-input-container>
                             </div>
+                            <button onclick="javascript:helcimProcess();" id="buttonProcess" style="display: none;"></button>
                         </div>
                         <div class="HomeItBtn">
-                            <button ng-disabled="!userInfo.HomeIt" name="buttonProcess" id="buttonProcess" class="btn btn-success" onclick="javascript:helcimProcess();"
-                                ng-click="HomeIt()">Home it</button>
+                            <button type="submit" name="buttonProcess" class="btn btn-success" ng-click="HomeIt()">Home it</button>
                         </div>
-                    </form>
-                    <br>
-                    <br>
-                    <?xml version=\"1.0\"?>
-                    <message>
-                        <response></response>
-                        <responseMessage></responseMessage>
-                        <noticeMessage></noticeMessage>
-                        <date></date>
-                        <time></time>
-                        <type></type>
-                        <amount></amount>
-                        <cardHolderName></cardHolderName>
-                        <cardNumber></cardNumber>
-                        <cardExpiry></cardExpiry>
-                        <cardToken></cardToken>
-                        <cardType></cardType>
-                        <transactionId></transactionId>
-                        <avsResponse></avsResponse>
-                        <cvvResponse></cvvResponse>
-                        <approvalCode></approvalCode>
-                        <orderNumber></orderNumber>
-                        <customerCode></customerCode>
-                    </message>
+                </form>
+                <br>
+                <br>
+                <?xml version=\"1.0\"?>
+                <message>
+                    <response></response>
+                    <responseMessage></responseMessage>
+                    <noticeMessage></noticeMessage>
+                    <date></date>
+                    <time></time>
+                    <type></type>
+                    <amount></amount>
+                    <cardHolderName></cardHolderName>
+                    <cardNumber></cardNumber>
+                    <cardExpiry></cardExpiry>
+                    <cardToken></cardToken>
+                    <cardType></cardType>
+                    <transactionId></transactionId>
+                    <avsResponse></avsResponse>
+                    <cvvResponse></cvvResponse>
+                    <approvalCode></approvalCode>
+                    <orderNumber></orderNumber>
+                    <customerCode></customerCode>
+                </message>
                 </div>
             </div>
             <!--Order Summary SideNav-->
@@ -263,12 +273,12 @@
                                         <ul>
                                             <li>
                                                 <md-button aria-label="plusItem" ng-click="plusItem(product)" class="item-button">
-                                                    <ng-md-icon  icon="add_circle_outline"></ng-md-icon>
+                                                    <ng-md-icon icon="add_circle_outline"></ng-md-icon>
                                                 </md-button>
                                             </li>
                                             <li>
                                                 <md-button aria-label="minusItem" ng-click="minusItem(product)" class="item-button">
-                                                    <ng-md-icon  icon="remove_circle_outline"></ng-md-icon>
+                                                    <ng-md-icon icon="remove_circle_outline"></ng-md-icon>
                                                 </md-button>
                                             </li>
                                         </ul>
@@ -276,7 +286,7 @@
                                     <div flex="35" layout="column">
                                         <li class="clear-item-li">
                                             <md-button id="item-remove-button" aria-label="removeFromCart" ng-click="removeFromCart(product)" class="item-button">
-                                                <ng-md-icon  icon="clear"></ng-md-icon>
+                                                <ng-md-icon icon="clear"></ng-md-icon>
                                             </md-button>
                                         </li>
                                         <li>

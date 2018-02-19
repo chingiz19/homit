@@ -237,6 +237,9 @@ md-tabs-wrapper{
     position: relative;
     top: 25px; left: 40%;
 }
+#cardInfoBox{
+    display: none;
+}
 .cardContainer{
     padding:0 0 0 2px;
 }
@@ -501,13 +504,13 @@ md-backdrop.md-opaque {
         font-size: 25px;
     }
     .orBtnSz{
-        font-size: 30px;
+        font-size: 25px;
     }
     .md-input-has-value.bigClass > input {
-        font-size: 30px;
+        font-size: 25px;
     }
     .bigClass{
-        margin-top: 30px;
+        margin-top: 25px;
     }
     .inptLbl{
         margin-bottom: 0px; 

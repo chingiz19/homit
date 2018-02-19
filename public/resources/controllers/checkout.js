@@ -40,8 +40,9 @@ app.controller("checkoutController",
                     $scope.userInfo.fname_valid = true;
                 if ($scope.userInfo.last_name)
                     $scope.userInfo.lname_valid = true;
-                if ($scope.userInfo.phone_number)
+                if ($scope.userInfo.phone_number){
                     $scope.userInfo.phone_valid = true;
+                }
                 if ($scope.userInfo.user_email)
                     $scope.userInfo.email_valid = true;
                 if ($scope.userInfo.birth_day && $scope.userInfo.birth_month && $scope.userInfo.birth_year)
@@ -51,6 +52,7 @@ app.controller("checkoutController",
             }
             if (checkout.getCheckoutUserInfo != "undefined" && checkout.getCheckoutUserInfo != null) {
                 $scope.userInfo = checkout.getCheckoutUserInfo;
+                $scope.userInfo.cardIsShown = false;
             }
             if (sessionStorage.getAddress()) {
                 checkout.address = sessionStorage.getAddress().formatted_address;
@@ -205,11 +207,14 @@ app.controller("checkoutController",
         $scope.paymentMessage_2 = "";
 
         $scope.HomeIt = function () {
+            if (!$scope.userInfo.HomeIt) return;
+
             googleAnalytics.addEvent('order_placed', {
                 "event_label": "Homit pressed",
                 "event_category": googleAnalytics.eventCategories.checkout_actions
             });
-
+        
+            $("#buttonProcess").click();
             activateCheckoutModal();
             updateCheckoutModal("inProcess");
             checkPaymentResponse(function (response_id, response_message, transaction_id, crd_lst4) {
@@ -430,11 +435,19 @@ app.controller("checkoutController",
             $scope.userInfo.address_valid = undefined;
         };
 
+        $scope.showCardInfo = function(){
+            $scope.userInfo.cardIsShown = !$scope.userInfo.cardIsShown;
+            $('#cardInfoBox').slideToggle(500);
+        }
+
         function readyToHomeIt() {
-            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo.hasLiquor) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.address_valid && ($scope.userInfo.drInstruction_valid == true || $scope.userInfo.drInstruction_valid == undefined)) {
+            if ($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && ($scope.userInfo.dob_valid || !$scope.userInfo.hasLiquor) && $scope.userInfo.email_valid && $scope.userInfo.phone_valid && $scope.userInfo.cd_1_valid && $scope.userInfo.cd_2_valid && $scope.userInfo.cd_3_valid && $scope.userInfo.address_valid && ($scope.userInfo.drInstruction_valid == true || $scope.userInfo.drInstruction_valid == undefined)) {
                 $scope.userInfo.HomeIt = true;
             } else {
                 $scope.userInfo.HomeIt = false;
+            }
+            if($scope.userInfo.fname_valid && $scope.userInfo.lname_valid && $scope.userInfo.email_valid && !$scope.userInfo.cardIsShown){
+                $scope.showCardInfo();
             }
         }
 
@@ -451,11 +464,11 @@ app.controller("checkoutController",
         };
 
         $scope.toggleCardInfo = function(){
-            $scope.userInfo.cardIsShown = !$scope.userInfo.cardIsShown;
             googleAnalytics.addEvent('pressed_cardinfo_button', {
                 "event_label": "Card info button pressed",
                 "event_category": googleAnalytics.eventCategories.checkout_actions
             });
+            showCardInfo();
         }
         
         /* Helper functions */
