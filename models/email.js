@@ -87,8 +87,9 @@ pub.sendOrderSlip = function (orderInfo) {
     var html = getEmailHtml(orderInfo.customer);
 
     prepareOrderSlip(orderInfo, function (pdfFileFath) {
+        var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
         let mailOptions = {
-            from: '"Homit Orders" <orders@homit.ca>',
+            from: fromValue,
             to: orderInfo.customer.email,
             subject: orderInfo.customer.first_name + '\'s order',
             html: html,
@@ -110,8 +111,9 @@ pub.sendModifiedOrderSlip = function (orderInfo, action) {
     if (action == "cancel") {
         var html = getCancelledOrderEmailHtml(orderInfo);
         prepareOrderSlip(orderInfo, function (pdfFileFath) {
+            var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
             let mailOptions = {
-                from: '"Homit Orders" <orders@homit.ca>',
+                from: fromValue,
                 to: orderInfo.customer.email,
                 subject: orderInfo.customer.first_name + '\'s order',
                 html: html,
@@ -121,8 +123,9 @@ pub.sendModifiedOrderSlip = function (orderInfo, action) {
     } else if (action == "modified") {
         var html = getModifiedOrderEmailHtml(orderInfo);
         prepareOrderSlip(orderInfo, function (pdfFileFath) {
+            var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
             let mailOptions = {
-                from: '"Homit Orders" <orders@homit.ca>',
+                from: fromValue,
                 to: orderInfo.customer.email,
                 subject: orderInfo.customer.first_name + '\'s order',
                 html: html,
@@ -138,8 +141,9 @@ pub.sendModifiedOrderSlip = function (orderInfo, action) {
     } else if (action == "refund") {
         var html = getRefundedOrderEmailHtml(orderInfo);
         prepareOrderSlip(orderInfo, function (pdfFileFath) {
+            var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
             let mailOptions = {
-                from: '"Homit Orders" <orders@homit.ca>',
+                from: fromValue,
                 to: orderInfo.customer.email,
                 subject: orderInfo.customer.first_name + '\'s order',
                 html: html,
@@ -159,8 +163,9 @@ pub.sendModifiedOrderSlip = function (orderInfo, action) {
 /* Prepare mail options and send notification email to customer, respectively */
 pub.sendRefundEmail = function (orderInfo) {
     var html = getRefundedOrderEmailHtml(orderInfo);
+    var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
     let mailOptions = {
-        from: '"Homit Orders" <orders@homit.ca>',
+        from: fromValue,
         to: orderInfo.customer.email,
         subject: orderInfo.customer.first_name + '\'s order',
         html: html,
@@ -170,8 +175,9 @@ pub.sendRefundEmail = function (orderInfo) {
 
 pub.sendPartialRefundEmail = function (orderInfo) {
     var html = getPartialRefundedOrderEmailHtml(orderInfo);
+    var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
     let mailOptions = {
-        from: '"Homit Orders" <orders@homit.ca>',
+        from: fromValue,
         to: orderInfo.customer.email,
         subject: orderInfo.customer.first_name + '\'s order',
         html: html,
@@ -181,8 +187,9 @@ pub.sendPartialRefundEmail = function (orderInfo) {
 
 pub.sendCancelEmail = function (orderInfo) {
     var html = getCancelledOrderEmailHtml(orderInfo);
+    var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
     let mailOptions = {
-        from: '"Homit Orders" <orders@homit.ca>',
+        from: fromValue,
         to: orderInfo.customer.email,
         subject: orderInfo.customer.first_name + '\'s order',
         html: html,
@@ -192,8 +199,9 @@ pub.sendCancelEmail = function (orderInfo) {
 
 pub.sendResetPasswordEmail = async function (orderInfo) {
     var html = getResetPasswordHTML(orderInfo.resetLink);
+    var fromValue = "noreply <" + process.env.NOREPLY_EMAIL_USER + ">";
     let mailOptions = {
-        from: '"noreply" <no-reply@homit.ca>',
+        from: fromValue,
         to: orderInfo.customer.email,
         subject: "Reset password",
         html: html,
