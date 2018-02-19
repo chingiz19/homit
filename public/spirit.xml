@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
 <url>
 <loc>https://homit.ca/catalog/product/absolut-vodka/ls/5000</loc>
 <changefreq>weekly</changefreq>
@@ -272,7 +273,7 @@
 </url>
 
 <url>
-<loc>https://homit.ca/catalog/product/wyborowa--vodka/ls/5045</loc>
+<loc>https://homit.ca/catalog/product/wyborowa-vodka/ls/5045</loc>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>
@@ -536,7 +537,7 @@
 </url>
 
 <url>
-<loc>https://homit.ca/catalog/product/j-&-b-rare-scotch/ls/5089</loc>
+<loc>https://homit.ca/catalog/product/j-&amp;-b-rare-scotch/ls/5089</loc>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>
@@ -554,7 +555,7 @@
 </url>
 
 <url>
-<loc>https://homit.ca/catalog/product/baileys--irish-cream-original/ls/5092</loc>
+<loc>https://homit.ca/catalog/product/baileys-irish-cream-original/ls/5092</loc>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>
@@ -786,6 +787,5 @@
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>
-
 
 </urlset>

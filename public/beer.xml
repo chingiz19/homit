@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
 <url>
 <loc>https://homit.ca/catalog/product/kronenbourg/ls/1001</loc>
 <changefreq>weekly</changefreq>
@@ -86,13 +87,13 @@
 </url>
 
 <url>
-<loc>https://homit.ca/catalog/product/keystone--lager/ls/1015</loc>
+<loc>https://homit.ca/catalog/product/keystone-lager/ls/1015</loc>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>
 
 <url>
-<loc>https://homit.ca/catalog/product/keystone--light/ls/1016</loc>
+<loc>https://homit.ca/catalog/product/keystone-light/ls/1016</loc>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>
@@ -284,13 +285,13 @@
 </url>
 
 <url>
-<loc>https://homit.ca/catalog/product/innis-&-gun-original-oak-aged-beer/ls/1048</loc>
+<loc>https://homit.ca/catalog/product/innis-&amp;-gun-original-oak-aged-beer/ls/1048</loc>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>
 
 <url>
-<loc>https://homit.ca/catalog/product/innis-&-gun-ipa/ls/1049</loc>
+<loc>https://homit.ca/catalog/product/innis-&amp;-gun-ipa/ls/1049</loc>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>
@@ -396,6 +397,7 @@
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>
+
 
 
 </urlset>

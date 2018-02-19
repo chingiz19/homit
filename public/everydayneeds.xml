@@ -2,6 +2,7 @@
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+<url>
 <loc>https://homit.ca/catalog/product/purex-bathroom-tissue-paper/ls/11000</loc>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
@@ -27,36 +28,6 @@
 
 <url>
 <loc>https://homit.ca/catalog/product/aspirin-daily-low-dose/ls/11008</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
-
-<url>
-<loc>https://homit.ca/catalog/product/tylenol-extra-strength/ls/11005</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
-
-<url>
-<loc>https://homit.ca/catalog/product/advil-liqui-gels/ls/11006</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
-
-<url>
-<loc>https://homit.ca/catalog/product/advil-liqui-gels/ls/11007</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
-
-<url>
-<loc>https://homit.ca/catalog/product/aspirin-daily-low-dose/ls/11008</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
-
-<url>
-<loc>https://homit.ca/catalog/product/aspirin-daily-low-dose/ls/11009</loc>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>  
