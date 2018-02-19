@@ -1,6 +1,6 @@
 app.controller("LogoSearchController", function ($scope, $http) { });
 
-app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $mdSidenav, $log, sessionStorage, user, notification) {
+app.controller("NavigationController", function ($scope, $http, $cookies, $window, $rootScope, $mdSidenav, $log, sessionStorage, user, notification, googleAnalytics) {
     $scope.init = function () {
         $scope.storeHub = false;
         $scope.userDropDown = false;
@@ -130,6 +130,13 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 $scope.resultProducts = $scope.searchDisplay.products;
 
                 $scope.searchResult = $scope.resultSuperCategory.concat($scope.resultCategory.concat($scope.resultSubcategory.concat($scope.resultProducts)));
+
+                if (!$scope.resultProducts.length > 0 && !$scope.resultSubcategory.length > 0  && !$scope.resultCategory.length > 0 && !$scope.resultSuperCategory.length > 0){
+                    googleAnalytics.addEvent('search_not_found', {
+                        "event_label": $scope.searchRequest,
+                        "event_category": googleAnalytics.eventCategories.catalog_actions
+                    });
+                }
 
             }, function errorCallback(response) {
                 console.error("error");

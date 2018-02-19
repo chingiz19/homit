@@ -1,6 +1,6 @@
 app.controller("checkoutController",
     function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav, 
-        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval) {
+        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval, googleAnalytics) {
         $scope.userCart = localStorage.getUserCart() || {};
         $scope.numberOfItemsInCart = 0;
         $scope.totalAmount = 0;
@@ -109,6 +109,10 @@ app.controller("checkoutController",
                     updateUserCart($scope.userCart);
                     $scope.prepareItemForDB(product.depot_id, currentQuantity);
                     $scope.updatePrices($scope.userCart);
+                    googleAnalytics.addEvent('plus_cart_item', {
+                        "event_label": product.brand + " " + product.name,
+                        "event_category": googleAnalytics.eventCategories.cart_actions
+                    });
                 }
             }
         };
@@ -125,6 +129,10 @@ app.controller("checkoutController",
                     $scope.prepareItemForDB(product.depot_id, currentQuantity);
 
                     $scope.updatePrices($scope.userCart);
+                    googleAnalytics.addEvent('minus_cart_item', {
+                        "event_label": product.brand + " " + product.name,
+                        "event_category": googleAnalytics.eventCategories.cart_actions
+                    });
                 }
             }
         };
@@ -159,6 +167,20 @@ app.controller("checkoutController",
                 $scope.prepareItemForDB(product.depot_id, 0);
 
                 $scope.updatePrices($scope.userCart);
+
+                googleAnalytics.addEvent('remove_from_cart', {
+                    "event_label": product.brand + " " + product.name,
+                    "event_category": googleAnalytics.eventCategories.cart_actions,
+                    "items": [
+                        {
+                            name: product.name,
+                            brand: product.brand,
+                            price: product.price,
+                            category: product.packaging,
+                            variant: product.volume,
+                        }
+                    ]
+                });
             }
         };
 
@@ -183,6 +205,11 @@ app.controller("checkoutController",
         $scope.paymentMessage_2 = "";
 
         $scope.HomeIt = function () {
+            googleAnalytics.addEvent('order_placed', {
+                "event_label": "Homit pressed",
+                "event_category": googleAnalytics.eventCategories.checkout_actions
+            });
+
             activateCheckoutModal();
             updateCheckoutModal("inProcess");
             checkPaymentResponse(function (response_id, response_message, transaction_id, crd_lst4) {
@@ -422,6 +449,14 @@ app.controller("checkoutController",
                 location.reload();
             }
         };
+
+        $scope.toggleCardInfo = function(){
+            $scope.userInfo.cardIsShown = !$scope.userInfo.cardIsShown;
+            googleAnalytics.addEvent('pressed_cardinfo_button', {
+                "event_label": "Card info button pressed",
+                "event_category": googleAnalytics.eventCategories.checkout_actions
+            });
+        }
         
         /* Helper functions */
 
