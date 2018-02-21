@@ -14,7 +14,7 @@ var sockIOServer = require("https").createServer({
 
 var io = require("socket.io")(sockIOServer, {
     pingInterval: 2000,
-    pingTimeout: 5000
+    pingTimeout: 10000
 });
 var driverConnector = require("net");
 var pub = {};

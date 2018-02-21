@@ -11,8 +11,11 @@ var helcimHost = "secure.myhelcim.com";
 var helcimPath = "/api/";
 var pub = {};
 
-var statusApproved = "approved";
-var typePurchase = "purchase";
+var statusApproved = "APPROVED";
+var typePurchase = "PURCHASE";
+var responseMessage = "APPROVED";
+var cvvMatch = "M";
+var avsResponses = ["D", "F", "M", "X", "Y"];
 
 /**
  * Requesting from Helcim to view transcation 
@@ -66,31 +69,102 @@ pub.getTransaction = function (transactionId, callback) {
 
 pub.validateTransaction = function (transactionDetails, amountRequired) {
     var transaction = transactionDetails.transactions.transaction[0];
-    if (transaction.amount[0] >= amountRequired
-        && transaction.type[0].toLowerCase() == typePurchase
-        && transaction.status[0].toLowerCase() == statusApproved
-        && transaction.test[0] == process.env.HELCIM_TEST_MODE) {
+
+    if (isTransactionPurchase(transaction)
+        && isTransactionApproved(transaction)
+        && isTransactionAmountCorrect(transaction, amountRequired)
+        && isTransactionValidMode(transaction)
+        && isTransactionCvvMatch(transaction)
+        && isTransactionAvsValid(transaction)
+        && isTransactionResponseApproved(transaction)
+    ) {
         return true;
     } else {
         Logger.log.error("Transaction is not valid.", transactionDetails);
         return false;
     }
-};
+}
+
+var isTransactionPurchase = function (transaction) {
+    if (transaction.type[0].toUpperCase() == typePurchase) {
+        return true;
+    } else {
+        Logger.log.error("Transaction type is wrong.", transaction.type[0].toUpperCase(), typePurchase);
+        return false;
+    }
+}
+
+var isTransactionApproved = function (transaction) {
+    if (transaction.status[0].toUpperCase() == statusApproved) {
+        return true;
+    } else {
+        Logger.log.error("Transaction status is wrong.", transaction.status[0].toUpperCase(), statusApproved);
+        return false;
+    }
+}
+
+var isTransactionAmountCorrect = function (transaction, amountRequired) {
+    if (transaction.amount[0] >= amountRequired) {
+        return true;
+    } else {
+        Logger.log.error("Transaction amount is wrong.", transaction.amount[0], amountRequired);
+        return false;
+    }
+
+}
+
+var isTransactionValidMode = function (transaction) {
+    if (transaction.test[0] == process.env.HELCIM_TEST_MODE) {
+        return true;
+    } else {
+        Logger.log.error("Transaction mode is wrong.", transaction.test[0], process.env.HELCIM_TEST_MODE);
+        return false;
+    }
+}
+
+var isTransactionResponseApproved = function (transaction) {
+    if (transaction.responseMessage[0].toUpperCase().substring(0, 3) == responseMessage.substring(0, 3)) {
+        return true;
+    } else {
+        Logger.log.error("Transaction response is wrong.", transaction.responseMessage[0].toUpperCase(), responseMessage);
+        return false;
+    }
+}
+
+var isTransactionCvvMatch = function (transaction) {
+    if (transaction.cvvResponse[0].toUpperCase() == cvvMatch) {
+        return true;
+    } else {
+        Logger.log.error("Transaction cvv is not matched.", transaction.cvvResponse[0].toUpperCase(), cvvMatch);
+        return false;
+    }
+}
+
+var isTransactionAvsValid = function (transaction) {
+    var avsRes = transaction.avsResponse[0].toUpperCase();
+    for (var i = 0; i < avsResponses.length; i++) {
+        if (avsRes.toUpperCase() == avsResponses[i]) {
+            return true;
+        }
+    }
+    Logger.log.error("Transaction avs is not matched.", avsRes, avsResponses);
+    return false;
+}
 
 pub.getUserCardLastDigits = function (transactionDetails) {
     var transaction = transactionDetails.transactions.transaction[0];
     var cardNumber = transaction.card[0].cardNumber[0];
     return cardNumber.substring(12, 16);
-};
+}
 
 pub.getUserCardToken = function (transactionDetails) {
     var transaction = transactionDetails.transactions.transaction[0];
     return transaction.card[0].cardType[0];
-};
+}
 
 pub.getUserCardType = function (transactionDetails) {
     var transaction = transactionDetails.transactions.transaction[0];
     return transaction.card[0].cardToken[0];
-};
+}
 
 module.exports = pub;

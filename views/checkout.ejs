@@ -13,7 +13,8 @@
             <div class="col1">
                 <div class="col1ChevRgt">
                     <md-button aria-label="toggleRight" ng-click="toggleRight()" class="open-btn" hide-gt-md>
-                        <ng-md-icon icon="keyboard_arrow_left" class="open-btn-icon"></ng-md-icon><span class="details-text">Details</span>
+                        <ng-md-icon icon="keyboard_arrow_left" class="open-btn-icon"></ng-md-icon>
+                        <span class="details-text">Details</span>
                     </md-button>
                 </div>
                 <div class="userPic">
@@ -169,8 +170,8 @@
                                 </md-input-container>
                             </div>
                             <div layout="row" layout-align="center">
-                                <md-input-container class="md-block extInput" flex="50">
-                                    <label class="inptLbl">Expiry Date [MMYY]</label>
+                                <md-input-container class="md-block extInput" flex="25">
+                                    <label class="inptLbl">MMYY</label>
                                     <input name="expiryDate" id="cardExpiry" ng-pattern="/^[0-9]*$/" maxlength="4" ng-model="expirayDate" ng-blur="sanitizeInput(expirayDate,'cd_2')"
                                         type="text" required>
                                     <div ng-messages="checkoutInput.expiryDate.$error">
@@ -178,9 +179,9 @@
                                         <div ng-message="required" class="inptErMsg">Required</div>
                                     </div>
                                 </md-input-container>
-                            </div>
-                            <div layout="row" layout-align="center">
-                                <md-input-container class="md-block extInput" flex="50">
+                                <!-- </div> -->
+                                <!-- <div layout="row" layout-align="center"> -->
+                                <md-input-container class="md-block extInput" flex="25">
                                     <label class="inptLbl inptLblSC1">CVV/CVC</label>
                                     <input name="cvv" id="cardCVV" ng-pattern="/^[0-9]*$/" maxlength="4" ng-model="cvv" ng-blur="sanitizeInput(cvv,'cd_3')" type="text"
                                         required>
@@ -189,6 +190,45 @@
                                         <div ng-message="required" class="inptErMsg">Required</div>
                                     </div>
                                 </md-input-container>
+                            </div>
+                            <!-- Card information -->
+                            <div layout="row" layout-align="center" class="billing-info">
+                                <md-checkbox ng-model="userInfo.billigAddresSame" ng-click="cardHolder()">
+                                    <span style="color: black;" class="billing-info-text">Billing information same as above</span>
+                                </md-checkbox>
+                            </div>
+                            <div ng-show="!userInfo.billigAddresSame">
+                                <div layout="row" layout-align="center">
+                                    <md-input-container class="md-block extInput" flex="50">
+                                        <label class="inptLbl">Name On Card</label>
+                                        <input name="cardHolderName" id="cardHolderName" ng-pattern="/^[a-zA-Z ]*$/" maxlength="30" ng-model="userInfo.cardHolderName" ng-blur="sanitizeInput(cardHolderName,'cardHolderName')"
+                                            type="text" required>
+                                        <div ng-messages="checkoutInput.cardHolderName.$error">
+                                            <div ng-message="pattern" class="inptErMsg">Letters only</div>
+                                            <div ng-message="required" class="inptErMsg">Required</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row" layout-align="center">
+                                    <md-input-container class="md-block extInput" flex="30">
+                                        <label class="inptLbl">Address</label>
+                                        <input name="expiryDate" id="cardHolderAddress" ng-pattern="/^[a-zA-Z0-9 -,.]*$/" maxlength="30" ng-model="userInfo.cardHolderAddress" ng-blur="sanitizeInput(cardHolderAddress,'cardHolderAddress')"
+                                            type="text" required>
+                                        <div ng-messages="checkoutInput.expiryDate.$error">
+                                            <div ng-message="pattern" class="inptErMsg">Address Format</div>
+                                            <div ng-message="required" class="inptErMsg">Required</div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container class="md-block extInput" flex="20">
+                                        <label class="inptLbl inptLblSC1">Postal Code</label>
+                                        <input name="postalCode" id="cardHolderPostalCode" ng-pattern="/^[a-zA-Z0-9 ]*$/" maxlength="7" ng-model="userInfo.cardHolderPostalCode" ng-blur="sanitizeInput(cardHolderPostalCode,'cardHolderPostalCode')"
+                                            type="text" required>
+                                        <div ng-messages="checkoutInput.postalCode.$error">
+                                            <div ng-message="pattern" class="inptErMsg">Postal Code Format</div>
+                                            <div ng-message="required" class="inptErMsg">Required</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
                             </div>
                             <button onclick="javascript:helcimProcess();" id="buttonProcess" style="display: none;"></button>
                         </div>
