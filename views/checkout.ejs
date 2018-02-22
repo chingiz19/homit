@@ -20,8 +20,13 @@
                 <div class="userPic">
                     <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100" />
                 </div>
+
+                <div id="tempMessage">
+                    The website is experiencing some technical difficulties, we apologise for any inconvenience and appreciate your understanding. Our team is working to fix the issue. Thank You for your patience!
+                </div>
+
                 <!--DoB-->
-                <form name="checkoutInput" id="helcimForm" ng-submit="HomeIt()">
+                <form name="checkoutInput" id="helcimForm" ng-submit="HomeIt()" style="display: none;">
                     <div id="dob" layout="column" ng-if="userInfo.hasLiquor">
                         <div layout="row" layout-align="center">
                             <md-input-container class="md-block bigClass">
