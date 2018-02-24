@@ -4,6 +4,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     $scope.searchCriteria = undefined;
     $scope.searCriteriaIndex = undefined;
     $scope.foundUsers = [];
+    $scope.foundTransactions = [];
     $scope.foundOrders = [];
     $scope.foundOrderContent = [];
     $scope.searchBy = undefined;
@@ -17,6 +18,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         $scope.searchCriteria = "";
         $scope.foundUsers = [];
         $scope.foundOrders = [];
+        $scope.foundTransactions = [];
         $scope.foundOrderContent = [];
         var searchRequestElement = document.getElementById("csr_Search");
         if (!$scope.isSearchLisenerOn) {
@@ -43,7 +45,6 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             }).then(function successCallback(response) {
                 $scope.foundUsers = response.data.users;
             }, function errorCallback(response) {
-                Logger.error("error");
             });
         }
         else if ($scope.searCriteriaIndex == 2) {
@@ -56,13 +57,12 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             }).then(function successCallback(response) {
                 $scope.foundUsers = response.data.users;
             }, function errorCallback(response) {
-                Logger.error("error");
             });
         }
         else if ($scope.searCriteriaIndex == 3) {
             $http({
                 method: 'POST',
-                url: "/api/orders/getorder",
+                url: "/api/orders/finduserbyorderid",
                 data: {
                     order_id: $scope.searchCriteria
                 }
@@ -76,7 +76,6 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 }, 10);
 
             }, function errorCallback(response) {
-                Logger.error("error");
             });
         }
     };
@@ -92,25 +91,40 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         }
         $http({
             method: 'POST',
-            url: "/api/orders/vieworders",
+            url: "/api/orders/viewordertransactions",
             data: {
                 user_id: userId,
                 guest_id: guestId
             }
         }).then(function successCallback(response) {
-            $scope.foundOrders = response.data.orders;
-            for (var tmp in $scope.foundOrders) {
-                $scope.foundOrders[tmp].date_placed = mm_dd_yyyy($scope.foundOrders[tmp].date_placed);
-                if (new Date($scope.foundOrders[tmp].date_assigned) > 0) {
-                    $scope.foundOrders[tmp].dispatched = true;
-                } else {
-                    $scope.foundOrders[tmp].dispatched = false;
-                }
+            $scope.foundTransactions = response.data.transactions;
+            for (var tmp in $scope.foundTransactions) {
+                $scope.foundTransactions[tmp].date_placed = mm_dd_yyyy($scope.foundTransactions[tmp].date_placed);
             }
         }, function errorCallback(response) {
-            Logger.error("error");
         });
     };
+
+    $scope.selectedTransactionID = function (transaction) {
+        $scope.foundOrders = [];
+        $http({
+            method: 'POST',
+            url: "/api/orders/vieworders",
+            data: {
+                transaction_id: transaction.id
+            }
+        }).then(function successCallback(response) {
+            $scope.foundOrders = response.data.orders;
+            for (let order in $scope.foundOrders) {
+                $scope.foundOrders[order]['date_assigned'] = hh_mm($scope.foundOrders[order]['date_assigned']);
+                $scope.foundOrders[order]['date_arrived_store'] = hh_mm($scope.foundOrders[order]['date_arrived_store']);
+                $scope.foundOrders[order]['date_picked'] = hh_mm($scope.foundOrders[order]['date_picked']);
+                $scope.foundOrders[order]['date_arrived_customer'] = hh_mm($scope.foundOrders[order]['date_arrived_customer']);
+                $scope.foundOrders[order]['date_delivered'] = hh_mm($scope.foundOrders[order]['date_delivered']);
+            }
+        }, function errorCallback(response) {
+        });
+    }
 
     $scope.selectOrderId = function (order) {
         $scope.selectedOrder = order;
@@ -122,16 +136,8 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 order_id: order.order_id
             }
         }).then(function successCallback(response) {
-            $scope.foundOrderContent = response.data.orders;
-            for (let item in $scope.foundOrderContent) {
-                $scope.foundOrderContent[item]['modify_number'] = 0;
-                $scope.selectedOrder['cartTotal'] = Math.round((parseFloat($scope.foundOrderContent[item].price) * parseFloat($scope.foundOrderContent[item].quantity) + $scope.selectedOrder['cartTotal']) * 100) / 100;
-            }
-            $scope.selectedOrder['delFee'] = Math.round((4.99 + parseInt($scope.selectedOrder['cartTotal'] / 100) * 2.99) * 100) / 100;
-            $scope.selectedOrder['GST'] = Math.round(($scope.selectedOrder['delFee'] + $scope.selectedOrder['cartTotal']) * 0.05 * 100) / 100;
-            $scope.selectedOrder['totAmount'] = Math.round(($scope.selectedOrder['cartTotal'] + $scope.selectedOrder['delFee'] + $scope.selectedOrder['GST']) * 100) / 100;
+            $scope.foundOrderContent = response.data.order;
         }, function errorCallback(response) {
-            Logger.error("error");
         });
     };
 
@@ -171,7 +177,6 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             }).then(function successCallback(response) {
                 $scope.ref_chr_Money = response.data;
             }, function errorCallback(response) {
-                Logger.error("error");
             });
         } else if (type != 1 && type != 5) {
             var list_to_send = {};
@@ -194,7 +199,6 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             }).then(function successCallback(response) {
                 $scope.ref_chr_Money = response.data;
             }, function errorCallback(response) {
-                Logger.error("error");
             });
         }
     };
@@ -445,7 +449,15 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     }
 
     function mm_dd_yyyy(inDate) {
-        return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
+        if (inDate) {
+            return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
+        }
+    }
+
+    function hh_mm(inDate) {
+        if (inDate) {
+            return parseInt(inDate.slice(12, 13), 10) + ":" + parseInt(inDate.slice(15, 16), 10);
+        }
     }
 
     $scope.init = function () {

@@ -21,7 +21,7 @@ var logMeta = {
 
 
 /* 
-*  Socke.io has it is own hand - shaker
+*  Socket.io has it is own hand - shaker
 *  Connection listener that iniates all other listeners 
 *  once connection is established
 */
@@ -96,7 +96,7 @@ var receiver = async function (jsonResponse) {
             nextnodeid: jsonResponse.details.nextnodeid
         };
 
-        var products = await Orders.getOrderById(orderId);
+        var products = await Orders.getOrderItemsById(orderId);
 
         var jsonOrder = {
             id: orderIdString,
@@ -107,6 +107,7 @@ var receiver = async function (jsonResponse) {
         var result = await Orders.getUserWithOrderByOrderId(orderId);
         var user = result.user;
         var orderDetails = result.order;
+        var transactionDetails = result.transaction;
 
         var jsonCustomer = {
             id: user.id_prefix + user.id,
@@ -115,9 +116,9 @@ var receiver = async function (jsonResponse) {
             last_name: user.last_name,
             dob: user.birth_date,
             phone: user.phone_number,
-            address: orderDetails.delivery_address,
-            comments: orderDetails.driver_instruction,
-            card_digits: orderDetails.card_digits,
+            address: transactionDetails.delivery_address,
+            comments: transactionDetails.driver_instruction,
+            card_digits: transactionDetails.card_digits,
             order: jsonOrder
         };
 

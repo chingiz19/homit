@@ -264,24 +264,40 @@ CREATE TABLE user_cart_info (
 ) ENGINE = InnoDB;
 
 
+CREATE TABLE orders_transactions_history (
+	id INT NOT NULL AUTO_INCREMENT,
+	id_prefix VARCHAR(3) NOT NULL DEFAULT "t_", 
+	user_id INT,
+	guest_id INT,
+	transaction_id VARCHAR(225) NOT NULL,
+	card_digits VARCHAR(4) NOT NULL,
+	total_price DECIMAL(6,2) NOT NULL,
+	total_amount DECIMAL(6,2) NOT NULL,
+	delivery_fee DECIMAL(6,2) NOT NULL,
+	total_tax DECIMAL(6,2) NOT NULL,
+	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	delivery_address VARCHAR(225) NOT NULL,
+	delivery_latitude DOUBLE NOT NULL,
+	delivery_longitude DOUBLE NOT NULL,
+	driver_instruction VARCHAR(225),
+	
+	PRIMARY KEY (id),
+	UNIQUE (transaction_id),	
+	CONSTRAINT fk_orders_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE SET NULL ON UPDATE CASCADE,
+	CONSTRAINT fk_orders_history_guest_id FOREIGN KEY (guest_id) REFERENCES users_customers_guest(id) ON DELETE SET NULL ON UPDATE CASCADE
+
+) ENGINE = InnoDB;
+
+
 CREATE TABLE orders_history (
 	id INT NOT NULL AUTO_INCREMENT,
 	id_prefix VARCHAR(3) NOT NULL DEFAULT "o_", 
-	user_id INT,
-	guest_id INT,
-	transaction_id INT NOT NULL,
-	card_digits VARCHAR(4) NOT NULL,
-	total_price DECIMAL(6,2) NOT NULL,
-	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	order_transaction_id INT NOT NULL,
 	date_assigned TIMESTAMP NULL,
 	date_arrived_store TIMESTAMP NULL,
 	date_picked TIMESTAMP NULL,
 	date_arrived_customer TIMESTAMP NULL,	
 	date_delivered TIMESTAMP NULL,
-	delivery_address VARCHAR(225) NOT NULL,
-	delivery_latitude DOUBLE NOT NULL,
-	delivery_longitude DOUBLE NOT NULL,
-	driver_instruction VARCHAR(225),
 	store_type INT NOT NULL,
 	store_id INT,
 	driver_id INT,
@@ -290,11 +306,10 @@ CREATE TABLE orders_history (
 	receiver_age INT,
 	
 	PRIMARY KEY (id),
-	CONSTRAINT fk_orders_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE SET NULL ON UPDATE CASCADE,
-	CONSTRAINT fk_orders_history_guest_id FOREIGN KEY (guest_id) REFERENCES users_customers_guest(id) ON DELETE SET NULL ON UPDATE CASCADE,	
 	CONSTRAINT fk_orders_history_store_type FOREIGN KEY (store_type) REFERENCES catalog_super_categories(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_orders_history_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_orders_history_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	CONSTRAINT fk_orders_history_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_orders_history_order_transaction_id FOREIGN KEY (order_transaction_id) REFERENCES orders_transactions_history(id) ON DELETE RESTRICT ON UPDATE CASCADE
 	
 ) ENGINE = InnoDB;
 

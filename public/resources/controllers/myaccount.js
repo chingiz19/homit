@@ -54,7 +54,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             document.getElementById("myAcLi" + tab).classList.remove("myTabsBtmLn");
             document.getElementById("myAcLi" + tab).classList.add("selectedTabLn");
             if (myaccount.selectedTab == 5) {
-                myaccount.viewUserOrders();
+                myaccount.viewUserTransactions();
             }
         };
 
@@ -195,53 +195,74 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             }
         };
 
-        myaccount.viewUserOrders = function () {
+        myaccount.viewUserTransactions = function () {
+            myaccount.foundOrders = [];
             $http({
                 method: 'POST',
-                url: '/api/myaccount/vieworders',
+                url: '/api/myaccount/viewordertransactions',
             }).then(function successCallback(response) {
-                myaccount.foundOrders = response.data.orders;
-                var inDate;
-                for (var tmp in myaccount.foundOrders) {
-                    inDate = myaccount.foundOrders[tmp].date_placed;
-                    myaccount.foundOrders[tmp].date_placed = myaccount.mm_dd_yyyy(inDate);
-                    myaccount.foundOrders[tmp].delivery_address = myaccount.foundOrders[tmp].delivery_address.substring(0, 13) + "..";
-                }
+                myaccount.foundTransactions = response.data.transactions;
+            for (var tmp in myaccount.foundTransactions) {
+                myaccount.foundTransactions[tmp].date_placed = myaccount.mm_dd_yyyy(myaccount.foundTransactions[tmp].date_placed);
+            }
             }, function errorCallback(response) {
                 console.log("Error in getting user Orders.");
             });
         };
 
+        myaccount.selectedTransactionID = function (transaction) {
+            myaccount.foundOrders = [];
+            $http({
+                method: 'POST',
+                url: "/api/myaccount/vieworders",
+                data: {
+                    transaction_id: transaction.id
+                }
+            }).then(function successCallback(response) {
+                myaccount.foundOrders = response.data.orders;
+                for (let order in $scope.foundOrders) {
+                    myaccount.foundOrders[order]['date_assigned'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_assigned']);
+                    myaccount.foundOrders[order]['date_arrived_store'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_arrived_store']);
+                    myaccount.foundOrders[order]['date_picked'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_picked']);
+                    myaccount.foundOrders[order]['date_arrived_customer'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_arrived_customer']);
+                    myaccount.foundOrders[order]['date_delivered'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_delivered']);
+                }
+            }, function errorCallback(response) {
+            });
+        }
+
         $scope.reqOrderID = 0;
 
         myaccount.getOrderContent = function (order_id) {
-            myaccount.slctcntBxIsSet = false;
-            var el_order_id = document.getElementById(order_id);
 
-            if (order_id == $scope.reqOrderID) {
-                if (el_order_id.classList.contains("slctcntBx")) {
-                    el_order_id.classList.remove("slctcntBx");
-                } else {
-                    el_order_id.classList.add("slctcntBx");
-                }
-            } else {
-                var x = document.querySelectorAll(".cntBx");
-                if ($scope.reqOrderID == 0) {
-                    el_order_id.classList.add("slctcntBx");
-                    $scope.reqOrderID = order_id;
-                } else {
-                    for (var i = 0; i < x.length; i++) {
-                        if (x[i].classList.contains("slctcntBx")) {
-                            document.getElementById(x[i].id).classList.remove("slctcntBx");
-                            el_order_id.classList.add("slctcntBx");
-                            $scope.reqOrderID = order_id;
-                            myaccount.slctcntBxIsSet = true;
-                        } else if (!myaccount.slctcntBxIsSet) {
-                            el_order_id.classList.add("slctcntBx");
-                        }
-                    }
-                }
-            }
+            // myaccount.slctcntBxIsSet = false;
+            // var el_order_id = document.getElementById(order_id);
+
+            // if (order_id == $scope.reqOrderID) {
+            //     if (el_order_id.classList.contains("slctcntBx")) {
+            //         el_order_id.classList.remove("slctcntBx");
+            //     } else {
+            //         el_order_id.classList.add("slctcntBx");
+            //     }
+            // } else {
+            //     var x = document.querySelectorAll(".cntBx");
+            //     if ($scope.reqOrderID == 0) {
+            //         el_order_id.classList.add("slctcntBx");
+            //         $scope.reqOrderID = order_id;
+            //     } else {
+            //         for (var i = 0; i < x.length; i++) {
+            //             if (x[i].classList.contains("slctcntBx")) {
+            //                 document.getElementById(x[i].id).classList.remove("slctcntBx");
+            //                 el_order_id.classList.add("slctcntBx");
+            //                 $scope.reqOrderID = order_id;
+            //                 myaccount.slctcntBxIsSet = true;
+            //             } else if (!myaccount.slctcntBxIsSet) {
+            //                 el_order_id.classList.add("slctcntBx");
+            //             }
+            //         }
+            //     }
+            // }
+
             $http({
                 method: 'POST',
                 url: 'api/myaccount/getorder',
@@ -249,7 +270,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     order_id: order_id
                 }
             }).then(function successCallback(response) {
-                myaccount.foundTheOrder = response.data.orders;
+                myaccount.foundTheOrder = response.data.order;
             }, function errorCallback(response) {
                 console.log("Error in getting the requested Order");
             });
@@ -346,9 +367,16 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
         };
 
+        myaccount.hh_mm = function(inDate) {
+            if (inDate) {
+                return parseInt(inDate.slice(12, 13), 10) + ":" + parseInt(inDate.slice(15, 16), 10);
+            }
+        }
+
         jQuery(function($){
             $("#gP_number").mask("(999) 999-9999");
          });
+
         myaccount.update_success = function(){
             myaccount.info_updated = true;
             setTimeout(function(){

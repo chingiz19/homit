@@ -166,16 +166,14 @@ router.post('/resetpassword', function (req, res, next) {
     }
 });
 
-router.post('/vieworders', function (req, res, next) {
+router.post('/viewordertransactions', async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
-    if (signedUser != false) {
+    if (signedUser) {
         var userId = signedUser.id;
-
-        Orders.getOrdersByUserId(userId).then(function (data) {
-            res.json({
-                success: true,
-                orders: data
-            });
+        var data = await Orders.getOrderTransactionsByUserId(userId);
+        res.json({
+            success: true,
+            transactions: data
         });
     } else {
         res.status(403).json({
@@ -187,24 +185,14 @@ router.post('/vieworders', function (req, res, next) {
     }
 });
 
-router.post('/getorder', function (req, res, next) {
+router.post('/vieworders', async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
-    if (signedUser != false) {
+    if (signedUser) {
         var userId = signedUser.id;
-        var orderId = req.body.order_id;
-
-        if (!orderId) {
-            res.status(403).json({
-                error: {
-                    "code": "U000",
-                    "dev_message": "Missing params",
-                    "required_params": ["order_id"]
-                }
-            });
-        }
-
-        Orders.getOrderByIdUserId(orderId, userId).then(function (data) {
-            if (data != false) {
+        var orderTransactionId = req.body.transaction_id;
+        if (orderTransactionId) {
+            var data = await Orders.getOrdersByTransactionIdWithUserId(orderTransactionId, userId);
+            if (data) {
                 res.json({
                     success: true,
                     orders: data
@@ -215,7 +203,52 @@ router.post('/getorder', function (req, res, next) {
                 });
             }
 
+        } else {
+            res.status(403).json({
+                error: {
+                    "code": "U000",
+                    "dev_message": "Missing params",
+                    "required_params": ["transaction_id"]
+                }
+            });
+        }
+    } else {
+        res.status(403).json({
+            error: {
+                "code": "",
+                "dev_message": "User is not signed in"
+            }
         });
+    }
+});
+
+
+router.post('/getorder', async function (req, res, next) {
+    var signedUser = Auth.getSignedUser(req);
+    if (signedUser) {
+        var userId = signedUser.id;
+        var orderId = req.body.order_id;
+        if (orderId) {
+            var data = await Orders.getOrderItemsByIdUserId(orderId, userId);
+            if (data) {
+                res.json({
+                    success: true,
+                    order: data
+                });
+            } else {
+                res.json({
+                    success: false
+                });
+            }
+        } else {
+            res.status(403).json({
+                error: {
+                    "code": "U000",
+                    "dev_message": "Missing params",
+                    "required_params": ["order_id"]
+                }
+            });
+        }
     } else {
         res.status(403).json({
             error: {

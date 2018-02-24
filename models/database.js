@@ -37,7 +37,8 @@ const dbTables = {
   orders_history_cancel: "orders_history_cancel",
   orders_history_add: "orders_history_add",
   drivers_request: "drivers_request",
-  orders_emails: "orders_emails"
+  orders_emails: "orders_emails",
+  orders_transactions_history: "orders_transactions_history"
 }
 
 /*Building metadata for log*/

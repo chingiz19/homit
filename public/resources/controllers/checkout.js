@@ -221,17 +221,13 @@ app.controller("checkoutController",
                 $("#cardHolderName").val($scope.userInfo.first_name + " " + $scope.userInfo.last_name);
                 $("#cardHolderAddress").val(sessionStorage.getAddress().address_components[0].long_name + sessionStorage.getAddress().address_components[1].long_name);
                 $("#cardHolderPostalCode").val(sessionStorage.getAddress().address_components[7].long_name);
-                // $scope.userInfo.cardHolderName = $scope.userInfo.first_name + " " + $scope.userInfo.last_name;
-                // $scope.userInfo.cardHolderAddress = sessionStorage.getAddress().address_components[0].long_name + sessionStorage.getAddress().address_components[1].long_name;
-                // $scope.userInfo.cardHolderPostalCode = sessionStorage.getAddress().address_components[7].long_name;
             }
 
-            // setTimeout(function(){
-                $("#buttonProcess").click();
-                activateCheckoutModal();
-                updateCheckoutModal("inProcess");
-                checkPaymentResponse(function (response_id, response_message, transaction_id, crd_lst4) {
-                    if (response_id == 1 && transaction_id) {
+                // $("#buttonProcess").click();
+                // activateCheckoutModal();
+                // updateCheckoutModal("inProcess");
+                // checkPaymentResponse(function (response_id, response_message, transaction_id, crd_lst4) {
+                //     if (response_id == 1 && transaction_id) {
 
                         var userInfoToSend = {};
                         userInfoToSend.fname = $scope.userInfo.first_name;
@@ -252,8 +248,8 @@ app.controller("checkoutController",
                             data: {
                                 user: userInfoToSend,
                                 products: cartService.parseCartToSend($scope.userCart),
-                                transaction_id: transaction_id,
-                                crd_lst4: crd_lst4
+                                transaction_id: 12991,
+                                crd_lst4: 1234
                             }
                         }).then(function successCallback(response) {
                             if (response.data.success) {
@@ -270,26 +266,25 @@ app.controller("checkoutController",
                             $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at +1(403) 800-3460.";
                             updateCheckoutModal("10");
                         });
-                    } else if (response_id == 0 && response_message == 0 && transaction_id == 0 && crd_lst4 == 0) {
-                        $scope.paymentMessage_1 = "Sorry, ";
-                        $scope.paymentMessage_2 = "Card error, please try again.";
-                        updateCheckoutModal("0");
-                    } else if (response_id == 0 && response_message == "Duplicate Payment") {
-                        $scope.paymentMessage_1 = "Thank You, ";
-                        $scope.paymentMessage_2 = "You order already processed.";
-                        updateCheckoutModal("11");
-                    } else if (response_id == 0 && (response_message == "ERROR - TERMINAL ID INACTIVE9405" || response_message.includes("DECLINED"))) {
-                        $scope.paymentMessage_1 = "Sorry, ";
-                        $scope.paymentMessage_2 = "Your card has been declined.";
-                        updateCheckoutModal("01");
-                    } else {
-                        $scope.paymentMessage_1 = "Sorry, ";
-                        $scope.paymentMessage_2 = $sce.trustAsHtml("<div layout='row' class='response-02-text'>Something went wrong, please let us know at <a class='email' href='mailto:info@homit.ca'>info@homit.ca</a> </div>");
-                        updateCheckoutModal("02");
-                    }
+                //     } else if (response_id == 0 && response_message == 0 && transaction_id == 0 && crd_lst4 == 0) {
+                //         $scope.paymentMessage_1 = "Sorry, ";
+                //         $scope.paymentMessage_2 = "Card error, please try again.";
+                //         updateCheckoutModal("0");
+                //     } else if (response_id == 0 && response_message == "Duplicate Payment") {
+                //         $scope.paymentMessage_1 = "Thank You, ";
+                //         $scope.paymentMessage_2 = "You order already processed.";
+                //         updateCheckoutModal("11");
+                //     } else if (response_id == 0 && (response_message == "ERROR - TERMINAL ID INACTIVE9405" || response_message.includes("DECLINED"))) {
+                //         $scope.paymentMessage_1 = "Sorry, ";
+                //         $scope.paymentMessage_2 = "Your card has been declined.";
+                //         updateCheckoutModal("01");
+                //     } else {
+                //         $scope.paymentMessage_1 = "Sorry, ";
+                //         $scope.paymentMessage_2 = $sce.trustAsHtml("<div layout='row' class='response-02-text'>Something went wrong, please let us know at <a class='email' href='mailto:info@homit.ca'>info@homit.ca</a> </div>");
+                //         updateCheckoutModal("02");
+                //     }
 
-                });
-            // }, 500);
+                // });
         };
 
         function activateCheckoutModal() {

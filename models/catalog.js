@@ -549,6 +549,10 @@ pub.getPricesForProducts = function (products) {
     });
 };
 
+pub.getAllPricesForProducts = function (cartProducts, dbProducts) {
+    return Catalog.priceCalculator(cartProducts, dbProducts, false);
+}
+
 pub.getTotalPriceForProducts = function (cartProducts, dbProducts) {
     var price = Catalog.priceCalculator(cartProducts, dbProducts, false);
     return price.total_price;

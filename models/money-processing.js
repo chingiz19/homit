@@ -67,6 +67,11 @@ pub.getTransaction = function (transactionId, callback) {
     post_req.end();
 };
 
+
+pub.isTransactionValid = function (transactiionId, amountRequired) {
+    return true;
+}
+
 pub.validateTransaction = function (transactionDetails, amountRequired) {
     var transaction = transactionDetails.transactions.transaction[0];
 
@@ -152,9 +157,10 @@ var isTransactionAvsValid = function (transaction) {
 }
 
 pub.getUserCardLastDigits = function (transactionDetails) {
-    var transaction = transactionDetails.transactions.transaction[0];
-    var cardNumber = transaction.card[0].cardNumber[0];
-    return cardNumber.substring(12, 16);
+    return "1234";
+    // var transaction = transactionDetails.transactions.transaction[0];
+    // var cardNumber = transaction.card[0].cardNumber[0];
+    // return cardNumber.substring(12, 16);
 }
 
 pub.getUserCardToken = function (transactionDetails) {

@@ -9,7 +9,7 @@ var metaData = {
     directory: __filename
 }
 
-router.post('/placeorder', function (req, res, next) {
+router.post('/placeorder', async function (req, res, next) {
     var email = req.body.user.email;
     var fname = req.body.user.fname;
     var lname = req.body.user.lname;
@@ -25,7 +25,6 @@ router.post('/placeorder', function (req, res, next) {
     var transactionId = req.body.transaction_id;
     var saveCard = req.body.save_card;
 
-    // TODO: Debug, for current testing
     Logger.log.info("Order has been placed", {
         email: email,
         fname: fname,
@@ -38,247 +37,117 @@ router.post('/placeorder', function (req, res, next) {
     SMS.alertDirectors("Order has been placed. Processing.");
 
     var signedUser = Auth.getSignedUser(req);
-    if (signedUser != false) {
-        var userId = signedUser.id;
+    var paramsMissing = false;
 
-        //TODO: check all items
-        if (!cartProducts || !phone || !address || !address_lat || !address_long || !transactionId) {
-            res.status(403).json({
-                error: {
-                    "code": "U000",
-                    "dev_message": "Missing params",
-                    "required_params": ["phone", "address", "address_latitude", "address_longitude", "products", "transactionId"]
+    if (signedUser) {
+        paramsMissing = !cartProducts || !phone || !address || !address_lat || !address_long || !transactionId;
+    } else {
+        paramsMissing = !email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts || !transactionId;
+    }
+
+    if (!paramsMissing) {
+        var isTransactionFine = await Orders.checkTransaction(transactionId);
+        if (isTransactionFine) {
+            var dbProducts = await Catalog.getCartProducts(cartProducts);
+            var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
+            var allPrices = Catalog.getAllPricesForProducts(cartProducts, dbProducts);
+            var totalPrice = allPrices.total_price;
+            var transactionValid = MP.isTransactionValid(transactionId, totalPrice);
+            if (transactionValid) {
+                var cardDigits = MP.getUserCardLastDigits(transactionId);
+                var data = {
+                    phone_number: phone
+                };
+                if (birth_year && birth_month && birth_day) {
+                    var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
+                    data.birth_date = birth_date;
                 }
-            });
-        } else {
-
-            // TODO: rewrite if-else in reverse order ('==' => '!=', and return error in if body)
-            Orders.checkTransaction(transactionId).then(function (isTransactionFine) {
-                if (isTransactionFine) {
-                    MP.getTransaction(transactionId, function (transactionDetails) {
-                        if (transactionDetails != 'empty' && transactionDetails.transactions != undefined) {
-                            Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
-                                var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
-                                var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
-                                var transactionValid = MP.validateTransaction(transactionDetails, totalPrice);
-                                if (transactionValid) {
-                                    var cardDigits = MP.getUserCardLastDigits(transactionDetails);
-                                    var data = {
-                                        phone_number: phone
-                                    };
-                                    if (birth_year && birth_month && birth_day) {
-                                        var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
-                                        data.birth_date = birth_date;
-                                    }
-                                    var key = {
-                                        id: userId
-                                    };
-                                    User.updateUser(data, key).then(function (updatedUser) {
-                                        if (updatedUser != false) {
-                                            var cardToken = MP.getUserCardToken(transactionDetails);
-                                            var cardType = MP.getUserCardType(transactionDetails);
-                                            saveCreditCard(key, saveCard, cardToken, cardDigits, cardType).then(function (savedCard) {
-                                                createOrders(userId, address, address_lat, address_long, driverInstruction, false, transactionId, cardDigits, totalPrice, products).then(function (userOrders) {
-                                                    var response = {
-                                                        success: true,
-                                                        orders: userOrders
-                                                    };
-                                                    res.send(response);
-                                                });
-                                            });
-                                        } else {
-                                            var response = {
-                                                success: false,
-                                                error: {
-                                                    dev_message: "Something went wrong while updating the user",
-                                                    ui_message: "Error happened while checkout. Please try again"
-                                                }
-                                            };
-                                            res.send(response);
-                                            Logger.log.warn("Something went wrong while updating the user (USER)", metaData);
-                                        }
-                                    });
-                                } else {
-                                    var response = {
-                                        success: false,
-                                        error: {
-                                            dev_message: "Paid and claimed amount does not match",
-                                            ui_message: "Error happened while checkout. Please try again"
-                                        }
-                                    };
-                                    res.send(response);
-                                    var specMetaData = {
-                                        directory: __filename,
-                                        requester_ip: req.connection.remoteAddress,
-                                        user_id: userId
-                                    }
-                                    Logger.log.warn("Transaction details mismatch (USER)", specMetaData);
-                                }
-                            });
-                        } else {
-                            var response = {
-                                success: false,
-                                error: {
-                                    dev_message: "Could not get transaction details from Helcim",
-                                    ui_message: "Error happened while checkout. Please try again"
-                                }
-                            };
-                            res.send(response);
-                            Logger.log.error("Could not get transaction details from Helcim (USER)", metaData);
-                        }
-                    });
-                } else {
-                    var response = {
-                        success: false,
-                        error: {
-                            dev_message: "Transaction ID already exists in database",
-                            ui_message: "Error happened while checkout. Please try again"
-                        }
+                var userId;
+                var isGuest;
+                if (signedUser) {
+                    isGuest = false;
+                    userId = signedUser.id
+                    var key = {
+                        id: userId
                     };
-                    res.send(response);
-                    Logger.log.warn("Transaction ID already exists in database (USER)", metaData);
+                    var updatedUser = await User.updateUser(data, key);
+
+                    // This is not working right now. Will be implemented later
+                    // if (saveCard) {
+                    //     var cardToken = MP.getUserCardToken(transactionDetails);
+                    //     var cardType = MP.getUserCardType(transactionDetails);
+                    //     await User.updateCreditCard(key, saveCard, cardToken, cardDigits, cardType);
+                    // }
+                } else {
+                    isGuest = true;
+                    var guestUserFound = await User.findGuestUser(email);
+                    data.first_name = fname;
+                    data.last_name = lname;
+                    if (guestUserFound) {
+                        userId = guestUserFound.id;
+
+                        var key = {
+                            id: userId
+                        };
+                        var guestUser = await User.updateGuestUser(data, key);
+                    } else {
+                        data.user_email = email;
+                        userId = await User.addGuestUser(data);
+                    }
                 }
-            });
+
+                // create orders
+                var userOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, allPrices, products);
+                var response = {
+                    success: true,
+                    orders: userOrders
+                };
+                res.send(response);
+            } else {
+                var response = {
+                    success: false,
+                    error: {
+                        dev_message: "Transaction details mismatch.",
+                        ui_message: "Error happened while checkout. Please try again"
+                    }
+                };
+                res.send(response);
+                var specMetaData = {
+                    directory: __filename,
+                    requester_ip: req.connection.remoteAddress,
+                    user_id: userId
+                }
+                Logger.log.warn("Transaction details mismatch.", specMetaData);
+            }
+        } else {
+            var response = {
+                success: false,
+                error: {
+                    dev_message: "Transaction ID already exists in database",
+                    ui_message: "Error happened while checkout. Please try again"
+                }
+            };
+            res.send(response);
+            Logger.log.warn("Transaction ID already exists in database.", metaData);
         }
     } else {
-        if (!email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts || !transactionId) {
-            res.status(403).json({
-                error: {
-                    "code": "U000",
-                    "dev_message": "Missing params",
-                    "required_params": ["email", "phone", "fname", "lname", "address", "address_lat", "address_long", "products"]
-                }
-            });
-        } else {
-            Orders.checkTransaction(transactionId).then(function (isTransactionFine) {
-                if (isTransactionFine) {
-                    MP.getTransaction(transactionId, function (transactionDetails) {
-                        if (transactionDetails != 'empty' && transactionDetails.transactions != undefined) {
-                            Catalog.getCartProducts(cartProducts).then(function (dbProducts) {
-                                var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
-                                var totalPrice = Catalog.getTotalPriceForProducts(cartProducts, dbProducts);
-                                var transactionValid = MP.validateTransaction(transactionDetails, totalPrice);
-                                if (transactionValid) {
-                                    var cardDigits = MP.getUserCardLastDigits(transactionDetails);
-                                    User.findGuestUser(email).then(function (guestUserFound) {
-                                        if (guestUserFound == false) {
-                                            var data = {
-                                                user_email: email,
-                                                first_name: fname,
-                                                last_name: lname,
-                                                phone_number: phone
-                                            };
-                                            if (birth_year && birth_month && birth_day) {
-                                                var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
-                                                data.birth_date = birth_date;
-                                            }
-                                            User.addGuestUser(data).then(function (guestUserId) {
-                                                if (guestUserId != false) {
-                                                    createOrders(guestUserId, address, address_lat, address_long, driverInstruction, true, transactionId, cardDigits, totalPrice, products).then(function (userOrders) {
-                                                        var response = {
-                                                            success: true,
-                                                            orders: userOrders
-                                                        };
-                                                        res.send(response);
-                                                    });
-                                                } else {
-                                                    var response = {
-                                                        success: false,
-                                                        error: {
-                                                            dev_message: "Something went wrong while adding the user",
-                                                            ui_message: "Error happened while checkout. Please try again"
-                                                        }
-                                                    };
-                                                    res.send(response);
-                                                    Logger.log.error("Something went wrong while adding the user (GUEST)", metaData);
-                                                }
-                                            });
-                                        } else {
-                                            var data = {
-                                                first_name: fname,
-                                                last_name: lname,
-                                                phone_number: phone
-                                            };
-                                            if (birth_year && birth_month && birth_day) {
-                                                var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
-                                                data.birth_date = birth_date;
-                                            }
-                                            var key = {
-                                                id: guestUserFound.id
-                                            };
-                                            User.updateGuestUser(data, key).then(function (guestUser) {
-                                                if (guestUser != false) {
-                                                    createOrders(guestUserFound.id, address, address_lat, address_long, driverInstruction, true, transactionId, cardDigits, totalPrice, products).then(function (userOrders) {
-                                                        var response = {
-                                                            success: true,
-                                                            orders: userOrders
-                                                        };
-                                                        res.send(response);
-                                                    });
-                                                } else {
-                                                    var response = {
-                                                        success: false,
-                                                        error: {
-                                                            dev_message: "Something went wrong while updating the user",
-                                                            ui_message: "Error happened while checkout. Please try again"
-                                                        }
-                                                    };
-                                                    res.send(response);
-                                                    Logger.log.error("Something went wrong while adding the user (GUEST)", metaData);
-                                                }
-                                            });
-                                        }
-                                    });
-                                } else {
-                                    var response = {
-                                        success: false,
-                                        error: {
-                                            dev_message: "Paid and claimed amount does not match",
-                                            ui_message: "Error happened while checkout. Please try again"
-                                        }
-                                    };
-                                    res.send(response);
-                                    var specMetaData = {
-                                        directory: __filename,
-                                        requester_ip: req.connection.remoteAddress
-                                    }
-                                    Logger.log.warn("Transaction details mismatch (GUEST)", specMetaData);
-                                }
-                            });
-                        } else {
-                            var response = {
-                                success: false,
-                                error: {
-                                    dev_message: "Could not get transaction details from Helcim",
-                                    ui_message: "Error happened while checkout. Please try again"
-                                }
-                            };
-                            res.send(response);
-                            Logger.log.error("Could not get transaction details from Helcim (GUEST)", metaData);
-                        }
-                    });
-                } else {
-                    var response = {
-                        success: false,
-                        error: {
-                            dev_message: "Transaction ID already exists in database",
-                            ui_message: "Error happened while checkout. Please try again"
-                        }
-                    };
-                    res.send(response);
-                    Logger.log.warn("Transaction ID already exists in database (GUEST)", metaData);
-                }
-            });
-        }
+        res.status(403).json({
+            error: {
+                "code": "U000",
+                "dev_message": "Missing params"
+            }
+        });
     }
 });
 
-var createOrders = function (id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, totalPrice, products) {
+var createOrders = async function (userId, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, allPrices, products) {
+    var orderTransactionId = await Orders.createTransactionOrder(userId, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, allPrices);
+
     var createFunctions = [];
     var userOrders = [];
 
     for (var superCategory in products) {
-        createFunctions.push(Orders.createOrder(id, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, totalPrice, superCategory));
+        createFunctions.push(Orders.createOrder(orderTransactionId, superCategory));
     }
 
     return Promise.all(createFunctions).then(function (orderIds) {
@@ -293,9 +162,9 @@ var createOrders = function (id, address, address_lat, address_long, driverInstr
             var cmUserId = "";
             var cmOrderId = "o_" + userOrder.order_id;
             if (isGuest) {
-                cmUserId = "g_" + id;
+                cmUserId = "g_" + userId;
             } else {
-                cmUserId = "u_" + id;
+                cmUserId = "u_" + userId;
             }
             CM.sendOrder(cmUserId, address, cmOrderId, superCategory);
             SMS.alertDirectors("Order has been placed. Processed. Order ID is: " + cmOrderId);
@@ -304,17 +173,6 @@ var createOrders = function (id, address, address_lat, address_long, driverInstr
         }
         return userOrders;
     });
-
-};
-
-var saveCreditCard = async function (userKey, saveCard, cardToken, cardDigits, cardType) {
-    if (saveCard) {
-        return User.updateCreditCard(userKey, cardToken, cardDigits, cardType).then(function (cardUpdated) {
-            return cardUpdated;
-        });
-    } else {
-        return true;
-    }
-};
+}
 
 module.exports = router;

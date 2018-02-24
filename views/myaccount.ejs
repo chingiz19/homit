@@ -149,7 +149,7 @@
                                     </div>
                                 </md-input-container>
                             </li>
-                            
+
                             <li class="invInptErrMsg_A">
                                 <span class="invInptErrMsg_B">{{myaccount.input_invalid_message}}</span>
                             </li>
@@ -332,30 +332,60 @@
                     <!-- Order History -->
                     <div ng-if="myaccount.selectedTab == 5" class="contentRCorHist">
                         <ul layout="row" class="flxCntrLn">
-                            <li flex="15" layout="row" class="flxCntrLn">
-                                <span class="ordCntHdr ordCntTxt">Order</span>
-                            </li>
                             <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Date</li>
-                            <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Store</li>
-                            <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Price</li>
+                            <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Cart Total</li>
+                            <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Delivery Fee</li>
+                            <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Total</li>
                             <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Address</li>
                         </ul>
                         <div class="ordHist">
-                            <div ng-repeat="order in myaccount.foundOrders">
+                            <div ng-repeat="transaction in myaccount.foundTransactions track by $index" id="{{ $index }}">
                                 <ul layout="row" class="flxCntrLn">
-                                    <li flex="15" layout="row" class="flxCntrLn">
-                                        <span>#{{order.order_id}}</span>
-                                        <md-button aria-label="ShowHideCardInfo" ng-click="myaccount.getOrderContent(order.order_id);" class="ordHistCntBtn">
+                                    <li flex="15" class="ordCntTxt flxCntrLn">
+                                        <md-button aria-label="transactions" ng-click="myaccount.selectedTransactionID(transaction);" class="ordHistCntBtn">
                                             <ng-md-icon icon="keyboard_arrow_down"></ng-md-icon>
                                         </md-button>
+                                        {{ transaction.date_placed }}
                                     </li>
-                                    <li flex="15" class="ordCntTxt flxCntrLn">{{order.date_placed}}</li>
-                                    <li flex="15" class="ordCntTxt flxCntrLn">Liquor Station</li>
-                                    <li flex="15" class="ordCntTxt flxCntrLn">$CXXX</li>
-                                    <li flex="15" class="ordCntTxt flxCntrLn">{{order.delivery_address}}</li>
+                                    <li flex="15" class="ordCntTxt flxCntrLn">$C{{' ' + transaction.total_price }}</li>
+                                    <li flex="15" class="ordCntTxt flxCntrLn">$C{{ ' ' + transaction.delivery_fee }}</li>
+                                    <li flex="15" class="ordCntTxt flxCntrLn">$C{{ ' ' + transaction.total_amount }}</li>
+                                    <li flex="15" class="ordCntTxt">{{ transaction.delivery_address }}</li>
                                 </ul>
-                                <div id="{{order.order_id}}" class="cntBx">
-                                    <div ng-value="item" class="cntBxA">
+                                <div ng-show="myaccount.foundOrders[0]">
+                                    <ul layout="row" class="flxCntrLn">
+                                        <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Order Id</li>
+                                        <li flex="15" class="ordCntHdr ordCntTxt flxCntrLn">Delivered At</li>
+                                    </ul>
+                                    <div ng-repeat="order in myaccount.foundOrders track by $index">
+                                        <ul layout="row" class="flxCntrLn">
+                                            <li flex="15" class="ordCntTxt flxCntrLn">
+                                                <md-button aria-label="orders" ng-click="myaccount.getOrderContent(order.order_id);" class="ordHistCntBtn">
+                                                    <ng-md-icon icon="keyboard_arrow_down"></ng-md-icon>
+                                                </md-button>
+                                                {{ order.order_id }}
+                                            </li>
+                                            <li flex="15" class="ordCntTxt flxCntrLn">{{ order.date_delivered }}</li>
+                                        </ul>
+                                        <div ng-value="item" class="cntBxA">
+                                            <div flex="40" layout="row" class="cntBxAA" ng-repeat="item in myaccount.foundTheOrder">
+                                                <ul class="cntBxAAA">
+                                                    <img class="cntBxAAAA" ng-src="{{'/resources/images/products/' + item.super_category + '/' + item.category + '/' + item.image}}">
+                                                </ul>
+                                                <div layout="row" class="cntBxAAB">
+                                                    <ul layout="column" class="cntBxAABA">
+                                                        <li class="cntBxAABAA">{{item.brand}}</li>
+                                                        <li class="cntBxAABAA">#{{item.packaging}}</li>
+                                                        <li class="cntBxAABAA">{{item.volume}}</li>
+                                                        <li class="cntBxAABAA">C${{item.price}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- </div> -->
+                                    <!-- <div id="{{ order.order_id }}" class="cntBx"> -->
+                                    <!-- <div ng-value="item" class="cntBxA">
                                         <div flex="40" layout="row" class="cntBxAA" ng-repeat="item in myaccount.foundTheOrder">
                                             <ul class="cntBxAAA">
                                                 <img class="cntBxAAAA" ng-src="{{'/resources/images/products/' + item.super_category + '/' + item.category + '/' + item.image}}">
@@ -369,7 +399,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -378,12 +408,13 @@
             </div>
         </div>
     </div>
+    </div>
     <% if (!production) { %>
         <script src="/resources/controllers/myaccount.js"></script>
         <script src="/resources/directives/addressAutocomplete.js"></script>
         <script src="/resources/services/date.js"></script>
         <script src="/resources/services/mapServices.js"></script>
-    <% } %>
+        <% } %>
 </body>
 
 </html>

@@ -50,7 +50,32 @@ router.post('/findusersbyemail', Auth.validateCsr(), function (req, res, next) {
     }
 });
 
-router.post('/vieworders', Auth.validateCsr(), function (req, res, next) {
+router.post('/finduserbyorderid', Auth.validateCsr(), async function (req, res, next) {
+    var orderId = req.body.order_id;
+    if (orderId) {
+        var result = await Orders.getUserWithOrderByOrderId(orderId);
+        if (result) {
+            res.json({
+                success: true,
+                user: result.user
+            });
+        } else {
+            res.json({
+                success: false
+            });
+        }
+    } else {
+        res.status(403).json({
+            error: {
+                "code": "U000",
+                "dev_message": "Missing params",
+                "required_params": ["user_email"]
+            }
+        });
+    }
+});
+
+router.post('/viewordertransactions', Auth.validateCsr(), async function (req, res, next) {
     var userId = req.body.user_id;
     var guestId = req.body.guest_id;
 
@@ -63,25 +88,40 @@ router.post('/vieworders', Auth.validateCsr(), function (req, res, next) {
             }
         });
     } else {
+        var data;
         if (!userId) {
-            Orders.getOrdersByGuestId(guestId).then(function (data) {
-                res.json({
-                    success: true,
-                    orders: data
-                });
-            });
+            data = await Orders.getOrderTransactionsByGuestId(guestId);
         } else {
-            Orders.getOrdersByUserId(userId).then(function (data) {
-                res.json({
-                    success: true,
-                    orders: data
-                });
-            });
+            data = await Orders.getOrderTransactionsByUserId(userId);
         }
+
+        res.json({
+            success: true,
+            transactions: data
+        });
     }
 });
 
-router.post('/getorder', Auth.validateCsr(), function (req, res, next) {
+router.post('/vieworders', Auth.validateCsr(), async function (req, res, next) {
+    var orderTransactionId = req.body.transaction_id;
+    if (!orderTransactionId) {
+        res.status(403).json({
+            error: {
+                "code": "U000",
+                "dev_message": "Missing params",
+                "required_params": ["transaction_id"]
+            }
+        });
+    } else {
+        var data = await Orders.getOrdersByTransactionId(orderTransactionId);
+        res.json({
+            success: true,
+            orders: data
+        });
+    }
+});
+
+router.post('/getorder', Auth.validateCsr(), async function (req, res, next) {
     var orderId = req.body.order_id;
 
     if (!orderId) {
@@ -93,31 +133,19 @@ router.post('/getorder', Auth.validateCsr(), function (req, res, next) {
             }
         });
     } else {
-        Orders.getOrderById(orderId).then(function (data) {
-            Orders.getUserWithOrderByOrderId(orderId).then(function (result) {
-                if (result != false) {
-                    res.json({
-                        success: true,
-                        user: result.user,
-                        orders: data
-                    });
-                } else {
-                    res.json({
-                        success: false
-                    });
-                }
-
-            });
+        var data = await Orders.getOrderItemsById(orderId);
+        res.json({
+            success: true,
+            order: data
         });
     }
 });
 
-router.get('/pendingorders', Auth.validateCsr(), function (req, res, next) {
-    Orders.getPendingOrders().then(function (pendingOrders) {
-        res.json({
-            success: true,
-            orders: pendingOrders
-        });
+router.get('/pendingorders', Auth.validateCsr(), async function (req, res, next) {
+    var pendingOrders = await Orders.getPendingOrders();
+    res.json({
+        success: true,
+        orders: pendingOrders
     });
 });
 
