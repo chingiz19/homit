@@ -21,6 +21,16 @@ body{
     height: 80%; 
     padding: 0;
 }
+.none{
+    display: none;
+}
+.margin-line{
+    margin: 4px 0 4px 0;
+}
+.order-id-text{
+    min-width: 20px; 
+    text-align: center;
+}
 /* Content box left column */
 .contentLC{
     background-color: rgba(255,255,255,1);
@@ -119,9 +129,13 @@ contentRCABB svg{
 }
 .ordHistCntBtn{
     margin: 0; padding: 0; min-width: 20px; min-height: 20px; height: 20px;
+    background-color: rgba(33, 211, 172, 0.9);
+}
+.order-content{
+    background-color: rgba(25, 126, 104, 0.9);
 }
 .ordHistCntBtn ng-md-icon{
-    fill: rgba(0,0,0,0.8);
+    fill: rgba(255, 255, 255, 0.8);
 }
 .ordHistCntBtn ng-md-icon svg{
     width: 20px; height: 20px;
@@ -181,12 +195,12 @@ contentRCABB svg{
     width: 75%; height: 0;
     transition: height 0.3s ease, background-color .3s ease;
 }
-.slctcntBx{
-    margin: auto;
-    height: 40%;
+.order-content-box{
+    margin-top: 5px; margin-bottom: 5px;
+    max-height: 40%;
     background-color: rgba(42,81,145,0.01);
     border: 1px solid rgba(55, 118, 143, 0.432); border-radius: 5px;
-    transition: height 0.6s ease, background-color .5s ease;
+    overflow-y: scroll;
 }
 
 @media(max-width: 1280px) and (min-width: 670px){

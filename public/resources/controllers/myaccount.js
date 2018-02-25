@@ -7,6 +7,8 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             myaccount.user = {};
             myaccount.foundOrders = [];
             myaccount.foundTheOrder = [];
+            myaccount.transactionShown;
+            myaccount.orderShown;
             myaccount.date = date;
             myaccount.selectedTab = 0;
             myaccount.edit = false;
@@ -19,7 +21,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
 
             myaccount.user.firstName = $scope.user.first_name;
             myaccount.user.lastName = $scope.user.last_name;
-            if($scope.user.birth_date){
+            if ($scope.user.birth_date) {
                 myaccount.user.birthYear = $scope.user.birth_date.slice(0, 4);
                 myaccount.user.birthMonth = new Date(parseInt($scope.user.birth_date.slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
                 myaccount.user.birthDay = parseInt($scope.user.birth_date.slice(8, 10), 10);
@@ -67,7 +69,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             myaccount.user.crPsswrd_valid = false;
             myaccount.user.new1Psswrd_valid = false;
             myaccount.user.new2Psswrd_valid = false;
-            if(type == 2){
+            if (type == 2) {
                 myaccount.user.address = sessionStorage.getAddress().formatted_address;
             }
         };
@@ -144,7 +146,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
         };
 
         myaccount.updateAddress = function () {
-            if(myaccount.address_valid){
+            if (myaccount.address_valid) {
                 $http({
                     method: 'POST',
                     url: '/api/myaccount/update',
@@ -202,15 +204,16 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 url: '/api/myaccount/viewordertransactions',
             }).then(function successCallback(response) {
                 myaccount.foundTransactions = response.data.transactions;
-            for (var tmp in myaccount.foundTransactions) {
-                myaccount.foundTransactions[tmp].date_placed = myaccount.mm_dd_yyyy(myaccount.foundTransactions[tmp].date_placed);
-            }
+                for (var tmp in myaccount.foundTransactions) {
+                    myaccount.foundTransactions[tmp].date_placed = myaccount.mm_dd_yyyy(myaccount.foundTransactions[tmp].date_placed);
+                }
             }, function errorCallback(response) {
                 console.log("Error in getting user Orders.");
             });
         };
 
-        myaccount.selectedTransactionID = function (transaction) {
+        myaccount.selectedTransactionID = function (transaction, element) {
+
             myaccount.foundOrders = [];
             $http({
                 method: 'POST',
@@ -229,40 +232,28 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 }
             }, function errorCallback(response) {
             });
+
+            if (myaccount.orderShown || myaccount.orderShown == 0) {
+                $('#order_' + myaccount.orderShown).slideToggle();
+                myaccount.orderShown;
+            }
+            if (myaccount.transactionShown == element) {
+                $('#transaction_' + element).slideToggle();
+                myaccount.transactionShown;
+            } else if (myaccount.transactionShown || myaccount.transactionShown == 0) {
+                $('#transaction_' + myaccount.transactionShown).slideToggle();
+                $('#transaction_' + element).slideToggle();
+                myaccount.transactionShown = element;
+            } else {
+                $('#transaction_' + element).slideToggle();
+                myaccount.transactionShown = element;
+            }
+
         }
 
         $scope.reqOrderID = 0;
 
-        myaccount.getOrderContent = function (order_id) {
-
-            // myaccount.slctcntBxIsSet = false;
-            // var el_order_id = document.getElementById(order_id);
-
-            // if (order_id == $scope.reqOrderID) {
-            //     if (el_order_id.classList.contains("slctcntBx")) {
-            //         el_order_id.classList.remove("slctcntBx");
-            //     } else {
-            //         el_order_id.classList.add("slctcntBx");
-            //     }
-            // } else {
-            //     var x = document.querySelectorAll(".cntBx");
-            //     if ($scope.reqOrderID == 0) {
-            //         el_order_id.classList.add("slctcntBx");
-            //         $scope.reqOrderID = order_id;
-            //     } else {
-            //         for (var i = 0; i < x.length; i++) {
-            //             if (x[i].classList.contains("slctcntBx")) {
-            //                 document.getElementById(x[i].id).classList.remove("slctcntBx");
-            //                 el_order_id.classList.add("slctcntBx");
-            //                 $scope.reqOrderID = order_id;
-            //                 myaccount.slctcntBxIsSet = true;
-            //             } else if (!myaccount.slctcntBxIsSet) {
-            //                 el_order_id.classList.add("slctcntBx");
-            //             }
-            //         }
-            //     }
-            // }
-
+        myaccount.getOrderContent = function (order_id, transaction, element) {
             $http({
                 method: 'POST',
                 url: 'api/myaccount/getorder',
@@ -274,6 +265,19 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             }, function errorCallback(response) {
                 console.log("Error in getting the requested Order");
             });
+
+            if (myaccount.orderShown == ( transaction + element )) {
+                $('#order_' + transaction + element).slideToggle();
+                myaccount.orderShown;
+            } else if (myaccount.orderShown || myaccount.orderShown == 0) {
+                $('#order_' + transaction +  myaccount.orderShown).slideToggle();
+                $('#order_' + transaction +  element).slideToggle();
+                myaccount.orderShown = transaction +  "" + element;
+            } else {
+                $('#order_' + transaction + element).slideToggle();
+                $('#order_' + transaction +  element).slideToggle();
+                myaccount.orderShown = transaction +  "" + element;
+            }
         };
 
         // myAccount Page left-SideNav functionality
@@ -318,7 +322,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 myaccount.address_longitude = latLng.lng();
                 myaccount.address = $scope.autocomplete.getText();
 
-                if(myaccount.edit && myaccount.selectedTab == 2){
+                if (myaccount.edit && myaccount.selectedTab == 2) {
                     myaccount.user.address = sessionStorage.getAddress().formatted_address;
                 }
                 myaccount.address_valid = true;
@@ -341,18 +345,18 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
         };
 
         myaccount.sanitizeInput = function (text, type) {
-            var pattern = { 
-                    "fname": /^[a-zA-Z]*$/, 
-                    "lname": /^[a-zA-Z]*$/, 
-                    "email": /^.+@.+\..+$/, 
-                    "phone": /^[0-9()+ -]*$/, 
-                    "cd_1": /^[0-9]*$/, 
-                    "cd_2": /^[0-9]*$/, 
-                    "cd_3": /^[0-9]*$/, 
-                    "crPsswrd_valid": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, 
-                    "new1Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/, 
-                    "new2Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/
-                };
+            var pattern = {
+                "fname": /^[a-zA-Z]*$/,
+                "lname": /^[a-zA-Z]*$/,
+                "email": /^.+@.+\..+$/,
+                "phone": /^[0-9()+ -]*$/,
+                "cd_1": /^[0-9]*$/,
+                "cd_2": /^[0-9]*$/,
+                "cd_3": /^[0-9]*$/,
+                "crPsswrd_valid": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/,
+                "new1Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/,
+                "new2Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/
+            };
             if (text && type) {
                 if (text.match(pattern[type])) {
                     myaccount.user[type + "_valid"] = true;
@@ -367,26 +371,26 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
         };
 
-        myaccount.hh_mm = function(inDate) {
+        myaccount.hh_mm = function (inDate) {
             if (inDate) {
                 return parseInt(inDate.slice(12, 13), 10) + ":" + parseInt(inDate.slice(15, 16), 10);
             }
         }
 
-        jQuery(function($){
+        jQuery(function ($) {
             $("#gP_number").mask("(999) 999-9999");
-         });
+        });
 
-        myaccount.update_success = function(){
+        myaccount.update_success = function () {
             myaccount.info_updated = true;
-            setTimeout(function(){
+            setTimeout(function () {
                 myaccount.info_updated = false;
                 document.getElementById("cancelEdit").click();
             }, 1500);
         };
 
         $scope.$on("checkUserLogin", function (event, args) {
-            if (!user.isUserLogged()){
+            if (!user.isUserLogged()) {
                 $window.location.href = "/main";
             }
         });
