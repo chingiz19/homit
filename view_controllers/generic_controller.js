@@ -9,9 +9,7 @@ var ejsOptions = {
 	catelogies: undefined,
 	showSearchBar: true,
 	production: isProduction,
-	og_image: undefined,
-	helcimToken: process.env.HELCIM_JS_TOKEN,
-	helcimTestMode: process.env.HELCIM_TEST_MODE
+	og_image: undefined
 };
 
 /**
@@ -39,6 +37,7 @@ router.get('/main', function(req, res, next){
 
 router.get("/checkout", function(req, res, next){
 	req.options.ejs["title"] = "Checkout";
+	req.options.ejs['stripeToken'] = process.env.STRIPE_TOKEN_PUB;
 	res.render("checkout.ejs", req.options.ejs);
 });
 

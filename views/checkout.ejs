@@ -21,12 +21,13 @@
                     <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100" />
                 </div>
 
-                <div id="tempMessage">
-                    The website is experiencing some technical difficulties, we apologise for any inconvenience and appreciate your understanding. Our team is working to fix the issue. Thank You for your patience!
-                </div>
+                <!-- <div id="tempMessage">
+            The website is experiencing some technical difficulties, we apologise for any inconvenience and appreciate your understanding. Our team is working to fix the issue. Thank You for your patience!
+            </div> -->
 
+                <input id="stripeToken" value="<%= stripeToken %>" hidden>
                 <!--DoB-->
-                <form name="checkoutInput" id="helcimForm" ng-submit="HomeIt()" style="display: none;">
+                <form name="checkoutInput" ng-submit="submitCheckout(checkoutInput.$valid)">
                     <div id="dob" layout="column" ng-if="userInfo.hasLiquor">
                         <div layout="row" layout-align="center">
                             <md-input-container class="md-block bigClass">
@@ -61,7 +62,7 @@
                             </md-input-container>
                         </div>
                         <div ng-if="userInfo.dob_valid == false" class="bodErrMsg_A">
-                            <span class="bodErrMsg_B">Homit liquor in {{userInfo.dob_diff}}&#8198days</span>
+                            <span class="bodErrMsg_B">Homit liquor in {{ userInfo.dob_diff + ' '}}days</span>
                         </div>
                     </div>
                     <!--First & Last Name-->
@@ -123,7 +124,7 @@
                         </md-input-container>
                     </div>
                     <!-- Deliver Instruction -->
-                    <div id="driver-instruction" class="inptFrm gu_address" style="display: flex; justify-content: flex-end;">
+                    <div id="driver-instruction" class="gu_address flex-end">
                         <md-input-container class="md-block bigClass" flex="50">
                             <label></label>
                             <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction"
@@ -153,118 +154,61 @@
                         </md-button>
                     </div>
                     <!--Card Info Hidden Box-->
-                    <div id="helcimResults">
-                        <div id="cardInfoBox">
-                            <input type="hidden" id="token" value="<%= helcimToken %>">
-                            <input type="hidden" id="language" value="en">
-                            <input type="hidden" id="test" value="<%= helcimTestMode %>">
-                            <input type="hidden" id="amount" value={{receipt}}>
-                            <input type="hidden" id="amountShipping" value={{delFee}}>
-                            <input type="hidden" id="amountTax" value={{GST}}>
-                            <input type="hidden" id="customerCode" value={{userInfo.id}}>
-                            <input type="hidden" id="comments" value="no comments">
+                    <div id="cardInfoBox">
+                        <div layout="column" layout-align="none none" class="stripe-card-info">
+                            <!-- Stripe Card Info -->
+                            <div>
+                                <label id="card-label" for="card">Card</label>
+                                <div id="card"></div>
+                            </div>
+                            <div>
+                                <div id="card-errors" role="alert"></div>
+                            </div>
+                        </div>
+                        <!-- Card information -->
+                        <div layout="row" layout-align="center" class="billing-info">
+                            <md-checkbox ng-model="userInfo.billigAddresSame" ng-click="cardHolder()">
+                                <span class="billing-info-text">Billing information same as above</span>
+                            </md-checkbox>
+                        </div>
+                        <div ng-show="!userInfo.billigAddresSame" for="checkoutInput">
                             <div layout="row" layout-align="center">
                                 <md-input-container class="md-block extInput" flex="50">
-                                    <label class="inptLbl">Card Number</label>
-                                    <input name="cardNumber" id="cardNumber" ng-pattern="/^[0-9]*$/" maxlength="16" ng-model="cardNumber" ng-blur="sanitizeInput(cardNumber,'cd_1')"
-                                        type="text" required>
-                                    <div ng-messages="checkoutInput.cardNumber.$error">
-                                        <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                    <label class="inptLbl">Name On Card</label>
+                                    <input name="cardHolderName" id="cardHolderName" ng-pattern="/^[a-zA-Z ]*$/" maxlength="30" ng-model="userInfo.cardHolderName"
+                                        ng-blur="sanitizeInput(cardHolderName,'cardHolderName')" type="text" ng-required="!userInfo.billigAddresSame">
+                                    <div ng-messages="checkoutInput.cardHolderName.$error">
+                                        <div ng-message="pattern" class="inptErMsg">Letters only</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
                                     </div>
                                 </md-input-container>
                             </div>
                             <div layout="row" layout-align="center">
-                                <md-input-container class="md-block extInput" flex="25">
-                                    <label class="inptLbl">MMYY</label>
-                                    <input name="expiryDate" id="cardExpiry" ng-pattern="/^[0-9]*$/" maxlength="4" ng-model="expirayDate" ng-blur="sanitizeInput(expirayDate,'cd_2')"
-                                        type="text" required>
+                                <md-input-container class="md-block extInput" flex="30">
+                                    <label class="inptLbl">Address</label>
+                                    <input name="expiryDate" id="cardHolderAddress" ng-pattern="/^[a-zA-Z0-9 -,.]*$/" maxlength="30" ng-model="userInfo.cardHolderAddress"
+                                        ng-blur="sanitizeInput(cardHolderAddress,'cardHolderAddress')" type="text" ng-required="!userInfo.billigAddresSame">
                                     <div ng-messages="checkoutInput.expiryDate.$error">
-                                        <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                        <div ng-message="pattern" class="inptErMsg">Address Format</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
                                     </div>
                                 </md-input-container>
-                                <!-- </div> -->
-                                <!-- <div layout="row" layout-align="center"> -->
-                                <md-input-container class="md-block extInput" flex="25">
-                                    <label class="inptLbl inptLblSC1">CVV/CVC</label>
-                                    <input name="cvv" id="cardCVV" ng-pattern="/^[0-9]*$/" maxlength="4" ng-model="cvv" ng-blur="sanitizeInput(cvv,'cd_3')" type="text"
-                                        required>
-                                    <div ng-messages="checkoutInput.cvv.$error">
-                                        <div ng-message="pattern" class="inptErMsg">Numbers only</div>
+                                <md-input-container class="md-block extInput" flex="20">
+                                    <label class="inptLbl inptLblSC1">Postal Code</label>
+                                    <input name="postalCode" id="cardHolderPostalCode" ng-pattern="/^[a-zA-Z0-9 ]*$/" maxlength="7" ng-model="userInfo.cardHolderPostalCode"
+                                        ng-blur="sanitizeInput(cardHolderPostalCode,'cardHolderPostalCode')" type="text" ng-required="!userInfo.billigAddresSame">
+                                    <div ng-messages="checkoutInput.postalCode.$error">
+                                        <div ng-message="pattern" class="inptErMsg">Postal Code Format</div>
                                         <div ng-message="required" class="inptErMsg">Required</div>
                                     </div>
                                 </md-input-container>
                             </div>
-                            <!-- Card information -->
-                            <div layout="row" layout-align="center" class="billing-info">
-                                <md-checkbox ng-model="userInfo.billigAddresSame" ng-click="cardHolder()">
-                                    <span style="color: black;" class="billing-info-text">Billing information same as above</span>
-                                </md-checkbox>
-                            </div>
-                            <div ng-show="!userInfo.billigAddresSame">
-                                <div layout="row" layout-align="center">
-                                    <md-input-container class="md-block extInput" flex="50">
-                                        <label class="inptLbl">Name On Card</label>
-                                        <input name="cardHolderName" id="cardHolderName" ng-pattern="/^[a-zA-Z ]*$/" maxlength="30" ng-model="userInfo.cardHolderName" ng-blur="sanitizeInput(cardHolderName,'cardHolderName')"
-                                            type="text" required>
-                                        <div ng-messages="checkoutInput.cardHolderName.$error">
-                                            <div ng-message="pattern" class="inptErMsg">Letters only</div>
-                                            <div ng-message="required" class="inptErMsg">Required</div>
-                                        </div>
-                                    </md-input-container>
-                                </div>
-                                <div layout="row" layout-align="center">
-                                    <md-input-container class="md-block extInput" flex="30">
-                                        <label class="inptLbl">Address</label>
-                                        <input name="expiryDate" id="cardHolderAddress" ng-pattern="/^[a-zA-Z0-9 -,.]*$/" maxlength="30" ng-model="userInfo.cardHolderAddress" ng-blur="sanitizeInput(cardHolderAddress,'cardHolderAddress')"
-                                            type="text" required>
-                                        <div ng-messages="checkoutInput.expiryDate.$error">
-                                            <div ng-message="pattern" class="inptErMsg">Address Format</div>
-                                            <div ng-message="required" class="inptErMsg">Required</div>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block extInput" flex="20">
-                                        <label class="inptLbl inptLblSC1">Postal Code</label>
-                                        <input name="postalCode" id="cardHolderPostalCode" ng-pattern="/^[a-zA-Z0-9 ]*$/" maxlength="7" ng-model="userInfo.cardHolderPostalCode" ng-blur="sanitizeInput(cardHolderPostalCode,'cardHolderPostalCode')"
-                                            type="text" required>
-                                        <div ng-messages="checkoutInput.postalCode.$error">
-                                            <div ng-message="pattern" class="inptErMsg">Postal Code Format</div>
-                                            <div ng-message="required" class="inptErMsg">Required</div>
-                                        </div>
-                                    </md-input-container>
-                                </div>
-                            </div>
-                            <button onclick="javascript:helcimProcess();" id="buttonProcess" style="display: none;"></button>
                         </div>
-                        <div class="HomeItBtn">
-                            <button type="submit" name="buttonProcess" class="btn btn-success" ng-click="HomeIt()">Home it</button>
-                        </div>
+                    </div>
+                    <div class="HomeItBtn">
+                        <button type="submit" name="buttonProcess" class="btn btn-success">Home it</button>
+                    </div>
                 </form>
-                <br>
-                <br>
-                <?xml version=\"1.0\"?>
-                <message>
-                    <response></response>
-                    <responseMessage></responseMessage>
-                    <noticeMessage></noticeMessage>
-                    <date></date>
-                    <time></time>
-                    <type></type>
-                    <amount></amount>
-                    <cardHolderName></cardHolderName>
-                    <cardNumber></cardNumber>
-                    <cardExpiry></cardExpiry>
-                    <cardToken></cardToken>
-                    <cardType></cardType>
-                    <transactionId></transactionId>
-                    <avsResponse></avsResponse>
-                    <cvvResponse></cvvResponse>
-                    <approvalCode></approvalCode>
-                    <orderNumber></orderNumber>
-                    <customerCode></customerCode>
-                </message>
-                </div>
             </div>
             <!--Order Summary SideNav-->
             <md-sidenav class="md-sidenav-right mdSideNavL1" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
@@ -340,10 +284,10 @@
                                     </div>
                                     <div class="cartBItems2C" flex="35">
                                         <ul class="cartBItems2C2">
-                                            <li>{{product.brand}} {{product.name}}</li>
-                                            <li>{{product.volume}}</li>
-                                            <li>{{product.quantity}}&#8202X{{product.packaging}}</li>
-                                            <li>C${{product.price}}</li>
+                                            <li>{{ product.brand }} {{ product.name }}</li>
+                                            <li>{{ product.volume }}</li>
+                                            <li>{{ product.quantity + ' '}} X {{product.packaging }}</li>
+                                            <li>C${{ product.price }}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -398,8 +342,9 @@
             <script src="/resources/services/mapServices.js"></script>
             <script src="/resources/services/date.js"></script>
             <script src="/resources/controllers/checkout.js"></script>
+            <script src="/resources/controllers/checkout.js"></script>
             <% } %>
-                <script src="https://secure.myhelcim.com/js/version2.js"></script>
+                <script src="https://js.stripe.com/v3/"></script>
     </div>
 </body>
 

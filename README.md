@@ -49,11 +49,9 @@
 		NOREPLY_EMAIL_USER=
 		NOREPLY_EMAIL_PASS=
 
-		# Helcim
-		HELCIM_ACCOUNT_ID=
-		HELCIM_API_TOKEN=   
-		HELCIM_JS_TOKEN=
-		HELCIM_TEST_MODE=		# 1 (for test) | 0 (for real use)		
+		# Stripe
+		STRIPE_TOKEN_SECRET=
+		STRIPE_TOKEN_PUB=
 		
 		# Order Slips
 		ORDER_SLIPS_DIR=

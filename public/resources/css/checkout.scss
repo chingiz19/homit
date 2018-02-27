@@ -3,12 +3,14 @@ body{
     letter-spacing: 0.01em;
     font-family: 'Nunito', sans-serif;
 }
+.flex-end{
+    display: flex; justify-content: flex-end;
+}
 /* Store Break Line */
 .store-break{
     display: flex; align-items: center; 
     margin: 15px 0 0px 0;
 }
-
 .store-break-line { 
     width: 100%; 
     border-bottom: 1px solid rgba(0,0,0, 0.866); 
@@ -28,13 +30,14 @@ body{
 .billing-info{
     margin-top: 25px;
 }
+.billing-info-text{
+    color: black;
+}
 
 #tempMessage{
     border: 1px solid goldenrod; background-color: rgb(241, 185, 82); text-align: center; border-radius: 5px; padding: 5px; font-size: 16px;
 }
 
-/*Column-1 consists of User Info
-Columns-2 consist of items and items' info*/
 @media(min-width: 495px){
     .col1{
         width: 475px !important;
@@ -383,13 +386,39 @@ md-backdrop.md-opaque {
     font-size: 20px;
 }
 
+.adrInpt{
+    width: 100%; height: 30px;
+    font-size: 15px;
+    color: rgba(0,0,0,0.85);
+    border: 1px solid rgba(0,0,0,0.12);
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-radius: 0;
+    overflow-y: hidden;
+    outline-width: 0;
+}
+.adrInpt::placeholder{
+    color: rgba(0,0,0,0.38);
+    font-size: 15px;
+}
+.adrInpt_x{
+    background-color: rgba(255,255,255,1);
+    position: absolute; right: 0px; top: 0px; min-width: 30px; min-height: 30px; margin: 0;
+    border-bottom: rgba(0,0,0,0.12);
+}
+.adrInpt_x_A{
+    fill: rgba(0,0,0,0.4);
+}
+.adrInpt_x_A svg{
+    width: 20px; height: 20px;
+}
+
 /*Mobile screens*/
 @media screen and (max-device-width: 600px) {
-
     #tempMessage{
         margin-top: 100px; font-size: 40px;
     }
-
     body{
         font-size: 23px
     }
@@ -401,6 +430,13 @@ md-backdrop.md-opaque {
         border: rgba(180,180,180,0.5) solid 2px ;border-radius: 5px; 
         box-shadow: none;
         z-index: 100; 
+    }
+    .adrInpt{
+        height: 35px;
+        font-size: 20px;
+    }
+    .adrInpt::placeholder{
+        font-size: 20px;
     }
     .container{
         margin: 0 !important;
@@ -573,10 +609,6 @@ md-backdrop.md-opaque {
     font-size: 13px;
     text-transform: uppercase; 
 }
-
-#helcimResults{
-    color: rgba(255,255,255,1);
-}
 #checkoutModal .modal-dialog{
     top: 20%;
 }
@@ -699,32 +731,6 @@ md-backdrop.md-opaque {
     -webkit-font-smoothing: antialiased;
 }
 
-.adrInpt{
-    width: 100%; height: 30px;
-    font-size: 15px;
-    color: rgba(0,0,0,0.85);
-    border: 1px solid rgba(0,0,0,0.12);
-    border-top-width: 0px;
-    border-left-width: 0px;
-    border-right-width: 0px;
-    overflow-y: hidden;
-    outline-width: 0;
-}
-.adrInpt::placeholder{
-    color: rgba(0,0,0,0.38);
-    font-size: 15px;
-}
-.adrInpt_x{
-    background-color: rgba(255,255,255,1);
-    position: absolute; right: 0px; top: 0px; min-width: 30px; min-height: 30px; margin: 0;
-    border-bottom: rgba(0,0,0,0.12);
-}
-.adrInpt_x_A{
-    fill: rgba(0,0,0,0.4);
-}
-.adrInpt_x_A svg{
-    width: 20px; height: 20px;
-}
 .outPlgn_txt{
     font-size: 12px;
     color: #d44444;
@@ -766,7 +772,26 @@ md-toolbar{
 #address md-input-container label{
     display: none;
 }
-
 .response-02-text{
     text-align: center;
+}
+#card{
+    width: 75%;
+    margin-left: auto; margin-right: auto;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+#card-label{
+    display: none;
+}
+.stripe-card-info{
+    margin: 20px 0 20px 0;
+}
+#card-errors{
+    width: 75%;
+    margin-left: auto; margin-right: auto;
+    color: red;
+}
+.__PrivateStripeElement{
+    width: 100%;
 }

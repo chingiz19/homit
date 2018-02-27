@@ -22,7 +22,7 @@ router.post('/placeorder', async function (req, res, next) {
     var birth_month = req.body.user.birth_month;
     var birth_year = req.body.user.birth_year;
     var cartProducts = req.body.products;
-    var transactionId = req.body.transaction_id;
+    var cardToken = req.body.token_id;
     var saveCard = req.body.save_card;
 
     Logger.log.info("Order has been placed", {
@@ -40,96 +40,105 @@ router.post('/placeorder', async function (req, res, next) {
     var paramsMissing = false;
 
     if (signedUser) {
-        paramsMissing = !cartProducts || !phone || !address || !address_lat || !address_long || !transactionId;
+        paramsMissing = !cartProducts || !phone || !address || !address_lat || !address_long || !cardToken;
     } else {
-        paramsMissing = !email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts || !transactionId;
+        paramsMissing = !email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts || !cardToken;
     }
 
     if (!paramsMissing) {
-        var isTransactionFine = await Orders.checkTransaction(transactionId);
-        if (isTransactionFine) {
-            var dbProducts = await Catalog.getCartProducts(cartProducts);
-            var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
-            var allPrices = Catalog.getAllPricesForProducts(cartProducts, dbProducts);
-            var totalPrice = allPrices.total_price;
-            var transactionValid = MP.isTransactionValid(transactionId, totalPrice);
-            if (transactionValid) {
-                var cardDigits = MP.getUserCardLastDigits(transactionId);
-                var data = {
-                    phone_number: phone
+        var dbProducts = await Catalog.getCartProducts(cartProducts);
+        var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
+        var allPrices = Catalog.getAllPricesForProducts(cartProducts, dbProducts);
+        var totalPrice = allPrices.total_price;
+        MP.charge(cardToken, totalPrice).then(async function (chargeResult) {
+            var cardDigits = chargeResult.source.last4;
+            var chargeId = chargeResult.id;
+            var data = {
+                phone_number: phone
+            };
+            if (birth_year && birth_month && birth_day) {
+                var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
+                data.birth_date = birth_date;
+            }
+            var userId;
+            var isGuest;
+            if (signedUser) {
+                isGuest = false;
+                userId = signedUser.id
+                var key = {
+                    id: userId
                 };
-                if (birth_year && birth_month && birth_day) {
-                    var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
-                    data.birth_date = birth_date;
-                }
-                var userId;
-                var isGuest;
-                if (signedUser) {
-                    isGuest = false;
-                    userId = signedUser.id
+                var updatedUser = await User.updateUser(data, key);
+
+                // This is not working right now. Will be implemented later
+                // if (saveCard) {
+                //     await User.updateCreditCard(key, saveCard, cardToken, cardDigits, cardType);
+                // }
+            } else {
+                isGuest = true;
+                var guestUserFound = await User.findGuestUser(email);
+                data.first_name = fname;
+                data.last_name = lname;
+                if (guestUserFound) {
+                    userId = guestUserFound.id;
+
                     var key = {
                         id: userId
                     };
-                    var updatedUser = await User.updateUser(data, key);
-
-                    // This is not working right now. Will be implemented later
-                    // if (saveCard) {
-                    //     var cardToken = MP.getUserCardToken(transactionDetails);
-                    //     var cardType = MP.getUserCardType(transactionDetails);
-                    //     await User.updateCreditCard(key, saveCard, cardToken, cardDigits, cardType);
-                    // }
+                    var guestUser = await User.updateGuestUser(data, key);
                 } else {
-                    isGuest = true;
-                    var guestUserFound = await User.findGuestUser(email);
-                    data.first_name = fname;
-                    data.last_name = lname;
-                    if (guestUserFound) {
-                        userId = guestUserFound.id;
-
-                        var key = {
-                            id: userId
-                        };
-                        var guestUser = await User.updateGuestUser(data, key);
-                    } else {
-                        data.user_email = email;
-                        userId = await User.addGuestUser(data);
-                    }
+                    data.user_email = email;
+                    userId = await User.addGuestUser(data);
                 }
-
-                // create orders
-                var userOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, allPrices, products);
-                var response = {
-                    success: true,
-                    orders: userOrders
-                };
-                res.send(response);
-            } else {
-                var response = {
-                    success: false,
-                    error: {
-                        dev_message: "Transaction details mismatch.",
-                        ui_message: "Error happened while checkout. Please try again"
-                    }
-                };
-                res.send(response);
-                var specMetaData = {
-                    directory: __filename,
-                    requester_ip: req.connection.remoteAddress,
-                    user_id: userId
-                }
-                Logger.log.warn("Transaction details mismatch.", specMetaData);
             }
-        } else {
+
+            // create orders
+            var userOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardDigits, allPrices, products);
             var response = {
-                success: false,
-                error: {
-                    dev_message: "Transaction ID already exists in database",
-                    ui_message: "Error happened while checkout. Please try again"
-                }
+                success: true,
+                orders: userOrders
             };
             res.send(response);
-            Logger.log.warn("Transaction ID already exists in database.", metaData);
-        }
+        }, async function (error) {
+            if (error) {
+                var errMessage = "Something went wrong while processing your order, please contact us at +1(403) 800-3460.";
+                switch (error.type) {
+                    case 'StripeCardError':
+                        errMessage = "Card has been declined.";
+                        Logger.log.debug("A declined card error", error);
+                        break;
+                    case 'RateLimitError':
+                        Logger.log.error("Too many requests made to the API too quickly", error);
+                        break;
+                    case 'StripeInvalidRequestError':
+                        Logger.log.error("Invalid parameters were supplied to Stripe's API", error);
+                        break;
+                    case 'StripeAPIError':
+                        Logger.log.error("An error occurred internally with Stripe's API", error);
+                        break;
+                    case 'StripeConnectionError':
+                        Logger.log.error("Some kind of error occurred during the HTTPS communication", error);
+                        break;
+                    case 'StripeAuthenticationError':
+                        Logger.log.error("You probably used an incorrect API key", error);
+                        break;
+                    case MP.declinedByNetwork:
+                        errMessage = "Card has been declined.";
+                        Logger.log.error("Payment has been declined by issuer (network).", error);
+                        break;
+                    default:
+                        Logger.log.error("Handle any other types of unexpected errors", error);
+                        break;
+                }
+                res.status(200).json({
+                    success: false,
+                    error: {
+                        "code": "U000",
+                        "message": errMessage
+                    }
+                });
+            }
+        });
     } else {
         res.status(403).json({
             error: {
@@ -140,8 +149,8 @@ router.post('/placeorder', async function (req, res, next) {
     }
 });
 
-var createOrders = async function (userId, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, allPrices, products) {
-    var orderTransactionId = await Orders.createTransactionOrder(userId, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardDigits, allPrices);
+var createOrders = async function (userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardDigits, allPrices, products) {
+    var orderTransactionId = await Orders.createTransactionOrder(userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardDigits, allPrices);
 
     var createFunctions = [];
     var userOrders = [];

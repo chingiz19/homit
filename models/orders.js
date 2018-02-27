@@ -17,12 +17,12 @@ var pub = {};
  * @param {*} cardNumber 
  * @param {*} allPrices 
  */
-pub.createTransactionOrder = async function (userId, address, address_lat, address_long, driverInstruction, isGuest, transactionId, cardNumber, allPrices) {
+pub.createTransactionOrder = async function (userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardNumber, allPrices) {
     var data = {
         delivery_address: address,
         delivery_latitude: address_lat,
         delivery_longitude: address_long,
-        transaction_id: transactionId,
+        charge_id: chargeId,
         card_digits: cardNumber,
         total_price: allPrices.total_price,
         total_amount: allPrices.cart_amount,
@@ -412,14 +412,6 @@ pub.getOrderItemsByIdUserId = async function (orderId, userId) {
         return order;
     }
     return false;
-}
-
-pub.checkTransaction = async function (transactionId) {
-    var data = {
-        transaction_id: transactionId
-    };
-    var ordersTransactions = await db.selectAllWhere(db.dbTables.orders_transactions_history, data);
-    return ordersTransactions.length == 0;
 }
 
 pub.isDelivered = function (orderId) {

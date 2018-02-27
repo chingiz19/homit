@@ -269,7 +269,7 @@ CREATE TABLE orders_transactions_history (
 	id_prefix VARCHAR(3) NOT NULL DEFAULT "t_", 
 	user_id INT,
 	guest_id INT,
-	transaction_id VARCHAR(225) NOT NULL,
+	charge_id VARCHAR(225) NOT NULL,
 	card_digits VARCHAR(4) NOT NULL,
 	total_price DECIMAL(6,2) NOT NULL,
 	total_amount DECIMAL(6,2) NOT NULL,
@@ -282,9 +282,9 @@ CREATE TABLE orders_transactions_history (
 	driver_instruction VARCHAR(225),
 	
 	PRIMARY KEY (id),
-	UNIQUE (transaction_id),	
-	CONSTRAINT fk_orders_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE SET NULL ON UPDATE CASCADE,
-	CONSTRAINT fk_orders_history_guest_id FOREIGN KEY (guest_id) REFERENCES users_customers_guest(id) ON DELETE SET NULL ON UPDATE CASCADE
+	UNIQUE (charge_id),
+	CONSTRAINT fk_orders_transactions_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE SET NULL ON UPDATE CASCADE,
+	CONSTRAINT fk_orders_transactions_history_guest_id FOREIGN KEY (guest_id) REFERENCES users_customers_guest(id) ON DELETE SET NULL ON UPDATE CASCADE
 
 ) ENGINE = InnoDB;
 
