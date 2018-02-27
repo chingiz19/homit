@@ -9,3 +9,6 @@ node_modules/
 www
 OrderSlips
 OrderSlips/*
+.gulp-scss-cache/
+.gulp-scss-cache/*
+.sass-cache/

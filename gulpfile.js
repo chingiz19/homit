@@ -14,6 +14,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify-es').default;
 var gulpFn  = require('gulp-fn');
 var mocha = require('gulp-mocha');
+var scss = require('gulp-scss');
 var beep = require('beepbeep');
 var del = require('del');
 var browserSync = require('browser-sync').create();
@@ -33,7 +34,7 @@ var jsFiles = [
     './public/**/controllers/*.js',
     './public/**/library/js/*.js'
 ];
-var cssFiles = './public/**/*.css';
+var cssFiles = './public/**/*.scss';
 var imgFiles = './public/**/*.+(png|svg|jpg|jpeg|ico)';
 var miscFiles = [
     './public/*.*',
@@ -102,7 +103,7 @@ gulp.task('img', function(){
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = true;
         }))
-        .pipe(cache('cssFiles'))
+        .pipe(cache('imgFiles'))
         .pipe(gulp.dest("www/"))
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = false;
@@ -128,7 +129,8 @@ gulp.task('css', function(){
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = true;
         }))
-        .pipe(cache('imgFiles'))
+        .pipe(cache('cssFiles'))
+        .pipe(scss())
         // .pipe(production(concatCss('resources/css/all.min.css'))) TODO
         .pipe(production(cssnano({
             "zindex": false
