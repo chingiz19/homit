@@ -719,7 +719,7 @@ pub.areAllDispatched = async function (transactionId) {
         AND date_assigned IS NULL
     `;
 
-    var data = { transaction_id: transactionId };
+    var data = { order_transaction_id: transactionId };
 
     var dbResult = await db.runQuery(sqlQuery, data);
     return dbResult.length == 0;
