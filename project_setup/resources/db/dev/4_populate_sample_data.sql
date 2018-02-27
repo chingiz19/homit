@@ -361,7 +361,7 @@ INSERT INTO `catalog_listings`(id,product_brand,product_name,product_description
 INSERT INTO `catalog_listings`(id,product_brand,product_name,product_description,product_country,type_id) VALUES (5089, "J & B", "Rare Scotch", NULL, "Scotland", 89);
 INSERT INTO `catalog_listings`(id,product_brand,product_name,product_description,product_country,type_id) VALUES (5090, "Wild Turkey", "Bourbon Whiskey 81 Proof", NULL, "USA", 85);
 INSERT INTO `catalog_listings`(id,product_brand,product_name,product_description,product_country,type_id) VALUES (5091, "Royal Reserve", "Canadian Rye Whisky", NULL, "Canada", 87);
-INSERT INTO `catalog_listings`(id,product_brand,product_name,product_description,product_country,type_id) VALUES (5092, "Baileys ", "Irish Cream Original", NULL, "Ireland", 91);
+INSERT INTO `catalog_listings`(id,product_brand,product_name,product_description,product_country,type_id) VALUES (5092, "Baileys ", "Irish Cream Original", NULL, "Ireland", 106);
 INSERT INTO `catalog_listings`(id,product_brand,product_name,product_description,product_country,type_id) VALUES (5093, "El Jimador", "Reposado", NULL, "Mexico", 92);
 INSERT INTO `catalog_listings`(id,product_brand,product_name,product_description,product_country,type_id) VALUES (5094, "Jose Cuervo Especial", "Gold", NULL, "Mexico", 93);
 INSERT INTO `catalog_listings`(id,product_brand,product_name,product_description,product_country,type_id) VALUES (5095, "Jose Cuervo Especial", "Silver", NULL, "Mexico", 94);
