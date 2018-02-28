@@ -700,12 +700,14 @@ var removeOrderRouteNode = async function (driverId, orderId) {
 pub.getRoutes = async function (driverId) {
     var sqlQuery = `
         SELECT routes.id AS route_id, routes.position AS position, history.id_prefix AS node_id_prefix,
-        routes.order_id AS node_id, history.delivery_address AS node_address, "order" AS node_type,
-        history.delivery_latitude AS node_latitude, history.delivery_longitude AS node_longitude
+        routes.order_id AS node_id, transaction.delivery_address AS node_address, "order" AS node_type,
+        transaction.delivery_latitude AS node_latitude, transaction.delivery_longitude AS node_longitude
         FROM drivers_routes AS routes,
-        orders_history AS history
+        orders_history AS history,
+        orders_transactions_history AS transaction
         WHERE 
-        routes.order_id = history.id
+        transaction.id = history.order_transaction_id
+        AND routes.order_id = history.id
         AND ? 
         
         UNION
