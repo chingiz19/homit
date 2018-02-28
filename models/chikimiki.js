@@ -147,8 +147,8 @@ var receiver = async function (jsonResponse) {
 
 
         // Old to be removed
-        if (emailTempStorage[orderDetails.transaction_id]) {
-            emailTransactionOld = emailTempStorage[orderDetails.transaction_id];
+        if (emailTempStorage[orderDetails.order_transaction_id]) {
+            emailTransactionOld = emailTempStorage[orderDetails.order_transaction_id];
 
             if (emailTransactionOld.orders) {
                 emailOrdersOld = emailTransactionOld.orders;
@@ -156,7 +156,7 @@ var receiver = async function (jsonResponse) {
         }
 
         // New
-        var emailTransactionTemp = await Email.getTransactionEmail(orderDetails.transaction_id);
+        var emailTransactionTemp = await Email.getTransactionEmail(orderDetails.order_transaction_id);
         if (emailTransactionTemp) {
             emailTransaction = JSON.parse(emailTransactionTemp);
 
@@ -182,14 +182,14 @@ var receiver = async function (jsonResponse) {
         // Old to be removed
         emailOrdersOld[superCategory.name] = emailOrderOld;
         emailTransactionOld.orders = emailOrdersOld;
-        emailTempStorage[orderDetails.transaction_id] = emailTransactionOld;
+        emailTempStorage[orderDetails.order_transaction_id] = emailTransactionOld;
 
         // New
         emailOrders[superCategory.name] = emailOrder;
         emailTransaction.orders = emailOrders;
 
         // Check if email is ready to send
-        var allAssigned = await Orders.areAllDispatched(orderDetails.transaction_id);
+        var allAssigned = await Orders.areAllDispatched(orderDetails.order_transaction_id);
         if (allAssigned) {
             emailTransactionOld.customer = jsonCustomer;
             emailTransaction.customer = jsonCustomer;
@@ -200,10 +200,10 @@ var receiver = async function (jsonResponse) {
             Email.sendOrderSlip(emailTransactionOld);
             // Email.sendOrderSlip(emailTransaction);
 
-            delete emailTempStorage[orderDetails.transaction_id];
-            await Email.deleteTransactionEmail(orderDetails.transaction_id);
+            delete emailTempStorage[orderDetails.order_transaction_id];
+            await Email.deleteTransactionEmail(orderDetails.order_transaction_id);
         } else {
-            await Email.saveTransactionEmail(orderDetails.transaction_id, emailTransaction);
+            await Email.saveTransactionEmail(orderDetails.order_transaction_id, emailTransaction);
         }
     } else {
         Logger.log.error("Error while processing order from CM due to wrong 'action' value received from CM", logMeta);
