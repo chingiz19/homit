@@ -1,3 +1,5 @@
+require('require-dir')('./gulp');
+
 var gulp = require("gulp");
 var nodemon = require('gulp-nodemon');
 var ngAnnotate = require('gulp-ng-annotate');
@@ -13,7 +15,6 @@ var concatCss = require('gulp-concat-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify-es').default;
 var gulpFn  = require('gulp-fn');
-var mocha = require('gulp-mocha');
 var scss = require('gulp-scss');
 var beep = require('beepbeep');
 var del = require('del');
@@ -87,7 +88,7 @@ gulp.task('js', function(){
             sub: true,
             esversion: 6
         }))
-        .pipe(jshint.reporter('default'))
+        .pipe(jshint.reporter('jshint-stylish'))
         .pipe(production(uglify(uglifyOptions)))
         .pipe(production(concat('resources/js/all.min.js')))
         .pipe(plumber.stop())
@@ -186,24 +187,6 @@ gulp.task('clean:www', function(){
     return del.sync('www');
 });
 
-gulp.task('test-views', ['compile', 'start'], function(){
-    var stream = gulp.src("./tests/view/*.test.js", {watch: false})
-            .pipe(mocha({
-                reporter: "spec",
-            }));
-            //TODO: nodemon doesn't exit with gulp-exit() in here
-    return stream;
-});
-
-gulp.task('test-db', function(){
-    var stream = gulp.src("./tests/db/*.test.js", {watch: false})
-            .pipe(mocha({
-                reporter: "spec",
-                exit: true
-            }));
-    return stream;
-});
-
 gulp.task('run', function(cb){
     if (gutil.env.env == "production"){
         environments.current(production);
@@ -229,6 +212,7 @@ gulp.task('default', function(){
 
     test-views              |  run test for views
     test-db                 |  run test for db
+    test-e2e                |  run test for end to end testing
     
     run --env production    | compiles everything for production environment\n`;
 

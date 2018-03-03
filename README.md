@@ -94,5 +94,19 @@
 ### Database structure
 	gulp test-db
 
+### Running End to End tests (e2e)
+#### Setting up 
+If running for the first time, you'll need to install selenium web-driver. This can be done by following commands:
+
+	1. npm install -g protractor
+	2. run 'webdriver-manager update'
+
+This will update webdriver. This only needs to be done once (or for later updates of webdriver).
+
+#### Run test
+	1. open new terminal/cmd window and run 'webdriver-manager start'
+	2. run server (localhost:8080)
+	3. gulp test-e2e
+
 ### Run views (200/404 for front pages)
 	gulp test-views
