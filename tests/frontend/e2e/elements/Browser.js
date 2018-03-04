@@ -1,13 +1,14 @@
-/* Private variables */
-var _baseUrl;
-
 class Browser {
     constructor(){
-        _baseUrl = "http://localhost:8080";
+        this._baseUrl = "http://localhost:8080";
     }
 
-    getBaseUrl(){
-        return _baseUrl;
+    baseUrl(){
+        return this._baseUrl;
+    }
+
+    currentUrl(){
+        return browser.getCurrentUrl();
     }
 }
 

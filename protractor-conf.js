@@ -12,7 +12,7 @@ exports.config = {
     }, {
         browserName: 'chrome',
         chromeOptions: {
-            args: ["--headless", "--disable-gpu"]
+            // args: ["--headless", "--disable-gpu"]
         }
       }],
       jasmineNodeOpts: {

@@ -1,44 +1,52 @@
 var Page = require("../Page");
 
-/* private variables */
-var addressAutocompleteInput = element(by.id("autocompleteAddressInputBox")); 
-var addressMessage = element(by.binding('addressMessage'));
-var url_base = "http://localhost:8080";
-
-
 class MainPage extends Page {
     constructor(){
         super('/main', "Homit | Snack, Liquor and Party Supply Delivery in Calgary");
+
+        this.addressAutocompleteInput = element(by.id("autocompleteAddressInputBox")); 
+        this.addressMessage = element(by.binding('addressMessage'));
+        this.goToHomitHubArrowBtn = element(by.id('goToHomitHubArrowBtn'));
+        this.snackVendorDiv = element(by.id('snack-vendor'));
+        this.liquorStationDiv = element(by.id('liquor-station'));
     }
 
     get(){
-        browser.get(url_base + "/main");
+        browser.get(this.baseUrl() + "/main");
         return this;
     }
 
-    getTitle(){
-        return this.title();
-    }
-
     setAddress(addr){
-        addressAutocompleteInput.sendKeys(addr);
+        this.addressAutocompleteInput.sendKeys(addr);
         return this;
     }
 
     selectFirstAddress(){
-        addressAutocompleteInput
+        this.addressAutocompleteInput
             .sendKeys(protractor.Key.ARROW_DOWN)
             .sendKeys(protractor.Key.ENTER);
         return this;
     }
 
     getAddressMessageText(){
-        return addressMessage.getText();
+        return this.addressMessage.getText();
+    }
+
+    clickSnackVendorDiv(){
+        this.snackVendorDiv.click();
+    }
+
+    clickLiquorStationDiv(){
+        this.liquorStationDiv.click();
     }
 
     getErrorAddressMessage(){
         return "Sorry, we do not deliver to your location at the moment.";
     }
+
+    homitHubUrl(){
+        return this.baseUrl() + "/main#homithub";
+    }
 }
 
-module.exports = new MainPage();
+module.exports = MainPage;

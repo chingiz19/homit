@@ -28,7 +28,7 @@
                 </span>
             </div>
             <div class="go-to-homit-hub">
-                <button ng-click="scrollTo('homitHub')">
+                <button id="goToHomitHubArrowBtn" ng-click="scrollTo('homitHub')">
                     <div layout="column">
                         <ng-md-icon icon="keyboard_arrow_down" class="go-to-homit-hub-icon"></ng-md-icon>
                     </div>
@@ -60,7 +60,7 @@
                     </h3>
                     <button class="homit-hub-text">Shop Now</button>
                 </div>
-                <div class="store-window liquor-station" ng-click="hrefTo('/catalog/liquor-station')">
+                <div id="liquor-station" class="store-window liquor-station" ng-click="hrefTo('/catalog/liquor-station')">
                     <div id="liquor-station-icon" class="store-window store-background-image"></div>
                     <h3>
                         <a class="homit-hub-text store-name-text" href="https://homit.ca/catalog/liquor-station">Liquor Station</a>

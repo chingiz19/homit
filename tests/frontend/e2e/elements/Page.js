@@ -1,14 +1,10 @@
 var Browser = require("./Browser");
 
-/* private variables */
-var _title;
-var _url;
-
 class Page extends Browser {
     constructor(url, title){
         super();
-        _url = url;
-        _title = title;
+        this._url = url;
+        this._title = title;
     }
 
     refresh(){
@@ -20,11 +16,11 @@ class Page extends Browser {
     }
 
     load(){
-        browser.get(this.getBaseUrl() + _url);
+        browser.get(this.getBaseUrl() + this._url);
     }
     
     title(){
-        return _title;
+        return this._title;
     }
 }
 
