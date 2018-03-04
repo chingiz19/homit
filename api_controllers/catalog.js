@@ -3,120 +3,98 @@
  */
 var router = require("express").Router();
 
-router.use('/', function (req, res, next) {
+var concat = require('unique-concat');
+
+router.use('/', async function (req, res, next) {
     var tempArray = req.path.split('/');
-    var superCategory = tempArray[1];
+    var storeTypeApi = tempArray[1];
     var categoryName = tempArray[2];
 
-    if (superCategory == Catalog.snackVendorSuperCategory) {
-        next();
+    if (categoryName) {
+        if (storeTypeApi == Catalog.snackVendorStoreType) {
+            next();
+        } else {
+            var storeType = await Catalog.getStoreTypeByApi(storeTypeApi);
+            if (storeType) {
+                var storeOpen = await Catalog.isStoreOpen(storeType);
+                var result = await Catalog.getAllProductsByCategory(storeType, categoryName, storeOpen);
+                var response = {
+                    success: true,
+                    store_open: storeOpen,
+                    subcategories: result.subcategories,
+                    products: result.products
+                };
+                res.send(response);
+            } else {
+                next();
+            }
+        }
     } else {
-        Catalog.isStoreOpen(superCategory).then(function (storeOpen) {
-            Catalog.getAllProductsByCategory(superCategory, categoryName, storeOpen).then(function (products) {
-                if (products.length > 0) {
-                    var allBrands = Catalog.getAllBrands(products);
-                    Catalog.getAllTypes(products).then(function (subcategories) {
-                        var response = {
-                            success: true,
-                            store_open: storeOpen,
-                            all_brands: allBrands,
-                            subcategories: subcategories,
-                            products: products
-                        };
-                        res.send(response);
-                    });
-                } else {
-                    next();
-                }
-            });
-        });
+        next();
     }
 });
 
-router.use('/snack-vendor', function (req, res, next) {
+router.use('/snack-vendor', async function (req, res, next) {
     var tempArray = req.path.split('/');
     var categoryName = tempArray[1];
-    var homitCarOpen = true;
 
-    Catalog.getAllProductsByCategory(Catalog.homitCarSuperCategory, categoryName, homitCarOpen).then(function (homitCarProducts) {
-        Catalog.isStoreOpen(Catalog.safewaySuperCategory).then(function (safewayOpen) {
-            if (!safewayOpen) {
-                Catalog.getCategoryOnlyProducts(Catalog.safewaySuperCategory, categoryName, safewayOpen, Catalog.convenienceSuperCategory, categoryName).then(function (safewayOnlyProducts) {
-                    Catalog.isStoreOpen(Catalog.convenienceSuperCategory).then(function (convenienceOpen) {
-                        Catalog.getAllProductsByCategory(Catalog.convenienceSuperCategory, categoryName, convenienceOpen).then(function (convenienceProducts) {
-                            var newProducts = convenienceProducts.concat(homitCarProducts);
-                            var finalProducts = newProducts.concat(safewayOnlyProducts);
-                            if (finalProducts.length > 0) {
-                                var allBrands = Catalog.getAllBrands(finalProducts);
-                                Catalog.getAllTypes(finalProducts).then(function (subcategories) {
-                                    var response = {
-                                        success: true,
-                                        store_open: convenienceOpen || homitCarOpen,
-                                        all_brands: allBrands,
-                                        subcategories: subcategories,
-                                        products: finalProducts
-                                    };
-                                    res.send(response);
-                                });
-                            } else {
-                                next();
-                            }
-                        });
-                    });
-                });
-            } else {
-                Catalog.getAllProductsByCategory(Catalog.safewaySuperCategory, categoryName, safewayOpen).then(function (safewayProducts) {
-                    var finalProducts = safewayProducts.concat(homitCarProducts);
-                    if (finalProducts.length > 0) {
-                        var allBrands = Catalog.getAllBrands(finalProducts);
-                        Catalog.getAllTypes(finalProducts).then(function (subcategories) {
-                            var response = {
-                                success: true,
-                                store_open: homitCarOpen || safewayOpen,
-                                all_brands: allBrands,
-                                subcategories: subcategories,
-                                products: finalProducts
-                            };
-                            res.send(response);
-                        });
-                    } else {
-                        next();
-                    }
-                });
-            }
-        });
-    });
+    if (categoryName) {
+        var safewayOpen = await Catalog.isStoreOpen(Catalog.safewayStoreType);
+        var subcategories;
+        var products;
+        if (safewayOpen) {
+            var result = await Catalog.getAllProductsByCategoryWithHomitCar(Catalog.safewayStoreType, categoryName, safewayOpen);
+            subcategories = result.subcategories;
+            products = result.products;
+        } else {
+            var safewayOnlyResult = await Catalog.getAllProductsByCategorySafewayOnly(categoryName, safewayOpen);
+            var newResult = await Catalog.getAllProductsByCategoryWithHomitCar(Catalog.sevenElevenStoreType, categoryName, true);
+
+            subcategories = concat(newResult.subcategories, safewayOnlyResult.subcategories);
+            products = newResult.products.concat(safewayOnlyResult.products);
+        }
+        var response = {
+            success: true,
+            store_open: true,
+            subcategories: subcategories,
+            products: products
+        };
+        res.send(response);
+    } else {
+        next();
+    }
 });
 
 
-router.post('/search', function (req, res, next) {
+router.post('/search', async function (req, res, next) {
     var searchText = req.body.search;
-    if (searchText.length < 3) {
-        var response = {
+    var response;
+    if (searchText.length >= 3) {
+        var limit = 7;
+        var storeTypes = await Catalog.searchStoreType(searchText, limit);
+        limit = limit - storeTypes.length;
+        var categories = await Catalog.searchCategory(searchText, limit);
+        limit = limit - categories.length;
+        var subcategories = await Catalog.searchSubcategory(searchText, limit);
+        limit = limit - subcategories.length;
+        var products = await Catalog.searchProducts(searchText, limit);
+
+        var finalResult = {
+            store_type: storeTypes,
+            category: categories,
+            subcategory: subcategories,
+            products: products
+        };
+        response = {
+            success: true,
+            result: finalResult
+        };
+    } else {
+        response = {
             success: false
         };
-        res.send(response);
     }
-
-    Catalog.searchSuperCategorySpecial(searchText).then(function (superCategories) {
-        Catalog.searchCategorySpecial(searchText).then(function (categories) {
-            Catalog.searchSubcategorySpecial(searchText).then(function (subcategories) {
-                Catalog.searchProductsSpecial(searchText).then(function (products) {
-                    var finalResult = {
-                        super_category: superCategories,
-                        category: categories,
-                        subcategory: subcategories,
-                        products: products
-                    };
-                    var response = {
-                        success: true,
-                        result: finalResult
-                    };
-                    res.send(response);
-                });
-            });
-        });
-    });
+    res.send(response);
 });
 
 router.post('/searchdepot', function (req, res, next) {

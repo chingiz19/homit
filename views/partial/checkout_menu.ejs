@@ -23,13 +23,13 @@
                 </div>
             </div>
             <!--Order Summary - Cart Items-->
-            <div ng-repeat="super_category in userCartToView track by $index" class="cartBItems1">
+            <div ng-repeat="store_type in userCartToView track by $index" class="cartBItems1">
                 <div class="store-break">
                     <div flex="10" class="store-break-line"></div>
-                    <span class="store-type">{{ super_category[0] }}</span>
+                    <span class="store-type">{{ store_type[0] }}</span>
                     <div  class="store-break-line"></div>
                 </div>
-                <div ng-repeat="product in super_category[1] track by $index">
+                <div ng-repeat="product in store_type[1] track by $index">
                     <div layout="row" layout-align="center">
                         <div class="cartBItems2A" flex="30">
                             <ul>

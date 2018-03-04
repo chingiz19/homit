@@ -31,10 +31,10 @@
                     <input id="glbSearchRequest" ng-model="searchRequest" placeholder="Search to Homit...">
                 </md-input-container>
                 <div ng-if="searchDisplay" id="glbSearchRequest" class="mnSrchC">
-                    <ul ng-if="resultSuperCategory.length" id="glbSrchA" class="mnSrchCA">
-                        <li ng-repeat="node in resultSuperCategory">
-                            <a href="/catalog/{{node.super_category}}/" target="_self" id="super_category_ + {{$index + 1}}" class="srchRslt mnSrchCAAA">
-                                <span class="mnSrchCAAAA">{{node.super_category_display}}</span>
+                    <ul ng-if="resultStoreType.length" id="glbSrchA" class="mnSrchCA">
+                        <li ng-repeat="node in resultStoreType">
+                            <a href="/catalog/{{node.store_type_api_name}}/" target="_self" id="store_type_ + {{$index + 1}}" class="srchRslt mnSrchCAAA">
+                                <span class="mnSrchCAAAA">{{node.store_type_display_name}}</span>
                             </a>
                         </li>
                         <li ng-if="resultCategory.length || resultSubcategory.length || resultProducts.length" class="search-line">
@@ -43,12 +43,12 @@
                     </ul>
                     <ul ng-if="resultCategory.length || resultSubcategory.length" id="glbSrchA" class="mnSrchCA">
                         <li ng-repeat="node in resultCategory">
-                            <a href="/catalog/{{node.super_category}}/{{node.category}}" target="_self" id="category_ + {{$index + 1}}" class="srchRslt mnSrchCAAA">
-                                <span class="mnSrchCAAAA">{{node.category_display}}</span>
+                            <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" id="category_ + {{$index + 1}}" class="srchRslt mnSrchCAAA">
+                                <span class="mnSrchCAAAA">{{node.category_display_name}}</span>
                             </a>
                         </li>
                         <li ng-repeat="node in resultSubcategory">
-                            <a href="/catalog/{{node.super_category}}/{{node.category}}" target="_self" ng-click="sendSubcategory(node.subcategory, 0)"
+                            <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" ng-click="sendSubcategory(node.subcategory, 0)"
                                 id="subcategory_ + {{$index + 1}}" class="srchRslt mnSrchCAAA">
                                 <span class="mnSrchCAAAA">{{node.subcategory}}</span>
                             </a>
@@ -59,16 +59,16 @@
                     </ul>
                     <ul ng-if="resultProducts.length" id="glbSrchB" class="mnSrchCB">
                         <li ng-repeat="node in resultProducts">
-                            <a href="/catalog/{{node.super_category}}/{{node.category}}" target="_self" layout="row" ng-click="sendSubcategory(node.subcategory, node.product_id)"
+                            <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" layout="row" ng-click="sendSubcategory(node.subcategory, node.product_id)"
                                 id="product_ + {{$index + 1}}" class="srchRslt mnSrchCBAA">
                                 <span class="mnSrchCBAAA">
-                                    <img class="mnSrchImg" ng-src="/resources/images/products/{{node.super_category}}/{{node.category}}/{{node.image}}">
+                                    <img class="mnSrchImg" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
                                 </span>
-                                <span class="mnSrchCBAAB">{{node.brand}} {{node.name}}</span>
+                                <span class="mnSrchCBAAB">{{node.brand}} {{node.subcategory}}</span>
                             </a>
                         </li>
                     </ul>
-                    <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultSuperCategory.length"
+                    <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultStoreType.length"
                         id="glbSrchC" class="mnSrchCB serach-not-found">
                         <li>
                             <span>Not Found Yet...</span>
@@ -137,7 +137,7 @@
                 </a>
             </li>
             <li ng-repeat="node in resultSubcategory" class="flex-li">
-                <a href="/catalog/{{node.super_category}}/{{node.category}}" target="_self" ng-click="sendSubcategory(node.subcategory, 0)"
+                <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" ng-click="sendSubcategory(node.subcategory, 0)"
                     id="subcategory_ + {{$index + 1}}">
                     <span>{{node.subcategory}}</span>
                 </a>
@@ -148,7 +148,7 @@
         </ul>
         <ul ng-if="resultProducts.length" class="searched-product-mobile">
             <li ng-repeat="node in resultProducts">
-                <a href="/catalog/{{node.super_category}}/{{node.category}}" target="_self" layout="row" ng-click="sendSubcategory(node.subcategory, node.product_id)"
+                <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" layout="row" ng-click="sendSubcategory(node.subcategory, node.product_id)"
                     id="product_ + {{$index + 1}}">
                     <span>
                         <img ng-src="/resources/images/products/{{node.super_category}}/{{node.category}}/{{node.image}}">

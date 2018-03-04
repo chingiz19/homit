@@ -4,23 +4,23 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
     $scope.userCart = localStorage.getUserCart() || {};
     $scope.numberOfItemsInCart = 0;
     $scope.totalAmount = 0;
-    $scope.super_category = $location.path().split("/")[2];
+    $scope.store_type_api_name = $location.path().split("/")[2];
 
    cartService.getCart()
         .then(function successCallback(response) {
                 if (response.data.success === true) {                                
                     updateUserCart(cartService.mergeCarts($scope.userCart, response.data.cart));
                 } else {
-                    updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {})); //REQUIRED to convert to new convention with super_category
+                    updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {})); //REQUIRED to convert to new convention with store_type_api_name
                 }
                 localStorage.setUserCart({});    
 
-                for(var super_category in $scope.userCart){
-                    for (var a in $scope.userCart[super_category]){
-                        $scope.totalAmount = $scope.totalAmount + ($scope.userCart[super_category][a].quantity * $scope.userCart[super_category][a].price);
-                        $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[super_category][a].quantity;
+                for(var store_type_api_name in $scope.userCart){
+                    for (var a in $scope.userCart[store_type_api_name]){
+                        $scope.totalAmount = $scope.totalAmount + ($scope.userCart[store_type_api_name][a].quantity * $scope.userCart[store_type_api_name][a].price);
+                        $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[store_type_api_name][a].quantity;
                         $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
-                        $scope.prepareItemForDB(a, $scope.userCart[super_category][a].quantity);
+                        $scope.prepareItemForDB(a, $scope.userCart[store_type_api_name][a].quantity);
                     }
                 }
             }, function errorCallback(response) {
@@ -30,13 +30,13 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
 
     $scope.$on("addToCart", function (event, product) {
         var tmpQuantity = 1;
-        var super_category = {};
-        if ($scope.userCart.hasOwnProperty(product.super_category)) {
-            super_category = $scope.userCart[product.super_category];
+        var store_type_api_name = {};
+        if ($scope.userCart.hasOwnProperty(product.store_type_api_name)) {
+            store_type_api_name = $scope.userCart[product.store_type_api_name];
         }
 
-        if (super_category.hasOwnProperty(product.depot_id)){
-            tmpQuantity = super_category[product.depot_id].quantity;
+        if (store_type_api_name.hasOwnProperty(product.depot_id)){
+            tmpQuantity = store_type_api_name[product.depot_id].quantity;
             tmpQuantity++;
 
             if (tmpQuantity > 10) {
@@ -46,22 +46,22 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
                 $scope.numberOfItemsInCart ++;
                 notification.addCartItem(product);
             }
-            super_category[product.depot_id].quantity = tmpQuantity;
+            store_type_api_name[product.depot_id].quantity = tmpQuantity;
             $scope.totalAmount = $scope.totalAmount + product.price;
             $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
         } else {
-            increaseCartItemIndexes(product.super_category);
+            increaseCartItemIndexes(product.store_type_api_name);
             product.orderIndex = 0;
-            super_category[product.depot_id] = product;
-            super_category[product.depot_id].quantity = tmpQuantity;
+            store_type_api_name[product.depot_id] = product;
+            store_type_api_name[product.depot_id].quantity = tmpQuantity;
             $scope.numberOfItemsInCart++;
             $scope.totalAmount = $scope.totalAmount + product.price;
             $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;   
             notification.addCartItem(product);         
         }
-        $scope.userCart[product.super_category] = super_category;
+        $scope.userCart[product.store_type_api_name] = store_type_api_name;
         updateUserCart($scope.userCart);
-        $scope.prepareItemForDB(product.depot_id,  $scope.userCart[product.super_category][product.depot_id].quantity);
+        $scope.prepareItemForDB(product.depot_id,  $scope.userCart[product.store_type_api_name][product.depot_id].quantity);
         googleAnalytics.addEvent('add_to_cart', {
             "event_label": product.brand + " " + product.name,
             "event_category": googleAnalytics.eventCategories.cart_actions,
@@ -79,12 +79,12 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
     });
 
     $scope.plusItem = function (product) {
-        if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
-            var currentQuantity = $scope.userCart[product.super_category][product.depot_id].quantity;
+        if ($scope.userCart.hasOwnProperty(product.store_type_api_name) && $scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
+            var currentQuantity = $scope.userCart[product.store_type_api_name][product.depot_id].quantity;
             if (currentQuantity < 10) {              
                 currentQuantity++;
                 
-                $scope.userCart[product.super_category][product.depot_id].quantity = currentQuantity;
+                $scope.userCart[product.store_type_api_name][product.depot_id].quantity = currentQuantity;
                 $scope.numberOfItemsInCart++;
                 $scope.totalAmount = $scope.totalAmount + product.price;
                 $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
@@ -100,12 +100,12 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
     };
 
     $scope.minusItem = function (product) {
-        if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
-            var currentQuantity = $scope.userCart[product.super_category][product.depot_id].quantity;
+        if ($scope.userCart.hasOwnProperty(product.store_type_api_name) && $scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
+            var currentQuantity = $scope.userCart[product.store_type_api_name][product.depot_id].quantity;
             if (currentQuantity > 1) {              
                 currentQuantity--;
                 
-                $scope.userCart[product.super_category][product.depot_id].quantity = currentQuantity;
+                $scope.userCart[product.store_type_api_name][product.depot_id].quantity = currentQuantity;
                 $scope.numberOfItemsInCart--;
                 $scope.totalAmount = $scope.totalAmount - product.price;
                 $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
@@ -136,16 +136,16 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
     };
 
     $scope.removeFromCart = function (product) {
-        if ($scope.userCart.hasOwnProperty(product.super_category) && $scope.userCart[product.super_category].hasOwnProperty(product.depot_id)) {
+        if ($scope.userCart.hasOwnProperty(product.store_type_api_name) && $scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
             // delete item and reorder indexes of other items
-            var index = $scope.userCart[product.super_category][product.depot_id].orderIndex;
-            var super_c = product.super_category;
-            delete $scope.userCart[product.super_category][product.depot_id];
+            var index = $scope.userCart[product.store_type_api_name][product.depot_id].orderIndex;
+            var super_c = product.store_type_api_name;
+            delete $scope.userCart[product.store_type_api_name][product.depot_id];
             decreaseCartItemIndexes(super_c, index);
 
-            // if super_category doesn't contain objects, then remove from list
-            if (Object.entries($scope.userCart[product.super_category]).length == 0){
-                delete $scope.userCart[product.super_category];
+            // if store_type_api_name doesn't contain objects, then remove from list
+            if (Object.entries($scope.userCart[product.store_type_api_name]).length == 0){
+                delete $scope.userCart[product.store_type_api_name];
             }
 
             updateUserCart($scope.userCart);
@@ -183,7 +183,7 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
 
     function updateUserCart(cart){
         $scope.userCart = cart;
-        $scope.userCartToView = cartService.getViewUserCart($scope.super_category, $scope.userCart);
+        $scope.userCartToView = cartService.getViewUserCart($scope.store_type_api_name, $scope.userCart);
     }
     
     // User Cart right-SideNav functionality
@@ -227,22 +227,22 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
      * Logic for increase/decrease order indexes of Cart items
      * @param {*} increase
      */
-    function updateCartItemIndexes(increase, super_category, deletedItemIndex){
-        if (!$scope.userCart[super_category]){
+    function updateCartItemIndexes(increase, store_type_api_name, deletedItemIndex){
+        if (!$scope.userCart[store_type_api_name]){
             return;
         }
 
-        var depot_ids = Object.keys($scope.userCart[super_category]);
+        var depot_ids = Object.keys($scope.userCart[store_type_api_name]);
         for (var i = 0; i < depot_ids.length; i++){
             var depot_id = depot_ids[i];
-            var currentIndex = $scope.userCart[super_category][depot_id].orderIndex;
+            var currentIndex = $scope.userCart[store_type_api_name][depot_id].orderIndex;
             if (increase){
                 // increase
-                $scope.userCart[super_category][depot_id].orderIndex = currentIndex + 1;
+                $scope.userCart[store_type_api_name][depot_id].orderIndex = currentIndex + 1;
             } else {
                 // decrease
                 if (currentIndex > deletedItemIndex){
-                    $scope.userCart[super_category][depot_id].orderIndex = currentIndex - 1;
+                    $scope.userCart[store_type_api_name][depot_id].orderIndex = currentIndex - 1;
                 }
             }
         }
@@ -251,15 +251,15 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
     /**
      * Helper method to increase order indexes of Cart items
      */
-    function increaseCartItemIndexes(super_category){
-        updateCartItemIndexes(true, super_category);
+    function increaseCartItemIndexes(store_type_api_name){
+        updateCartItemIndexes(true, store_type_api_name);
     }
 
     /**
      * Helper method to decrease order indexes of Cart items
      */
-    function decreaseCartItemIndexes(super_category, deletedItemIndex){
-        updateCartItemIndexes(false, super_category, deletedItemIndex);
+    function decreaseCartItemIndexes(store_type_api_name, deletedItemIndex){
+        updateCartItemIndexes(false, store_type_api_name, deletedItemIndex);
     }
 
 

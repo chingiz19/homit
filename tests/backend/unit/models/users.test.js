@@ -370,19 +370,19 @@ describe("Tests for User Model", function(){
 
     /* Helpers */
     async function deleteUsersFromDB(){
-        await db.runQuery("Delete from " + db.dbTables.users_customers);
-        await db.runQuery("Delete from " + db.dbTables.users_customers_guest);    }
+        await db.runQuery("Delete from " + db.tables.users_customers);
+        await db.runQuery("Delete from " + db.tables.users_customers_guest);    }
 
     async function addUsersToDB(){
         var hashedPass = await Auth.hashPassword(user1.password);
         var tmpUser = Object.assign({}, user1, {password: hashedPass});
-        await db.insertQuery(db.dbTables.users_customers, tmpUser);
+        await db.insertQuery(db.tables.users_customers, tmpUser);
 
         hashedPass = await Auth.hashPassword(user2.password);
         tmpUser = Object.assign({}, user2, {password: hashedPass});
-        await db.insertQuery(db.dbTables.users_customers, tmpUser);
+        await db.insertQuery(db.tables.users_customers, tmpUser);
 
-        await db.insertQuery(db.dbTables.users_customers_guest, guestUser1);
+        await db.insertQuery(db.tables.users_customers_guest, guestUser1);
     }
 
     function makeDeepCopy(obj){
@@ -390,10 +390,10 @@ describe("Tests for User Model", function(){
     }
 
     function getUserQuery(email){
-        return db.runQuery("Select * from " + db.dbTables.users_customers + " where ?", {user_email: email});
+        return db.runQuery("Select * from " + db.tables.users_customers + " where ?", {user_email: email});
     }
 
     function getGuestUserQuery(email){
-        return db.runQuery("Select * from " + db.dbTables.users_customers_guest + " where ?", {user_email: email});
+        return db.runQuery("Select * from " + db.tables.users_customers_guest + " where ?", {user_email: email});
     }
 });

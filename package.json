@@ -47,6 +47,7 @@
     "socket.io": "^2.0.4",
     "stripe": "^5.5.0",
     "twilio": "^3.10.1",
+    "unique-concat": "^0.2.2",
     "winston": "^2.4.0",
     "winston-daily-rotate-file": "^1.7.2",
     "xml2js": "^0.4.19"

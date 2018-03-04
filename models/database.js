@@ -8,30 +8,34 @@ var con;
 /**
  * Database tables
  */
-const dbTables = {
-  catalog_categories: "catalog_categories",
-  catalog_containers: "catalog_containers",
-  catalog_depot: "catalog_depot",
+const tables = {
+  catalog_store_types: "catalog_store_types",
   catalog_stores: "catalog_stores",
-  catalog_listings: "catalog_listings",
-  catalog_packagings: "catalog_packagings",
+  catalog_packaging_containers: "catalog_packaging_containers",
   catalog_packaging_volumes: "catalog_packaging_volumes",
-  catalog_products: "catalog_products",
+  catalog_packaging_packagings: "catalog_packaging_packagings",
+  catalog_description_names: "catalog_description_names",
+  catalog_categories: "catalog_categories",
   catalog_subcategories: "catalog_subcategories",
-  catalog_super_categories: "catalog_super_categories",
   catalog_types: "catalog_types",
+  catalog_listings: "catalog_listings",
+  catalog_listings_descriptions: "catalog_listings_descriptions",
+  catalog_products: "catalog_products",
+  catalog_items: "catalog_items",
+  catalog_depot: "catalog_depot",
+  catalog_warehouse: "catalog_warehouse",
   drivers: "drivers",
   drivers_shift_history: "drivers_shift_history",
   drivers_status: "drivers_status",
   drivers_routes: "drivers_routes",
   employee_roles: "employee_roles",
-  orders_cart_info: "orders_cart_info",
+  orders_cart_items: "orders_cart_items",
   orders_history: "orders_history",
   users_customers: "users_customers",
   users_customers_guest: "users_customers_guest",
   users_customers_history: "users_customers_history",
   users_employees: "users_employees",
-  user_cart_info: "user_cart_info",
+  user_cart_items: "user_cart_items",
   csr_actions: "csr_actions",
   orders_history_refund: "orders_history_refund",
   orders_history_cancel: "orders_history_cancel",
@@ -117,6 +121,10 @@ var deleteQuery2 = function (table, data) {
   return runQuery('DELETE FROM ' + table + ' WHERE ? AND ?', data);
 };
 
+var selectAllWhereLimitOne = function (table, data) {
+  return runQuery('SELECT * FROM ' + table + ' WHERE ? LIMIT 1', data);
+};
+
 /**
  * Ends database connection in ethical/gracefull way, ensuring
  * all previously enqueued queries are still before sending
@@ -137,5 +145,6 @@ module.exports.updateQuery = updateQuery;
 module.exports.selectAllFromTable = selectAllFromTable;
 module.exports.deleteQuery = deleteQuery;
 module.exports.deleteQuery2 = deleteQuery2; //TODO: can this be combined with deleteQuery?
-module.exports.dbTables = dbTables;
+module.exports.tables = tables;
+module.exports.selectAllWhereLimitOne = selectAllWhereLimitOne;
 module.exports.endConnection = end;

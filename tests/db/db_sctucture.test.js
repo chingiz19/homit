@@ -1372,7 +1372,7 @@ describe("Database structure unit tests", function(){
         expect(actual).to.own.deep.equal(expected);            
     });
 
-    it("Check user_cart_info table structure", async function(){
+    it("Check user_cart_items table structure", async function(){
         let expected = {
             "id": {
                 "Key": "PRI",
@@ -1404,7 +1404,7 @@ describe("Database structure unit tests", function(){
             }
         };
 
-        let table_structure = await db.runQuery("Describe user_cart_info");        
+        let table_structure = await db.runQuery("Describe user_cart_items");        
         let actual = convertTableStructureToMap(table_structure);
 
         expect(actual).to.own.deep.equal(expected);            

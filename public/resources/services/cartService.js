@@ -22,51 +22,72 @@ app.service('cartService', function ($http, localStorage) {
 
         for (var i = 0; i < remoteCart.length; i++) {
             var product_array = remoteCart[i];
-            var super_category = product_array[1].super_category;
+            var store_type_api_name = product_array[1].store_type_api_name;
             var depot_id = product_array[0];
-            if (localCart.hasOwnProperty(super_category) && localCart[super_category].hasOwnProperty(depot_id)) {
+            if (localCart.hasOwnProperty(store_type_api_name) && localCart[store_type_api_name].hasOwnProperty(depot_id)) {
                 // add to quantity, not exceeding 10
-                var tmpQuantity = localCart[super_category][depot_id].quantity;
+                var tmpQuantity = localCart[store_type_api_name][depot_id].quantity;
                 tmpQuantity += product_array[1].quantity;
 
                 if (tmpQuantity >= 10) tmpQuantity = 10;
 
-                localCart[super_category][depot_id].quantity = tmpQuantity;
+                localCart[store_type_api_name][depot_id].quantity = tmpQuantity;
             } else {
                 // for empty localCart
-                if (!localCart.hasOwnProperty(super_category)) {
-                    localCart[super_category] = {};
+                if (!localCart.hasOwnProperty(store_type_api_name)) {
+                    localCart[store_type_api_name] = {};
                 }
-                localCart[super_category][depot_id] = product_array[1];
+                localCart[store_type_api_name][depot_id] = product_array[1];
             }
         }
         
+        // Add orderIndex
+        for (var type in localCart){
+            var index = 0;
+            for (var item in localCart[type]){
+                localCart[type][item].orderIndex = index;
+                index++;
+            }
+        }
+
         return localCart;
     };
 
     /**
-     * Puts 'super_category' as first property in cart
-     * @param {*} super_category 
+     * Puts 'store_type_api_name' as first property in cart
+     * @param {*} store_type_api_name 
      * @param {*} cart 
      */
-    function _getViewUserCart(super_category, lCart) {
+    function _getViewUserCart(store_type_api_name, lCart) {
         var cart = jQuery.extend(true, {}, lCart);
 
-        var selected = cart[super_category];
-        delete cart[super_category];
+        var selected = cart[store_type_api_name];
+        delete cart[store_type_api_name];
 
         // Item ordering
         // Implementation expected bubble sort - knowing order (from 0 - n) look expected order 'i' and insert at 'i'
         // Using this to 
         // takes O(n^2)
         var orderedItems = [];
+        var orderIndexCounter = 0;
         if (selected){ // order if there are items to order
             var keys = Object.keys(selected);
+            var unusedKeys = keys.slice();
+            var usedIndexes = [];
             for (var expectedOrderIndex = 0; expectedOrderIndex < keys.length; expectedOrderIndex++){
                 var failBack = true;
                 for (var j = 0; j < keys.length; j++){
                     if (selected[keys[j]].orderIndex == expectedOrderIndex){
-                        orderedItems.splice(expectedOrderIndex, 0, selected[keys[j]]);
+                        var indexToUse = expectedOrderIndex;
+                        if (usedIndexes.indexOf(expectedOrderIndex) != -1){
+                            indexToUse++;
+                        }
+                        selected[keys[j]].orderIndex = indexToUse;
+
+                        orderedItems.splice(indexToUse, 0, selected[keys[j]]);   
+                        var index = unusedKeys.indexOf(keys[j]);
+                        unusedKeys.splice(index, 1);
+                        usedIndexes.push(indexToUse);
                         failBack = false;
                         break;
                     }
@@ -75,18 +96,25 @@ app.service('cartService', function ($http, localStorage) {
                 // Add item at second index (good approach as item will be visible, but not first)
                 if (failBack){
                     console.warn("Cart ordering runs in failBack mode");
-                    orderedItems.splice(1, 0, selected[keys[j]]);
+                    selected[unusedKeys[0]].orderIndex = 1;
+                    orderedItems.splice(1, 0, selected[unusedKeys[0]]);
+                    for (var k = 2; k < orderedItems.length; k++){
+                        orderedItems[k].orderIndex += 1;
+                    }
+
+                    unusedKeys.splice(0, 1);                    
                 }
+                orderIndexCounter++;
             }
         }
 
         var new_cart = Object.entries(cart);
         if (selected) {
-            new_cart.splice(0, 0, [super_category, orderedItems]);
+            new_cart.splice(0, 0, [store_type_api_name, orderedItems]);
         }
 
-        // // WORKAROUND (TODO)
-        // // temp workaround for many super_categories
+        // WORKAROUND (TODO)
+        // temp workaround for many super_categories
         // var tempObj = {};
         // var indexesToRemove = [];
         // for (var i = 0; i < new_cart.length; i++){
@@ -120,17 +148,17 @@ app.service('cartService', function ($http, localStorage) {
         //     }
 
 
-        //     if (super_category == "snack-vendor"){
+        //     if (store_type_api_name == "snack-vendor"){
         //         new_cart.splice(0, 0, ['snack-vendor', orderedItems]);
         //     } else {
         //         new_cart.push(['snack-vendor', orderedItems]);
         //     }
         // }
 
-        // reverse order
-        new_cart = new_cart.filter(function(item){
-            return item[0] == 'liquor-station' || item[0] == 'snack-vendor';
-        });
+        // // reverse order
+        // new_cart = new_cart.filter(function(item){
+        //     return item[0] == 'liquor-station' || item[0] == 'snack-vendor';
+        // });
         // END WORKAROUND
 
         return new_cart;

@@ -164,7 +164,7 @@ try {
 
 pub.findDriver = function (email) {
     var data = { user_email: email };
-    return db.selectAllWhere(db.dbTables.drivers, data).then(function (dbResult) {
+    return db.selectAllWhere(db.tables.drivers, data).then(function (dbResult) {
         if (dbResult.length > 0) {
             return User.sanitizeUserObject(dbResult[0]);
         } else {
@@ -176,7 +176,7 @@ pub.findDriver = function (email) {
 /* Find driver from database*/
 pub.findDriverById = function (driverId) {
     var data = { id: driverId };
-    return db.selectAllWhere(db.dbTables.drivers, data).then(function (dbResult) {
+    return db.selectAllWhereLimitOne(db.tables.drivers, data).then(function (dbResult) {
         if (dbResult.length > 0) {
             return User.sanitizeUserObject(dbResult[0]);
         } else {
@@ -188,7 +188,7 @@ pub.findDriverById = function (driverId) {
 /* Authenticate driver */
 pub.authenticateDriver = function (email, password) {
     var data = { user_email: email };
-    return db.selectAllWhere(db.dbTables.drivers, data).then(function (driver) {
+    return db.selectAllWhereLimitOne(db.tables.drivers, data).then(function (driver) {
         if (driver.length > 0) {
             return Auth.comparePassword(password, driver[0].password).then(function (match) {
                 if (match) {
@@ -286,7 +286,7 @@ var driverStatusExists = async function (driverId) {
     var data = {
         driver_id: driverId
     };
-    var dbResult = await db.selectAllWhere(db.dbTables.drivers_status, data);
+    var dbResult = await db.selectAllWhereLimitOne(db.tables.drivers_status, data);
     return dbResult.length > 0;
 }
 
@@ -307,11 +307,11 @@ var updateDriverStatusConnected = async function (driverId, socketId) {
             socket_id: socketId,
             connected: true
         };
-        await db.updateQuery(db.dbTables.drivers_status, [dataUpdate, data]);
+        await db.updateQuery(db.tables.drivers_status, [dataUpdate, data]);
     } else {
         Logger.log.info("Inserting driver status for driver: " + driverId);
         data.socket_id = socketId;
-        await db.insertQuery(db.dbTables.drivers_status, data);
+        await db.insertQuery(db.tables.drivers_status, data);
     }
 }
 
@@ -325,19 +325,19 @@ var updateDriverStatusDisconnected = async function (socketId) {
         socket_id: socketId
     };
 
-    var driverStatus = await db.selectAllWhere(db.dbTables.drivers_status, key);
+    var driverStatus = await db.selectAllWhereLimitOne(db.tables.drivers_status, key);
     var driverId = driverStatus[0].driver_id;
 
     var started = await shiftStarted(driverId);
     var online = await isOnline(driverId);
 
     if (!online && !started) {
-        await db.deleteQuery(db.dbTables.drivers_status, key);
+        await db.deleteQuery(db.tables.drivers_status, key);
     } else {
         var dataUpdate = {
             connected: false
         };
-        await db.updateQuery(db.dbTables.drivers_status, [dataUpdate, key]);
+        await db.updateQuery(db.tables.drivers_status, [dataUpdate, key]);
     }
 }
 
@@ -345,7 +345,7 @@ var isConnected = async function (driverId) {
     var data = {
         driver_id: driverId
     };
-    var driverStatus = await db.selectAllWhere(db.dbTables.drivers_status, data);
+    var driverStatus = await db.selectAllWhereLimitOne(db.tables.drivers_status, data);
     return (driverStatus.length > 0 && driverStatus[0].connected);
 }
 
@@ -359,7 +359,8 @@ var shiftStarted = async function (driverId) {
         SELECT *
         FROM drivers_shift_history
         WHERE shift_end IS NULL   
-        AND ?`
+        AND ?
+        LIMIT 1`;
     var data = { driver_id: driverId };
     var dbResult = await db.runQuery(sqlQuery, data);
     return dbResult.length != 0;
@@ -374,7 +375,7 @@ var saveOnline = async function (driverId) {
     var started = await shiftStarted(driverId);
     if (!started) {
         var data = { driver_id: driverId };
-        await db.insertQuery(db.dbTables.drivers_shift_history, data);
+        await db.insertQuery(db.tables.drivers_shift_history, data);
     }
 
     await setDriverOnlineFlag(driverId, true);
@@ -406,7 +407,7 @@ var updateLocation = async function (driverId, location) {
         driver_id: driverId
     };
 
-    await db.updateQuery(db.dbTables.drivers_status, [updateData, key]);
+    await db.updateQuery(db.tables.drivers_status, [updateData, key]);
 }
 
 /**
@@ -422,7 +423,7 @@ var setDriverOnlineFlag = async function (driverId, status) {
     var key = {
         driver_id: driverId
     };
-    await db.updateQuery(db.dbTables.drivers_status, [data, key]);
+    await db.updateQuery(db.tables.drivers_status, [data, key]);
 }
 
 /**
@@ -471,7 +472,7 @@ var isOnline = async function (driverId) {
     var data = {
         driver_id: driverId
     };
-    var driverStatus = await db.selectAllWhere(db.dbTables.drivers_status, data);
+    var driverStatus = await db.selectAllWhereLimitOne(db.tables.drivers_status, data);
     return (driverStatus.length > 0 && driverStatus[0].online);
 }
 
@@ -501,7 +502,7 @@ var saveDropOff = async function (driverId, dropOff) {
         id: orderId
     };
 
-    await db.updateQuery(db.dbTables.orders_history, [updateData, key]);
+    await db.updateQuery(db.tables.orders_history, [updateData, key]);
     updateOrdersHistory("date_delivered", [orderIdString]);
 }
 
@@ -553,7 +554,7 @@ pub.dispatchOrder = async function (driverId, storeId, orderId, nextNodeIdString
         position: orderInsertAt
     };
 
-    await db.insertQuery(db.dbTables.drivers_routes, orderData);
+    await db.insertQuery(db.tables.drivers_routes, orderData);
 }
 
 /**
@@ -599,7 +600,8 @@ var shiftRoutes = async function (driverId, nextNodeIdString) {
         var sqlQuerySelect = `
             SELECT position
             FROM drivers_routes
-            WHERE ? AND ?`;
+            WHERE ? AND ?
+            LIMIT 1`;
 
         var route = await db.runQuery(sqlQuerySelect, [driverData, selectData]);
 
@@ -634,7 +636,7 @@ var insertStoreToRoutes = async function (driverId, storeId, nextNodeIdString, s
             position: positionToInsert
         };
 
-        await db.insertQuery(db.dbTables.drivers_routes, storeData);
+        await db.insertQuery(db.tables.drivers_routes, storeData);
     }
     var maxPosition = await getRoutesMaxPosition(driverId);
     return maxPosition + 1;
@@ -650,12 +652,13 @@ var removeRouteNode = async function (driverId, data) {
     var sqlQuerySelect = `
         SELECT id, position
         FROM drivers_routes
-        WHERE driver_id = `+ driverId + ` AND ?`;
+        WHERE driver_id = `+ driverId + ` AND ?
+        LIMIT 1`;
 
     var route = await db.runQuery(sqlQuerySelect, data);
     var deleteData = { id: route[0].id };
 
-    await db.deleteQuery(db.dbTables.drivers_routes, deleteData);
+    await db.deleteQuery(db.tables.drivers_routes, deleteData);
 
     var sqlQuery = `
         UPDATE drivers_routes
@@ -744,7 +747,7 @@ var addToDriversRequest = async function (driverId, json) {
         order_info: JSON.stringify(json)
     };
 
-    await db.insertQuery(db.dbTables.drivers_request, data);
+    await db.insertQuery(db.tables.drivers_request, data);
 }
 
 /**
@@ -757,8 +760,8 @@ var getDriversRequest = async function (driverId) {
         driver_id: driverId
     };
 
-    var requests = await db.selectAllWhere(db.dbTables.drivers_request, data);
-    await db.deleteQuery(db.dbTables.drivers_request, data);
+    var requests = await db.selectAllWhere(db.tables.drivers_request, data);
+    await db.deleteQuery(db.tables.drivers_request, data);
     return requests;
 }
 

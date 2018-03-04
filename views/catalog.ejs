@@ -41,7 +41,7 @@
                                     <li class="navgtLn3AAA" ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '0px'} || {'margin-left': '70px'}">
                                         <ng-md-icon ng-show="('<%= loadedStore %>' == 'Snack Vendor')" icon="shopping_cart" style="fill: rgba(42,81,145,0.9);" size="50"></ng-md-icon>
                                         <a ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '20px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '0px'}"
-                                            href="/catalog/liquor-station" target="_self" class="navgtLn3AAAB">Snack Vendor</a>
+                                            href="/catalog/snack-vendor" target="_self" class="navgtLn3AAAB">Snack Vendor</a>
                                     </li>
                                 </ul>
                                 <div class="box-center section-3-header" layout="row">
@@ -67,9 +67,9 @@
                                 </div>
                                 <span>
                                     <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
-                                        <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"
+                                        <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant" ng-click="checkSubcategories(variant)"
                                             class="SubcategoryNameHDR">
-                                            <span>{{variant.subcategory_name}}</span>
+                                            <span>{{variant}}</span>
                                         </md-radio-button>
                                     </md-radio-group>
                                 </span>
@@ -83,9 +83,9 @@
                         <%= selectedCategory %>'}}</div>
                     <div style="margin-top: 16px;">
                         <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
-                            <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant.subcategory_name" ng-click="checkSubcategories(variant.subcategory_name)"
+                            <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant" ng-click="checkSubcategories(variant)"
                                 class="SubcategoryName">
-                                <span>{{variant.subcategory_name}}</span>
+                                <span>{{variant}}</span>
                             </md-radio-button>
                         </md-radio-group>
                     </div>

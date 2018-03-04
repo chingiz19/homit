@@ -47,7 +47,7 @@ router.post('/placeorder', async function (req, res, next) {
 
     if (!paramsMissing) {
         var dbProducts = await Catalog.getCartProducts(cartProducts);
-        var products = Catalog.getCartProductsWithSuperCategory(cartProducts, dbProducts);
+        var products = Catalog.getCartProductsWithStoreType(cartProducts, dbProducts);
         var allPrices = Catalog.getAllPricesForProducts(cartProducts, dbProducts);
         var totalPrice = allPrices.total_price;
         MP.charge(cardToken, totalPrice).then(async function (chargeResult) {
@@ -155,16 +155,16 @@ var createOrders = async function (userId, address, address_lat, address_long, d
     var createFunctions = [];
     var userOrders = [];
 
-    for (var superCategory in products) {
-        createFunctions.push(Orders.createOrder(orderTransactionId, superCategory));
+    for (var storeType in products) {
+        createFunctions.push(Orders.createOrder(orderTransactionId, storeType));
     }
 
     return Promise.all(createFunctions).then(function (orderIds) {
         var i = 0;
-        for (var superCategory in products) {
-            var inserted = Orders.insertProducts(orderIds[i], products[superCategory]);
+        for (var storeType in products) {
+            var inserted = Orders.insertProducts(orderIds[i], products[storeType]);
             var userOrder = {
-                super_category: superCategory,
+                storeType: storeType,
                 order_id: orderIds[i]
             };
 
@@ -175,7 +175,7 @@ var createOrders = async function (userId, address, address_lat, address_long, d
             } else {
                 cmUserId = "u_" + userId;
             }
-            CM.sendOrder(cmUserId, address, cmOrderId, superCategory);
+            CM.sendOrder(cmUserId, address, cmOrderId, storeType);
             SMS.alertDirectors("Order has been placed. Processed. Order ID is: " + cmOrderId);
             userOrders.push(userOrder);
             i++;

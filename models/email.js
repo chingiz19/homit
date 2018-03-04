@@ -300,7 +300,7 @@ var getOrderSlipHtml = function (htmlSource, OI) {
     for (sub_order in orders) {
         $('#table').append(
             "<tr style='width: 100vw;'><table>" +
-            "<tr style='text-align: left;'><td style='width: 100%; font-size: 11px;'>" + OI.orders[sub_order].super_category_display + "</td></tr>" +
+            "<tr style='text-align: left;'><td style='width: 100%; font-size: 11px;'>" + OI.orders[sub_order].store_type_display_name + "</td></tr>" +
             "<tr style='text-align: left;'><td style='width: 100%; font-size: 11px; padding-bottom: 4pt; border-bottom: 1px solid black;'>" + "Order ID: " + OI.orders[sub_order].id.split('_')[1] + "</td></tr>" +
             "<tr style='height:8pt'></tr>" +
             "</table></tr>" +
@@ -438,7 +438,7 @@ pub.getTransactionEmail = async function (transactionId) {
     var data = {
         transaction_id: transactionId
     };
-    var transactionEmail = await db.selectAllWhere(db.dbTables.orders_emails, data);
+    var transactionEmail = await db.selectAllWhereLimitOne(db.tables.orders_emails, data);
     if (transactionEmail.length > 0) {
         return transactionEmail[0].email;
     } else {
@@ -461,10 +461,10 @@ pub.saveTransactionEmail = async function (transactionId, json) {
         var dataUpdate = {
             email: JSON.stringify(json)
         };
-        await db.updateQuery(db.dbTables.orders_emails, [dataUpdate, key]);
+        await db.updateQuery(db.tables.orders_emails, [dataUpdate, key]);
     } else {
         key.email = JSON.stringify(json);
-        await db.insertQuery(db.dbTables.orders_emails, key);
+        await db.insertQuery(db.tables.orders_emails, key);
     }
 }
 
@@ -477,7 +477,7 @@ pub.deleteTransactionEmail = async function (transactionId) {
     var data = {
         transaction_id: transactionId
     };
-    await db.deleteQuery(db.dbTables.orders_emails, data);
+    await db.deleteQuery(db.tables.orders_emails, data);
 }
 
 module.exports = pub;

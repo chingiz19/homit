@@ -86,7 +86,7 @@ var receiver = async function (jsonResponse) {
         var storeKey = {
             id: storeId
         };
-        var dbStore = await db.selectAllWhere(db.dbTables.catalog_stores, storeKey);
+        var dbStore = await db.selectAllWhereLimitOne(db.tables.catalog_stores, storeKey);
         var jsonStore = {
             id: storeIdString,
             address: dbStore[0].address,
@@ -165,27 +165,25 @@ var receiver = async function (jsonResponse) {
             }
         }
 
-        var superCategory = await Catalog.getSuperCategoryById(jsonStore.store_type);
+        var storeType = await Catalog.getStoreTypeById(jsonStore.store_type);
 
         // Old to be removed
         emailOrderOld = jsonOrder;
         emailOrderOld.store = jsonStore;
-        emailOrderOld.super_category_display = superCategory.display_name;
-        emailOrderOld.super_category_custom = superCategory.custom_name;
+        emailOrderOld.store_type_display_name = storeType.display_name;
 
         // New
         emailOrder = jsonOrder;
         emailOrder.store = jsonStore;
-        emailOrder.super_category_display = superCategory.display_name;
-        emailOrder.super_category_custom = superCategory.custom_name;
+        emailOrder.store_type_display_name = storeType.display_name;
 
         // Old to be removed
-        emailOrdersOld[superCategory.name] = emailOrderOld;
+        emailOrdersOld[storeType.name] = emailOrderOld;
         emailTransactionOld.orders = emailOrdersOld;
         emailTempStorage[orderDetails.order_transaction_id] = emailTransactionOld;
 
         // New
-        emailOrders[superCategory.name] = emailOrder;
+        emailOrders[storeType.name] = emailOrder;
         emailTransaction.orders = emailOrders;
 
         // Check if email is ready to send
@@ -213,7 +211,7 @@ var receiver = async function (jsonResponse) {
 
 pub.send = function (json, isOrder) {
     if (isOrder) {
-        Logger.log.debug('Sending order to CM \n Super category: ' + json.details.order.store_type, logMeta);
+        Logger.log.debug('Sending order to CM \n Store type: ' + json.details.order.store_type, logMeta);
     }
     SocketIO.emit(CM_DEFAULT_EMIT, json);
 };

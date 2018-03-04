@@ -124,14 +124,14 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
             }).then(function successCallback(response) {
 
                 $scope.searchDisplay = response.data.result;
-                $scope.resultSuperCategory = $scope.searchDisplay.super_category;
+                $scope.resultStoreType = $scope.searchDisplay.store_type;
                 $scope.resultCategory = $scope.searchDisplay.category;
                 $scope.resultSubcategory = $scope.searchDisplay.subcategory;
                 $scope.resultProducts = $scope.searchDisplay.products;
 
-                $scope.searchResult = $scope.resultSuperCategory.concat($scope.resultCategory.concat($scope.resultSubcategory.concat($scope.resultProducts)));
+                $scope.searchResult = $scope.resultStoreType.concat($scope.resultCategory.concat($scope.resultSubcategory.concat($scope.resultProducts)));
 
-                if (!$scope.resultProducts.length > 0 && !$scope.resultSubcategory.length > 0  && !$scope.resultCategory.length > 0 && !$scope.resultSuperCategory.length > 0){
+                if (!$scope.resultProducts.length > 0 && !$scope.resultSubcategory.length > 0  && !$scope.resultCategory.length > 0 && !$scope.resultStoreType.length > 0){
                     googleAnalytics.addEvent('search_not_found', {
                         "event_label": $scope.searchRequest,
                         "event_category": googleAnalytics.eventCategories.catalog_actions

@@ -39,7 +39,7 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
         data.driver_instruction = driverInstruction;
     };
 
-    var inserted = await db.insertQuery(db.dbTables.orders_transactions_history, data);
+    var inserted = await db.insertQuery(db.tables.orders_transactions_history, data);
     return inserted.insertId;
 }
 
@@ -47,16 +47,16 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
  * Create order in orders_history table
  * 
  * @param {*} orderTransactionId 
- * @param {*} superCategory 
+ * @param {*} storeType 
  */
-pub.createOrder = async function (orderTransactionId, superCategory) {
-    var superCategoryId = await Catalog.getSuperCategoryIdByName(superCategory);
+pub.createOrder = async function (orderTransactionId, storeType) {
+    var storeType = await Catalog.getStoreTypeIdByName(storeType);
     var data = {
         order_transaction_id: orderTransactionId,
-        store_type: superCategoryId
+        store_type: storeType
     };
 
-    var inserted = await db.insertQuery(db.dbTables.orders_history, data);
+    var inserted = await db.insertQuery(db.tables.orders_history, data);
     return inserted.insertId;
 }
 
@@ -75,7 +75,7 @@ pub.insertProducts = async function (orderId, products) {
             price_sold: products[key].price,
             tax: products[key].tax
         };
-        var success = await db.insertQuery(db.dbTables.orders_cart_info, data);
+        var success = await db.insertQuery(db.tables.orders_cart_items, data);
         if (!success) {
             return false;
         }
@@ -92,7 +92,7 @@ pub.getOrderTransactionById = async function (transactionId) {
     var data = {
         id: transactionId
     };
-    var orderTransactions = await db.selectAllWhere(db.dbTables.orders_transactions_history, data);
+    var orderTransactions = await db.selectAllWhereLimitOne(db.tables.orders_transactions_history, data);
     if (orderTransactions.length > 0) {
         return orderTransactions[0];
     } else {
@@ -109,7 +109,7 @@ pub.getOrderTransactionsByUserId = async function (userId) {
     var data = {
         user_id: userId
     };
-    var orderTransactions = await db.selectAllWhere(db.dbTables.orders_transactions_history, data);
+    var orderTransactions = await db.selectAllWhere(db.tables.orders_transactions_history, data);
     return orderTransactions;
 }
 
@@ -122,7 +122,7 @@ pub.getOrderTransactionsByGuestId = async function (userId) {
     var data = {
         guest_id: userId
     };
-    var orderTransactions = await db.selectAllWhere(db.dbTables.orders_transactions_history, data);
+    var orderTransactions = await db.selectAllWhere(db.tables.orders_transactions_history, data);
     return orderTransactions;
 }
 
@@ -142,44 +142,16 @@ pub.getOrdersByTransactionId = async function (orderTransactionId) {
         orders_history.date_arrived_customer AS date_arrived_customer,
         orders_history.date_delivered AS date_delivered,
         orders_history.store_id AS store_id,
-        super_categories.name AS super_category, 
-        super_categories.name AS super_category_custom, 
+        store_type.name AS store_type, 
+        store_type.display_name AS store_type_display_name, 
         orders_history.driver_id AS driver_id,
         orders_history.refused AS refused,
         orders_history.receiver_name AS receiver_name,
         orders_history.receiver_age AS receiver_age
 
-        FROM orders_history,
-        catalog_super_categories AS super_categories
+        FROM orders_history JOIN catalog_store_types AS store_type ON (orders_history.store_type = store_type.id)
 
-        WHERE super_categories.id = orders_history.store_type AND ?
-        AND super_categories.name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
-
-        UNION
-
-        SELECT
-        orders_history.id AS order_id,
-        orders_history.id_prefix AS order_id_prefix,
-        orders_history.date_assigned AS date_assigned,
-        orders_history.date_arrived_store AS date_arrived_store,
-        orders_history.date_picked AS date_picked,
-        orders_history.date_arrived_customer AS date_arrived_customer,
-        orders_history.date_delivered AS date_delivered,
-        orders_history.store_id AS store_id,
-        super_categories.name AS super_category,               
-        '` + Catalog.snackVendorSuperCategory + `' AS super_category_custom,   
-        orders_history.driver_id AS driver_id,
-        orders_history.refused AS refused,
-        orders_history.receiver_name AS receiver_name,
-        orders_history.receiver_age AS receiver_age
-
-        FROM orders_history,
-        catalog_super_categories AS super_categories
-
-        WHERE super_categories.id = orders_history.store_type
-        AND ?
-        AND super_categories.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
-        
+        WHERE ?
         ORDER BY date_assigned`;
 
     var data = { "orders_history.order_transaction_id": orderTransactionId };
@@ -196,57 +168,39 @@ pub.getOrdersByTransactionId = async function (orderTransactionId) {
 pub.getOrderItemsById = async function (orderId) {
     var sqlQuery = `
         SELECT
-        orders_cart_info.depot_id AS depot_id, super_categories.name AS super_category,
-        super_categories.name AS super_category_custom,
-        categories.name AS category, subcategories.name AS subcategory, types.name AS type,
-        listings.product_brand AS brand, listings.product_name AS name,
-        listings.product_description AS description, listings.product_country AS country,
-        containers.name AS container, packagings.name AS packaging, volumes.volume_name AS volume,
-        depot.price AS price, products.product_image AS image, orders_cart_info.quantity AS quantity,
-        orders_cart_info.price_sold AS price_sold, orders_cart_info.tax AS tax
+        cart_item.depot_id AS depot_id,
+        store_type.name AS store_type,
+        store_type.name AS store_type_display_name,
+        category.name AS category,
+        subcategory.name AS subcategory,
+        type.name AS type,
+        listing.brand AS brand,
+        listing.name AS name,
+        container.name AS container,
+        packaging.name AS packaging,
+        volume.name AS volume,
+        depot.price AS price,
+        product.image AS image,
+        cart_item.quantity AS quantity,
+        cart_item.price_sold AS price_sold,
+        cart_item.tax AS tax
         
-        FROM orders_cart_info AS orders_cart_info, catalog_depot AS depot, catalog_products AS products,
-        catalog_listings AS listings, catalog_types AS types, catalog_subcategories AS subcategories,
-        catalog_categories AS categories, catalog_super_categories AS super_categories,
-        catalog_packagings AS packagings, catalog_packaging_volumes AS volumes,
-        catalog_containers AS containers
-        
-        WHERE depot.id = orders_cart_info.depot_id AND depot.product_id = products.id
-        AND products.listing_id = listings.id AND listings.type_id = types.id AND
-        types.subcategory_id = subcategories.id AND subcategories.category_id = categories.id
-        AND categories.super_category_id = super_categories.id AND depot.packaging_id = packagings.id
-        AND depot.packaging_volume_id = volumes.id AND products.container_id = containers.id
-        AND ?
-        AND super_categories.name NOT IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
-        
-        UNION
-        
-        SELECT
-        orders_cart_info.depot_id AS depot_id, super_categories.name AS super_category,
-        '` + Catalog.snackVendorSuperCategory + `' AS super_category_custom,
-        categories.name AS category, subcategories.name AS subcategory, types.name AS type,
-        listings.product_brand AS brand, listings.product_name AS name,
-        listings.product_description AS description, listings.product_country AS country,
-        containers.name AS container, packagings.name AS packaging, volumes.volume_name AS volume,
-        depot.price AS price, products.product_image AS image, orders_cart_info.quantity AS quantity,
-        orders_cart_info.price_sold AS price_sold, orders_cart_info.tax AS tax
-        
-        FROM orders_cart_info AS orders_cart_info, catalog_depot AS depot, catalog_products AS products,
-        catalog_listings AS listings, catalog_types AS types, catalog_subcategories AS subcategories,
-        catalog_categories AS categories, catalog_super_categories AS super_categories,
-        catalog_packagings AS packagings, catalog_packaging_volumes AS volumes,
-        catalog_containers AS containers
-        
-        WHERE depot.id = orders_cart_info.depot_id AND depot.product_id = products.id
-        AND products.listing_id = listings.id AND listings.type_id = types.id AND
-        types.subcategory_id = subcategories.id AND subcategories.category_id = categories.id
-        AND categories.super_category_id = super_categories.id AND depot.packaging_id = packagings.id
-        AND depot.packaging_volume_id = volumes.id AND products.container_id = containers.id
-        AND ?
-        AND super_categories.name IN ('` + Catalog.safewaySuperCategory + `', '` + Catalog.convenienceSuperCategory + `', '` + Catalog.homitCarSuperCategory + `')
-        `
+        FROM
+        orders_cart_items AS cart_item JOIN catalog_depot AS depot ON (cart_item.depot_id = depot.id)
+        JOIN catalog_items AS item ON (depot.item_id = item.id)
+        JOIN catalog_products AS product ON (item.product_id = product.id)
+        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
+        JOIN catalog_types AS type ON (listing.type_id = type.id)
+        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
+        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
+        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
+        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
+        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
+        JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
 
-    var data = { "orders_cart_info.order_id": orderId };
+        WHERE ?`;
+
+    var data = { "cart_item.order_id": orderId };
     var dbResult = await db.runQuery(sqlQuery, [data, data]);
     return dbResult;
 }
@@ -261,7 +215,7 @@ pub.getUserWithOrderByOrderId = async function (orderId) {
         id: orderId
     };
 
-    var orders = await db.selectAllWhere(db.dbTables.orders_history, data);
+    var orders = await db.selectAllWhereLimitOne(db.tables.orders_history, data);
     if (orders.length > 0) {
         var order = orders[0];
         var transactionId = order.order_transaction_id;
@@ -289,111 +243,125 @@ pub.getUserWithOrderByOrderId = async function (orderId) {
  */
 pub.getPendingOrders = async function () {
     var sqlQuery = `
-    SELECT
-    history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
-    history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
-    history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
-    history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
-    transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
-    transaction.driver_instruction AS driver_instruction,
-    history.driver_id AS driver_id, history.store_id AS store_id,
-    stores.id_prefix AS store_id_prefix, stores.name AS store_name,
-    stores.address AS store_address, super_categories.name AS super_category,
-    users.id AS user_id, users.id_prefix AS user_id_prefix, users.user_email AS user_email,
-    users.first_name AS first_name, users.last_name AS last_name, users.phone_number AS user_phone_number,
-    users.birth_date AS user_birth_date
-    FROM
-    orders_history AS history,
-    catalog_stores AS stores,
-    catalog_super_categories AS super_categories,
-    users_customers AS users,
-    orders_transactions_history AS transaction
-    WHERE
-    history.store_id = stores.id
-    AND history.store_type = super_categories.id
-    AND transaction.user_id = users.id
-    AND history.date_delivered IS NULL
-    
-    UNION
-    
-    SELECT
-    history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
-    history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
-    history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
-    history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
-    transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
-    transaction.driver_instruction AS driver_instruction,
-    history.driver_id AS driver_id, history.store_id AS store_id,
-    stores.id_prefix AS store_id_prefix,
-    stores.name AS store_name, stores.address AS store_address, super_categories.name AS super_category,
-    guests.id AS user_id, guests.id_prefix AS user_id_prefix, guests.user_email AS user_email,
-    guests.first_name AS first_name, guests.last_name AS last_name, guests.phone_number AS user_phone_number,
-    guests.birth_date AS user_birth_date
-    FROM
-    orders_history AS history,
-    catalog_stores AS stores,
-    catalog_super_categories AS super_categories,
-    users_customers_guest AS guests,
-    orders_transactions_history AS transaction    
-    WHERE
-    history.store_id = stores.id
-    AND history.store_type = super_categories.id
-    AND transaction.guest_id = guests.id
-    AND history.date_delivered IS NULL
-    
-    UNION
-    
-    SELECT
-    history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
-    history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
-    history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
-    history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
-    transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
-    transaction.driver_instruction AS driver_instruction,
-    history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
-    NULL AS store_address, super_categories.name AS super_category, users.id AS user_id, users.id_prefix AS user_id_prefix,
-    users.user_email AS user_email, users.first_name AS first_name, users.last_name AS last_name,
-    users.phone_number AS user_phone_number, users.birth_date AS user_birth_date
-    FROM
-    orders_history AS history,
-    catalog_super_categories AS super_categories,    
-    users_customers AS users,
-    orders_transactions_history AS transaction        
-    WHERE
-    history.store_id IS NULL
-    AND history.store_type = super_categories.id    
-    AND history.date_delivered IS NULL
-    AND transaction.user_id = users.id
-    
-    UNION
-    
-    SELECT
-    history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
-    history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
-    history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
-    history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
-    transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
-    transaction.driver_instruction AS driver_instruction,
-    history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
-    NULL AS store_address, super_categories.name AS super_category, guests.id AS user_id, guests.id_prefix AS user_id_prefix,
-    guests.user_email AS user_email, guests.first_name AS first_name, guests.last_name AS last_name,
-    guests.phone_number AS user_phone_number, guests.birth_date AS user_birth_date
-    FROM
-    orders_history AS history,
-    catalog_super_categories AS super_categories,    
-    users_customers_guest AS guests,
-    orders_transactions_history AS transaction            
-    WHERE
-    history.store_id IS NULL
-    AND history.store_type = super_categories.id        
-    AND history.date_delivered IS NULL
-    AND transaction.guest_id = guests.id
-    `;
+        SELECT
+        history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
+        history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
+        history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
+        history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
+        transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
+        transaction.driver_instruction AS driver_instruction,
+        history.driver_id AS driver_id, history.store_id AS store_id,
+        stores.id_prefix AS store_id_prefix, stores.name AS store_name,
+        stores.address AS store_address, store_type.name AS store_type,
+        users.id AS user_id, users.id_prefix AS user_id_prefix, users.user_email AS user_email,
+        users.first_name AS first_name, users.last_name AS last_name, users.phone_number AS user_phone_number,
+        users.birth_date AS user_birth_date
+        FROM
+        orders_history AS history,
+        catalog_stores AS stores,
+        catalog_store_types AS store_type,
+        users_customers AS users,
+        orders_transactions_history AS transaction
+        WHERE
+        transaction.id = history.order_transaction_id
+        AND history.store_id = stores.id
+        AND history.store_type = store_type.id
+        AND transaction.user_id = users.id
+        AND transaction.guest_id IS NULL
+        AND history.date_delivered IS NULL
+        
+        UNION
+        
+        SELECT
+        history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
+        history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
+        history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
+        history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
+        transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
+        transaction.driver_instruction AS driver_instruction,
+        history.driver_id AS driver_id, history.store_id AS store_id,
+        stores.id_prefix AS store_id_prefix,
+        stores.name AS store_name, stores.address AS store_address, store_type.name AS store_type,
+        guests.id AS user_id, guests.id_prefix AS user_id_prefix, guests.user_email AS user_email,
+        guests.first_name AS first_name, guests.last_name AS last_name, guests.phone_number AS user_phone_number,
+        guests.birth_date AS user_birth_date
+        FROM
+        orders_history AS history,
+        catalog_stores AS stores,
+        catalog_store_types AS store_type,
+        users_customers_guest AS guests,
+        orders_transactions_history AS transaction    
+        WHERE
+        transaction.id = history.order_transaction_id
+        AND history.store_id = stores.id
+        AND history.store_type = store_type.id
+        AND transaction.guest_id = guests.id
+        AND transaction.user_id IS NULL
+        AND history.date_delivered IS NULL
+        
+        UNION
+        
+        SELECT
+        history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
+        history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
+        history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
+        history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
+        transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
+        transaction.driver_instruction AS driver_instruction,
+        history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
+        NULL AS store_address, store_type.name AS store_type, users.id AS user_id, users.id_prefix AS user_id_prefix,
+        users.user_email AS user_email, users.first_name AS first_name, users.last_name AS last_name,
+        users.phone_number AS user_phone_number, users.birth_date AS user_birth_date
+        FROM
+        orders_history AS history,
+        catalog_store_types AS store_type,    
+        users_customers AS users,
+        orders_transactions_history AS transaction        
+        WHERE
+        transaction.id = history.order_transaction_id
+        AND history.store_id IS NULL
+        AND history.store_type = store_type.id    
+        AND history.date_delivered IS NULL
+        AND transaction.user_id = users.id
+        AND transaction.guest_id IS NULL
+        
+        UNION
+        
+        SELECT
+        history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
+        history.date_assigned AS date_assigned, history.date_arrived_store AS date_arrived_store,
+        history.date_picked AS date_picked, history.date_arrived_customer AS date_arrived_customer,
+        history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
+        transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
+        transaction.driver_instruction AS driver_instruction,
+        history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
+        NULL AS store_address, store_type.name AS store_type, guests.id AS user_id, guests.id_prefix AS user_id_prefix,
+        guests.user_email AS user_email, guests.first_name AS first_name, guests.last_name AS last_name,
+        guests.phone_number AS user_phone_number, guests.birth_date AS user_birth_date
+        FROM
+        orders_history AS history,
+        catalog_store_types AS store_type,    
+        users_customers_guest AS guests,
+        orders_transactions_history AS transaction            
+        WHERE
+        transaction.id = history.order_transaction_id
+        AND history.store_id IS NULL
+        AND history.store_type = store_type.id        
+        AND history.date_delivered IS NULL
+        AND transaction.guest_id = guests.id
+        AND transaction.user_id IS NULL`;
 
     var pendingOrders = await db.runQuery(sqlQuery);
     return pendingOrders;
 }
 
+/**
+ * Returns orders by transaction id
+ * Also checks with user id
+ * 
+ * @param {*} transactionId 
+ * @param {*} userId 
+ */
 pub.getOrdersByTransactionIdWithUserId = async function (transactionId, userId) {
     var transaction = await pub.getOrderTransactionById(transactionId);
     if (transaction) {
@@ -405,6 +373,13 @@ pub.getOrdersByTransactionIdWithUserId = async function (transactionId, userId) 
     return false;
 }
 
+/**
+ * Returns order items of specific order.
+ * Also checks with user id
+ * 
+ * @param {*} orderId 
+ * @param {*} userId 
+ */
 pub.getOrderItemsByIdUserId = async function (orderId, userId) {
     var userOrder = await pub.getUserWithOrderByOrderId(orderId);
     if (userOrder.user.id == userId) {
@@ -414,11 +389,34 @@ pub.getOrderItemsByIdUserId = async function (orderId, userId) {
     return false;
 }
 
+/**
+ * Have all orders related to the transaction been dispatched
+ * 
+ * @param {*} transactionId 
+ */
+pub.areAllDispatched = async function (transactionId) {
+    var sqlQuery = `
+        SELECT id
+        FROM orders_history
+        WHERE ?
+        AND date_assigned IS NULL
+        LIMIT 1
+    `;
+
+    var data = { order_transaction_id: transactionId };
+
+    var dbResult = await db.runQuery(sqlQuery, data);
+    return dbResult.length == 0;
+}
+
+
+// Below are refund methods - they need to be revisited
 pub.isDelivered = function (orderId) {
     var sqlQuery = `
-        SELECT *
+        SELECT id
         FROM orders_history
-        WHERE date_delivered IS NULL AND ?`
+        WHERE date_delivered IS NULL AND ?
+        LIMIT 1`
 
     var data = { id: orderId };
     return db.runQuery(sqlQuery, data).then(function (orders) {
@@ -429,7 +427,6 @@ pub.isDelivered = function (orderId) {
         }
     });
 };
-
 
 /**
  * Inserts data into orders_history_refund table.
@@ -451,15 +448,14 @@ pub.placeRefundHistory = function (orderId, csrActionId, dateScheduled, dateSche
         data.date_scheduled_note = dateScheduledNote;
     }
 
-    return db.insertQuery(db.dbTables.orders_history_refund, data).then(function (inserted) {
+    return db.insertQuery(db.tables.orders_history_refund, data).then(function (inserted) {
         return inserted.insertId;
     });
 
 };
 
-
 /**
- * Change data in orders_cart_info table. 
+ * Change data in orders_cart_items table. 
  * Used by full cancel and full refund.
  * @param {*Number} orderId 
  */
@@ -468,22 +464,21 @@ pub.placeFullRefundCart = function (orderId) {
         order_id: orderId
     };
 
-    return db.selectAllWhere(db.dbTables.orders_cart_info, selectData).then(function (items) {
+    return db.selectAllWhere(db.tables.orders_cart_items, selectData).then(function (items) {
         var data = {
             modified_quantity: 0
         };
         var key = {
             order_id: orderId
         };
-        return db.updateQuery(db.dbTables.orders_cart_info, [data, key]).then(function (updated) {
+        return db.updateQuery(db.tables.orders_cart_items, [data, key]).then(function (updated) {
             return items;
         });
     });
 };
 
-
 /**
- * Change data in orders_cart_info table. 
+ * Change data in orders_cart_items table. 
  * @param {*Number} orderId 
  * @param {*Number} refundItems 
  */
@@ -495,7 +490,7 @@ pub.placePartialRefundCart = function (orderId, refundItems) {
     var sqlQuery = `
     SELECT id, order_id, depot_id, quantity, price_sold AS price,
     modified_quantity, tax
-    FROM orders_cart_info
+    FROM orders_cart_items
     WHERE ?;`
 
     return db.runQuery(sqlQuery, selectData).then(function (items) {
@@ -525,7 +520,7 @@ pub.placePartialRefundCart = function (orderId, refundItems) {
                         id: refundItem.id
                     };
 
-                    updateFunctions.push(db.updateQuery(db.dbTables.orders_cart_info, [updateData, key]));
+                    updateFunctions.push(db.updateQuery(db.tables.orders_cart_items, [updateData, key]));
                 }
             }
         }
@@ -534,7 +529,6 @@ pub.placePartialRefundCart = function (orderId, refundItems) {
         });
     });
 };
-
 
 /**
  * Insert data into orders_history_cancel table.
@@ -547,7 +541,7 @@ pub.placeCancelHistory = function (orderId, csrActionId) {
         csr_action_id: csrActionId
     };
 
-    return db.insertQuery(db.dbTables.orders_history_cancel, insertData).then(function (inserted) {
+    return db.insertQuery(db.tables.orders_history_cancel, insertData).then(function (inserted) {
         return inserted.insertId;
     });
 };
@@ -565,7 +559,7 @@ pub.placeAddHistory = function (orderId, csrActionId, chargeAmount) {
         charge_amount: chargeAmount
     };
 
-    return db.insertQuery(db.dbTables.orders_history_add, insertData).then(function (inserted) {
+    return db.insertQuery(db.tables.orders_history_add, insertData).then(function (inserted) {
         return inserted.insertId;
     });
 };
@@ -575,6 +569,7 @@ pub.placeAddHistory = function (orderId, csrActionId, chargeAmount) {
  * Calculates modified amount.
  * If customer owes us, the result will be positive.
  * If we owe customer, the result will be negative.
+ * 
  * @param {*Number} orderId 
  */
 pub.calculateModifiedAmount = function (orderId, oldItems, refund) {
@@ -586,7 +581,7 @@ pub.calculateModifiedAmount = function (orderId, oldItems, refund) {
     var sqlQuery = `
         SELECT id, order_id, depot_id, quantity, price_sold AS price,
         modified_quantity, tax
-        FROM orders_cart_info
+        FROM orders_cart_items
         WHERE ?;`
 
     return db.runQuery(sqlQuery, data).then(function (items) {
@@ -628,7 +623,7 @@ pub.calculatePartialCancelAmount = function (orderId, oldItems, refund) {
     var sqlQuery = `
         SELECT id, order_id, depot_id, quantity, price_sold AS price,
         modified_quantity, tax
-        FROM orders_cart_info
+        FROM orders_cart_items
         WHERE ?;`
 
     return db.runQuery(sqlQuery, data).then(function (items) {
@@ -678,7 +673,7 @@ pub.getOrderInfo = function (orderId) {
         id: orderId
     };
 
-    return db.selectAllWhere(db.dbTables.orders_history, data).then(function (orders) {
+    return db.selectAllWhere(db.tables.orders_history, data).then(function (orders) {
         if (orders.length > 0) {
             return orders[0];
         } else {
@@ -694,7 +689,7 @@ pub.updateRefundAmount = function (refundHistoryId, customerRefundAmount) {
     var key = {
         id: refundHistoryId
     };
-    return db.updateQuery(db.dbTables.orders_history_refund, [data, key]).then(function (updated) {
+    return db.updateQuery(db.tables.orders_history_refund, [data, key]).then(function (updated) {
         return updated;
     });
 };
@@ -706,23 +701,9 @@ pub.updateCancelAmount = function (cancelHistoryId, customerRefundAmount) {
     var key = {
         id: cancelHistoryId
     };
-    return db.updateQuery(db.dbTables.orders_history_cancel, [data, key]).then(function (updated) {
+    return db.updateQuery(db.tables.orders_history_cancel, [data, key]).then(function (updated) {
         return updated;
     });
 };
-
-pub.areAllDispatched = async function (transactionId) {
-    var sqlQuery = `
-        SELECT *
-        FROM orders_history
-        WHERE ?
-        AND date_assigned IS NULL
-    `;
-
-    var data = { order_transaction_id: transactionId };
-
-    var dbResult = await db.runQuery(sqlQuery, data);
-    return dbResult.length == 0;
-}
 
 module.exports = pub;

@@ -19,7 +19,7 @@ function addIsGuest(user) {
  */
 pub.findUser = function (email) {
     var data = { user_email: email };
-    return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
+    return db.selectAllWhereLimitOne(db.tables.users_customers, data).then(function (dbResult) {
         if (dbResult.length > 0) {
             return pub.sanitizeUserObject(dbResult[0]);
         } else {
@@ -33,7 +33,7 @@ pub.findUser = function (email) {
  */
 pub.findUserById = function (id) {
     var data = { id: id };
-    return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
+    return db.selectAllWhereLimitOne(db.tables.users_customers, data).then(function (dbResult) {
         if (dbResult.length > 0) {
             return pub.sanitizeUserObject(dbResult[0]);
         } else {
@@ -46,8 +46,8 @@ pub.findUserById = function (id) {
  * Add user to database based on data
  */
 pub.addUser = function (userData) {
-    return db.insertQuery(db.dbTables.users_customers, userData).then(function (dbResult) {
-        if (dbResult.errno && typeof dbResult.errno === "number"){
+    return db.insertQuery(db.tables.users_customers, userData).then(function (dbResult) {
+        if (dbResult.errno && typeof dbResult.errno === "number") {
             return false;
         }
         return dbResult.insertId;
@@ -59,7 +59,7 @@ pub.addUser = function (userData) {
  */
 pub.authenticateUser = function (email, password) {
     var data = { user_email: email };
-    return db.selectAllWhere(db.dbTables.users_customers, data).then(function (user) {
+    return db.selectAllWhereLimitOne(db.tables.users_customers, data).then(function (user) {
         if (user.length > 0) {
             return Auth.comparePassword(password, user[0].password).then(function (match) {
                 if (match) {
@@ -79,7 +79,7 @@ pub.authenticateUser = function (email, password) {
  */
 pub.findGuestUser = function (email) {
     var data = { user_email: email };
-    return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
+    return db.selectAllWhereLimitOne(db.tables.users_customers_guest, data).then(function (dbResult) {
         if (dbResult.length > 0) {
             return addIsGuest(pub.sanitizeUserObject(dbResult[0]));
         } else {
@@ -93,7 +93,7 @@ pub.findGuestUser = function (email) {
  */
 pub.findGuestUserById = function (id) {
     var data = { id: id };
-    return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
+    return db.selectAllWhereLimitOne(db.tables.users_customers_guest, data).then(function (dbResult) {
         if (dbResult.length > 0) {
             return addIsGuest(pub.sanitizeUserObject(dbResult[0]));
         } else {
@@ -106,8 +106,8 @@ pub.findGuestUserById = function (id) {
  * Add guest user to database based on the data
  */
 pub.addGuestUser = function (userData) {
-    return db.insertQuery(db.dbTables.users_customers_guest, userData).then(function (dbResult) {
-        if (dbResult.errno && typeof dbResult.errno === "number"){
+    return db.insertQuery(db.tables.users_customers_guest, userData).then(function (dbResult) {
+        if (dbResult.errno && typeof dbResult.errno === "number") {
             return false;
         }
         return dbResult.insertId;
@@ -119,7 +119,7 @@ pub.addGuestUser = function (userData) {
  */
 pub.updateGuestUser = function (userData, key) {
     var data = [userData, key];
-    return db.updateQuery(db.dbTables.users_customers_guest, data).then(function (dbResult) {
+    return db.updateQuery(db.tables.users_customers_guest, data).then(function (dbResult) {
         if (dbResult != false) {
             return true;
         } else {
@@ -155,14 +155,14 @@ pub.updateUser = function (userData, key) {
         user_id: key.id
     };
 
-    return db.selectColumnsWhere(Object.keys(userData), db.dbTables.users_customers, key).then(function (users) {
+    return db.selectColumnsWhere(Object.keys(userData), db.tables.users_customers, key).then(function (users) {
         if (users != false) {
             if (ifNewInfo(userData, users[0])) {
-                return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
+                return db.updateQuery(db.tables.users_customers, data).then(function (dbResult) {
                     if (dbResult != false) {
                         if (!isHistoryNull(users[0])) {
                             historyData = Object.assign(historyData, users[0]);
-                            return db.insertQuery(db.dbTables.users_customers_history, historyData).then(function (historyInserted) {
+                            return db.insertQuery(db.tables.users_customers_history, historyData).then(function (historyInserted) {
                                 if (historyInserted != false) {
                                     return true;
                                 } else {
@@ -194,7 +194,7 @@ pub.updateCreditCard = function (userKey, cardToken, cardDigits, cardType) {
 
     var data = [updateDate, userKey];
 
-    return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
+    return db.updateQuery(db.tables.users_customers, data).then(function (dbResult) {
         return true;
     });
 };
@@ -206,7 +206,8 @@ pub.authenticateCsrUser = function (email, password) {
     var sqlQuery = `
     SELECT *
     FROM users_employees
-    WHERE role_id = 2 AND ?`;
+    WHERE role_id = 2 AND ?
+    LIMIT 1`;
     var data = {
         user_email: email,
     };
@@ -230,7 +231,7 @@ pub.authenticateCsrUser = function (email, password) {
 pub.findUsersByPhone = function (phone_number) {
     var data = { phone_number: phone_number };
     var result = [];
-    return db.selectAllWhere(db.dbTables.users_customers, data).then(function (dbResult) {
+    return db.selectAllWhere(db.tables.users_customers, data).then(function (dbResult) {
         for (i = 0; i < dbResult.length; i++) {
             result.push(pub.sanitizeUserObject(dbResult[i]));
         }
@@ -244,7 +245,7 @@ pub.findUsersByPhone = function (phone_number) {
 pub.findGuestUsersByPhone = function (phone_number) {
     var data = { phone_number: phone_number };
     var result = [];
-    return db.selectAllWhere(db.dbTables.users_customers_guest, data).then(function (dbResult) {
+    return db.selectAllWhere(db.tables.users_customers_guest, data).then(function (dbResult) {
         for (i = 0; i < dbResult.length; i++) {
             result.push(addIsGuest(pub.sanitizeUserObject(dbResult[i])));
         }
@@ -308,14 +309,14 @@ function findUsersWithHistory(data) {
 
 pub.updatePassword = function (userId, oldPassword, newPassword) {
     var key = { id: userId };
-    return db.selectColumnsWhere("password", db.dbTables.users_customers, key).then(function (user) {
+    return db.selectColumnsWhere("password", db.tables.users_customers, key).then(function (user) {
         if (user.length > 0) {
             return Auth.comparePassword(oldPassword, user[0].password).then(function (match) {
                 if (match) {
                     return Auth.hashPassword(newPassword).then(function (hashedPassword) {
                         var userData = { password: hashedPassword };
                         var data = [userData, key];
-                        return db.updateQuery(db.dbTables.users_customers, data).then(function (dbResult) {
+                        return db.updateQuery(db.tables.users_customers, data).then(function (dbResult) {
                             if (dbResult != false) {
                                 return true;
                             } else {
@@ -339,20 +340,24 @@ pub.updatePassword = function (userId, oldPassword, newPassword) {
  * @param {*String} email 
  */
 pub.getUserPasswordHash = async function (email) {
-    var query = "Select password from " + db.dbTables.users_customers + " where ?";
+    var query = `
+        SELECT password
+        FROM users_customers
+        WHERE ?
+        LIMIT 1`;
     var data = { user_email: email };
     var pHash = await db.runQuery(query, data);
     if (!pHash[0]) {
         return false;
     }
-    return pHash[0].password; 
+    return pHash[0].password;
 }
 
 pub.resetPassword = async function (email, newPassword) {
     var key = { user_email: email };
     var hashedPassword = await Auth.hashPassword(newPassword);
     var userData = { password: hashedPassword };
-    var result = await db.updateQuery(db.dbTables.users_customers, [userData, key]);
+    var result = await db.updateQuery(db.tables.users_customers, [userData, key]);
     if (result != false) {
         return true;
     } else {
