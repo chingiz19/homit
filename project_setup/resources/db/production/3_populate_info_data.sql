@@ -245,7 +245,7 @@ INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(113, "Fruit Liqueu
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(114, "Coffee Liqueur", "24");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(115, "Cream Liqueur", "21");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(116, "Infused Wine", "22");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(117, "Irish Cream", "15");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(117, "Irish Cream", "21");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(118, "Classic Chips", "25");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(119, "Sour Cream & Onion Chips", "25");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(120, "Cheddar Cheese Chips", "25");

@@ -1,13 +1,13 @@
 use homit_dev;
 
-/*Catalog - Store Type*/
+/* Insert Catalog - Store Type */
 INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(1,"solo-liquor", "Liquor Station", "liquor-station", "liquor-station_icon.png");
 INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(2,"safeway", "Snack Vendor", "snack-vendor", "snack-vendor_icon.png");
 INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(3,"7-eleven", "Snack Vendor", "snack-vendor", "snack-vendor_icon.png");
 INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(4,"homitcar", "Snack Vendor", "snack-vendor", "snack-vendor_icon.png");
 INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(5,"liquor-depot", "Liquor Station", "old-liquor-depot", "old-liquor-depot_icon.png");
 
-/*Catalog - Store*/
+/* Insert Catalog - Store */
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type, open_time, close_time, open_time_next, close_time_next) VALUES (1, "s_", "Homit Store", "Calgary, AB", "0", "0", "4038003460", "4", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type, open_time, close_time, open_time_next, close_time_next) VALUES (100, "s_", "Liquor Depot", "3630 Brentwood Rd NW, Calgary, AB T2L 1K8", "51.0869109", "-114.1277174", "4032892946", "5", "10:00:00", "23:59:59", "00:00:00", "02:00:00");
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type, open_time, close_time, open_time_next, close_time_next) VALUES (101, "s_", "Solo Liquor Crowfoot", "818 Crowfoot Crescent NW, Calgary, AB T3G 4S3", "51.127318", "-114.206648", "5873525478", "1", "10:00:00", "23:59:59", "00:00:00", "02:00:00");
@@ -73,25 +73,24 @@ INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, ad
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type, open_time, close_time, open_time_next, close_time_next) VALUES (333, "s_", "7-eleven", "13 Southland Crescent SW Unit 103, Calgary, AB T2W 0K4", "50.9639219", "-114.0844925", "5872952150", "3", "00:00:00", "23:59:59", "00:00:00", "00:00:00");
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type, open_time, close_time, open_time_next, close_time_next) VALUES (334, "s_", "7-eleven", "1919 Southland Dr SW Unit 102, Calgary, AB T2W 0K1", "50.9607798", "-114.104962399999", "4032522720", "3", "00:00:00", "23:59:59", "00:00:00", "00:00:00");
 
-/*Catalog - Description Name*/
+/* Insert Catalog - Description Name */
 INSERT INTO `catalog_description_names`(id, name) VALUES(1, "Preview");
 INSERT INTO `catalog_description_names`(id, name) VALUES(2, "Type");
 INSERT INTO `catalog_description_names`(id, name) VALUES(3, "Producer");
 INSERT INTO `catalog_description_names`(id, name) VALUES(4, "Country of Origin");
 INSERT INTO `catalog_description_names`(id, name) VALUES(5, "Alcohol Content %");
 
-/*Catalog - Category*/
+/* Insert Catalog - Category */
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(1, "beer", "Beer");
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(2, "wine", "Wine");
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(3, "spirit", "Spirit");
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(4, "liqueur", "Liqueur");
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(5, "snack", "Snack");
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(6, "beverage", "Beverage");
-INSERT INTO `catalog_categories` (id, name, display_name) VALUES(7, "beverage", "Beverage");
-INSERT INTO `catalog_categories` (id, name, display_name) VALUES(8, "party-supply", "Party-Supply");
-INSERT INTO `catalog_categories` (id, name, display_name) VALUES(9, "everyday-needs", "Everyday-Needs");
+INSERT INTO `catalog_categories` (id, name, display_name) VALUES(7, "party-supply", "Party-Supply");
+INSERT INTO `catalog_categories` (id, name, display_name) VALUES(8, "everyday-needs", "Everyday-Needs");
 
-/*Catalog - Subcategory*/
+/* Insert Catalog - Subcategory*/
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(1, "Lager", "1");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(2, "Witbier", "1");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(3, "Pilsner", "1");
@@ -124,12 +123,12 @@ INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(29, "Sauce & 
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(30, "Soda & Juice", "6");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(31, "Water & Ice", "6");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(32, "Energy Drink", "6");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(33, "Plastic & Paper", "8");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(34, "Games & Décor", "8");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(35, "Barware", "8");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(36, "Miscellaneous", "9");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(33, "Plastic & Paper", "7");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(34, "Games & Décor", "7");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(35, "Barware", "7");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(36, "Miscellaneous", "8");
 
-/*Catalog - Type*/
+/* Insert Catalog Type */
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(1, "Pale Lager", "1");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(2, "Wheat Ale", "2");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(3, "Pale Lager", "3");
@@ -220,33 +219,33 @@ INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(87, "Blended", "15
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(88, "Irish", "15");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(89, "Scotch", "15");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(90, "Oaked", "15");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(91, "Irish Cream", "15");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(92, "Reposado Tequila", "16");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(93, "Gold Tequila", "16");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(94, "Silver Tequila", "16");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(95, "Anejo Tequila", "16");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(96, "Lime Tequila", "16");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(97, "Cognac", "17");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(98, "Spiced Rum", "18");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(99, "Black Spiced Rum", "18");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(100, "White Rum", "18");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(101, "Gold Rum", "18");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(102, "Blended", "18");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(103, "Blended", "19");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(104, "Dry Gin", "19");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(105, "Herbal Liqueur", "20");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(106, "Irish Liqueur", "21");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(107, "Apple Liqueur", "22");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(108, "Grape Liqueur", "22");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(109, "Raspberry Liqueur", "22");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(110, "Watermelon Liqueur", "22");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(111, "Hezelnut Liqueur", "20");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(112, "Blended Liqueur", "23");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(113, "Black Raspberry Liqueur", "22");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(114, "Fruit Liqueur", "22");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(115, "Coffee Liqueur", "24");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(116, "Cream Liqueur", "21");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(117, "Infused Wine", "22");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(91, "Reposado Tequila", "16");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(92, "Gold Tequila", "16");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(93, "Silver Tequila", "16");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(94, "Anejo Tequila", "16");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(95, "Lime Tequila", "16");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(96, "Cognac", "17");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(97, "Spiced Rum", "18");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(98, "Black Spiced Rum", "18");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(99, "White Rum", "18");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(100, "Gold Rum", "18");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(101, "Blended", "18");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(102, "Blended", "19");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(103, "Dry Gin", "19");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(104, "Herbal Liqueur", "20");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(105, "Irish Liqueur", "21");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(106, "Apple Liqueur", "22");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(107, "Grape Liqueur", "22");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(108, "Raspberry Liqueur", "22");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(109, "Watermelon Liqueur", "22");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(110, "Hezelnut Liqueur", "20");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(111, "Blended Liqueur", "23");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(112, "Black Raspberry Liqueur", "22");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(113, "Fruit Liqueur", "22");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(114, "Coffee Liqueur", "24");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(115, "Cream Liqueur", "21");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(116, "Infused Wine", "22");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(117, "Irish Cream", "21");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(118, "Classic Chips", "25");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(119, "Sour Cream & Onion Chips", "25");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(120, "Cheddar Cheese Chips", "25");
@@ -337,7 +336,7 @@ INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(204, "Regular", "3
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(205, "Extra Strength", "36");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(206, "Low Dose", "36");
 
-/*Catalog Packaging - Container*/
+/* Insert Catalog Packaging - Container */
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(1, "can");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(2, "bottle");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(3, "object");
@@ -345,7 +344,7 @@ INSERT INTO `catalog_packaging_containers`(id, name) VALUES(4, "bar");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(5, "pack");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(6, "jar");
 
-/*Catalog Packaging - Packaging*/
+/* Insert Catalog Packaging - Packaging */
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(1, "6");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(2, "12");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(3, "24");
@@ -367,7 +366,7 @@ INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(18, "16ct");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(19, "24ct");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(20, "30ct");
 
-/*Catalog Packaging - Volume*/
+/* Insert Catalog Packaging - Volume */
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(1, "330ml");
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(2, "341ml");
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(3, "355ml");
