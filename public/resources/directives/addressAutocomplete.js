@@ -113,18 +113,20 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                             var cut_characters = 0;
 
                             // Takes into account characters of each word in the input
-                            for(var j = 0; j < predictions[0].matched_substrings.length; j++){
-                                cut_characters = cut_characters + predictions[0].matched_substrings[j].length;
+                            if (predictions){
+                                for(var j = 0; j < predictions[0].matched_substrings.length; j++){
+                                    cut_characters = cut_characters + predictions[0].matched_substrings[j].length;
+                                }
+                                // Takes into account 'space' in the input
+                                cut_characters = cut_characters + (predictions[0].matched_substrings.length - 1 );
+    
+                                for (var i = 0; i < predictions.length; i++){
+                                    predictions[i].description = predictions[i].description.substring(cut_characters);
+                                }
+                                scope._matched_part = _.startCase(_.toLower(scope._searchedAddress));
+                                scope._predictions = predictions;
+                                scope.$apply();
                             }
-                            // Takes into account 'space' in the input
-                            cut_characters = cut_characters + (predictions[0].matched_substrings.length - 1 );
-
-                            for (var i = 0; i < predictions.length; i++){
-                                predictions[i].description = predictions[i].description.substring(cut_characters);
-                            }
-                            scope._matched_part = _.startCase(_.toLower(scope._searchedAddress));
-                            scope._predictions = predictions;
-                            scope.$apply();
                         });
                     }
 

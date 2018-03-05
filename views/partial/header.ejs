@@ -64,7 +64,7 @@
                                 <span class="mnSrchCBAAA">
                                     <img class="mnSrchImg" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
                                 </span>
-                                <span class="mnSrchCBAAB">{{node.brand}} {{node.subcategory}}</span>
+                                <span class="mnSrchCBAAB">{{node.brand}} {{node.name}}</span>
                             </a>
                         </li>
                     </ul>
@@ -120,10 +120,10 @@
         <input id="glbSearchRequest-mobile" ng-model="searchRequest" placeholder="Search to Homit...">
     </div>
     <div ng-if="searchDisplay && screenIsMob" id="search-result-mobile">
-        <ul ng-if="resultSuperCategory.length">
-            <li ng-repeat="node in resultSuperCategory" class="flex-li">
-                <a href="/catalog/{{node.super_category}}/" target="_self" id="super_category_ + {{$index + 1}}">
-                    <span>{{node.super_category_display}}</span>
+        <ul ng-if="resultStoreType.length">
+            <li ng-repeat="node in resultStoreType" class="flex-li">
+                <a href="/catalog/{{node.store_type_api_name}}/" target="_self" id="super_category_ + {{$index + 1}}">
+                    <span>{{node.store_type_display_name}}</span>
                 </a>
             </li>
             <li ng-if="resultCategory.length || resultSubcategory.length || resultProducts.length" class="search-line">
@@ -132,8 +132,8 @@
         </ul>
         <ul ng-if="resultCategory.length || resultSubcategory.length">
             <li ng-repeat="node in resultCategory" class="flex-li">
-                <a href="/catalog/{{node.super_category}}/{{node.category}}" target="_self" id="category_ + {{$index + 1}}">
-                    <span>{{node.category_display}}</span>
+                <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" id="category_ + {{$index + 1}}">
+                    <span>{{node.category_display_name}}</span>
                 </a>
             </li>
             <li ng-repeat="node in resultSubcategory" class="flex-li">
@@ -151,13 +151,13 @@
                 <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" layout="row" ng-click="sendSubcategory(node.subcategory, node.product_id)"
                     id="product_ + {{$index + 1}}">
                     <span>
-                        <img ng-src="/resources/images/products/{{node.super_category}}/{{node.category}}/{{node.image}}">
+                        <img ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
                     </span>
                     <span class="product-brand-text-mobile">{{node.brand}} {{node.name}}</span>
                 </a>
             </li>
         </ul>
-        <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultSuperCategory.length">
+        <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultStoreType.length">
             <li>
                 <span class="product-brand-text-mobile">Not Found Yet...</span>
             </li>
