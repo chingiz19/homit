@@ -331,7 +331,8 @@ pub.searchStoreType = async function (searchText, limit) {
         var sqlQuery = `
         SELECT DISTINCT display_name AS store_type_display_name, image AS store_type_image, api_name AS store_type_api_name
         FROM catalog_store_types
-        WHERE display_name LIKE '%` + searchText + `%'
+        WHERE available = true
+        AND display_name LIKE '%` + searchText + `%'
         LIMIT ` + limit;
         var dbResult = await db.runQuery(sqlQuery);
         return dbResult;
@@ -365,8 +366,8 @@ pub.searchCategory = async function (searchText, limit) {
         JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
         JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
         
-        WHERE
-        category.name LIKE '%` + searchText + `%'   OR category.display_name LIKE '%` + searchText + `%'
+        WHERE store_type.available = true
+        AND category.name LIKE '%` + searchText + `%'   OR category.display_name LIKE '%` + searchText + `%'
         LIMIT ` + limit;
 
         var dbResult = await db.runQuery(sqlQuery);
@@ -402,8 +403,8 @@ pub.searchSubcategory = async function (searchText, limit) {
         JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
         JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
         
-        WHERE
-        subcategory.name LIKE '%` + searchText + `%'
+        WHERE store_type.available = true
+        AND subcategory.name LIKE '%` + searchText + `%'
         LIMIT ` + limit;
 
         var dbResult = await db.runQuery(sqlQuery);
@@ -445,9 +446,9 @@ pub.searchProducts = async function (searchText, limit) {
         JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
         JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
         
-        WHERE
+        WHERE store_type.available = true
 
-        listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
+        AND listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
         LIMIT ` + limit;
 
         var dbResult = await db.runQuery(sqlQuery);
@@ -490,9 +491,9 @@ pub.searchProductsSpecial = async function (searchText, limit) {
             JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
             JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
             
-            WHERE
+            WHERE store_type.available = true
     
-            listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'`;
+            AND listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'`;
 
         if (safewayOpen) {
             sqlQuery = sqlQuery0 + ` AND store_type.name NOT IN('` + Catalog.sevenElevenStoreType + `')

@@ -12,6 +12,7 @@ CREATE TABLE catalog_store_types (
 	display_name VARCHAR(225) NOT NULL,	
 	image VARCHAR(225),  
 	api_name VARCHAR(225) NOT NULL,		
+	available BOOLEAN DEFAULT TRUE,
 	
 	PRIMARY KEY (id)
 ) ENGINE = InnoDB;
