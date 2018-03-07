@@ -102,6 +102,13 @@ app.service('sessionStorage', ["$window", function($window){
         return _get("container-selected");
     };
 
+    var _setAddressUnitNumber = function(value){
+        return _set("address-unit-number", value);
+    };
+
+    var _getAddressUnitNumber = function(){
+        return _get("address-unit-number");
+    };
 
     return {
         get: _get,
@@ -123,6 +130,8 @@ app.service('sessionStorage', ["$window", function($window){
         setCategoryClicked: _setCategoryClicked,
         getCategoryClicked: _getCategoryClicked,
         setProductContainerSelected: _setProductContainerSelected,
-        getProductContainerSelected: _getProductContainerSelected
+        getProductContainerSelected: _getProductContainerSelected,
+        setAddressUnitNumber: _setAddressUnitNumber,
+        getAddressUnitNumber: _getAddressUnitNumber
     };
 }]);

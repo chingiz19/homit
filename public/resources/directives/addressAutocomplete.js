@@ -25,12 +25,16 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
         function clearText(){
             sessionStorage.setAddress(undefined);
             privScopeAccess._searchedAddress = "";
+            privScopeAccess._unitNumber="";
         }
     
         /**
          * Returns Google Place object
          */
         publicFunctions.getPlace = function(){
+            if(privScopeAccess._unitNumber){
+                selectedPlace.formatted_address = privScopeAccess._unitNumber + " " + selectedPlace.formatted_address;
+            }
             return selectedPlace;
         };
     
@@ -77,6 +81,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                 // Need let google APIs to load
                 $timeout(function(){
                     scope._predictions = [];
+                    scope._unitNumber = "";
                     var service = new google.maps.places.AutocompleteService();
                     var places = new google.maps.places.PlacesService(document.getElementById('placesServiceNode'));
                             
@@ -90,7 +95,6 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                         scope._searchedAddress = addrSelected.formatted_address;
                         // if address is already selected, set that address
                         selectedPlace = addrSelected;
-                        
                     }
                       
                     /* Helper functions */
@@ -99,19 +103,29 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                      * Called on keypress event in address input box
                      */
                     scope._addressTyped = function(){
+                        var tmpSearchedAddress;
                         if (!scope._searchedAddress){ 
                             scope._predictions = [];
                             return;
-                        } 
+                        } else{
+                            tmpSearchedAddress = scope._searchedAddress;
+                        }
+
+                        if(scope._unitNumber){
+                            tmpSearchedAddress = _.trimStart(tmpSearchedAddress, scope._unitNumber + " ");
+                        }
+
                         service.getPlacePredictions({ 
-                                input: scope._searchedAddress,
+                                input: tmpSearchedAddress,
                                 bounds: scope.bounds,
                                 types: ['geocode'],
                                 componentRestrictions: { country: 'ca' }
                             }, function(predictions, status){
 
+                            if(predictions == null || predictions.length <= 2){
+                                scope._unitNumber = _.escapeRegExp(_.split(tmpSearchedAddress," ",1));
+                            }
                             var cut_characters = 0;
-
                             // Takes into account characters of each word in the input
                             if (predictions){
                                 for(var j = 0; j < predictions[0].matched_substrings.length; j++){
@@ -199,7 +213,14 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                      */
                     scope._addressSelected = function(address){
                         places.getDetails({placeId: address.place_id}, function(place, status){
-                            scope._searchedAddress = place.formatted_address;
+                            if(scope._unitNumber){
+                                // scope._unitNumber = (scope._unitNumber).replaceAll("^$,.*-?+()/{}[]|:#","");
+                                sessionStorage.setAddressUnitNumber(scope._unitNumber);
+                                scope._searchedAddress = scope._unitNumber + " " + place.formatted_address;
+                            } else{
+                                scope._searchedAddress = place.formatted_address
+                            }
+                            // scope._searchedAddress = place.formatted_address;
                             selectedPlace = place;
                             scope._predictions = []; // clean predictions
                             scope.addressChangeEvent();
