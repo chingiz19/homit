@@ -1,7 +1,4 @@
-use homit_dev;
-
-/* Insert employee roles */
-INSERT INTO `employee_roles`(id, role) VALUES (2,'CSR');
+use homit;
 
 INSERT INTO `users_employees`(user_email, first_name, last_name, password, role_id) VALUES ("csr1@homit.ca", "CSR", "CSR", "$2a$10$ID0LP8Tk7O1bhm/wzNOIdOx9pceiEtTsh/zUUkA.IbOaMT69ZITbC", 2);
 
