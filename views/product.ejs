@@ -20,7 +20,7 @@
                         </span>
                         <span itemprop="name">
                             <%= product_brand %>
-                        </span> - Delivered by Homit</h1>
+                        </span> - One Click Away</h1>
                     <section>
                         <!--googleoff: snippet-->
                         <div class="col-md-6 product-img product-image" layout="column">
@@ -104,29 +104,33 @@
                                     <div layout="column">
                                         <h3 class="product-details-header">Product Details</h3>
                                         <ul class="bullet-description">
-                                            <li>{{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]
+                                            <li class="product-details-short">{{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]
                                                 }} x {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]
                                                 }}
                                                 <span class="product-details-container">{{ selected_container}}</span>
                                             </li>
                                             <!--googleon: snippet-->
-                                            <li ng-click="hrefTo()">
-                                                <a href="<%= see_more_url %>">See More Products</a>
-                                            </li>
-                                            <% if (product_origin_country) {%>
-                                                <li itemprop="description">Country of Origin:
+                                            <!-- <% if (product_origin_country) {%> -->
+                                                <li itemprop="description"><span class="bold">Type:</span>
+                                                    <%= product_type %>
+                                                </li>
+                                                <li itemprop="description"><span class="bold">Country of Origin:</span>
                                                     <%= product_origin_country %>
                                                 </li>
-                                                <li itemprop="description">Made by:
-                                                    <%= product_made_by %>
-                                                </li>
-
-                                                <% if (showAlcoholVolume) {%>
-                                                    <li itemprop="description">Alcohol/Vol:
+                                                <%if (product_made_by != "NULL") { %>
+                                                    <li itemprop="description"><span class="bold">Made by:</span>
+                                                        <%= product_made_by %>
+                                                    </li>
+                                                <% } %>
+                                                <%if (showAlcoholVolume) { %>
+                                                    <li itemprop="description"><span class="bold">Alcohol/Vol:</span>
                                                         <%= product_alcohol_volume %>
                                                     </li>
-                                                    <% } %>
-                                                        <% } %>
+                                                <% } %>
+                                                <li ng-click="hrefTo()">
+                                                    <a href="<%= see_more_url %>">See More Products</a>
+                                                </li>
+                                            <!-- <% } %> -->
                                         </ul>
                                     </div>
                         </div>

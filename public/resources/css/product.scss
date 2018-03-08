@@ -12,6 +12,13 @@ ul {
 li {
     list-style-type: none;
 }
+.bold{
+    font-weight: 600;
+    margin-bottom: 1px;
+}
+.product-details-short{
+    font-weight: 600; font-size: 16; margin-bottom: 3px;
+}
 img:focus{
     outline: none;
 }

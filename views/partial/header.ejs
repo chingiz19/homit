@@ -28,7 +28,7 @@
                     </md-button>
                     <label class="mnSrchAA">
                     </label>
-                    <input id="glbSearchRequest" ng-model="searchRequest" placeholder="Search to Homit...">
+                    <input id="glbSearchRequest" ng-model="searchRequest" placeholder="Search to Homit..." autocomplete="none" autocorrect="off" spellcheck="false">
                 </md-input-container>
                 <div ng-if="searchDisplay" id="glbSearchRequest" class="mnSrchC">
                     <ul ng-if="resultStoreType.length" id="glbSrchA" class="mnSrchCA">
@@ -117,7 +117,7 @@
     </md-toolbar>
     <div id="mobile-search-container" ng-show="mobileSearchShow" layout="row">
         <ng-md-icon icon="search" class="searchIconInput"></ng-md-icon>
-        <input id="glbSearchRequest-mobile" ng-model="searchRequest" placeholder="Search to Homit...">
+        <input id="glbSearchRequest-mobile" ng-model="searchRequest" placeholder="Search to Homit..." autocomplete="none" autocorrect="off" spellcheck="false">
     </div>
     <div ng-if="searchDisplay && screenIsMob" id="search-result-mobile">
         <ul ng-if="resultStoreType.length">

@@ -733,7 +733,7 @@ pub.getProductsByListingId = async function (listingId, isStoreOpen) {
         JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
         JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
         
-        WHERE ? AND ?
+        WHERE ?
         
         ORDER BY listing_id, product_id, item_id, depot_id`;
 
@@ -765,6 +765,24 @@ pub.findAlternativeListing = async function (listingId) {
     return dbResult[0].listing_id;
 }
 
+/**
+ * Get all descriptions for the listing id
+ * 
+ * @param {*} listingId 
+ */
+var getDescriptionsByListingId = async function (listingId) {
+    var sqlQuery = `
+        SELECT name.name AS name, description.description AS description
+        FROM catalog_listings AS listing
+        JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id)
+        JOIN catalog_description_names AS name ON (description.description_key = name.id)
+        WHERE ?`;
+
+    var data = { "listing.id": listingId };
+    var dbResult = await db.runQuery(sqlQuery, data);
+    return dbResult;
+}
+
 pub.getProductPageProductsByListingId = async function (listingId) {
     // Get super category for listing
     var storeType = await Catalog.getStoreTypeByListing(listingId);
@@ -792,20 +810,28 @@ pub.getProductPageProductsByListingId = async function (listingId) {
         // get products
         products = await Catalog.getProductsByListingId(altListingId, altIsStoreOpen);
     }
-
-    return convertToProductPageItem(products);
+    var descriptions = await getDescriptionsByListingId(listingId);
+    return convertToProductPageItem(products.products, descriptions);
 }
 
 /**
  * 
  * @param {*} products - array of products
+ * @param {*} descriptions
  */
-function convertToProductPageItem(products) {
+function convertToProductPageItem(products, descriptions) {
     var tmpPr = products[0];
+
+    var finalDescriptions = {};
+
+    for (let i = 0; i < descriptions.length; i++) {
+        finalDescriptions[descriptions[i].name] = descriptions[i].description;
+    }
 
     // Extract common fields of products
     var finalResult = {
         "store_type": tmpPr.store_type,
+        "store_type_api_name": tmpPr.store_type_api_name,
         "category": tmpPr.category,
         "subcategory": tmpPr.subcategory,
         "type": tmpPr.type,
@@ -814,9 +840,9 @@ function convertToProductPageItem(products) {
         "description": tmpPr.description,
         "store_open": tmpPr.store_open,
         "tax": tmpPr.tax,
-        // "origin_country": tmpPr.origin_country,
-        // "made_by": tmpPr.made_by,
-        // "alcohol_volume": tmpPr.alcohol_volume,
+        "origin_country": finalDescriptions['Country of Origin'],
+        "made_by": finalDescriptions['Producer'],
+        "alcohol_volume": finalDescriptions['Alcohol Content %'],
         "products": {}
     };
 
