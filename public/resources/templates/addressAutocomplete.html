@@ -100,8 +100,8 @@
 
 <div id="placesServiceNode" style="display: none;"></div>
 
-<input style="text-transform: capitalize;" id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocomplete="none" autocorrect="off" spellcheck="false" required>
-<md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0; ">
+<input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocomplete="none" autocorrect="off" spellcheck="false" required>
+<md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0 ">
     <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
 </md-button>
 
