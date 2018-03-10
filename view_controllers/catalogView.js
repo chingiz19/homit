@@ -447,6 +447,7 @@ router.get('/:parent/:category', function (req, res, next) {
     }
 
     try {
+        req.options.ejs.title = _.startCase(req.params.category) + " Catalog | Homit";
         req.options.ejs.categories = convertArrayToString(categories[req.params.parent]);
         req.options.ejs.loadedStore = _.startCase(req.params.parent);
         req.options.ejs.selectedCategory = req.params.category;
