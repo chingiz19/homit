@@ -12,7 +12,7 @@ app.service('googleAnalytics', function(){
         cart_actions: "cart_actions",
         catalog_actions: "catalog_actions",
         checkout_actions: "checkout_actions"
-    }
+    };
 
      /**
      * Registers event with Google Analytics

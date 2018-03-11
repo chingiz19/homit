@@ -184,7 +184,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         googleAnalytics.addEvent('filter_categories', {
             "event_category": googleAnalytics.eventCategories.catalog_actions
         });
-    }
+    };
 
     $scope.emptySubcategories = function () {
         $scope.userSelectedSubcategories = null;

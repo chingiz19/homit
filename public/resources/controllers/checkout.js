@@ -1,5 +1,5 @@
 app.controller("checkoutController",
-    function ($scope, $http, $location, $rootScope, $cookies, $window, $timeout, $mdSidenav,
+    function ($scope, $http, $location, $rootScope, $cookies, $window, $mdSidenav,
         $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval, googleAnalytics, $timeout) {
 
         $scope.init = function () {
@@ -267,7 +267,7 @@ app.controller("checkoutController",
 
         $scope.submitCheckout = function (valid) {
             if (valid) $scope.HomeIt();
-        }
+        };
 
 
         $scope.HomeIt = function () {
@@ -505,7 +505,7 @@ app.controller("checkoutController",
         $scope.showCardInfo = function () {
             $scope.userInfo.cardIsShown = !$scope.userInfo.cardIsShown;
             $('#cardInfoBox').slideToggle(500);
-        }
+        };
 
         function readyToHomeIt() {
             //TODO: rewrite
@@ -545,7 +545,7 @@ app.controller("checkoutController",
                 "event_category": googleAnalytics.eventCategories.checkout_actions
             });
             $scope.showCardInfo();
-        }
+        };
 
         /* Helper functions */
 
@@ -564,9 +564,9 @@ app.controller("checkoutController",
                 if (!addr) return;
                 $scope.userInfo.cardHolderName = $scope.userInfo.first_name + " " + $scope.userInfo.last_name;
                 $scope.userInfo.cardHolderAddress = addr.address_components[0].long_name + addr.address_components[1].long_name;
-                $scope.userInfo.cardHolderPostalCode = addr.address_components[7].long_name
+                $scope.userInfo.cardHolderPostalCode = addr.address_components[7].long_name;
             }
-        }
+        };
 
         $scope.init();
     });

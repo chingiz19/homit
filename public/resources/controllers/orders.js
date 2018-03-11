@@ -124,7 +124,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             }
         }, function errorCallback(response) {
         });
-    }
+    };
 
     $scope.selectOrderId = function (order) {
         $scope.selectedOrder = order;

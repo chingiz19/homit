@@ -90,7 +90,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
 
     $scope.hrefTo = function (path) {
         $window.location.href = $window.location.origin + path;
-        $(".homit-hub-text-dashboard").css("display","none")
+        $(".homit-hub-text-dashboard").css("display","none");
         sessionStorage.setCategoryClicked("store-switched");
     };
 
@@ -200,7 +200,8 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
                 document.getElementById("glbSearchRequest-mobile").focus();
             }, 0.1);
         } 
-    }
+    };
+    
     function checkUser() {
         if (user.isUserLogged()) {
             $scope.isSignedIn = true;

@@ -144,18 +144,18 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
                 map: map,
                 icon: icon,
             });
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            google.maps.event.addListener(marker, 'click', (function(marker, j) {
                 return function() {
                     var infowindow = new google.maps.InfoWindow();                    
                     infowindow.setContent('<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
                     '<div id="bodyContent">'+
-                    '<div style="display: flex; justify-content: center; line-height: 2em; font-size: 20px; font-weight: 500;">' + markers[i].id_prefix + markers[i].order_id + '</div>'+
+                    '<div style="display: flex; justify-content: center; line-height: 2em; font-size: 20px; font-weight: 500;">' + markers[j].id_prefix + markers[j].order_id + '</div>'+
                     '<ul style="margin: 0; padding: 0;">'+
-                    '<li>Call - <button onclick="call(' + markers[i].phone_number +')">' + markers[i].phone_number + '</button></li>'+
-                    '<li>Text - <button onclick="sendText('+ markers[i].phone_number +')">' + markers[i].phone_number + '</button></li>'+
-                    '<li>Email - <button onclick="sendEmail('+ markers[i].email +')">' + markers[i].email + '</button></li>'+
+                    '<li>Call - <button onclick="call(' + markers[j].phone_number +')">' + markers[j].phone_number + '</button></li>'+
+                    '<li>Text - <button onclick="sendText('+ markers[j].phone_number +')">' + markers[j].phone_number + '</button></li>'+
+                    '<li>Email - <button onclick="sendEmail('+ markers[j].email +')">' + markers[j].email + '</button></li>'+
                     '</ul>'+
                     '</div>'+
                     '</div>');

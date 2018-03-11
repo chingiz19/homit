@@ -7,8 +7,8 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             myaccount.user = {};
             myaccount.foundOrders = [];
             myaccount.foundTheOrder = [];
-            myaccount.transactionShown;
-            myaccount.orderShown;
+            myaccount.transactionShown = undefined;
+            myaccount.orderShown = undefined;
             myaccount.date = date;
             myaccount.selectedTab = 0;
             myaccount.edit = false;
@@ -235,11 +235,13 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
 
             if (myaccount.orderShown || myaccount.orderShown == 0) {
                 $('#order_' + myaccount.orderShown).slideToggle();
-                myaccount.orderShown;
+                //TODO: Elnar, should myaccount.orderShown = element?
+                // myaccount.orderShown;
             }
             if (myaccount.transactionShown == element) {
                 $('#transaction_' + element).slideToggle();
-                myaccount.transactionShown;
+                //TODO: Elnar, should myaccount.orderShown = element?
+                // myaccount.transactionShown;
             } else if (myaccount.transactionShown || myaccount.transactionShown == 0) {
                 $('#transaction_' + myaccount.transactionShown).slideToggle();
                 $('#transaction_' + element).slideToggle();
@@ -249,7 +251,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 myaccount.transactionShown = element;
             }
 
-        }
+        };
 
         $scope.reqOrderID = 0;
 
@@ -268,7 +270,8 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
 
             if (myaccount.orderShown == ( transaction + element )) {
                 $('#order_' + transaction + element).slideToggle();
-                myaccount.orderShown;
+                //TODO: Elnar, should myaccount.orderShown = element?
+                // myaccount.orderShown;
             } else if (myaccount.orderShown || myaccount.orderShown == 0) {
                 $('#order_' + transaction +  myaccount.orderShown).slideToggle();
                 $('#order_' + transaction +  element).slideToggle();
@@ -345,6 +348,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
         };
 
         myaccount.sanitizeInput = function (text, type) {
+            /* jshint ignore:start */
             var pattern = {
                 "fname": /^[a-zA-Z]*$/,
                 "lname": /^[a-zA-Z]*$/,
@@ -357,6 +361,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                 "new1Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/,
                 "new2Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/
             };
+            /* jshint ignore:end */
             if (text && type) {
                 if (text.match(pattern[type])) {
                     myaccount.user[type + "_valid"] = true;
@@ -375,7 +380,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
             if (inDate) {
                 return parseInt(inDate.slice(12, 13), 10) + ":" + parseInt(inDate.slice(15, 16), 10);
             }
-        }
+        };
 
         jQuery(function ($) {
             $("#gP_number").mask("(999) 999-9999");

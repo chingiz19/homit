@@ -128,7 +128,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                                 scope.$apply();
                             }
                         });
-                    }
+                    };
 
                     var elementNumber = 0;
 
@@ -179,7 +179,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                             scope._predictions = [];
                             scope.$apply();
                         }
-                    };
+                    }
 
                     function updateAddressinput(elementNumber){
                         scope._searchedAddress = scope._matched_part + scope._predictions[elementNumber - 1].description;
@@ -189,7 +189,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                     function addEvLisToAddressInput(){
                         var addressInput = document.getElementById('autocompleteAddressInputBox');
                         addressInput.addEventListener('keyup', navigatePredictions, false);
-                    };
+                    }
 
                     addEvLisToAddressInput();
                     
@@ -205,7 +205,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                             scope.addressChangeEvent();
                             scope.$apply();
                         });
-                    }
+                    };
                 }, 0);  
             }            
         };
