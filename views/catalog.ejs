@@ -6,10 +6,26 @@
             <link href="/resources/css/catalog.css" rel="stylesheet">
 </head>
 
-<body ng-cloak>
+<body>
     <%- include('partial/checkout_menu')%>
         <div ng-controller="catalogController" id="ctnCont">
-            <div layout="row" class="container col01">
+        <div id="loading">
+                <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div layout="row" class="container col01" ng-cloak>
                 <!--Mob-version Navigate-->
                 <!-- Start -->
                 <div ng-if="screenIsMob">

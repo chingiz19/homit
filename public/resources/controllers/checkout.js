@@ -14,7 +14,7 @@ app.controller("checkoutController",
                 "fname_valid": false,
                 "lname_valid": false,
                 "email_valid": false,
-                "billigAddresSame": true,
+                "billigAddresSame": false,
                 "cardHolderName_valid": false,
                 "cardHolderAddress_valid": false,
                 "cardHolderPostalCode_valid": false,
@@ -133,7 +133,6 @@ app.controller("checkoutController",
                     $scope.bounds = new google.maps.LatLngBounds({ lat: 50.862122, lng: -114.173317 }, { lat: 51.172396, lng: -113.925171 });
                 }
             });
-            // readyToHomeIt();
         };
 
         cartService.getCart()
@@ -304,6 +303,7 @@ app.controller("checkoutController",
                 }
 
                 var userInfoToSend = {};
+
                 userInfoToSend.fname = $scope.userInfo.first_name;
                 userInfoToSend.lname = $scope.userInfo.last_name;
                 userInfoToSend.birth_year = $scope.userInfo.birth_year;
@@ -311,10 +311,22 @@ app.controller("checkoutController",
                 userInfoToSend.birth_day = $scope.userInfo.birth_day;
                 userInfoToSend.phone = $scope.userInfo.phone_number.replace(/[() +-]/g, "");
                 userInfoToSend.email = $scope.userInfo.user_email;
-                userInfoToSend.address = $scope.checkout.address;
+
+                //Check if address unit number presents
+                var addressUnitNumber = sessionStorage.getAddressUnitNumber();
+                if(addressUnitNumber){
+                    userInfoToSend.address = _.trim(_.trimStart($scope.checkout.address, addressUnitNumber));
+                    if($scope.userInfo.drInstruction){
+                        userInfoToSend.driver_instruction = $scope.userInfo.drInstruction + "; Unit Number: " + addressUnitNumber;
+                    }else{
+                        userInfoToSend.driver_instruction = "Unit Number: " + addressUnitNumber;
+                    }
+                } else{
+                    userInfoToSend.address = $scope.checkout.address;
+                    userInfoToSend.driver_instruction = $scope.userInfo.drInstruction
+                }
                 userInfoToSend.address_latitude = $scope.checkout.address_latitude;
                 userInfoToSend.address_longitude = $scope.checkout.address_longitude;
-                userInfoToSend.driver_instruction = $scope.userInfo.drInstruction;
 
                 $http({
                     method: 'POST',
@@ -334,6 +346,7 @@ app.controller("checkoutController",
 
                     $scope.paymentMessage_1 = "Thank You, ";
                     $scope.paymentMessage_2 = "Homit will take care!";
+                    $scope.paymentMessage_3 = "Your order will be delivered in 30 - 45 mins";
                     updateCheckoutModal("1");
 
                 }, function errorCallback(error) {
@@ -533,6 +546,7 @@ app.controller("checkoutController",
                 $scope.userCart = {};
                 $scope.clearCart();
                 $scope.delFee = 0;
+                sessionStorage.setAddressUnitNumber("");
                 $window.location.href = $window.location.origin + "/main";
             } else {
                 location.reload();

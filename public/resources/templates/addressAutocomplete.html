@@ -1,83 +1,23 @@
 <style>
-    /* Google Search autocomplete non-mobile */
-    .predictions-container{
-        position: absolute;
-        margin: 0; padding: 0;
-        background: #fff;
-        border-radius: 0 0 5px 5px;
-        border: 1px solid #ccc;
-        border-top-width: 0px;
-        max-height: 250px; width: 716px;
-    }
-    .predictions-item {
-        display: flex; align-items: center;
-        border-bottom: 1px solid rgba(180,180,180,0.3);
-        color: rgba(130,130,130,1);
-        padding-left: 40px;
-        letter-spacing: 0.03ex;
-        line-height: 38px;
-        font-size: 17px;
-        font-weight: 300 !important;
-    }
-    .predictions-item span{
-        color: rgba(0,0,0,1);
-    }
-    .predictions-container:after{
-        margin-right: 5px;
-        margin-top: 5px;
-    }
-    .powered-by-google{
-        display: flex; justify-content: flex-end; align-items: center; 
-        padding-right: 10px; 
-        height: 30px;
-    }
-    .powered-by-google img{
-        width: 150px; height: 20px;
-    }
-    .predictions-item:hover{
-        background-color: rgba(245,245,245,1) !important;
-    }
-    .predictions-item div{
-        width: 98%;
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-        white-space: nowrap;
-    }
-    .address-selected{
-        background-color: rgba(196, 217, 255,0.3) !important;
-    }
-
-    @media (max-width: 750px) and (min-width: 600px){
+        /* Google Search autocomplete non-mobile */
         .predictions-container{
-            width: 486px;
-        }
-    }
-
-    @media (max-width: 599px) and (min-width: 300px){
-        .predictions-container{
-            width: 386px;
-        }
-    }
-    /* Mobile Devices */
-    @media screen and (max-device-width: 500px) {
-        .predictions-container{
+            position: absolute;
             margin: 0; padding: 0;
-            max-height: 450px; 
-            width: 92vw;
+            background: #fff;
+            border-radius: 0 0 5px 5px;
+            border: 1px solid #ccc;
+            border-top-width: 0px;
+            max-height: 250px; width: 716px;
         }
         .predictions-item {
             display: flex; align-items: center;
             border-bottom: 1px solid rgba(180,180,180,0.3);
             color: rgba(130,130,130,1);
-            letter-spacing: 0.05ex;
-            line-height: 70px;
-            font-size: 33px;
-        }
-        .predictions-item div{
-            width: 98%;
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            white-space: nowrap;
+            padding-left: 40px;
+            letter-spacing: 0.03ex;
+            line-height: 38px;
+            font-size: 17px;
+            font-weight: 300 !important;
         }
         .predictions-item span{
             color: rgba(0,0,0,1);
@@ -89,28 +29,88 @@
         .powered-by-google{
             display: flex; justify-content: flex-end; align-items: center; 
             padding-right: 10px; 
-            height: 60px;
+            height: 30px;
         }
         .powered-by-google img{
-            width: 260px; height: 35px;
+            width: 150px; height: 20px;
         }
-    }
-</style>
-
-
-<div id="placesServiceNode" style="display: none;"></div>
-
-<input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocomplete="none" autocorrect="off" spellcheck="false" required>
-<md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0 ">
-    <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
-</md-button>
-
-<!-- Google Address prediction dropdown -->
-<!-- Start --> 
-<ul class="predictions-container" ng-if="_predictions.length != 0" ng-cloak>
-    <li ng-repeat="address in _predictions" id="prediction_{{$index + 1}}" class="predictions-item" ng-click="_addressSelected(address)">
-        <div><span>{{_matched_part}}</span>{{address.description}}</div>
-    </li>
-    <li class="powered-by-google"><img ng-src="{{'/resources/images/non-catalog-image/powered_by_google.png'}}" /></li>
-</ul>
-<!-- End -->
+        .predictions-item:hover{
+            background-color: rgba(245,245,245,1) !important;
+        }
+        .predictions-item div{
+            width: 98%;
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap;
+        }
+        .address-selected{
+            background-color: rgba(196, 217, 255,0.3) !important;
+        }
+    
+        @media (max-width: 750px) and (min-width: 600px){
+            .predictions-container{
+                width: 486px;
+            }
+        }
+    
+        @media (max-width: 599px) and (min-width: 300px){
+            .predictions-container{
+                width: 386px;
+            }
+        }
+        /* Mobile Devices */
+        @media screen and (max-device-width: 500px) {
+            .predictions-container{
+                margin: 0; padding: 0;
+                max-height: 450px; 
+                width: 92vw;
+            }
+            .predictions-item {
+                display: flex; align-items: center;
+                border-bottom: 1px solid rgba(180,180,180,0.3);
+                color: rgba(130,130,130,1);
+                letter-spacing: 0.05ex;
+                line-height: 70px;
+                font-size: 33px;
+            }
+            .predictions-item div{
+                width: 98%;
+                overflow: hidden; 
+                text-overflow: ellipsis; 
+                white-space: nowrap;
+            }
+            .predictions-item span{
+                color: rgba(0,0,0,1);
+            }
+            .predictions-container:after{
+                margin-right: 5px;
+                margin-top: 5px;
+            }
+            .powered-by-google{
+                display: flex; justify-content: flex-end; align-items: center; 
+                padding-right: 10px; 
+                height: 60px;
+            }
+            .powered-by-google img{
+                width: 260px; height: 35px;
+            }
+        }
+    </style>
+    
+    
+    <div id="placesServiceNode" style="display: none;"></div>
+    
+    <input style="text-transform: capitalize;" id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocomplete="none" autocorrect="off" spellcheck="false" required>
+    <md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0; ">
+        <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
+    </md-button>
+    
+    <!-- Google Address prediction dropdown -->
+    <!-- Start --> 
+    <ul class="predictions-container" ng-if="_predictions.length != 0" ng-cloak>
+        <li ng-repeat="address in _predictions" id="prediction_{{$index + 1}}" class="predictions-item" ng-click="_addressSelected(address)">
+            <div><span>{{_matched_part}}</span>{{address.description}}</div>
+        </li>
+        <li class="powered-by-google"><img ng-src="{{'/resources/images/non-catalog-image/powered_by_google.png'}}" /></li>
+    </ul>
+    <!-- End -->

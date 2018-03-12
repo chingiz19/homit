@@ -283,6 +283,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                 }
             }
         }, 20);
+        $('#loading').fadeOut();
     };
     setInterval(rippleCatButton, 3000);
 });

@@ -20,11 +20,6 @@
                 <div class="userPic">
                     <img ng-src="{{'/resources/images/Homit_Logo.jpeg'}}" width="100" height="100" />
                 </div>
-
-                <!-- <div id="tempMessage">
-            The website is experiencing some technical difficulties, we apologise for any inconvenience and appreciate your understanding. Our team is working to fix the issue. Thank You for your patience!
-            </div> -->
-
                 <input id="stripeToken" value="<%= stripeToken %>" hidden>
                 <!--DoB-->
                 <form name="checkoutInput" ng-submit="submitCheckout(checkoutInput.$valid)">
@@ -326,8 +321,11 @@
                                 <div class="pR_B">
                                     <span class="pR_BA">{{paymentMessage_1}}{{userInfo.first_name}}</span>
                                 </div>
-                                <div class="pR_C">
+                                <div style="width: 100%; margin-bottom: 10px;">
                                     <span class="pR_CA" ng-bind-html="paymentMessage_2"></span>
+                                </div>
+                                <div class="pR_C">
+                                    <span class="delivery-time-text" ng-bind-html="paymentMessage_3"></span>
                                 </div>
                             </div>
                         </div>
