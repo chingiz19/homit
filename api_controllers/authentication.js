@@ -9,13 +9,7 @@ var crypto = require("crypto");
 router.post('/userexists', async function (req, res, next) {
     var email = req.body.email;
     if (!email) {
-        res.status(403).json({
-            error: {
-                "code": "U000",
-                "dev_message": "Missing params",
-                "required_params": ["email"]
-            }
-        });
+        return errorMessages.sendMissingParams(res, ["email"]);
     } else {
         var userExists = await User.findUser(email);
         if (!userExists) {
@@ -43,12 +37,7 @@ router.post('/signup', async function (req, res, next) {
     var password = req.body.password;
 
     if (!(fname && lname && email && password)) {
-        res.status(400).json({
-            "error": {
-                "code": "U000",
-                "dev_message": "Missing params"
-            }
-        });
+        return errorMessages.sendMissingParams(res);
     } else {
         var hashedPassword = await Auth.hashPassword(password);
         var userExists = await User.findUser(email);
@@ -72,12 +61,7 @@ router.post('/signup', async function (req, res, next) {
                 ui_message: "Successfully signed up. You will receive an email with confirmation"
             });
         } else {
-            res.json({
-                error: {
-                    code: "A002",
-                    "ui_message": "User already exists" // TODO update this error message to non obvious one (security)
-                }
-            });
+            return errorMessages.sendUserAlreadyExists(res);
         }
     }
 });
@@ -87,21 +71,11 @@ router.post('/signin', async function (req, res, next) {
     var email = req.body.email;
     var password = req.body.password;
     if (!(email && password)) {
-        res.status(200).json({
-            "error": {
-                "code": "U000",
-                "dev_message": "Missing params"
-            }
-        });
+        return errorMessages.sendMissingParams(res);
     } else {
         var user = await User.authenticateUser(email, password);
         if (!user) {
-            res.json({
-                error: {
-                    code: "A003",
-                    ui_message: "Invalid email, or password"
-                }
-            });
+            return errorMessages.sendInvalidCredentials(res);
         } else {
             Auth.sign(req, res, user);
             res.json({
@@ -125,11 +99,7 @@ router.all('/signout', function (req, res, next) {
 router.post('/forgotpassword', async function (req, res, next) {
     // Require email in body
     if (!req.body.email) {
-        return res.status(200).json({
-            error: {
-                dev_message: "Missing required parameters"
-            }
-        });
+        return errorMessages.sendMissingParams(res);
     }
 
     // Create jwt token
@@ -171,11 +141,7 @@ router.post('/forgotpassword', async function (req, res, next) {
 router.post('/resetpassword', async function (req, res, next) {
     // Check for email and token params
     if (!req.body.email || !req.body.token || !req.body.new_password || !req.body.confirm_password) {
-        return res.status(200).json({
-            error: {
-                dev_message: "Missing required parameters"
-            }
-        });
+        return errorMessages.sendMissingParams(res);
     }
 
     // Assert that n_p, c_p match
@@ -190,19 +156,13 @@ router.post('/resetpassword', async function (req, res, next) {
     // Check for valid email and token
     var pHash = await User.getUserPasswordHash(req.body.email);
     if (!pHash) {
-        return res.status(403).json({
-            success: false,
-            ui_message: "Invalid token"
-        });
+        return errorMessages.sendInvalidToken(res);
     }
 
     var tokenValue = JWTToken.validateResetPasswordToken(req.body.token, pHash);
     pHash = crypto.randomBytes(62).toString(); // clean up
     if (!tokenValue || tokenValue.email != req.body.email) {
-        return res.status(200).json({
-            success: false,
-            ui_message: "Invalid token"
-        });
+        return errorMessages.sendInvalidToken(res);
     }
 
     // Change password in db
@@ -225,11 +185,7 @@ router.post('/resetpassword', async function (req, res, next) {
 router.get("/csrlogin", async function (req, res, next) {
     var user = await User.authenticateCsrUser(req.query.username, req.query.password);
     if (!user) {
-        res.json({
-            error: {
-                code: "A003"
-            }
-        });
+        return errorMessages.sendInvalidCredentials(res);
     } else {
         Auth.sign(req, res, user);
         res.redirect("/vieworders");

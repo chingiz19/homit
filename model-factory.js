@@ -16,6 +16,7 @@ var SMS                 = require("./models/SMS");
 var MP                  = require("./models/money-processing");
 var CSR                 = require("./models/csr");
 var Email               = require("./models/email");
+var ErrorMessages       = require("./models/error_messages");
 
 /**
  * This class uses initiator that 
@@ -39,6 +40,7 @@ class modelFactory {
         global.MP = MP;
         global.CSR = CSR;
         global.Email = Email;
+        global.errorMessages = ErrorMessageBuilder;
     }
 }
 
