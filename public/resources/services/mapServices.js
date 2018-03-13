@@ -83,6 +83,7 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
      * @return boolean
      */
     pub.isPlaceInsidePolygon = function (latLng, polygon) {
+        if (!latLng) return undefined;
         return google.maps.geometry.poly.containsLocation(latLng, polygon);
     };
 

@@ -74,8 +74,14 @@ app.service('date', [function(){
         }
     };
 
-    pub.isOver18Years = function(day, month, year){
-        return new Date(year+18, pub.convertMonth(month)-1, day) <= new Date();
+    pub.isOver18Years = function(dob){
+        if(!dob) return;
+        
+        var month = parseInt(dob.split("-")[0]);
+        var day = parseInt(dob.split("-")[1]);
+        var year = parseInt(dob.split("-")[2]);
+
+        return new Date(year + 18, month -1, day) <= new Date();
     };
 
     pub.dayDifference = function(day, month, year){

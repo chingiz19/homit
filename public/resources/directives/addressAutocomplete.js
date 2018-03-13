@@ -114,6 +114,8 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                     if(scope._unitNumber){
                         tmpSearchedAddress = _.trim(_.trimStart(tmpSearchedAddress, scope._unitNumber));
                     }
+                    
+                    if(!tmpSearchedAddress || _.isEmpty(tmpSearchedAddress)) return;
 
                     service.getPlacePredictions({ 
                             input: tmpSearchedAddress,

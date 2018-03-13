@@ -6,6 +6,13 @@ body{
 .flex-end{
     display: flex; justify-content: flex-end;
 }
+.flex-center{
+    display: flex; 
+    justify-content: center; align-items: center;
+}
+.error-message{
+    color: red; font-size: 13px;
+}
 /* Store Break Line */
 .store-break{
     display: flex; align-items: center; 
@@ -29,13 +36,6 @@ body{
 }
 .billing-info{
     margin-top: 25px;
-}
-.billing-info-text{
-    color: black;
-}
-
-#tempMessage{
-    border: 1px solid goldenrod; background-color: rgb(241, 185, 82); text-align: center; border-radius: 5px; padding: 5px; font-size: 16px;
 }
 
 @media(min-width: 495px){
@@ -164,10 +164,13 @@ navbar{
     top: 10px; right: 0;
     width: 75px; height: 35px;
 }
-.userPic{
-    display: flex;
-    justify-content: center; 
-    margin-top: 25px;
+.delivery-time-message{
+    height: 35px; width: 100%; 
+    background-color: rgba(0,0,0,0.7);
+}
+.delivery-time-message span{
+    font-size: 20px; font-weight: 600;
+    color: white; 
 }
 .open-btn
 {   
@@ -214,14 +217,14 @@ md-tabs-wrapper{
     min-height: 150px !important;
 }
 .HomeItBtn{
-    position: relative;
-    top: 25px; left: 40%;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
 }
-#cardInfoBox{
-    display: none;
-}
-.cardContainer{
-    padding:0 0 0 2px;
+.HomeItBtn button{
+    font-weight: bold; 
+    font-size: 17px;
 }
 .extBoxTtl{
     position: relative;
@@ -229,20 +232,6 @@ md-tabs-wrapper{
     font-size: 13px;
     font-weight: 700;
     color: #333;
-}
-.card-info-btn
-{   
-    margin:0px 2px 0px 2px;
-    background-color: white !important;
-    min-width: 1px !important; min-height: 1px !important; 
-    height: 40px; 
-    box-shadow: none !important;
-}
-.opnCIsgn{
-    fill: rgb(63,81,181);
-}
-.extInput{
-    margin-bottom: 0px;
 }
 .mdSideNavL1{
     width: 100%;
@@ -416,11 +405,17 @@ md-backdrop.md-opaque {
 
 /*Mobile screens*/
 @media screen and (max-device-width: 600px) {
-    #tempMessage{
-        margin-top: 100px; font-size: 40px;
-    }
     body{
         font-size: 23px
+    }
+    .delivery-time-message{
+        height: 70px; width: 100%; 
+        background-color: rgba(0,0,0,0.7);
+        margin-bottom: 70px;
+    }
+    .delivery-time-message span{
+        font-size: 40px; font-weight: 500;
+        color: white; 
     }
     .mdSideNavL1{
         min-width: 65% !important; min-height: 100% !important;
@@ -444,7 +439,7 @@ md-backdrop.md-opaque {
     }
     .col1{
         width: 100% !important;
-        top: 111px;
+        top: 110px;
     }
     .inptFrm{
         height: 90px;
@@ -452,15 +447,6 @@ md-backdrop.md-opaque {
     .extBoxTtl{
         font-size: 18px;
         font-weight: 500;
-    }
-    .card-info-btn{
-        height: 80px;
-    }
-    .card-info-btn img{
-        height: 31.25px; width: 50px;
-    }
-    .card-info-btn svg{
-        height: 40px; width: 40px;
     }
     .summerLnP1{
         height: 3em;
@@ -518,9 +504,6 @@ md-backdrop.md-opaque {
         color: rgb(95,95,95);
         letter-spacing: 0.02em;
     }
-    .btn{
-        font-size: 25px;
-    }
     .orBtnSz{
         font-size: 25px;
     }
@@ -530,31 +513,21 @@ md-backdrop.md-opaque {
     .bigClass{
         margin-top: 25px;
     }
-    .inptLbl{
-        margin-bottom: 0px; 
-    }
-    .inptLblSC1{
-        bottom: 56px !important; 
-    }
-    .inptLblSC2{
-        height: 37px !important;
-        padding-top: 0 !important; padding-bottom: 0 !important;
-    }
-    .cardContainer{
-        margin: 0 auto 0 auto !important;
-    }
     .col1ChevRgt{
+        top: 0;
         width: 200px;
     }
     .open-btn{   
         display: flex;
-        margin: 0; padding: 0;
-        max-height: 90px !important; height: 90px !important;
-        max-width: 200px !important; width: 200px;
-        background-color: rgba(245,245,245,1);
-        border: 1px solid rgba(200,200,200,1);
-        border-right-width: 0px;
+        max-height: 70px !important; height: 70px !important;
+        max-width: 170px !important; width: 170px;
+        background-color: transparent;
+        color: white;
+        border-left: 2px solid white;
         border-radius: 45px 0 0 45px; 
+    }
+    .open-btn-icon{
+        fill: white;
     }
     .details-text{
         display: flex;
@@ -584,7 +557,8 @@ md-backdrop.md-opaque {
         margin-top: 30px;
         margin-bottom: 25px;
     }
-    .billing-info-text{
+    .HomeItBtn button{
+        font-weight: 400; 
         font-size: 30px;
     }
 }
@@ -781,23 +755,7 @@ md-toolbar{
 .response-02-text{
     text-align: center;
 }
-#card{
-    width: 75%;
-    margin-left: auto; margin-right: auto;
-    padding-bottom: 4px;
-    border-bottom: 1px solid rgba(0,0,0,0.12);
-}
-#card-label{
+
+.Overlay-Badge--bottomLeft{
     display: none;
-}
-.stripe-card-info{
-    margin: 20px 0 20px 0;
-}
-#card-errors{
-    width: 75%;
-    margin-left: auto; margin-right: auto;
-    color: red;
-}
-.__PrivateStripeElement{
-    width: 100%;
 }
