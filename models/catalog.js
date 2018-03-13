@@ -36,14 +36,17 @@ pub.isStoreOpen = async function (storeType) {
         SELECT stores.id
         FROM
         catalog_stores AS stores JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
+        JOIN stores_hours AS hours ON (stores.id = hours.store_id)
         WHERE
-        (stores.open_time <= CURRENT_TIME
-        AND stores.close_time >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
-        OR stores.open_time_next <= CURRENT_TIME
-        AND stores.close_time_next >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
+        hours.day = DAYOFWEEK(CURRENT_TIMESTAMP)
+        AND (hours.open_time <= CURRENT_TIME
+        AND hours.close_time >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
+        OR hours.open_time_next <= CURRENT_TIME
+        AND hours.close_time_next >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
         )
         AND ?
-        LIMIT 1`;
+        LIMIT 1
+    `;
 
     var data = {
         "store_types.name": storeType

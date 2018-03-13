@@ -27,10 +27,6 @@ CREATE TABLE catalog_stores (
 	address_longitude DOUBLE NOT NULL,
 	phone_number VARCHAR(10),	
 	store_type INT UNSIGNED NOT NULL,
-	open_time TIME,
-	close_time TIME,
-	open_time_next TIME,
-	close_time_next TIME,
 
 	PRIMARY KEY (id),
 	CONSTRAINT fk_catalog_stores_store_type FOREIGN KEY (store_type) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE		
@@ -451,3 +447,16 @@ CREATE TABLE orders_history_add (
 	CONSTRAINT fk_orders_history_add_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
 	CONSTRAINT fk_orders_history_add_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE = InnoDB;
+
+CREATE TABLE stores_hours (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	store_id INT UNSIGNED NOT NULL,
+	day TINYINT NOT NULL,
+	open_time TIME,
+	close_time TIME,
+	open_time_next TIME NULL,
+	close_time_next TIME NULL,
+	
+	PRIMARY KEY (id),
+	CONSTRAINT fk_stores_hours_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE
+ ) ENGINE = InnoDB;

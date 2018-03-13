@@ -42,7 +42,8 @@ const tables = {
   orders_history_add: "orders_history_add",
   drivers_request: "drivers_request",
   orders_emails: "orders_emails",
-  orders_transactions_history: "orders_transactions_history"
+  orders_transactions_history: "orders_transactions_history",
+  stores_hours: "stores_hours"
 }
 
 /*Building metadata for log*/
