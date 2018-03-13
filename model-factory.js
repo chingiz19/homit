@@ -40,7 +40,7 @@ class modelFactory {
         global.MP = MP;
         global.CSR = CSR;
         global.Email = Email;
-        global.errorMessages = ErrorMessageBuilder;
+        global.errorMessages = ErrorMessages;
     }
 }
 
