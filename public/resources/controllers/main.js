@@ -38,15 +38,20 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
      */
     $scope.gotAddressResults = function () {
         var latLng = $scope.autocomplete.getLatLng();
+        var place = $scope.autocomplete.getPlace();
         if (!latLng) return;
         if (mapServices.isPlaceInsidePolygon(latLng, $scope.coveragePolygon)) {
-            sessionStorage.setAddress($scope.autocomplete.getPlace());
+            sessionStorage.setAddress(place);
             sessionStorage.setAddressLat(latLng.lat());
             sessionStorage.setAddressLng(latLng.lng());
             $scope.scrollTo('homitHub');
         } else {
             $scope.addressMessage = "Sorry, we do not deliver to your location at the moment.";
             $scope.scrollTo('coverage');
+            googleAnalytics.addEvent('out_of_coverage', {
+                "event_label": place.formatted_address,
+                "event_category": googleAnalytics.eventCategories.address_actions
+            });
         }
     };
 

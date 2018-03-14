@@ -368,8 +368,9 @@ app.controller("checkoutController",
 
         $scope.gotAddressResults = function () {
             var latLng = $scope.autocomplete.getLatLng();
+            var place = $scope.autocomplete.getPlace();
             if (mapServices.isPlaceInsidePolygon(latLng, $scope.coveragePolygon)) {
-                sessionStorage.setAddress($scope.autocomplete.getPlace());
+                sessionStorage.setAddress(place);
                 sessionStorage.setAddressLat(latLng.lat());
                 sessionStorage.setAddressLng(latLng.lng());
                 $scope.checkout.address_latitude = latLng.lat();
@@ -378,6 +379,10 @@ app.controller("checkoutController",
                 $scope.userInfo.withinCoverage = true;
             } else {
                 $scope.userInfo.withinCoverage = false;
+                googleAnalytics.addEvent('out_of_coverage', {
+                    "event_label": place.formatted_address,
+                    "event_category": googleAnalytics.eventCategories.address_actions
+                });
             }
         };
 

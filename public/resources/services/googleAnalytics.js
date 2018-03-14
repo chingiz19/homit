@@ -11,7 +11,8 @@ app.service('googleAnalytics', function(){
     pub.eventCategories = {
         cart_actions: "cart_actions",
         catalog_actions: "catalog_actions",
-        checkout_actions: "checkout_actions"
+        checkout_actions: "checkout_actions",
+        address_actions: "address_actions"
     };
 
      /**
