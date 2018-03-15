@@ -168,9 +168,9 @@ app.service('cartService', function ($http, localStorage) {
      * Used to convert userCart object to object consisting of "depot_id: quantity"
      * @param {*} cart  - user cart
      */
-    function _parseCartToSend(cart){
+    function _parseCartToSend(rcart){
         var parsedCart = {};
-        cart = Object.values(cart);
+        var cart = Object.values(rcart);
         for (var i = 0; i < cart.length; i++){
             var super_categories = Object.values(cart[i]);
             for (var j = 0; j < super_categories.length; j++){

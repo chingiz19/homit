@@ -3,7 +3,7 @@ app.controller("checkoutController",
         $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval, googleAnalytics, $timeout) {
 
         $scope.userInfo = {};
-        
+
 
         $scope.init = function () {
             $scope.userCart = localStorage.getUserCart() || {};
@@ -40,7 +40,7 @@ app.controller("checkoutController",
                 $scope.checkout.address_longitude = sessionStorage.getAddressLng();
             }
 
-            $timeout(function(){
+            $timeout(function () {
                 mapServices.createCoveragePolygon().then(function (polygon) {
                     if (polygon) {
                         $scope.coveragePolygon = polygon;
@@ -63,19 +63,39 @@ app.controller("checkoutController",
                 }
                 localStorage.setUserCart({});
 
-                for (var store_type in $scope.userCart) {
-                    for (var a in $scope.userCart[store_type]) {
-                        $scope.totalAmount = $scope.totalAmount + ($scope.userCart[store_type][a].quantity * $scope.userCart[store_type][a].price);
-                        $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[store_type][a].quantity;
-                        $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
-                        $scope.prepareItemForDB(a, $scope.userCart[store_type][a].quantity);
+                $http({
+                    method: 'POST',
+                    url: "/api/checkout/checkout",
+                    data: {
+                        products: Object.keys(cartService.parseCartToSend($scope.userCart))
                     }
-                    if (store_type == "liquor-station") {
+                }).then(function successCallback(response) {
+                    var checkedItems = response.data;
+                    for (var store_type in $scope.userCart) {
+                        for (var a in $scope.userCart[store_type]) {
+                            $scope.totalAmount = $scope.totalAmount + ($scope.userCart[store_type][a].quantity * $scope.userCart[store_type][a].price);
+                            $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[store_type][a].quantity;
+                            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
+                            $scope.prepareItemForDB(a, $scope.userCart[store_type][a].quantity);
+
+                            $scope.userCart[store_type][a]["store_open"] = checkedItems.products[store_type][a];
+                        }
+                    }
+                    if (checkedItems.all_stores_open == false) {
+                        $window.onload = function () {
+                            $scope.paymentMessage_1 = "Closed Store";
+                            $scope.closedStoreMessage = "Shopping cart contains items from currnetly closed stores. Please";
+                            activateCheckoutModal();
+                            updateCheckoutModal("03");
+                        }
+                    }
+                    if ($scope.userCart.hasOwnProperty("liquor-station")) {
                         $scope.userInfo.hasLiquor = true;
-                    } else{
+                    } else {
                         $scope.userInfo.dob_not_valid = false;
                     }
-                }
+                }, function errorCallback(response) {
+                });
 
                 // Calculation For receipt
                 $scope.updatePrices($scope.userCart);
@@ -83,7 +103,6 @@ app.controller("checkoutController",
             }, function errorCallback(response) {
                 updateUserCart(localStorage.getUserCart());
             });
-
         $scope.plusItem = function (product) {
             var tmpQuantity = 1;
             if ($scope.userCart.hasOwnProperty(product.store_type_api_name) && $scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
@@ -186,10 +205,10 @@ app.controller("checkoutController",
         };
 
         $scope.submitCheckout = function (valid) {
-            if($scope.userInfo.dob_not_valid){
+            if ($scope.userInfo.dob_not_valid) {
                 $("#dob").click();
                 return;
-            } else if(!$scope.userInfo.withinCoverage){
+            } else if (!$scope.userInfo.withinCoverage) {
                 $("#autocompleteAddressInputBox").click();
                 return;
             }
@@ -197,7 +216,7 @@ app.controller("checkoutController",
 
                 var handler = StripeCheckout.configure({
                     key: $scope.stripeToken,
-                    image: 'http://localhost:8080/resources/images/non-catalog-image/homit_logo/H-logo.png',
+                    image: '/resources/images/non-catalog-image/homit_logo/H-logo_stripe.png',
                     locale: 'auto',
                     token: function (token) {
                         if (token.id) {
@@ -386,11 +405,6 @@ app.controller("checkoutController",
             }
         };
 
-        jQuery(function ($) {
-            $("#gP_number").mask("(999) 999-9999");
-            $('#dob').mask("99-99-9999");
-        });
-
         $scope.clearText = function () {
             $scope.userInfo.address_valid = undefined;
         };
@@ -403,6 +417,7 @@ app.controller("checkoutController",
                 $scope.userInfo.dob_not_valid = false;
             }
         }
+
         function updateUserCart(cart) {
             $scope.userCart = cart;
             $scope.userCartToView = cartService.getViewUserCart($scope.store_type, $scope.userCart);
@@ -420,6 +435,24 @@ app.controller("checkoutController",
                 location.reload();
             }
         };
+
+        $scope.removeClosedItems = function () {
+            for (var store_type in $scope.userCart) {
+                for (var b in $scope.userCart[store_type]) {
+                    if (!$scope.userCart[store_type][b].store_open) {
+                        delete $scope.userCart[store_type][b];
+                    }
+                }
+                if ($scope.userCart[store_type]) {
+                    delete $scope.userCart[store_type];
+                }
+            }
+            localStorage.setUserCart($scope.userCart);
+            updateUserCart($scope.userCart);
+            $scope.updatePrices($scope.userCart);
+            $('#checkoutModal').modal('hide');
+            $scope.toggleRight();
+        }
 
         // Checkout Page right-SideNav functionality
         $scope.toggleRight = buildDelayedToggler('right');
@@ -452,6 +485,11 @@ app.controller("checkoutController",
                     $log.debug("close RIGHT is done");
                 });
         };
+
+        jQuery(function ($) {
+            $("#gP_number").mask("(999) 999-9999");
+            $("#date_of_birth").mask("99-99-9999");
+        });
 
         $scope.init();
     });

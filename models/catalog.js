@@ -869,6 +869,57 @@ function convertToProductPageItem(products, descriptions) {
     return finalResult;
 }
 
+/**
+ * Check if store open for the products in checkout
+ * 
+ * @param {*} depotIds 
+ */
+pub.checkProductsForStoreOpen = async function (depotIds) {
+    var sqlQuery = `
+        SELECT depot.id AS depot_id,
+        store_type.name AS store_type,
+        store_type.api_name AS store_type_api_name
+        FROM catalog_depot AS depot JOIN catalog_store_types AS store_type ON(depot.store_type_id = store_type.id)
+        WHERE depot.id in (` + depotIds + `)
+        ORDER BY store_type_api_name`;
+
+    var dbProducts = await db.runQuery(sqlQuery);
+
+    var products = {};
+    var currentStoreType = {};
+    var storeOpen;
+    var allStoresOpen = true;
+    for (let i = 0; i < dbProducts.length; i++) {
+        if (i == 0) {
+            storeOpen = await pub.isStoreOpen(dbProducts[i].store_type);
+            if (allStoresOpen && !storeOpen) {
+                allStoresOpen = false;
+            }
+            currentStoreType[dbProducts[i].depot_id] = storeOpen;
+        } else {
+            if (dbProducts[i - 1].store_type_api_name != dbProducts[i].store_type_api_name) {
+                products[dbProducts[i - 1].store_type_api_name] = currentStoreType;
+                currentStoreType = {};
+                storeOpen = await pub.isStoreOpen(dbProducts[i].store_type);
+                if (allStoresOpen && !storeOpen) {
+                    allStoresOpen = false;
+                }
+            }
+            currentStoreType[dbProducts[i].depot_id] = storeOpen;
+        }
+
+        if (i == dbProducts.length - 1) {
+            products[dbProducts[i].store_type_api_name] = currentStoreType;
+        }
+    }
+
+    var finalResult = {
+        all_stores_open: allStoresOpen,
+        products: products
+    };
+
+    return finalResult;
+}
 
 
 // old

@@ -149,6 +149,18 @@ router.post('/placeorder', async function (req, res, next) {
     }
 });
 
+router.post('/checkout', async function (req, res, next) {
+    var cartProducts = req.body.products;
+    var productsResult = await Catalog.checkProductsForStoreOpen(cartProducts);
+
+    var response = {
+        success: true,
+        all_stores_open: productsResult.all_stores_open,
+        products: productsResult.products
+    };
+    res.send(response);
+});
+
 var createOrders = async function (userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardDigits, allPrices, products) {
     var orderTransactionId = await Orders.createTransactionOrder(userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardDigits, allPrices);
 

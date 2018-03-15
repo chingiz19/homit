@@ -21,10 +21,10 @@
                 <input id="stripeToken" value="<%= stripeToken %>" hidden>
                 <!--DoB-->
                 <form name="checkoutInput" ng-submit="submitCheckout(checkoutInput.$valid)">
-                    <div class="flex-center" ng-if="userInfo.hasLiquor">
+                    <div class="flex-center" ng-show="userInfo.hasLiquor">
                         <md-input-container class="md-block bigClass" flex="45">
-                            <label class="inptLbl">Date of Birth MM-DD-YYYY </label>
-                            <input name="dob" id = "dob" ng-pattern="/^((0[13578]|1[02])[-.](29|30|31)[-.](18|19|20)[0-9]{2})|((01|0[3-9]|1[1-2])[-.](29|30)[-.](18|19|20)[0-9]{2})|((0[1-9]|1[0-2])[-.](0[1-9]|1[0-9]|2[0-8])[-.](18|19|20)[0-9]{2})|((02)[\/.]29[-.](((18|19|20)(04|08|[2468][048]|[13579][26]))|2000))$/" ng-model="userInfo.dateOfBirth" ng-blur="checkDOB(userInfo.dateOfBirth)" required />
+                            <label class="inptLbl">Date of Birth MM-DD-YYYY</label>
+                            <input id ="date_of_birth" name="dob" ng-pattern="/^((0[13578]|1[02])[-.](29|30|31)[-.](18|19|20)[0-9]{2})|((01|0[3-9]|1[1-2])[-.](29|30)[-.](18|19|20)[0-9]{2})|((0[1-9]|1[0-2])[-.](0[1-9]|1[0-9]|2[0-8])[-.](18|19|20)[0-9]{2})|((02)[\/.]29[-.](((18|19|20)(04|08|[2468][048]|[13579][26]))|2000))$/" ng-model="userInfo.dateOfBirth" ng-blur="checkDOB(userInfo.dateOfBirth)" required />
                             <div ng-messages="checkoutInput.dob.$error" ng-messages-multiple>
                                 <div ng-message="pattern" class="inptErMsg">Date format only</div>
                                 <div ng-message="required" class="inptErMsg">Required</div>
@@ -170,8 +170,9 @@
                                                 <ng-md-icon icon="clear"></ng-md-icon>
                                             </md-button>
                                         </li>
-                                        <li>
+                                        <li class="product-img-li">
                                             <img class="cartBItems2B2" ng-src={{product.image}}>
+                                            <img ng-show="!product.store_open" class="closed-item-img" ng-src="/resources/images/non-catalog-image/homit_closed.png">
                                         </li>
                                     </div>
                                     <div class="cartBItems2C" flex="35">
@@ -203,20 +204,22 @@
                                     <md-progress-circular md-colors="{color: 'primary'}" md-diameter="76" ng-disabled="paymentResult != 'inProcess' "></md-progress-circular>
                                 </div>
                             </div>
-                            <div id="paymentResult" ng-if="paymentResult == '1' || paymentResult == '02' || paymentResult == '0' || paymentResult == '01' || paymentResult == '10' || paymentResult == '11' ">
+                            <div id="paymentResult" ng-if="paymentResult == '1' || paymentResult == '02' || paymentResult == '03' || paymentResult == '0' || paymentResult == '01' || paymentResult == '10' || paymentResult == '11' ">
                                 <div class="pR_A">
                                     <md-button class="modal-close-button" ng-click="clearPage()">
                                         <ng-md-icon icon="close" class="modal-close-button-icon"></ng-md-icon>
                                     </md-button>
-                                    <md-button ng-click="clearPage()" class="clrPg">
+                                    <md-button ng-click="clearPage()" class="message-icon-button">
                                         <ng-md-icon ng-if="paymentResult == '1' " icon="done" class="pR_A1"></ng-md-icon>
                                         <ng-md-icon ng-if="paymentResult == '11' " icon="warning" class="pR_A1 pR_A2"></ng-md-icon>
                                     </md-button>
                                     <ng-md-icon ng-if="paymentResult == '10' || paymentResult == '0'" icon="warning" class="pR_A10"></ng-md-icon>
                                     <ng-md-icon ng-if="paymentResult == '01' || paymentResult == '02' " icon="sentiment_dissatisfied" class="pR_A11"></ng-md-icon>
+                                    <ng-md-icon ng-if="paymentResult == '03'" icon="announcement" class="pR_A10 closed-message-icon"></ng-md-icon>
                                 </div>
-                                <div class="pR_B">
-                                    <span class="pR_BA">{{paymentMessage_1}}{{userInfo.first_name}}</span>
+                                <div class="pR_B" layout="column">
+                                    <span class="pR_BA">{{ paymentMessage_1 }}{{ userInfo.first_name }}</span>
+                                    <span class="store-closed-message" ng-if="closedStoreMessage">{{ closedStoreMessage }} <span ng-click="removeClosedItems()" class="store-closed-message-remove">remove items</span></span>
                                 </div>
                                 <div style="width: 100%; margin-bottom: 10px;">
                                     <span class="pR_CA" ng-bind-html="paymentMessage_2"></span>
