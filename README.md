@@ -19,10 +19,27 @@
 #### Install gulp
 	Run command 'npm install -g gulp'
 
-### 3. Create ENV variable **n_mode** 
-	Valid options - dev | test | production
+### 3. Installing SASS
+	SASS requires ruby.
 
-### 4. Create .env file for your mode (dev.env | test.env | production.env)
+	Installing Ruby
+		MAC OS:  	ruby is pre-installed
+		WINDOWS:	rubyinstaller.org
+		Linux:		apt-get install ruby (or ruby-dev, check online)
+
+	Installing SASS
+		1. Use following command to install sass 'gem install sass'
+		2. After it is installed run 'sass -v' to confirm
+	
+
+### 4. Create ENV variables 
+	n_mode
+		Valid options - dev | test | production
+	
+	NODE_ENV (only in production)
+		Valid options - production
+
+### 5. Create .env file for your mode (dev.env | test.env | production.env)
 	This file will be used to load environment variables used inside the server
 #### Valid file names
 	dev.env | test.env | production.env
