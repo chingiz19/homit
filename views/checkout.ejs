@@ -24,7 +24,7 @@
                     <div class="flex-center" ng-show="userInfo.hasLiquor">
                         <md-input-container class="md-block bigClass" flex="45">
                             <label class="inptLbl">Date of Birth MM-DD-YYYY</label>
-                            <input id ="date_of_birth" name="dob" ng-pattern="/^((0[13578]|1[02])[-.](29|30|31)[-.](18|19|20)[0-9]{2})|((01|0[3-9]|1[1-2])[-.](29|30)[-.](18|19|20)[0-9]{2})|((0[1-9]|1[0-2])[-.](0[1-9]|1[0-9]|2[0-8])[-.](18|19|20)[0-9]{2})|((02)[\/.]29[-.](((18|19|20)(04|08|[2468][048]|[13579][26]))|2000))$/" ng-model="userInfo.dateOfBirth" ng-blur="checkDOB(userInfo.dateOfBirth)" required />
+                            <input id ="date_of_birth" name="dob" ng-pattern="/^((0[13578]|1[02])[-.](29|30|31)[-.](18|19|20)[0-9]{2})|((01|0[3-9]|1[1-2])[-.](29|30)[-.](18|19|20)[0-9]{2})|((0[1-9]|1[0-2])[-.](0[1-9]|1[0-9]|2[0-8])[-.](18|19|20)[0-9]{2})|((02)[\/.]29[-.](((18|19|20)(04|08|[2468][048]|[13579][26]))|2000))$/" ng-model="userInfo.dateOfBirth" ng-blur="checkDOB(userInfo.dateOfBirth)" ng-required="userInfo.hasLiquor" />
                             <div ng-messages="checkoutInput.dob.$error" ng-messages-multiple>
                                 <div ng-message="pattern" class="inptErMsg">Date format only</div>
                                 <div ng-message="required" class="inptErMsg">Required</div>

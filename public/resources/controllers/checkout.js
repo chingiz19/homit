@@ -206,7 +206,7 @@ app.controller("checkoutController",
 
         $scope.submitCheckout = function (valid) {
             if ($scope.userInfo.dob_not_valid) {
-                $("#dob").click();
+                $("#date_of_birth").click();
                 return;
             } else if (!$scope.userInfo.withinCoverage) {
                 $("#autocompleteAddressInputBox").click();
