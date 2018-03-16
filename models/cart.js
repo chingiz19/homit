@@ -10,12 +10,16 @@ var pub = {};
 pub.getUserCart = async function (userId) {
     var sqlQuery = `
         SELECT DISTINCT stores.store_type
-        FROM catalog_stores AS stores
-        WHERE 
-        (stores.open_time <= CURRENT_TIME
-        AND stores.close_time >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
-        OR stores.open_time_next <= CURRENT_TIME
-        AND stores.close_time_next >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)))`;
+        FROM
+        catalog_stores AS stores JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
+        JOIN stores_hours AS hours ON (stores.id = hours.store_id)
+        WHERE
+        hours.day = DAYOFWEEK(CURRENT_TIMESTAMP)
+        AND (hours.open_time <= CURRENT_TIME
+        AND hours.close_time >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
+        OR hours.open_time_next <= CURRENT_TIME
+        AND hours.close_time_next >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
+        )`;
 
     var storeTypeDb = await db.runQuery(sqlQuery);
     var openStoreTypes = [];
@@ -60,7 +64,7 @@ pub.getUserCart = async function (userId) {
         AND depot.store_type_id = store_type.id
 
         AND store_type.id IN (` + openStoreTypes + `)
-        AND usercart.user_id = 1
+        AND ?
 
         UNION ALL
 
@@ -99,13 +103,12 @@ pub.getUserCart = async function (userId) {
         AND depot.store_type_id = store_type.id
 
         AND store_type.id NOT IN (` + openStoreTypes + `)
-        AND usercart.user_id = 1
+        AND ?
 
         ORDER BY depot_id`;
 
-    var data1 = { "usercart.user_id": userId };
-    var data2 = { "usercart.user_id": userId };
-    var dbResult = await db.runQuery(sqlQuery, [data1, data2]);
+    var data = { "usercart.user_id": userId };
+    var dbResult = await db.runQuery(sqlQuery, [data, data]);
     return getFormattedProducts(dbResult);
 }
 
