@@ -260,11 +260,13 @@ app.controller("checkoutController",
 
             userInfoToSend.fname = $scope.userInfo.first_name;
             userInfoToSend.lname = $scope.userInfo.last_name;
-            userInfoToSend.birth_month = parseInt($scope.userInfo.dateOfBirth.split("-")[0]);
-            userInfoToSend.birth_day = parseInt($scope.userInfo.dateOfBirth.split("-")[1]);
-            userInfoToSend.birth_year = parseInt($scope.userInfo.dateOfBirth.split("-")[2]);
             userInfoToSend.phone = $scope.userInfo.phone_number.replace(/[() +-]/g, "");
             userInfoToSend.email = $scope.userInfo.user_email;
+            if($scope.userInfo.hasLiquor){
+                userInfoToSend.birth_month = parseInt($scope.userInfo.dateOfBirth.split("-")[0]);
+                userInfoToSend.birth_day = parseInt($scope.userInfo.dateOfBirth.split("-")[1]);
+                userInfoToSend.birth_year = parseInt($scope.userInfo.dateOfBirth.split("-")[2]);    
+            }
 
             //Check if address unit number presents
             var addressUnitNumber = sessionStorage.getAddressUnitNumber();
