@@ -54,6 +54,8 @@ router.post('/placeorder', async function (req, res, next) {
             var cardDigits = chargeResult.source.last4;
             var chargeId = chargeResult.id;
             var data = {
+                first_name: fname,
+                last_name: lname,
                 phone_number: phone
             };
             if (birth_year && birth_month && birth_day) {
@@ -64,11 +66,15 @@ router.post('/placeorder', async function (req, res, next) {
             var isGuest;
             if (signedUser) {
                 isGuest = false;
+                data.address = address;
+                data.address_latitude = address_lat;
+                data.address_longitude = address_long;
+
                 userId = signedUser.id
                 var key = {
                     id: userId
                 };
-                var updatedUser = await User.updateUser(data, key);
+                await User.updateUser(data, key);
 
                 // This is not working right now. Will be implemented later
                 // if (saveCard) {
@@ -77,8 +83,6 @@ router.post('/placeorder', async function (req, res, next) {
             } else {
                 isGuest = true;
                 var guestUserFound = await User.findGuestUser(email);
-                data.first_name = fname;
-                data.last_name = lname;
                 if (guestUserFound) {
                     userId = guestUserFound.id;
 

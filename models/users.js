@@ -130,8 +130,15 @@ pub.updateGuestUser = function (userData, key) {
 
 function ifNewInfo(newData, user) {
     for (var key in newData) {
-        if (newData[key] != user[key]) {
-            return true;
+        if (key == "birth_date") {
+            var newDate = new Date(newData[key] + " 00:00:00");
+            if (newDate.getTime() != user[key].getTime()) {
+                return true;
+            }
+        } else {
+            if (newData[key] != user[key]) {
+                return true;
+            }
         }
     }
     return false;
@@ -149,41 +156,24 @@ function isHistoryNull(user) {
 /**
  * Update user data
  */
-pub.updateUser = function (userData, key) {
+pub.updateUser = async function (userData, key) {
     var data = [userData, key];
     var historyData = {
         user_id: key.id
     };
 
-    return db.selectColumnsWhere(Object.keys(userData), db.tables.users_customers, key).then(function (users) {
-        if (users != false) {
-            if (ifNewInfo(userData, users[0])) {
-                return db.updateQuery(db.tables.users_customers, data).then(function (dbResult) {
-                    if (dbResult != false) {
-                        if (!isHistoryNull(users[0])) {
-                            historyData = Object.assign(historyData, users[0]);
-                            return db.insertQuery(db.tables.users_customers_history, historyData).then(function (historyInserted) {
-                                if (historyInserted != false) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            });
-                        } else {
-                            return true;
-                        }
-                    } else {
-                        return false;
-                    }
-                });
-            } else {
-                return true;
+    var users = await db.selectColumnsWhereLimitOne(Object.keys(userData), db.tables.users_customers, key);
+    if (users.length > 0) {
+        var user = users[0];
+        if (ifNewInfo(userData, user)) {
+            await db.updateQuery(db.tables.users_customers, data);
+            if (!isHistoryNull(user)) {
+                historyData = Object.assign(historyData, user);
+                await db.insertQuery(db.tables.users_customers_history, historyData);
             }
-        } else {
-            return false;
         }
-    });
-};
+    }
+}
 
 pub.updateCreditCard = function (userKey, cardToken, cardDigits, cardType) {
     var updateDate = {
@@ -309,7 +299,7 @@ function findUsersWithHistory(data) {
 
 pub.updatePassword = function (userId, oldPassword, newPassword) {
     var key = { id: userId };
-    return db.selectColumnsWhere("password", db.tables.users_customers, key).then(function (user) {
+    return db.selectColumnsWhereLimitOne("password", db.tables.users_customers, key).then(function (user) {
         if (user.length > 0) {
             return Auth.comparePassword(oldPassword, user[0].password).then(function (match) {
                 if (match) {

@@ -5,10 +5,12 @@
 var mysql = require("promise-mysql");
 var con;
 
+var pub = {};
+
 /**
  * Database tables
  */
-const tables = {
+pub.tables = {
   catalog_store_types: "catalog_store_types",
   catalog_stores: "catalog_stores",
   catalog_packaging_containers: "catalog_packaging_containers",
@@ -73,7 +75,7 @@ mysql.createConnection({
 
 /*Database query functions*/
 
-var runQuery = function (query, data) {
+pub.runQuery = function (query, data) {
   return con.query(query, data).then(function (result) {
     return result;
   }).catch(function (error) {
@@ -86,45 +88,45 @@ var runQuery = function (query, data) {
   });
 };
 
-var insertQuery = function (table, data) {
-  return runQuery('INSERT INTO ' + table + ' SET ?', data);
-};
+pub.insertQuery = function (table, data) {
+  return pub.runQuery('INSERT INTO ' + table + ' SET ?', data);
+}
 
-var selectColumnsWhere = function (columns, table, data) {
-  return runQuery('SELECT ' + columns + ' FROM ' + table + ' WHERE ?', data);
-};
+pub.selectColumnsWhereLimitOne = function (columns, table, data) {
+  return pub.runQuery('SELECT ' + columns + ' FROM ' + table + ' WHERE ? LIMIT 1', data);
+}
 
-var selectAllWhere = function (table, data) {
-  return runQuery('SELECT * FROM ' + table + ' WHERE ?', data);
-};
+pub.selectAllWhere = function (table, data) {
+  return pub.runQuery('SELECT * FROM ' + table + ' WHERE ?', data);
+}
 
-var selectAllWhere2 = function (table, data) {
-  return runQuery('SELECT * FROM ' + table + ' WHERE ? AND ?', data);
-};
+pub.selectAllWhere2 = function (table, data) {
+  return pub.runQuery('SELECT * FROM ' + table + ' WHERE ? AND ?', data);
+}
 
-var selectAllFromTable = function (table) {
-  return runQuery('SELECT * FROM ' + table);
-};
+pub.selectAllFromTable = function (table) {
+  return pub.runQuery('SELECT * FROM ' + table);
+}
 
-var updateQuery = function (table, data) {
-  return runQuery('UPDATE ' + table + ' SET ? WHERE ?', data);
-};
+pub.updateQuery = function (table, data) {
+  return pub.runQuery('UPDATE ' + table + ' SET ? WHERE ?', data);
+}
 
-var updateQueryWhereIn = function (table, data) {
-  return runQuery('UPDATE ' + table + ' SET ? WHERE ? in ?', data);
-};
+pub.updateQueryWhereIn = function (table, data) {
+  return pub.runQuery('UPDATE ' + table + ' SET ? WHERE ? in ?', data);
+}
 
-var deleteQuery = function (table, data) {
-  return runQuery('DELETE FROM ' + table + ' WHERE ?', data);
-};
+pub.deleteQuery = function (table, data) {
+  return pub.runQuery('DELETE FROM ' + table + ' WHERE ?', data);
+}
 
-var deleteQuery2 = function (table, data) {
-  return runQuery('DELETE FROM ' + table + ' WHERE ? AND ?', data);
-};
+pub.deleteQuery2 = function (table, data) {
+  return pub.runQuery('DELETE FROM ' + table + ' WHERE ? AND ?', data);
+}
 
-var selectAllWhereLimitOne = function (table, data) {
-  return runQuery('SELECT * FROM ' + table + ' WHERE ? LIMIT 1', data);
-};
+pub.selectAllWhereLimitOne = function (table, data) {
+  return pub.runQuery('SELECT * FROM ' + table + ' WHERE ? LIMIT 1', data);
+}
 
 /**
  * Ends database connection in ethical/gracefull way, ensuring
@@ -137,15 +139,4 @@ var end = function () {
   });
 };
 
-module.exports.runQuery = runQuery;
-module.exports.insertQuery = insertQuery;
-module.exports.selectColumnsWhere = selectColumnsWhere;
-module.exports.selectAllWhere = selectAllWhere;
-module.exports.selectAllWhere2 = selectAllWhere2;
-module.exports.updateQuery = updateQuery;
-module.exports.selectAllFromTable = selectAllFromTable;
-module.exports.deleteQuery = deleteQuery;
-module.exports.deleteQuery2 = deleteQuery2; //TODO: can this be combined with deleteQuery?
-module.exports.tables = tables;
-module.exports.selectAllWhereLimitOne = selectAllWhereLimitOne;
-module.exports.endConnection = end;
+module.exports = pub;
