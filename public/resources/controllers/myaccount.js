@@ -152,7 +152,7 @@ app.controller("myaccountController", ["$location", "$scope", "$cookies", "$wind
                     url: '/api/myaccount/update',
                     data: {
                         user: {
-                            address1: myaccount.address,
+                            address: myaccount.address,
                             address_latitude: myaccount.address_latitude,
                             address_longitude: myaccount.address_longitude
                         }

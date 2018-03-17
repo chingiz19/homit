@@ -282,9 +282,9 @@ function findUsersWithHistory(data) {
     var sqlQuery = `SELECT users_customers.id AS id, users_customers.id_prefix AS id_prefix,
         users_customers.user_email AS user_email, users_customers.first_name AS first_name,
         users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
-        users_customers.birth_date AS birth_date, users_customers.address1 AS address1,
-        users_customers.address1_latitude AS address1_latitude,
-        users_customers.address1_longitude AS address1_longitude
+        users_customers.birth_date AS birth_date, users_customers.address AS address,
+        users_customers.address_latitude AS address_latitude,
+        users_customers.address_longitude AS address_longitude
         
         FROM users_customers
         WHERE ? OR id IN (
