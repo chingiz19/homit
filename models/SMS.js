@@ -38,13 +38,15 @@ jsonfile.readFile(file, function (err, obj) {
  * @param {*String} name 
  */
 pub.notifyDriverArrival = function (number, name) {
+    if (process.env.n_mode == "production") {
     client.messages
         .create({
             to: number,
             from: twillioNumber,
             body: 'Hey ' + name + ', your Homit delivery is minutes away!',
         })
-        .then((message) => Logger.log.debug('Sent text message with ID: ' + message.sid), logMeta);;
+        .then((message) => Logger.log.debug('Sent text message with ID: ' + message.sid), logMeta);
+    }
 }
 
 /**

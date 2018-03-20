@@ -49,7 +49,7 @@ var sendEmailViaOrders = function (mailOptions) {
             Logger.log.error("Could not send an ORDER email with " + error.message + "ID.", metaData)
             return false;
         } else {
-            Logger.log.debug('ORDER email was sent with ' + error.message + "ID.");
+            Logger.log.debug('ORDER email was sent! ', metaData);
             return true;
         }
     });

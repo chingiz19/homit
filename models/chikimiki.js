@@ -12,8 +12,6 @@ var SocketIO = require("socket.io")(cmSocketIOServer, {
     pingTimeout: 2000
 });
 
-var emailTempStorage = {};
-
 /* Building metadata for log */
 var logMeta = {
     directory: __filename
@@ -129,33 +127,15 @@ var receiver = async function (jsonResponse) {
                 customer: jsonCustomer
             }
         };
-        Driver.send(driverIdString, jsonFinal);
+        NM.sendToDriver(driverIdString, jsonFinal);
 
         await Driver.dispatchOrder(driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded);
 
         //Add to email temp
-
-        // Old to be removed
-        var emailTransactionOld = {};
-        var emailOrdersOld = {};
-        var emailOrderOld = {};
-
-        // New
         var emailTransaction = {};
         var emailOrders = {};
         var emailOrder = {};
 
-
-        // Old to be removed
-        if (emailTempStorage[orderDetails.order_transaction_id]) {
-            emailTransactionOld = emailTempStorage[orderDetails.order_transaction_id];
-
-            if (emailTransactionOld.orders) {
-                emailOrdersOld = emailTransactionOld.orders;
-            }
-        }
-
-        // New
         var emailTransactionTemp = await Email.getTransactionEmail(orderDetails.order_transaction_id);
         if (emailTransactionTemp) {
             emailTransaction = JSON.parse(emailTransactionTemp);
@@ -167,38 +147,20 @@ var receiver = async function (jsonResponse) {
 
         var storeType = await Catalog.getStoreTypeById(jsonStore.store_type);
 
-        // Old to be removed
-        emailOrderOld = jsonOrder;
-        emailOrderOld.store = jsonStore;
-        emailOrderOld.store_type_display_name = storeType.display_name;
-
-        // New
         emailOrder = jsonOrder;
         emailOrder.store = jsonStore;
         emailOrder.store_type_display_name = storeType.display_name;
 
-        // Old to be removed
-        emailOrdersOld[storeType.name] = emailOrderOld;
-        emailTransactionOld.orders = emailOrdersOld;
-        emailTempStorage[orderDetails.order_transaction_id] = emailTransactionOld;
-
-        // New
         emailOrders[storeType.name] = emailOrder;
         emailTransaction.orders = emailOrders;
 
         // Check if email is ready to send
         var allAssigned = await Orders.areAllDispatched(orderDetails.order_transaction_id);
         if (allAssigned) {
-            emailTransactionOld.customer = jsonCustomer;
             emailTransaction.customer = jsonCustomer;
 
-            Logger.log.debug("email Old JSON is ", JSON.stringify(emailTransactionOld));
-            Logger.log.debug("email New JSON is ", JSON.stringify(emailTransaction));
+            Email.sendOrderSlip(emailTransaction);
 
-            Email.sendOrderSlip(emailTransactionOld);
-            // Email.sendOrderSlip(emailTransaction);
-
-            delete emailTempStorage[orderDetails.order_transaction_id];
             await Email.deleteTransactionEmail(orderDetails.order_transaction_id);
         } else {
             await Email.saveTransactionEmail(orderDetails.order_transaction_id, emailTransaction);

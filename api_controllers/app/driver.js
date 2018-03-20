@@ -20,7 +20,6 @@ router.post('/signin', function (req, res, next) {
         Driver.authenticateDriver(email, password).then(function (driver) {
             if (driver != false) { 
                 var driverId = driver.id_prefix + driver.id;
-                var portId = Driver.getConnectionPort();
                 var jwt_token = JWTToken.createToken({
                     driver_id: driverId
                 });
@@ -32,8 +31,7 @@ router.post('/signin', function (req, res, next) {
                     driver: driver,
                     jwt_token: jwt_token,
                     connection: {
-                        host: ip.address(),
-                        port: portId
+                        host: ip.address()
                     }
                 };
 

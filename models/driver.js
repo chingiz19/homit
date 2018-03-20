@@ -1,170 +1,11 @@
 /**
  * @copyright Homit 2018
  */
-
-var fs = require("fs");
-const path = require('path');
-var KEY_PATH = path.normalize(process.cwd() + "/ssl/server.enc.key");
-var CERTIFICATE_PATH = path.normalize(process.cwd() + "/ssl/server.crt");
-var sockIOServer = require("https").createServer({
-    key: fs.readFileSync(KEY_PATH),
-    cert: fs.readFileSync(CERTIFICATE_PATH),
-    passphrase: 'test'
-});
-
-var io = require("socket.io")(sockIOServer, {
-    pingInterval: 2000,
-    pingTimeout: 10000
-});
-var driverConnector = require("net");
 var pub = {};
-var driverConnections = {};
-var driverTempStorage = {};
-var SOCKET_PORT = 3000;
-var DEFAULT_EMIT = "data";
-
-/* Building metadata for log */
-var logMeta = {
-    directory: __filename
-}
-
-io.on("connection", function (socket) {
-    Logger.log.verbose(socket.id + " app has been connected to server", logMeta);
-    socket.isVerified = false;
-
-    setTimeout(function () {
-        if (!socket.isVerified) {
-            socket.disconnect();
-        }
-    }, 5000);
-
-    var conInfo = {
-        driver_id: "",
-        port: SOCKET_PORT,
-        socket: socket
-    };
-    driverConnections[socket.id] = conInfo;
-
-    socket.on("verify", async function (data) {
-        // Put status table
-        var receivedJson = JSON.parse(data);
-        var tokenData = JWTToken.validateToken(receivedJson.token);
-        if (!tokenData || tokenData.driver_id != receivedJson.driver_id) {
-            socket.disconnect();
-        } else {
-            var driverId = tokenData.driver_id.split("_")[1];
-            socket.isVerified = true;
-            driverConnections[socket.id].driver_id = tokenData.driver_id;
-            await updateDriverStatusConnected(driverId, socket.id);
-            if (driverTempStorage[tokenData.driver_id]) {
-                for (var i = 0; i < driverTempStorage[tokenData.driver_id].length; i++) {
-                    Driver.send(tokenData.driver_id, driverTempStorage[tokenData.driver_id][i]);
-                }
-                driverTempStorage[tokenData.driver_id] = [];
-            }
-
-            var requests = await getDriversRequest(driverId);
-
-            // TODO: Chingiz uncommenct this
-            // for (var i = 0; i < requests.length; i++) {
-            //     Driver.send("d_" + requests[i].driver_id,  JSON.parse(requests[i].order_info));
-            // }
-        }
-    });
-
-    socket.on("data", function (data) {
-        if (!socket.isVerified) {
-            socket.disconnect();
-        }
-        var receivedJson = JSON.parse(data);
-        Logger.log.verbose("--------------------------------------------------------");
-        Logger.log.verbose(receivedJson);
-        Logger.log.verbose("--------------------------------------------------------");
-        if (receivedJson.action == "driver_status") {
-            var driverDetails = receivedJson.details;
-            var driverIdString = driverDetails.driver_id;
-            var driverIdInt = driverIdString.split("_")[1];
-            var sendToCm = true;
-            switch (driverDetails.status) {
-                case "online":
-                    saveOnline(driverIdInt);
-                    updateLocation(driverIdInt, driverDetails.location);
-                    break;
-                case "offline":
-                    saveOffline(driverIdInt);
-                    break;
-                case "arrived_store":
-                    Logger.log.verbose("Data received from driver: arrived_store");
-                    Logger.log.verbose("store_id: " + driverDetails.arrived_store.store_id);
-                    Logger.log.verbose("order_ids: " + driverDetails.arrived_store.order_ids + "\n");
-                    saveArrivedStore(driverIdInt, driverDetails.arrived_store.order_ids);
-                    removeStoreRouteNode(driverIdInt, driverDetails.arrived_store.store_id);
-                    break;
-                case "pick_up":
-                    Logger.log.verbose("Data received from driver: pick_up");
-                    Logger.log.verbose("store_id: " + driverDetails.pick_up.store_id);
-                    Logger.log.verbose("order_ids: " + driverDetails.pick_up.order_ids + "\n");
-                    savePickUp(driverIdInt, driverDetails.pick_up.order_ids);
-                    break;
-                case "drop_off":
-                    Logger.log.verbose("Data received from driver: drop_off");
-                    Logger.log.verbose("order_id: " + driverDetails.drop_off.order_id);
-                    Logger.log.verbose("refused: " + driverDetails.drop_off.refused);
-                    Logger.log.verbose("same_receiver: " + driverDetails.drop_off.same_receiver);
-                    Logger.log.verbose("receiver_name: " + driverDetails.drop_off.receiver_name);
-                    Logger.log.verbose("receiver_age: " + driverDetails.drop_off.receiver_age + "\n");
-                    removeOrderRouteNode(driverIdInt, driverDetails.drop_off.order_id);
-                    saveDropOff(driverIdInt, driverDetails.drop_off);
-                    break;
-                case "location_update":
-                    updateLocation(driverIdInt, driverDetails.location);
-                    break;
-                case "arrived_customer":
-                    Logger.log.verbose("Data received from driver: arrived_customer");
-                    Logger.log.verbose("customer_id: " + driverDetails.arrived_customer.customer_id);
-                    Logger.log.verbose("order_ids: " + driverDetails.arrived_customer.order_ids + "\n");
-                    saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids, driverDetails.arrived_customer.customer_id);
-                    sendToCm = false;
-                    break;
-                default:
-                    Logger.log.error("Wrong 'status' received from driver app. Received data: " + receivedJson.stringify(), logMeta);
-            }
-            if (sendToCm) {
-                CM.send(receivedJson);
-            }
-        } else {
-            Logger.log.error("Wrong 'action' received from driver app. Received data: " + receivedJson.stringify(), logMeta);
-        }
-    });
-
-    socket.on("disconnect", function () {
-        updateDriverStatusDisconnected(socket.id);
-        delete driverConnections[socket.id];
-        Logger.log.verbose(socket.id + " app has been disconnected from server", logMeta);
-    });
-
-    socket.on("connect_error", function (data) {
-        Logger.log.verbose("Connect error has been occurred " + data, logMeta);
-    });
-
-    socket.on("connect_timeout", function (data) {
-        Logger.log.verbose("Conenction timeout with driver has been occurred " + data, logMeta);
-    });
-
-    socket.on("error", function (data) {
-        Logger.log.error("Conenction error with driver occurred " + data, logMeta);
-    });
-});
-
-try {
-    sockIOServer.listen(SOCKET_PORT);
-} catch (err) {
-    Logger.log.error("Can't listen to port " + SOCKET_PORT + "Please close other apps that might be using the same port", logMeta);
-}
 
 pub.findDriver = function (email) {
     var data = { user_email: email };
-    return db.selectAllWhere(db.tables.drivers, data).then(function (dbResult) {
+    return db.selectAllWhereLimitOne(db.tables.drivers, data).then(function (dbResult) {
         if (dbResult.length > 0) {
             return User.sanitizeUserObject(dbResult[0]);
         } else {
@@ -203,42 +44,6 @@ pub.authenticateDriver = function (email, password) {
     });
 };
 
-/* Get connection info for driver */
-pub.getConnectionPort = function () {
-    //TODO: Why not remove this method
-    return 443;
-}
-
-pub.send = async function (id, json) {
-    var driverId = id.split("_")[1];
-    var driverConnected = await isConnected(driverId);
-    var driverConnectedOld = false;
-    for (var sockId in driverConnections) {
-        if (driverConnections[sockId].driver_id == id) {
-            driverConnections[sockId].socket.emit(DEFAULT_EMIT, JSON.stringify(json) + "\n");
-            driverConnectedOld = true;
-            Logger.log.verbose("Sending order to " + id);
-            break;
-        }
-    }
-
-    if (!driverConnectedOld) {
-        if (!driverTempStorage[id]) {
-            driverTempStorage[id] = [];
-        }
-        driverTempStorage[id].push(json);
-        Logger.log.warn("Could not send order to offline driver " + id);
-    }
-
-    if (!driverConnected) {
-        await addToDriversRequest(driverId, json);
-        var driverInfo = await Driver.findDriverById(driverId);
-        SMS.notifyDriver("Your app is disconnected and you have been dispatched for an order " +
-            json.details.customer.order.id,
-            driverInfo.first_name, driverInfo.phone_number, function response() { });
-    }
-}
-
 pub.cancelOrder = function (orderId, driverId) {
     var driverIdString = "d_" + driverId;
     var orderIdString = "o_" + orderId;
@@ -251,7 +56,7 @@ pub.cancelOrder = function (orderId, driverId) {
             }
         }
     };
-    Driver.send(driverId, json);
+    NM.sendToDriver(driverId, json);
 }
 
 pub.getActiveDrivers = async function () {
@@ -296,7 +101,7 @@ var driverStatusExists = async function (driverId) {
  * @param {*} driverId 
  * @param {*} socketId 
  */
-var updateDriverStatusConnected = async function (driverId, socketId) {
+pub.updateDriverStatusConnected = async function (driverId, socketId) {
     var update = await driverStatusExists(driverId);
     var data = {
         driver_id: driverId
@@ -320,7 +125,7 @@ var updateDriverStatusConnected = async function (driverId, socketId) {
  * 
  * @param {*} socketId 
  */
-var updateDriverStatusDisconnected = async function (socketId) {
+pub.updateDriverStatusDisconnected = async function (socketId) {
     var key = {
         socket_id: socketId
     };
@@ -341,7 +146,7 @@ var updateDriverStatusDisconnected = async function (socketId) {
     }
 }
 
-var isConnected = async function (driverId) {
+pub.isConnected = async function (driverId) {
     var data = {
         driver_id: driverId
     };
@@ -371,7 +176,7 @@ var shiftStarted = async function (driverId) {
  * 
  * @param {*} driverId 
  */
-var saveOnline = async function (driverId) {
+pub.saveOnline = async function (driverId) {
     var started = await shiftStarted(driverId);
     if (!started) {
         var data = { driver_id: driverId };
@@ -387,7 +192,7 @@ var saveOnline = async function (driverId) {
  * 
  * @param {*} driverId 
  */
-var saveOffline = async function (driverId) {
+pub.saveOffline = async function (driverId) {
     await setDriverOnlineFlag(driverId, false);
     await endShift(driverId);
 }
@@ -398,7 +203,7 @@ var saveOffline = async function (driverId) {
  * @param {*} driverId 
  * @param {*} location 
  */
-var updateLocation = async function (driverId, location) {
+pub.updateLocation = async function (driverId, location) {
     var updateData = {
         longitude: location.longitude,
         latitude: location.latitude
@@ -477,15 +282,15 @@ var isOnline = async function (driverId) {
 }
 
 // Orders history
-var saveArrivedStore = function (driverId, orderIds) {
+pub.saveArrivedStore = function (driverId, orderIds) {
     updateOrdersHistory("date_arrived_store", orderIds);
 }
 
-var savePickUp = function (driverId, orderIds) {
+pub.savePickUp = function (driverId, orderIds) {
     updateOrdersHistory("date_picked", orderIds);
 }
 
-var saveDropOff = async function (driverId, dropOff) {
+pub.saveDropOff = async function (driverId, dropOff) {
     var orderIdString = dropOff.order_id;
     var orderId = orderIdString.split("_")[1];
 
@@ -506,7 +311,7 @@ var saveDropOff = async function (driverId, dropOff) {
     updateOrdersHistory("date_delivered", [orderIdString]);
 }
 
-var saveArrivedCustomer = async function (driverId, orderIds, customerIdString) {
+pub.saveArrivedCustomer = async function (driverId, orderIds, customerIdString) {
     var customerInit = customerIdString.split("_")[0];
     var customerId = customerIdString.split("_")[1];
 
@@ -674,7 +479,7 @@ var removeRouteNode = async function (driverId, data) {
  * @param {*} driverId 
  * @param {*} storeId 
  */
-var removeStoreRouteNode = async function (driverId, storeId) {
+pub.removeStoreRouteNode = async function (driverId, storeId) {
     var storeIdInt = storeId.split("_")[1];
     var storeData = { store_id: storeIdInt };
 
@@ -687,7 +492,7 @@ var removeStoreRouteNode = async function (driverId, storeId) {
  * @param {*} driverId 
  * @param {*} orderId 
  */
-var removeOrderRouteNode = async function (driverId, orderId) {
+pub.removeOrderRouteNode = async function (driverId, orderId) {
     var orderIdInt = orderId.split("_")[1];
     var orderData = { order_id: orderIdInt };
 
@@ -741,7 +546,7 @@ pub.getRoutes = async function (driverId) {
  * @param {*} driverId 
  * @param {*} json 
  */
-var addToDriversRequest = async function (driverId, json) {
+pub.addToDriversRequest = async function (driverId, json) {
     var data = {
         driver_id: driverId,
         order_info: JSON.stringify(json)
@@ -755,7 +560,7 @@ var addToDriversRequest = async function (driverId, json) {
  * 
  * @param {*} driverId 
  */
-var getDriversRequest = async function (driverId) {
+pub.getDriversRequest = async function (driverId) {
     var data = {
         driver_id: driverId
     };

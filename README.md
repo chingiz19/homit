@@ -81,6 +81,9 @@
 		# Keys
 		SESSION_KEY=
 
+		# Redis
+		REDIS_USER=
+
 ## Running project
 ### Using gulp
 	We use gulp to automate preprocessing, and pre-run tasks

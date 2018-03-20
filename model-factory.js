@@ -17,6 +17,7 @@ var MP                  = require("./models/money-processing");
 var CSR                 = require("./models/csr");
 var Email               = require("./models/email");
 var ErrorMessages       = require("./models/error_messages");
+var NetworkManager      = require("./models/network_manager");
 
 /**
  * This class uses initiator that 
@@ -41,6 +42,7 @@ class modelFactory {
         global.CSR = CSR;
         global.Email = Email;
         global.errorMessages = ErrorMessages;
+        global.NM = NetworkManager;
     }
 }
 
