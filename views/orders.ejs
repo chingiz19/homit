@@ -37,18 +37,15 @@
                 </md-container>
             </div>
             <div class="container">
-                <div class="gtDataA">
+                <div class="gtDataA" style="width: 100%;">
                     <md-radio-group>
                         <md-radio-button id="usrRbtn" aria-label="selectUser" class="gtDataAA" ng-value="user" ng-repeat="user in foundUsers" ng-click="selectedUserID(user)">
-                            <ul layout="row" class="gtDataAAA">
-                                <li class="gtDataAAAA">First Name: </li>
-                                <li class="gtDataAAAB">{{' ' + user.first_name + ';  '}}</li>
-                                <li class="gtDataAAAA">Last Name: </li>
-                                <li class="gtDataAAAB">{{' ' + user.last_name + ';  '}}</li>
-                                <li class="gtDataAAAA">Email: </li>
-                                <li class="gtDataAAAB">{{' ' + user.user_email + ';  '}}</li>
-                                <li class="gtDataAAAA">Phone: </li>
-                                <li class="gtDataAAAB">{{' ' + user.phone_number + ';  '}}</li>
+                            <ul layout="row" class="gtDataAAA" style="width: 60%; display: flex; justify-content: space-between;">
+                                <li class="gtDataAAAA">First Name: {{' ' + user.first_name + ';  '}}</li>
+                                <li class="gtDataAAAA">Last Name: {{' ' + user.last_name + ';  '}}</li>
+                                <li class="gtDataAAAA">Email: {{' ' + user.user_email + ';  '}}</li>
+                                <li ng-show="!user.is_guest" class="gtDataAAAA">Phone: {{' ' + user.phone_number + ';  '}}</li>
+                                <li ng-show="user.is_guest" class="gtDataAAAA">User : Guest</li>
                             </ul>
                         </md-radio-button>
                     </md-radio-group>
@@ -59,16 +56,12 @@
                     <md-radio-group>
                         <md-radio-button aria-label="transactions" class="gtDataAA" ng-repeat="transaction in foundTransactions" ng-value="transaction" ng-click="selectedTransactionID(transaction)">
                             <ul layout="row" class="gtDataAAA">
-                                <li class="gtDataAAAA">Date Placed:</li>
-                                <li class="gtDataAAAB"> {{' ' + transaction.date_placed + ';  '}}</li>
-                                <li class="gtDataAAAA">Delivery Address:</li>
-                                <li class="gtDataAAAB"> {{' ' + transaction.delivery_address + ';  '}}</li>
-                                <li class="gtDataAAAA">Total Paid:</li>
-                                <li class="gtDataAAAB"> {{' C$' + transaction.total_price + ';  '}}</li>
-                                <li class="gtDataAAAA">Cart Total:</li>
-                                <li class="gtDataAAAB"> {{' C$' + transaction.total_amount + ';  '}}</li>
-                                <li class="gtDataAAAA">Delivery Fee:</li>
-                                <li class="gtDataAAAB"> {{' C$' + transaction.delivery_fee + ';  '}}</li>
+                                <li class="gtDataAAAA">Date Placed: {{' ' + transaction.date_placed + ';  '}}</li>
+                                <li class="gtDataAAAA">Total Paid: {{' C$' + transaction.total_price + ';  '}}</li>
+                                <li class="gtDataAAAA">Cart Total: {{' C$' + transaction.total_amount + ';  '}}</li>
+                                <li class="gtDataAAAA">Delivery Fee: {{' C$' + transaction.delivery_fee + ';  '}}</li>
+                                <li class="gtDataAAAA">Phone: {{ transaction.phone_number + ';  '}}</li>
+                                <li class="gtDataAAAA">Delivery Address: {{' ' + transaction.delivery_address + ';  '}}</li>
                             </ul>
                         </md-radio-button>
                     </md-radio-group>
@@ -80,20 +73,13 @@
                         <md-radio-button id="{{order.order_id}}" aria-label="selectOrder" class="gtDataBA" ng-value="order" ng-repeat="order in foundOrders"
                             ng-click="selectOrderId(order)">
                             <ul layout="row" class="gtDataBAA">
-                                <li class="gtDataBAAA">Order Id: </li>
-                                <li class="gtDataBAAB">&nbsp{{order.order_id}};&nbsp&nbsp</li>
-                                <li class="gtDataBAAA">Assigned At: </li>
-                                <li class="gtDataBAAB">&nbsp{{order.date_assigned}};&nbsp&nbsp</li>
-                                <li class="gtDataBAAA">Driver Id: </li>
-                                <li class="gtDataBAAB">&nbsp{{order.driver_id}};&nbsp&nbsp</li>
-                                <li class="gtDataBAAA">Arrived Store At: </li>
-                                <li class="gtDataBAAB">&nbsp{{order.date_arrived_store}};&nbsp&nbsp</li>
-                                <li class="gtDataBAAA">Picked At: </li>
-                                <li class="gtDataBAAB">&nbsp{{order.date_picked}};&nbsp&nbsp</li>
-                                <li class="gtDataBAAA">Arrived Customer At: </li>
-                                <li class="gtDataBAAB">&nbsp{{order.date_arrived_customer}};&nbsp&nbsp</li>
-                                <li class="gtDataBAAA">Delivered At: </li>
-                                <li class="gtDataBAAB">&nbsp{{order.date_delivered}};&nbsp&nbsp</li>
+                                <li class="gtDataBAAA">Order Id: {{ order.order_id }};</li>
+                                <li class="gtDataBAAA">Assigned At: {{ order.date_assigned }};</li>
+                                <li class="gtDataBAAA">Driver Id: {{ order.driver_id }};</li>
+                                <li class="gtDataBAAA">Arrived Store At: {{ order.date_arrived_store }};</li>
+                                <li class="gtDataBAAA">Picked At: {{ order.date_picked }};</li>
+                                <li class="gtDataBAAA">Arrived Customer At: {{ order.date_arrived_customer }};</li>
+                                <li class="gtDataBAAA">Delivered At: {{ order.date_delivered }};</li>
                                 <li layout="row">
                                     <span>Order Refused: </span>
                                     <ng-md-icon ng-if="!order.refused" style="fill: rgb(31, 196, 157);" icon="highlight_off" size="17"></ng-md-icon>
@@ -125,11 +111,11 @@
                                     <img class="gtDataCBAAA" ng-src="{{'/resources/images/products/' + item.super_category_custom + '/' + item.category + '/' + item.image}}">
                                 </ul>
                                 <ul layout="column" class="gtDataCBABB" style="margin: 0; padding: 0;">
-                                    <li class="gtDataStrCBABAB">{{item.super_category}}</li>
-                                    <li class="gtDataCBABAB">&nbsp{{item.brand}}&nbsp&nbsp</li>
-                                    <li class="gtDataCBABAB">{{item.volume}}&nbspX{{item.packaging}}</li>
-                                    <li class="gtDataPrCBABAB">C$&nbsp{{item.price}}</li>
-                                    <li class="gtDataPrCBABAB">#{{item.quantity}}</li>
+                                    <li class="gtDataStrCBABAB">{{ item.store_type }}</li>
+                                    <li class="gtDataCBABAB">{{ item.brand + " " + item.name }}</li>
+                                    <li class="gtDataCBABAB">{{ item.volume + " x " + item.packaging }}</li>
+                                    <li class="gtDataPrCBABAB">C${{ item.price }}</li>
+                                    <li class="gtDataPrCBABAB">#{{ item.quantity }}</li>
                                     <li ng-if="adctrl.reqeustType == 2 || adctrl.reqeustType == 4" class="gtDataPrCBABAB" style="color: red; font-weight: 450;">#{{item.modify_number}}</li>
                                 </ul>
                             </div>

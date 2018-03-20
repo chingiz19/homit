@@ -12,12 +12,13 @@ var pub = {};
  * @param {*} address_lat 
  * @param {*} address_long 
  * @param {*} driverInstruction 
+ * @param {*} phoneNumber 
  * @param {*} isGuest 
  * @param {*} transactionId 
  * @param {*} cardNumber 
  * @param {*} allPrices 
  */
-pub.createTransactionOrder = async function (userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardNumber, allPrices) {
+pub.createTransactionOrder = async function (userId, address, address_lat, address_long, driverInstruction, phoneNumber, isGuest, chargeId, cardNumber, allPrices) {
     var data = {
         delivery_address: address,
         delivery_latitude: address_lat,
@@ -27,7 +28,8 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
         total_price: allPrices.total_price,
         total_amount: allPrices.cart_amount,
         delivery_fee: allPrices.delivery_fee,
-        total_tax: allPrices.total_tax
+        total_tax: allPrices.total_tax,
+        phone_number: phoneNumber
     };
     if (isGuest) {
         data.guest_id = userId;
@@ -254,7 +256,7 @@ pub.getPendingOrders = async function () {
         stores.id_prefix AS store_id_prefix, stores.name AS store_name,
         stores.address AS store_address, store_type.name AS store_type,
         users.id AS user_id, users.id_prefix AS user_id_prefix, users.user_email AS user_email,
-        users.first_name AS first_name, users.last_name AS last_name, users.phone_number AS user_phone_number,
+        users.first_name AS first_name, users.last_name AS last_name, transaction.phone_number AS user_phone_number,
         users.birth_date AS user_birth_date
         FROM
         orders_history AS history,
@@ -283,7 +285,7 @@ pub.getPendingOrders = async function () {
         stores.id_prefix AS store_id_prefix,
         stores.name AS store_name, stores.address AS store_address, store_type.name AS store_type,
         guests.id AS user_id, guests.id_prefix AS user_id_prefix, guests.user_email AS user_email,
-        guests.first_name AS first_name, guests.last_name AS last_name, guests.phone_number AS user_phone_number,
+        guests.first_name AS first_name, guests.last_name AS last_name, transaction.phone_number AS user_phone_number,
         guests.birth_date AS user_birth_date
         FROM
         orders_history AS history,
@@ -311,7 +313,7 @@ pub.getPendingOrders = async function () {
         history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
         NULL AS store_address, store_type.name AS store_type, users.id AS user_id, users.id_prefix AS user_id_prefix,
         users.user_email AS user_email, users.first_name AS first_name, users.last_name AS last_name,
-        users.phone_number AS user_phone_number, users.birth_date AS user_birth_date
+        transaction.phone_number AS user_phone_number, users.birth_date AS user_birth_date
         FROM
         orders_history AS history,
         catalog_store_types AS store_type,    
@@ -337,7 +339,7 @@ pub.getPendingOrders = async function () {
         history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
         NULL AS store_address, store_type.name AS store_type, guests.id AS user_id, guests.id_prefix AS user_id_prefix,
         guests.user_email AS user_email, guests.first_name AS first_name, guests.last_name AS last_name,
-        guests.phone_number AS user_phone_number, guests.birth_date AS user_birth_date
+        transaction.phone_number AS user_phone_number, guests.birth_date AS user_birth_date
         FROM
         orders_history AS history,
         catalog_store_types AS store_type,    
@@ -407,6 +409,43 @@ pub.areAllDispatched = async function (transactionId) {
 
     var dbResult = await db.runQuery(sqlQuery, data);
     return dbResult.length == 0;
+}
+
+/**
+ * Finds users by phone number in orders transactions history
+ * 
+ * @param {*} phoneNumber 
+ */
+pub.getUsersByOrderPhone = async function (phoneNumber) {
+    var sql = `
+        SELECT DISTINCT user.id, user.id_prefix, user.user_email, user.first_name,
+        user.last_name, user.phone_number, user.birth_date, user.address, false AS is_guest
+        FROM orders_transactions_history AS transaction
+        JOIN users_customers AS user ON (transaction.user_id = user.id)
+        WHERE ?`;
+
+    var data = { "transaction.phone_number": phoneNumber };
+
+    var dbResult = await db.runQuery(sql, data);
+    return dbResult;
+}
+
+/**
+ * Finds guests by phone number in orders transactions history
+ * 
+ * @param {*} phoneNumber 
+ */
+pub.getGuestsByOrderPhone = async function (phoneNumber) {
+    var sql = `
+        SELECT DISTINCT guest.*, true AS is_guest
+        FROM orders_transactions_history AS transaction
+        JOIN users_customers_guest AS guest ON (transaction.guest_id = guest.id)
+        WHERE ?`;
+
+    var data = { "transaction.phone_number": phoneNumber };
+
+    var dbResult = await db.runQuery(sql, data);
+    return dbResult;
 }
 
 

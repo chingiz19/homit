@@ -113,7 +113,7 @@ var receiver = async function (jsonResponse) {
             first_name: user.first_name,
             last_name: user.last_name,
             dob: user.birth_date,
-            phone: user.phone_number,
+            phone: transactionDetails.phone_number,
             address: transactionDetails.delivery_address,
             comments: transactionDetails.driver_instruction,
             card_digits: transactionDetails.card_digits,

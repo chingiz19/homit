@@ -311,19 +311,11 @@ pub.saveDropOff = async function (driverId, dropOff) {
     updateOrdersHistory("date_delivered", [orderIdString]);
 }
 
-pub.saveArrivedCustomer = async function (driverId, orderIds, customerIdString) {
-    var customerInit = customerIdString.split("_")[0];
-    var customerId = customerIdString.split("_")[1];
+pub.saveArrivedCustomer = async function (driverId, orderIds) {
+    var orderInfo = await getUserWithOrderByOrderId(orderIdsString[0].split("_")[1]);
+    var name = orderInfo.user.first_name;
+    var phone = orderInfo.transaction.phone_number;
 
-    var customer;
-    if (customerInit == "u") {
-        customer = await User.findUserById(customerId);
-    } else {
-        customer = await User.findGuestUserById(customerId);
-    }
-
-    var name = customer.first_name + " " + customer.last_name;
-    var phone = customer.phone_number;
     SMS.notifyDriverArrival(phone, name);
     updateOrdersHistory("date_arrived_customer", orderIds);
 }

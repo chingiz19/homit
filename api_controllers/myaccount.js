@@ -16,11 +16,9 @@ router.post('/update', function (req, res, next) {
         var birth_month = req.body.user.birth_month;
         var birth_year = req.body.user.birth_year;
         var address = req.body.user.address;
-        var address_lat = req.body.user.address_latitude;
-        var address_long = req.body.user.address_longitude;
 
         if (!(user_email || first_name || last_name
-            || phone_number || (birth_day && birth_month && birth_year) || (address && address_lat && address_long))) {
+            || phone_number || (birth_day && birth_month && birth_year) || address)) {
             res.status(403).json({
 
                 error: {
@@ -52,10 +50,8 @@ router.post('/update', function (req, res, next) {
             var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
             userData.birth_date = birth_date;
         }
-        if (address && address_lat && address_long) {
+        if (address) {
             userData.address = address;
-            userData.address_latitude = address_lat;
-            userData.address_longitude = address_long;
         }
 
         User.updateUser(userData, key).then(function (updatedUser) {

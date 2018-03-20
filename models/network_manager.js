@@ -126,7 +126,7 @@ drivers.on("connection", function (socket) {
                                 Logger.log.verbose("Data received from driver: arrived_customer");
                                 Logger.log.verbose("customer_id: " + driverDetails.arrived_customer.customer_id);
                                 Logger.log.verbose("order_ids: " + driverDetails.arrived_customer.order_ids + "\n");
-                                Driver.saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids, driverDetails.arrived_customer.customer_id);
+                                Driver.saveArrivedCustomer(driverIdInt, driverDetails.arrived_customer.order_ids);
                                 sendToCm = false;
                                 break;
                             default:

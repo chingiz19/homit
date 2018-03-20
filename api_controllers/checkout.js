@@ -53,11 +53,7 @@ router.post('/placeorder', async function (req, res, next) {
         MP.charge(cardToken, totalPrice).then(async function (chargeResult) {
             var cardDigits = chargeResult.source.last4;
             var chargeId = chargeResult.id;
-            var data = {
-                first_name: fname,
-                last_name: lname,
-                phone_number: phone
-            };
+            var data = {};
             if (birth_year && birth_month && birth_day) {
                 var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
                 data.birth_date = birth_date;
@@ -67,14 +63,13 @@ router.post('/placeorder', async function (req, res, next) {
             if (signedUser) {
                 isGuest = false;
                 data.address = address;
-                data.address_latitude = address_lat;
-                data.address_longitude = address_long;
+                data.phone_number = phone;
 
                 userId = signedUser.id
                 var key = {
                     id: userId
                 };
-                await User.updateUser(data, key);
+                await User.updateCheckoutUser(data, key);
 
                 // This is not working right now. Will be implemented later
                 // if (saveCard) {
@@ -82,6 +77,8 @@ router.post('/placeorder', async function (req, res, next) {
                 // }
             } else {
                 isGuest = true;
+                data.first_name = fname;
+                data.last_name = lname;
                 var guestUserFound = await User.findGuestUser(email);
                 if (guestUserFound) {
                     userId = guestUserFound.id;
@@ -97,7 +94,7 @@ router.post('/placeorder', async function (req, res, next) {
             }
 
             // create orders
-            var userOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardDigits, allPrices, products);
+            var userOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction, phone, isGuest, chargeId, cardDigits, allPrices, products);
             var response = {
                 success: true,
                 orders: userOrders
@@ -165,8 +162,8 @@ router.post('/checkout', async function (req, res, next) {
     res.send(response);
 });
 
-var createOrders = async function (userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardDigits, allPrices, products) {
-    var orderTransactionId = await Orders.createTransactionOrder(userId, address, address_lat, address_long, driverInstruction, isGuest, chargeId, cardDigits, allPrices);
+var createOrders = async function (userId, address, address_lat, address_long, driverInstruction, phoneNumber, isGuest, chargeId, cardDigits, allPrices, products) {
+    var orderTransactionId = await Orders.createTransactionOrder(userId, address, address_lat, address_long, driverInstruction, phoneNumber, isGuest, chargeId, cardDigits, allPrices);
 
     var createFunctions = [];
     var userOrders = [];

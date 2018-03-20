@@ -36,7 +36,7 @@
                     <div layout="row" layout-align="center" style="margin: 0;">
                         <md-input-container class="md-block bigClass" flex="40">
                             <label class="inptLbl">First Name</label>
-                            <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.first_name" type="text" required />
+                            <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.first_name" type="text" required />
                             <div ng-messages="checkoutInput.fname.$error">
                                 <div ng-message="pattern" class="inptErMsg">Letters only</div>
                                 <div ng-message="required" class="inptErMsg">Required</div>
@@ -44,7 +44,7 @@
                         </md-input-container>
                         <md-input-container class="md-block bigClass" flex="40">
                             <label class="inptLbl">Last Name</label>
-                            <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="userInfo.last_name" type="text" required/>
+                            <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.last_name" type="text" required/>
                             <div ng-messages="checkoutInput.lname.$error">
                                 <div ng-message="pattern" class="inptErMsg">Letters only</div>
                                 <div ng-message="required" class="inptErMsg">Required</div>

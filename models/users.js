@@ -10,7 +10,7 @@ pub.sanitizeUserObject = function (user) {
 };
 
 function addIsGuest(user) {
-    user.is_guest = true;
+    user.is_guest = 1;
     return user;
 };
 
@@ -129,7 +129,10 @@ pub.updateGuestUser = function (userData, key) {
 };
 
 function ifNewInfo(newData, user) {
-    for (var key in newData) {
+    for (let key in newData) {
+        if (user[key] == null) {
+            return true;
+        }
         if (key == "birth_date") {
             var newDate = new Date(newData[key] + " 00:00:00");
             if (newDate.getTime() != user[key].getTime()) {
@@ -145,7 +148,7 @@ function ifNewInfo(newData, user) {
 }
 
 function isHistoryNull(user) {
-    for (var key in user) {
+    for (let key in user) {
         if (user[key] != null) {
             return false;
         }
@@ -154,20 +157,59 @@ function isHistoryNull(user) {
 }
 
 /**
- * Update user data
+ * Update user data from checkout.
+ * Updates user's birth_date and saves previous birth_date in history.
+ * Updates address and phone number, if they were empty
+ * 
+ * @param {*} newData 
+ * @param {*} key 
  */
-pub.updateUser = async function (userData, key) {
-    var data = [userData, key];
-    var historyData = {
-        user_id: key.id
-    };
+pub.updateCheckoutUser = async function (newData, key) {
+    // if user has birth date update it and save in history
+    if (newData.birth_date) {
+        var newData2 = {
+            birth_date: newData.birth_date
+        };
+        await pub.updateUser(newData2, key);
+    }
 
-    var users = await db.selectColumnsWhereLimitOne(Object.keys(userData), db.tables.users_customers, key);
+    // update the fields which are null in user table
+    delete newData.birth_date;
+
+    var users = await db.selectColumnsWhereLimitOne(Object.keys(newData), db.tables.users_customers, key);
     if (users.length > 0) {
         var user = users[0];
-        if (ifNewInfo(userData, user)) {
+        var updateData = {};
+        for (let column in user) {
+            if (user[column] == null || user[column] == "") {
+                updateData[column] = newData[column];
+            }
+        }
+
+        if (Object.keys(updateData).length != 0) {
+            var data = [updateData, key];
+            db.updateQuery(db.tables.users_customers, data);
+        }
+    }
+}
+
+/**
+ * Update user data. Will save old data in history.
+ * 
+ * @param {*} newData 
+ * @param {*} key 
+ */
+pub.updateUser = async function (newData, key) {
+    var users = await db.selectColumnsWhereLimitOne(Object.keys(newData), db.tables.users_customers, key);
+    if (users.length > 0) {
+        var user = users[0];
+        if (ifNewInfo(newData, user)) {
+            var data = [newData, key];
             await db.updateQuery(db.tables.users_customers, data);
             if (!isHistoryNull(user)) {
+                var historyData = {
+                    user_id: key.id
+                };
                 historyData = Object.assign(historyData, user);
                 await db.insertQuery(db.tables.users_customers_history, historyData);
             }
@@ -190,71 +232,6 @@ pub.updateCreditCard = function (userKey, cardToken, cardDigits, cardType) {
 };
 
 /**
- * Authenticate csr user
- */
-pub.authenticateCsrUser = function (email, password) {
-    var sqlQuery = `
-    SELECT *
-    FROM users_employees
-    WHERE role_id = 2 AND ?
-    LIMIT 1`;
-    var data = {
-        user_email: email,
-    };
-    return db.runQuery(sqlQuery, data).then(function (user) {
-        if (user.length > 0) {
-            return Auth.comparePassword(password, user[0].password).then(function (match) {
-                if (match) {
-                    return pub.sanitizeUserObject(user[0]);
-                } else {
-                    return false;
-                }
-            });
-        }
-        return false;
-    });
-};
-
-/**
- * Find users by phone number
- */
-pub.findUsersByPhone = function (phone_number) {
-    var data = { phone_number: phone_number };
-    var result = [];
-    return db.selectAllWhere(db.tables.users_customers, data).then(function (dbResult) {
-        for (i = 0; i < dbResult.length; i++) {
-            result.push(pub.sanitizeUserObject(dbResult[i]));
-        }
-        return result;
-    });
-};
-
-/**
- * Find guest users by phone number
- */
-pub.findGuestUsersByPhone = function (phone_number) {
-    var data = { phone_number: phone_number };
-    var result = [];
-    return db.selectAllWhere(db.tables.users_customers_guest, data).then(function (dbResult) {
-        for (i = 0; i < dbResult.length; i++) {
-            result.push(addIsGuest(pub.sanitizeUserObject(dbResult[i])));
-        }
-        return result;
-    });
-};
-
-/**
- * Find users by phone number including history table
- */
-pub.findUsersByPhoneWithHistory = function (phone_number) {
-    var data = { phone_number: phone_number };
-
-    return findUsersWithHistory(data).then(function (result) {
-        return result;
-    });
-};
-
-/**
  * Find guest users by email
  */
 pub.findGuestUsersByEmail = function (user_email) {
@@ -270,21 +247,17 @@ pub.findGuestUsersByEmail = function (user_email) {
 /**
  * Find users by email including history table
  */
-pub.findUsersByEmailWithHistory = function (user_email) {
-    var data = { user_email: user_email };
+pub.findUsersByEmailWithHistory = async function (email) {
+    var data = { user_email: email };
+    var result = await findUsersWithHistory(data);
+    return result;
+}
 
-    return findUsersWithHistory(data).then(function (result) {
-        return result;
-    });
-};
-
-function findUsersWithHistory(data) {
+var findUsersWithHistory = async function (data) {
     var sqlQuery = `SELECT users_customers.id AS id, users_customers.id_prefix AS id_prefix,
         users_customers.user_email AS user_email, users_customers.first_name AS first_name,
         users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
-        users_customers.birth_date AS birth_date, users_customers.address AS address,
-        users_customers.address_latitude AS address_latitude,
-        users_customers.address_longitude AS address_longitude
+        users_customers.birth_date AS birth_date, users_customers.address AS address, false AS is_guest
         
         FROM users_customers
         WHERE ? OR id IN (
@@ -292,10 +265,9 @@ function findUsersWithHistory(data) {
             WHERE ?
         ) `;
 
-    return db.runQuery(sqlQuery, [data, data]).then(function (dbResult) {
-        return dbResult;
-    });
-};
+    var dbResult = await db.runQuery(sqlQuery, [data, data]);
+    return dbResult;
+}
 
 pub.updatePassword = function (userId, oldPassword, newPassword) {
     var key = { id: userId };

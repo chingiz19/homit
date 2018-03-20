@@ -176,8 +176,6 @@ CREATE TABLE users_customers (
 	phone_number VARCHAR(10),
 	birth_date DATE NULL,
 	address VARCHAR(225),
-	address_latitude DOUBLE,
-	address_longitude DOUBLE,
 	card_token VARCHAR(225) NULL,
 	card_type VARCHAR(225) NULL,
 	card_digits VARCHAR(4) NULL,
@@ -196,8 +194,6 @@ CREATE TABLE users_customers_history (
 	phone_number VARCHAR(10),
 	birth_date DATE NULL,
 	address VARCHAR(225),
-	address_latitude DOUBLE,
-	address_longitude DOUBLE,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_users_customers_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -210,7 +206,6 @@ CREATE TABLE users_customers_guest (
 	user_email VARCHAR(225) NOT NULL,
 	first_name VARCHAR(225) NOT NULL,
 	last_name VARCHAR(225) NOT NULL,
-	phone_number VARCHAR(10) NOT NULL,
 	birth_date DATE NULL,
 	
 	PRIMARY KEY (id),
@@ -313,6 +308,7 @@ CREATE TABLE orders_transactions_history (
 	delivery_latitude DOUBLE NOT NULL,
 	delivery_longitude DOUBLE NOT NULL,
 	driver_instruction VARCHAR(225),
+	phone_number VARCHAR(10),
 	
 	PRIMARY KEY (id),
 	UNIQUE (charge_id),

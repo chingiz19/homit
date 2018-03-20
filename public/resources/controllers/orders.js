@@ -38,7 +38,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         if ($scope.searCriteriaIndex == 1) {
             $http({
                 method: 'POST',
-                url: "/api/orders/findusersbyemail",
+                url: "/api/csr/findusersbyemail",
                 data: {
                     user_email: $scope.searchCriteria
                 }
@@ -50,7 +50,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         else if ($scope.searCriteriaIndex == 2) {
             $http({
                 method: 'POST',
-                url: "/api/orders/findusersbyphone",
+                url: "/api/csr/findusersbyphone",
                 data: {
                     phone_number: $scope.searchCriteria
                 }
@@ -62,7 +62,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         else if ($scope.searCriteriaIndex == 3) {
             $http({
                 method: 'POST',
-                url: "/api/orders/finduserbyorderid",
+                url: "/api/csr/finduserbyorderid",
                 data: {
                     order_id: $scope.searchCriteria
                 }
@@ -91,7 +91,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         }
         $http({
             method: 'POST',
-            url: "/api/orders/viewordertransactions",
+            url: "/api/csr/viewordertransactions",
             data: {
                 user_id: userId,
                 guest_id: guestId
@@ -109,7 +109,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         $scope.foundOrders = [];
         $http({
             method: 'POST',
-            url: "/api/orders/vieworders",
+            url: "/api/csr/vieworders",
             data: {
                 transaction_id: transaction.id
             }
@@ -131,7 +131,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         $scope.selectedOrder['cartTotal'] = 0;
         $http({
             method: 'POST',
-            url: "/api/orders/getorder",
+            url: "/api/csr/getorder",
             data: {
                 order_id: order.order_id
             }
@@ -311,7 +311,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         $scope.ADL_POL_markers = [];
         $http({
             method: 'GET',
-            url: "/api/driver/activedrivers",
+            url: "/api/csr/activedrivers",
         }).then(function successCallback(response) {
             $scope.online_driverList = response.data.drivers;
             for (var driver in $scope.online_driverList) {
@@ -331,7 +331,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
 
         $http({
             method: 'GET',
-            url: "/api/orders/pendingorders",
+            url: "/api/csr/pendingorders",
 
         }).then(function successCallback(response) {
             $scope.customer_pendingList = response.data.orders;
@@ -376,7 +376,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         clearSelection();
         $http({
             method: 'POST',
-            url: "/api/driver/getroutes",
+            url: "/api/csr/getdriverroutes",
             data: {
                 driver_id: driver.driver_id
             }
