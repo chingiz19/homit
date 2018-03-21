@@ -76,3 +76,13 @@
 
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <%- include('notification')%>
+
+<script>
+    if (window.screen.width < 500) {
+        global_screenIsMob = true;
+    } else {
+        global_screenIsMob = false;
+    }
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -1,0 +1,154 @@
+<html ng-app="mainModule">
+
+<head>
+    <%- include('partial/imports')%>
+        <%- include('partial/header', {title: title}); %>
+            <title>
+                <%=title%>
+            </title>
+            <link href="/resources/css/accounts.css" rel="stylesheet">
+</head>
+
+<body ng-controller="accountsController" ng-cloak>
+    <div ng-show="isReqLogIn">
+        <!-- Header -->
+        <section class="sign-header">
+            <h1>Log In</h1>
+        </section>
+        <!-- Body -->
+        <section class="sign-body">
+            <form name="logIn_mob" class="sign-form" ng-submit="loginMob(logIn_mob.$valid)">
+                <div class="sign-form-inner-box inner-box-logIn">
+                    <md-input-container class="input-width-1 email-margin">
+                        <label>Email</label>
+                        <input name="login_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="login_email_mob" type="email"
+                            required/>
+                        <div ng-messages="logIn_mob.login_email.$error">
+                            <div ng-message="pattern">Email format only</div>
+                            <div ng-message="maxlength">30 caracters maximum</div>
+                            <div ng-message="required">Required</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="input-width-1">
+                        <label>Password</label>
+                        <input name="login_password" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/"
+                            maxlength="30" ng-model="login_password_mob" type="password" required/>
+                        <div ng-messages="logIn.login_password.$error">
+                            <div ng-message="pattern">Avoid - ?$!^%'/{[(
+                                <|>)]}\,+”;&#@</div>
+                            <div ng-message="maxlength">30 caracters maximum</div>
+                            <div ng-message="required">Required</div>
+                        </div>
+                    </md-input-container>
+                    <button class="sign-btn-mob" type="submit">Log in</button>
+                </div>
+            </form>
+        </section>
+        <!-- Footer -->
+        <section class="logIn-footer">
+            <div class="new-to-text-mob">New to Homit?</div>
+            <button class="sign-footer-btn" ng-click="toggleSign()">Sign Up</button>
+        </section>
+        <!-- Message box -->
+        <section id="logInMessage-mob">
+            <div id="invalidLogIn-mob" class="invalidLogIn-mob">
+                <div class="error-message-text margin-auto">Sorry, You have entered invalid credentials. Please try
+                    <span class="error-message-link" ng-click="tryAgainLogIn()">again</span>
+                </div>
+                <div class="or-div">
+                    <span class="or-span">or</span>
+                </div>
+                <div class="error-message-link margin-auto" ng-click="forgotPasswordMob(logIn_mob.$valid)">Forgot Password</div>
+            </div>
+            <div id="emailNotification-mob" class="emailNotification-mob">
+                <div>{{ sign_message_mob }}</div>
+            </div>
+            <div id="sucLogIn-mob" class="sucSign-mob">
+                <div class="sucCircle-mob">
+                    <img src="/resources/images/icons/done.svg" />
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+
+
+    <!-- SIGN UP -->
+    <div ng-show="!isReqLogIn">
+        <!-- Header -->
+        <section class="sign-header">
+            <h1>Sign Up</h1>
+        </section>
+        <!-- Body -->
+        <section class="sign-body">
+            <form name="signUp_mob" class="sign-form" ng-submit="signupMob(signUp_mob.$valid)">
+                <div class="sign-form-inner-box inner-box-signUp">
+                    <md-input-container class="input-width-1">
+                        <label class="inptLbl">Email</label>
+                        <input name="signup_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="signup_email_mob" type="email" required/>
+                        <div ng-messages="signUp_mob.signup_email.$error">
+                            <div ng-message="pattern">Email format only</div>
+                            <div ng-message="maxlength">30 caracters maximum</div>
+                            <div ng-message="required">Required</div>
+                        </div>
+                    </md-input-container>
+                    <div layout="row" class="input-width-1">
+                        <md-input-container class="input-width-2">
+                            <label class="inptLbl">First Name</label>
+                            <input name="signup_fname" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_fname_mob" type="text" required/>
+                            <div ng-messages="signUp_mob.signup_fname.$error">
+                                <div ng-message="pattern">Letters only</div>
+                                <div ng-message="maxlength">30 caracters maximum</div>
+                                <div ng-message="required">Required</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="input-width-2">
+                            <label class="inptLbl">First Name</label>
+                            <input name="signUp_mob" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_lname_mob" type="text" required/>
+                            <div ng-messages="signUp.signup_lname.$error">
+                                <div ng-message="pattern">Letters only</div>
+                                <div ng-message="maxlength">30 caracters maximum</div>
+                                <div ng-message="required">Required</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <md-input-container class="input-width-1">
+                        <label class="inptLbl">Password</label>
+                        <input name="signup_password" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" maxlength="30"
+                            ng-model="signup_password_mob" type="password" required/>
+                        <div ng-messages="signUp_mob.signup_password.$error">
+                            <div ng-message="pattern">Avoid - ?$!^%'/{[(
+                                <|>)]}\,+”;&#@</div>
+                            <div ng-message="maxlength">30 caracters maximum</div>
+                            <div ng-message="required">Required</div>
+                        </div>
+                    </md-input-container>
+                    <button class="sign-btn-mob" type="submit">Sign up</button>
+                </div>
+            </form>
+        </section>
+        <!-- Footer -->
+        <section class="signUp-footer">
+            <button class="sign-footer-btn" ng-click="toggleSign()">Sign In</button>
+        </section>
+
+        <!-- Message box -->
+        <section>
+            <div id="sucSignUp-mob" class="sucSign-mob">
+                <div class="sucCircle-mob">
+                    <img src="/resources/images/icons/done.svg" />
+                </div>
+            </div>
+            <div id="signUpNotification-mob" class="signUpNotification-mob">
+                <div>{{ sign_message_mob  }}</div>
+            </div>
+        </section>
+    </div>
+
+    <script src="/resources/controllers/accounts.js"></script>
+</body>
+
+
+</html>

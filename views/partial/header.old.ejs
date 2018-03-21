@@ -1,0 +1,207 @@
+<title>
+    <%= title %>
+</title>
+
+<link href="/resources/css/header.css" rel="stylesheet">
+<link href="/resources/css/generic.css" rel="stylesheet">
+<nav layout="column" ng-controller="NavigationController" class="navCont" ng-cloak>
+    <input id="searchBarBoolean" type="hidden" value="<%= showSearchBar %>">
+    <md-toolbar class="fixed-header" ng-style="(showSearchBar == 'false') && {'background-color': 'transparent !important'}">
+        <div class="md-toolbar-tools header">
+            <div class="header-icon">
+                <a class="mVerHedL2a1" href="/main" target="_self">
+                    <img class="homit-logo-white-image" ng-show="showSearchBar == 'true'" ng-src="{{'/resources/images/Homit_Logo_white.jpeg'}}"
+                        width="42px" height="42px;" />
+                    <img class="homit-logo-tm-image" ng-show="showSearchBar == 'false'" ng-src="{{'/resources/images/Homit_Logo_TM.jpeg'}}" />
+                </a>
+            </div>
+            <!-- Search button, mobile device -->
+            <md-button id="clear-search-mobile" aria-label="searchOrClear-mobile" ng-show="showSearchBar == 'true'" ng-click="focusSearchInput(searchRequest); searchRequest = '' ; searchDisplay = ''; mobileSearchShow = !mobileSearchShow;">
+                <ng-md-icon ng-if="!mobileSearchShow" icon="search"></ng-md-icon>
+                <ng-md-icon ng-if="mobileSearchShow" icon="clear"></ng-md-icon>
+            </md-button>
+            <div class="header-search" ng-show="showSearchBar == 'true'">
+                <md-input-container class="mnSrchA" layout="row">
+                    <md-button id="clear-search" class="mnSrchB" aria-label="searchOrClear" ng-click="searchRequest = '' ; searchDisplay = ''; ">
+                        <ng-md-icon ng-if="!searchRequest" icon="search" class="header-search-icon"></ng-md-icon>
+                        <ng-md-icon ng-if="searchRequest" icon="clear" class="header-search-icon"></ng-md-icon>
+                    </md-button>
+                    <label class="mnSrchAA">
+                    </label>
+                    <input id="glbSearchRequest" ng-model="searchRequest" placeholder="Search to Homit..." autocomplete="none" autocorrect="off" spellcheck="false">
+                </md-input-container>
+                <div ng-if="searchDisplay" id="glbSearchRequest" class="mnSrchC">
+                    <ul ng-if="resultStoreType.length" id="glbSrchA" class="mnSrchCA">
+                        <li ng-repeat="node in resultStoreType">
+                            <a href="/catalog/{{node.store_type_api_name}}/" target="_self" id="store_type_ + {{$index + 1}}" class="srchRslt mnSrchCAAA">
+                                <span class="mnSrchCAAAA">{{node.store_type_display_name}}</span>
+                            </a>
+                        </li>
+                        <li ng-if="resultCategory.length || resultSubcategory.length || resultProducts.length" class="search-line">
+                            <div></div>
+                        </li>
+                    </ul>
+                    <ul ng-if="resultCategory.length || resultSubcategory.length" id="glbSrchA" class="mnSrchCA">
+                        <li ng-repeat="node in resultCategory">
+                            <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" id="category_ + {{$index + 1}}" class="srchRslt mnSrchCAAA">
+                                <span class="mnSrchCAAAA">{{node.category_display_name}}</span>
+                            </a>
+                        </li>
+                        <li ng-repeat="node in resultSubcategory">
+                            <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" ng-click="sendSubcategory(node.subcategory, 0)"
+                                id="subcategory_ + {{$index + 1}}" class="srchRslt mnSrchCAAA">
+                                <span class="mnSrchCAAAA">{{node.subcategory}}</span>
+                            </a>
+                        </li>
+                        <li ng-if="resultProducts.length" class="search-line">
+                            <div></div>
+                        </li>
+                    </ul>
+                    <ul ng-if="resultProducts.length" id="glbSrchB" class="mnSrchCB">
+                        <li ng-repeat="node in resultProducts">
+                            <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" layout="row" ng-click="sendSubcategory(node.subcategory, node.product_id)"
+                                id="product_ + {{$index + 1}}" class="srchRslt mnSrchCBAA">
+                                <span class="mnSrchCBAAA">
+                                    <img class="mnSrchImg" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
+                                </span>
+                                <span class="mnSrchCBAAB">{{node.brand}} {{node.name}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultStoreType.length"
+                        id="glbSrchC" class="mnSrchCB serach-not-found">
+                        <li>
+                            <span>Not Found Yet...</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="hdrRend">
+                <md-button aria-label="header-dashboard" id="dashboardBtn" ng-click="hdrExtBx('hdrHub', 'hdrHub1', 'hdrHub2', 'hdrHub3')"
+                    class="hdrRendBtn" ng-show="showSearchBar == 'true' && !screenIsMob">
+                    <ng-md-icon icon="dashboard" class="header-icon"></ng-md-icon>
+                </md-button>
+                <md-button id="sign-button" ng-if="!isSignedIn" aria-label="header-sign" data-toggle="modal" data-target="#loginModal" class="hdrRendBtn">
+                    <ng-md-icon icon="person_outline" style="filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));" class="header-icon"></ng-md-icon>
+                </md-button>
+                <md-button id="signed-in-button" ng-if="isSignedIn" aria-label="myAccExtBox" ng-click="hdrExtBx('hdrMyAcc', 'hdrMyAcc1', 'hdrMyAcc2', 'hdrMyAcc3')"
+                    class="hdrRendBtn">
+                    <ng-md-icon icon="person" class="header-icon"></ng-md-icon>
+                </md-button>
+                <div id="hdrMyAcc" aria-hidden="true" ng-if="isSignedIn" class="myAccnt fdIn">
+                    <div id="hdrMyAcc1" class="box-extension"></div>
+                    <div id="hdrMyAcc" class="storeHubA">
+                        <ul id="my-account-ul" class="myAccntAA" layout="column">
+                            <li id="myaccount-li" class="my-account-box myAccntFCS" ng-click="hrefTo('/myaccount')">
+                                <div>
+                                    <span class="my-account-text">{{ username }}</span>
+                                </div>
+                            </li>
+                            <li id="checkout-li" class="my-account-box myAccntFCS" ng-click="hrefTo('/checkout')">
+                                <div>
+                                    <span class="my-account-text">Check Out</span>
+                                </div>
+                            </li>
+                            <li class="myAccntBAC"></li>
+                            <li class="my-account-signout myAccntFCS" ng-click="logout()">
+                                <div>
+                                    <span class="my-account-signout-text">Sign Out
+                                        <span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-toolbar>
+    <div id="mobile-search-container" ng-show="mobileSearchShow" layout="row">
+        <ng-md-icon icon="search" class="searchIconInput"></ng-md-icon>
+        <input id="glbSearchRequest-mobile" ng-model="searchRequest" placeholder="Search to Homit..." autocomplete="none" autocorrect="off" spellcheck="false">
+    </div>
+    <div ng-if="searchDisplay && screenIsMob" id="search-result-mobile">
+        <ul ng-if="resultStoreType.length">
+            <li ng-repeat="node in resultStoreType" class="flex-li">
+                <a href="/catalog/{{node.store_type_api_name}}/" target="_self" id="super_category_ + {{$index + 1}}">
+                    <span>{{node.store_type_display_name}}</span>
+                </a>
+            </li>
+            <li ng-if="resultCategory.length || resultSubcategory.length || resultProducts.length" class="search-line">
+                <div></div>
+            </li>
+        </ul>
+        <ul ng-if="resultCategory.length || resultSubcategory.length">
+            <li ng-repeat="node in resultCategory" class="flex-li">
+                <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" id="category_ + {{$index + 1}}">
+                    <span>{{node.category_display_name}}</span>
+                </a>
+            </li>
+            <li ng-repeat="node in resultSubcategory" class="flex-li">
+                <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" ng-click="sendSubcategory(node.subcategory, 0)"
+                    id="subcategory_ + {{$index + 1}}">
+                    <span>{{node.subcategory}}</span>
+                </a>
+            </li>
+            <li ng-if="resultProducts.length" class="search-line">
+                <div></div>
+            </li>
+        </ul>
+        <ul ng-if="resultProducts.length" class="searched-product-mobile">
+            <li ng-repeat="node in resultProducts">
+                <a href="/catalog/{{node.store_type_api_name}}/{{node.category}}" target="_self" layout="row" ng-click="sendSubcategory(node.subcategory, node.product_id)"
+                    id="product_ + {{$index + 1}}">
+                    <span>
+                        <img ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
+                    </span>
+                    <span class="product-brand-text-mobile">{{node.brand}} {{node.name}}</span>
+                </a>
+            </li>
+        </ul>
+        <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultStoreType.length">
+            <li>
+                <span class="product-brand-text-mobile">Not Found Yet...</span>
+            </li>
+        </ul>
+    </div>
+    <!-- End -->
+    <!-- Dashboard -->
+    <div id="hdrHub" aria-hidden="true" class="storeHub fdIn">
+        <div id="hdrHub1" class="box-extension"></div>
+        <div id="hub-background-image"></div>
+        <div id="hdrHub2" class="storeHubA" layout="column">
+            <h2 class="homit-hub-header-dashboard homit-hub-text-dashboard">Homit Hub</h2>
+            <div class="homit-hub-stores-box-dasgboard" layout="column">
+                <div id="snack-vendor-dashboard" class="store-window-dashboard" ng-click="hrefTo('/catalog/snack-vendor')">
+                    <h3>
+                        <a class="homit-hub-text-dashboard store-name-text-dashboard" href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a>
+                    </h3>
+                    <button class="homit-hub-text-dashboard">Shop</button>
+                </div>
+                <div id="liquor-store-dashboard" class="store-window-dashboard" ng-click="hrefTo('/catalog/liquor-station')">
+                    <h3>
+                        <a class="homit-hub-text-dashboard store-name-text-dashboard" href="https://homit.ca/catalog/liquor-station">Liquor Station</a>
+                    </h3>
+                    <button class="homit-hub-text-dashboard">Shop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<%- include('signup')%>
+
+    <% if (!production) { %>
+        <script src="/resources/services/userInfo.js"></script>
+        <script src="/resources/services/sessionStorage.js"></script>
+        <script src="/resources/controllers/header.js"></script>
+        <% } %>
+            <script>
+                $(document).ready(function () {
+                    $(window).resize(function () {
+                        var navHeight = $(".navbar").height();
+                        $(document.body).css("margin-top", navHeight);
+                    });
+
+                    $(window).resize();
+                });
+            </script>

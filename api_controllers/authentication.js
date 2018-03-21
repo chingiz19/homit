@@ -57,7 +57,7 @@ router.post('/signup', async function (req, res, next) {
             var user = await User.findUser(email);
             Auth.sign(req, res, user);
             res.json({
-                status: "success",
+                success: true,
                 ui_message: "Successfully signed up. You will receive an email with confirmation"
             });
         } else {
@@ -79,7 +79,7 @@ router.post('/signin', async function (req, res, next) {
         } else {
             Auth.sign(req, res, user);
             res.json({
-                status: "success",
+                success: true,
                 ui_message: "Successfully signed in"
             });
         }
@@ -87,7 +87,7 @@ router.post('/signin', async function (req, res, next) {
 });
 
 /* Sign out the user */
-router.all('/signout', function (req, res, next) {
+router.post('/signout', function (req, res, next) {
     Auth.clear(res);
     res.status(200).json({ "success": true, "ui_message": "Successfully logged out" });
 });

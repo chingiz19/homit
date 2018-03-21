@@ -15,7 +15,8 @@ var concatCss = require('gulp-concat-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify-es').default;
 var gulpFn  = require('gulp-fn');
-var scss = require('gulp-scss');
+var sass = require('gulp-sass');
+var imagemin = require('gulp-imagemin');
 var beep = require('beepbeep');
 var del = require('del');
 var browserSync = require('browser-sync').create();
@@ -35,7 +36,8 @@ var jsFiles = [
     './public/**/controllers/*.js',
     './public/**/library/js/*.js'
 ];
-var cssFiles = './public/**/*.scss';
+var cssFiles = './public/resources/css/*.scss';
+var cssFilesToWatch = './public/**/*.scss';
 var imgFiles = './public/**/*.+(png|svg|jpg|jpeg|ico)';
 var miscFiles = [
     './public/*.*',
@@ -105,6 +107,10 @@ gulp.task('img', function(){
             wwwChangedViaGulp = true;
         }))
         .pipe(cache('imgFiles'))
+        .pipe(imagemin([
+            imagemin.jpegtran({progressive: true}),
+            imagemin.optipng({optimizationLevel: 5})
+        ]))
         .pipe(gulp.dest("www/"))
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = false;
@@ -123,15 +129,17 @@ gulp.task('misc', function(){
 });
 
 gulp.task('css', function(){
-    return gulp.src(cssFiles)
+    return gulp.src(cssFilesToWatch)
         .pipe(plumber({
             errorHandler: errorHandling
         }))
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = true;
         }))
-        .pipe(cache('cssFiles'))
-        .pipe(scss())
+        // .pipe(cache('cssFiles'))
+        .pipe(sass({
+            includePaths: ['./public/resources/css/styles']
+        }).on('erorr', sass.logError))
         // .pipe(production(concatCss('resources/css/all.min.css'))) TODO
         .pipe(production(cssnano({
             "zindex": false
@@ -145,7 +153,7 @@ gulp.task('css', function(){
 });
 
 gulp.task('watch', function(){
-    gulp.watch(cssFiles, ['css']);
+    gulp.watch(cssFilesToWatch, ['css']);
     gulp.watch(jsFiles, ['js']);
     gulp.watch(imgFiles, ['img']);
     gulp.watch(miscFiles, ['misc']);
@@ -172,15 +180,15 @@ gulp.task('start', function(cb){
 });
 
 gulp.task('www-error', function(){
-    gulp.watch('www/**/*', function(){
-        if (!wwwChangedViaGulp){
-            notifier.notify({
-                title: 'WWW folder contents has been modified',
-                message: 'Files inside www/ folder have been modified, please apply changes to public/ folder contents'
-            });
-            beep(3, 1000);
-        }
-    });
+    // gulp.watch('www/**/*', function(){
+    //     if (!wwwChangedViaGulp){
+    //         notifier.notify({
+    //             title: 'WWW folder contents has been modified',
+    //             message: 'Files inside www/ folder have been modified, please apply changes to public/ folder contents'
+    //         });
+    //         beep(3, 1000);
+    //     }
+    // });
 });
 
 gulp.task('clean:www', function(){

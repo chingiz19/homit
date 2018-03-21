@@ -1,0 +1,584 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+.header .md-button:not([disabled]):hover {
+    background-color: transparent;
+}
+.header .md-button:not([disabled]).md-focused {
+    background-color: transparent;
+}
+[aria-hidden="true"] { visibility: hidden; }
+  
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%  !important;
+  z-index: 2;
+}
+.homit-logo-tm-image{
+    width: 107px; height: 33px;
+    filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));
+}
+.header-category{
+    bottom: auto !important;
+    top: 100%; left: 37%;
+    width: 50%;
+    border-radius: 5px;
+}
+.hdrRend{
+    display: flex; justify-content: flex-end;
+}
+.hdrRendBtn{
+    margin: 0; padding: 0; 
+    min-width: 78px; width: 78px;
+}
+.hdrRendBtn svg {
+    width: 42px; height: 42px;
+}
+.storeHubA{
+    display: flex; align-items: center;
+    height: 100%; width: 100%; 
+}
+#hub-background-image{
+    position: fixed;
+    width: 270px; height: 400px;
+    background-size: cover; 
+    background-image: url('/resources/images/non-catalog-image/homit-hub-cover.png'); 
+    background-position: center;
+    background-repeat:no-repeat;
+    z-index: 0;
+}
+.box-extension{
+    position: absolute; 
+    left: 73%; top: -7; 
+    width: 13px; height: 13px; 
+    background-color: rgba(255,255,255,1); 
+    border: 1px rgba(220,220,220,0.99) solid; border-right-color: rgba(255,255,255,1); border-bottom-color: rgba(255,255,255,1); 
+    -webkit-transform: rotate(45deg); 
+    z-index: 0;
+}
+#hdrHub1{
+    background-image: url('/resources/images/non-catalog-image/homit-hub-cover.png');
+}
+
+.homit-hub-text-dashboard{
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 0.045em;
+    -webkit-font-smoothing: antialiased;
+}
+.homit-hub-header-dashboard{
+    position: relative; 
+    display: flex; justify-content: center;
+    font-weight: 400; font-size: 30px; 
+}
+.homit-hub-stores-box-dasgboard{
+    position: relative; 
+    top: 10%; width: 100%;
+}
+#snack-vendor-dashboard{
+    margin-top: 10px;
+}
+#liquor-store-dashboard{
+    margin-top: 30px;
+}
+.store-window-dashboard{
+    height: 70px; width: 260px;
+    margin-left: 5px; 
+    background-color: rgba(255,255,255,1); 
+    border-radius: 2px; 
+    outline: none;
+    box-shadow: 0 0px 2px 1px rgba(0,0,0,0.5);
+}
+.store-window-dashboard h3{
+    margin: 0; 
+    padding-top: 5px;
+    text-align: center; 
+}
+.store-window-dashboard a:hover{
+    text-decoration-line: none;
+    color: rgba(0,0,0,1);
+}
+.store-window-dashboard:focus {
+    outline: 0;
+}
+.store-name-text-dashboard{
+    color: rgba(0,0,0,1); font-weight: 600;
+    font-size: 20px;
+}
+.store-window-dashboard button{
+    position: absolute; 
+    width: 220px;
+    height: 30px; 
+    margin-left: 20px;
+    font-size: 17px !important; font-weight: 500; 
+    background-color: rgba(42,81,145,1); 
+    border: 1px solid rgba(42,81,145,1); border-radius: 3px; 
+    color: rgba(255,255,255,1); text-transform: uppercase; 
+    box-shadow: none;
+    -webkit-transition: background-color 0.3s;
+}
+#snack-vendor-dashboard button{
+    bottom: 105px;
+}
+#liquor-store-dashboard button{
+    bottom: 5px;
+}
+.store-window-dashboard:hover button{
+    background-color: rgba(15, 40, 82,1); 
+    border: 1px solid rgba(15, 40, 82,1);
+    transition: all 0.3s ease;
+}
+.myAccntAA{
+    margin-top: 10px;
+    list-style: none;  
+    width: 100%;
+    margin: 0; padding: 0;
+}
+.my-account-box{
+    padding: 5px 0 5px 20;
+}
+.my-account-signout{
+    margin-top: 5px;
+    padding: 5px 0 0px 20; 
+}
+.my-account-text{
+    color: black; font-size: 16px; font-weight: 500;
+}
+.my-account-signout-text{
+    color: black; font-size: 14px;
+}
+.my-account-box:hover .my-account-text{
+    text-decoration-line: underline;
+}
+.myAccntBAA:hover .myAccntBAAAA{
+    text-decoration-line: underline;
+}
+.my-account-signout:hover .my-account-signout-text{
+    text-decoration-line: underline;
+}
+.myAccntBAC{
+    line-height: 2px; border-bottom: 1px rgba(220,220,220,0.99) solid
+}
+
+/* To make Homit-Hub box appear more smoothly */
+.fdIn{ -webkit-animation: fadein 1s; }
+@-webkit-keyframes fadein { from {opacity:0;} to {opacity:1;} }
+
+.myAccntFCS:focus{
+    outline: none !important;
+}
+/*For non-phone devices*/
+/*Start*/
+@media screen and (min-device-width: 1501px){
+    /* Header Search */
+    .header-search{
+        width: 500px; 
+    }
+}
+@media screen and (max-device-width: 1500px) and (min-device-width: 601px) {
+    /* Header Search */
+    .header-search{
+        width: 465px; 
+    }
+}
+@media (max-width: 800px) and (min-width: 700px){
+    .header-search{
+        width: 400px; 
+    }
+}
+@media (max-width: 699px) and (min-width: 600px){
+    .header-search{
+        width: 300px; 
+    }
+}
+@media (max-width: 599px){
+    .header-search{
+        display: none;
+    }
+}
+@media (max-width: 440px){
+    #dashboardBtn{
+        display: none;
+    }
+}
+/* Non-mobile devices */
+@media (min-device-width: 601px){
+    #mobile-search-container, #clear-search-mobile{
+        display: none;
+    }
+    .navCont{
+        margin-bottom: 55px;
+    }
+    md-toolbar{
+        min-height: 55px !important;
+        height: 55px !important;
+    }
+    .md-toolbar-tools{
+        max-height: 55px !important;
+        height: 55px !important;
+    }
+    .md-input-focused .mnSrchAA{
+        margin-bottom: 0px;
+        font-size: 15px;
+    }
+    .mnSrchA.md-input-focused input{
+        padding-bottom: 4px;
+        border: none;
+    }
+    .mnSrchA input::-webkit-input-placeholder{
+        color: rgba(42,81,145,0.6) !important;
+        font-size: 17px;
+    }
+    .mnSrchC{
+        position: absolute; 
+        left: 0.5%; top: 35px; 
+        width: 99.15%; max-height: 490px; 
+        border: 1px solid rgba(145, 143, 143, 0.856); border-radius: 0 0 5px 5px; 
+        border-top: 1px solid rgba(145, 143, 143, 0.3);
+        background-color: rgba(255,255,255, 0.99); 
+        overflow-y: scroll; 
+        z-index: 1000;
+    }
+    .mnSrchCA{
+        margin: 0; padding: 0;
+    }
+    .mnSrchCAAA{
+        display: flex; 
+        padding-top: 10px; padding-bottom: 10px;
+    }
+    .mnSrchCAAAA{
+        position: relative; 
+        left: 25px; 
+        font-size: 20px; font-weight: 600; color: rgba(0,0,0, 0.65);
+    }
+    .mnSrchCB{
+        min-width: 100%; 
+        max-height: 490px;
+        margin: 0; padding: 0;
+    }
+    .mnSrchCB li{
+        display: flex;
+    }
+    .mnSrchCBAA{
+        min-width: 100%; 
+        padding-top: 10px; padding-bottom: 10px;
+    }
+    .mnSrchCBAAA{
+        position: relative; 
+        left: 25px;
+    }
+    .mnSrchImg{
+        width: 50px; height: 50px;
+    }
+    .mnSrchCBAAB{
+        display: flex; 
+        align-items: center; 
+        position: relative; 
+        left: 35px; 
+        font-size: 16px; font-weight: 500; color: rgba(0,0,0, 0.55);
+    }
+    .button-press-feel{
+        border: 1px inset;
+    }
+    /*Header Search*/
+    .header-search{
+        position: relative;
+        left: 7%;
+    }
+    .srchRslt:hover{
+        background-color: rgba(0,0,0,0.08);
+        transition: 0.4s;
+    }
+    .srchRsltKEYS{
+        background-color: rgba(196, 217, 255,0.3) !important;
+    }
+    .mnSrchA{
+        margin: 0;
+        padding-top: 6px;
+    }
+    .mnSrchA input{
+        padding-bottom: 4px;
+        color: rgba(0,0,0,0.8);
+        font-size: 17px;
+        background-color: rgba(255,255,255,1);
+        border-radius: 0 3px 3px 0; 
+        border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); border-right: 2px solid rgba(255,255,255,0.8);
+    }
+    .mnSrchA .md-errors-spacer{
+        min-height: 1px !important;
+    }
+    .mnSrchAA{
+        display: flex; align-items: center;
+        margin: 0;
+        bottom: 35px !important;
+        font-size: 18px;
+    }
+    .mnSrchB{
+        left: 1px;
+        min-height: 30px; min-width: 35px;
+        margin: 0; padding: 0; 
+        background-color: rgba(245,245,245,1);
+        border-top: 2px solid rgba(245,245,245,0.8); border-bottom: 2px solid rgba(245,245,245,0.8); border-left: 2px solid rgba(245,245,245,0.8);
+        border-radius: 3px 0 0 3px; 
+    }
+    .mnSrchB:hover{
+        background-color: rgba(245,245,245,1) !important;
+    }
+    .header-search-icon{
+        fill: rgba(42,81,145,0.6);
+    }
+    /*User information DropDown*/
+    .infoDrDwnA{
+        position: fixed;
+        display: flex; 
+        justify-content: center; align-items: flex-start;  
+        top: 70px; right: 10px; 
+        height: 20vh; width: 12vw; 
+        border: 1.5px rgba(220,220,220,0.99) solid; border-radius: 5px; 
+        background-color: rgba(250,250,250,0.99);  
+        margin: 0; padding: 0;
+        z-index: 2000;
+    }
+    .infoDrDwnAA{
+        display: flex; 
+        padding-left: 18px;
+        font-size: 17px; color: rgba(150,150,150,0.8);
+    }
+    .infoDrDwnAB{
+        display: flex; 
+        padding-left: 20px;
+        font-size: 17px; color: rgba(150,150,150,0.8);
+    }
+    .infoDrDwnAAA{
+        display: flex; align-items: center;
+    }
+    /*Categories Box*/
+    .expBtn{
+        position: fixed; 
+        left: 47%; top: 60px; 
+        min-height: 10px; height: 10px; 
+        background-color: rgba(253,253,253,0.95) !important;
+        border-top-left-radius: 0; border-top-right-radius: 0; 
+    }
+    .expBtnIc{
+        position: relative; 
+        bottom: 8px; 
+        fill: rgba(42,81,145,0.6);
+    }
+    .storeHub{
+        position: fixed; 
+        top: 70px; right: 65px;; 
+        height: 400px; width: 270px;  
+        border: 1px rgba(220,220,220,0.99) solid; 
+        border-radius: 2px;
+        background-color: rgba(255,255,255,1);
+        box-shadow: 0 0px 10px rgba(0,0,0,0.3);
+        z-index: 1000;
+    }
+    .myAccnt{
+        position: fixed; 
+        top: 70px; right: 8px;; 
+        height: 120px; width: 200px;  
+        border: 1px rgba(220,220,220,0.99) solid; 
+        border-radius: 2px;
+        background-color: rgba(255,255,255,1);
+        box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    .header-icon {
+        flex-basis: 5%;
+        fill: rgba(255,255,255,1);
+    }
+   .search-line{
+        display: flex; justify-content: center;
+   }
+   .search-line div{
+        width: 90%; 
+        border-bottom: 1px solid rgba(105, 103, 103, 0.15); 
+        line-height: 1px; margin: 5px 0 5px;
+   }
+}
+
+/*For non-computer screen*/
+@media screen and (max-device-width: 500px) {
+    md-toolbar{
+        height: 110px;
+    }
+    .navCont{
+        position: absolute;
+    }
+    .md-toolbar-tools{
+        max-height: 110px;
+        height: 110px;
+    }
+    .homit-logo-white-image{
+        width: 88px; height: 88px;
+    }
+    #sign-button, #clear-search-mobile, #signed-in-button{
+        min-height: 100px; height: 100px;
+        min-width: 90px; width: 90px;
+        fill: rgba(255,255,255,1);
+    }
+    #sign-button{
+        margin-left: 5px;
+    }
+    #sign-button svg{
+        height: 90px; width: 90px;
+    }
+    #signed-in-button svg{
+        height: 90px; width: 90px;
+    }
+    #clear-search-mobile{
+        fill: rgba(255,255,255,1);
+    }
+    #clear-search-mobile svg{
+        height: 70px; width: 70px;
+    }
+    .header-search{
+        display: none;
+    }
+   .homit-logo-tm-image{
+        width: 235px; height: 75px;
+        filter: drop-shadow(0 0px 2px rgba(0,0,0,0.6));
+   }
+   .header-search-icon-mobile{
+        fill: rgba(255,255,255,1);
+   }
+   .header-search-icon-mobile svg{
+       height: 40px; width: 40px;
+   }
+    #mobile-search-container svg{
+        height: 70px; width: 70px;
+        fill: rgba(0,0,0,0.8);
+    }
+    #mobile-search-container .md-input{
+        border-width: 0 !important;
+    }
+    #mobile-search-container.md-input-focused .md-input{
+        border-color: rgba(0,0,0,0.12) !important;
+        border-width: 0 !important;
+    }
+    #glbSearchRequest{
+        display: none;
+    }
+    .search-line{
+        display: flex; justify-content: center;
+        margin-top: 20px;
+   }
+   .search-line div{
+        width: 90%; 
+        border-bottom: 2px solid rgba(105, 103, 103, 0.15); 
+        line-height: 2px; margin: 5px 0 5px;
+        margin: 10px auto 10px auto;
+   }
+   #search-result-mobile a{
+       text-decoration: none;
+   }
+   #mobile-search-container{
+       position: fixed; 
+       top: 110px; 
+       height: 110px; width: 100%;
+       background-color: rgba(254,254,254,1);
+       border-bottom: 1px solid rgba(0,0,0,0.4);
+       z-index: 1000;
+   }
+   #mobile-search-container lable{
+       display: none;
+   }
+   #mobile-search-container input{
+       width: 90%; font-size: 50px;
+       padding-left: 10px;
+       border: 0;
+   }
+   .searchIconInput{
+       height: 108px; width: 100px; 
+       display: flex; justify-content: center; align-items: center;
+       background-color: rgba(255,255,255,1);
+   }
+   #search-result-mobile{
+       position: fixed; 
+       top: 220px; 
+       max-height: 70%; width: 100%; 
+       border-width: 0 1px 2px 1px; border-style: solid; border-color: rgba(0,0,0,0.4); 
+       background-color: rgba(253,253, 253,1);
+       overflow-y: scroll;
+       -webkit-overflow-scrolling: touch;
+       z-index: 1000;
+   }
+   #search-result-mobile ul{
+       margin: 15px 0 15px 0;
+   }
+   .flex-li{
+       display: flex; align-items: center; 
+       padding-top: 20px;
+   }
+   .flex-li span{
+       font-size: 50px; 
+       color: rgba(0,0,0,0.95);
+   }
+   .flex-li a{
+       width: 100%;
+   }
+   .searched-product-mobile li{
+        margin: 50px 0 50px 0;
+   }
+   .searched-product-mobile img{
+       height: 150px; width: 150px;
+   }
+   .product-brand-text-mobile{
+       display: flex; align-items: center; 
+       font-size: 44px; color: rgba(0,0,0,0.95); 
+       margin-left: 15px;
+   }
+    .col24{
+        padding-left: 80px !important;
+    }
+    .myAccnt{
+        position: fixed; 
+        top: 111px; right: 35px;
+        height: 210px; width: 300px;  
+        border: 1px rgba(220,220,220,0.99) solid; 
+        border-radius: 2px;
+        background-color: rgba(255,255,255,1);
+        box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    #hdrMyAcc1{
+        left: 90%;
+    }
+    #my-account-ul{
+        height: 100%;
+    }
+    .my-account-signout-text{
+        font-size: 30px;
+    }
+    .my-account-checkout-text{
+        font-size: 33px;
+    }
+    .my-account-text{
+        font-size: 34px;
+    }
+    #myaccount-li{
+        padding-top: 15px;
+    }
+    #checkout-li{
+        padding-top: 5px;
+        padding-bottom: 15px;
+    }
+}
+.serach-not-found{
+    height: 35px; 
+    display: flex;
+    align-content: center;
+}
+.serach-not-found span{
+    font-size: 20px !important;
+    font-weight: 500 !important;
+    display: flex; 
+    align-items: center; 
+    position: relative; 
+    left: 35px; 
+    font-size: 15px; font-weight: 500; color: rgba(0,0,0, 0.55);
+}

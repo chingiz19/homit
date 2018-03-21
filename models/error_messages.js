@@ -6,6 +6,7 @@ var pub = {};
 
 pub.sendMissingParams = function(res){
     var message = {
+        success: false,
         "error": {
             "code": "U000",
             "dev_message": "Missing params"
@@ -17,6 +18,7 @@ pub.sendMissingParams = function(res){
 // User already exists
 pub.sendUserAlreadyExists = function(res){
     res.status(200).json({
+        success: false,
         error: {
             code: "A002",
             "ui_message": "User already exists"
@@ -27,6 +29,7 @@ pub.sendUserAlreadyExists = function(res){
 // Invalid email, or password
 pub.sendInvalidCredentials = function(res){
     res.json({
+        success: false,
         error: {
             code: "A003",
             ui_message: "Invalid email, or password"

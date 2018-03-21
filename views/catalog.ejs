@@ -6,7 +6,7 @@
             <link href="/resources/css/catalog.css" rel="stylesheet">
 </head>
 
-<body>
+<body style="top: 51px;">
     <%- include('partial/checkout_menu')%>
         <div ng-controller="catalogController" id="ctnCont">
         <div id="loading">
@@ -25,6 +25,7 @@
                     <div></div>
                 </div>
             </div>
+            <!-- display: none for mobile devices for work purposes -->
             <div layout="row" class="container col01" ng-cloak>
                 <!--Mob-version Navigate-->
                 <!-- Start -->
