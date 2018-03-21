@@ -22,6 +22,7 @@ var del = require('del');
 var browserSync = require('browser-sync').create();
 var notifier = require('node-notifier');
 var log = require('fancy-log');
+var fs = require('fs');
 
 
 /* Variables */
@@ -65,6 +66,14 @@ function errorHandling(err){
 
 /* Gulp tasks */
 gulp.task('compile', function(cb){
+    if(fs.existsSync('www/resources/images')){
+        return gulpSequence('clean:saveimages', ['js', 'css', 'misc'])(cb);
+    } else {
+        return gulpSequence('clean:saveimages', ['js', 'css', 'misc', 'img'])(cb);
+    }
+});
+
+gulp.task('compile-production', function(cb){
     return gulpSequence('clean:www', ['js', 'css', 'img', 'misc'])(cb);
 });
 
@@ -191,6 +200,10 @@ gulp.task('www-error', function(){
     // });
 });
 
+gulp.task('clean:saveimages', function(){
+    return del.sync(['www/resources/*', 'www/*', '!www/resources', '!www/resources/images/**']);
+});
+
 gulp.task('clean:www', function(){
     return del.sync('www');
 });
@@ -198,7 +211,7 @@ gulp.task('clean:www', function(){
 gulp.task('run', function(cb){
     if (gutil.env.env == "production"){
         environments.current(production);
-        return gulpSequence('compile')(cb);
+        return gulpSequence('compile-production')(cb);
     } else {
         environments.current(development);
         return gulpSequence('compile', 'start', 'watch', 'browserSync', 'www-error')(cb);
@@ -211,17 +224,31 @@ gulp.task('default', function(){
     TASKS                  DESCRIPTION
 
     run                     |  for front-end development (copies files to www folder, starts nodemon, browserSync, www-error watch)
-    compile                 |  cleans www folder then copies files to that folder (js, css, img)
+    
+    compile-production      |  cleans www folder then copies files to that folder (js, css, img)
+
+    compile                 |  runs clean:saveimages then copies files to that folder (js, css, img). NOTE: it will not copy images if www/resources/images folder exists
+    
     clean:www               |  deletes www folder
+    
+    clean:saveimages        |  deletes www folder, except www/resouces/images/
+    
     js                      |  copy js files to www folder
+    
     css                     |  copy css files to www folder
+    
     img                     |  copy img files to www folder
+    
     misc                    |  copy files inside public folder (doesn't include subfolders)
 
+
     test-views              |  run test for views
+    
     test-db                 |  run test for db
+    
     test-e2e                |  run test for end to end testing
     
+    g
     run --env production    | compiles everything for production environment\n`;
 
     log(gulpTasksList);
