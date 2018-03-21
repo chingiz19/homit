@@ -404,7 +404,8 @@ md-backdrop.md-opaque {
 }
 .adrInpt_x{
     background-color: rgba(255,255,255,1);
-    position: absolute; right: 0px; top: 0px; min-width: 30px; min-height: 30px; margin: 0;
+    position: absolute; right: 0px; top: 0px; 
+    min-width: 30px; min-height: 30px; margin: 0;
     border-bottom: rgba(0,0,0,0.12);
 }
 .adrInpt_x_A{
@@ -545,10 +546,7 @@ md-backdrop.md-opaque {
     background-color: transparent;
 }
 .modal-close-button-icon{
-    // display: flex; justify-content: center;
     fill: rgb(173, 173, 173);
-    // border-radius: 40px;
-    // width: 20px; height: 20px;
 }
 .modal-close-button-icon svg{
     width: 20px; height: 20px;

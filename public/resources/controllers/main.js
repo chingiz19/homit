@@ -1,9 +1,17 @@
-app.controller("mainController", function ($scope, $http, sessionStorage, $cookies, $window, $location, $anchorScroll, mapServices) {
+app.controller("mainController", function ($scope, $http, sessionStorage, $cookies, $window, $location, $anchorScroll, mapServices, $timeout, googleAnalytics) {
     $scope.map = undefined;
     $scope.userDropDown = false;
+    $scope.showCoverageMap = false;
     $scope.bounds = undefined;
 
     $scope.init = function () {
+
+        var screen_width = window.screen.width;
+        if (screen_width < 500) {
+            $scope.screenIsMob = true;
+        } else {
+            $scope.screenIsMob = false;
+        }
 
         // always scroll to the top, then later to defined hash
         var currentHash = $location.hash();
@@ -37,6 +45,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
      * This function is called after autocomplete gets the address
      */
     $scope.gotAddressResults = function () {
+        $("#autocompleteAddressInputBox").blur();
         var latLng = $scope.autocomplete.getLatLng();
         var place = $scope.autocomplete.getPlace();
         if (!latLng) return;
@@ -44,10 +53,27 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
             sessionStorage.setAddress(place);
             sessionStorage.setAddressLat(latLng.lat());
             sessionStorage.setAddressLng(latLng.lng());
-            $scope.scrollTo('homitHub');
+            $timeout(function(){
+                $scope.scrollTo('homitHub');                
+            }, 200);
         } else {
-            $scope.addressMessage = "Sorry, we do not deliver to your location at the moment.";
-            $scope.scrollTo('coverage');
+            $scope.showCoverageMap = true;
+            var mapGrowClass = [];
+            if(!$scope.screenIsMob){
+                mapGrowClass[0] = "address-box-grow-screen";
+                mapGrowClass[1] = "covergae-map-box-grow-screen";
+            } else{
+                mapGrowClass[0] = "address-box-grow-mob";
+                mapGrowClass[1] = "covergae-map-box-grow-mob";
+            }
+            $timeout(function() {
+                $(".srchAddrsC").addClass(mapGrowClass[0]);
+                $(".covergae-map-box").addClass(mapGrowClass[1]);
+                $(".addressMessage").addClass("addressMessage-show");
+                if($scope.screenIsMob){
+                    animateScrollTo(0, { speed: 2000 });
+                }
+            }, 100);
             googleAnalytics.addEvent('out_of_coverage', {
                 "event_label": place.formatted_address,
                 "event_category": googleAnalytics.eventCategories.address_actions
@@ -55,30 +81,22 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
         }
     };
 
+    $scope.$watch('showCoverageMap', function(newValue){
+        if (!newValue){
+            $timeout(function() {
+                if(!$scope.screenIsMob){
+                    $(".srchAddrsC").removeClass("address-box-grow-screen");
+                } else{
+                    $(".srchAddrsC").removeClass("address-box-grow-mob");
+                }
+            }, 50);
+        }
+    });
+
     $scope.hrefTo = function (path) {
         $window.location.href = $window.location.origin + path;
         sessionStorage.setCategoryClicked("store-switched");
     };
-
-    $(document).scroll(function () {
-        var screen_width = window.screen.width;
-        var screen_height;
-        var diff;
-
-        if (screen_width < 600) {
-            screen_height = window.innerHeight;
-            diff = 10;
-        } else if (screen_width > 601) {
-            screen_height = window.screen.height;
-            diff = screen_height * 0.09; 
-        }
-
-        if ($(this).scrollTop() > screen_height - diff) {
-            $("#calgary-image").css("background-image", "url('/resources/images/non-catalog-image/homit-hub-cover.png')");
-        } else {
-            $("#calgary-image").css("background-image", "url('/resources/images/non-catalog-image/calgary.jpg')");
-        }
-    });
 
     /**
      * When called this method will scroll view to the element with 'id'

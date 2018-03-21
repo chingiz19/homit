@@ -6,11 +6,26 @@ li {list-style-type: none;}
 .none{
     display: none;
 }
-.full-screen{
-    min-height: 800px;
-    height: 100%;
-    width: 100%;
+.address-section, .about-homit-section, .homit-hub-section{
+    position: relative;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+.address-section{
+    background-image: url('/resources/images/non-catalog-image/pages/calgary.jpg');
+    min-height: 100vh;
+}
+.about-homit-section{
+    background-color: rgba(255,255,255,1);
+    min-height: 100vh;
+}
+.homit-hub-section{
+    background-image: url('/resources/images/non-catalog-image/homit_hub/homit-hub-cover.png');
+    min-height: 100vh;
+}
+
 body{
     background-color: transparent;
     letter-spacing: 0.01em;
@@ -24,55 +39,20 @@ body{
     align-items: center;
     flex-direction: column;
 }
-.getting-started{
-    background-color: rgba(42,81,145,1);
-}
-.mainPage-header {
-    position: fixed; 
-    top: 10; 
-    width: 100%; 
-    display: flex; 
-    align-items: center;
-}
-#calgary-image{
-    position: fixed;
-    background-size: cover; 
-    background-image: url('/resources/images/non-catalog-image/calgary.jpg'); 
-    background-position: center;
-    background-repeat:no-repeat;
-    z-index: -1;
-}
-h2.hmtHubA{
-    margin: 0;
-}
-.logoTg{
-    margin-left: 15px;
-}
-.logoTgAA{
-    width: 120px; height: 37px;
-    filter: drop-shadow(0px 0px 7px rgba(0,0,0,0.5));
-}
-.signTg{
-    display: flex; justify-content: flex-end;
-}
-.signTgAA{
-    fill: white; filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.5));
-}
-.signTgAA svg{
-    width: 48px; height: 48px;
-}
-.signTgAB{
-    fill: rgba(255,255,255,0.9);
-}
-.signTgAB svg{
-    width: 50px; height: 50px;
-}
 .srchAddrsC{
-    width: 730px; display: flex; justify-content: center; align-items: center;
+    width: 730px; 
     height: 60px;
+    display: flex; justify-content: center; align-items: center;
     background-color: rgba(255,255,255,1);
     border-radius: 5px;
     box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.8);
+    transition: all 0.4s ease-in;
+}
+.covergae-map-box{
+    display: flex; justify-content: center;
+    width: 716px; height: 0px; 
+    background-color: white; 
+    text-align: center; 
 }
 .srchAddrsCA{
     position: relative;
@@ -106,14 +86,38 @@ h2.hmtHubA{
 .srchAddrsCACA svg{
     width: 20px; height: 20px;
 }
-.area-map-page{
-    background-color: rgba(236, 236, 236, 1) !important;
+#homit-order-steps{
+    background-color: white;
 }
+.order-steps-section{
+    display: flex; flex-direction: row; 
+    justify-content: space-around;
+    height: 100%; 
+}
+.order-step{
+    height: 100%;
+    text-align: center; display: flex; flex-flow: column; justify-content: center; align-items: center;
+}
+.order-step-img{
+    width: 300px; height: 300px; 
+    filter: drop-shadow(0 0px 6px rgba(0,0,0,0.65));
+}
+.order-step-header{
+    margin-top: 50px;
+    text-align: center; 
+}
+.order-step-p{
+    margin: 30px 5% 0 5%;
+    padding-left: 15px;
+    font-size: 17px;
+    text-align: left; 
+    border-left: 2px solid rgba(42, 81,145, 0.4); 
+}
+
 .area-map{
-    position: absolute; 
-    height: 60%; width: 70%;
-    box-shadow: 0 0px 10px 0px rgba(0,0,0,0.45);
-    border-radius: 3px;
+    position: relative;
+    height: 100%; width: 100%;
+    border-radius: 0 0 3px 3px;
 }
 .area-map-text-box{
     position: relative; 
@@ -128,13 +132,31 @@ h2.hmtHubA{
     display: flex; justify-content: center;
     font-size: 25px; font-weight: 400; 
 }
-.addressMessage-text{
-    position: relative; 
-    bottom: 280px;
-    font-size: 30px; font-weight: 400;  
-    color: black; 
-    filter: drop-shadow(0 0px 3px rgba(0,0,0,0.4));
+.addressMessage{
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 35px;
+    margin-top: 10px; 
     z-index: 100;
+}
+.addressMessage-text{
+    font-size: 20px; font-weight: 400;  
+    color: rgba(42,81,145,1);
+}
+.addressMessage-show{
+    display: flex;
+    justify-content: center; align-items: center;
+    transition: all 0.3s ease;
+}
+.message-cover{
+    position: absolute;
+    width: 97%; height: 40px;
+    background-size: cover;
+    overflow: hidden;
+    background-color: rgba(255,255,255,1);
+    filter: blur(9px);
+    z-index: -1;
 }
 .homit-hub{
     color: white;
@@ -145,7 +167,8 @@ h2.hmtHubA{
     -webkit-font-smoothing: antialiased;
 }
 .homit-hub-header{
-    position: relative; top: 20%; 
+    position: relative; 
+    bottom: 50px; 
     display: flex; justify-content: center;
     font-weight: 400; font-size: 50px; 
 }
@@ -158,14 +181,14 @@ h2.hmtHubA{
 }
 .store-window{
     height: 300px; width: 250px; 
-    border: 1px solid black;
+    border: 1px solid rgba(255,255,255,0.5);
     border-radius: 5px; 
     outline: none;
-    box-shadow: 0 0px 5px 2px rgba(0,0,0,0.5);
+    box-shadow: 0 0px 5px 2px rgba(255,255,255,0.5);
     -webkit-transition: background-color 0.3s;
 }
 .store-background-image{
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255,255,255,0.4);
 }
 .store-window:hover .store-background-image{
     background-color: rgba(255,255,255,0.8); 
@@ -183,10 +206,10 @@ h2.hmtHubA{
     z-index: 0;
 }
 #snack-vendor-icon{
-    background-image: url('/resources/images/non-catalog-image/snack-vendor_icon.png'); 
+    background-image: url('/resources/images/non-catalog-image/homit_hub/snack-vendor_icon.png'); 
 }
 #liquor-station-icon{
-    background-image: url('/resources/images/non-catalog-image/liquor-station_icon.png'); 
+    background-image: url('/resources/images/non-catalog-image/homit_hub/liquor-station_icon.png'); 
 }
 .store-window a:hover{
     color: rgba(0,0,0,1);
@@ -223,7 +246,8 @@ h2.hmtHubA{
 }
 .main-page-address-box{
     position: relative;
-    z-index: 1000; width: 730px;
+    z-index: 1000; 
+    width: 730px;
 }
 .main-page-address-box-text{
     text-align: center; 
@@ -240,50 +264,42 @@ nav{
     position: fixed;
     z-index: 1000;
 }
-/* Google Search autocomplete non-mobile */
-.pac-container{
-    margin-top: 1px;
-    background: #fff;
-    border-radius: 0 0 5px 5px;
-    border: 1px solid #ccc;
-    max-height: 250px;
-}
-.pac-icon{
-    display: none;
-}
-.pac-item {
-    display: flex; align-items: center;
-    padding-left: 20px;
-    letter-spacing: 0.03ex;
-    line-height: 40px;
-    font-size: 17px;
-    font-weight: 300 !important;
-}
-.pac-item-query{
-    font-size: 17px !important;
-    color: rgba(0,0,0,0.5);
-    font-weight: 300;
-}
-.pac-matched{
-    font-size: 17px !important;
-    color: rgba(0,0,0,1);
-    font-weight: 300;
-}
-.pac-container:after{
-    margin-right: 5px;
-    margin-top: 5px;
-}
 .go-to-homit-hub button{
     background-color: transparent; border: transparent;
 }
-.go-to-homit-hub-icon svg{
-    width: 40px; height: 40px;
-    fill: rgba(50,50,50,1)
+.go-to-homit-hub-icon{
+    width: 44px; height: 44px;
+}
+
+@media (min-width: 300px){
+    .go-to-homit-hub {
+        outline:0;
+        filter: drop-shadow(0 0px 1px rgba(0,0,0,0.7));
+        animation: MoveUpDown 2s linear infinite;
+        position: absolute;
+        margin: 0 auto 0 auto;
+      }
+      button:focus {outline:0;}
+      
+      @keyframes MoveUpDown {
+        0% {
+          bottom: 0;
+        }
+        50% {
+          bottom: 20px;
+        }
+        100% {
+          bottom: 0;
+        }
+      }
 }
 
 @media (max-width: 750px) and (min-width: 600px){
     .main-page-address-box{
         width: 500px;
+    }
+    .covergae-map-box{
+        width: 486px;
     }
     .main-page-address-box-text{
         font-size: 28px;
@@ -299,6 +315,9 @@ nav{
 @media (max-width: 599px) and (min-width: 300px){
     .main-page-address-box{
         width: 400px;
+    }
+    .covergae-map-box{
+        width: 386px;
     }
     .main-page-address-box-text{
         font-size: 22px;
@@ -329,16 +348,7 @@ nav{
     }
 }
 
-@media (max-width: 1000px) and (min-width: 550px){
-    .area-map{
-        height: 50%;
-    }
-}
-
 @media (max-width: 549px) and (min-width: 430px){
-    .area-map{
-        height: 45%;
-    }
     .homit-hub-header {
         font-size: 35px;
     }
@@ -349,21 +359,63 @@ nav{
         width: 400px;
         overflow-x: scroll !important;
     }
-    .area-map{
-        height: 45%;
-    }
     .homit-hub-header {
         font-size: 30px;
     }
 }
 
+@media (max-width: 1180px) and (min-width: 1050px){
+    .order-step-img{
+        width: 250px; height: 250px;
+    }
+}
+
+@media (max-width: 1049px) and (min-width: 900px){
+    .order-step-img{
+        width: 200px; height: 200px;
+    }
+}
+
+@media (max-width: 899px) and (min-width: 750px){
+    .order-step-img{
+        width: 150px; height: 150px;
+    }
+}
+
+@media (max-width: 749px) and (min-width: 400px){
+    .order-steps-section{
+        display: flex; 
+        flex-direction: column; 
+        align-items: center;
+        height: 100%; 
+        width: 100%;
+    }
+    .order-step{
+        padding-top: 10px;
+        max-width: 90% !important;
+    }
+    .order-step-img{
+        width: 200px; height: 200px;
+    }
+    .order-step-p{
+        display: none;
+    }
+    .order-step-header{
+        margin-top: 15px;
+        font-size: 25px;
+    }
+}
+
 /* Mobile Devices */
 @media screen and (max-device-width: 500px) {
-    .full-screen{
-        height: 100vh !important;
+    .address-section, .about-homit-section, .homit-hub-section{
+        background-attachment: scroll;
     }
     #address{
         height: 100% !important;
+    }
+    .go-to-homit-hub{
+        display: none;
     }
     .area-map-text-box{
         top: 600px;
@@ -393,10 +445,26 @@ nav{
     }
     .srchAddrsC{
         width: 100%;
-        height: 130px;
+        height: 114px;
         background-color: rgba(255,255,255,1);
         border-radius: 5px;
         box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.8);
+    }
+    .message-cover{
+        filter: blur(30px);
+    }
+    .covergae-map-box{
+        height: 480px;
+        width: 92vw;
+    }
+    .area-map{
+        width: 100%;
+    }
+    .addressMessage{
+        margin-top: 25px;
+    }
+    .addressMessage-text{
+        font-size: 45px;
     }
     .srchAddrsCAA{
         position: absolute; padding-left: 5px;
@@ -410,7 +478,9 @@ nav{
     .srchAddrsCAC{
         position: absolute; 
         right: 0;
-        min-width: 100px; min-height: 100px; margin: 0;
+        min-width: 95px; min-height: 95px; 
+        margin-top: 2px; margin-left: 2px;
+        background-color: rgba(255,255,255,0.95);
     }
     .srchAddrsCACA{
         fill: rgba(0,0,0,0.3);
@@ -431,13 +501,6 @@ nav{
         font-size: 35px;
         font-weight: 200;
     }
-    .go-to-homit-hub{
-        height: 100px; width: 100px;
-    }
-    .go-to-homit-hub-icon svg{
-        height: 80px; width: 80px;
-        fill: rgba(50,50,50,1)
-    }
     .homit-hub-header{
         top: 20%; 
         font-size: 80px; 
@@ -447,7 +510,6 @@ nav{
     }
     .store-window{
         height: 450px; width: 350px; 
-        box-shadow: 0 0px 10px 5px rgba(0,0,0,0.5);
     }
     .store-name-text{
         font-weight: 400;
@@ -462,25 +524,45 @@ nav{
         font-size: 30px !important; 
     }
 
+    .order-steps-section{
+        display: flex;
+        flex-direction: column;
+    }
+    .order-step{
+        max-width: 100vw !important;
+    }
+    .order-step-p{
+        width: 70%;
+        margin: auto;
+    }
+    .order-step-header {
+        margin-top: 30px;
+        font-size: 40px;
+    }
+    .order-step-p{
+        font-size: 23px;
+    }
+    .order-step-img {
+        width: 200px;
+        height: 200px;
+    }
 }
 
-.go-to-homit-hub {
-    outline:0;
-    filter: drop-shadow(0 0px 1px rgba(0,0,0,0.7));
-    animation: MoveUpDown 2s linear infinite;
-    position: absolute;
-    margin: 0 auto 0 auto;
-  }
-  button:focus {outline:0;}
-  
-  @keyframes MoveUpDown {
-    0% {
-      bottom: 0;
-    }
-    50% {
-      bottom: 20px;
-    }
-    100% {
-      bottom: 0;
-    }
-  }
+//Out of Coverage grow box
+.address-box-grow-screen{
+    height: 410px;
+    transition: all 0.3s ease-in;
+}
+.covergae-map-box-grow-screen{
+    height: 340px;
+    transition: all 0.3s ease-in;
+}
+
+.address-box-grow-mob{
+    height: 600px;
+    transition: all 0.3s ease-in;
+}
+.covergae-map-box-grow-mob{
+    height: 480px;
+    transition: all 0.3s ease-in;
+}

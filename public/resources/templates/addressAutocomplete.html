@@ -108,7 +108,7 @@
     <!-- Google Address prediction dropdown -->
     <!-- Start --> 
     <ul class="predictions-container" ng-if="_predictions.length != 0" ng-cloak>
-        <li ng-repeat="address in _predictions" id="prediction_{{$index + 1}}" class="predictions-item" ng-click="_addressSelected(address)">
+        <li ng-repeat="address in _predictions" id="prediction_{{$index + 1}}" class="predictions-item" ng-click="_addressSelected(address); document.getElementById('autocompleteAddressInputBox').blur();">
             <div><span>{{_matched_part}}</span>{{address.description}}</div>
         </li>
         <li class="powered-by-google"><img ng-src="{{'/resources/images/non-catalog-image/powered_by_google.png'}}" /></li>

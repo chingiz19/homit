@@ -9,6 +9,7 @@
  *      input-class="srchAddrsCAB"                      // OPTIONAL - input element class
  *      icon-class="srchAddrsCACA"                      // OPTIONAL - 'x' icon element class
  *      button-class="srchAddrsCAC"                     // OPTIONAL - 'x' button element class
+ *      show-coverage-map="true | false"                // OPTIONAL - Show/Hide coverage map
  * </address-autocomplete>
  * 
  */
@@ -26,6 +27,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
         sessionStorage.setAddress(undefined);
         privScopeAccess._searchedAddress = "";
         privScopeAccess._unitNumber="";
+        privScopeAccess.showCoverageMap = false;
     }
 
     /**
@@ -73,7 +75,8 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
             iconClass: "@?iconClass", // optional x icon class(es) (as is biding)
             inputDisabled: "@?inputDisabled", // optional input element
             buttonClass: "@?buttonClass", // optional x button class(es) (as is biding)
-            bounds: "<autocompleteBounds" // autocomplete results in these bounds are shown first
+            bounds: "<autocompleteBounds", // autocomplete results in these bounds are shown first
+            showCoverageMap: "=?" // Show/Hide coverage map
         },
         templateUrl: '/resources/templates/addressAutocomplete.html',
         link: function(scope, element, attrs){
@@ -89,6 +92,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                 scope.autocomplete = publicFunctions;
                 scope.clearText = clearText;
                 privScopeAccess = scope;
+                var elementNumber = 0;
 
                 var addrSelected = sessionStorage.getAddress();
                 if (addrSelected){
@@ -104,6 +108,7 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                  */
                 scope._addressTyped = function(){
                     var tmpSearchedAddress;
+                    elementNumber = 0;
                     if (!scope._searchedAddress){ 
                         scope._predictions = [];
                         return;
@@ -146,7 +151,6 @@ app.directive("addressAutocomplete", function(sessionStorage, $interval, $timeou
                     });
                 }
 
-                var elementNumber = 0;
 
                 function navigatePredictions(evt){
                     //event key "down"

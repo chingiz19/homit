@@ -50,17 +50,10 @@ app.service('mapServices', ["$http", "sessionStorage", function ($http, sessionS
     };
 
     pub.createMap = function (elementId, options) {
-        var screen_width = window.screen.width;
-        var zoom_scale;
-        if(screen_width < 500){
-            zoom_scale = 11;
-        } else{
-            zoom_scale = 10; 
-        }
         if (!options) {
             options = {
-                zoom: zoom_scale,
-                center: new google.maps.LatLng(51.054637, -114.094996),
+                zoom: 10,
+                center: new google.maps.LatLng(51.079637, -114.094996),
                 // zoomControl: false,
                 // scaleControl: false,
                 mapTypeControl: false,
