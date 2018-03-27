@@ -6,9 +6,9 @@
  *      autocomplete="autocomplete"                     // REQUIRED - This is the scope object that will contain methods to access autocomplete data  
  *      on-address-selected="gotAddressResults">        // REQUIRED - This is callback function that contains the logic for when address is selected
  *      autocomplete-bounds="map.getBounds()"           // REQUIRED - This is bounds which autocomplete should put in priority when showing results
- *      input-class="srchAddrsCAB"                      // OPTIONAL - input element class
- *      icon-class="srchAddrsCACA"                      // OPTIONAL - 'x' icon element class
- *      button-class="srchAddrsCAC"                     // OPTIONAL - 'x' button element class
+ *      input-class="address-input"                      // OPTIONAL - input element class
+ *      icon-class="address-input-icon"                      // OPTIONAL - 'x' icon element class
+ *      button-class="address-input-btn"                     // OPTIONAL - 'x' button element class
  *      show-coverage-map="true | false"                // OPTIONAL - Show/Hide coverage map
  * </address-autocomplete>
  * 

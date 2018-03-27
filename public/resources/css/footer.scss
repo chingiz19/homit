@@ -167,7 +167,7 @@ a{
     text-decoration: none !important;
 }
 /* Mobile Devices */
-@media screen and (max-device-width: 500px) {
+@media screen and (max-device-width: 479px) and (min-device-width: 360px){
     .col_2{
         width: 80px; height: 80px;
     }
@@ -176,5 +176,19 @@ a{
     }
     .text{
         font-size: 12px; 
+    }
+}
+@media screen and (max-device-width: 359px){
+    .col_2{
+        width: 65px; height: 65px;
+    }
+    .ftr-logo-img{
+        width: 40px; height: 40px;
+    }
+    .text{
+        font-size: 10px; 
+    }
+    .homit-copyright{
+        font-size: 9px;
     }
 }

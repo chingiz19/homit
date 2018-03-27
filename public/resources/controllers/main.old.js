@@ -67,9 +67,9 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
                 mapGrowClass[1] = "covergae-map-box-grow-mob";
             }
             $timeout(function() {
-                $(".address-input-sec").addClass(mapGrowClass[0]);
+                $(".srchAddrsC").addClass(mapGrowClass[0]);
                 $(".covergae-map-box").addClass(mapGrowClass[1]);
-                $(".address-message").addClass("address-message-show");
+                $(".addressMessage").addClass("addressMessage-show");
                 if($scope.screenIsMob){
                     animateScrollTo(0, { speed: 2000 });
                 }
@@ -85,9 +85,9 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
         if (!newValue){
             $timeout(function() {
                 if(!$scope.screenIsMob){
-                    $(".address-input-sec").removeClass("address-box-grow-screen");
+                    $(".srchAddrsC").removeClass("address-box-grow-screen");
                 } else{
-                    $(".address-input-sec").removeClass("address-box-grow-mob");
+                    $(".srchAddrsC").removeClass("address-box-grow-mob");
                 }
             }, 50);
         }

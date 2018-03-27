@@ -14,7 +14,7 @@
                 <input id="product" style="display: none;" value="<%= product %>">
                 <input id="default_container" style="display: none;" value="<%= default_container %>">
                 <div layout="column" itemscope itemtype="http://schema.org/Product">
-                    <h1 style="text-align: center;">
+                    <h1>
                         <span itemprop="brand">
                             <%= product_name %>
                         </span>
@@ -143,15 +143,17 @@
                     <div class="recomended-products-header-line"></div>
                     <div class="recomended-products-header-text">People also Homit</div>
                 </section>
-                <section layout="row" class="recomended-item">
-                    <div ng-repeat="item in recommended_products">
-                        <ul ng-click="hrefTo(item.url)">
-                            <li class="also-image-li">
-                                <img ng-src="{{item.image}}">
-                            </li>
-                            <li class="recomended-item-text">{{ item.packaging + " X " + item.size }}</li>
-                            <li class="recomended-item-text">C${{ item.price }}</li>
-                        </ul>
+                <section class="recomended-item">
+                    <div class="recomended-item-div">
+                        <div ng-repeat="item in recommended_products">
+                            <ul ng-click="hrefTo(item.url)">
+                                <li class="also-image-li">
+                                    <img ng-src="{{item.image}}">
+                                </li>
+                                <li class="recomended-item-text">{{ item.packaging + " X " + item.size }}</li>
+                                <li class="recomended-item-text">C${{ item.price }}</li>
+                            </ul>
+                        </div>
                     </div>
                 </section>
                 <section layout="row" class="recomended-products-footer">

@@ -509,7 +509,7 @@ md-radio-button .md-label {
 }
 
 /* start of phone styles */
-@media screen and (max-device-width: 479px) {
+@media screen and (max-device-width: 479px){
     .typesSdNB1 {
         display: none;
     }
@@ -824,6 +824,12 @@ md-radio-button .md-label {
 
     .add-to-cart-btn:hover {
         background-color: rgba(33, 241, 193, 0.089) !important;
+    }
+}
+
+@media screen and (max-device-width: 359px){
+    .item-box{
+        width: 160px;
     }
 
 }
