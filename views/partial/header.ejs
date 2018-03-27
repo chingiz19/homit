@@ -21,8 +21,8 @@
         <!-- search bar -->
         <section class="search-sec" ng-show="!screenMob" flex="40">
             <button class="search-btn" ng-click="searchRequest = '' ; searchDisplay = ''; ">
-                <img ng-if="!searchRequest" ng-src="/resources/images/icons/search_magnifier.svg">
-                <img ng-if="searchRequest" ng-src="/resources/images/icons/clear-search.svg">
+                <ng-md-icon ng-if="!searchRequest" icon="search"></ng-md-icon>
+                <ng-md-icon ng-if="searchRequest" icon="clear"></ng-md-icon>
             </button>
             <input id="global-search-input" class="search-input" ng-model="searchRequest" placeholder="Search to Homit...">
 
@@ -83,7 +83,7 @@
                     <div class="hub-box">
                         <div id="snack-vendor-dashboard" class="store-div snack-vendor-div" ng-click="hrefTo('/catalog/snack-vendor')">
                             <div>
-                                <img ng-src="/resources/images/non-catalog-image/snack-vendor_icon.png">
+                                <img ng-src="/resources/images/non-catalog-image/homit_hub/snack-vendor_icon.png">
                             </div>
                             <h3>
                                 <a href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a>
@@ -92,7 +92,7 @@
                         </div>
                         <div id="liquor-store-dashboard" class="store-div" ng-click="hrefTo('/catalog/liquor-station')">
                             <div>
-                                <img ng-src="/resources/images/non-catalog-image/liquor-station_icon.png">
+                                <img ng-src="/resources/images/non-catalog-image/homit_hub/liquor-station_icon.png">
                             </div>
                             <h3>
                                 <a href="https://homit.ca/catalog/liquor-station">Liquor Station</a>
@@ -104,7 +104,7 @@
             </div>
 
             <% if(!userLoggedIn) { %>
-                <span>
+                <span id="sign-btns">
                     <button class="homit-btn logIn-btn rgb-background btn-font" ng-click="modal(true, 'login');">
                         Log in
                     </button>
@@ -159,7 +159,7 @@
                 </a>
             </li>
             <li ng-repeat="node in resultSubcategory" class="search-res-li">
-                <a href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" class="search-res-a" target="_self" ng-click="sendSubcategory(node.subcategory, 0)"
+                <a href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" class="search-res-a" target="_self" ng-click="goToSearchedNode(node.subcategory, 0)"
                     id="subcategory_{{ $index + 1 }}">
                     <span class="search-res-span">{{ node.subcategory }}</span>
                 </a>
@@ -171,7 +171,7 @@
         <ul ng-if="resultProducts.length" class="search-res-ul-product">
             <li ng-repeat="node in resultProducts" class="search-res-li-product">
                 <a href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" class="search-res-a-product" target="_self" layout="row"
-                    ng-click="sendSubcategory(node.subcategory, node.product_id)" id="product_{{ $index + 1 }}">
+                    ng-click="goToSearchedNode(node.subcategory, node.product_id)" id="product_{{ $index + 1 }}">
                     <span>
                         <img class="search-res-product-img" ng-src="/resources/images/products/{{ node.category }}/{{ node.image }}">
                     </span>

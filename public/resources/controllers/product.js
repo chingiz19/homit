@@ -15,10 +15,8 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
 
     $scope.addToCart = function (product) {
         if (product.store_open) {
-            // var p = jQuery.extend(true, {}, product);
             var p = {};
-
-            p.super_category = product.super_category;
+            p.store_type_api_name = product.store_type_api_name;
             p.volume = product.products[$scope.selected_container].product_variants.all_volumes[product.products[$scope.selected_container].selectedVolume];
             p.packaging = product.products[$scope.selected_container].product_variants[product.products[$scope.selected_container].product_variants.all_volumes[product.products[$scope.selected_container].selectedVolume]].all_packagings[product.products[$scope.selected_container].selectedPack];
             p.price = product.products[$scope.selected_container].product_variants[product.products[$scope.selected_container].product_variants.all_volumes[product.products[$scope.selected_container].selectedVolume]][product.products[$scope.selected_container].product_variants[product.products[$scope.selected_container].product_variants.all_volumes[product.products[$scope.selected_container].selectedVolume]].all_packagings[product.products[$scope.selected_container].selectedPack]].price;

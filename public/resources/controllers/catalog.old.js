@@ -2,7 +2,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     var catalogCtrl = this;
 
     $scope.selection = $location.path();
-    $scope.showCategories = false;
+
     $scope.isBeers = false;
     $scope.isWines = false;
     $scope.isSpirits = false;
@@ -104,13 +104,6 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         }
     };
 
-    $scope.hrefPrdPage = function (product) {
-        var path;
-        path = "/catalog/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + product.image.substring(product.image.lastIndexOf("_") + 1, product.image.lastIndexOf("."))
-        $window.location.href = $window.location.origin + _.escape(_.toLower(path));
-        // console.log("url " + $window.location.origin + _.escape(_.toLower(path)));
-    }
-
     $scope.nextVolume = function (product) {
         $scope.numberOfVolumes = product.product_variants.all_volumes.length;
         $scope.volumeI = product.volumeI;
@@ -121,7 +114,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         product.selectedVolume = product.product_variants.all_volumes[product.volumeI];
         product.packJ = 0;
         product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
-
+        
         googleAnalytics.addEvent('next_volume', {
             "event_label": product.brand + " " + product.name,
             "event_category": googleAnalytics.eventCategories.catalog_actions
@@ -165,27 +158,41 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
 
     catalogCtrl.scope = $scope;
 
+    // TODO switch to Subcategories box when Category selected
+    $scope.showCategories = false;
 
-    $scope.filterCategories = function () {
-        $('#category_box').animate({ width: 'toggle' });
-        if ($scope.showCategories) {
-            $scope.showCategories = false;
-            document.getElementById("show_cat_icon").classList.add('rot-cat-btn_2');
-            var el = document.getElementById("show_cat_icon").classList;
-            setTimeout(function () {
-                el.remove('rot-cat-btn_1', 'rot-cat-btn_2');
-            }, 500);
-        } else {
-            $scope.showCategories = true;
-            document.getElementById("show_cat_icon").classList.add('rot-cat-btn_1');
-        }
+        // TODO switch to Subcategories box when Category selected
+        $scope.showCategories = false;
+        $scope.filterCategories = function () {
+            $('#category_box').animate({width: 'toggle'});
+            if ($scope.showCategories) {
+                $scope.showCategories = false;
+                document.getElementById("show_cat_icon").classList.add('rot180_2');
+                var el = document.getElementById("show_cat_icon").classList;
+                setTimeout(function () {
+                    el.remove('rot180_1', 'rot180_2');
+                }, 500);
+            } else {
+                $scope.showCategories = true;
+                document.getElementById("show_cat_icon").classList.add('rot180_1');
+            }
+        };
+    $scope.filterCategoriesViaButton = function(){
+        $scope.filterCategories();
+        googleAnalytics.addEvent('filter_categories', {
+            "event_category": googleAnalytics.eventCategories.catalog_actions
+        });
+    };
+
+    $scope.emptySubcategories = function () {
+        $scope.userSelectedSubcategories = null;
     };
 
     // USer Cart right-SideNav functionality
     // Start
-    $scope.toggleNavLeft = buildToggler('nav-btn-mob');
+    $scope.toggleNavLeft = buildToggler('navigateMobSN');
     $scope.NavigateOpen = function () {
-        return $mdSidenav('nav-btn-mob').isOpen();
+        return $mdSidenav('navigateMobSN').isOpen();
     };
     function debounce(func, wait, context) {
         var timer;
@@ -209,27 +216,30 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         };
     }
     $scope.close = function () {
-        $mdSidenav('nav-btn-mob').close()
+        $mdSidenav('navigateMobSN').close()
             .then(function () {
                 $log.debug("close NAVIGATE is done");
             });
     };
     // End
 
-    function clickRadioButton(id) {
-        $("#" + id).click();
-        $scope.$apply();
+    function clickRadioButton(id){
+        // $timeout(function(){
+            $("#" + id).click();
+            $scope.$apply();
+            console.log("girdi");
+        // }, 0);
     }
 
     $window.onload = function () {
         var screen_width = window.screen.width;
         var isCategoryClicked = sessionStorage.getCategoryClicked();
-        $scope.screenIsMob = global_screenIsMob;
+        $scope.screenMob = global_screenIsMob;
         var subcad = sessionStorage.getSearchSubcategory();
         var prodID = sessionStorage.getSearchProduct();
         setTimeout(function () {
             if (subcad != 'undefined' && subcad != null) {
-                var x = document.querySelectorAll(".cat-body-cat");
+                var x = document.querySelectorAll(".SubcategoryName");
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].textContent.trim() == subcad) {
                         clickRadioButton(x[i].id);
@@ -239,22 +249,22 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             } else if (isCategoryClicked == "true") {
                 $scope.filterCategories();
                 clickRadioButton("radio_0");
-            } else if (isCategoryClicked == "store-switched") {
-                sessionStorage.setCategoryClicked(true);
-                clickRadioButton("radio_0");
             } else {
                 sessionStorage.setCategoryClicked(true);
                 clickRadioButton("radio_0");
             }
             if (prodID != 'undefined') {
-                var y = document.querySelectorAll(".item-box");
+                var y = document.querySelectorAll(".itemBoxL1");
                 for (var j = 0; j < y.length; j++) {
                     if (y[j].id == prodID) {
-                        var top = $("#" + y[j].id).offset().top - ($window.innerHeight / 5);
+                        Element.prototype.documentOffsetTop = function () {
+                            return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0);
+                        };
+                        var top = document.getElementById(y[j].id).documentOffsetTop() - ($window.innerHeight / 5);
                         animateScrollTo(top, 1600);
-                        $("#" + prodID).addClass("highlighted");
+                        document.getElementById(prodID).classList.add('highlighted');
                         setTimeout(function () {
-                            $("#" + prodID).removeClass("highlighted");
+                            document.getElementById(prodID).classList.remove('highlighted');
                         }, 2500);
                         if (subcad == 'undefined' && subcad == null)
                             $scope.filterCategories();
@@ -264,25 +274,5 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         }, 20);
         $('#loading').fadeOut();
     };
-
-    $scope.scroll_prev = 0;
-    $scope.scroll_current = 0;
-
-    $(window).on('scroll', function () {
-        var scrollTop = $(window).scrollTop();
-        var elementOffset = $("#items-section").offset().top;
-        $scope.scroll_prev = $scope.scroll_current;
-        $scope.scroll_current = elementOffset - scrollTop;
-
-        if ($scope.scroll_prev > $scope.scroll_current && $scope.scroll_current <= 54) {
-            $("#category-box").removeClass("cat-section-absolute");
-            $("#category-box").addClass("cat-section-fixed");
-        } else if ($scope.scroll_prev < $scope.scroll_current && $scope.scroll_current >= 54) {
-            $("#category-box").removeClass("cat-section-fixed");
-            $("#category-box").addClass("cat-section-absolute");
-        }
-    });
-
-
 });
 

@@ -9,7 +9,7 @@
 <body style="top: 51px;">
     <%- include('partial/checkout_menu')%>
         <div ng-controller="catalogController" id="ctnCont">
-        <div id="loading">
+            <div id="loading">
                 <div class="lds-spinner">
                     <div></div>
                     <div></div>
@@ -25,209 +25,154 @@
                     <div></div>
                 </div>
             </div>
-            <!-- display: none for mobile devices for work purposes -->
-            <div layout="row" class="container col01" ng-cloak>
+
+            <!-- <div style="height: 200px; width: 100%; border: 1px solid black;"></div> -->
+
+            <div class="catalog-content" ng-cloak>
                 <!--Mob-version Navigate-->
                 <!-- Start -->
                 <div ng-if="screenIsMob">
-                    <md-button id="navigateMobIcon" ng-click="toggleNavLeft()" ng-hide="NavigateOpen()" class="md-fab md-primary navigate-mob-icon"
-                        aria-label="navigateMob">
+                    <button id="nav-btn-mob" class="nav-btn-mob box-center" ng-click="toggleNavLeft()" ng-hide="NavigateOpen()">
                         <ng-md-icon icon="dehaze"></ng-md-icon>
-                    </md-button>
-                    <md-sidenav class="mdSideNavL1" md-component-id="navigateMobSN" md-whiteframe="4">
-                        <md-content layout-padding class="mdSideNavL1A">
-                            <div layout="row" class="section-1">
-                                <div class="section-1-A">NAVIGATE</div>
-                                <md-button ng-click="close()" class="md-primary section-1-B" hide-gt-md aria-label="closeNavigate">
-                                    <ng-md-icon icon="chevron_left" class="section-1-button"></ng-md-icon>
-                                </md-button>
+                    </button>
+                    <md-sidenav md-component-id="nav-btn-mob" md-whiteframe="4" class="md-sidenav-mob">
+                        <md-content class="md-content-mob">
+                            <div class="nav-mob-header">
+                                <div class="nav-mob-header-txt">NAVIGATE</div>
+                                <button ng-click="close()" class="nav-mob-cls-btn" hide-gt-md>
+                                    <ng-md-icon icon="chevron_left"></ng-md-icon>
+                                </button>
                             </div>
-                            <div class="navgtLn3">
-                                <div class="box-center section-2-header" layout="row">
-                                    <div class="section-border section-2-border"></div>
-                                    <div class="section-header-text section-2-header-text">STORE</div>
-                                    <div class="section-border section-2-border"></div>
-                                </div>
-                                <ul style="margin: 0; padding: 0;">
-                                    <li class="navgtLn3AAA" ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '0px'} || {'margin-left': '70px'}">
-                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Liquor Station')" icon="shopping_cart" style="fill: rgba(42,81,145,0.9);"
-                                            size="50"></ng-md-icon>
-                                        <a ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '20px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '0px'}"
-                                            href="/catalog/liquor-station" target="_self" class="navgtLn3AAAB">Liquor Station</a>
+                            <section class="nav-mob-content">
+                                <div class="nav-sep-line-str">STORE</div>
+                                <ul class="str-ul">
+                                    <li class="nav-mob-str-ln str-ln-1" ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '0px'} || {'margin-left': '10px'}">
+                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Liquor Station')" icon="shopping_cart"></ng-md-icon>
+                                        <a ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '10px', 'font-weight':'600', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
+                                            href="/catalog/liquor-station" target="_self">Liquor Station</a>
                                     </li>
-                                    <li class="navgtLn3AAA" ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '0px'} || {'margin-left': '70px'}">
-                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Snack Vendor')" icon="shopping_cart" style="fill: rgba(42,81,145,0.9);" size="50"></ng-md-icon>
-                                        <a ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '20px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '0px'}"
-                                            href="/catalog/snack-vendor" target="_self" class="navgtLn3AAAB">Snack Vendor</a>
+                                    <li class="nav-mob-str-ln" ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '0px'} || {'margin-left': '10px'}">
+                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Snack Vendor')" icon="shopping_cart"></ng-md-icon>
+                                        <a ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '10px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
+                                            href="/catalog/snack-vendor" target="_self">Snack Vendor</a>
                                     </li>
                                 </ul>
-                                <div class="box-center section-3-header" layout="row">
-                                    <div class="section-border section-3-border"></div>
-                                    <div class="section-header-text section-3-header-text">STORE AISLE</div>
-                                    <div class="section-border section-3-border"></div>
-                                </div>
-                                <ul class="navgtLn3A">
-                                    <ul ng-repeat="category in <%= categories %> track by $index" class="navgtLn3AA">
-                                        <li class="navgtLn3AAA" ng-style="('<%= selectedCategory %>' == category) && {'margin-left': '0px'} || {'margin-left': '70px'}">
-                                            <ng-md-icon ng-show="('<%= selectedCategory %>' == category)" icon="label" style="fill: rgba(42,81,145,0.9); margin-left: 10px;"
-                                                size="40"></ng-md-icon>
-                                            <a ng-style="('<%= selectedCategory %>' == category) && {'margin-left': '20px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '0px'}"
-                                                href="/catalog/{{'<%= loadedStore %>' | kebabCase}}/{{category}}" target="_self"
-                                                class="navgtLn3AAAB">{{category | capitalize}}</a>
-                                        </li>
-                                    </ul>
+                                <div class="nav-sep-line-aisle">STORE AISLE</div>
+                                <ul class="str-aisle-ul">
+                                    <li class="nav-mob-aisle-ln" ng-repeat="category in <%= categories %> track by $index">
+                                        <ng-md-icon ng-show="('<%= selectedCategory %>' == category)" icon="label"></ng-md-icon>
+                                        <a ng-style="('<%= selectedCategory %>' == category) && {'margin-left': '10px', 'font-weight':'600'} || {'margin-left': '30px'}"
+                                            href="/catalog/{{ '<%= loadedStore %>' | kebabCase }}/{{ category }}" target="_self">{{category | capitalize}}</a>
+                                    </li>
                                 </ul>
-                                <div class="box-center section-4-header" layout="row">
-                                    <div class="section-border section-4-border"></div>
-                                    <div class="section-header-text section-4-header-text">CATEGORY</div>
-                                    <div class="section-border section-4-border"></div>
-                                </div>
-                                <span>
-                                    <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
-                                        <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant" ng-click="checkSubcategories(variant)"
-                                            class="SubcategoryNameHDR">
-                                            <span>{{variant}}</span>
-                                        </md-radio-button>
-                                    </md-radio-group>
-                                </span>
-                            </div>
+                                <div class="nav-sep-line-cat">CATEGORY</div>
+                                <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
+                                    <md-radio-button class="cat-body-cat" ng-repeat="variant in subcategories" id="radio_{{ $index }}" ng-value="variant" ng-click="checkSubcategories(variant)">
+                                        <span class="variant-txt">{{ variant }}</span>
+                                    </md-radio-button>
+                                </md-radio-group>
+                            </section>
                         </md-content>
                     </md-sidenav>
                 </div>
                 <!--End-->
-                <md-container class="col1">
-                    <div class="sizeStage col1A">{{'
-                        <%= selectedCategory %>'}}</div>
-                    <div style="margin-top: 16px;">
-                        <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
-                            <md-radio-button aria-label="variantInSubcad" ng-repeat="variant in subcategories" ng-value="variant" ng-click="checkSubcategories(variant)"
-                                class="SubcategoryName">
-                                <span>{{variant}}</span>
-                            </md-radio-button>
-                        </md-radio-group>
-                    </div>
+                <section id="category-box" class="cat-section-absolute cat-section">
+                    <div class="cat-section-header section-header box-center" ng-click="filterCategories()">{{ '
+                        <%= selectedCategory %> '}}</div>
+                    <md-radio-group ng-model="SubcategoryName">
+                        <md-radio-button class="cat-body-cat" id="radio_{{$index}}" ng-repeat="variant in subcategories" ng-value="variant" ng-click="checkSubcategories(variant)">
+                            <span>{{ variant }}</span>
+                        </md-radio-button>
+                    </md-radio-group>
                     <!--Category Box start-->
-                    <span class="col1D">
-                        <md-button aria-label="filterCategories" id="category-button" ng-click="filterCategories()" class="fltCategoryBtn">
-                            <ng-md-icon id="show_cat_icon" icon="flip"></ng-md-icon>
-                        </md-button>
-                    </span>
-                    <div id="category_box" class="col1E">
-                        <div layout="column">
-                            <div class="sizeStage col1EAA same-line">
-                                <%= loadedStore %>
-                            </div>
-                            <ul class="col1EAB same-line" layout="column">
-                                <li ng-repeat='category in <%= categories %> track by $index'>
-                                    <a href="/catalog/{{'<%= loadedStore %>' | kebabCase }}/{{category}}" target="_self" class="category-list" ng-style="(('<%= selectedCategory %>' == category)) && {'background-color': 'rgba(0,189,149,0.7)'}">
-                                        <span ng-style="(('<%= selectedCategory %>' == category)) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}">{{ category }}</span>
-                                    </a>
-                                </li>
-                            </ul>
+                    <button id="category-button" ng-click="filterCategories()" class="filter-cat-btn">
+                        <ng-md-icon id="show_cat_icon" icon="flip"></ng-md-icon>
+                    </button>
+                    <div id="category_box" class="cat-body-cubcat">
+                        <div class="cat-section-header section-header box-center same-line" ng-click="filterCategories()">
+                            <%= loadedStore %>
                         </div>
+                        <ul class="subcat-list same-line" layout="column">
+                            <li ng-repeat='category in <%= categories %> track by $index'>
+                                <a href="/catalog/{{ '<%= loadedStore %>' | kebabCase }}/{{ category }}" target="_self" class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': 'rgba(0,189,149,0.7)'}">
+                                    <span ng-style="( '<%= selectedCategory %>' == category ) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}">{{ category }}</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                     <!--End-->
-                </md-container>
-                <div layout-fill layout="row">
-                    <div flex="80" layout-wrap class="col24" id="col24">
-                        <div ng-repeat="product in products">
-                            <div ng-if="isInSelectedSubcategories(product.subcategory)">
-                                <div class="itemBoxL1" id="{{product.product_id}}" itemscope itemtype="http://schema.org/Thing">
-                                    <ul class="itemBoxL2">
-                                        <md-button aria-label="addToCart" class="addToCrtBtn" ng-click="addToCart(product, v_index)">
-                                            <ng-md-icon icon="shopping_cart" class="add-shopping-cart"></ng-md-icon>
-                                        </md-button>
-                                        <div class="pvChangeBx"></div>
-                                        <div class="pvChange1">
-                                            <div class="pvChange1A">
-                                                <ul>
-                                                    <li class="pvChange1AAA">
-                                                        <md-button class="pvChangeBtnA" ng-show="product.product_variants.all_volumes[product.volumeI-1]" ng-click="previousVolume(product)"
-                                                            aria-label="leftVol">
-                                                            <ng-md-icon icon="keyboard_arrow_left" class="pvChangeBtnAA"></ng-md-icon>
-                                                        </md-button>
-                                                    </li>
-                                                    <span class="pvChange1AAB">
-                                                        <span layout="row" class="pvChange1AABA">
-                                                            <!-- <li class="nHighltdVol" style="width: 2ch; overflow: hidden; white-space: nowrap;">{{product.product_variants.all_volumes[product.volumeI-1]}}</li> -->
-                                                            <li class="highltdVol">&#8198{{product.product_variants.all_volumes[product.volumeI]}}&#8198</li>
-                                                            <!-- <li class="nHighltdVol" style="width: 2ch; overflow: hidden; white-space: nowrap;">{{product.product_variants.all_volumes[product.volumeI+1]}}</li> -->
-                                                        </span>
-                                                    </span>
-                                                    <li class="pvChange1AAC">
-                                                        <md-button class="pvChangeBtnA" ng-show="product.product_variants.all_volumes[product.volumeI+1]" ng-click="nextVolume(product)"
-                                                            aria-label="rightVol">
-                                                            <ng-md-icon icon="keyboard_arrow_right" class="pvChangeBtnAA"></ng-md-icon>
-                                                        </md-button>
-                                                    </li>
-                                                </ul>
-                                                <ul>
-                                                    <li class="pvChange1ABA">
-                                                        <md-button class="pvChangeBtnA" ng-show="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ-1]"
-                                                            ng-click="previousPack(product)" aria-label="leftPack">
-                                                            <ng-md-icon icon="keyboard_arrow_left" class="pvChangeBtnAA"></ng-md-icon>
-                                                        </md-button>
-                                                    </li>
-                                                    <span class="pvChange1ABB">
-                                                        <span layout="row" class="pvChange1ABBA">
-                                                            <!-- <li class="nHighltdPack">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ-1]}}</li> -->
-                                                            <li class="highltdPack">&#8198X{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]}}&#8198</li>
-                                                            <!-- <li class="nHighltdPack">{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ+1]}}</li> -->
-                                                        </span>
-                                                    </span>
-                                                    <li class="pvChange1ABC">
-                                                        <md-button class="pvChangeBtnA" ng-show="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ+1]"
-                                                            ng-click="nextPack(product)" aria-label="rightPack">
-                                                            <ng-md-icon icon="keyboard_arrow_right" class="pvChangeBtnAA"></ng-md-icon>
-                                                        </md-button>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                </section>
+                <section class="items-section" id="items-section">
+                    <div ng-repeat="product in products">
+                        <div ng-if="isInSelectedSubcategories(product.subcategory)">
+                            <div class="item-box" id="{{ product.product_id }}">
+                                <ul class="item-box-ul">
+                                    <button class="add-to-cart-btn" ng-click="addToCart(product, v_index)">
+                                        <ng-md-icon icon="add_shopping_cart"></ng-md-icon>
+                                    </button>
+                                    <section class="pack-vol-section">
+                                        <ul class="pac-vol-ul">
+                                            <li class="pac-vol-li pac-vol-li-left volume-minus">
+                                                <button class="pac-vol-btn box-center" ng-if="product.product_variants.all_volumes[product.volumeI-1]" ng-click="previousVolume(product)">
+                                                    <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+                                                </button>
+                                            </li>
+                                            <li class="pac-vol-li pac-vol-li-mid">
+                                                <span class="pac-vol-text">{{ product.product_variants.all_volumes[product.volumeI] }}</span>
+                                            </li>
+                                            <li class="pac-vol-li pac-vol-li-right volume-plus">
+                                                <button class="pac-vol-btn box-center" ng-if="product.product_variants.all_volumes[product.volumeI+1]" ng-click="nextVolume(product)">
+                                                    <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                        <ul class="pac-vol-ul">
+                                            <li class="pac-vol-li pac-vol-li-left pack-minus">
+                                                <button class="pac-vol-btn box-center" ng-if="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ-1]"
+                                                    ng-click="previousPack(product)">
+                                                    <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+                                                </button>
+                                            </li>
+                                            <li class="pac-vol-li pac-vol-li-mid">
+                                                <span class="pac-vol-text">X{{ product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]
+                                                    }}
+                                                </span>
+                                            </li>
+                                            <li class="pac-vol-li pac-vol-li-right pack-plus">
+                                                <button class="pac-vol-btn box-center" ng-if="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ+1]"
+                                                    ng-click="nextPack(product)">
+                                                    <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <li class="item-pic" ng-click="hrefPrdPage(product)">
+                                        <img ng-src="{{ product.image }}">
+                                    </li>
+                                    <img ng-if="!product.store_open" class="catalog-store-closed" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
+                                    <li class="catalog-text item-brand" ng-click="hrefPrdPage(product)">
+                                        <div>
+                                            <ng-md-icon icon="info" class="item-info-icon"></ng-md-icon>
+                                            <span>{{ product.brand }} {{ product.name }}</span>
                                         </div>
-                                        <!--Volume/Pack change Small Screens - Start-->
-                                        <!-- Start -->
-                                        <div class="volPackMob" ng-if="screenIsMob">
-                                            <div class="volPackMobA" ng-show="product.product_variants.all_volumes[product.volumeI-1]">
-                                                <md-button ng-click="previousVolume(product)" aria-label="nextVol">
-                                                    <ng-md-icon icon="keyboard_arrow_left" class="volPackMobAAA"></ng-md-icon>
-                                                </md-button>
-                                            </div>
-                                            <div class="volPackMobD" ng-show="product.product_variants.all_volumes[product.volumeI+1]">
-                                                <md-button ng-click="nextVolume(product)" aria-label="preciousVol">
-                                                    <ng-md-icon icon="keyboard_arrow_right" class="volPackMobAAA"></ng-md-icon>
-                                                </md-button>
-                                            </div>
-                                            <ul class="price-volume-pack-mobile" layout="row">
-                                                <li>&#8198{{product.product_variants.all_volumes[product.volumeI]}}&#8198</li>
-                                                <li>&#8198X{{product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]}}&#8198</li>
-                                            </ul>
-                                            <div class="volPackMobC">
-                                                <md-button ng-click="previousPack(product)" aria-label="nextPack" ng-show="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ-1]">
-                                                    <ng-md-icon icon="keyboard_arrow_left" class="volPackMobAAA"></ng-md-icon>
-                                                </md-button>
-                                            </div>
-                                            <div class="volPackMobF" ng-show="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ+1]">
-                                                <md-button ng-click="nextPack(product)" aria-label="nextPack">
-                                                    <ng-md-icon icon="keyboard_arrow_right" class="volPackMobAAA"></ng-md-icon>
-                                                </md-button>
-                                            </div>
-                                        </div>
-                                        <!-- End -->
-                                        <li class="container itmPic">
-                                            <img ng-src={{product.image}}>
-                                        </li>
-                                        <img ng-if="!product.store_open" class="catalog-store-closed" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
-                                        <li class="brand hmtTxt">{{product.brand}} {{product.name}}</li>
-                                        <li class="price" itemscope itemtype="http://schema.org/Offer">
-                                            <span>{{product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price}}C$</span>
-                                        </li>
-                                    </ul>
-                                </div>
+                                    </li>
+                                    <li class="item-pack-vlo-mob pack-vol-prc-mob-txt box-center">
+                                        <span>{{ product.product_variants.all_volumes[product.volumeI] + " x" + product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]
+                                            }}</span>
+                                    </li>
+                                    <li class="catalog-text item-price pack-vol-prc-mob-txt">
+                                        <span>{{ product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price
+                                            }}C$
+                                        </span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
+        </div>
+
         </div>
         <% if (!production) { %>
             <script src="/resources/services/localStorage.js"></script>

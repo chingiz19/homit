@@ -390,7 +390,7 @@ var recommended_products = {
 router.get("/product/:productName/ls/:listingId", async function (req, res, next) {
     var product = await Catalog.getProductPageProductsByListingId(req.params.listingId);
 
-    var validationUrl = "/product/" + _.trim(_.toLower(product.brand + " " + product.name)).replace(/ /g, "-") + "/ls/" + req.params.listingId;
+    var validationUrl = "/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + req.params.listingId;
 
     if (!product || validationUrl != req.url) {
         return res.redirect("/notfound");
@@ -412,7 +412,7 @@ router.get("/product/:productName/ls/:listingId", async function (req, res, next
     req.options.ejs.recommended_products = JSON.stringify(recommended_products[_.lowerCase(product.category)]);
     req.options.ejs.see_more_url = "https://homit.ca/catalog/" + product.store_type_api_name + "/" + product.category;
 
-    if (Object.values(product.products).length > 0){
+    if (Object.values(product.products).length > 0) {
         req.options.ejs.og_image = Object.values(product.products)[0].image;
     }
 
@@ -421,9 +421,9 @@ router.get("/product/:productName/ls/:listingId", async function (req, res, next
         product.products[key].selectedPack = 0;
     }
 
-    if(product.product_alcohol_volume != "0.00%" && product.store_type_api_name == "liquor-station"){
+    if (product.product_alcohol_volume != "0.00%" && product.store_type_api_name == "liquor-station") {
         req.options.ejs.showAlcoholVolume = true;
-    }else{
+    } else {
         req.options.ejs.showAlcoholVolume = false;
     }
 

@@ -8,8 +8,8 @@
 
 <body ng-cloak>
     <%- include('partial/checkout_menu')%>
-        <div ng-controller="productController" layout="column">
-            <div class="container">
+        <div class="controller" ng-controller="productController" layout="column">
+            <div class="product-content">
                 <input id="recommendedProducts" style="display: none;" value="<%= recommended_products %>">
                 <input id="product" style="display: none;" value="<%= product %>">
                 <input id="default_container" style="display: none;" value="<%= default_container %>">
@@ -20,7 +20,7 @@
                         </span>
                         <span itemprop="name">
                             <%= product_brand %>
-                        </span> - One Click Away</h1>
+                        </span> - Order Online</h1>
                     <section>
                         <!--googleoff: snippet-->
                         <div class="col-md-6 product-img product-image" layout="column">
@@ -30,7 +30,7 @@
                             </div>
                             <div class="product-image-line"></div>
                             <div layout="row">
-                                <div ng-repeat="(key, value) in product.products">
+                                <div ng-repeat="(key, value) in product.products" class="product-img-list">
                                     <img class="product-image-to-select" ng-style="((key == selected_container)) && {'border':'1px solid rgba(0,0,0,0.2)'}" ng-click="updateContainer(key)"
                                         ng-src="{{ value.image}}">
                                 </div>
@@ -110,7 +110,7 @@
                                                 <span class="product-details-container">{{ selected_container}}</span>
                                             </li>
                                             <!--googleon: snippet-->
-                                            <!-- <% if (product_origin_country) {%> -->
+                                            <% if (product_origin_country) {%>
                                                 <li itemprop="description"><span class="bold">Type:</span>
                                                     <%= product_type %>
                                                 </li>
@@ -127,10 +127,10 @@
                                                         <%= product_alcohol_volume %>
                                                     </li>
                                                 <% } %>
-                                                <li ng-click="hrefTo()">
-                                                    <a href="<%= see_more_url %>">See More Products</a>
+                                                <li>
+                                                    <a href="<%= see_more_url %>" target="_self">See More Products</a>
                                                 </li>
-                                            <!-- <% } %> -->
+                                            <% } %>
                                         </ul>
                                     </div>
                         </div>
@@ -146,7 +146,7 @@
                 <section layout="row" class="recomended-item">
                     <div ng-repeat="item in recommended_products">
                         <ul ng-click="hrefTo(item.url)">
-                            <li>
+                            <li class="also-image-li">
                                 <img ng-src="{{item.image}}">
                             </li>
                             <li class="recomended-item-text">{{ item.packaging + " X " + item.size }}</li>

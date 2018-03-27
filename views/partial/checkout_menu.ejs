@@ -1,69 +1,58 @@
 <link href="/resources/css/checkout_menu.css" rel="stylesheet">
 <div ng-controller="cartController" ng-cloak>
-    <div class="cart1">
-        <md-button id="cart" ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-fab md-primary cart2a" aria-label="toggleRightCart">
-            <div class="cart2aa"><ng-md-icon icon="shopping_cart" class="shopping-cart"></ng-md-icon></div>
-        </md-button>
-        <div class="cartNotificationNumber cart2b">{{numberOfItemsInCart}}</div>
+    <div class="checkout-menu-btn-div">
+        <button id="cart" class="checkout-menu-btn" ng-click="toggleRight()" ng-hide="isOpenRight()">
+            <ng-md-icon icon="shopping_cart"></ng-md-icon>
+        </button>
+        <div class="items-num box-center">{{numberOfItemsInCart}}</div>
     </div>
-    <md-sidenav class="md-sidenav-right md-whiteframe-4dp mdSideNavR1" md-component-id="right"> 
-        <md-content class="mdSideNavR2">
-            <div class="sdNavFB1">
-                <div class="sdNavFB2">
-                    <md-button ng-click="close()" aria-label="HideSideNav" class="close-button" >
+    <md-sidenav class="md-sidenav-right md-whiteframe-4dp checkout-sn" md-component-id="right"> 
+        <md-content class="checkout-sn-content">
+            <section class="sidenav-header">
+                <div class="cart-tot box-center">
+                    <button ng-click="close()" class="box-center sidenav-cls-btn">
                         <ng-md-icon  icon="keyboard_arrow_right"></ng-md-icon>
-                    </md-button>
-                    <ul layout="row" class="cart-total">
+                    </button>
+                    <ul class="total-ul">
                         <li>Cart Total:</li>
-                        <li>&nbsp &nbspC${{totalAmount}}</li>
+                        <li>&nbsp &nbspC${{ totalAmount }}</li>
                     </ul>
                 </div>
-                <div class="div-checkout">
-                    <button onclick="location.href='/checkout'" class="md-primary checkout cart-button">Proceed to Checkout</button>
+                <div class="box-center to-checkout-div">
+                    <button onclick="location.href='/checkout'" class="to-checkout-btn">Proceed to Checkout</button>
                 </div>
-            </div>
-            <!--Order Summary - Cart Items-->
-            <div ng-repeat="store_type in userCartToView track by $index" class="cartBItems1">
-                <div class="store-break">
-                    <div flex="10" class="store-break-line"></div>
-                    <span class="store-type">{{ store_type[0] }}</span>
-                    <div  class="store-break-line"></div>
+            </section>
+            <section class="sidenav-body" ng-repeat="store_type in userCartToView track by $index">
+                <div class="store-seper box-center">
+                    <span class="store-name">{{ store_type[0] }}</span>
                 </div>
                 <div ng-repeat="product in store_type[1] track by $index">
-                    <div layout="row" layout-align="center">
-                        <div class="cartBItems2A" flex="30">
+                    <div class="item-div">
+                        <div class="box-center item-left-div">
+                            <button class="item-btn" ng-click="plusItem(product)">
+                                <ng-md-icon  icon="add_circle_outline"></ng-md-icon>
+                            </button>
+                            <button  class="item-btn" ng-click="minusItem(product)">
+                                <ng-md-icon icon="remove_circle_outline"></ng-md-icon>
+                            </button>
+                        </div>
+                        <div class="item-mid-div">
+                            <button id="item-remove-button" class="item-btn remove-btn" ng-click="removeFromCart(product)">
+                                <ng-md-icon icon="clear"></ng-md-icon>
+                            </button>
+                            <img class="item-img" ng-src="{{ product.image }}">
+                        </div>
+                        <div class="box-center item-right-div">
                             <ul>
-                                <li>
-                                    <md-button aria-label="plusItem" ng-click="plusItem(product)" class="item-button">
-                                        <ng-md-icon  icon="add_circle_outline"></ng-md-icon>
-                                    </md-button>
-                                </li>
-                                <li>
-                                    <md-button  aria-label="minusItem" ng-click="minusItem(product)" class="item-button">
-                                        <ng-md-icon  icon="remove_circle_outline"></ng-md-icon>
-                                    </md-button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div flex="35" layout="column" >
-                            <li class="cartBItems2B1">
-                                <md-button id="item-remove-button" aria-label="removeFromCart" ng-click="removeFromCart(product)" class="item-button">
-                                    <ng-md-icon  icon="clear"></ng-md-icon>
-                                </md-button>
-                            </li>
-                            <li><img class="cartBItems2B2" ng-src={{product.image}}></li>
-                        </div>
-                        <div class="cartBItems2C" flex="35">
-                            <ul class="cartBItems2C2">
-                                <li>{{product.brand}} {{product.name}}</li>
-                                <li>{{product.volume}}</li>
-                                <li>{{product.quantity}}&#8202X{{product.packaging}}</li>
-                                <li>C${{product.price}}</li>
+                                <li>{{ product.brand }} {{ product.name }}</li>
+                                <li>{{ product.volume }}</li>
+                                <li>{{ product.quantity + " x" + product.packaging }}</li>
+                                <li>{{ "C$" + product.price }}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </md-content>
     </md-sidenav>
 </div>
