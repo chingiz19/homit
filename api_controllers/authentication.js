@@ -55,7 +55,7 @@ router.post('/signup', async function (req, res, next) {
             var insertedUser = await User.addUser(userData);
             //TODO: check for success
             var user = await User.findUser(email);
-            Auth.sign(req, res, user);
+            Auth.signCustomerSession(req, user);
             res.json({
                 success: true,
                 ui_message: "Successfully signed up. You will receive an email with confirmation"
@@ -77,7 +77,7 @@ router.post('/signin', async function (req, res, next) {
         if (!user) {
             return errorMessages.sendInvalidCredentials(res);
         } else {
-            Auth.sign(req, res, user);
+            Auth.signCustomerSession(req, user);
             res.json({
                 success: true,
                 ui_message: "Successfully signed in"
@@ -87,8 +87,8 @@ router.post('/signin', async function (req, res, next) {
 });
 
 /* Sign out the user */
-router.post('/signout', function (req, res, next) {
-    Auth.clear(res);
+router.all('/signout', function (req, res, next) {
+    Auth.clear(req);
     res.status(200).json({ "success": true, "ui_message": "Successfully logged out" });
 });
 
@@ -187,7 +187,7 @@ router.get("/csrlogin", async function (req, res, next) {
     if (!user) {
         return errorMessages.sendInvalidCredentials(res);
     } else {
-        Auth.sign(req, res, user);
+        Auth.signCSRSession(req, user);
         res.redirect("/vieworders");
     }
 });

@@ -48,6 +48,14 @@ pub.tables = {
   stores_hours: "stores_hours"
 }
 
+/**
+ * Redis Database tables
+ */
+pub.redisTable = {
+  io_drivers: 1,
+  sessions: 10
+}
+
 /*Building metadata for log*/
 var logMeta = {
   directory: __filename
