@@ -2,6 +2,9 @@ md-toolbar{
     background-color: rgba(42,81,145,0.95) !important;
 }
 body{
+    position: relative;
+    top: 50px;
+    overflow-y: hidden;
     background-color: rgba(250,250,250,1); 
     font-family: 'Nunito', sans-serif; 
     color: rgba(70,70,70,1);
@@ -48,7 +51,7 @@ a {
 footer{
     position: absolute;
     width: 100%;
-    bottom: 0;
+    bottom: 50px;
 }
 @media (max-height: 530px){
     footer{
@@ -63,12 +66,38 @@ footer{
     .content{
         padding-right: 15px;
     }
-    .content h1{
-        font-size: 32px !important;
+    .top-header{
+        font-size: 32px;
+    }
+    .homit-nav-content {
+        width: 380px;
     }
 }
-@media screen and (max-device-width: 600px) {
-    body{
-        padding-top: 125px;
+
+@media (max-width: 630px){
+    .homit-nav-content {
+        width: 380px;
+    }
+}
+
+/* start of phone styles */
+@media screen and (max-device-width: 479px) and (min-device-width: 360px){
+    .top-header{
+        font-size: 30px;
+    }
+    .homit-nav-content {
+        width: 100vw;
+    }
+}
+
+@media screen and (max-device-width: 359px){
+    .top-header{
+        font-size: 24px;
+    }
+    .homit-nav-content {
+        width: 100vw;
+    }
+    .phone{
+        font-size: 29px;
     }
 }
