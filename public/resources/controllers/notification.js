@@ -2,7 +2,8 @@ app.controller("notificationController", function ($scope, $sce, notification, $
 
     $scope.init = function(){
         $scope.clearAll();
-        $scope.defaultTimeout = 3000; // 2 seconds
+        $scope.timeoutIsSet;
+        $scope.defaultTimeout = 2000; // 2 seconds
     };
 
     $scope.clearAll = function () {
@@ -32,7 +33,6 @@ app.controller("notificationController", function ($scope, $sce, notification, $
 
     function addCartItem(product){
         $scope.product = product;
-
         clearWithTimeout();
     }   
 
@@ -52,13 +52,18 @@ app.controller("notificationController", function ($scope, $sce, notification, $
      * Clear notifications after 'n' milliseconds
      * @param {*} timeout 
      */
+
     function clearWithTimeout(timeout){
         var time = timeout;
         if (!time){
             time = $scope.defaultTimeout;
         }
 
-        $timeout(function(){
+        if($scope.timeoutIsSet){
+            $timeout.cancel($scope.timeoutIsSet);
+        }
+
+        $scope.timeoutIsSet = $timeout(function(){
             $scope.clearAll();
         }, time);
     }

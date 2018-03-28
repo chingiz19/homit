@@ -1,7 +1,7 @@
 .notification_box{
     position: fixed; 
     bottom: 30px; right: 30px; 
-    height: 70px; width: 250px; 
+    height: 90px; width: 250px; 
     display: flex; align-items: center; justify-content: center;
     border: 1px solid rgba(44, 37, 37, 0.733);
     border-radius: 3px;
@@ -11,20 +11,20 @@
     animation: fadeIn 0.2s ease;
 }
 .addItem_img{
-    width: 60px; height: 60px;
+    width: 70px; height: 70px;
 }
 .addItem_ul{
     margin: 0; padding: 0; 
     margin-left: 10px;
 }
 .addItem_ulA{
-    display: flex; justify-content: center; 
-    font-weight: 500;
-    font-size: 17px;
+    text-align: center;
+    font-size: 15px;
 }
 .addItem_ulB{
-    display: flex; justify-content: center; 
-    font-size: 13px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
 }
 .notification-body{
     letter-spacing: 0.01em;

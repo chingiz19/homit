@@ -3,8 +3,8 @@
     <div class="checkout-menu-btn-div">
         <button id="cart" class="checkout-menu-btn" ng-click="toggleRight()" ng-hide="isOpenRight()">
             <ng-md-icon icon="shopping_cart"></ng-md-icon>
+            <div class="items-num box-center">{{numberOfItemsInCart}}</div>
         </button>
-        <div class="items-num box-center">{{numberOfItemsInCart}}</div>
     </div>
     <md-sidenav class="md-sidenav-right md-whiteframe-4dp checkout-sn" md-component-id="right"> 
         <md-content class="checkout-sn-content">

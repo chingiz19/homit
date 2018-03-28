@@ -419,46 +419,6 @@ md-radio-button .md-label {
     visibility: hidden;
 }
 
-.addItem {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    height: 60px;
-    width: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(44, 37, 37, 0.733);
-    border-radius: 3px;
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.26);
-    z-index: 1000;
-    transition: all 0.4s ease-in-out;
-}
-
-.addItem_img {
-    width: 50px;
-    height: 50px;
-}
-
-.addItem_ul {
-    margin: 0;
-    padding: 0;
-    margin-left: 10px;
-}
-
-.addItem_ulA {
-    display: flex;
-    justify-content: center;
-    font-weight: 500;
-}
-
-.addItem_ulB {
-    display: flex;
-    justify-content: center;
-    font-size: 13px;
-}
-
 /* start of window shrinkage affect solution */
 @media (max-width: 1140px) and (min-width: 856px) {
     .catalog-content {

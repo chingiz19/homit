@@ -241,6 +241,8 @@ app.controller("checkoutController",
             window.addEventListener('popstate', function () {
                 handler.close();
             });
+
+            //if (valid) $scope.HomeIt();
         };
 
 
