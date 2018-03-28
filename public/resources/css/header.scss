@@ -59,8 +59,8 @@ nav {
     transition: background-color 0.3s;
 }
 
-.search-btn svg{
-    fill: rgba(42,81,145,0.7);
+.search-btn svg {
+    fill: rgba(42, 81, 145, 0.7);
 }
 
 .search-btn:hover {
@@ -224,13 +224,27 @@ nav {
 
 .user-signed-btn {
     background-color: rgba(42, 81, 145, 1);
-    border: 1px solid rgba(42, 81, 145, 1);
+    border: none;
 }
 
-.user-signed-btn img {
-    background-color: rgba(42, 81, 145, 1);
+.user-signed-btn ng-md-icon {
+    fill: rgba(255, 255, 255, 1);
+}
+
+.user-signed-btn ng-md-icon svg {
     width: 34px;
     height: 34px;
+}
+
+.header-sign-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
 
 .myAccount-box {
@@ -295,8 +309,6 @@ nav {
 .header-hub {
     position: absolute;
     top: 60px;
-
-    // right: 30px;
     height: 400px;
     width: 270px;
     border: 1px rgba(220, 220, 220, 0.99) solid;
@@ -355,29 +367,32 @@ h3 {
 }
 
 /* start of window shrinkage affect solution */
-@media (max-width: 1140px) and (min-width: 856px){
-    .homit-nav-content{
+@media (max-width: 1140px) and (min-width: 856px) {
+    .homit-nav-content {
         width: 855px;
     }
 }
 
-@media (max-width: 855px) and (min-width: 571px){
-    .homit-nav-content{
+@media (max-width: 855px) and (min-width: 571px) {
+    .homit-nav-content {
         width: 570px;
     }
-    .search-sec{
+
+    .search-sec {
         display: none;
     }
 }
 
-@media (max-width: 570px){
-    .homit-nav-content{
+@media (max-width: 570px) {
+    .homit-nav-content {
         width: 285px;
     }
-    .search-sec{
+
+    .search-sec {
         display: none;
     }
-    #sign-btns{
+
+    #sign-btns {
         display: none;
     }
 }
@@ -390,16 +405,15 @@ h3 {
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
-    .cart1{
+    .cart1 {
         display: none;
     }
-
 
     .homit-nav-content {
         width: 100%;
     }
 
-    #sign-btns{
+    #sign-btns {
         display: inline;
     }
 
@@ -420,12 +434,14 @@ h3 {
         margin-right: 2px;
     }
 
-    .myAccount-box{
+    .myAccount-box {
         right: 5px;
     }
-    .myAccount-box .box-extBox{
-        left: 83%;
+
+    .myAccount-box .box-extBox {
+        left: 87%;
     }
+
     .search-btn-mob {
         height: 35px;
         width: 40px;
@@ -441,7 +457,8 @@ h3 {
     }
 
     .search-icon-mob svg {
-        margin-top: 3px; margin-bottom: 3px;
+        margin-top: 3px;
+        margin-bottom: 3px;
         width: 29px;
         height: 29px;
     }
@@ -483,10 +500,12 @@ h3 {
         font-size: 18px;
         color: rgba(0, 0, 0, 0.85);
     }
-    .mob-global-search-input input::placeholder{
+
+    .mob-global-search-input input::placeholder {
         color: rgba(0, 0, 0, 0.55);
         font-size: 20px;
     }
+
     .mob-search-result {
         position: absolute;
         top: 100px;
@@ -550,13 +569,16 @@ h3 {
         width: 70px;
         height: 70px;
     }
-    .search-res-line{
-        display: flex; justify-content: center;
+
+    .search-res-line {
+        display: flex;
+        justify-content: center;
     }
-    .search-res-line div{
+
+    .search-res-line div {
         margin: 3px 0 3px;
-        width: 90%; 
+        width: 90%;
         line-height: 1px;
-        border-bottom: 1px solid rgba(105, 103, 103, 0.15); 
+        border-bottom: 1px solid rgba(105, 103, 103, 0.15);
     }
 }

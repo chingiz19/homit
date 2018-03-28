@@ -4,15 +4,15 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
     $scope.showCoverageMap = false;
     $scope.bounds = undefined;
 
+
     $scope.init = function () {
 
-        var screen_width = window.screen.width;
-        if (screen_width < 500) {
-            $scope.screenIsMob = true;
-        } else {
-            $scope.screenIsMob = false;
-        }
+        $scope.screenIsMob = global_screenIsMob;
 
+        if(global_screenIsMob){
+            $(".full-screen").css({"height": window.innerHeight});
+        }
+        
         // always scroll to the top, then later to defined hash
         var currentHash = $location.hash();
         if (!sessionStorage.getAddress()) {

@@ -115,7 +115,7 @@
                 </span>
                 <%} else {%>
                     <button ng-click="hdrExtBx('hdrMyAcc', 'hdrMyAcc1', 'hdrMyAcc2', 'hdrMyAcc3')" class="user-signed-btn">
-                        <img ng-src="/resources/images/icons/person.svg">
+                        <ng-md-icon icon="person"></ng-md-icon>
                     </button>
                     <div id="hdrMyAcc" aria-hidden="true" class="myAccount-box">
                         <div id="hdrMyAcc1" class="box-extBox"></div>
@@ -130,7 +130,7 @@
                     </div>
                     <% } %>
         </section>
-        <modal show="showModal" show-login="showLogInModal" style="position: absolute;"></modal>
+        <modal class="header-sign-modal" show="showModal" ng-show="showModal" show-login="showLogInModal"></modal>
     </div>
     <!-- Mobile global-search Input-->
     <section class="mob-global-search-input" ng-show="mobileSearchShow">

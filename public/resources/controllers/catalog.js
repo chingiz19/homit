@@ -222,9 +222,8 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     }
 
     $window.onload = function () {
-        var screen_width = window.screen.width;
-        var isCategoryClicked = sessionStorage.getCategoryClicked();
         $scope.screenIsMob = global_screenIsMob;
+        var isCategoryClicked = sessionStorage.getCategoryClicked();
         var subcad = sessionStorage.getSearchSubcategory();
         var prodID = sessionStorage.getSearchProduct();
         setTimeout(function () {

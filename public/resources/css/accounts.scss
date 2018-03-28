@@ -3,7 +3,8 @@
     .margin-auto {
         margin: auto;
     }
-    .search-btn-mob{
+
+    .search-btn-mob {
         display: none;
     }
 
@@ -113,9 +114,11 @@
         color: rgba(0, 0, 0, 0.95);
     }
 
-    #emailNotification-mob, #signUpNotification-mob{
+    #emailNotification-mob, #signUpNotification-mob {
         font-size: 20px;
-        display: flex; align-items: center; justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .error-message-link {
@@ -128,9 +131,6 @@
         height: 20px;
     }
 
-    // #sucLogIn-mob{
-    //     display: flex;
-    // }
     .sucCircle-mob {
         margin: auto;
         margin-top: calc(10vh - 40px);
@@ -138,6 +138,26 @@
         width: 80px;
         border-radius: 40px;
         background-color: rgba(0, 189, 149, 1);
+    }
+
+    .msg-close-btn {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        border: none;
+        background-color: transparent;
+        width: 22px;
+        height: 22px;
+        padding: 0;
+    }
+
+    .msg-close-btn ng-md-icon {
+        fill: rgba(0, 0, 0, 0.4);
+    }
+
+    .msg-close-btn ng-md-icon svg {
+        width: 20px;
+        height: 20px;
     }
 
     .foldIn-mob {
@@ -148,12 +168,16 @@
         animation: unfoldOut 0.6s ease-in-out;
     }
 
-    .sucCircle-mob img {
-        height: 70px;
-        width: 70px;
+    .sucCircle-mob ng-md-icon {
+        fill: rgba(255, 255, 255, 1);
         margin: auto;
         margin-left: 5px;
         margin-top: 5px;
+    }
+
+    .sucCircle-mob ng-md-icon svg {
+        height: 70px;
+        width: 70px;
     }
 
     .emailNotification-mob {
@@ -170,10 +194,12 @@
         display: none;
         height: 0px;
     }
-    .signUpNotification-mob{
+
+    .signUpNotification-mob {
         display: none;
         height: 0px;
     }
+
     .sign-showSucMessage-mob {
         position: absolute;
         bottom: 0;

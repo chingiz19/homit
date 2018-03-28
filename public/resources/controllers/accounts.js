@@ -33,7 +33,7 @@ app.controller("accountsController", function ($scope, $window, $timeout, user) 
             $scope.sign_message_mob = "Couldn't connect. Please refresh the page and try again.";
             $("#emailNotification-mob").addClass("sign-showErrorMessage-mob");
             $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob");
-            $("#emailNotification-mob").addClass("invalidLogIn-mob");
+            $("#emailNotification-mob").addClass("invalidLogIn-mob foldIn-mob");
         });
     }
 
@@ -56,7 +56,7 @@ app.controller("accountsController", function ($scope, $window, $timeout, user) 
             pScope.sign_message_mob = "ERROR in password reset. Please contact info@homit.ca";
             $("#emailNotification-mob").addClass("sign-showErrorMessage-mob");
             $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob");
-            $("#invalidLogIn-mob").addClass("invalidLogIn-mob");
+            $("#invalidLogIn-mob").addClass("invalidLogIn-mob foldIn-mob");
         });
     }
 
