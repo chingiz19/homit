@@ -312,7 +312,7 @@ pub.saveDropOff = async function (driverId, dropOff) {
 }
 
 pub.saveArrivedCustomer = async function (driverId, orderIds) {
-    var orderInfo = await Orders.getUserWithOrderByOrderId(orderIdsString[0].split("_")[1]);
+    var orderInfo = await Orders.getUserWithOrderByOrderId(orderIds[0].split("_")[1]);
     var name = orderInfo.user.first_name;
     var phone = orderInfo.transaction.phone_number;
 

@@ -3,57 +3,12 @@
  */
 var pub = {};
 
-var SECRET_KEY = "hF)Zf:NR2W+gBGF]"
-var connector = require('net');
-var CM_DEFAULT_EMIT = "message";
-var cmSocketIOServer = require("http").createServer();
-var SocketIO = require("socket.io")(cmSocketIOServer, {
-    pingInterval: 2100,
-    pingTimeout: 2000
-});
-
 /* Building metadata for log */
 var logMeta = {
     directory: __filename
 }
 
-
-/* 
-*  Socket.io has it is own hand - shaker
-*  Connection listener that iniates all other listeners 
-*  once connection is established
-*/
-SocketIO.on('connection', function (client) {
-    var verification = {
-        "action": "verify_server",
-        "key": SECRET_KEY
-    }
-    CM.send(verification);
-    Logger.log.debug("Connection to CM established", logMeta);
-
-    client.on('data', function (data) {
-        receiver(JSON.parse(data));
-    });
-
-    client.on('disconnect', function () {
-        Logger.log.warn("Connection to CM has been lost", logMeta);
-        SMS.alertDirectors("\u26A0 CM is down \u26A0");
-    });
-
-    /* CM error listener that will be logged here as well */
-    client.on('error', function (data) {
-        Logger.log.error("CM connection is experiencing issues", logMeta);
-    })
-});
-
-
-/* CM is listening at port 6262 on only localhost! */
-cmSocketIOServer.listen(6262, function () {
-    Logger.log.verbose('Listening for CM at 6262');
-});
-
-
-var receiver = async function (jsonResponse) {
+pub.receiver = async function (jsonResponse) {
     if (jsonResponse.action == "chikimiki_response_to_driver") {
         var driverIdString = jsonResponse.details.driver_id;
         var orderIdString = jsonResponse.details.order_id;
@@ -168,50 +123,6 @@ var receiver = async function (jsonResponse) {
     } else {
         Logger.log.error("Error while processing order from CM due to wrong 'action' value received from CM", logMeta);
     }
-};
-
-
-pub.send = function (json, isOrder) {
-    if (isOrder) {
-        Logger.log.debug('Sending order to CM \n Store type: ' + json.details.order.store_type, logMeta);
-    }
-    SocketIO.emit(CM_DEFAULT_EMIT, json);
-};
-
-
-pub.sendOrder = function (customerId, customerAddress, orderId, storeType) {
-    var newOrder = {
-        "action": "neworder",
-        "details": {
-            "customer": {
-                "id": customerId,
-                "address": customerAddress
-            },
-            "order": {
-                "id": orderId,
-                "store_type": storeType
-            }
-        }
-    };
-    CM.send(newOrder, true);
-}
-
-
-pub.cancelOrder = function (orderId, driverId) {
-    var driverIdString = "d_" + driverId;
-    var orderIdString = "o_" + orderId;
-
-    var json = {
-        "action": "driver_status",
-        "details": {
-            "driver_id": driverIdString,
-            "status": "remove_order",
-            "remove_order": {
-                "order_id": orderIdString
-            }
-        }
-    };
-    CM.send(json);
 };
 
 module.exports = pub;

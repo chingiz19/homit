@@ -400,7 +400,7 @@ router.post('/additems', Auth.validateCsr(), function (req, res, next) {
                             } else {
                                 cmUserId = "u_" + userId;
                             }
-                            CM.sendOrder(cmUserId, orderInfo.delivery_address, cmOrderId, superCategory);
+                            NM.sendOrderToCM(cmUserId, orderInfo.delivery_address, cmOrderId, superCategory);
 
                             Catalog.getTotalPriceForProducts(products).then(function (price) {
                                 Orders.placeAddHistory(orderId, csrActionId, price.total_price).then(function (addHistoryId) {
