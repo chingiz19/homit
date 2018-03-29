@@ -3,7 +3,6 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
 
         $scope.showModal = false;
         $scope.mobileSearchShow = false;
-        $scope.searchRequest;
         $scope.screenMob = global_screenIsMob;
         $scope.searchListNode = 0;
         addEvLisToSearch();
@@ -17,7 +16,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             $scope.showModal = true;
             $scope.showLogInModal = logIn;
         }
-    }
+    };
 
     $scope.logout = function () {
         user.logout()
@@ -41,11 +40,11 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
         sessionStorage.setCategoryClicked("store-switched");
     };
 
-    function addEvLisToSearch(){
+    function addEvLisToSearch() {
         var searchRequestElement;
-        if($scope.screenMob){
-            searchRequestElement = document.getElementById('global-search-input-mobile');    
-        } else{
+        if ($scope.screenMob) {
+            searchRequestElement = document.getElementById('global-search-input-mobile');
+        } else {
             searchRequestElement = document.getElementById('global-search-input');
         }
         searchRequestElement.addEventListener('keyup', globalSearch, false);
@@ -69,7 +68,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
 
                 $scope.searchResult = $scope.resultStoreType.concat($scope.resultCategory.concat($scope.resultSubcategory.concat($scope.resultProducts)));
 
-                if (!$scope.resultProducts.length > 0 && !$scope.resultSubcategory.length > 0  && !$scope.resultCategory.length > 0 && !$scope.resultStoreType.length > 0){
+                if ($scope.resultProducts.length == 0 && $scope.resultSubcategory.length == 0 && $scope.resultCategory.length == 0 && $scope.resultStoreType.length == 0) {
                     googleAnalytics.addEvent('search_not_found', {
                         "event_label": $scope.searchRequest,
                         "event_category": googleAnalytics.eventCategories.catalog_actions
@@ -79,7 +78,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             }, function errorCallback(response) {
                 console.error("error");
             });
-        } 
+        }
         navigateSearchResult(evt, $scope.searchResult);
     }
 
@@ -96,33 +95,33 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
 
         var el = document.querySelectorAll('.navigate-search');
         //Key down
-        if(evt.keyCode == 40){
-            if($scope.searchListNode == 0 && !$("#" + el[0].id).hasClass("highlighted-arrow")){
+        if (evt.keyCode == 40) {
+            if ($scope.searchListNode == 0 && !$("#" + el[0].id).hasClass("highlighted-arrow")) {
                 $("#" + el[0].id).addClass("highlighted-arrow");
-            } else if($scope.searchListNode == $scope.searchResult.length-1){
+            } else if ($scope.searchListNode == $scope.searchResult.length - 1) {
                 $("#" + el[$scope.searchListNode].id).removeClass("highlighted-arrow");
                 $scope.searchListNode = 0;
                 $("#" + el[$scope.searchListNode].id).addClass("highlighted-arrow");
-            } else{
+            } else {
                 $("#" + el[$scope.searchListNode].id).removeClass("highlighted-arrow");
-                $scope.searchListNode += 1;                                
+                $scope.searchListNode += 1;
                 $("#" + el[$scope.searchListNode].id).addClass("highlighted-arrow");
             }
-        } 
+        }
         //event key "up"
-        else if(evt.keyCode == 38){
-            if($scope.searchListNode == 0){
+        else if (evt.keyCode == 38) {
+            if ($scope.searchListNode == 0) {
                 $("#" + el[$scope.searchListNode].id).removeClass("highlighted-arrow");
                 $scope.searchListNode = $scope.searchResult.length;
                 $("#" + el[$scope.searchListNode - 1].id).addClass("highlighted-arrow");
                 $scope.searchListNode -= 1;
-            } else if($scope.searchListNode == 1){
+            } else if ($scope.searchListNode == 1) {
                 $("#" + el[$scope.searchListNode].id).removeClass("highlighted-arrow");
                 $scope.searchListNode = 0;
                 $("#" + el[$scope.searchListNode].id).addClass("highlighted-arrow");
-            } else{
+            } else {
                 $("#" + el[$scope.searchListNode].id).removeClass("highlighted-arrow");
-                $scope.searchListNode -= 1;                              
+                $scope.searchListNode -= 1;
                 $("#" + el[$scope.searchListNode].id).addClass("highlighted-arrow");
             }
         }
@@ -131,7 +130,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             $("#" + el[$scope.searchListNode].id)[0].click();
         }
         //event key "esc"
-        else if(evt.keyCode == 27){
+        else if (evt.keyCode == 27) {
             $(".search-btn").click();
             $(".search-input").blur();
         }
@@ -146,7 +145,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             if (event.target.id != $scope.id_1 && event.target.id != $scope.id_2 && event.target.id != $scope.id_3 && event.target.id != $scope.id_4) {
                 document.getElementById($scope.id_1).setAttribute("aria-hidden", "true");
                 window.removeEventListener('click', clickedOffBox, false);
-                if($scope.id_1 == "hdrHub" && $(".hub-btn").hasClass("hub-selected")){
+                if ($scope.id_1 == "hdrHub" && $(".hub-btn").hasClass("hub-selected")) {
                     $(".hub-btn").removeClass("hub-selected");
                 }
             }
@@ -162,9 +161,9 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
         $scope.id_2 = id_2;
         $scope.i_3 = id_3;
         $scope.id_4 = id_4;
-        if(id_1 == "hdrHub" && $(".hub-btn").hasClass("hub-selected")){
+        if (id_1 == "hdrHub" && $(".hub-btn").hasClass("hub-selected")) {
             $(".hub-btn").removeClass("hub-selected");
-        } else if(id_1 == "hdrHub" && !$(".hub-btn").hasClass("hub-selected")){
+        } else if (id_1 == "hdrHub" && !$(".hub-btn").hasClass("hub-selected")) {
             $(".hub-btn").addClass("hub-selected");
         }
         var el = document.getElementById(id_1).attributes;
@@ -181,13 +180,13 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
         }
     };
 
-    $scope.focusSearchInput = function(){
-        if(!$scope.mobileSearchShow){
+    $scope.focusSearchInput = function () {
+        if (!$scope.mobileSearchShow) {
             setTimeout(function () {
                 //keybords shows up but cursor doesn't start inside input
                 $("#global-search-input-mobile").focus();
             }, 1);
-        } else{
+        } else {
             setTimeout(function () {
                 $("#global-search-input-mobile").blur();
             }, 1);

@@ -90,7 +90,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
 
     $scope.hrefTo = function (path) {
         $window.location.href = $window.location.origin + path;
-        $(".homit-hub-text-dashboard").css("display","none");
+        $(".homit-hub-text-dashboard").css("display", "none");
         sessionStorage.setCategoryClicked("store-switched");
     };
 
@@ -103,11 +103,11 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
     $scope.isArrowPressed = false;
     $scope.resListNode = 0;
 
-    function addEvLisToSearch(){
+    function addEvLisToSearch() {
         var searchRequestElement;
-        if($scope.screenIsMob){
-            searchRequestElement = document.getElementById('glbSearchRequest-mobile');    
-        } else{
+        if ($scope.screenIsMob) {
+            searchRequestElement = document.getElementById('glbSearchRequest-mobile');
+        } else {
             searchRequestElement = document.getElementById('glbSearchRequest');
         }
         searchRequestElement.addEventListener('keyup', globalSearch, false);
@@ -131,7 +131,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
 
                 $scope.searchResult = $scope.resultStoreType.concat($scope.resultCategory.concat($scope.resultSubcategory.concat($scope.resultProducts)));
 
-                if (!$scope.resultProducts.length > 0 && !$scope.resultSubcategory.length > 0  && !$scope.resultCategory.length > 0 && !$scope.resultStoreType.length > 0){
+                if ($scope.resultProducts.length <= 0 && $scope.resultSubcategory.length <= 0 && $scope.resultCategory.length <= 0 && $scope.resultStoreType.length <= 0) {
                     googleAnalytics.addEvent('search_not_found', {
                         "event_label": $scope.searchRequest,
                         "event_category": googleAnalytics.eventCategories.catalog_actions
@@ -141,7 +141,7 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
             }, function errorCallback(response) {
                 console.error("error");
             });
-        } else if(evt.keyCode == 27){
+        } else if (evt.keyCode == 27) {
             document.getElementById("clear-search").click();
         }
 
@@ -194,14 +194,14 @@ app.controller("NavigationController", function ($scope, $http, $cookies, $windo
         }
     }
 
-    $scope.focusSearchInput = function(){
-        if(!$scope.mobileSearchShow){
+    $scope.focusSearchInput = function () {
+        if (!$scope.mobileSearchShow) {
             setTimeout(function () {
                 document.getElementById("glbSearchRequest-mobile").focus();
             }, 0.1);
-        } 
+        }
     };
-    
+
     function checkUser() {
         if (user.isUserLogged()) {
             $scope.isSignedIn = true;

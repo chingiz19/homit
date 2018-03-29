@@ -106,10 +106,10 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
 
     $scope.hrefPrdPage = function (product) {
         var path;
-        path = "/catalog/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + product.image.substring(product.image.lastIndexOf("_") + 1, product.image.lastIndexOf("."))
+        path = "/catalog/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + product.image.substring(product.image.lastIndexOf("_") + 1, product.image.lastIndexOf("."));
         $window.location.href = $window.location.origin + _.escape(_.toLower(path));
         // console.log("url " + $window.location.origin + _.escape(_.toLower(path)));
-    }
+    };
 
     $scope.nextVolume = function (product) {
         $scope.numberOfVolumes = product.product_variants.all_volumes.length;
@@ -233,6 +233,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                     if (x[i].textContent.trim() == subcad) {
                         clickRadioButton(x[i].id);
                         $scope.filterCategories();
+                        break;
                     }
                 }
             } else if (isCategoryClicked == "true") {
@@ -252,13 +253,15 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                         var top = $("#" + y[j].id).offset().top - ($window.innerHeight / 5);
                         animateScrollTo(top, 1600);
                         $("#" + prodID).addClass("highlighted");
-                        setTimeout(function () {
-                            $("#" + prodID).removeClass("highlighted");
-                        }, 2500);
-                        if (subcad == 'undefined' && subcad == null)
+                        if (subcad == 'undefined' && subcad == null) {
                             $scope.filterCategories();
+                        }
+                        break;
                     }
                 }
+                setTimeout(function () {
+                    $("#" + prodID).removeClass("highlighted");
+                }, 2500);
             }
         }, 20);
         $('#loading').fadeOut();

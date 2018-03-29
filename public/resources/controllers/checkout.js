@@ -87,7 +87,7 @@ app.controller("checkoutController",
                             $scope.closedStoreMessage = "Shopping cart contains items from currnetly closed stores. Please";
                             activateCheckoutModal();
                             updateCheckoutModal("03");
-                        }
+                        };
                     }
                     if ($scope.userCart.hasOwnProperty("liquor-station")) {
                         $scope.userInfo.hasLiquor = true;
@@ -235,7 +235,7 @@ app.controller("checkoutController",
                     email: $scope.userInfo.user_email
                 });
 
-            };
+            }
 
             // Close Checkout on page navigation:
             window.addEventListener('popstate', function () {
@@ -260,10 +260,10 @@ app.controller("checkoutController",
             userInfoToSend.lname = $scope.userInfo.last_name;
             userInfoToSend.phone = $scope.userInfo.phone_number.replace(/[() +-]/g, "");
             userInfoToSend.email = $scope.userInfo.user_email;
-            if($scope.userInfo.hasLiquor){
+            if ($scope.userInfo.hasLiquor) {
                 userInfoToSend.birth_month = parseInt($scope.userInfo.dateOfBirth.split("-")[0]);
                 userInfoToSend.birth_day = parseInt($scope.userInfo.dateOfBirth.split("-")[1]);
-                userInfoToSend.birth_year = parseInt($scope.userInfo.dateOfBirth.split("-")[2]);    
+                userInfoToSend.birth_year = parseInt($scope.userInfo.dateOfBirth.split("-")[2]);
             }
 
             //Check if address unit number presents
@@ -277,7 +277,7 @@ app.controller("checkoutController",
                 }
             } else {
                 userInfoToSend.address = $scope.checkout.address;
-                userInfoToSend.driver_instruction = $scope.userInfo.drInstruction
+                userInfoToSend.driver_instruction = $scope.userInfo.drInstruction;
             }
             userInfoToSend.address_latitude = $scope.checkout.address_latitude;
             userInfoToSend.address_longitude = $scope.checkout.address_longitude;
@@ -416,7 +416,7 @@ app.controller("checkoutController",
             } else {
                 $scope.userInfo.dob_not_valid = false;
             }
-        }
+        };
 
         function updateUserCart(cart) {
             $scope.userCart = cart;
@@ -452,7 +452,7 @@ app.controller("checkoutController",
             $scope.updatePrices($scope.userCart);
             $('#checkoutModal').modal('hide');
             $scope.toggleRight();
-        }
+        };
 
         // Checkout Page right-SideNav functionality
         $scope.toggleRight = buildDelayedToggler('right');

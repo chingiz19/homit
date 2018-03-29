@@ -3,8 +3,8 @@ app.service('user', function ($cookies, $http) {
     var publicFunctions = {};
 
 
-    publicFunctions.isUserLogged = function(){
-        if (getUser()){
+    publicFunctions.isUserLogged = function () {
+        if (getUser()) {
             return true;
         } else {
             return false;
@@ -12,8 +12,8 @@ app.service('user', function ($cookies, $http) {
     };
 
 
-    publicFunctions.getName = function(){
-        if (!publicFunctions.isUserLogged()){
+    publicFunctions.getName = function () {
+        if (!publicFunctions.isUserLogged()) {
             return undefined;
         }
 
@@ -21,7 +21,7 @@ app.service('user', function ($cookies, $http) {
         return user.first_name;
     };
 
-    publicFunctions.login = function(email, pass){
+    publicFunctions.login = function (email, pass) {
         return $http({
             method: 'POST',
             url: '/api/authentication/signin',
@@ -30,13 +30,13 @@ app.service('user', function ($cookies, $http) {
                 password: pass,
             }
         });
-    }
+    };
 
-    publicFunctions.logout = function(){
+    publicFunctions.logout = function () {
         return $http.post('/api/authentication/signout');
-    }
+    };
 
-    publicFunctions.signup = function(account){
+    publicFunctions.signup = function (account) {
         return $http({
             method: 'POST',
             url: '/api/authentication/signup',
@@ -47,9 +47,9 @@ app.service('user', function ($cookies, $http) {
                 lname: account.lname
             }
         });
-    }
+    };
 
-    publicFunctions.forgotPassword = function(email){
+    publicFunctions.forgotPassword = function (email) {
         return $http({
             method: 'POST',
             url: '/api/authentication/forgotpassword',
@@ -57,14 +57,14 @@ app.service('user', function ($cookies, $http) {
                 email: email
             }
         });
-    }
+    };
 
 
 
-    function getUser(){
-        try{
+    function getUser() {
+        try {
             return JSON.parse($cookies.get("user").replace("j:", ""));
-        } catch(e){
+        } catch (e) {
             return false;
         }
     }
@@ -72,4 +72,3 @@ app.service('user', function ($cookies, $http) {
 
     return publicFunctions;
 });
-    

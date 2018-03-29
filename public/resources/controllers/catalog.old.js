@@ -263,13 +263,15 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                         var top = document.getElementById(y[j].id).documentOffsetTop() - ($window.innerHeight / 5);
                         animateScrollTo(top, 1600);
                         document.getElementById(prodID).classList.add('highlighted');
-                        setTimeout(function () {
-                            document.getElementById(prodID).classList.remove('highlighted');
-                        }, 2500);
-                        if (subcad == 'undefined' && subcad == null)
+                        if (subcad == 'undefined' && subcad == null) {
                             $scope.filterCategories();
+                        }
+                        break;
                     }
                 }
+                setTimeout(function () {
+                    document.getElementById(prodID).classList.remove('highlighted');
+                }, 2500);
             }
         }, 20);
         $('#loading').fadeOut();
