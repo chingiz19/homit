@@ -148,6 +148,7 @@ CREATE TABLE catalog_depot (
 	store_type_id INT UNSIGNED NOT NULL,
 	price DECIMAL(6,2) NOT NULL,
 	tax BOOLEAN DEFAULT TRUE,
+	available BOOLEAN DEFAULT TRUE,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_catalog_depot_item_id FOREIGN KEY (item_id) REFERENCES catalog_items(id) ON DELETE RESTRICT ON UPDATE CASCADE,

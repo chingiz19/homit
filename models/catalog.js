@@ -97,7 +97,8 @@ pub.getAllProductsByCategory = async function (storeType, categoryName, storeOpe
         JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
         JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
         
-        WHERE ? AND ?
+        WHERE depot.available = true
+        AND ? AND ?
         
         ORDER BY listing_id, product_id, item_id, depot_id`;
 
@@ -449,7 +450,7 @@ pub.searchProducts = async function (searchText, limit) {
         JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
         JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
         
-        WHERE store_type.available = true
+        WHERE store_type.available = true AND depot.available = true
 
         AND listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
         LIMIT ` + limit;
@@ -494,7 +495,7 @@ pub.searchProductsSpecial = async function (searchText, limit) {
             JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
             JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
             
-            WHERE store_type.available = true
+            WHERE store_type.available = true AND depot.available = true
     
             AND listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'`;
 
