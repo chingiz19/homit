@@ -535,8 +535,8 @@ INSERT INTO `catalog_categories` (id, name, display_name) VALUES(1, "beer", "Bee
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(2, "wine", "Wine");
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(3, "spirit", "Spirit");
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(4, "liqueur", "Liqueur");
-INSERT INTO `catalog_categories` (id, name, display_name) VALUES(5, "snack", "Snack");
-INSERT INTO `catalog_categories` (id, name, display_name) VALUES(6, "beverage", "Beverage");
+INSERT INTO `catalog_categories` (id, name, display_name) VALUES(5, "snacks", "Snacks");
+INSERT INTO `catalog_categories` (id, name, display_name) VALUES(6, "beverages", "Beverages");
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(7, "party-supply", "Party-Supply");
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(8, "everyday-needs", "Everyday-Needs");
 
