@@ -2,8 +2,8 @@ var router = require("express").Router();
 var _ = require("lodash");
 
 const categories = {
-    "liquor-station": ['beer', 'liqueur', 'spirit', 'wine'],
-    "snack-vendor": ['beverage', 'everyday-needs', 'party-supply', 'snack']
+    "liquor-station": ['beer', 'liqueur', 'spirit', 'wine', 'party-supply'],
+    "snack-vendor": ['beverage', 'everyday-needs', 'snack']
 }
 
 

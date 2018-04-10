@@ -4,13 +4,6 @@
 
 var pub = {};
 
-pub.snackVendorStoreType = "snack-vendor";
-pub.snackVendorDisplayName = "Snack Vendor";
-pub.safewayStoreType = "safeway";
-pub.sevenElevenStoreType = "7-eleven";
-pub.homitCarStoreType = "homitcar";
-pub.snackVendorImage = "snack-vendor_store.jpeg";
-
 /**
  * Get store type name by store type api
  * 
@@ -103,131 +96,6 @@ pub.getAllProductsByCategory = async function (storeType, categoryName, storeOpe
         ORDER BY listing_id, product_id, item_id, depot_id`;
 
     var data = [{ "category.name": categoryName }, { "store_type.name": storeType }];
-    var dbResult = await db.runQuery(sqlQuery, data);
-    return getFormattedProducts(dbResult, storeOpen);
-}
-
-/**
- * Return all products based on the store type and category provided
- * Also adds homit car products.
- * This is temporary method - will be removed in future.
- * 
- * @param {*} storeType 
- * @param {*} categoryName 
- * @param {*} storeOpen 
- */
-pub.getAllProductsByCategoryWithHomitCar = async function (storeType, categoryName, storeOpen) {
-    var sqlQuery = `
-        SELECT
-        depot.id AS depot_id,
-        item.id AS item_id,
-        listing.id AS listing_id,
-        product.id AS product_id,
-        type.name AS type,
-        subcategory.name AS subcategory,
-        category.name AS category,
-        store_type.name AS store_type,
-        store_type.api_name AS store_type_api_name,        
-        store_type.display_name AS store_type_display_name,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        depot.price AS price,
-        depot.tax AS tax,
-        packaging.name AS packaging,
-        container.name AS container,
-        volume.name AS volume
-        
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
-        JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
-        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
-
-        WHERE
-        ? AND (? OR ?)
-        
-        ORDER BY listing_id, product_id, item_id, depot_id`;
-
-    var data = [{ "category.name": categoryName }, { "store_type.name": storeType }, { "store_type.name": pub.homitCarStoreType }];
-    var dbResult = await db.runQuery(sqlQuery, data);
-    return getFormattedProducts(dbResult, storeOpen);
-}
-
-/**
- * Return all products based on the store type and category provided
- * Returns only safeway products.
- * This is temporary method - will be removed in future.
- * 
- * @param {*} categoryName 
- * @param {*} storeOpen 
- */
-pub.getAllProductsByCategorySafewayOnly = async function (categoryName, storeOpen) {
-    var sqlQuery = `
-        SELECT
-        depot.id AS depot_id,
-        item.id AS item_id,
-        listing.id AS listing_id,
-        product.id AS product_id,
-        type.name AS type,
-        subcategory.name AS subcategory,
-        category.name AS category,
-        store_type.name AS store_type,
-        store_type.api_name AS store_type_api_name,        
-        store_type.display_name AS store_type_display_name,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        depot.price AS price,
-        depot.tax AS tax,
-        packaging.name AS packaging,
-        container.name AS container,
-        volume.name AS volume
-        
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
-        JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
-        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
-
-        WHERE ? AND ?
-
-        AND (listing.id) NOT IN (
-            SELECT 
-            listing2.id AS id2
-
-            FROM
-            catalog_depot AS depot2 JOIN catalog_items AS item2 ON (depot2.item_id = item2.id)
-            JOIN catalog_products AS product2 ON (item2.product_id = product2.id)
-            JOIN catalog_listings AS listing2 ON (product2.listing_id = listing2.id)
-            JOIN catalog_types AS type2 ON (listing2.type_id = type2.id)
-            JOIN catalog_subcategories AS subcategory2 ON (type2.subcategory_id = subcategory2.id)
-            JOIN catalog_categories AS category2 ON (subcategory2.category_id = category2.id)
-            JOIN catalog_store_types AS store_type2 ON (depot2.store_type_id = store_type2.id)
-            
-            WHERE
-            ? AND ?
-        )
-        
-        ORDER BY listing_id, product_id, item_id, depot_id
-    `;
-
-    var data = [
-        { "category.name": categoryName }, { "store_type.name": pub.safewayStoreType },
-        { "category2.name": categoryName }, { "store_type2.name": pub.sevenElevenStoreType }
-    ];
     var dbResult = await db.runQuery(sqlQuery, data);
     return getFormattedProducts(dbResult, storeOpen);
 }
@@ -419,15 +287,13 @@ pub.searchSubcategory = async function (searchText, limit) {
 }
 
 /**
- * Search for the text in brand and name
+ * Search for the text in brand, name, and description
  * 
  * @param {*} searchText 
  * @param {*} limit
  */
 pub.searchProducts = async function (searchText, limit) {
-    if (limit > 0) {
-        var sqlQuery = `
-        SELECT DISTINCT
+    var sqlSelect = `
         listing.id AS listing_id,
         product.id AS product_id,
         type.name AS type,
@@ -438,8 +304,9 @@ pub.searchProducts = async function (searchText, limit) {
         listing.brand AS brand,
         listing.name AS name,
         product.image AS image,
-        container.name AS container
-        
+        container.name AS container`;
+
+    var sqlFrom = `
         FROM
         catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
         JOIN catalog_products AS product ON (item.product_id = product.id)
@@ -448,70 +315,38 @@ pub.searchProducts = async function (searchText, limit) {
         JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
         JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
         JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
-        
-        WHERE store_type.available = true AND depot.available = true
+        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)`;
 
-        AND listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
-        LIMIT ` + limit;
+    var sqlWhere = `
+        WHERE store_type.available = true AND depot.available = true AND`;
 
-        var dbResult = await db.runQuery(sqlQuery);
-        return dbResult;
-    } else {
-        return [];
-    }
-}
+    var sqlQuery = `
+        SELECT *
+        FROM ( 
+            SELECT DISTINCT ` + sqlSelect
+        + ` ` + sqlFrom + ` ` + sqlWhere
+        + ` listing.brand LIKE '` + searchText + `%' OR listing.name LIKE '` + searchText + `%'
+            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '` + searchText + `%'`
 
-/**
- * Search for the text in brand and name
- * This is temporary method - will be removed later
- * 
- * @param {*} searchText 
- * @param {*} limit
- */
-pub.searchProductsSpecial = async function (searchText, limit) {
-    if (limit > 0) {
-        var sqlQuery0 =
-            `SELECT DISTINCT
-            listing.id AS listing_id,
-            product.id AS product_id,
-            type.name AS type,
-            subcategory.name AS subcategory,
-            category.name AS category,
-            store_type.display_name AS store_type_display_name,
-            store_type.api_name AS store_type_api_name,
-            listing.brand AS brand,
-            listing.name AS name,
-            product.image AS image,
-            container.name AS container
-            
-            FROM
-            catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-            JOIN catalog_products AS product ON (item.product_id = product.id)
-            JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-            JOIN catalog_types AS type ON (listing.type_id = type.id)
-            JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-            JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-            JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-            JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
-            
-            WHERE store_type.available = true AND depot.available = true
-    
-            AND listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'`;
+        + ` UNION ` +
 
-        if (safewayOpen) {
-            sqlQuery = sqlQuery0 + ` AND store_type.name NOT IN('` + Catalog.sevenElevenStoreType + `')
-                LIMIT ` + limit;
-        } else {
-            sqlQuery = sqlQuery0 + ` AND store_type.name NOT IN('` + Catalog.safewayStoreType + `')
-                LIMIT ` + limit;
-        }
+        `SELECT DISTINCT ` + sqlSelect
+        + ` ` + sqlFrom + ` ` + sqlWhere
+        + ` listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
+            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '%` + searchText + `%'`
 
-        var dbResult = await db.runQuery(sqlQuery);
-        return dbResult;
-    } else {
-        return [];
-    }
+        + ` UNION ` +
+
+        `SELECT DISTINCT ` + sqlSelect
+        + ` ` + sqlFrom + ` `
+        + `JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id) `
+        + sqlWhere
+        + ` description.description LIKE '` + searchText + `%'`
+        + `) AS final_products
+        LIMIT ` + limit + `;`;
+
+    var dbResult = await db.runQuery(sqlQuery);
+    return dbResult;
 }
 
 /**
@@ -798,22 +633,7 @@ pub.getProductPageProductsByListingId = async function (listingId) {
 
     // get store open
     var isStoreOpen = await Catalog.isStoreOpen(storeType);
-    var products;
-    // if store open or not safeway
-    if (isStoreOpen || (storeType != Catalog.safewayStoreType)) {
-        products = await Catalog.getProductsByListingId(listingId, isStoreOpen);
-    } else {
-        // else super category is safeway and store is closed
-
-        // find alternative listing
-        var altListingId = await Catalog.findAlternativeListing(listingId);
-        var altSuperCategory = await Catalog.getStoreTypeByListing(altListingId);
-
-        // get store open
-        var altIsStoreOpen = await Catalog.isStoreOpen(altSuperCategory);
-        // get products
-        products = await Catalog.getProductsByListingId(altListingId, altIsStoreOpen);
-    }
+    var products = await Catalog.getProductsByListingId(listingId, isStoreOpen);
     var descriptions = await getDescriptionsByListingId(listingId);
     return convertToProductPageItem(products.products, descriptions);
 }
