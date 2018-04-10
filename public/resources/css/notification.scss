@@ -1,30 +1,30 @@
 .notification_box{
     position: fixed; 
     bottom: 30px; right: 30px; 
-    height: 60px; width: 250px; 
+    height: 90px; width: 250px; 
     display: flex; align-items: center; justify-content: center;
     border: 1px solid rgba(44, 37, 37, 0.733);
     border-radius: 3px;
     background-color: rgba(255, 255, 255, 1);   
     box-shadow: 0 0px 5px 0px rgba(0,0,0,.26);
-    z-index: 1000;
-    transition: all 0.4s ease-in-out;
+    z-index: 100;
+    animation: fadeIn 0.2s ease;
 }
 .addItem_img{
-    width: 50px; height: 50px;
+    width: 70px; height: 70px;
 }
 .addItem_ul{
     margin: 0; padding: 0; 
     margin-left: 10px;
 }
 .addItem_ulA{
-    display: flex; justify-content: center; 
-    font-weight: 500;
+    text-align: center;
     font-size: 15px;
 }
 .addItem_ulB{
-    display: flex; justify-content: center; 
-    font-size: 13px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
 }
 .notification-body{
     letter-spacing: 0.01em;
@@ -42,19 +42,29 @@
     color: black;
 }
 
-/*Mobile screens*/
-@media screen and (max-device-width: 600px) {
+/* start of phone styles */
+@media screen and (max-device-width: 479px){
     .notification_box{
-        bottom: 30px; left: 30px; 
-        height: 120px; width: 400px;
+        position: fixed; 
+        top: 60px; left: 20px; 
+        height: 60px; width: 200px; 
     }
     .addItem_img{
-        height: 100px !important; width: 100px !important;
-    }
-    .addItem_ulA{
-        font-size: 22px !important;
+        width: 40px; height: 40px;
     }
     .addItem_ulB{
-        font-size: 22px !important;
+        display: flex; justify-content: center; 
+        font-size: 10px;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #e5e5e5;
+    }
+    100% {
+        background: rgba(255, 255, 255, 1);
+        border-color: #e5e5e5;
     }
 }

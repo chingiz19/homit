@@ -1,4 +1,7 @@
 <style>
+        #autocompleteAddressInputBox{
+            text-transform: capitalize;
+        }
         /* Google Search autocomplete non-mobile */
         .predictions-container{
             position: absolute;
@@ -32,7 +35,7 @@
             height: 30px;
         }
         .powered-by-google img{
-            width: 150px; height: 20px;
+            width: 150px; height: auto;
         }
         .predictions-item:hover{
             background-color: rgba(245,245,245,1) !important;
@@ -46,61 +49,62 @@
         .address-selected{
             background-color: rgba(196, 217, 255,0.3) !important;
         }
-    
-        @media (max-width: 750px) and (min-width: 600px){
+        @media (max-width: 855px) and (min-width: 571px){
             .predictions-container{
-                width: 486px;
+                width: 556px;
             }
-        }
-    
-        @media (max-width: 599px) and (min-width: 300px){
+        }   
+        @media (max-width: 570px){
             .predictions-container{
                 width: 386px;
             }
+            .predictions-item{
+                font-size: 15px;
+            }
         }
-        /* Mobile Devices */
-        @media screen and (max-device-width: 500px) {
+        /* start of phone styles */
+        @media screen and (max-device-width: 479px) {
+            .address-section, .about-homit-section, .homit-hub-section, footer{
+                min-width: 100vw;
+            }
+
+            .go-to-homit-hub{
+                display: none;
+            }
+            .search-btn-mob{
+                display: none;
+            }
+            .homit-nav-content{
+                width: 100vw;
+            }
+            .main-page-address-box, .address-input-sec, .about-homit-section{
+                width: 95vw;
+            }
+            .address-input, .predictions-container{
+                width: calc(95vw - 14px);
+            }
             .predictions-container{
-                margin: 0; padding: 0;
-                max-height: 450px; 
-                width: 92vw;
+                max-height: 220px;
             }
             .predictions-item {
-                display: flex; align-items: center;
-                border-bottom: 1px solid rgba(180,180,180,0.3);
-                color: rgba(130,130,130,1);
-                letter-spacing: 0.05ex;
-                line-height: 70px;
-                font-size: 33px;
-            }
-            .predictions-item div{
-                width: 98%;
-                overflow: hidden; 
-                text-overflow: ellipsis; 
-                white-space: nowrap;
-            }
-            .predictions-item span{
-                color: rgba(0,0,0,1);
-            }
-            .predictions-container:after{
-                margin-right: 5px;
-                margin-top: 5px;
-            }
-            .powered-by-google{
-                display: flex; justify-content: flex-end; align-items: center; 
-                padding-right: 10px; 
-                height: 60px;
+                line-height: 33px;
+                font-size: 16px;
+                padding-left: 20px !important;
             }
             .powered-by-google img{
-                width: 260px; height: 35px;
+                width: 100px !important; height: auto;
             }
+            .main-page-address-box-text{
+                font-size: 24px;
+            }
+
         }
     </style>
     
     
     <div id="placesServiceNode" style="display: none;"></div>
     
-    <input style="text-transform: capitalize;" id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocomplete="none" autocorrect="off" spellcheck="false" required>
+    <input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocomplete="off" autocorrect="off" spellcheck="false" required>
     <md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0; ">
         <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
     </md-button>

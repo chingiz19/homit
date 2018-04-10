@@ -648,14 +648,10 @@ function convertToProductPageItem(products, descriptions) {
 
     var finalDescriptions = {};
 
-    for (let i = 0; i < descriptions.length; i++) {
-        finalDescriptions[descriptions[i].name] = descriptions[i].description;
-    }
-
     // Extract common fields of products
     var finalResult = {
-        "store_type": tmpPr.store_type,
         "store_type_api_name": tmpPr.store_type_api_name,
+        "store_type_display_name": tmpPr.store_type_display_name,
         "category": tmpPr.category,
         "subcategory": tmpPr.subcategory,
         "type": tmpPr.type,
@@ -664,11 +660,13 @@ function convertToProductPageItem(products, descriptions) {
         "description": tmpPr.description,
         "store_open": tmpPr.store_open,
         "tax": tmpPr.tax,
-        "origin_country": finalDescriptions['Country of Origin'],
-        "made_by": finalDescriptions['Producer'],
-        "alcohol_volume": finalDescriptions['Alcohol Content %'],
-        "products": {}
+        "products": {},
+        "details": {}
     };
+
+    for (let i = 0; i < descriptions.length; i++) {
+        finalResult.details[descriptions[i].name] = descriptions[i].description;
+    }
 
     if (!finalResult.name) {
         finalResult.name = "";

@@ -2,13 +2,11 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     var catalogCtrl = this;
 
     $scope.selection = $location.path();
-
+    $scope.showCategories = false;
     $scope.isBeers = false;
     $scope.isWines = false;
     $scope.isSpirits = false;
     $scope.isOthers = false;
-    $scope.screenIsMob = false;
-
 
     $scope.selectedCategory = undefined;
 
@@ -106,6 +104,20 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         }
     };
 
+    $scope.hrefToStore = function (path) {
+        $window.location.href = $window.location.origin + path;
+    };
+
+    $scope.hrefToCat = function(category){
+        $window.location.href = $window.location.origin + hrefChangeCategory($window.location.pathname,_.trim(_.lowerCase(category)).replace(/ /g, "-"));
+    }
+
+    $scope.hrefPrdPage = function (product) {
+        var path;
+        path = "/catalog/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + product.image.substring(product.image.lastIndexOf("_") + 1, product.image.lastIndexOf("."));
+        $window.location.href = $window.location.origin + _.escape(_.toLower(path));
+    };
+
     $scope.nextVolume = function (product) {
         $scope.numberOfVolumes = product.product_variants.all_volumes.length;
         $scope.volumeI = product.volumeI;
@@ -116,7 +128,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         product.selectedVolume = product.product_variants.all_volumes[product.volumeI];
         product.packJ = 0;
         product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
-        
+
         googleAnalytics.addEvent('next_volume', {
             "event_label": product.brand + " " + product.name,
             "event_category": googleAnalytics.eventCategories.catalog_actions
@@ -160,41 +172,27 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
 
     catalogCtrl.scope = $scope;
 
-    // TODO switch to Subcategories box when Category selected
-    $scope.showCategories = false;
 
-        // TODO switch to Subcategories box when Category selected
-        $scope.showCategories = false;
-        $scope.filterCategories = function () {
-            $('#category_box').animate({width: 'toggle'});
-            if ($scope.showCategories) {
-                $scope.showCategories = false;
-                document.getElementById("show_cat_icon").classList.add('rot180_2');
-                var el = document.getElementById("show_cat_icon").classList;
-                setTimeout(function () {
-                    el.remove('rot180_1', 'rot180_2');
-                }, 500);
-            } else {
-                $scope.showCategories = true;
-                document.getElementById("show_cat_icon").classList.add('rot180_1');
-            }
-        };
-    $scope.filterCategoriesViaButton = function(){
-        $scope.filterCategories();
-        googleAnalytics.addEvent('filter_categories', {
-            "event_category": googleAnalytics.eventCategories.catalog_actions
-        });
-    };
-
-    $scope.emptySubcategories = function () {
-        $scope.userSelectedSubcategories = null;
+    $scope.filterCategories = function () {
+        $('#category_box').animate({ width: 'toggle' });
+        if ($scope.showCategories) {
+            $scope.showCategories = false;
+            document.getElementById("show_cat_icon").classList.add('rot-cat-btn_2');
+            var el = document.getElementById("show_cat_icon").classList;
+            setTimeout(function () {
+                el.remove('rot-cat-btn_1', 'rot-cat-btn_2');
+            }, 500);
+        } else {
+            $scope.showCategories = true;
+            document.getElementById("show_cat_icon").classList.add('rot-cat-btn_1');
+        }
     };
 
     // USer Cart right-SideNav functionality
     // Start
-    $scope.toggleNavLeft = buildToggler('navigateMobSN');
+    $scope.toggleNavLeft = buildToggler('nav-btn-mob');
     $scope.NavigateOpen = function () {
-        return $mdSidenav('navigateMobSN').isOpen();
+        return $mdSidenav('nav-btn-mob').isOpen();
     };
     function debounce(func, wait, context) {
         var timer;
@@ -218,73 +216,94 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         };
     }
     $scope.close = function () {
-        $mdSidenav('navigateMobSN').close()
+        $mdSidenav('nav-btn-mob').close()
             .then(function () {
                 $log.debug("close NAVIGATE is done");
             });
     };
     // End
 
-    function rippleCatButton() {
-        var el = document.getElementById("category-button");
-        if (el.classList.contains("add-ripplle-affect")) {
-            el.classList.remove("add-ripplle-affect");
-        }
-        setTimeout(function () {
-            el.classList.add("add-ripplle-affect");
-        }, 1000);
+    function clickRadioButton(id) {
+        $("#" + id).click();
+        $scope.$apply();
     }
 
     $window.onload = function () {
-        var screen_width = window.screen.width;
+        $scope.screenIsMob = global_screenIsMob;
         var isCategoryClicked = sessionStorage.getCategoryClicked();
-        if (screen_width < 500) {
-            $scope.screenIsMob = true;
-        } else {
-            $scope.screenIsMob = false;
-        }
         var subcad = sessionStorage.getSearchSubcategory();
         var prodID = sessionStorage.getSearchProduct();
         setTimeout(function () {
             if (subcad != 'undefined' && subcad != null) {
-                var x = document.querySelectorAll(".SubcategoryName");
+                var x = document.querySelectorAll(".cat-body-cat");
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].textContent.trim() == subcad) {
-                        document.getElementById(x[i].id).click();
+                        clickRadioButton(x[i].id);
                         $scope.filterCategories();
+                        break;
                     }
                 }
             } else if (isCategoryClicked == "true") {
                 $scope.filterCategories();
-                document.getElementById('radio_1').click();
+                clickRadioButton("radio_0");
             } else if (isCategoryClicked == "store-switched") {
                 sessionStorage.setCategoryClicked(true);
-                document.getElementById('radio_1').click();
+                clickRadioButton("radio_0");
             } else {
                 sessionStorage.setCategoryClicked(true);
-                document.getElementById('radio_1').click();
+                clickRadioButton("radio_0");
             }
             if (prodID != 'undefined') {
-                var y = document.querySelectorAll(".itemBoxL1");
+                var y = document.querySelectorAll(".item-box");
                 for (var j = 0; j < y.length; j++) {
                     if (y[j].id == prodID) {
-                        Element.prototype.documentOffsetTop = function () {
-                            return this.offsetTop + (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0);
-                        };
-                        var top = document.getElementById(y[j].id).documentOffsetTop() - ($window.innerHeight / 5);
+                        var top = $("#" + y[j].id).offset().top - ($window.innerHeight / 5);
                         animateScrollTo(top, 1600);
-                        document.getElementById(prodID).classList.add('highlighted');
-                        setTimeout(function () {
-                            document.getElementById(prodID).classList.remove('highlighted');
-                        }, 2500);
-                        if (subcad == 'undefined' && subcad == null)
+                        $("#" + prodID).addClass("highlighted");
+                        if (subcad == 'undefined' && subcad == null) {
                             $scope.filterCategories();
+                        }
+                        break;
                     }
                 }
+                setTimeout(function () {
+                    $("#" + prodID).removeClass("highlighted");
+                }, 2500);
             }
         }, 20);
         $('#loading').fadeOut();
     };
-    setInterval(rippleCatButton, 3000);
+
+
+    function hrefChangeCategory(pathname,category){
+        let pathname_1 = pathname.split("/");
+        let pathname_final = "";
+        pathname_1[pathname_1.length - 1] = category;
+        delete pathname_1[0];
+        for(part in pathname_1){
+            pathname_final = pathname_final + "/" + pathname_1[part];
+        }
+        return pathname_final;
+    }
+
+    $scope.scroll_prev = 0;
+    $scope.scroll_current = 0;
+
+    $(window).on('scroll', function () {
+        var scrollTop = $(window).scrollTop();
+        var elementOffset = $("#items-section").offset().top;
+        $scope.scroll_prev = $scope.scroll_current;
+        $scope.scroll_current = elementOffset - scrollTop;
+
+        if ($scope.scroll_prev > $scope.scroll_current && $scope.scroll_current <= 54) {
+            $("#category-box").removeClass("cat-section-absolute");
+            $("#category-box").addClass("cat-section-fixed");
+        } else if ($scope.scroll_prev < $scope.scroll_current && $scope.scroll_current >= 54) {
+            $("#category-box").removeClass("cat-section-fixed");
+            $("#category-box").addClass("cat-section-absolute");
+        }
+    });
+
+
 });
 

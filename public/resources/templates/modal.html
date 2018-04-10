@@ -1,0 +1,427 @@
+<style>
+    .font {
+        letter-spacing: 0.01em;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    .modal-header,
+    .modal-fotter {
+        transition: border-bottom-color 0.3s;
+    }
+
+    .modal-content {
+        width: 400px;
+        height: 0px;
+        border: 1px solid black;
+        border-radius: 5px;
+        background-color: white;
+        z-index: 100;
+        animation: fadeIn .2s ease-in-out;
+    }
+
+    .login-footer {
+        text-align: center;
+    }
+
+    .modal-background-blur {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        filter: blur(1px);
+        -webkit-filter: blur(1px);
+        -o-filter: blur(1px);
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+    }
+
+    .logIn-modal {
+        height: 520px;
+        transition: all 2s ease-in-out;
+    }
+
+    .signup-modal {
+        height: 600px;
+        transition: all 2s ease-in-out;
+    }
+
+    .log-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .clear-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        transition: background-color 0.3s;
+        border: none;
+    }
+
+    .clear-btn:hover {
+        border-radius: 3px;
+        border: 1px solid rgba(100, 100, 100, 0.2);
+        background-color: rgba(100, 100, 100, 0.1);
+        transition: background-color 0.3s;
+    }
+
+    .log-btn {
+        width: 200px;
+        height: 35px;
+        font-size: 22px;
+        border-radius: 6px;
+        border: 1px solid rgba(42, 81, 145, 1);
+        background-color: rgba(42, 81, 145, 0.8);
+        transition: background-color 0.3s;
+        color: white;
+    }
+
+    .log-btn:hover {
+        background-color: rgba(42, 81, 145, 1);
+        transition: background-color 0.3s;
+    }
+
+    .input-width-1 {
+        width: 80%;
+    }
+
+    .input-width-2 {
+        width: 50%;
+    }
+
+    .invalidLogIn {
+        display: none;
+        height: 0px;
+    }
+
+    .sucSign {
+        display: none;
+        height: 0px;
+    }
+
+    .emailNotification {
+        display: none;
+        height: 0px;
+    }
+
+    .signUpNotification {
+        display: none;
+        height: 0px;
+    }
+
+    .sign-showSucMessage {
+        position: absolute;
+        bottom: 0;
+        height: 134px;
+        width: 100%;
+        background-color: rgba(245, 245, 245, 1);
+        border-radius: 3px;
+    }
+
+    .msg-close-btn {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        border: none;
+        background-color: transparent;
+        width: 22px;
+        height: 22px;
+        padding: 0;
+    }
+
+    .msg-close-btn ng-md-icon {
+        fill: rgba(0, 0, 0, 0.4);
+    }
+
+    .msg-close-btn ng-md-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .sign-showErrorMessage {
+        position: absolute;
+        bottom: 0;
+        display: flex !important;
+        flex-direction: column;
+        height: 134px !important;
+        width: 100%;
+        padding: 15px;
+        background-color: rgba(240, 240, 240, 1);
+        border-radius: 3px;
+        text-align: center;
+        z-index: 100;
+    }
+
+    .message-link {
+        color: rgb(0, 149, 207);
+        font-size: 17px;
+        transition: background-color 0.3s;
+    }
+
+    .message-div {
+        font-size: 17px;
+    }
+
+    .or-div {
+        width: 100%;
+        height: 20px;
+    }
+
+    .or-span {
+        color: rgba(180, 180, 180, 1);
+        font-size: 16px;
+    }
+
+    .or-div::before,
+    .or-div::after {
+        content: "";
+        display: inline-block;
+        width: 150px;
+        padding-bottom: 4px;
+        border-top: 1px solid rgba(220, 220, 220, 1);
+    }
+
+    ::after,
+    ::before {
+        box-sizing: border-box;
+    }
+
+    .signUp-logIn-btn {
+        border: none;
+        background-color: transparent;
+        color: rgb(0, 149, 207);
+        font-size: 18px;
+        color: rgba(0, 189, 149, 1);
+    }
+
+    .sucCircle {
+        margin: 30px auto;
+        height: 70px;
+        width: 70px;
+        border-radius: 35px;
+        background-color: rgba(0, 189, 149, 1);
+    }
+
+    .sucCircle ng-md-icon {
+        fill: rgba(255, 255, 255, 1);
+        margin: auto;
+        margin-left: 5px;
+        margin-top: 5px;
+    }
+
+    .sucCircle ng-md-icon svg {
+        height: 60px;
+        width: 60px;
+    }
+
+    .foldIn {
+        animation: unfoldIn 0.6s ease-in-out;
+    }
+
+    .foldOut {
+        animation: unfoldOut 0.6s ease-in-out;
+    }
+
+    #invalidLogIn .message-link {
+        margin-top: 5px;
+    }
+
+    button:focus {
+        outline: none;
+    }
+
+    .new-to-text {
+        margin-top: 17px;
+        margin-bottom: 3px;
+        font-size: 19px;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #e5e5e5;
+        }
+        100% {
+            background: rgba(255, 255, 255, 1);
+            border-color: #e5e5e5;
+        }
+    }
+
+    @keyframes unfoldIn {
+        0% {
+            transform: scaleY(.005) scaleX(0);
+        }
+        50% {
+            transform: scaleY(.005) scaleX(1);
+        }
+        100% {
+            transform: scaleY(1) scaleX(1);
+        }
+    }
+
+    @keyframes unfoldOut {
+        0% {
+            transform: scaleY(1) scaleX(1);
+        }
+        50% {
+            transform: scaleY(.005) scaleX(1);
+        }
+        100% {
+            transform: scaleY(.005) scaleX(0);
+        }
+    }
+</style>
+
+<div class="font modal-background" ng-show="_show && _showLogIn">
+    <div class="modal-background-blur"></div>
+    <div class="modal-content logIn-modal">
+        <!-- Header -->
+        <section class="modal-header back-transition">
+            <h1>Log in</h1>
+            <button class="clear-btn" ng-click="_close();">
+                <ng-md-icon icon="clear" size="24"></ng-md-icon>
+            </button>
+        </section>
+        <!-- Body -->
+        <section class="modal-body back-transition">
+            <form name="logIn" class="log-form logIn-form" ng-submit="_login(logIn.$valid)">
+                <md-input-container class="input-width-1">
+                    <label class="inptLbl">Email</label>
+                    <input name="login_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="login_email" type="email" required/>
+                    <div ng-messages="logIn.login_email.$error">
+                        <div ng-message="pattern" class="inptErMsg">Email format only</div>
+                        <div ng-message="maxlength">30 caracters maximum</div>
+                        <div ng-message="required" class="inptErMsg">Required</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="input-width-1">
+                    <label class="inptLbl">Password</label>
+                    <input name="login_password" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" maxlength="30" ng-model="login_password"
+                        type="password" required/>
+                    <div ng-messages="logIn.login_password.$error">
+                        <div ng-message="pattern">Avoid - ?$!^%'/{[(
+                            <|>)]}\,+”;&#@</div>
+                        <div ng-message="maxlength">30 caracters maximum</div>
+                        <div ng-message="required">Required</div>
+                    </div>
+                </md-input-container>
+                <button class="log-btn" type="submit">Log in</button>
+            </form>
+        </section>
+        <!-- Footer -->
+        <section class="modal-footer back-transition login-footer">
+            <div class="new-to-text">New to Homit?</div>
+            <button class="signUp-logIn-btn" ng-click="_toggleModal()">Sign Up</button>
+        </section>
+        <!-- Message box -->
+        <section id="logInMessage">
+            <div id="invalidLogIn" class="invalidLogIn">
+                <button class="msg-close-btn" ng-click="tryAgainLogIn()">
+                    <ng-md-icon icon="clear"></ng-md-icon>
+                </button>
+                <div class="message-div">Sorry, You have entered invalid credentials. Please try
+                    <span class="message-link" ng-click="_tryAgainLogIn()">again</span>
+                </div>
+                <div class="or-div">
+                    <span class="or-span">or</span>
+                </div>
+                <div class="message-link" ng-click="_forgotPassword(logIn.$valid)">Forgot Password</div>
+            </div>
+            <div id="emailNotification" class="emailNotification">
+                <button class="msg-close-btn" onClick="window.location.reload()">
+                    <ng-md-icon icon="clear"></ng-md-icon>
+                </button>
+                <div class="message-div">{{ logIn_message }}</div>
+            </div>
+            <div id="sucLogIn" class="sucSign">
+                <div class="sucCircle">
+                    <ng-md-icon icon="done"></ng-md-icon>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<div class="modal-background" ng-show="_show && !_showLogIn">
+    <div class="modal-background-blur"></div>
+    <div class="modal-content signUp-modal">
+        <!-- Header -->
+        <section class="modal-header">
+            <h1>Sign up</h1>
+            <button class="clear-btn" ng-click="_close();">
+                <ng-md-icon icon="clear" size="24"></ng-md-icon>
+            </button>
+        </section>
+        <!-- Body -->
+        <section class="modal-body">
+            <form name="signUp" class="log-form" ng-submit="_signup(signUp.$valid)">
+                <md-input-container class="input-width-1">
+                    <label class="inptLbl">Email</label>
+                    <input name="signup_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="signup_email" type="email" required/>
+                    <div ng-messages="signUp.signup_email.$error">
+                        <div ng-message="pattern">Email format only</div>
+                        <div ng-message="maxlength">30 caracters maximum</div>
+                        <div ng-message="required">Required</div>
+                    </div>
+                </md-input-container>
+                <div layout="row" class="input-width-1">
+                    <md-input-container class="input-width-2">
+                        <label class="inptLbl">First Name</label>
+                        <input name="signup_fname" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_fname" type="text" required/>
+                        <div ng-messages="signUp.signup_fname.$error">
+                            <div ng-message="pattern">Letters only</div>
+                            <div ng-message="maxlength">30 caracters maximum</div>
+                            <div ng-message="required">Required</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="input-width-2">
+                        <label class="inptLbl">First Name</label>
+                        <input name="signup_lname" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_lname" type="text" required/>
+                        <div ng-messages="signUp.signup_lname.$error">
+                            <div ng-message="pattern">Letters only</div>
+                            <div ng-message="maxlength">30 caracters maximum</div>
+                            <div ng-message="required">Required</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <md-input-container class="input-width-1">
+                    <label class="inptLbl">Password</label>
+                    <input name="signup_password" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" maxlength="30"
+                        ng-model="signup_password" type="password" required/>
+                    <div ng-messages="logIn.signup_password.$error">
+                        <div ng-message="pattern">Avoid - ?$!^%'/{[(
+                            <|>)]}\,+”;&#@</div>
+                        <div ng-message="maxlength">30 caracters maximum</div>
+                        <div ng-message="required">Required</div>
+                    </div>
+                </md-input-container>
+                <button class="log-btn" type="submit">Sign up</button>
+            </form>
+        </section>
+        <!-- Footer -->
+        <section class="modal-footer">
+            <button class="signUp-logIn-btn" ng-click="_toggleModal()">Log In</button>
+        </section>
+        <!-- Message box -->
+        <section>
+            <div id="sucSignUp" class="sucSign">
+                <div class="sucCircle">
+                    <ng-md-icon icon="done"></ng-md-icon>
+                </div>
+            </div>
+            <div id="signUpNotification" class="signUpNotification">
+                <button class="msg-close-btn" onClick="window.location.reload()">
+                    <ng-md-icon icon="clear"></ng-md-icon>
+                </button>
+                <div class="message-div">{{ logIn_message }}</div>
+            </div>
+        </section>
+    </div>
+</div>

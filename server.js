@@ -28,7 +28,7 @@ var logMeta = {
 }
 
 /* Variables */
-var session = require("cookie-session");
+var session = require("express-session");
 var webServer = express();
 var path = require("path");
 var webpagePath = path.join(__dirname, "/www");
@@ -37,6 +37,13 @@ var cookies = require("cookies");
 var cookieParser = require("cookie-parser");
 var https = require("https");
 var fs = require('fs');
+var redisClient = require('redis').createClient();
+var RedisStore = require('connect-redis')(session);
+
+var sessionStore = new RedisStore({
+	client: redisClient,
+	db: db.redisTable.sessions
+});
 
 
 /* make logs folder */
@@ -49,8 +56,8 @@ if (!fs.existsSync('.logs')) {
 var helmet = require("helmet");
 var csurf = require("csurf");
 var limiter = require("express-rate-limit")({ // alternative - bottleneck
-	windowMs: 60 * 1000, // every minute
-	max: 500, // max 500 requests
+	windowMs: 1000, // every second
+	max: 200, // max 200 requests
 	delayMs: 0
 });
 
@@ -62,14 +69,18 @@ var sslOptions = {
 };
 
 /* Server Middleware */
-//TODO: move to db sessions
 webServer.use(session({
-	name: "session", 
-	keys: [process.env.SESSION_KEY],
-	httpOnly: true,
-	secure: true,
-	expires: new Date(Date.now() + (60 * 60 * 1000)),
-	maxAge: 1 * 60 * 60 * 1000  // 1 hour
+	store: sessionStore,
+	name: "session_sid", 
+	secret: process.env.SESSION_KEY,
+	resave: true,
+	saveUninitialized: false,	
+	cookie: {
+		secure: false, // Setting to false as reverse proxy is used in production
+		httpOnly: true,
+		expires: new Date(Date.now() + (24 * 60 * 60 * 1000)),
+		maxAge: 24 * 60 * 60 * 1000  // 24 hours
+	}
 }));
 
 
@@ -98,15 +109,6 @@ webServer.use(function (req, res, next) {
 
 /* Redirecting all HTTP to HTTPS */
 webServer.all('*', function (req, res, next) {
-	// if (req.secure) {
-	// 	return next();
-	// };
-
-	// if (req.query.mobile) {
-	// 	return next();
-	// } else {
-	// 	res.redirect('https://' + req.hostname + req.url); // express 4.x
-	// }
 	return next();
 });
 

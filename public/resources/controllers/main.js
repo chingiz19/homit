@@ -4,15 +4,15 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
     $scope.showCoverageMap = false;
     $scope.bounds = undefined;
 
+
     $scope.init = function () {
 
-        var screen_width = window.screen.width;
-        if (screen_width < 500) {
-            $scope.screenIsMob = true;
-        } else {
-            $scope.screenIsMob = false;
-        }
+        $scope.screenIsMob = global_screenIsMob;
 
+        if(global_screenIsMob){
+            $(".full-screen").css({"height": window.innerHeight});
+        }
+        
         // always scroll to the top, then later to defined hash
         var currentHash = $location.hash();
         if (!sessionStorage.getAddress()) {
@@ -67,9 +67,9 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
                 mapGrowClass[1] = "covergae-map-box-grow-mob";
             }
             $timeout(function() {
-                $(".srchAddrsC").addClass(mapGrowClass[0]);
+                $(".address-input-sec").addClass(mapGrowClass[0]);
                 $(".covergae-map-box").addClass(mapGrowClass[1]);
-                $(".addressMessage").addClass("addressMessage-show");
+                $(".address-message").addClass("address-message-show");
                 if($scope.screenIsMob){
                     animateScrollTo(0, { speed: 2000 });
                 }
@@ -85,9 +85,9 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
         if (!newValue){
             $timeout(function() {
                 if(!$scope.screenIsMob){
-                    $(".srchAddrsC").removeClass("address-box-grow-screen");
+                    $(".address-input-sec").removeClass("address-box-grow-screen");
                 } else{
-                    $(".srchAddrsC").removeClass("address-box-grow-mob");
+                    $(".address-input-sec").removeClass("address-box-grow-mob");
                 }
             }, 50);
         }

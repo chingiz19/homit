@@ -51,6 +51,9 @@ main{
     background-color: rgba(42,81,145,1);  
     box-shadow: 0 0px 4px 3px rgba(0,0,0,0.5);
 }
+.ftr-logo-img{
+    width: 60px; height: 60px;
+}
 .col_3{
     padding: 0;
     margin: 22px auto 5px 0;
@@ -152,6 +155,7 @@ main{
 }
 .homit-copyright{
     width: 100%;
+    padding-left: 15px;
     display: flex; justify-content: flex-end; 
     margin: auto;
     font-size: 12px; font-weight: 400; 
@@ -163,17 +167,28 @@ a{
     text-decoration: none !important;
 }
 /* Mobile Devices */
-@media screen and (max-device-width: 500px) {
-    .text{
-        font-size: 20px;
-    }
+@media screen and (max-device-width: 479px) and (min-device-width: 360px){
     .col_2{
-        height: 110px; width: 110px;
+        width: 80px; height: 80px;
     }
-    .col_2 img{
-        width: 75px; height: 75px;
+    .ftr-logo-img{
+        width: 50px; height: 50px;
+    }
+    .text{
+        font-size: 12px; 
+    }
+}
+@media screen and (max-device-width: 359px){
+    .col_2{
+        width: 65px; height: 65px;
+    }
+    .ftr-logo-img{
+        width: 40px; height: 40px;
+    }
+    .text{
+        font-size: 10px; 
     }
     .homit-copyright{
-        font-size: 20px;
+        font-size: 9px;
     }
 }

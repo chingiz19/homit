@@ -57,7 +57,7 @@ router.post('/update', function (req, res, next) {
         User.updateUser(userData, key).then(function (updatedUser) {
             if (updatedUser) {
                 User.findUserById(id).then(function (newUser) {
-                    Auth.sign(req, res, newUser);
+                    Auth.signCustomerSession(req, newUser);
                     var response = {
                         user: newUser,
                         success: true

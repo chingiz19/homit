@@ -38,7 +38,8 @@ var io = require("socket.io")(sockIOServer, {
 io.adapter(redis({
     host: 'localhost',
     port: 6379,
-    user: process.env.REDIS_USER
+    user: process.env.REDIS_USER,
+    db: db.redisTable.io_drivers
 }));
 
 

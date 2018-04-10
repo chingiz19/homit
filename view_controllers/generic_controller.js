@@ -9,7 +9,8 @@ var ejsOptions = {
 	catelogies: undefined,
 	showSearchBar: true,
 	production: isProduction,
-	og_image: undefined
+	og_image: undefined,
+	userLoggedIn: false
 };
 
 /**
@@ -21,6 +22,11 @@ router.use(function(req, res, next){
 	 * EJS rendering options
 	 */
 	req.options.ejs = Object.assign({}, ejsOptions); // deep copy
+
+	// Check for signed in user
+	if (Auth.getSignedUser(req)){
+		req.options.ejs.userLoggedIn = true;
+	}
 	next();
 });
 
@@ -39,6 +45,11 @@ router.get("/checkout", function(req, res, next){
 	req.options.ejs["title"] = "Checkout";
 	req.options.ejs['stripeToken'] = process.env.STRIPE_TOKEN_PUB;
 	res.render("checkout.ejs", req.options.ejs);
+});
+
+router.get("/accounts", function(req, res, next){
+	req.options.ejs["title"] = "Homit - Login | Sign up";
+	res.render("accounts.ejs", req.options.ejs);
 });
 
 router.get("/sifarish01", function(req, res, next){

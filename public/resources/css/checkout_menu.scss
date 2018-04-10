@@ -1,331 +1,371 @@
-/*2 below keep SideNav fixed*/
 .md-sidenav-backdrop {
     position: fixed;
 }
+
 .md-sidenav-right {
     position: fixed;
 }
-/*General Tags*/
+
 ul {
     list-style-type: none;
 }
+
 li {
     list-style-type: none;
 }
-/* Store Break Line */
-.store-break{
-    display: flex; align-items: center; 
-    margin: 15px 0 0px 0;
+
+.box-center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
-.store-break-line { 
-    width: 100%; 
-    border-bottom: 1px solid rgba(0,0,0, 0.866); 
-    line-height: 1px; margin: 5px 0 5px; 
-} 
-.store-type { 
-    width: 205px;
-    background:#fff; padding:0 5px; 
-    letter-spacing: 0.045em;
-    -webkit-font-smoothing: antialiased;
-    font-size: 13px;
-    text-transform: uppercase; 
+.checkout-menu-btn-div {
+    position: fixed;
+    right: 20px;
+    top: 20%;
+    margin: 10px;
+    font-family: 'Nunito', sans-serif;
+    z-index: 1;
 }
 
-@media(min-width: 400px){
-    md-sidenav{
-        max-width: 400px !important;
-    } 
-    .mdSideNavR1{
-        overflow-y: hidden !important;
-    }
-     .mdSideNavR2{
-        overflow-y: scroll;
-        height: 100%;
-    }
-    .shopping-cart svg{
-        height: 38px; width: 38px;
-        fill: rgba(0,94,92,0.8);
-    }
-}
-
-/*User Cart SideNav*/
-.div-checkout{
-    display: flex; justify-content: center; 
-    margin-bottom: 10px; margin-top: 6px;
-}
-.checkout{
-    min-height: 100%; 
-    font-size: 20px;
-    letter-spacing: 0.025em;
-    color: rgba(255,255,255,1);
-    background-color: rgba(0,189,149,0.8); 
-    border: 1px solid rgba(0,189,149,0.8); 
-    -webkit-transition: background-color 0.3s;   
-}
-.cart-total{
-    margin: 0; padding: 0; 
-    color: white; 
-    font-size: 20px; font-weight: 600; 
-    margin-right: auto;
-}
-.checkout:hover{
-    background-color: rgb(2, 112, 88); 
-    border: 1px solid rgb(2, 112, 88);
+.checkout-menu-btn {
+    position: relative;
+    top: 5px;
+    height: 60px;
+    width: 60px;
+    background-color: rgba(33, 211, 172, 0.9);
+    box-shadow: 0 0px 7px 1px rgba(0, 0, 0, 0.35);
+    border-radius: 30px;
+    border-style: none;
     transition: all 0.3s ease;
 }
-.cart-button{
-    outline: none;
-    height: 37px !important;
-    border-radius: 5px !important; 
-    box-shadow: 0 0px 3px 1px rgba(0,0,0,0.3);
+.checkout-menu-btn:active { 
+    transition: all 0.3s ease;
 }
-.checkout span{
-    position: relative;
-    bottom: 2px;
+
+.checkout-menu-btn ng-md-icon {
+    fill: rgba(0, 94, 92, 0.8);
 }
-.mdSideNavR1{
-    width: 100%; height: 80%;
-    margin-top: 61px; 
-    border: rgba(63,222,17,0.1) solid 1.5px ;border-radius: 5px; 
+
+.checkout-menu-btn ng-md-icon svg {
+    width: 35px;
+    height: 35;
+}
+
+.items-num {
+    position: absolute;
+    bottom: 45px;
+    left: 42px;
+    min-width: 23px;
+    height: 25px;
+    background-color: orangered;
+    color: ghostwhite;
+    font-size: 14px;
+    font-weight: 700;
+    border: solid 2px rgb(255, 255, 255);
+    border-radius: 3px;
+    z-index: 20;
+}
+
+.checkout-sn {
+    max-width: 450px !important;
+    width: 450px;
+    height: 80%;
+    margin-top: 50px;
+    border: 2px solid rgba(63, 222, 17, 0.1);
+    border-radius: 5px 0 0 5px;
     box-shadow: none;
+    overflow-y: hidden !important;
 }
-/*SideNav fixed box, i.e. "Checkout" btn, close btn, "Cart Tot"*/
-.sdNavFB1{
+
+.checkout-sn-content {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.sidenav-header {
     position: fixed;
     width: 100%;
     padding: 0px;
-    background-color: rgb(255,255,255);
-    border-bottom: rgba(63,222,17,0.1) solid 1px;
+    background-color: rgb(255, 255, 255);
+    border-bottom: rgba(63, 222, 17, 0.1) solid 1px;
     z-index: 1;
 }
-.sdNavFB2{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.cart-tot {
     height: 2.5em;
-    background-color: rgba(0,189,149,0.8);
+    background-color: rgba(0, 189, 149, 0.8);
     border-radius: 5px 5px 0 0;
 }
-/*Cart - cart item list */
-.cart1{
-    position: fixed;
-    right: 5px;
-    top: 30%; 
-    z-index: 1;
-    font-family: 'Nunito', sans-serif;
-}
-.cart2a{
-    position: relative; 
-    top: 5px;
-    background-color: rgba(33, 211, 172, 0.9) !important;
-    box-shadow: 0 0px 10px 0px rgba(0,0,0,.26) !important;
-}
-.cart2aa{
-    margin: 0; padding: 0;
-    margin-left: 4px;
-}
-.cart2b{
-    display: flex; 
-    justify-content: center; align-items: center;
-}
-.cartNotificationNumber{
-    position: relative;
-    bottom: 65px; left: 45px;
-    width: 30%; height: 20px;
-    background-color: orangered;
-    color: ghostwhite;
-    font-size: 12px; font-weight: 700;
-    border: solid 2px rgb(255,255,255); border-radius: 3px;
-    z-index: 20;
-}
-.cartBItems1{
-    position: relative; 
-    top: 85px; 
+
+.sidenav-cls-btn {
+    width: 50px;
+    height: 100%;
+    background-color: transparent;
+    margin: 0 65px 0 10px;
     padding: 0;
-    background-color: rgb(255,255,255);
+    border: none;
+    fill: rgba(255, 255, 255, 1);
+}
+
+.sidenav-cls-btn ng-md-icon {
+    fill: rgba(255, 255, 255, 1);
+}
+
+.sidenav-cls-btn ng-md-icon svg {
+    width: 35px;
+    height: 35;
+}
+
+.total-ul {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto 0 0;
+    padding: 0;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.to-checkout-div {
+    margin-bottom: 10px;
+    margin-top: 6px;
+}
+
+.to-checkout-btn {
+    height: 100%;
+    font-size: 20px;
+    letter-spacing: 0.025em;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(0, 189, 149, 0.8);
+    border: 1px solid rgba(0, 189, 149, 0.8);
+    transition: background-color 0.3s;
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 0 0px 3px 1px rgba(0, 0, 0, 0.3);
+}
+
+.to-checkout-btn:hover {
+    background-color: rgb(2, 112, 88);
+    border: 1px solid rgb(2, 112, 88);
+    transition: background-color 0.3s ease;
+}
+
+.sidenav-body {
+    position: relative;
+    top: 85px;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
     padding-bottom: 20px;
 }
-.cartBItems2A{
-    display: flex; 
-    justify-content: flex-end;
-    align-items: center;
+
+.store-seper {
+    flex-direction: row;
+    width: 100%;
+}
+
+.store-name {
+    text-align: center;
+    padding: 5px;
+    color: rgba(0, 0, 0, 0.55);
+    -webkit-font-smoothing: antialiased;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.store-seper:before {
+    content: "";
+    width: 50px;
+    height: 1px;
+    margin: auto 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.store-seper:after {
+    content: "";
+    flex-grow: 3;
+    height: 1px;
+    margin: auto 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+.item-div {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.item-btn {
+    width: 85px;
+    height: 35px;
+    background-color: transparent;
+    border: none;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.item-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.item-btn ng-md-icon {
+    fill: rgba(0, 0, 0, 0.8);
+}
+
+.item-btn ng-md-icon svg {
+    width: 25px;
+    height: 25px;
+}
+
+.remove-btn {
+    margin-left: auto;
+}
+
+.remove-btn ng-md-icon {
+    fill: rgb(198, 70, 5);
+}
+
+.remove-btn ng-md-icon svg {
+    width: 25px;
+    height: 25px;
+}
+
+.item-left-div {
+    flex-direction: column;
+    align-items: flex-end;
     margin-top: 3em;
+    width: 25%;
 }
-.cartBItems2B1{
-    display: flex; 
-    justify-content: flex-end;
-}
-.cartBItems2B2{
-    width: 125px ; height: 125px;
-    margin: 0; padding: 0;
-    display: flex; 
-    justify-content: center;
-}
-.cartBItems2C{
-    display: flex; 
-    justify-content: center;
+
+.item-mid-div {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-top: 3em;
+}
+
+.item-right-div {
+    width: 35%;
+    margin-top: 2em;
+}
+
+.item-right-div ul {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
     text-align: center;
 }
-.cartBItems2C2{
-    margin: 0; padding: 0;
-    font-size: 14px;
-}
-/*Order Summaty Buttons*/
-.close-button{
-    display: flex; align-items: center; justify-content: center;
-    min-width: 50px !important; width: 50px;
-    fill: rgba(255,255,255,1);
-    /* margin-right: auto; */
-    height: 100%;
-    margin: 0 40px 0 10px;
-    /* margin-left: 10px; */
+
+.item-img {
+    width: 125px;
+    height: 125px;
+    margin: 0;
     padding: 0;
-}
-.close-button svg{
-    width: 25px; height: 25px;
-}
-.glyClsBtnSgn{
-    color: rgb(0,94,92);
-    font-size: 14px;
-}
-.ClsBtnCart{
-    width: 25px; height: 25px;
-}
-.item-button{
-    padding: 0 !important;
-    margin: 0 !important;
-}
-.item-button svg{
-    width: 25px; height: 25px;
-}
-#item-remove-button ng-md-icon{
-    fill: rgb(198,70,5);
+    display: flex;
+    justify-content: center;
 }
 
-/*Mobile screens*/
-@media screen and (max-device-width: 600px) {
-    .shopping-cart svg{
-        padding-top: 5px; padding-left: 7px;
-        height: 100px; width: 100px;
-        fill: rgba(0,94,92,0.7);
+/* start of non-mobile/tablet styles */
+@media screen and (min-device-width: 768px) {
+    .item-pack-vlo-mob {
+        display: none;
     }
-    .sdNavFB1{
-        position: fixed !important;
+}
+
+/* start of medium tablet styles */
+@media screen and (min-device-width: 480px) and (max-device-width: 767px) {
+    .item-pack-vlo-mob {
+        display: none;
+    }
+}
+
+/* start of phone styles */
+@media screen and (max-device-width: 479px) {
+    .checkout-menu-btn-div {
+        right: -1 !important;
+    }
+
+    .checkout-menu-btn {
+        border: 1px solid rgba(33, 211, 172, 1);
+        box-shadow: 0 0px 0px 2px rgba(255, 255, 255, 1);
+    }
+
+    .checkout-sn {
+        position: fixed;
+        right: 0;
         top: 0;
-        border-width: 0 0 1px 0 !important;
-        /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
-        transform: translateZ(0) !important; -webkit-transform: translateZ(0) !important;
-        z-index: 5;
-    }
-    .cart1{
-        top: 35%; right: 0;
-    }
-    .md-button.md-fab{
-        width: 140px; height: 140px;
-    }
-    .cart2aa{
-        width: 120px !important; height: 120px !important;
-        margin-top: 17px; padding-right: 10px;
-    }
-    .cartNotificationNumber{
-        position: relative;
-        bottom: 155px; left: 90px;
-        min-width: 45px; height: 45px;
-        background-color: orangered;
-        color: rgba(255,255,255,1);
-        font-size: 32px; font-weight: 600;
-        border: solid 2px rgb(255,255,255); border-radius: 3px;
-        z-index: 20;
-    }
-    .store-type{
-        width: 290px;
-        font-size: 20px;
-    }
-    /*SideNav*/
-    .mdSideNavR1{
-        min-width: 65% !important; min-height: 100% !important;
-        width: 65%;
-        margin-top: 0;
-        top: 1px;
-        border: rgba(180,180,180,0.5) solid 2px ;border-radius: 5px; 
-        box-shadow: none;
-        z-index: 100; 
-    }
-    .mdSideNavR2{
-        overflow-y: scroll;
-        height: 100%;
+        min-height: 100vh !important;
+        height: 100vh;
+        min-width: 70vw !important;
+        width: 70vw;
+        margin: 0;
     }
 
-    md-backdrop.md-opaque {
-        background-color: rgba(33,33,33,0.7);
+    .sidenav-header {
+        transform: translateZ(0) !important;
+        -webkit-transform: translateZ(0) !important;
     }
-    /*SideNav fixed box, i.e. "Checkout" btn, close btn, "Cart Tot"*/
-    .sdNavFB2{
+
+    .sidenav-cls-btn {
+        margin: 0;
+    }
+
+    .store-seper:before {
+        content: "";
+        width: 20px;
+    }
+
+    .store-name {
+        font-size: 10px;
+    }
+
+    .item-btn {
+        width: 50px;
+        height: 30px;
         padding: 0;
-        margin-top: 0; margin-bottom: 0;
-        height: 5em;
     }
-    .glyClsBtnSgn{
-        font-size: 20px;
-    }
-    .ClsBtnCart{
-        width: 50px; height: 50px;
-    }
-    /*Cart Items*/
-    .item-button svg{
-        width: 50px; height: 50px;
-    }
-    /* Cart Buttons */
-    .div-checkout{
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-    .checkout{
-        min-height: 100%; 
-    }
-    .cart-total{
-        font-size: 40px;
-    }
-    .cart-button{
-        height: 80px !important;
-        font-size: 42px;
-    }
-    .cartBItems1{
-        position: relative;
-        top: 190px; 
-    }
-    .sdNavFB1{
-        border-bottom: rgba(63,222,17,0.8) solid 3px;
-    }
-    .cartBItems2B2{
-        width: 200px ; height: 200px;
-    }
-    .cartBItems2C{
-        display: flex; 
-        justify-content: center;
-        align-items: center;
-        margin-top: 3em;
-        text-align: center;
-    }
-    .cartBItems2C2{
-        font-size: 22px;
-        margin: 0; padding: 0;
-    }
-    .close-button{
-        margin-left: 20px; 
-    }
-    .close-button svg{
-        width: 50px; height: 50px;
-    }
-}
-md-checkbox.md-checked .md-ink-ripple {
-     color: rgba(63,222,17,0.87); 
-}
-md-checkbox.md-checked .md-icon {
-    background-color: rgba(63,222,17,0.87);
-}
 
+    .item-btn ng-md-icon svg {
+        width: 20px;
+        height: 20px;
+    }
 
+    .item-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .item-left-div {
+        margin-top: 30px;
+    }
+
+    .item-right-div {
+        margin-top: 1em;
+    }
+
+    .item-right-div ul {
+        font-size: 11px;
+    }
+
+    .sidenav-cls-btn ng-md-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .total-ul {
+        margin: auto auto auto 8px;
+        font-size: 17px;
+    }
+
+    .to-checkout-btn {
+        height: 30px;
+        font-size: 17px;
+    }
+}

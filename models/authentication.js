@@ -2,45 +2,33 @@
  * @copyright Homit 2018
  */
 
-var cookiee = require('cookie-encryption');
 var bcrypt = require('bcrypt');
 var pub = {};
 const saltRounds = 10;
-
-/* Constructing cookie */
-global.vault = cookiee(global.secretKey, { //TODO: Improve secret key selection
-    cookie: "homit",
-    maxAge: 60 * 60 * 1000, // 1 hour
-    signed: true,
-    httpOnly: true
-});
 
 /* Building metadata for log */                                   
 var logMeta = {
     directory: __filename
   }
 
-/* Signing user cookie */
-pub.sign = function (req, res, obj) {
-    try {
-        res.cookie("user", obj, { maxAge: 60 * 60 * 1000, httpOnly: false });
-        vault.write(req, JSON.stringify(obj));
-        return true;
-    } catch (e) {
-        var metaData = {
-        directory: __filename,
-        error_path: req.path, 
-        error_message: e.message
-    }
-        Logger.log.error("Error while signing user cookie", metaData);
-        return false;
-    }
-};
 
-pub.clear = function (res) {
-    res.clearCookie('homit');
-    res.clearCookie('user');
-    vault.flush();
+const UserRoles = {
+    customer: "customer",
+    csr: "csr"
+}
+
+/* Signing customer cookie*/
+pub.signCustomerSession = function(req, user){
+    return signSession(req, user, UserRoles.customer);
+}
+
+/* Signing customer cookie*/
+pub.signCSRSession = function(req, csr){
+    return signSession(req, csr, UserRoles.csr);
+}
+
+pub.clear = function (req) {
+    req.session.destroy();
 };
 
 pub.validate = function (options) {
@@ -76,8 +64,7 @@ pub.comparePassword = function (plainPassword, hashPassword) {
 pub.validateCsr = function (options) {
     return function (req, res, next) {
         if (checkAuthCsr(req)) {
-            next();
-            return;
+            return next();
         }
         if (options && options.redirect) {
             res.redirect("/");
@@ -88,40 +75,23 @@ pub.validateCsr = function (options) {
 };
 
 function checkAuth(req) {
-    if (req.session) {
-        var user = vault.read(req);
-        if (user && user.startsWith("{")) {
-            user = JSON.parse(user);
-            if (user.user_email == req.cookies.user.user_email) {
-                return true;
-            }
-        }
-    }
-    return false;
+    return req.session && req.session.signedIn;
 }
 
 function checkAuthCsr(req) {
-    if (req.session) {
-        var user = vault.read(req);
-        if (user && user.startsWith("{")) {
-            user = JSON.parse(user);
-            if (user.user_email == req.cookies.user.user_email && user.role_id == 2) {
-                return true;
-            }
-        }
-    }
-    return false;
+    return req.session && req.session.signedIn && req.session.role == UserRoles.csr;
+}
+
+function signSession(req, user, role) {
+    req.session.user = user;
+    req.session.signedIn = true;
+    req.session.role = role;
+    return true;
 }
 
 pub.getSignedUser = function(req) {
-    if (req.session) {
-        var user = vault.read(req);
-        if (user && user.startsWith("{")) {
-            user = JSON.parse(user);
-            if (user.user_email == req.cookies.user.user_email) {
-                return user;
-            }
-        }
+    if (req.session && req.session.user) {
+        return req.session.user;
     }
     return false;
 }

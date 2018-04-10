@@ -15,12 +15,14 @@ var concatCss = require('gulp-concat-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify-es').default;
 var gulpFn  = require('gulp-fn');
-var scss = require('gulp-scss');
+var sass = require('gulp-sass');
+var imagemin = require('gulp-imagemin');
 var beep = require('beepbeep');
 var del = require('del');
 var browserSync = require('browser-sync').create();
 var notifier = require('node-notifier');
 var log = require('fancy-log');
+var fs = require('fs');
 
 
 /* Variables */
@@ -35,7 +37,8 @@ var jsFiles = [
     './public/**/controllers/*.js',
     './public/**/library/js/*.js'
 ];
-var cssFiles = './public/**/*.scss';
+var cssFiles = './public/resources/css/*.scss';
+var cssFilesToWatch = './public/**/*.scss';
 var imgFiles = './public/**/*.+(png|svg|jpg|jpeg|ico)';
 var miscFiles = [
     './public/*.*',
@@ -63,6 +66,14 @@ function errorHandling(err){
 
 /* Gulp tasks */
 gulp.task('compile', function(cb){
+    if(fs.existsSync('www/resources/images')){
+        return gulpSequence('clean:saveimages', ['js', 'css', 'misc'])(cb);
+    } else {
+        return gulpSequence('clean:saveimages', ['js', 'css', 'misc', 'img'])(cb);
+    }
+});
+
+gulp.task('compile-production', function(cb){
     return gulpSequence('clean:www', ['js', 'css', 'img', 'misc'])(cb);
 });
 
@@ -105,6 +116,10 @@ gulp.task('img', function(){
             wwwChangedViaGulp = true;
         }))
         .pipe(cache('imgFiles'))
+        .pipe(imagemin([
+            imagemin.jpegtran({progressive: true}),
+            imagemin.optipng({optimizationLevel: 5})
+        ]))
         .pipe(gulp.dest("www/"))
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = false;
@@ -123,15 +138,17 @@ gulp.task('misc', function(){
 });
 
 gulp.task('css', function(){
-    return gulp.src(cssFiles)
+    return gulp.src(cssFilesToWatch)
         .pipe(plumber({
             errorHandler: errorHandling
         }))
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = true;
         }))
-        .pipe(cache('cssFiles'))
-        .pipe(scss())
+        // .pipe(cache('cssFiles'))
+        .pipe(sass({
+            includePaths: ['./public/resources/css/styles']
+        }).on('erorr', sass.logError))
         // .pipe(production(concatCss('resources/css/all.min.css'))) TODO
         .pipe(production(cssnano({
             "zindex": false
@@ -145,7 +162,7 @@ gulp.task('css', function(){
 });
 
 gulp.task('watch', function(){
-    gulp.watch(cssFiles, ['css']);
+    gulp.watch(cssFilesToWatch, ['css']);
     gulp.watch(jsFiles, ['js']);
     gulp.watch(imgFiles, ['img']);
     gulp.watch(miscFiles, ['misc']);
@@ -172,15 +189,19 @@ gulp.task('start', function(cb){
 });
 
 gulp.task('www-error', function(){
-    gulp.watch('www/**/*', function(){
-        if (!wwwChangedViaGulp){
-            notifier.notify({
-                title: 'WWW folder contents has been modified',
-                message: 'Files inside www/ folder have been modified, please apply changes to public/ folder contents'
-            });
-            beep(3, 1000);
-        }
-    });
+    // gulp.watch('www/**/*', function(){
+    //     if (!wwwChangedViaGulp){
+    //         notifier.notify({
+    //             title: 'WWW folder contents has been modified',
+    //             message: 'Files inside www/ folder have been modified, please apply changes to public/ folder contents'
+    //         });
+    //         beep(3, 1000);
+    //     }
+    // });
+});
+
+gulp.task('clean:saveimages', function(){
+    return del.sync(['www/resources/*', 'www/*', '!www/resources', '!www/resources/images/**']);
 });
 
 gulp.task('clean:www', function(){
@@ -190,7 +211,7 @@ gulp.task('clean:www', function(){
 gulp.task('run', function(cb){
     if (gutil.env.env == "production"){
         environments.current(production);
-        return gulpSequence('compile')(cb);
+        return gulpSequence('compile-production')(cb);
     } else {
         environments.current(development);
         return gulpSequence('compile', 'start', 'watch', 'browserSync', 'www-error')(cb);
@@ -203,17 +224,31 @@ gulp.task('default', function(){
     TASKS                  DESCRIPTION
 
     run                     |  for front-end development (copies files to www folder, starts nodemon, browserSync, www-error watch)
-    compile                 |  cleans www folder then copies files to that folder (js, css, img)
+    
+    compile-production      |  cleans www folder then copies files to that folder (js, css, img)
+
+    compile                 |  runs clean:saveimages then copies files to that folder (js, css, img). NOTE: it will not copy images if www/resources/images folder exists
+    
     clean:www               |  deletes www folder
+    
+    clean:saveimages        |  deletes www folder, except www/resouces/images/
+    
     js                      |  copy js files to www folder
+    
     css                     |  copy css files to www folder
+    
     img                     |  copy img files to www folder
+    
     misc                    |  copy files inside public folder (doesn't include subfolders)
 
+
     test-views              |  run test for views
+    
     test-db                 |  run test for db
+    
     test-e2e                |  run test for end to end testing
     
+    g
     run --env production    | compiles everything for production environment\n`;
 
     log(gulpTasksList);

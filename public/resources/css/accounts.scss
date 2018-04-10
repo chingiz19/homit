@@ -1,0 +1,272 @@
+/* start of phone styles */
+@media screen and (max-device-width: 479px) {
+    .margin-auto {
+        margin: auto;
+    }
+
+    .search-btn-mob {
+        display: none;
+    }
+
+    input {
+        font-size: 16px;
+    }
+
+    .homit-nav {
+        position: relative;
+    }
+
+    .button-sec {
+        display: none;
+    }
+
+    .sign-header {
+        height: 12vh;
+        padding: 15px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .sign-header h1 {
+        margin: 0;
+        text-align: center;
+        font-weight: 400 !important;
+    }
+
+    .sign-body {
+        height: calc(68vh - 50px);
+    }
+
+    .sign-btn-mob {
+        width: 200px;
+        height: 40px;
+        font-size: 22px;
+        border-radius: 6px;
+        border: 1px solid rgba(42, 81, 145, 1);
+        background-color: rgba(42, 81, 145, 0.8);
+        color: white;
+    }
+
+    .sign-form {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .sign-form-inner-box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .inner-box-logIn {
+        height: 70%;
+    }
+
+    .inner-box-signUp {
+        height: 90%;
+    }
+
+    .input-width-1 {
+        width: 90%;
+    }
+
+    .input-width-2 {
+        width: 50%;
+    }
+
+    .email-margin {
+        margin-bottom: 20px;
+    }
+
+    .logIn-footer {
+        height: 20vh;
+        padding: 8%;
+        border-top: 1px solid #e5e5e5;
+        text-align: center;
+    }
+
+    .signUp-footer {
+        height: 20vh;
+        padding: 40px;
+        border-top: 1px solid #e5e5e5;
+        text-align: right;
+    }
+
+    .sign-footer-btn {
+        font-size: 18px;
+        margin-top: 3px;
+        border: none;
+        background-color: transparent;
+        color: rgba(0, 189, 149, 1);
+    }
+
+    .new-to-text-mob {
+        margin-bottom: 3px;
+        font-size: 18px;
+    }
+
+    .error-message-text {
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.95);
+    }
+
+    #emailNotification-mob, #signUpNotification-mob {
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .error-message-link {
+        color: rgb(0, 149, 207);
+        font-size: 17px;
+    }
+
+    .or-div {
+        width: 100%;
+        height: 20px;
+    }
+
+    .sucCircle-mob {
+        margin: auto;
+        margin-top: calc(10vh - 40px);
+        height: 80px;
+        width: 80px;
+        border-radius: 40px;
+        background-color: rgba(0, 189, 149, 1);
+    }
+
+    .msg-close-btn {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        border: none;
+        background-color: transparent;
+        width: 22px;
+        height: 22px;
+        padding: 0;
+    }
+
+    .msg-close-btn ng-md-icon {
+        fill: rgba(0, 0, 0, 0.4);
+    }
+
+    .msg-close-btn ng-md-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .foldIn-mob {
+        animation: unfoldIn 0.6s ease-in-out;
+    }
+
+    .foldOut-mob {
+        animation: unfoldOut 0.6s ease-in-out;
+    }
+
+    .sucCircle-mob ng-md-icon {
+        fill: rgba(255, 255, 255, 1);
+        margin: auto;
+        margin-left: 5px;
+        margin-top: 5px;
+    }
+
+    .sucCircle-mob ng-md-icon svg {
+        height: 70px;
+        width: 70px;
+    }
+
+    .emailNotification-mob {
+        display: none;
+        height: 0px;
+    }
+
+    .sucSign-mob {
+        display: none;
+        height: 0px;
+    }
+
+    .invalidLogIn-mob {
+        display: none;
+        height: 0px;
+    }
+
+    .signUpNotification-mob {
+        display: none;
+        height: 0px;
+    }
+
+    .sign-showSucMessage-mob {
+        position: absolute;
+        bottom: 0;
+        height: 20vh;
+        width: 100%;
+        background-color: rgba(245, 245, 245, 1);
+        border-radius: 3px;
+    }
+
+    .sign-showErrorMessage-mob {
+        position: absolute;
+        bottom: 0;
+        display: flex !important;
+        flex-direction: column;
+        height: 20vh !important;
+        width: 100%;
+        padding: 5px 10px;
+        background-color: rgba(240, 240, 240, 1);
+        border-radius: 3px;
+        text-align: center;
+        z-index: 100;
+    }
+
+    .or-span {
+        color: rgba(180, 180, 180, 1);
+        font-size: 15px;
+    }
+
+    .or-div::before,
+    .or-div::after {
+        content: "";
+        display: inline-block;
+        width: 150px;
+        padding-bottom: 4px;
+        border-top: 1px solid rgba(220, 220, 220, 1);
+    }
+
+    ::after,
+    ::before {
+        box-sizing: border-box;
+    }
+
+    @keyframes foldIn-mob {
+        0% {
+            transform: scaleY(0.005) scaleX(0);
+        }
+
+        50% {
+            transform: scaleY(0.005) scaleX(1);
+        }
+
+        100% {
+            transform: scaleY(1) scaleX(1);
+        }
+    }
+
+    @keyframes foldOut-mob {
+        0% {
+            transform: scaleY(1) scaleX(1);
+        }
+
+        50% {
+            transform: scaleY(0.005) scaleX(1);
+        }
+
+        100% {
+            transform: scaleY(0.005) scaleX(0);
+        }
+    }
+}
