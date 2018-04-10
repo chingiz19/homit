@@ -9,9 +9,12 @@ const redis = require('socket.io-redis');
 const KEY_PATH = path.normalize(process.cwd() + "/ssl/server.enc.key");
 const CERTIFICATE_PATH = path.normalize(process.cwd() + "/ssl/server.crt");
 const DRIVER_NAMESPACE = "/drivers";
-var driverConnector = require("net");
+const CM_NAMESPACE = "/chikimiki";
 const SOCKET_PORT = 3000;
+const CM_SOCKET_PORT = 6262;
 const DEFAULT_EMIT = "data";
+const CM_DEFAULT_EMIT = "message";
+const CM_SECRET_KEY = "hF)Zf:NR2W+gBGF]"
 
 /* Building metadata for log */
 var logMeta = {
@@ -31,7 +34,7 @@ var io = require("socket.io")(sockIOServer, {
     pingTimeout: 10000
 });
 
-/* Attaching redis server as adapter */
+/* Attaching redis server as adapter to local server for CM */
 io.adapter(redis({
     host: 'localhost',
     port: 6379,
@@ -40,9 +43,34 @@ io.adapter(redis({
 }));
 
 
+/**
+ * Separate local server for CM connections
+ */
+
+/* Creating local server for CM */
+var localServer = require("http").createServer();
+
+/* Attaching Redis to local server to socketio */
+var chikimikiIO = require("socket.io")(localServer, {
+    pingInterval: 2000,
+    pingTimeout: 10000
+});
+
+/* Attaching redis server as adapter to local server for CM */
+chikimikiIO.adapter(redis({
+    host: 'localhost',
+    port: 6379,
+    user: process.env.REDIS_USER
+}));
+
+
 /* Building drivers namespace */
 var drivers = io.of(DRIVER_NAMESPACE);
+var chikimiki = chikimikiIO.of(CM_NAMESPACE);
 
+/**
+ * Connection handler for Drivers
+ */
 drivers.on("connection", function (socket) {
     socket.isVerified = false;
 
@@ -134,7 +162,7 @@ drivers.on("connection", function (socket) {
                                 Logger.log.error("Wrong 'status' received from driver app. Received data: " + receivedJson.stringify(), logMeta);
                         }
                         if (sendToCm) {
-                            CM.send(receivedJson);
+                            pub.sendToCM(receivedJson);
                         }
                     } else {
                         // Driver.update disconnect
@@ -167,6 +195,81 @@ drivers.on("connection", function (socket) {
 });
 
 /**
+ * Connection handler for CM
+ */
+chikimiki.on('connection', function (client) {
+    var verification = {
+        "action": "verify_server",
+        "key": CM_SECRET_KEY
+    }
+    pub.sendToCM(verification);
+    Logger.log.debug("Connection to CM established", logMeta);
+
+    client.on('data', function (data) {
+        CM.receiver(JSON.parse(data));
+    });
+
+    client.on('disconnect', function () {
+        Logger.log.warn("Connection to CM has been lost", logMeta);
+        SMS.alertDirectors("\u26A0 CM is down \u26A0");
+    });
+
+    /* CM error listener that will be logged here as well */
+    client.on('error', function (data) {
+        Logger.log.error("CM connection is experiencing issues", logMeta);
+    })
+
+    client.on('error', function (data) {
+        Logger.log.error("CM connection is experiencing issues", logMeta);
+    })
+});
+
+
+pub.sendToCM = async function (json, isOrder) { 
+    if (isOrder) {
+        Logger.log.debug('Sending order to CM \n Store type: ' + json.details.order.store_type, logMeta);
+    }
+    chikimiki.emit(CM_DEFAULT_EMIT, json);
+}
+
+
+pub.sendOrderToCM = function (customerId, customerAddress, orderId, storeType) {
+    var newOrder = {
+        "action": "neworder",
+        "details": {
+            "customer": {
+                "id": customerId,
+                "address": customerAddress
+            },
+            "order": {
+                "id": orderId,
+                "store_type": storeType
+            }
+        }
+    };
+    pub.sendToCM(newOrder, true);
+}
+
+
+pub.cancelCMOrder = function (orderId, driverId) {
+    var driverIdString = "d_" + driverId;
+    var orderIdString = "o_" + orderId;
+
+    var json = {
+        "action": "driver_status",
+        "details": {
+            "driver_id": driverIdString,
+            "status": "remove_order",
+            "remove_order": {
+                "order_id": orderIdString
+            }
+        }
+    };
+    pub.sendToCM(json);
+};
+
+
+/**
  * Send data to driver
  * 
  * @param {*} id 
@@ -190,6 +293,7 @@ pub.sendToDriver = async function (id, json) {
 
 try {
     sockIOServer.listen(SOCKET_PORT);
+    localServer.listen(CM_SOCKET_PORT);
 } catch (err) {
     Logger.log.error("Can't listen to port " + SOCKET_PORT + "Please close other apps that might be using the same port", logMeta);
 }

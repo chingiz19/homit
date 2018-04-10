@@ -13,15 +13,15 @@ var homit_tags = {
 }
 
 const categories = {
-    "liquor-station": ['beer', 'liqueur', 'spirit', 'wine'],
-    "snack-vendor": ['beverages', 'everyday needs', 'party supply', 'snacks'],
-    "linas-italian-store": ['baked goods', 'beverages', 'canned and jarred', 'condiments and sauces', 'dry packaged', 'grains and legumes', 'herbs and spices', 'oil and vinegar' , 'pasta and baking', 'snacks']
+    "liquor-station": ['beer', 'liqueur', 'spirit', 'wine', 'party supply'],
+    "snack-vendor": ['beverages', 'everyday needs', 'snacks'],
+    "linas-italian-store": ['baked goods', 'beverages', 'canned and jarred', 'condiments and sauces', 'dry packaged', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
 }
 
 const api_categories = {
-    "liquor-station": ['beer', 'liqueur', 'spirit', 'wine'],
-    "snack-vendor": ['beverages', 'everyday-needs', 'party-supply', 'snacks'],
-    "linas-italian-store": ['baked-goods', 'beverages', 'canned-and-jarred', 'condiments-and-sauces', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar' , 'pasta-and-baking', 'snacks']
+    "liquor-station": ['beer', 'liqueur', 'spirit', 'wine', 'party-supply'],
+    "snack-vendor": ['beverages', 'everyday-needs', 'snacks'],
+    "linas-italian-store": ['baked-goods', 'beverages', 'canned-and-jarred', 'condiments-and-sauces', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
 }
 
 
@@ -801,26 +801,26 @@ router.get("/product/:productName/ls/:listingId", async function (req, res, next
     req.options.ejs.recommended_products = JSON.stringify(recommended_products[product.category]);
     req.options.ejs.see_more_url = "https://homit.ca/catalog/" + product.store_type_api_name + "/" + product.category;
 
-    
+
     if (Object.values(product.products).length > 0) {
         req.options.ejs.og_image = Object.values(product.products)[0].image;
     }
 
     req.options.ejs.title = _.trim(product.brand + _.trimEnd(" " + product.name) + " - Delivered to Your Doorstep | Homit");
 
-    if(product.details.preview){
+    if (product.details.preview) {
         req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. " + clearHomitTags(product.details.preview).split(".")[0]);
-    }else{
+    } else {
         req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. Let us Home It and liberate your precious time.");
     }
 
-    for(detail in req.options.ejs.product_details){
+    for (detail in req.options.ejs.product_details) {
         req.options.ejs.product_details[detail] = convertHomitTags(req.options.ejs.product_details[detail]);
     }
 
-    if(product.store_type_api_name == "linas-italian-store"){
+    if (product.store_type_api_name == "linas-italian-store") {
         req.options.ejs.store_web = "https://linasmarket.com/";
-    } else{
+    } else {
         req.options.ejs.store_web = undefined;
     }
 
@@ -852,7 +852,7 @@ router.get('/:parent/:category', function (req, res, next) {
         req.options.ejs.title = _.startCase(req.params.category) + " Catalog | Homit";
         req.options.ejs.categories = convertArrayToString(categories[req.params.parent]);
         req.options.ejs.loadedStore = _.startCase(req.params.parent);
-        req.options.ejs.selectedCategory = req.params.category.replace(/-/g , " ");
+        req.options.ejs.selectedCategory = req.params.category.replace(/-/g, " ");
         res.render("catalog.ejs", req.options.ejs);
     } catch (e) {
         next()
@@ -863,18 +863,18 @@ function convertArrayToString(array) {
     return "[\"" + array.join("\",\"") + "\"]";
 }
 
-function convertHomitTags(string){
+function convertHomitTags(string) {
     var tmpString = string;
-    for (tag in homit_tags){
+    for (tag in homit_tags) {
         tmpString = tmpString.replace(new RegExp(tag, 'g'), homit_tags[tag]);
     }
     return tmpString;
 }
 
-function clearHomitTags(string){
+function clearHomitTags(string) {
     var tmpString = string;
-    for (tag in homit_tags){
-        tmpString = tmpString.replace(new RegExp(tag, 'g'),"");
+    for (tag in homit_tags) {
+        tmpString = tmpString.replace(new RegExp(tag, 'g'), "");
     }
     return tmpString;
 }

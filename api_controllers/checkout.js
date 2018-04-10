@@ -188,7 +188,7 @@ var createOrders = async function (userId, address, address_lat, address_long, d
             } else {
                 cmUserId = "u_" + userId;
             }
-            CM.sendOrder(cmUserId, address, cmOrderId, storeType);
+            NM.sendOrderToCM(cmUserId, address, cmOrderId, storeType);
             SMS.alertDirectors("Order has been placed. Processed. Order ID is: " + cmOrderId);
             userOrders.push(userOrder);
             i++;

@@ -3,7 +3,8 @@
  */
 var router = require("express").Router();
 
-var concat = require('unique-concat');
+const HOMIT_CAR_STORE_TYPE = "homitcar";
+const HOMIT_CAR_CATEGORY = "party-supply";
 
 router.use('/', async function (req, res, next) {
     var tempArray = req.path.split('/');
@@ -11,60 +12,29 @@ router.use('/', async function (req, res, next) {
     var categoryName = tempArray[2];
 
     if (categoryName) {
-        if (storeTypeApi == Catalog.snackVendorStoreType) {
+        var storeType;
+        if (categoryName == HOMIT_CAR_CATEGORY) {
+            storeType = HOMIT_CAR_STORE_TYPE;
+        } else {
+            storeType = await Catalog.getStoreTypeByApi(storeTypeApi);
+        }
+        if (storeType) {
+            var storeOpen = await Catalog.isStoreOpen(storeType);
+            var result = await Catalog.getAllProductsByCategory(storeType, categoryName, storeOpen);
+            var response = {
+                success: true,
+                store_open: storeOpen,
+                subcategories: result.subcategories,
+                products: result.products
+            };
+            res.send(response);
+        } else {
             next();
-        } else {
-            var storeType = await Catalog.getStoreTypeByApi(storeTypeApi);
-            if (storeType) {
-                var storeOpen = await Catalog.isStoreOpen(storeType);
-                var result = await Catalog.getAllProductsByCategory(storeType, categoryName, storeOpen);
-                var response = {
-                    success: true,
-                    store_open: storeOpen,
-                    subcategories: result.subcategories,
-                    products: result.products
-                };
-                res.send(response);
-            } else {
-                next();
-            }
         }
     } else {
         next();
     }
 });
-
-router.use('/snack-vendor', async function (req, res, next) {
-    var tempArray = req.path.split('/');
-    var categoryName = tempArray[1];
-
-    if (categoryName) {
-        var safewayOpen = await Catalog.isStoreOpen(Catalog.safewayStoreType);
-        var subcategories;
-        var products;
-        if (safewayOpen) {
-            var result = await Catalog.getAllProductsByCategoryWithHomitCar(Catalog.safewayStoreType, categoryName, safewayOpen);
-            subcategories = result.subcategories;
-            products = result.products;
-        } else {
-            var safewayOnlyResult = await Catalog.getAllProductsByCategorySafewayOnly(categoryName, safewayOpen);
-            var newResult = await Catalog.getAllProductsByCategoryWithHomitCar(Catalog.sevenElevenStoreType, categoryName, true);
-
-            subcategories = concat(newResult.subcategories, safewayOnlyResult.subcategories);
-            products = newResult.products.concat(safewayOnlyResult.products);
-        }
-        var response = {
-            success: true,
-            store_open: true,
-            subcategories: subcategories,
-            products: products
-        };
-        res.send(response);
-    } else {
-        next();
-    }
-});
-
 
 router.post('/search', async function (req, res, next) {
     var searchText = req.body.search;

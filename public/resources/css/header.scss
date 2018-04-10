@@ -107,6 +107,15 @@ nav {
     margin: 0;
     padding: 0;
 }
+#hub-background-image{
+    position: fixed;
+    width: 270px; height: 400px;
+    background-size: cover; 
+    background-image: url('/resources/images/non-catalog-image/homit_hub/homit-hub-cover.png'); 
+    background-position: center;
+    background-repeat:no-repeat;
+    z-index: 0;
+}
 
 .NM-search-box li:hover {
     background-color: rgba(230, 230, 230, 1);
@@ -117,6 +126,9 @@ nav {
     display: flex;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+#hdrHub1{
+    background-image: url('/resources/images/non-catalog-image/homit_hub/homit-hub-cover.png');
 }
 
 .NM-search-box li a span {
