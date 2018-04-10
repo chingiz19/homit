@@ -37,6 +37,11 @@ li {
     background-color: rgba(33, 211, 172, 0.9);
     box-shadow: 0 0px 7px 1px rgba(0, 0, 0, 0.35);
     border-radius: 30px;
+    border-style: none;
+    transition: all 0.3s ease;
+}
+.checkout-menu-btn:active { 
+    transition: all 0.3s ease;
 }
 
 .checkout-menu-btn ng-md-icon {

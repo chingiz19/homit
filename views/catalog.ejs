@@ -46,28 +46,33 @@
                             <section class="nav-mob-content">
                                 <div class="nav-sep-line-str">STORE</div>
                                 <ul class="str-ul">
-                                    <li class="nav-mob-str-ln str-ln-1" ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '0px'} || {'margin-left': '10px'}">
+                                    <li class="nav-mob-str-ln str-ln-1" ng-style="('<%= loadedStore %>' == 'Lina’s Italian Store') && {'margin-left': '0px'} || {'margin-left': '10px'}" ng-click="hrefToStore('/catalog/linas-italian-store')">
+                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Lina’s Italian Store')" icon="shopping_cart"></ng-md-icon>
+                                        <a ng-style="('<%= loadedStore %>' == 'Lina’s Italian Store') && {'margin-left': '10px', 'font-weight':'600', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
+                                            target="_self">Lina's Italian Store</a>
+                                    </li>
+                                    <li class="nav-mob-str-ln str-ln-1" ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '0px'} || {'margin-left': '10px'}" ng-click="hrefToStore('/catalog/liquor-station')">
                                         <ng-md-icon ng-show="('<%= loadedStore %>' == 'Liquor Station')" icon="shopping_cart"></ng-md-icon>
                                         <a ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '10px', 'font-weight':'600', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
-                                            href="/catalog/liquor-station" target="_self">Liquor Station</a>
+                                            target="_self">Liquor Station</a>
                                     </li>
-                                    <li class="nav-mob-str-ln" ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '0px'} || {'margin-left': '10px'}">
+                                    <li class="nav-mob-str-ln" ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '0px'} || {'margin-left': '10px'}" ng-click="hrefToStore('/catalog/snack-vendor')">
                                         <ng-md-icon ng-show="('<%= loadedStore %>' == 'Snack Vendor')" icon="shopping_cart"></ng-md-icon>
                                         <a ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '10px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
-                                            href="/catalog/snack-vendor" target="_self">Snack Vendor</a>
+                                         target="_self">Snack Vendor</a>
                                     </li>
                                 </ul>
                                 <div class="nav-sep-line-aisle">STORE AISLE</div>
                                 <ul class="str-aisle-ul">
-                                    <li class="nav-mob-aisle-ln" ng-repeat="category in <%= categories %> track by $index">
+                                    <li class="nav-mob-aisle-ln" ng-repeat="category in <%= categories %> track by $index" ng-click="hrefToCat(category)">
                                         <ng-md-icon ng-show="('<%= selectedCategory %>' == category)" icon="label"></ng-md-icon>
                                         <a ng-style="('<%= selectedCategory %>' == category) && {'margin-left': '10px', 'font-weight':'600'} || {'margin-left': '30px'}"
-                                            href="/catalog/{{ '<%= loadedStore %>' | kebabCase }}/{{ category }}" target="_self">{{category | capitalize}}</a>
+                                           target="_self">{{ category }}</a>
                                     </li>
                                 </ul>
                                 <div class="nav-sep-line-cat">CATEGORY</div>
                                 <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
-                                    <md-radio-button class="cat-body-cat" ng-repeat="variant in subcategories" id="radio_{{ $index }}" ng-value="variant" ng-click="checkSubcategories(variant)">
+                                    <md-radio-button class="cat-body-cat" ng-repeat="variant in subcategories | orderBy" id="radio_{{ $index }}" ng-value="variant" ng-click="checkSubcategories(variant)">
                                         <span class="variant-txt">{{ variant }}</span>
                                     </md-radio-button>
                                 </md-radio-group>
@@ -80,7 +85,7 @@
                     <div class="cat-section-header section-header box-center" ng-click="filterCategories()">{{ '
                         <%= selectedCategory %> '}}</div>
                     <md-radio-group ng-model="SubcategoryName">
-                        <md-radio-button class="cat-body-cat" id="radio_{{$index}}" ng-repeat="variant in subcategories" ng-value="variant" ng-click="checkSubcategories(variant)">
+                        <md-radio-button class="cat-body-cat" id="radio_{{$index}}" ng-repeat="variant in subcategories | orderBy" ng-value="variant" ng-click="checkSubcategories(variant)">
                             <span>{{ variant }}</span>
                         </md-radio-button>
                     </md-radio-group>
@@ -92,11 +97,11 @@
                         <div class="cat-section-header section-header box-center same-line" ng-click="filterCategories()">
                             <%= loadedStore %>
                         </div>
-                        <ul class="subcat-list same-line" layout="column">
-                            <li ng-repeat='category in <%= categories %> track by $index'>
-                                <a href="/catalog/{{ '<%= loadedStore %>' | kebabCase }}/{{ category }}" target="_self" class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': 'rgba(0,189,149,0.7)'}">
-                                    <span ng-style="( '<%= selectedCategory %>' == category ) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'25px'}">{{ category }}</span>
-                                </a>
+                        <ul class="cat-list same-line" layout="column">
+                            <li ng-repeat='category in <%= categories %> track by $index' ng-click="hrefToCat(category)" style="outline: none;">
+                                <div class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': 'rgba(0,189,149,0.7)'}">
+                                    <span ng-style="( '<%= selectedCategory %>' == category ) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'20px'}">{{ category }}</span>
+                                </div>
                             </li>
                         </ul>
                     </div>

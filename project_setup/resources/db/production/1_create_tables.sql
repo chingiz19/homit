@@ -65,6 +65,14 @@ CREATE TABLE catalog_description_names (
 ) ENGINE = InnoDB;
 
 
+CREATE TABLE catalog_image_names (
+	id INT UNSIGNED NOT NULL,
+	name VARCHAR(225),
+	
+	PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+
 CREATE TABLE catalog_categories (
 	id INT UNSIGNED NOT NULL,
 	name VARCHAR(225) NOT NULL,
@@ -109,7 +117,7 @@ CREATE TABLE catalog_listings_descriptions (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	listing_id INT UNSIGNED NOT NULL,
 	description_key INT UNSIGNED NOT NULL,
-	description VARCHAR(225),
+	description VARCHAR(1500),
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_catalog_listings_descriptions_listing_id FOREIGN KEY (listing_id) REFERENCES catalog_listings(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
@@ -126,6 +134,18 @@ CREATE TABLE catalog_products (
 	PRIMARY KEY (id),
 	CONSTRAINT fk_catalog_products_listing_id FOREIGN KEY (listing_id) REFERENCES catalog_listings(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_catalog_products_container_id FOREIGN KEY (container_id) REFERENCES catalog_packaging_containers(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+
+CREATE TABLE catalog_products_images (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	product_id INT UNSIGNED NOT NULL,
+	image_key INT UNSIGNED NOT NULL,
+	image VARCHAR(225),
+	
+	PRIMARY KEY (id),
+	CONSTRAINT fk_catalog_products_images_product_id FOREIGN KEY (product_id) REFERENCES catalog_products(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
+	CONSTRAINT fk_catalog_products_images_image_key FOREIGN KEY (image_key) REFERENCES catalog_image_names(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 

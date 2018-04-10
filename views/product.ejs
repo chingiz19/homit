@@ -4,23 +4,25 @@
     <%- include('partial/imports')%>
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/product.css" rel="stylesheet">
+            <meta name="description" content="<%= meta_description %>" />
 </head>
 
 <body ng-cloak>
+
     <%- include('partial/checkout_menu')%>
         <div class="controller" ng-controller="productController" layout="column">
-            <div class="product-content">
-                <input id="recommendedProducts" style="display: none;" value="<%= recommended_products %>">
-                <input id="product" style="display: none;" value="<%= product %>">
-                <input id="default_container" style="display: none;" value="<%= default_container %>">
-                <div layout="column" itemscope itemtype="http://schema.org/Product">
-                    <h1>
-                        <span itemprop="brand">
-                            <%= product_name %>
-                        </span>
-                        <span itemprop="name">
-                            <%= product_brand %>
-                        </span> - Order Online</h1>
+            <div class="product-content" itemscope itemtype="http://schema.org/Product">
+                <input id="recommendedProducts" class="none" value="<%= recommended_products %>">
+                <input id="product" class="none" value="<%= product %>">
+                <input id="default_container" class="none" value="<%= default_container %>">
+                <h2 class="product-name-h2-mob">
+                    <span itemprop="brand">
+                        <%= product_brand %>
+                    </span>
+                    <span itemprop="name">
+                        <%= product_name %>
+                    </span> - Deliver Now</h2>
+                <div layout="column">
                     <section>
                         <!--googleoff: snippet-->
                         <div class="col-md-6 product-img product-image" layout="column">
@@ -38,12 +40,23 @@
                         </div>
                         <!--googleon: snippet-->
                         <div class="col-md-6 product-property">
-                            <% if (product_description) {%>
-                                <section>
-                                    <p itemprop="description">
-                                        Description:
-                                        <%= product_description %>
-                                    </p>
+                            <h2 class="product-name-h2-web">
+                                <span itemprop="brand">
+                                    <%= product_brand %>
+                                </span>
+                                <span itemprop="name">
+                                    <%= product_name %>
+                                </span> - Deliver Now</h2>
+                            <% if (product_details.ingredients) {%>
+                                <section class="ingredients-sec">
+                                    <div class="ingredients">
+                                        <h3 class="sub-header">Ingredients:</h3>
+                                        <!-- <ul> -->
+                                            <span itemprop="additionalProperty">
+                                                <%- product_details.ingredients %>
+                                            </span>
+                                        <!-- </ul> -->
+                                    </div>
                                 </section>
                                 <% } %>
                                     <section layout="column" class="section-box">
@@ -102,40 +115,87 @@
                                         <button class="add-to-cart" ng-click="addToCart(product)">Add To Cart</button>
                                     </section>
                                     <div layout="column">
-                                        <h3 class="product-details-header">Product Details</h3>
+                                        <h3 class="product-details-header sub-header">Product Details</h3>
                                         <ul class="bullet-description">
-                                            <li class="product-details-short">{{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]
+                                            <li>
+                                                <span class="bold">Product:</span> {{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]
                                                 }} x {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]
                                                 }}
                                                 <span class="product-details-container">{{ selected_container}}</span>
                                             </li>
                                             <!--googleon: snippet-->
-                                            <% if (product_origin_country) {%>
-                                                <li itemprop="description"><span class="bold">Type:</span>
-                                                    <%= product_type %>
-                                                </li>
-                                                <li itemprop="description"><span class="bold">Country of Origin:</span>
-                                                    <%= product_origin_country %>
-                                                </li>
-                                                <%if (product_made_by != "NULL") { %>
-                                                    <li itemprop="description"><span class="bold">Made by:</span>
-                                                        <%= product_made_by %>
-                                                    </li>
-                                                <% } %>
-                                                <%if (showAlcoholVolume) { %>
-                                                    <li itemprop="description"><span class="bold">Alcohol/Vol:</span>
-                                                        <%= product_alcohol_volume %>
-                                                    </li>
-                                                <% } %>
+                                            <% if (store_web) {%>
                                                 <li>
-                                                    <a href="<%= see_more_url %>" target="_self">See More Products</a>
+                                                    <span class="bold">Sold By:</span>
+                                                    <a href="<%= store_web %>" target="_blank" itemprop="description">
+                                                        <%= store_type_display_name %>
+                                                    </a>
                                                 </li>
                                             <% } %>
+                                            <li>
+                                                <span class="bold">Location:</span>
+                                                <span itemprop="description">Calgary, AB</span>
+                                            </li>
+                                            <% if (product_type) {%>
+                                                <li>
+                                                    <span class="bold">Type:</span>
+                                                    <span itemprop="additionalType">
+                                                        <%= product_type %>
+                                                    </span>
+                                                </li>
+                                            <% } %>
+                                            <% if (product_details.country_of_origin) {%>
+                                                <li>
+                                                    <span class="bold">Country of Origin:</span>
+                                                    <span itemprop="description">
+                                                        <%= product_details.country_of_origin %>
+                                                    </span>
+                                                </li>
+                                            <% } %>
+                                            <%if (product_details.producer != "NULL" && product_details.producer) { %>
+                                                <li>
+                                                    <span class="bold">Made by:</span>
+                                                    <span itemprop="manufacturer">
+                                                        <%= product_details.producer %>
+                                                    </span>
+                                                </li>
+                                            <% } %>
+                                            <%if (product_details.alcohol_content) { %>
+                                                <li>
+                                                    <span class="bold">Alcohol/Vol:</span>
+                                                    <span itemprop="description">
+                                                        <%= product_details.alcohol_content %>
+                                                    </span>
+                                                </li>
+                                            <% } %>
+                                            <li>
+                                                <a href="<%= see_more_url %>" target="_self">See More Products</a>
+                                            </li>
                                         </ul>
                                     </div>
                         </div>
                     </section>
                 </div>
+                <% if (product_details.preview) {%>
+                    <section class="preview-sec">
+                        <div class="description">
+                            <h3 class="sub-header">Product Description:</h3>
+                            <p itemprop="description">
+                                <%- product_details.preview %>
+                            </p>
+                        </div>
+                    </section>
+                    <% } %>
+                <% if (product_details.serving_suggestions) {%>
+                    <section class="preview-sec">
+                        <div class="description">
+                            <h3 class="sub-header">Serving Sugestions:</h3>
+                            <p itemprop="description">
+                                <%- product_details.serving_suggestions %>
+                            </p>
+                        </div>
+                    </section>
+                    <% } %>
             </div>
             <div class="recomended-products">
                 <!--googleoff: snippet-->

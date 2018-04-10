@@ -3,19 +3,20 @@ md-toolbar {
 }
 
 body {
+    padding-top: 30px;
     font-family: 'Nunito', sans-serif;
     color: rgba(70, 70, 70, 1);
     letter-spacing: 0.025em;
 }
 
-ul {
-    list-style-type: none;
+.none{
+    display: none;
 }
 
-li {
-    list-style-type: none;
+.description ul, .description li, .ingredients ul, .ingredients li{
+    list-style-type: initial !important;
+    font-size: 16px;
 }
-
 .bold {
     font-weight: 600;
     margin-bottom: 1px;
@@ -24,6 +25,14 @@ li {
 h1 {
     text-align: center;
     margin-bottom: 25px;
+}
+
+.product-name-h2-web{
+    text-align: center; 
+    margin-top: 0; 
+    font-weight: 600; 
+    color: rgba(39, 9, 9,0.9);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .controller {
@@ -35,12 +44,6 @@ h1 {
     top: 50px;
     width: 1140px;
     margin: 0 auto;
-}
-
-.product-details-short {
-    font-weight: 600;
-    font-size: 15;
-    margin-top: 5px;
 }
 
 img:focus {
@@ -103,13 +106,29 @@ footer {
     height: 50px;
 }
 
+.ingredients-sec{
+    margin-top: 25px;
+}
+
+.ingredients{
+    margin-bottom: 20px;
+}
+
+.ingredients li{
+    font-size: 16px;
+}
+
+.sub-header{
+    font-size: 18px; color: rgba(0,0,0,0.85); font-weight: 600;
+}
+
 .size-section {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 40px;
+    height: 30px;
     margin-top: 5px;
     margin-bottom: 2px;
 }
@@ -120,7 +139,7 @@ footer {
 }
 
 .size-buttons button:hover {
-    background-color: rgba(150, 150, 150, 1);
+    background-color: rgba(33, 211, 172, 1);
     transition: all 0.3s ease;
 }
 
@@ -133,11 +152,11 @@ button:focus {
     justify-content: flex-start;
     padding: 0;
     margin: 0;
-    height: 40px;
-    width: 100px;
+    height: 30px;
+    width: 90px;
     border: 0;
     border-radius: 2px 0 0 2px;
-    background-color: rgba(230, 230, 230, 1);
+    background-color: rgba(33, 211, 172, 0.2);
     transition: background-color 0.3s;
 }
 
@@ -146,11 +165,11 @@ button:focus {
     justify-content: flex-end;
     padding: 0;
     margin: 0;
-    height: 40px;
-    width: 100px;
+    height: 30px;
+    width: 90px;
     border: 0;
     border-radius: 0 2px 2px 0;
-    background-color: rgba(230, 230, 230, 1);
+    background-color: rgba(33, 211, 172, 0.2);
     transition: background-color 0.3s;
 }
 
@@ -161,7 +180,7 @@ button:focus {
 }
 
 .size-box-middle {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
 }
 
@@ -181,8 +200,8 @@ button:focus {
     align-items: center;
     margin: 0;
     padding: 0;
-    height: 30px;
-    width: 110px;
+    height: 23px;
+    width: 100px;
     background-color: rgba(254, 254, 254, 1);
     z-index: 1;
 }
@@ -190,9 +209,10 @@ button:focus {
 .selected-product-price {
     display: flex;
     justify-content: center;
-    font-size: 22px;
+    font-size: 24px;
+    color: rgb(24, 204, 165);
     font-weight: 600;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .add-to-cart {
@@ -201,9 +221,10 @@ button:focus {
     margin: 10px auto 10px auto;
     font-size: 17px;
     text-transform: uppercase;
-    background-color: rgba(70, 70, 70, 1);
+    background-color: rgba(70, 70, 70, 0.9);
     color: rgba(255, 255, 255, 1);
     border-radius: 5px;
+    border-style: none;
     transition: background-color 0.3s;
 }
 
@@ -213,17 +234,22 @@ button:focus {
 }
 
 .product-details-header {
-    padding: 5px 0 5px 5px;
+    margin: 20px 0 5px 0;
+    padding: 5px 0 2px 2px;
     width: 100%;
-    border: 1px solid rgba(200, 200, 200, 0.5);
-    border-left-width: 0;
-    border-right-width: 0;
-    font-size: 16px;
-    font-weight: 600;
+    border-bottom: 1px solid rgba(200, 200, 200, 0.5);
 }
 
 .product-details-container {
     text-transform: capitalize;
+}
+
+.description{
+    margin-bottom: 20px;
+}
+
+.preview-sec{
+    margin-top: 30px;
 }
 .recomended-products{
     position: relative;
@@ -336,6 +362,13 @@ footer{
 }
 
 /* start of window shrinkage affect solution */
+
+@media (max-width: 992px){
+    h2{
+        margin-top: 50px;
+    }
+}
+
 @media (max-width: 1140px) and (min-width: 856px) {
     .product-content {
         width: 855px;
@@ -364,15 +397,27 @@ footer{
 }
 
 /* start of non-mobile/tablet styles */
-@media screen and (min-device-width: 768px) {}
+@media screen and (min-device-width: 768px) {
+    .product-name-h2-mob{
+        display: none;
+    }
+}
 
 /* start of medium tablet styles */
 @media screen and (min-device-width: 480px) and (max-device-width: 767px) {}
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
+    body{
+        padding-top: 20px;
+    }
     .product-content {
-        max-width: 350px;
+        max-width: calc(100vw - 40px);
+        width: calc(100vw - 40px);
+    }
+
+    .product-property{
+        padding-left: 0; padding-right: 0;
     }
 
     .checkout-menu-btn-div {
@@ -390,6 +435,19 @@ footer{
         font-size: 25px;
         margin-bottom: 10px;
         text-align: center;
+    }
+
+    .product-name-h2-web{
+        display: none;
+    }
+
+    .product-name-h2-mob{
+        margin-top: 0; 
+        text-align: center; 
+        font-weight: 600; 
+        color: rgb(39, 9, 9);
+        font-size: 22px;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
 
     .product-image {
@@ -418,7 +476,7 @@ footer{
     }
 
     .product-details-header {
-        padding: 10px 0 10px 5px;
+        padding: 10px 0 10px 0px;
         width: 100%;
     }
 

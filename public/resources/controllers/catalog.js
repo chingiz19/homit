@@ -104,11 +104,18 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         }
     };
 
+    $scope.hrefToStore = function (path) {
+        $window.location.href = $window.location.origin + path;
+    };
+
+    $scope.hrefToCat = function(category){
+        $window.location.href = $window.location.origin + hrefChangeCategory($window.location.pathname,_.trim(_.lowerCase(category)).replace(/ /g, "-"));
+    }
+
     $scope.hrefPrdPage = function (product) {
         var path;
         path = "/catalog/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + product.image.substring(product.image.lastIndexOf("_") + 1, product.image.lastIndexOf("."));
         $window.location.href = $window.location.origin + _.escape(_.toLower(path));
-        // console.log("url " + $window.location.origin + _.escape(_.toLower(path)));
     };
 
     $scope.nextVolume = function (product) {
@@ -266,6 +273,18 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         }, 20);
         $('#loading').fadeOut();
     };
+
+
+    function hrefChangeCategory(pathname,category){
+        let pathname_1 = pathname.split("/");
+        let pathname_final = "";
+        pathname_1[pathname_1.length - 1] = category;
+        delete pathname_1[0];
+        for(part in pathname_1){
+            pathname_final = pathname_final + "/" + pathname_1[part];
+        }
+        return pathname_final;
+    }
 
     $scope.scroll_prev = 0;
     $scope.scroll_current = 0;
