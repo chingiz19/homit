@@ -108,9 +108,9 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         $window.location.href = $window.location.origin + path;
     };
 
-    $scope.hrefToCat = function(category){
-        $window.location.href = $window.location.origin + hrefChangeCategory($window.location.pathname,_.trim(_.lowerCase(category)).replace(/ /g, "-"));
-    }
+    $scope.hrefToCat = function (category) {
+        $window.location.href = $window.location.origin + hrefChangeCategory($window.location.pathname, _.trim(_.lowerCase(category)).replace(/ /g, "-"));
+    };
 
     $scope.hrefPrdPage = function (product) {
         var path;
@@ -275,12 +275,12 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     };
 
 
-    function hrefChangeCategory(pathname,category){
+    function hrefChangeCategory(pathname, category) {
         let pathname_1 = pathname.split("/");
         let pathname_final = "";
         pathname_1[pathname_1.length - 1] = category;
         delete pathname_1[0];
-        for(part in pathname_1){
+        for (let part in pathname_1) {
             pathname_final = pathname_final + "/" + pathname_1[part];
         }
         return pathname_final;

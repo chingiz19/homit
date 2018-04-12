@@ -405,26 +405,19 @@ var prepareOrderSlip = function (orderInfo, callback) {
  * @param {*Array} products - Products recieved after dispatch [array of product objecs] 
  */
 var getTotalPriceForProducts = function (orders) {
-    var depotQuantities = {};
     var prices = [];
 
     for (sub_order in orders) {
-        for (var i = 0; i < orders[sub_order].products.length; i++) {
-            depotQuantities[orders[sub_order].products[i].depot_id] = orders[sub_order].products[i].quantity;
-            var currentPrice = {
-                "depot_id": orders[sub_order].products[i].depot_id,
-                "price": orders[sub_order].products[i].price_sold,
-                "tax": orders[sub_order].products[i].tax
-            };
-            prices.push(currentPrice);
-        }
+        prices = prices.concat(orders[sub_order].products);
     }
 
-    price = Catalog.priceCalculator(depotQuantities, prices, false);
-    priceObject.deliveryFee = "C$ " + price.delivery_fee;
-    priceObject.totalTax = "C$ " + price.total_tax;
-    priceObject.totalAmount = "C$ " + price.cart_amount;
-    priceObject.totalPrice = "C$ " + price.total_price;
+    var calcProducts = getCartProductsWithStoreType(prices);
+
+    price = Catalog.getAllPricesForProducts(calcProducts);
+    priceObject.deliveryFee = "C$ " + price.delivery_fee.toFixed(2);
+    priceObject.totalTax = "C$ " + price.total_tax.toFixed(2);
+    priceObject.totalAmount = "C$ " + price.cart_amount.toFixed(2);
+    priceObject.totalPrice = "C$ " + price.total_price.toFixed(2);
 
     return priceObject;
 };

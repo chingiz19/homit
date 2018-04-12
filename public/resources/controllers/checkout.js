@@ -332,53 +332,13 @@ app.controller("checkoutController",
         }
 
         $scope.updatePrices = function (products) {
-            var deliveryFee1 = 4.99;
-            var deliveryFee2 = 2.99;
-            var albertaGst = 0.05;
-            var depotQuantities = {};
-            var prices = [];
-            for (var superCategory in products) {
-                for (var key in products[superCategory]) {
-                    var temp = {
-                        id: products[superCategory][key].depot_id,
-                        price: products[superCategory][key].price,
-                        tax: products[superCategory][key].tax
-                    };
-                    prices.push(temp);
-                    depotQuantities[products[superCategory][key].depot_id] = products[superCategory][key].quantity;
-                }
-            }
-            var totalAmount = 0;
-            var totalTax = 0;
-            for (var i = 0; i < prices.length; i++) {
-                totalAmount = totalAmount + parseFloat(prices[i].price) * depotQuantities[prices[i].id];
-                if (prices[i].tax) {
-                    totalTax = totalTax + parseFloat(prices[i].price) * depotQuantities[prices[i].id] * albertaGst;
-                }
-            }
-            // Calculating math numbers
-            totalAmount = Math.round(totalAmount * 100) / 100;
-            var deliveryFee;
-            if (totalAmount > 100) {
-                deliveryFee = deliveryFee1 + Math.floor(parseInt(totalAmount / 100)) * deliveryFee2;
-            } else if (totalAmount > 0 && totalAmount < 100) {
-                deliveryFee = deliveryFee1;
-            } else {
-                deliveryFee = 0.00;
-            }
-            totalTax = Math.round((totalTax + deliveryFee * albertaGst) * 100) / 100;
-            var totalPrice = totalAmount + deliveryFee + totalTax;
+            var prices = $scope.calculatePrice(products);
 
             // Updating display variables
-            totalTax = totalTax.toFixed(2);
-            totalAmount = totalAmount.toFixed(2);
-            totalPrice = totalPrice.toFixed(2);
-            deliveryFee = deliveryFee.toFixed(2);
-
-            $scope.delFee = deliveryFee;
-            $scope.totalAmount = totalAmount;
-            $scope.GST = totalTax;
-            $scope.receipt = totalPrice;
+            $scope.delFee = prices.delivery_fee.toFixed(2);
+            $scope.totalAmount = prices.cart_amount.toFixed(2);
+            $scope.GST = prices.total_tax.toFixed(2);
+            $scope.receipt = prices.total_price.toFixed(2);
         };
 
         $scope.updateBDays = function () {
@@ -492,4 +452,58 @@ app.controller("checkoutController",
         });
 
         $scope.init();
+
+        /*
+         * These variables are taken from B.E.
+         * Do NOT modify them
+        */
+        const ALBERTA_GST = 0.05;
+        const DELIVERY_FEE_1 = 4.99;
+        const DELIVERY_FEE_2 = 2.99;
+
+        /**
+         * This method is same as the one in B.E.
+         * This method should NOT be modified
+         * 
+         * @param {*} products 
+         */
+        $scope.calculatePrice = function (products) {
+            var totalAmount = 0;
+            var totalTax = 0;
+            var totalDelivery = 0;
+        
+            for (let storeType in products) {
+                var tmpAmount = 0;
+                var tmpTax = 0;
+                for (let item in products[storeType]) {
+                    tmpAmount = tmpAmount + parseFloat(products[storeType][item].price) * products[storeType][item].quantity;
+                    if (products[storeType][item].tax) {
+                        tmpTax = tmpTax + parseFloat(products[storeType][item].price) * products[storeType][item].quantity * ALBERTA_GST;
+                    }
+                }
+                var tmpDelivery = DELIVERY_FEE_1 + Math.floor(parseInt(tmpAmount / 100)) * DELIVERY_FEE_2;
+                tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
+        
+                totalAmount = totalAmount + tmpAmount;
+                totalDelivery = totalDelivery + tmpDelivery;
+                totalTax = totalTax + tmpTax;
+            }
+        
+            var totalPrice = totalAmount + totalTax + totalDelivery;
+        
+            // Updating display variables
+            totalTax = parseFloat(totalTax.toFixed(2));
+            totalAmount = parseFloat(totalAmount.toFixed(2));
+            totalDelivery = parseFloat(totalDelivery.toFixed(2));
+            totalPrice = parseFloat(totalPrice.toFixed(2));
+        
+            var finalPrices = {
+                "cart_amount": totalAmount,
+                "delivery_fee": totalDelivery,
+                "total_tax": totalTax,
+                "total_price": totalPrice
+            };
+        
+            return finalPrices;
+        };
     });

@@ -4,6 +4,12 @@
 
 var pub = {};
 
+pub.HOMIT_CAR_STORE_TYPE = "homitcar";
+pub.SOLO_LIQUOR_STORE_TYPE = "solo-liquor";
+const ALBERTA_GST = 0.05;
+const DELIVERY_FEE_1 = 4.99;
+const DELIVERY_FEE_2 = 2.99;
+
 /**
  * Get store type name by store type api
  * 
@@ -365,73 +371,56 @@ pub.getStoreTypeIdByName = async function (storeType) {
 }
 
 /**
- * Returns prices for products
+ * Get all prices for products
  * 
  * @param {*} products 
  */
-pub.getPricesForProducts = async function (products) {
-    var prices = {};
-    var depotIds = [];
-    for (var key in products) {
-        depotIds.push(products[key].depot_id);
+pub.getAllPricesForProducts = function (products) {
+    if (products[pub.HOMIT_CAR_STORE_TYPE] && products[pub.SOLO_LIQUOR_STORE_TYPE]) {
+        products[pub.SOLO_LIQUOR_STORE_TYPE] = Object.assign(products[pub.SOLO_LIQUOR_STORE_TYPE], products[pub.HOMIT_CAR_STORE_TYPE]);
+        delete products[pub.HOMIT_CAR_STORE_TYPE];
     }
-
-    var sqlQuery = `
-            SELECT id AS depot_id, price AS price, tax AS tax
-            FROM catalog_depot
-            WHERE id in (` + depotIds + `); `;
-
-    var pricesList = db.runQuery(sqlQuery);
-    for (var i = 0; i < pricesList.length; i++) {
-        var currentPrice = {
-            price: pricesList[i].price,
-            tax: pricesList[i].tax
-        };
-        prices[pricesList[i].depot_id] = currentPrice;
-    }
-    return prices;
+    return calculatePrice(products);
 }
 
-pub.getAllPricesForProducts = function (cartProducts, dbProducts) {
-    return Catalog.priceCalculator(cartProducts, dbProducts, false);
-}
-
-pub.getTotalPriceForProducts = function (cartProducts, dbProducts) {
-    var price = Catalog.priceCalculator(cartProducts, dbProducts, false);
-    return price.total_price;
-};
-
-pub.priceCalculator = function (depotQuantities, prices, refund) {
-    var deliveryFee1 = 4.99;
-    var deliveryFee2 = 2.99;
-    var albertaGst = 0.05;
+/**
+ * Calculate prices for products
+ * 
+ * @param {*} products 
+ */
+var calculatePrice = function (products) {
     var totalAmount = 0;
     var totalTax = 0;
-    for (var i = 0; i < prices.length; i++) {
-        totalAmount = totalAmount + parseFloat(prices[i].price) * depotQuantities[prices[i].depot_id];
-        if (prices[i].tax) {
-            totalTax = totalTax + parseFloat(prices[i].price) * depotQuantities[prices[i].depot_id] * albertaGst;
+    var totalDelivery = 0;
+
+    for (let storeType in products) {
+        var tmpAmount = 0;
+        var tmpTax = 0;
+        for (let item in products[storeType]) {
+            tmpAmount = tmpAmount + parseFloat(products[storeType][item].price) * products[storeType][item].quantity;
+            if (products[storeType][item].tax) {
+                tmpTax = tmpTax + parseFloat(products[storeType][item].price) * products[storeType][item].quantity * ALBERTA_GST;
+            }
         }
-    }
-    // Calculating math numbers
-    totalAmount = Math.round(totalAmount * 100) / 100;
-    var deliveryFee = 0;
-    if (!refund) {
-        deliveryFee = deliveryFee1 + Math.floor(parseInt(totalAmount / 100)) * deliveryFee2;
+        var tmpDelivery = DELIVERY_FEE_1 + Math.floor(parseInt(tmpAmount / 100)) * DELIVERY_FEE_2;
+        tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
+
+        totalAmount = totalAmount + tmpAmount;
+        totalDelivery = totalDelivery + tmpDelivery;
+        totalTax = totalTax + tmpTax;
     }
 
-    totalTax = Math.round((totalTax + deliveryFee * albertaGst) * 100) / 100;
-    var totalPrice = totalAmount + deliveryFee + totalTax;
+    var totalPrice = totalAmount + totalTax + totalDelivery;
 
     // Updating display variables
     totalTax = parseFloat(totalTax.toFixed(2));
     totalAmount = parseFloat(totalAmount.toFixed(2));
-    deliveryFee = parseFloat(deliveryFee.toFixed(2));
+    totalDelivery = parseFloat(totalDelivery.toFixed(2));
     totalPrice = parseFloat(totalPrice.toFixed(2));
 
     var finalPrices = {
         "cart_amount": totalAmount,
-        "delivery_fee": deliveryFee,
+        "delivery_fee": totalDelivery,
         "total_tax": totalTax,
         "total_price": totalPrice
     };
@@ -462,20 +451,26 @@ pub.getCartProducts = async function (cartProducts) {
 /**
  * Get cart products with respective store type
  * 
- * @param {*} cartProducts 
- * @param {*} dbProducts 
+ * @param {*} dbProducts
+ * @param {*} cartProducts
  */
-pub.getCartProductsWithStoreType = function (cartProducts, dbProducts) {
+pub.getCartProductsWithStoreType = function (dbProducts, cartProducts) {
     var products = {};
     var currentStoreType = {};
     for (var i = 0; i < dbProducts.length; i++) {
-
+        var tmpQuantity;
+        if (cartProducts) {
+            tmpQuantity = cartProducts[dbProducts[i].depot_id];
+        } else {
+            tmpQuantity = dbProducts[i].quantity;
+        }
         var currentItem = {
             depot_id: dbProducts[i].depot_id,
             price: dbProducts[i].price,
             tax: dbProducts[i].tax,
-            quantity: cartProducts[dbProducts[i].depot_id]
+            quantity: tmpQuantity
         };
+
 
         if (i == 0) {
             currentStoreType[dbProducts[i].depot_id] = currentItem;
