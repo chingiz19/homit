@@ -10,7 +10,8 @@
             border-radius: 0 0 5px 5px;
             border: 1px solid #ccc;
             border-top-width: 0px;
-            max-height: 250px; width: 716px;
+            max-height: 250px; 
+            /* width: 716px; */
         }
         .predictions-item {
             display: flex; align-items: center;
@@ -22,8 +23,9 @@
             font-size: 17px;
             font-weight: 300 !important;
         }
-        .predictions-item span{
-            color: rgba(0,0,0,1);
+        .predictions-item b{
+            color: rgba(0,0,0,0.7) !important;
+            font-weight: 500 !important;
         }
         .predictions-container:after{
             margin-right: 5px;
@@ -35,7 +37,7 @@
             height: 30px;
         }
         .powered-by-google img{
-            width: 150px; height: auto;
+            width: auto; height: 20px;
         }
         .predictions-item:hover{
             background-color: rgba(245,245,245,1) !important;
@@ -104,7 +106,7 @@
     
     <div id="placesServiceNode" style="display: none;"></div>
     
-    <input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disbaled="{{inputDisabled}}" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocomplete="off" autocorrect="off" spellcheck="false" required>
+    <input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disabled="inputDisabled" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocomplete="off" autocorrect="off" spellcheck="false" required>
     <md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0; ">
         <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
     </md-button>
@@ -113,7 +115,7 @@
     <!-- Start --> 
     <ul class="predictions-container" ng-if="_predictions.length != 0" ng-cloak>
         <li ng-repeat="address in _predictions" id="prediction_{{$index + 1}}" class="predictions-item" ng-click="_addressSelected(address); document.getElementById('autocompleteAddressInputBox').blur();">
-            <div><span>{{_matched_part}}</span>{{address.description}}</div>
+            <div><b>{{_matched_part}}</b>{{address.description}}</div>
         </li>
         <li class="powered-by-google"><img ng-src="{{'/resources/images/non-catalog-image/powered_by_google.png'}}" /></li>
     </ul>

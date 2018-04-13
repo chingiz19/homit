@@ -110,6 +110,14 @@ app.service('sessionStorage', ["$window", function($window){
         return _get("address-unit-number");
     };
 
+    var _setAccountSection = function(value){
+        return _set("account-section", value);
+    };
+
+    var _getAccountSection = function(){
+        return _get("account-section");
+    };
+
     return {
         get: _get,
         set: _set,
@@ -132,6 +140,8 @@ app.service('sessionStorage', ["$window", function($window){
         setProductContainerSelected: _setProductContainerSelected,
         getProductContainerSelected: _getProductContainerSelected,
         setAddressUnitNumber: _setAddressUnitNumber,
-        getAddressUnitNumber: _getAddressUnitNumber
+        getAddressUnitNumber: _getAddressUnitNumber,
+        setAccountSection: _setAccountSection,
+        getAccountSection: _getAccountSection
     };
 }]);

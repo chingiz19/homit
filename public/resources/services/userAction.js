@@ -2,26 +2,7 @@ app.service('user', function ($cookies, $http) {
 
     var publicFunctions = {};
 
-
-    publicFunctions.isUserLogged = function () {
-        if (getUser()) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-
-    publicFunctions.getName = function () {
-        if (!publicFunctions.isUserLogged()) {
-            return undefined;
-        }
-
-        var user = getUser();
-        return user.first_name;
-    };
-
-    publicFunctions.login = function (email, pass) {
+    publicFunctions.login = function(email, pass){
         return $http({
             method: 'POST',
             url: '/api/authentication/signin',
@@ -59,16 +40,47 @@ app.service('user', function ($cookies, $http) {
         });
     };
 
+    publicFunctions.update = function(user){
+        return $http({
+            method: 'POST',
+            url: 'api/account/update',
+            data: {
+                user: user
+            }
+        });
+    };
 
+    publicFunctions.user = function(){
+        return $http.get('/api/account/user');
+    };
 
-    function getUser() {
-        try {
-            return JSON.parse($cookies.get("user").replace("j:", ""));
-        } catch (e) {
-            return false;
-        }
-    }
+    publicFunctions.updateCardInfo = function(token){
+        return $http({
+            method: "POST",
+            url: 'api/account/paymentmethod/update',
+            data: {
+                token: token
+            }
+        });
+    };
 
+    publicFunctions.updatePassword = function(currentPass, newPass){
+        return $http({
+            method: "POST",
+            url: 'api/account/resetpassword',
+            data: {
+                current_password: currentPass,
+                new_password: newPass
+            }
+        });
+    };
+
+    publicFunctions.orders = function(){
+        return $http({
+            method: "POST",
+            url: 'api/account/vieworders'
+        });
+    };
 
     return publicFunctions;
 });

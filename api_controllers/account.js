@@ -4,116 +4,78 @@
 
 var router = require("express").Router();
 
-router.post('/update', function (req, res, next) {
+router.post('/update', Auth.validate(), async function (req, res, next) {
+    var signedUser = Auth.getSignedUser(req);
+
+    /* Checks and validations */
+
+    if (!signedUser.id){
+        // TODO: log error for degubbing
+        Auth.invalidate(req);
+        // TODO: need a way to let F.E know that a page refresh is required after showing error message
+        return errorMessages.sendGenericError(res);        
+    }
+
+    var allValidParams = ["email", "first_name", "last_name", "phone", "birth_day", "birth_month", "birth_year", "address"];
+    if (!req.body.user || HelperUtils.hasInvalidParams(req.body.user, allValidParams)){
+        return errorMessages.sendMissingParams(res);
+    }
+
+    // Special check for birth date
+    if (req.body.user.birth_day || req.body.user.birth_month || req.body.user.birth_year){
+        if (!(req.body.user.birth_day && req.body.user.birth_month && req.body.user.birth_year)){
+            return errorMessages.sendMissingParams(res);    
+        } else {
+            //TODO
+            // if not date is valid
+            //      send missingParams error | or less generic error message
+            //      log the error for debugging 
+        }
+    }
+    
+    /* Update user info */
+
+    var key = {
+        id: signedUser.id
+    };
+
+    if (!(await User.updateUser(req.body.user, key))){
+        return errorMessages.sendGenericError(res);
+    }
+
+    var newUser = await User.findUserById(signedUser.id);
+    if (!newUser){
+        return errorMessages.sendGenericError(res);
+    }
+
+    Auth.signCustomerSession(req, newUser);
+    res.status(200).send({
+        success: true,
+        ui_message: "Successfully updated"
+    });
+
+});
+
+router.post('/resetpassword', Auth.validate(), function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (signedUser != false) {
         var id = signedUser.id;
-        var user_email = req.body.user.email;
-        var first_name = req.body.user.fname;
-        var last_name = req.body.user.lname;
-        var phone_number = req.body.user.phone_number;
-        var birth_day = req.body.user.birth_day;
-        var birth_month = req.body.user.birth_month;
-        var birth_year = req.body.user.birth_year;
-        var address = req.body.user.address;
+        var currentPassword = req.body.current_password;
+        var newPassword = req.body.new_password;
 
-        if (!(user_email || first_name || last_name
-            || phone_number || (birth_day && birth_month && birth_year) || address)) {
-            res.status(403).json({
-
-                error: {
-                    "code": "U000",
-                    "dev_message": "Missing params"
-                }
-            });
-        }
-
-        var key = {
-            id: id
-        };
-
-        var userData = {};
-
-        if (user_email) {
-            userData.user_email = user_email;
-        }
-        if (first_name) {
-            userData.first_name = first_name;
-        }
-        if (last_name) {
-            userData.last_name = last_name;
-        }
-        if (phone_number) {
-            userData.phone_number = phone_number;
-        }
-        if (birth_year && birth_month && birth_day) {
-            var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
-            userData.birth_date = birth_date;
-        }
-        if (address) {
-            userData.address = address;
-        }
-
-        User.updateUser(userData, key).then(function (updatedUser) {
-            if (updatedUser) {
-                User.findUserById(id).then(function (newUser) {
-                    Auth.signCustomerSession(req, newUser);
-                    var response = {
-                        user: newUser,
+        if (!currentPassword || !newPassword) {
+            return errorMessages.sendMissingParams(res);
+        } else {
+            User.updatePassword(id, currentPassword, newPassword).then(function (updatedUser) {
+                if (updatedUser) {
+                    let response = {
                         success: true
                     };
                     res.send(response);
-                });
-            } else {
-                var response = {
-                    success: false,
-                    error: {
-                        dev_message: "Something went wrong while updating the user",
-                        ui_message: "Error happened while updating the user. Please try again"
-                    }
-                };
-                res.send(response);
-            }
-        });
-    } else {
-        res.status(403).json({
-            error: {
-                "code": "",
-                "dev_message": "User is not signed in"
-            }
-        });
-    }
-});
-
-router.post('/resetpassword', function (req, res, next) {
-    var signedUser = Auth.getSignedUser(req);
-    if (signedUser != false) {
-        var id = signedUser.id;
-        var oldPassword = req.body.old_password;
-        var newPassword = req.body.new_password;
-
-        if (!oldPassword || !newPassword) {
-            res.status(403).json({
-                error: {
-                    "code": "U000",
-                    "dev_message": "Missing params",
-                    "required_params": ["old_password", "new_password"]
-                }
-            });
-        } else {
-            User.updatePassword(id, oldPassword, newPassword).then(function (updatedUser) {
-                if (updatedUser) {
-                    var response = {
-                        success: true,
-                    };
-                    res.send(response);
                 } else {
-                    var response = {
+                    let response = {
                         success: false,
-                        error: {
-                            dev_message: "Password didn't match.",
-                            ui_message: "Password didn't match."
-                        }
+                        ui_message: "Wrong credintials"
                     };
                     res.send(response);
                 }
@@ -218,6 +180,51 @@ router.post('/getorder', async function (req, res, next) {
                 "code": "",
                 "dev_message": "User is not signed in"
             }
+        });
+    }
+});
+
+router.get('/user', Auth.validate(), async function (req, res, next) {
+    var signedUser = Auth.getSignedUser(req);
+    if (!signedUser) {
+        return errorMessages.sendGenericError(res);
+    }
+
+    delete signedUser.id;
+    delete signedUser.id_prefix;
+    delete signedUser.password; // enforcing safety
+
+    var card = await MP.getCustomerPaymentMethod(signedUser.stripe_customer_id);
+    if (card) {
+        signedUser.card = card;
+    }
+    res.send({
+        success: true,
+        user: signedUser
+    });
+});
+
+router.post('/paymentmethod/update', Auth.validate(), async function (req, res, next) {
+    var signedUser = Auth.getSignedUser(req);
+    if (!signedUser) {
+        return errorMessages.sendGenericError(res);
+    }
+
+    if (!req.body.token){
+        return errorMessages.sendMissingParams(res);
+    }
+
+    // add token to the user
+    try{
+        if(await MP.updateCustomerPaymentMethod(signedUser.stripe_customer_id, req.body.token)){
+            res.send({
+                success: true
+            });
+        }
+    } catch(err){
+        res.send({
+            success: false,
+            ui_message: "Couldn't update payment method, please try again"
         });
     }
 });

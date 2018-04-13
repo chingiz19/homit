@@ -61,4 +61,11 @@ pub.sendPasswordNotUpdated = function(res){
     });
 }
 
+pub.sendGenericError = function(res){
+    res.status(200).json({
+        success: false,
+        ui_message: "Ooops... Something went wrong, please try again"
+    });
+}
+
 module.exports = pub;

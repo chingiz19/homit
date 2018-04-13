@@ -50,7 +50,7 @@ router.post('/placeorder', async function (req, res, next) {
         var products = Catalog.getCartProductsWithStoreType(dbProducts, cartProducts);
         var allPrices = Catalog.getAllPricesForProducts(products);
         var totalPrice = allPrices.total_price;
-        MP.charge(cardToken, totalPrice).then(async function (chargeResult) {
+        MP.chargeCard(cardToken, totalPrice).then(async function (chargeResult) {
             var cardDigits = chargeResult.source.last4;
             var chargeId = chargeResult.id;
             var data = {};

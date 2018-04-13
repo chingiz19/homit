@@ -31,9 +31,6 @@ router.post('/signup', async function (req, res, next) {
     var fname = req.body.fname;
     var lname = req.body.lname;
     var email = req.body.email;
-    var birth_day = req.body.birth_day;
-    var birth_month = req.body.birth_month;
-    var birth_year = req.body.birth_year;
     var password = req.body.password;
 
     if (!(fname && lname && email && password)) {
@@ -42,16 +39,14 @@ router.post('/signup', async function (req, res, next) {
         var hashedPassword = await Auth.hashPassword(password);
         var userExists = await User.findUser(email);
         if (!userExists) {
+            var stripeCustomerId = await User.makeStripeCustomer(email);
             var userData = {
                 user_email: email,
                 first_name: fname,
                 last_name: lname,
-                password: hashedPassword
+                password: hashedPassword,
+                stripe_customer_id: stripeCustomerId
             };
-            if (birth_year && birth_month && birth_day) {
-                var birth_date = birth_year + "-" + birth_month + "-" + birth_day;
-                userData.birth_date = birth_date;
-            }
             var insertedUser = await User.addUser(userData);
             //TODO: check for success
             var user = await User.findUser(email);
@@ -88,7 +83,7 @@ router.post('/signin', async function (req, res, next) {
 
 /* Sign out the user */
 router.all('/signout', function (req, res, next) {
-    Auth.clear(req);
+    Auth.invalidate(req);
     res.status(200).json({ "success": true, "ui_message": "Successfully logged out" });
 });
 

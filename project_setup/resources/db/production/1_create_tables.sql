@@ -197,12 +197,13 @@ CREATE TABLE users_customers (
 	phone_number VARCHAR(10),
 	birth_date DATE NULL,
 	address VARCHAR(225),
+	stripe_customer_id VARCHAR(225) NOT NULL,
 	card_token VARCHAR(225) NULL,
 	card_type VARCHAR(225) NULL,
 	card_digits VARCHAR(4) NULL,
 	
 	PRIMARY KEY (id),
-	UNIQUE (user_email)
+	UNIQUE (user_email, stripe_customer_id)
 ) ENGINE = InnoDB;
 
 

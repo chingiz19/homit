@@ -27,6 +27,7 @@ class modelFactory {
         global.Email =          require("./models/email");
         global.errorMessages =  require("./models/error_messages");
         global.NM =             require("./models/network_manager");
+        global.HelperUtils =      require("./models/helper_utils");
     }
 }
 

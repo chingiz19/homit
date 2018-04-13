@@ -27,7 +27,7 @@ pub.signCSRSession = function(req, csr){
     return signSession(req, csr, UserRoles.csr);
 }
 
-pub.clear = function (req) {
+pub.invalidate = function (req) {
     req.session.destroy();
 };
 
@@ -91,7 +91,7 @@ function signSession(req, user, role) {
 
 pub.getSignedUser = function(req) {
     if (req.session && req.session.user) {
-        return req.session.user;
+        return Object.assign({}, req.session.user);
     }
     return false;
 }

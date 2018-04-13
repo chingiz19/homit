@@ -147,7 +147,11 @@ gulp.task('css', function(){
         }))
         // .pipe(cache('cssFiles'))
         .pipe(sass({
-            includePaths: ['./public/resources/css/styles']
+            includePaths: [
+                './public/resources/css/base',
+                './public/resources/css/default',
+                './public/resources/css/styles'
+            ]
         }).on('erorr', sass.logError))
         // .pipe(production(concatCss('resources/css/all.min.css'))) TODO
         .pipe(production(cssnano({

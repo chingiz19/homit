@@ -84,7 +84,7 @@ webServer.use(session({
 }));
 
 
-webServer.use(limiter);
+// webServer.use(limiter);
 webServer.use(bodyParser.json());
 webServer.use(cookieParser(secretKey));
 webServer.use(bodyParser.urlencoded({ extended: true }));
@@ -95,10 +95,7 @@ webServer.use(helmet());
 
 webServer.use("/api/app", require(path.join(__dirname, "/api_controllers/app/app_controller")));
 
-
-webServer.use(csurf({
-	cookie: true
-}));
+webServer.use(csurf());
 
 /* Setting CSRF token per request*/
 webServer.use(function (req, res, next) {

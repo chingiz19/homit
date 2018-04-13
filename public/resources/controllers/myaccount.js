@@ -1,405 +1,305 @@
-app.controller("myaccountController", ["$location", "$scope", "$cookies", "$window", "$http", "$rootScope", "$timeout", "$mdSidenav", "$log", "sessionStorage", "$mdToast", "date", "user", "mapServices",
-    function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, $mdToast, date, user, mapServices) {
+app.controller("myaccountController", function ($scope, $window, sessionStorage, user, notification) {
 
-        $scope.showSearchBar = true;
-        var myaccount = this;
-        myaccount.init = function () {
-            myaccount.user = {};
-            myaccount.foundOrders = [];
-            myaccount.foundTheOrder = [];
-            myaccount.transactionShown = undefined;
-            myaccount.orderShown = undefined;
-            myaccount.date = date;
-            myaccount.selectedTab = 0;
-            myaccount.edit = false;
-            myaccount.isOrderHistoryShown = false;
-            myaccount.passwordError = false;
-            myaccount.info_updated = false;
-            myaccount.address_valid = undefined;
+    var confirmMessage = "Changes will be lost. Would you like to proceed?";
 
-            $scope.user = JSON.parse($cookies.get("user").replace("j:", ""));
+    var selectors_section0 = "[ng-model='fname'], [ng-model='lname'], [ng-model='dob'], [ng-model='email'], [ng-model='phone']";
+    var selectors_section1 = "[ng-model='address']";
+    var selectors_section2 = "[ng-model='card_name'], [ng-model='card_num'], [ng-model='card_exp'], [ng-model='card_cvc'], [ng-model='card_addr']";
+    var selectors_section3 = "[ng-model='old_pass'], [ng-model='new_pass'], [ng-model='confirm_pass']";
 
-            myaccount.user.firstName = $scope.user.first_name;
-            myaccount.user.lastName = $scope.user.last_name;
-            if ($scope.user.birth_date) {
-                myaccount.user.birthYear = $scope.user.birth_date.slice(0, 4);
-                myaccount.user.birthMonth = new Date(parseInt($scope.user.birth_date.slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
-                myaccount.user.birthDay = parseInt($scope.user.birth_date.slice(8, 10), 10);
+    var modifiedFlag = "modified";
+
+    /**
+     * Initialization
+     * Contains logic for getting started with this controller
+     */
+    $scope.init = function () {
+        $scope.dobPattern = /^((0[13578]|1[02])[-.](29|30|31)[-.](18|19|20)[0-9]{2})|((01|0[3-9]|1[1-2])[-.](29|30)[-.](18|19|20)[0-9]{2})|((0[1-9]|1[0-2])[-.](0[1-9]|1[0-9]|2[0-8])[-.](18|19|20)[0-9]{2})|((02)[\/.]29[-.](((18|19|20)(04|08|[2468][048]|[13579][26]))|2000))$/;
+
+        $scope.editEnabled = false;
+        let selectedSection = sessionStorage.getAccountSection();
+
+        if(selectedSection){
+            try{
+                $scope.section = parseInt(selectedSection);
+            } catch(e){
+                $scope.section = 0; // Default to 0    
             }
-            myaccount.user.email = $scope.user.user_email;
-            myaccount.user.phoneNumber = $scope.user.phone_number;
-            myaccount.user.address = $scope.user.address;
-
-            myaccount.b_years = date.getYears();
-            myaccount.b_months = date.getMonths();
-            myaccount.b_days = date.getDays(myaccount.user.birthMonth, myaccount.user.birthYear);
-
-            mapServices.createCoveragePolygon().then(function (polygon) {
-                if (polygon) {
-                    $scope.coveragePolygon = polygon;
-                }
-            });
-        };
-
-        myaccount.updateTab = function (tab) {
-            myaccount.selectedTab = tab;
-            var el = document.querySelector('.selectedTab');
-            if (el) {
-                document.getElementById(el.id).classList.remove("selectedTab");
-            }
-            document.getElementById("myAcTi" + tab).classList.add("selectedTab");
-            el = document.querySelector('.selectedTabLn');
-            if (el) {
-                document.getElementById(el.id).classList.remove("selectedTabLn");
-                document.getElementById(el.id).classList.add("myTabsBtmLn");
-            }
-            document.getElementById("myAcLi" + tab).classList.remove("myTabsBtmLn");
-            document.getElementById("myAcLi" + tab).classList.add("selectedTabLn");
-            if (myaccount.selectedTab == 5) {
-                myaccount.viewUserTransactions();
-            }
-        };
-
-        myaccount.editButton = function (type) {
-            myaccount.edit = !myaccount.edit;
-            myaccount.user.fname_valid = false;
-            myaccount.user.lname_valid = false;
-            myaccount.user.email_valid = false;
-            myaccount.user.phone_valid = false;
-            myaccount.user.crPsswrd_valid = false;
-            myaccount.user.new1Psswrd_valid = false;
-            myaccount.user.new2Psswrd_valid = false;
-            if (type == 2) {
-                myaccount.user.address = sessionStorage.getAddress().formatted_address;
-            }
-        };
-
-        myaccount.cancelEdit = function () {
-            myaccount.edit = !myaccount.edit;
-            myaccount.user.firstName = $scope.user.first_name;
-            myaccount.user.lastName = $scope.user.last_name;
-            myaccount.user.birthYear = $scope.user.birth_date.slice(0, 4);
-            myaccount.user.birthMonth = new Date(parseInt($scope.user.birth_date.slice(5, 7), 10) + ", 11 , 2017").getMonth() + 1;
-            myaccount.user.birthDay = parseInt($scope.user.birth_date.slice(8, 10), 10);
-            myaccount.user.email = $scope.user.user_email;
-            myaccount.user.phoneNumber = $scope.user.phone_number;
-            myaccount.user.address = $scope.user.address;
-        };
-
-        myaccount.updateMe = function () {
-            if (myaccount.user.fname_valid || myaccount.user.lname_valid || (myaccount.user.birthDay && myaccount.user.birthMonth && myaccount.user.birthYear) || (!myaccount.user.birthDay && !myaccount.user.birthMonth && !myaccount.user.birthYear)) {
-                $http({
-                    method: 'POST',
-                    url: '/api/myaccount/update',
-                    data: {
-                        user: {
-                            fname: myaccount.user.firstName,
-                            lname: myaccount.user.lastName,
-                            birth_year: myaccount.user.birthYear,
-                            birth_month: date.convertMonth(myaccount.user.birthMonth),
-                            birth_day: myaccount.user.birthDay
-                        }
-                    }
-                }).then(function successCallback(response) {
-                    if (response.data.success === true) {
-                        myaccount.user.fname_valid = false;
-                        myaccount.user.lname_valid = false;
-                        myaccount.update_success();
-                        console.log("Success:  Me updated");
-                    } else {
-                        console.log("Fail: Me failed to update");
-                    }
-                }, function errorCallback(response) {
-                    console.log("Error: in me update");
-                });
-            } else {
-                myaccount.input_invalid_message = "Please make sure input data is correct.";
-            }
-        };
-
-        myaccount.updateContact = function () {
-            if (myaccount.user.email_valid || myaccount.user.phone_valid) {
-                $http({
-                    method: 'POST',
-                    url: '/api/myaccount/update',
-                    data: {
-                        user: {
-                            email: myaccount.user.email,
-                            phone_number: myaccount.user.phoneNumber.replace(/[() +-]/g, ""),
-                        }
-                    }
-                }).then(function successCallback(response) {
-                    if (response.data.success === true) {
-                        myaccount.user.email_valid = false;
-                        myaccount.user.phone_valid = false;
-                        myaccount.update_success();
-                        console.log("Success: Contact updated");
-                    } else {
-                        console.log("Fail: Contact failed to update");
-                    }
-                }, function errorCallback(response) {
-                    console.log("ERROR in contact update");
-                });
-            } else {
-                myaccount.input_invalid_message = "Please make sure input data is correct.";
-            }
-        };
-
-        myaccount.updateAddress = function () {
-            if (myaccount.address_valid) {
-                $http({
-                    method: 'POST',
-                    url: '/api/myaccount/update',
-                    data: {
-                        user: {
-                            address: myaccount.address,
-                            address_latitude: myaccount.address_latitude,
-                            address_longitude: myaccount.address_longitude
-                        }
-                    }
-                }).then(function successCallback(response) {
-                    if (response.data.success === true) {
-                        console.log("Success: Address updated");
-                    } else {
-                        console.log("Fail: Address failed to update");
-                    }
-                }, function errorCallback(response) {
-                    console.log("ERROR in address update");
-                });
-            }
-        };
-
-        myaccount.changePassword = function () {
-            if (myaccount.user.crPsswrd_valid && myaccount.user.new1Psswrd_valid && myaccount.user.new2Psswrd_valid && !myaccount.passwordError) {
-                $http({
-                    method: 'POST',
-                    url: '/api/myaccount/resetpassword',
-                    data: {
-                        old_password: myaccount.password,
-                        new_password: myaccount.new_password
-                    }
-                }).then(function successCallback(response) {
-                    if (response.data.success === true) {
-                        myaccount.user.crPsswrd_valid = false;
-                        myaccount.user.new1Psswrd_valid = false;
-                        myaccount.user.new2Psswrd_valid = false;
-                        myaccount.passwordError = false;
-                        myaccount.update_success();
-                        console.log("Success: Password reset");
-                    } else {
-                        console.log("Error: Password failed to reset");
-                    }
-                }, function errorCallback(response) {
-                    console.log("ERROR in password reset");
-                });
-            } else {
-                myaccount.input_invalid_message = "Please make sure input data is correct.";
-            }
-        };
-
-        myaccount.viewUserTransactions = function () {
-            myaccount.foundOrders = [];
-            $http({
-                method: 'POST',
-                url: '/api/myaccount/viewordertransactions',
-            }).then(function successCallback(response) {
-                myaccount.foundTransactions = response.data.transactions;
-                for (var tmp in myaccount.foundTransactions) {
-                    myaccount.foundTransactions[tmp].date_placed = myaccount.mm_dd_yyyy(myaccount.foundTransactions[tmp].date_placed);
-                }
-            }, function errorCallback(response) {
-                console.log("Error in getting user Orders.");
-            });
-        };
-
-        myaccount.selectedTransactionID = function (transaction, element) {
-
-            myaccount.foundOrders = [];
-            $http({
-                method: 'POST',
-                url: "/api/myaccount/vieworders",
-                data: {
-                    transaction_id: transaction.id
-                }
-            }).then(function successCallback(response) {
-                myaccount.foundOrders = response.data.orders;
-                for (let order in $scope.foundOrders) {
-                    myaccount.foundOrders[order]['date_assigned'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_assigned']);
-                    myaccount.foundOrders[order]['date_arrived_store'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_arrived_store']);
-                    myaccount.foundOrders[order]['date_picked'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_picked']);
-                    myaccount.foundOrders[order]['date_arrived_customer'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_arrived_customer']);
-                    myaccount.foundOrders[order]['date_delivered'] = myaccount.hh_mm(myaccount.foundOrders[order]['date_delivered']);
-                }
-            }, function errorCallback(response) {
-            });
-
-            if (myaccount.orderShown || myaccount.orderShown == 0) {
-                $('#order_' + myaccount.orderShown).slideToggle();
-                //TODO: Elnar, should myaccount.orderShown = element?
-                // myaccount.orderShown;
-            }
-            if (myaccount.transactionShown == element) {
-                $('#transaction_' + element).slideToggle();
-                //TODO: Elnar, should myaccount.orderShown = element?
-                // myaccount.transactionShown;
-            } else if (myaccount.transactionShown || myaccount.transactionShown == 0) {
-                $('#transaction_' + myaccount.transactionShown).slideToggle();
-                $('#transaction_' + element).slideToggle();
-                myaccount.transactionShown = element;
-            } else {
-                $('#transaction_' + element).slideToggle();
-                myaccount.transactionShown = element;
-            }
-
-        };
-
-        $scope.reqOrderID = 0;
-
-        myaccount.getOrderContent = function (order_id, transaction, element) {
-            $http({
-                method: 'POST',
-                url: 'api/myaccount/getorder',
-                data: {
-                    order_id: order_id
-                }
-            }).then(function successCallback(response) {
-                myaccount.foundTheOrder = response.data.order;
-            }, function errorCallback(response) {
-                console.log("Error in getting the requested Order");
-            });
-
-            if (myaccount.orderShown == ( transaction + element )) {
-                $('#order_' + transaction + element).slideToggle();
-                //TODO: Elnar, should myaccount.orderShown = element?
-                // myaccount.orderShown;
-            } else if (myaccount.orderShown || myaccount.orderShown == 0) {
-                $('#order_' + transaction +  myaccount.orderShown).slideToggle();
-                $('#order_' + transaction +  element).slideToggle();
-                myaccount.orderShown = transaction +  "" + element;
-            } else {
-                $('#order_' + transaction + element).slideToggle();
-                $('#order_' + transaction +  element).slideToggle();
-                myaccount.orderShown = transaction +  "" + element;
-            }
-        };
-
-        // myAccount Page left-SideNav functionality
-        $scope.toggleLeft = buildDelayedToggler('left');
-        function debounce(func, wait, context) {
-            var timer;
-            return function debounced() {
-                var context = $scope,
-                    args = Array.prototype.slice.call(arguments);
-                $timeout.cancel(timer);
-                timer = $timeout(function () {
-                    timer = undefined;
-                    func.apply(context, args);
-                }, wait || 10);
-            };
+        } else {
+            $scope.section = 0;           
         }
-        function buildDelayedToggler(navID) {
-            return debounce(function () {
-                $mdSidenav(navID)
-                    .toggle()
-                    .then(function () {
-                        $log.debug("toggle " + navID + " is done");
-                    });
-            }, 200);
-        }
-        $scope.close = function () {
-            $mdSidenav('right').close()
-                .then(function () {
-                    $log.debug("close LEFT is done");
-                });
-        };
 
-        $scope.gotAddressResults = function () {
-            var latLng = $scope.autocomplete.getLatLng();
-            if (mapServices.isPlaceInsidePolygon(latLng, $scope.coveragePolygon)) {
+        $("input").keydown(function(){
+            $(this).addClass(modifiedFlag);
+        });
 
-                sessionStorage.setAddress($scope.autocomplete.getPlace());
-                sessionStorage.setAddressLat(latLng.lat());
-                sessionStorage.setAddressLng(latLng.lng());
+        user.user().then(function success(res){
+            if (res.data.success){
+                $scope.fname = res.data.user.first_name;
+                $scope.lname = res.data.user.last_name;
+                $scope.email = res.data.user.user_email;
+                $scope.phone = res.data.user.phone_number;
 
-                myaccount.address_latitude = latLng.lat();
-                myaccount.address_longitude = latLng.lng();
-                myaccount.address = $scope.autocomplete.getText();
+                $scope.card = res.data.user.card;
 
-                if (myaccount.edit && myaccount.selectedTab == 2) {
-                    myaccount.user.address = sessionStorage.getAddress().formatted_address;
-                }
-                myaccount.address_valid = true;
+                $scope.user = res.data.user;
+
+                //TODO: Assign creadit card numbers
             } else {
-                myaccount.address_valid = false;
+                //show error through notification
             }
-        };
+        }, function error(){
+            console.log("debug");
+            // Show error through notification
+        });
 
-        myaccount.updateBDays = function () {
-            myaccount.b_days = date.getDays(myaccount.user.birthMonth, myaccount.user.birthYear);
-        };
-
-        myaccount.checkPassword = function () {
-            if (myaccount.passwordError == true || myaccount.passwordError == false) {
-                myaccount.passwordError = (myaccount.new_password != myaccount.confirm_password);
-            } else {
-                myaccount.passwordError = (myaccount.new_password != myaccount.confirm_password);
-            }
-            return myaccount.passwordError;
-        };
-
-        myaccount.sanitizeInput = function (text, type) {
-            /* jshint ignore:start */
-            var pattern = {
-                "fname": /^[a-zA-Z]*$/,
-                "lname": /^[a-zA-Z]*$/,
-                "email": /^.+@.+\..+$/,
-                "phone": /^[0-9()+ -]*$/,
-                "cd_1": /^[0-9]*$/,
-                "cd_2": /^[0-9]*$/,
-                "cd_3": /^[0-9]*$/,
-                "crPsswrd_valid": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/,
-                "new1Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/,
-                "new2Psswrd": /^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/
-            };
-            /* jshint ignore:end */
-            if (text && type) {
-                if (text.match(pattern[type])) {
-                    myaccount.user[type + "_valid"] = true;
-                }
-                else {
-                    myaccount.user[type + "_valid"] = false;
-                }
-            }
-        };
-
-        myaccount.mm_dd_yyyy = function (inDate) {
-            return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
-        };
-
-        myaccount.hh_mm = function (inDate) {
-            if (inDate) {
-                return parseInt(inDate.slice(12, 13), 10) + ":" + parseInt(inDate.slice(15, 16), 10);
-            }
-        };
+        /* Stripe setup */
+        $scope.stripe = Stripe($("#stripeToken").val());
+        var elements = $scope.stripe.elements();    
+        $scope.cardElement = elements.create('card', {
+            hidePostalCode: false
+        });
+        $scope.cardElement.mount("#card");
 
         jQuery(function ($) {
-            $("#gP_number").mask("(999) 999-9999");
+            $("#phone-number").mask("(999) 999-9999");
+            $("#date_of_birth").mask("99-99-9999");
+            $("#card_numb").mask("9999 9999 9999 9999");
+            $("#card_exp").mask("99/99");
         });
 
-        myaccount.update_success = function () {
-            myaccount.info_updated = true;
-            setTimeout(function () {
-                myaccount.info_updated = false;
-                document.getElementById("cancelEdit").click();
-            }, 1500);
-        };
 
-        $scope.$on("checkUserLogin", function (event, args) {
-            if (!user.isUserLogged()) {
-                $window.location.href = "/main";
+        $(window).on('resize', function(){
+            if ($(window).width() > 1000){
+                $scope.openSidebar();
+            } else {
+                $scope.closeSidebar();
             }
         });
+    };
 
-        myaccount.init();
-    }]);
+    /**
+     * Helper method called when selection is made.
+     * Method contains selection related logic
+     */
+    $scope.selectSection = function(selection){
+        var cancelChanges = true;
+        
+        // prompt user to save progress or it will be lost
+        switch($scope.section){
+            case 0:
+                if (checkInputIfModified(selectors_section0)){
+                    cancelChanges = confirm(confirmMessage);
+                    if (cancelChanges){
+                        $scope.resetProfileSection();
+                    }
+                }
+                break;
+            case 1:
+                //TODO: might change if we use addressAutocomplete instead of input
+                if (checkInputIfModified(selectors_section1)){
+                    cancelChanges = confirm(confirmMessage);
+                    if (cancelChanges){
+                        $scope.resetDeliveryAddressSection();
+                    }
+                }
+                break;
+            case 2:
+                if (checkInputIfModified(selectors_section2)){
+                    cancelChanges = confirm(confirmMessage);
+                    if (cancelChanges){
+                        $scope.resetPaymentMethodsSection();
+                    }
+                }
+                break;
+            case 3:
+                if (checkInputIfModified(selectors_section3)){
+                    cancelChanges = confirm(confirmMessage);
+                    if (cancelChanges) {
+                        $scope.resetSecuritySettingsSection();
+                    }
+                }
+                break;
+            default: 
+                break;
+        }
+        
+        // only proceed if fields are not modified
+        if (cancelChanges){
+            $scope.closeSidebar();
+            $scope.section = selection;
+            sessionStorage.setAccountSection(selection);
+
+            $scope.editEnabled = false;
+
+            if (!$scope.orders){
+                user.orders().then(function success(res){
+                    if(res.data.success){
+                        $scope.orders = res.data.orders;
+                    }
+                }, function(error){
+
+                });
+            }
+        }
+    };
+
+    /**
+     * Called to update user profile information
+     */
+    $scope.updateProfile = function(valid){
+        // Do nothing if nothing was modified
+        if (!checkInputIfModified(selectors_section0) && !valid){
+            $scope.editEnabled = false;
+            return;
+        }
+
+        user.update({
+            first_name: $scope.fname,
+            last_name: $scope.lname,
+            email: $scope.email,
+            phone: $scope.phone
+        }).then(function success(response){
+
+        }, function error(){
+
+        });
+    };
+
+    /**
+     * Called to update user delivery address
+     */
+    $scope.updateDeliveryAddress = function(valid){
+        if(!valid) return;
+    };
+
+    /**
+     * Called to update user payment method
+     */
+    $scope.updatePaymentMethod = function(valid){
+        if(!valid) return;
+
+        $scope.stripe.createToken($scope.cardElement, {
+            name: $scope.card_name
+        }).then(function(result){
+            if (result.error || !result.token.id){
+                //TODO: notify user that something is wrong, and they should try again
+                alert("Card false");
+                return;
+            }
+
+            user.updateCardInfo(result.token.id).then(function success(res){
+                if (res.data.success){
+                    //TODO: notify user everything is good
+                    alert("Success");
+                    $window.location.reload();
+                } else {
+                    //TODO: notify user error
+                    alert("Error");    
+                }
+            }, function(err){
+                //TODO: notify user error
+                alert("Error");
+            });
+        });
+    };
+
+    /**
+     * Called to update user security settings
+     */
+    $scope.updateSecuritySettings = function(valid){
+        if(!valid) return;
+
+        user.updatePassword($scope.security_set.current_pass.$modelValue, $scope.security_set.new_pass.$modelValue).then(function success(res){
+            if(res.data.success){
+                alert("All good");
+                $window.location.reload();
+            } else {
+                alert(res.data.ui_message);
+            }
+        }, function(error){
+            alert("Something went wrong while updating password. Please reload the page and try again;");
+        });
+    };
+
+    /**
+     * Resets input values for Profile section
+     */
+    $scope.resetProfileSection = function(){
+        $scope.fname = $scope.user.first_name;
+        $scope.lname = $scope.user.last_name;
+        $scope.email = $scope.user.user_email;
+        $scope.phone = $scope.user.phone_number;
+
+        resetInputMofiedFlag(selectors_section0);
+        $scope.editEnabled = false;
+    };
+
+    /**
+     * Resets input values for Delivery Address section
+     */
+    $scope.resetDeliveryAddressSection = function(){
+        $scope.address = "";
+        resetInputMofiedFlag(selectors_section1);
+        $scope.editEnabled = false;
+    };
+
+    /**
+     * Resets input values for Payment Methods section
+     */
+    $scope.resetPaymentMethodsSection = function(){
+        $scope.card_name = "";
+        $scope.cardElement.clear();
+        resetInputMofiedFlag(selectors_section2);
+        $scope.editEnabled = false;
+    };
+
+    /**
+     * Resets input values for Security Settings section
+     */
+    $scope.resetSecuritySettingsSection = function(){
+        $scope.old_pass = "";
+        $scope.new_pass = "";
+        $scope.confirm_pass = "";
+        resetInputMofiedFlag(selectors_section3);
+        $scope.editEnabled = false;
+    };
+
+    /**
+     * Close sidebar for mobile
+     */
+    $scope.openSidebar = function(){
+        $(".sidebar-default").removeClass("hidden");
+    };
+
+    /**
+     * Open sidebar for mobile
+     */
+    $scope.closeSidebar = function(){
+        var el = $(".sidebar-default");
+        if (el.css("display") != "flex"){
+            el.addClass("hidden");
+        }
+    };
+
+    /**
+     * Resets selector modified flag
+     */
+    function resetInputMofiedFlag(selector){
+        $(selector).removeClass(modifiedFlag);
+    }
+
+    /**
+     * Checks given selector(s) for ng-dirty class
+     * 
+     * @param {*} selector 
+     * @returns boolean
+     */
+    function checkInputIfModified(selector){
+        return $(selector).hasClass(modifiedFlag);
+    }
+
+    // Initialize at the end of file!
+    $scope.init();
+});
 

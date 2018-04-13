@@ -73,7 +73,7 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
             autocomplete: "=", // public functions (two way binding)
             inputClass: "@?inputClass",  // optional input element class(es) (as is biding)
             iconClass: "@?iconClass", // optional x icon class(es) (as is biding)
-            inputDisabled: "@?inputDisabled", // optional input element
+            inputDisabled: "=?inputDisabled", // optional input element
             buttonClass: "@?buttonClass", // optional x button class(es) (as is biding)
             bounds: "<autocompleteBounds", // autocomplete results in these bounds are shown first
             showCoverageMap: "=?" // Show/Hide coverage map

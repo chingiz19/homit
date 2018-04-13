@@ -31,15 +31,14 @@ pub.findUser = function (email) {
 /**
  * Find user based on id
  */
-pub.findUserById = function (id) {
+pub.findUserById = async function (id) {
     var data = { id: id };
-    return db.selectAllWhereLimitOne(db.tables.users_customers, data).then(function (dbResult) {
-        if (dbResult.length > 0) {
-            return pub.sanitizeUserObject(dbResult[0]);
-        } else {
-            return false;
-        }
-    });
+    var dbResult = await db.selectAllWhereLimitOne(db.tables.users_customers, data);
+    if (dbResult.length > 0) {
+        return pub.sanitizeUserObject(dbResult[0]);
+    } else {
+        return false;
+    }
 };
 
 /**
@@ -215,6 +214,7 @@ pub.updateUser = async function (newData, key) {
             }
         }
     }
+    return true;
 }
 
 pub.updateCreditCard = function (userKey, cardToken, cardDigits, cardType) {
@@ -326,5 +326,9 @@ pub.resetPassword = async function (email, newPassword) {
         return false;
     }
 };
+
+pub.makeStripeCustomer = async function (userEmail) {
+    return await MP.createCustomer(userEmail);
+}
 
 module.exports = pub;
