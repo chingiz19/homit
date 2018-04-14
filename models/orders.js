@@ -745,4 +745,38 @@ pub.updateCancelAmount = function (cancelHistoryId, customerRefundAmount) {
     });
 };
 
+pub.getDisplayOrderItemsById = async function(id){
+    var sqlQuery = `
+        SELECT
+        store_type.display_name AS store_type_display_name,
+        listing.brand AS brand,
+        listing.name AS name,
+        container.name AS container,
+        packaging.name AS packaging,
+        volume.name AS volume,
+        product.image AS image,
+        category.name AS category,
+        cart_item.quantity AS quantity,
+        cart_item.price_sold AS price_sold
+        
+        FROM
+        orders_cart_items AS cart_item JOIN catalog_depot AS depot ON (cart_item.depot_id = depot.id)
+        JOIN catalog_items AS item ON (depot.item_id = item.id)
+        JOIN catalog_products AS product ON (item.product_id = product.id)
+        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
+        JOIN catalog_types AS type ON (listing.type_id = type.id)
+        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
+        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
+        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
+        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
+        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
+        JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
+
+        WHERE ?`;
+
+    var data = { "cart_item.order_id": id };
+    var dbResult = await db.runQuery(sqlQuery, [data, data]);
+    return dbResult;
+}
+
 module.exports = pub;

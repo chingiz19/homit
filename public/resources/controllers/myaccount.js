@@ -22,6 +22,7 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
         if(selectedSection){
             try{
                 $scope.section = parseInt(selectedSection);
+                if ($scope.section == 4) loadOrders();
             } catch(e){
                 $scope.section = 0; // Default to 0    
             }
@@ -43,8 +44,6 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
                 $scope.card = res.data.user.card;
 
                 $scope.user = res.data.user;
-
-                //TODO: Assign creadit card numbers
             } else {
                 //show error through notification
             }
@@ -132,14 +131,8 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
 
             $scope.editEnabled = false;
 
-            if (!$scope.orders){
-                user.orders().then(function success(res){
-                    if(res.data.success){
-                        $scope.orders = res.data.orders;
-                    }
-                }, function(error){
-
-                });
+            if (!$scope.orders && selection == 4){
+                loadOrders();
             }
         }
     };
@@ -157,7 +150,7 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
         user.update({
             first_name: $scope.fname,
             last_name: $scope.lname,
-            email: $scope.email,
+            user_email: $scope.email,
             phone: $scope.phone
         }).then(function success(response){
 
@@ -297,6 +290,21 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
      */
     function checkInputIfModified(selector){
         return $(selector).hasClass(modifiedFlag);
+    }
+
+    /**
+     * Helper method to load orders
+     */
+    function loadOrders(){
+        $scope.orderSectionText = "Loading...";
+        user.orders().then(function success(res){
+            if(res.data.success){
+                $scope.orders = res.data.orders;
+                $scope.orderSectionText = "No Orders"; //won;t be shown if orders contains something                        
+            }
+        }, function(error){
+            $scope.orderSectionText = "Something went wrong while retrieving orders, please refresh the page";
+        });
     }
 
     // Initialize at the end of file!

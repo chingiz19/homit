@@ -119,7 +119,7 @@
         <section ng-show="section == 2">
             <div class="flex-row flex-100 section-header">
                 <span class="burger-menu" ng-click="openSidebar()">Menu</span>
-                <h1>Payment method</h1>                              
+                <h1>Payment Method</h1>                              
             </div>
 
             <span class="divider" style="width:100%"></span>
@@ -223,8 +223,31 @@
             <span class="divider" style="width:100%"></span>
 
             <div class="flex-column flex-100">
-                <div ng-show="!orders">No Orders</div>
-                <div ng-show="orders"></div>
+                <div ng-show="!orders || orders.length == 0" ng-bind="orderSectionText"></div>
+                <div ng-show="orders" ng-repeat="order in orders">
+                    <div class="order">
+                        <span class="header" ng-click="order.showDetails = !order.showDetails">
+                            <h3 class="flex-center">Order #{{order.id}}</h3>
+                            <span class="flex-center">|</span>
+                            <h3 class="flex-center" ng-bind="order.date_delivered"></h3>
+                        </span>
+
+                        <p>Addr: {{order.delivery_address}}</p>
+                        <p>Store: {{order.store}}</p>
+                        <p>Payment: **** **** **** {{order.card_digits}}</p>
+                        
+                        <span class="order-items" ng-show="order.showDetails" ng-repeat="item in order.items">
+                            <div class="item">
+                                <img width="100" height="100" ng-src="{{'/resources/images/products/' + item.category.toLowerCase() + '/' + item.image}}">
+                                <span class="details">
+                                    {{item.volume}}
+                                    {{item.brand}}
+                                </span>
+                            </div>
+                        </span>
+
+                    </div>
+                </div>
             </div>
         </section>
     </main>

@@ -78,7 +78,7 @@ app.service('user', function ($cookies, $http) {
     publicFunctions.orders = function(){
         return $http({
             method: "POST",
-            url: 'api/account/vieworders'
+            url: 'api/account/viewallorders'
         });
     };
 

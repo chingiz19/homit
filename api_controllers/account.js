@@ -110,7 +110,42 @@ router.post('/viewordertransactions', async function (req, res, next) {
     }
 });
 
-router.post('/vieworders', async function (req, res, next) {
+router.post("/viewallorders", Auth.validate(), async function(req, res, next){
+    var signedUser = Auth.getSignedUser(req);
+    if (!signedUser){
+        return errorMessages.sendGenericError(res);
+    }
+    var orders = [];
+    var transactions = await Orders.getOrderTransactionsByUserId(signedUser.id);
+
+    for (let tr of transactions){
+        var individualOrders = await Orders.getOrdersByTransactionIdWithUserId(tr.id, signedUser.id);
+        for (let individualOrder of individualOrders){            
+            var order = {
+                id: individualOrder.order_id,
+                card_digits: tr.card_digits,
+                delivery_address: tr.delivery_address,
+                date_delivered: individualOrder.date_delivered
+            }
+
+            order.items = await Orders.getDisplayOrderItemsById(order.id);
+
+            if (!order.date_delivered){
+                order.date_delivered = "Pending...";
+            }
+            order.store = order.items[0].store_type_display_name;
+            orders.push(order);
+        }
+}
+
+    res.status(200).json({
+        success: true,
+        orders: orders
+    });
+
+});
+
+router.post('/vieworders', Auth.validate(), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (signedUser) {
         var userId = signedUser.id;
