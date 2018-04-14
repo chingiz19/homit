@@ -61,18 +61,20 @@ var sendEmailViaOrders = function (mailOptions) {
  * Includes cancelled, refunded and modified orders. 
 */
 var sendEmailViaNoReply = function (mailOptions) {
-    return noReplyTransporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            var metaData = {
-                directory: __filename,
-                error_message: error.message,
+    return new Promise(function (resolve, reject) {
+        noReplyTransporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                var metaData = {
+                    directory: __filename,
+                    error_message: error.message,
+                }
+                Logger.log.error("Could not send an RESET PASSWORD email with " + info.messageId + "ID.", metaData)
+                return reject(false);
+            } else {
+                Logger.log.debug('RESET PASSWORD email was sent with ' + info.messageId + "ID.");
+                return resolve(true);
             }
-            Logger.log.error("Could not send an RESET PASSWORD email with " + info.messageId + "ID.", metaData)
-            return false;
-        } else {
-            Logger.log.debug('RESET PASSWORD email was sent with ' + info.messageId + "ID.");
-            return true;
-        }
+        });
     });
 }
 
@@ -202,7 +204,7 @@ pub.sendResetPasswordEmail = async function (orderInfo) {
     var fromValue = "noreply <" + process.env.NOREPLY_EMAIL_USER + ">";
     let mailOptions = {
         from: fromValue,
-        to: orderInfo.customer.email,
+        to: orderInfo.customer_email,
         subject: "Reset password",
         html: html,
     };

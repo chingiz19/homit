@@ -27,7 +27,13 @@ class modelFactory {
         global.Email =          require("./models/email");
         global.errorMessages =  require("./models/error_messages");
         global.NM =             require("./models/network_manager");
-        global.HelperUtils =      require("./models/helper_utils");
+        global.HelperUtils =    require("./models/helper_utils");
+
+        if (process.env.n_mode == "production"){
+            global.machineHostname = "https://www.homit.ca";
+        } else {
+            global.machineHostname = "http://localhost:8080";
+        }
     }
 }
 

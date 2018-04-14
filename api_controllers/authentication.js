@@ -116,7 +116,7 @@ router.post('/forgotpassword', async function (req, res, next) {
     // send via email 
     var emailSuccess = await Email.sendResetPasswordEmail({
         customer_email: req.body.email,
-        resetLink: "https://www.homit.ca/resetpassword/" + req.body.email + "/" + token
+        resetLink: machineHostname + "/resetpassword/" + req.body.email + "/" + token
     });
 
     if (emailSuccess) {
