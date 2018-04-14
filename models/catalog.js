@@ -577,29 +577,6 @@ pub.getProductsByListingId = async function (listingId, isStoreOpen) {
 }
 
 /**
- * Find alternative listing from different store type
- * 
- * @param {*} listingId 
- */
-pub.findAlternativeListing = async function (listingId) {
-    var sqlQuery = `
-        SELECT listing.id AS listing_id
-        FROM catalog_listings AS listing
-        WHERE
-        listing.id != ` + listingId + `
-        AND (listing.name, listing.brand) IN(
-            SELECT listing2.name, listing2.brand
-            FROM catalog_listings AS listing2
-            WHERE ?
-        ) `;
-
-    var data = { "listing2.id": listingId };
-    var dbResult = await db.runQuery(sqlQuery, data);
-
-    return dbResult[0].listing_id;
-}
-
-/**
  * Get all descriptions for the listing id
  * 
  * @param {*} listingId 
@@ -615,6 +592,18 @@ var getDescriptionsByListingId = async function (listingId) {
     var data = { "listing.id": listingId };
     var dbResult = await db.runQuery(sqlQuery, data);
     return dbResult;
+}
+
+
+var getImagesByProductId = async function (productId) {
+    var sqlQuery = `
+        SELECT name.name AS name, image.image AS image, image.product_id AS product_id
+        FROM catalog_image_names AS name
+        JOIN catalog_products_images AS image ON (name.id = image.image_key)
+        WHERE ?`;
+
+    var data = { "image.product_id": productId };
+    return await db.runQuery(sqlQuery, data);
 }
 
 pub.getProductPageProductsByListingId = async function (listingId) {
@@ -638,7 +627,7 @@ pub.getProductPageProductsByListingId = async function (listingId) {
  * @param {*} products - array of products
  * @param {*} descriptions
  */
-function convertToProductPageItem(products, descriptions) {
+var convertToProductPageItem = async function (products, descriptions) {
     var tmpPr = products[0];
 
     var finalDescriptions = {};
@@ -675,9 +664,11 @@ function convertToProductPageItem(products, descriptions) {
     // We expect not to have duplicate containers in the array
     for (let i = 0; i < products.length; i++) {
         let product = products[i];
+        let other_images = await getImagesByProductId(product.product_id);
         finalResult.products[product.container] = {
             "image": product.image,
-            "product_variants": product.product_variants
+            "product_variants": product.product_variants,
+            "other_images": other_images
         }
     }
     return finalResult;
