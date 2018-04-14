@@ -1,7 +1,7 @@
 use homit;
 
 /*Store Type*/
-INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(6,"linas-italian-store", "Lina's Italian Store", "linas-italian-store", "linas-italian-store_icon.png");
+INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(6,"linas-italian-market", "Lina's Italian Store", "linas-italian-market", "linas-italian-store_icon.png");
 
 /*Store Type*/
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (335, "s_", "Lina's Italian Market", "2202 Centre St NE, Calgary, AB T2E 2T5", "51.071908", "-114.062205", "4032779166", "6");

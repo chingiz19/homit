@@ -831,7 +831,7 @@ var recommended_products = {
 router.get("/product/:productName/ls/:listingId", async function (req, res, next) {
     var product = await Catalog.getProductPageProductsByListingId(req.params.listingId);
 
-    var validationUrl = "/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + req.params.listingId;
+    var validationUrl = clearProductUrl("/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + req.params.listingId);
 
     if (!product || validationUrl != req.url) {
         return res.redirect("/notfound");
@@ -916,6 +916,15 @@ function convertHomitTags(string) {
         tmpString = tmpString.replace(new RegExp(tag, 'g'), homit_tags[tag]);
     }
     return tmpString;
+}
+
+function clearProductUrl(path){
+    var tempPath = path;
+    let characters = ["#", "&"];
+    for(let i=0; i<characters.length; i++){
+        tempPath = tempPath.replace(characters[i], "");
+    }
+    return tempPath;
 }
 
 function clearHomitTags(string) {

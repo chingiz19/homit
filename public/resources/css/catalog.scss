@@ -570,6 +570,7 @@ md-radio-button .md-label {
     .nav-mob-content {
         position: relative;
         top: 20px;
+        padding-bottom: 20px;
     }
 
     .str-ul {
@@ -608,6 +609,7 @@ md-radio-button .md-label {
     }
 
     .nav-mob-aisle-ln a {
+        text-transform: capitalize;
         font-size: 17px;
         color: rgba(255, 255, 255, 1);
     }

@@ -114,8 +114,8 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
 
     $scope.hrefPrdPage = function (product) {
         var path;
-        path = "/catalog/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + product.image.substring(product.image.lastIndexOf("_") + 1, product.image.lastIndexOf("."));
-        $window.location.href = $window.location.origin + _.escape(_.toLower(path));
+        path = "/catalog/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + product.listing_id;
+        $window.location.href = $window.location.origin + _.toLower(clearProductUrl(path));
     };
 
     $scope.nextVolume = function (product) {
@@ -284,6 +284,15 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             pathname_final = pathname_final + "/" + pathname_1[part];
         }
         return pathname_final;
+    }
+
+    function clearProductUrl(path){
+        var tempPath = path;
+        let characters = ["#", "&"];
+        for(let i=0; i<characters.length; i++){
+            tempPath = tempPath.replace(characters[i], "");
+        }
+        return tempPath;
     }
 
     $scope.scroll_prev = 0;

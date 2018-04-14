@@ -75,6 +75,7 @@ pub.getAllProductsByCategory = async function (storeType, categoryName, storeOpe
         store_type.name AS store_type,
         store_type.api_name AS store_type_api_name,
         store_type.display_name AS store_type_display_name,
+        listing.id AS listing_id,
         listing.brand AS brand,
         listing.name AS name,
         product.image AS image,
