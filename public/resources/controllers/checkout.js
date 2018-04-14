@@ -1,6 +1,6 @@
 app.controller("checkoutController",
     function ($scope, $http, $location, $rootScope, $cookies, $window, $mdSidenav,
-        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval, googleAnalytics, $timeout) {
+        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval, googleAnalytics, $timeout, user) {
 
         $scope.userInfo = {};
 
@@ -25,12 +25,6 @@ app.controller("checkoutController",
             $scope.checkout = this;
 
             $scope.checkout.getCheckoutUserInfo = sessionStorage.getCheckoutUserInfo();
-            if ($cookies.get("user")) {
-                $scope.userInfo = JSON.parse($cookies.get("user").replace("j:", ""));
-                $scope.userSignedIn = true;
-            } else {
-                $scope.userSignedIn = false;
-            }
             if ($scope.checkout.getCheckoutUserInfo != "undefined" && $scope.checkout.getCheckoutUserInfo != null) {
                 $scope.userInfo = $scope.checkout.getCheckoutUserInfo;
             }
@@ -39,6 +33,16 @@ app.controller("checkoutController",
                 $scope.checkout.address_latitude = sessionStorage.getAddressLat();
                 $scope.checkout.address_longitude = sessionStorage.getAddressLng();
             }
+
+            // Check for user, if logged in populate 
+            user.user().then(function(res){
+                if (res.data.success){
+                    $scope.userInfo = res.data.user;
+                    $scope.userSignedIn = true;
+                }
+            }, function(err){
+                // Nothing to do
+            });
 
             $timeout(function () {
                 mapServices.createCoveragePolygon().then(function (polygon) {
