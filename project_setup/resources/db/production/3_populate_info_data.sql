@@ -524,11 +524,11 @@ INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (334, 6
 INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (334, 7, "00:00:00", "23:59:59");
 
 /* Insert Catalog - Description Name */
-INSERT INTO `catalog_description_names`(id, name) VALUES(1, "Preview");
-INSERT INTO `catalog_description_names`(id, name) VALUES(2, "Type");
-INSERT INTO `catalog_description_names`(id, name) VALUES(3, "Producer");
-INSERT INTO `catalog_description_names`(id, name) VALUES(4, "Country of Origin");
-INSERT INTO `catalog_description_names`(id, name) VALUES(5, "Alcohol Content %");
+INSERT INTO `catalog_description_names`(id, name) VALUES(1, "preview");
+INSERT INTO `catalog_description_names`(id, name) VALUES(2, "type");
+INSERT INTO `catalog_description_names`(id, name) VALUES(3, "producer");
+INSERT INTO `catalog_description_names`(id, name) VALUES(4, "country_of_origin");
+INSERT INTO `catalog_description_names`(id, name) VALUES(5, "alcohol_content");
 
 /* Insert Catalog - Category */
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(1, "beer", "Beer");

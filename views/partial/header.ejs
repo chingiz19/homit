@@ -78,15 +78,24 @@
             </button>
             <div id="hdrHub" aria-hidden="true" class="header-hub" ng-style="('<%= userLoggedIn %>' == 'true') && {'right': '28px'} || {'right': '128px'}">
                 <div id="hdrHub1" class="box-extBox"></div>
-                <div id="hub-background-image"></div>
+                <!-- <div id="hub-background-image"></div> -->
                 <div id="hdrHub2">
                     <div class="hub-box">
                         <div id="snack-vendor-dashboard" class="store-div snack-vendor-div" ng-click="hrefTo('/catalog/snack-vendor')">
                             <div>
                                 <img ng-src="/resources/images/non-catalog-image/homit_hub/snack-vendor_icon.png">
                             </div>
-                            <h3>
+                            <h3 style="font-size: 14px;">
                                 <a href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a>
+                            </h3>
+                            <button class="hub-shop-btn">Shop</button>
+                        </div>
+                        <div id="linas-italian-store-dashboard" class="store-div snack-vendor-div " ng-click="hrefTo('/catalog/linas-italian-market')">
+                            <div>
+                                <img ng-src="/resources/images/non-catalog-image/homit_hub/linas-italian-store_icon.png">
+                            </div>
+                            <h3 style="font-size: 14px;">
+                                <a href="https://homit.ca/catalog/linas-italian-store">Lina's Italian Market</a>
                             </h3>
                             <button class="hub-shop-btn">Shop</button>
                         </div>
@@ -94,7 +103,7 @@
                             <div>
                                 <img ng-src="/resources/images/non-catalog-image/homit_hub/liquor-station_icon.png">
                             </div>
-                            <h3>
+                            <h3 style="font-size: 14px;">
                                 <a href="https://homit.ca/catalog/liquor-station">Liquor Station</a>
                             </h3>
                             <button class="hub-shop-btn">Shop</button>

@@ -273,11 +273,17 @@ body{
 }
 .store-window h3{
     position: relative;
-    margin-top: 15px;
-    font-weight: 400; font-size: 20px; 
-    text-align: center;
-    text-transform: uppercase;
+    margin-top: 10px;
+    height: 48px; 
+    font-weight: 400; font-size: 23px; 
+    // text-transform: uppercase;
     z-index: 1;
+}
+.store-window a{
+    height: 100%; width: 100%;
+    display: flex; align-items: center;
+    // text-align: center;
+    justify-content: center;
 }
 .store-window button{
     position: absolute; 

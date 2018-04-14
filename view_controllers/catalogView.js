@@ -15,13 +15,13 @@ var homit_tags = {
 const categories = {
     "liquor-station": ['beer', 'liqueur', 'spirit', 'wine', 'party supply'],
     "snack-vendor": ['beverages', 'everyday needs', 'snacks'],
-    "linas-italian-store": ['baked goods', 'beverages', 'canned and jarred', 'condiments and sauces', 'dry packaged', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
+    "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'dry packaged', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
 }
 
 const api_categories = {
     "liquor-station": ['beer', 'liqueur', 'spirit', 'wine', 'party-supply'],
     "snack-vendor": ['beverages', 'everyday-needs', 'snacks'],
-    "linas-italian-store": ['baked-goods', 'beverages', 'canned-and-jarred', 'condiments-and-sauces', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
+    "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
 }
 
 
@@ -261,7 +261,7 @@ var recommended_products = {
             "price": 3.19
         }
     ],
-    "everyday needs": [
+    "everyday-needs": [
         {
             "brand": "Scotties",
             "name": "Napkins",
@@ -308,7 +308,7 @@ var recommended_products = {
             "price": 3.19
         }
     ],
-    "party supply": [
+    "party-supply": [
         {
             "brand": "Arctic Glacier",
             "name": "Ice",
@@ -637,7 +637,7 @@ var recommended_products = {
             "price": 2.79
         },
     ],
-    "condiments-and-sauces": [
+    "condiments": [
         {
             "brand": "Lindt",
             "name": "Intense Orange",
@@ -776,6 +776,53 @@ var recommended_products = {
             "packaging": "1",
             "size": "100gm",
             "price": 3.19
+        }
+    ],
+    "coffee-and-tea": [
+        {
+            "brand": "Arctic Glacier",
+            "name": "Ice",
+            "image": "/resources/images/products/beverages/p_9528.jpeg",
+            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "packaging": "1",
+            "size": "5.95lb",
+            "price": 3.59
+        },
+        {
+            "brand": "Absolut",
+            "name": "Vodka",
+            "image": "/resources/images/products/spirit/b_5000.jpeg",
+            "url": "/catalog/product/absolut-vodka/ls/5000",
+            "packaging": "1",
+            "size": "750ml",
+            "price": 28.99
+        },
+        {
+            "brand": "Realemon",
+            "name": "Lime juice",
+            "image": "/resources/images/products/beverages/b_9513.jpeg",
+            "url": "/catalog/product/realemon-lime-juice/ls/9513",
+            "packaging": "1",
+            "size": "100ml",
+            "price": 1.29
+        },
+        {
+            "brand": "Jagermeister",
+            "name": null,
+            "image": "/resources/images/products/liqueur/b_7000.jpeg",
+            "url": "/catalog/product/jagermeister/ls/7000",
+            "packaging": "1",
+            "size": "750ml",
+            "price": 31.99
+        },
+        {
+            "brand": "OASIS",
+            "name": "Exotic Mango",
+            "image": "/resources/images/products/beverages/b_9524.jpeg",
+            "url": "/catalog/product/oasis-exotic-mango/ls/9524",
+            "packaging": "1",
+            "size": "960ml",
+            "price": 3.29
         }
     ],
 }
