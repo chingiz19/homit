@@ -377,11 +377,11 @@ pub.getStoreTypeIdByName = async function (storeType) {
  * @param {*} products 
  */
 pub.getAllPricesForProducts = function (products) {
-    if (products[pub.HOMIT_CAR_STORE_TYPE] && products[pub.SOLO_LIQUOR_STORE_TYPE]) {
+    if (products[pub.HOMIT_CAR_STORE_TYPE]) {
         products[pub.SOLO_LIQUOR_STORE_TYPE] = Object.assign(products[pub.SOLO_LIQUOR_STORE_TYPE], products[pub.HOMIT_CAR_STORE_TYPE]);
         delete products[pub.HOMIT_CAR_STORE_TYPE];
     }
-    return calculatePrice(products);
+    return pub.calculatePrice(products);
 }
 
 /**
@@ -389,7 +389,7 @@ pub.getAllPricesForProducts = function (products) {
  * 
  * @param {*} products 
  */
-var calculatePrice = function (products) {
+pub.calculatePrice = function (products) {
     var totalAmount = 0;
     var totalTax = 0;
     var totalDelivery = 0;

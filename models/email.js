@@ -415,7 +415,7 @@ var getTotalPriceForProducts = function (orders) {
 
     var calcProducts = getCartProductsWithStoreType(prices);
 
-    price = Catalog.getAllPricesForProducts(calcProducts);
+    price = Catalog.calculatePrice(calcProducts);
     priceObject.deliveryFee = "C$ " + price.delivery_fee.toFixed(2);
     priceObject.totalTax = "C$ " + price.total_tax.toFixed(2);
     priceObject.totalAmount = "C$ " + price.cart_amount.toFixed(2);
