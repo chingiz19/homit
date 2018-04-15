@@ -42,7 +42,7 @@ pub.validate = function (options) {
             res.redirect("/");
         } else {
             Logger.log.verbose("R400");
-            res.status(400).send("Not Authorized", logMeta);
+            res.status(400).send("Not Authorized");
         }
     }
 };

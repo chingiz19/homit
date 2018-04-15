@@ -41,8 +41,8 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
                 $scope.email = res.data.user.user_email;
                 $scope.phone = res.data.user.phone_number;
 
+                $scope.dob = res.data.user.dob;
                 $scope.card = res.data.user.card;
-
                 $scope.user = res.data.user;
             } else {
                 //show error through notification
@@ -147,15 +147,30 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
             return;
         }
 
+        // convert mm-dd-yyyy to yyyy-mm-dd
+        var birth_date = $scope.dob.split("-");
+        birth_date = birth_date[2] + '-' + birth_date[0] + '-' + birth_date[1];
+
+        var phone = $scope.phone.replace("(","");
+        phone = phone.replace(")", "");
+        phone = phone.replace(" ", "");
+        phone = phone.replace("-", "");
+
         user.update({
             first_name: $scope.fname,
             last_name: $scope.lname,
             user_email: $scope.email,
-            phone: $scope.phone
-        }).then(function success(response){
-
-        }, function error(){
-
+            phone_number: phone,
+            birth_date: birth_date
+        }).then(function success(res){
+            if (res.data.success){
+                notification.addSuccessMessage("Updated");
+                $window.location.reload();
+            } else {
+                notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
+            }
+        }, function error(err){
+            notification.addErrorMessage("Something went wrong while updating, please try again later");
         });
     };
 
@@ -183,16 +198,13 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
 
             user.updateCardInfo(result.token.id).then(function success(res){
                 if (res.data.success){
-                    //TODO: notify user everything is good
-                    alert("Success");
+                    notification.addSuccessMessage("Updated");
                     $window.location.reload();
                 } else {
-                    //TODO: notify user error
-                    alert("Error");    
+                    notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
                 }
             }, function(err){
-                //TODO: notify user error
-                alert("Error");
+                notification.addErrorMessage("Something went wrong while updating, please try again later");
             });
         });
     };
@@ -205,13 +217,13 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
 
         user.updatePassword($scope.security_set.current_pass.$modelValue, $scope.security_set.new_pass.$modelValue).then(function success(res){
             if(res.data.success){
-                alert("All good");
+                notification.addSuccessMessage("Updated");
                 $window.location.reload();
             } else {
-                alert(res.data.ui_message);
+                notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
             }
         }, function(error){
-            alert("Something went wrong while updating password. Please reload the page and try again;");
+            notification.addErrorMessage("Something went wrong while updating, please try again later");
         });
     };
 

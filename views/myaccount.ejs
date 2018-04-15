@@ -58,7 +58,7 @@
                         </md-input-container>
                         <md-input-container class="md-block container-margin" flex="100">
                             <label>Date of Birth MM-DD-YYYY</label>
-                            <input id ="date_of_birth" name="dob" ng-pattern="dobPattern" ng-disabled="!editEnabled" ng-model="dob" ng-blur="checkDOB()" required/>
+                            <input id ="date_of_birth" name="dob" ng-pattern="dobPattern" ng-disabled="!editEnabled" ng-model="dob" ng-blur="checkDOB()"/>
                             <div ng-messages="profile.dob.$error" ng-messages-multiple>
                                 <div ng-message="pattern">Date format only</div>
                                 <div ng-message="required">Required</div>
@@ -75,7 +75,7 @@
                         </md-input-container>
                         <md-input-container class="md-block container-margin" flex="100">
                             <label>Phone</label>
-                            <input id="phone-number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-disabled="!editEnabled" ng-model="phone" required/>
+                            <input id="phone-number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-disabled="!editEnabled" ng-model="phone"/>
                             <div ng-messages="checkoutInput.phone.$error">
                                 <div ng-message="pattern">Numbers only</div>
                                 <div ng-message="minlength">Required</div>

@@ -16,21 +16,9 @@ router.post('/update', Auth.validate(), async function (req, res, next) {
         return errorMessages.sendGenericError(res);        
     }
 
-    var allValidParams = ["email", "first_name", "last_name", "phone", "birth_day", "birth_month", "birth_year", "address"];
+    var allValidParams = ["user_email", "first_name", "last_name", "phone_number", "birth_date", "address"];
     if (!req.body.user || HelperUtils.hasInvalidParams(req.body.user, allValidParams)){
         return errorMessages.sendMissingParams(res);
-    }
-
-    // Special check for birth date
-    if (req.body.user.birth_day || req.body.user.birth_month || req.body.user.birth_year){
-        if (!(req.body.user.birth_day && req.body.user.birth_month && req.body.user.birth_year)){
-            return errorMessages.sendMissingParams(res);    
-        } else {
-            //TODO
-            // if not date is valid
-            //      send missingParams error | or less generic error message
-            //      log the error for debugging 
-        }
     }
     
     /* Update user info */
@@ -230,8 +218,15 @@ router.get('/user', Auth.validate(), async function (req, res, next) {
     delete signedUser.password; // enforcing safety
 
     var card = await MP.getCustomerPaymentMethod(signedUser.stripe_customer_id);
+    delete signedUser.stripe_customer_id;    
     if (card) {
         signedUser.card = card;
+    }
+
+    if (signedUser.birth_date){
+        var date = signedUser.birth_date.split("T")[0].split("-");
+        signedUser.dob = date[1] + '-' + date[2] + '-' + date[0];
+        delete signedUser.birth_date;
     }
     res.send({
         success: true,
