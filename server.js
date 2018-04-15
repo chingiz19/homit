@@ -45,6 +45,8 @@ var sessionStore = new RedisStore({
 	db: db.redisTable.sessions
 });
 
+var cart_version = 2;
+
 
 /* make logs folder */
 var errorLog = ".logs/error_log";
@@ -97,9 +99,10 @@ webServer.use("/api/app", require(path.join(__dirname, "/api_controllers/app/app
 
 webServer.use(csurf());
 
-/* Setting CSRF token per request*/
+/* Setting CSRF token, and other cookies/settings per request*/
 webServer.use(function (req, res, next) {
 	res.cookie("csrf-token", req.csrfToken());
+	res.cookie("cart-version", cart_version, {httpOnly: false});
 	res.setHeader("Keep-Alive", "timeout: 60, max: 1000");
 	return next();
 })

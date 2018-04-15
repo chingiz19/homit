@@ -1,32 +1,35 @@
 app.service('localStorage', ["$window", function($window){
     var _store = $window.localStorage;
-
-    var _set = function(key, value){
+    var pub = {};
+    pub.set = function(key, value){
         if (!_store) return false;
         if(typeof(value) == 'object') value = JSON.stringify(value);
         _store.setItem(key, value);
         return true;
     };
 
-    var _get = function(key){
+    pub.get = function(key){
         if (!_store) return false;
         var value = _store.getItem(key);
         if (value && value.startsWith("{")) value = JSON.parse(value);
         return value;
     };
 
-    var _setUserCart = function(value){
-        return _set("homit_userCart", value);
+    pub.setUserCart = function(value){
+        return pub.set("homit_userCart", value);
     };
 
-    var _getUserCart = function(){
-        return _get("homit_userCart");
+    pub.getUserCart = function(){
+        return pub.get("homit_userCart");
     };
 
-    return {
-        get: _get,
-        set: _set,
-        setUserCart: _setUserCart,
-        getUserCart: _getUserCart
+    pub.setCartVersion = function(value){
+        return pub.set("cart_version", value);
     };
+
+    pub.getCartVersion = function(){
+        return pub.get("cart_version");
+    };
+
+    return pub;
 }]);

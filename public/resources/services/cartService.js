@@ -1,4 +1,4 @@
-app.service('cartService', function ($http, localStorage) {
+app.service('cartService', function ($http, localStorage, $cookies) {
 
     var _modifyCartItem = function (depot_id, itemQuantity) {
         return $http.post('/api/cart/modifyitem', {
@@ -180,6 +180,19 @@ app.service('cartService', function ($http, localStorage) {
 
         return parsedCart;
     }
+
+    /**
+     * Runs on initialization of cartService
+     */
+    function _init(){
+        var cart_version = $cookies.get("cart-version");
+        if(cart_version != localStorage.getCartVersion()){
+            localStorage.setUserCart({});
+            localStorage.setCartVersion(cart_version);            
+        }
+    }
+
+    _init();
 
     return {
         modifyCartItem: _modifyCartItem,
