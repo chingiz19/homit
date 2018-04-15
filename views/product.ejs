@@ -34,7 +34,7 @@
                             <div layout="row">
                                 <div ng-repeat="(key, value) in product.products" class="product-img-list">
                                     <img class="product-image-to-select" ng-style="((key == selected_container)) && {'border':'1px solid rgba(0,0,0,0.1)', 'border-radius' : '4px'}" ng-click="updateContainer(key)"
-                                        ng-src="{{ value.image}}">
+                                        ng-src="{{ value.image }}">
                                 </div>
                             </div>
                         </div>
