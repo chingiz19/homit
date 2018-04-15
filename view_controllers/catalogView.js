@@ -15,13 +15,13 @@ var homit_tags = {
 const categories = {
     "liquor-station": ['beer', 'liqueur', 'spirit', 'wine', 'party supply'],
     "snack-vendor": ['beverages', 'everyday needs', 'snacks'],
-    "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'dry packaged', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
+    "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'confectionery', 'dry packaged', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
 }
 
 const api_categories = {
     "liquor-station": ['beer', 'liqueur', 'spirit', 'wine', 'party-supply'],
     "snack-vendor": ['beverages', 'everyday-needs', 'snacks'],
-    "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
+    "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'confectionery', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
 }
 
 
@@ -328,13 +328,13 @@ var recommended_products = {
             "price": 28.99
         },
         {
-            "brand": "Realemon",
-            "name": "Lime juice",
-            "image": "/resources/images/products/beverages/b_9513.jpeg",
-            "url": "/catalog/product/realemon-lime-juice/ls/9513",
+            "brand": "Lindt",
+            "name": "Hazelnut Chocolate",
+            "image": "/resources/images/products/snacks/br_9039.jpeg",
+            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
             "packaging": "1",
-            "size": "100ml",
-            "price": 1.29
+            "size": "100gm",
+            "price": 3.19
         },
         {
             "brand": "Jagermeister",
@@ -469,13 +469,13 @@ var recommended_products = {
             "price": 28.99
         },
         {
-            "brand": "Realemon",
-            "name": "Lime juice",
-            "image": "/resources/images/products/beverages/b_9513.jpeg",
-            "url": "/catalog/product/realemon-lime-juice/ls/9513",
+            "brand": "Lindt",
+            "name": "Hazelnut Chocolate",
+            "image": "/resources/images/products/snacks/br_9039.jpeg",
+            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
             "packaging": "1",
-            "size": "100ml",
-            "price": 1.29
+            "size": "100gm",
+            "price": 3.19
         },
         {
             "brand": "Jagermeister",
@@ -798,13 +798,60 @@ var recommended_products = {
             "price": 28.99
         },
         {
-            "brand": "Realemon",
-            "name": "Lime juice",
-            "image": "/resources/images/products/beverages/b_9513.jpeg",
-            "url": "/catalog/product/realemon-lime-juice/ls/9513",
+            "brand": "Lindt",
+            "name": "Hazelnut Chocolate",
+            "image": "/resources/images/products/snacks/br_9039.jpeg",
+            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
             "packaging": "1",
-            "size": "100ml",
-            "price": 1.29
+            "size": "100gm",
+            "price": 3.19
+        },
+        {
+            "brand": "Jagermeister",
+            "name": null,
+            "image": "/resources/images/products/liqueur/b_7000.jpeg",
+            "url": "/catalog/product/jagermeister/ls/7000",
+            "packaging": "1",
+            "size": "750ml",
+            "price": 31.99
+        },
+        {
+            "brand": "OASIS",
+            "name": "Exotic Mango",
+            "image": "/resources/images/products/beverages/b_9524.jpeg",
+            "url": "/catalog/product/oasis-exotic-mango/ls/9524",
+            "packaging": "1",
+            "size": "960ml",
+            "price": 3.29
+        }
+    ],
+    "confectionery": [
+        {
+            "brand": "Arctic Glacier",
+            "name": "Ice",
+            "image": "/resources/images/products/beverages/p_9528.jpeg",
+            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "packaging": "1",
+            "size": "5.95lb",
+            "price": 3.59
+        },
+        {
+            "brand": "Absolut",
+            "name": "Vodka",
+            "image": "/resources/images/products/spirit/b_5000.jpeg",
+            "url": "/catalog/product/absolut-vodka/ls/5000",
+            "packaging": "1",
+            "size": "750ml",
+            "price": 28.99
+        },
+        {
+            "brand": "Lindt",
+            "name": "Hazelnut Chocolate",
+            "image": "/resources/images/products/snacks/br_9039.jpeg",
+            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
+            "packaging": "1",
+            "size": "100gm",
+            "price": 3.19
         },
         {
             "brand": "Jagermeister",
