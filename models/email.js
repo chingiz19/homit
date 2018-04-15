@@ -413,7 +413,7 @@ var getTotalPriceForProducts = function (orders) {
         prices = prices.concat(orders[sub_order].products);
     }
 
-    var calcProducts = getCartProductsWithStoreType(prices);
+    var calcProducts = Catalog.getCartProductsWithStoreType(prices);
 
     price = Catalog.calculatePrice(calcProducts);
     priceObject.deliveryFee = "C$ " + price.delivery_fee.toFixed(2);
