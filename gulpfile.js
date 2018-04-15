@@ -166,10 +166,9 @@ gulp.task('css', function(){
 });
 
 gulp.task('watch', function(){
-    gulp.watch(cssFilesToWatch, ['css']);
-    gulp.watch(jsFiles, ['js']);
-    gulp.watch(imgFiles, ['img']);
-    gulp.watch(miscFiles, ['misc']);
+    gulp.watch(cssFilesToWatch, {interval: 1000}, ['css']);
+    gulp.watch(jsFiles, {interval: 1000}, ['js']);
+    gulp.watch(miscFiles, {interval: 1000}, ['misc']);
 })
 
 gulp.task('start', function(cb){
