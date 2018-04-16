@@ -36,7 +36,7 @@ router.route('/')
 	});
 
 router.get('/main', function(req, res, next){
-	req.options.ejs["title"] = "Homit | Snack, Liquor and Party Supply Delivery in Calgary";
+	req.options.ejs["title"] = "Homit | Italian Grocery, Snack, Liquor and Party Supply Delivery in Calgary";
 	req.options.ejs["showSearchBar"] = false;
 	res.render("main.ejs", req.options.ejs);
 });

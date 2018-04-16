@@ -2,7 +2,7 @@ var Page = require("../Page");
 
 class MainPage extends Page {
     constructor(){
-        super('/main', "Homit | Snack, Liquor and Party Supply Delivery in Calgary");
+        super('/main', "Homit | Italian Grocery, Snack, Liquor and Party Supply Delivery in Calgary");
 
         this.addressAutocompleteInput = element(by.id("autocompleteAddressInputBox")); 
         this.addressMessage = element(by.binding('addressMessage'));

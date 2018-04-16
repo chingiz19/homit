@@ -887,11 +887,58 @@ router.get("/product/:productName/ls/:listingId", async function (req, res, next
     // Assign variables
     req.options.ejs.product_brand = product.brand;
     req.options.ejs.product_name = product.name;
-    req.options.ejs.product_details = product.details;
     req.options.ejs.default_container = Object.keys(product.products)[0];
-    req.options.ejs.store_type_display_name = _.startCase(product.store_type_display_name, '-', ' ');
+
+    if (product.store_type_api_name == "linas-italian-market") {
+        req.options.ejs.store_type_display_name = '<li><span class="bold">Sold By: </span><a href="'+ "https://linasmarket.com/" +'" target="_blank" itemprop="additionalProperty">' + _.startCase(product.store_type_display_name, '-', ' ') + '</a></li>';
+    } else {
+        req.options.ejs.store_type_display_name = undefined;
+    }
+
+    if(product.details.country_of_origin){
+        req.options.ejs.country_of_origin = '<li><span class="bold">Country of Origin:</span><span itemprop="additionalProperty"> ' + product.details.country_of_origin + '</span></li>';
+    } else{
+        req.options.ejs.country_of_origin ="";
+    }
+
+    if(product.details.producer){
+        req.options.ejs.producer = '<li><span class="bold">Made by:</span><span itemprop="manufacturer"> ' + product.details.producer + '</span></li>';
+    }else{
+        req.options.ejs.producer = "";
+    }
+
+    if(product.details.alcohol_content){
+        req.options.ejs.alcohol_content = '<li><span class="bold">Alcohol/Vol:</span><span itemprop="additionalProperty"> '+ product.details.alcohol_content + '</span></li>';
+    } else{
+        req.options.ejs.alcohol_content = "";
+    }
+
+    if(product.type){
+        req.options.ejs.product_type = '<li><span class="bold">Type:</span><span itemprop="additionalType"> ' + product.type + '</span></li>';
+    } else{
+        req.options.ejs.product_type = "";
+    }
+
+    if(product.details.preview){
+        req.options.ejs.preview = '<section class="preview-sec" itemprop="description"><div class="description"><h3 class="sub-header">Product Description:</h3><p> ' + convertHomitTags(product.details.preview) + '</p></div></section>';
+    } else{
+        req.options.ejs.preview = "";
+    }
+
+    if(product.details.ingredients){
+        req.options.ejs.ingredients = '<section class="ingredients-sec" itemprop="disambiguatingDescription"><div class="ingredients"><h3 class="sub-header">Ingredients:</h3><span> ' + convertHomitTags(product.details.ingredients) + '</span></div></section>';
+    } else{
+        req.options.ejs.ingredients = "";
+    }
+
+    if(product.details.serving_suggestions){
+        req.options.ejs.serving_suggestions = '<section class="preview-sec" itemprop="additionalProperty"><div class="description"><h3 class="sub-header">Serving Sugestions:</h3><p> ' + convertHomitTags(product.details.serving_suggestions) + '</p></div></section>';
+    }else{
+        req.options.ejs.serving_suggestions = "";
+    }
+    
+    req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="' + Object.values(product.products)[0].image + '">';
     req.options.ejs.store_type_api_name = product.store_type_api_name;
-    req.options.ejs.product_type = product.type;
     req.options.ejs.recommended_products = JSON.stringify(recommended_products[product.category]);
     req.options.ejs.see_more_url = "https://homit.ca/catalog/" + product.store_type_api_name + "/" + product.category;
 
@@ -906,16 +953,6 @@ router.get("/product/:productName/ls/:listingId", async function (req, res, next
         req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. " + clearHomitTags(product.details.preview).split(".")[0]);
     } else {
         req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. Let us Home It and liberate your precious time.");
-    }
-
-    for (detail in req.options.ejs.product_details) {
-        req.options.ejs.product_details[detail] = convertHomitTags(req.options.ejs.product_details[detail]);
-    }
-
-    if (product.store_type_api_name == "linas-italian-store") {
-        req.options.ejs.store_web = "https://linasmarket.com/";
-    } else {
-        req.options.ejs.store_web = undefined;
     }
 
     for (key in product.products) {
@@ -967,7 +1004,7 @@ function convertHomitTags(string) {
 
 function clearProductUrl(path){
     var tempPath = path;
-    let characters = ["#", "&"];
+    let characters = ["#", "&", "'"];
     for(let i=0; i<characters.length; i++){
         tempPath = tempPath.replace(characters[i], "");
     }

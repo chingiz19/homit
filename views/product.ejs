@@ -16,10 +16,10 @@
                 <input id="product" class="none" value="<%= product %>">
                 <input id="default_container" class="none" value="<%= default_container %>">
                 <h2 class="product-name-h2-mob">
-                    <span itemprop="brand">
+                    <span itemprop="name">
                         <%= product_brand %>
                     </span>
-                    <span itemprop="name">
+                    <span itemprop="brand">
                         <%= product_name %>
                     </span> - Deliver Now</h2>
                 <div layout="column">
@@ -33,32 +33,22 @@
                             <div class="product-image-line"></div>
                             <div layout="row">
                                 <div ng-repeat="(key, value) in product.products" class="product-img-list">
-                                    <img class="product-image-to-select" ng-style="((key == selected_container)) && {'border':'1px solid rgba(0,0,0,0.1)', 'border-radius' : '4px'}" ng-click="updateContainer(key)"
-                                        ng-src="{{ value.image }}">
+                                    <img class="product-image-to-select" ng-style="((key == selected_container)) && {'border':'1px solid rgba(0,0,0,0.1)', 'border-radius' : '4px'}"
+                                        ng-click="updateContainer(key)" ng-src="{{ value.image }}">
                                 </div>
                             </div>
                         </div>
                         <!--googleon: snippet-->
                         <div class="col-md-6 product-property">
                             <h2 class="product-name-h2-web">
-                                <span itemprop="brand">
+                                <span>
                                     <%= product_brand %>
                                 </span>
-                                <span itemprop="name">
+                                <span>
                                     <%= product_name %>
                                 </span> - Deliver Now</h2>
-                            <% if (product_details.ingredients) {%>
-                                <section class="ingredients-sec">
-                                    <div class="ingredients">
-                                        <h3 class="sub-header">Ingredients:</h3>
-                                        <!-- <ul> -->
-                                        <span itemprop="additionalProperty">
-                                            <%- product_details.ingredients %>
-                                        </span>
-                                        <!-- </ul> -->
-                                    </div>
-                                </section>
-                                <% } %>
+                            <%- product_image %>
+                                <%- ingredients %>
                                     <section layout="column" class="section-box">
                                         <!--googleoff: snippet-->
                                         <div layout="row" class="size-section">
@@ -124,102 +114,49 @@
                                                 <span class="product-details-container">{{ selected_container}}</span>
                                             </li>
                                             <!--googleon: snippet-->
-                                            <% if (store_web) {%>
+                                            <%- store_type_display_name %>
                                                 <li>
-                                                    <span class="bold">Sold By:</span>
-                                                    <a href="<%= store_web %>" target="_blank" itemprop="description">
-                                                        <%= store_type_display_name %>
-                                                    </a>
+                                                    <span class="bold">Location:</span>
+                                                    <span itemprop="additionalProperty">Calgary, AB</span>
                                                 </li>
-                                                <% } %>
-                                                    <li>
-                                                        <span class="bold">Location:</span>
-                                                        <span itemprop="description">Calgary, AB</span>
-                                                    </li>
-                                                    <% if (product_type) {%>
-                                                        <li>
-                                                            <span class="bold">Type:</span>
-                                                            <span itemprop="additionalType">
-                                                                <%= product_type %>
-                                                            </span>
-                                                        </li>
-                                                        <% } %>
-                                                            <% if (product_details.country_of_origin) {%>
+                                                <%- product_type %>
+                                                    <%- country_of_origin %>
+                                                        <%- producer %>
+                                                            <%- alcohol_content %>
                                                                 <li>
-                                                                    <span class="bold">Country of Origin:</span>
-                                                                    <span itemprop="description">
-                                                                        <%= product_details.country_of_origin %>
-                                                                    </span>
+                                                                    <a href="<%= see_more_url %>" target="_self" itemprop="isSimilarTo">See More Products</a>
                                                                 </li>
-                                                                <% } %>
-                                                                    <%if (product_details.producer != "NULL" && product_details.producer) { %>
-                                                                        <li>
-                                                                            <span class="bold">Made by:</span>
-                                                                            <span itemprop="manufacturer">
-                                                                                <%= product_details.producer %>
-                                                                            </span>
-                                                                        </li>
-                                                                        <% } %>
-                                                                            <%if (product_details.alcohol_content) { %>
-                                                                                <li>
-                                                                                    <span class="bold">Alcohol/Vol:</span>
-                                                                                    <span itemprop="description">
-                                                                                        <%= product_details.alcohol_content %>
-                                                                                    </span>
-                                                                                </li>
-                                                                                <% } %>
-                                                                                    <li>
-                                                                                        <a href="<%= see_more_url %>" target="_self">See More Products</a>
-                                                                                    </li>
                                         </ul>
                                     </div>
                         </div>
                     </section>
                 </div>
-                <% if (product_details.preview) {%>
-                    <section class="preview-sec">
-                        <div class="description">
-                            <h3 class="sub-header">Product Description:</h3>
-                            <p itemprop="description">
-                                <%- product_details.preview %>
-                            </p>
-                        </div>
-                    </section>
-                    <% } %>
-                        <% if (product_details.serving_suggestions) {%>
-                            <section class="preview-sec">
-                                <div class="description">
-                                    <h3 class="sub-header">Serving Sugestions:</h3>
-                                    <p itemprop="description">
-                                        <%- product_details.serving_suggestions %>
-                                    </p>
+                <%- preview %>
+                    <%- serving_suggestions %>
+                        <div class="recomended-products">
+                            <!--googleoff: snippet-->
+                            <section layout="row" class="recomended-products-header">
+                                <div class="recomended-products-header-line"></div>
+                                <div class="recomended-products-header-text">People also Homit</div>
+                            </section>
+                            <section class="recomended-item">
+                                <div class="recomended-item-div">
+                                    <div ng-repeat="item in recommended_products">
+                                        <ul ng-click="hrefTo(item.url)">
+                                            <li class="also-image-li">
+                                                <img ng-src="{{item.image}}">
+                                            </li>
+                                            <li class="recomended-item-text">{{ item.packaging + " X " + item.size }}</li>
+                                            <li class="recomended-item-text">C${{ item.price }}</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </section>
-                            <% } %>
-                                <div class="recomended-products">
-                                    <!--googleoff: snippet-->
-                                    <section layout="row" class="recomended-products-header">
-                                        <div class="recomended-products-header-line"></div>
-                                        <div class="recomended-products-header-text">People also Homit</div>
-                                    </section>
-                                    <section class="recomended-item">
-                                        <div class="recomended-item-div">
-                                            <div ng-repeat="item in recommended_products">
-                                                <ul ng-click="hrefTo(item.url)">
-                                                    <li class="also-image-li">
-                                                        <img ng-src="{{item.image}}">
-                                                    </li>
-                                                    <li class="recomended-item-text">{{ item.packaging + " X " + item.size }}</li>
-                                                    <li class="recomended-item-text">C${{ item.price }}</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section layout="row" class="recomended-products-footer">
-                                        <div class="recomended-products-header-line"></div>
-                                    </section>
-                                    <!--googleoff: snippet-->
-                                </div>
+                            <section layout="row" class="recomended-products-footer">
+                                <div class="recomended-products-header-line"></div>
+                            </section>
+                            <!--googleoff: snippet-->
+                        </div>
             </div>
 
         </div>
