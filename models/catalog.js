@@ -573,6 +573,7 @@ pub.getProductsByListingId = async function (listingId, isStoreOpen) {
         JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
         
         WHERE ?
+        AND store_type.available = true
         
         ORDER BY listing_id, product_id, item_id, depot_id`;
 
