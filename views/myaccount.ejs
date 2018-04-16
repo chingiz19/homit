@@ -133,7 +133,7 @@
                         <div style="display: flex; flex-direction: row;">
                             <md-input-container class="md-block container-margin" flex="50">
                                 <label>Name</label>
-                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="!editEnabled" ng-model="card_name" type="text" ng-required="" />
+                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="!editEnabled" ng-model="card_name" type="text" ng-required="" />
                                 <div ng-messages="profile.fname.$error">
                                     <div ng-message="pattern">Letters only</div>
                                     <div ng-message="required">Required</div>
