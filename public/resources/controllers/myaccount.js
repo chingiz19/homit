@@ -142,19 +142,39 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
      */
     $scope.updateProfile = function(valid){
         // Do nothing if nothing was modified
-        if (!checkInputIfModified(selectors_section0) && !valid){
+        if (!checkInputIfModified(selectors_section0) || !valid){
             $scope.editEnabled = false;
+            resetValues();
             return;
         }
 
         // convert mm-dd-yyyy to yyyy-mm-dd
-        var birth_date = $scope.dob.split("-");
-        birth_date = birth_date[2] + '-' + birth_date[0] + '-' + birth_date[1];
-
-        var phone = $scope.phone.replace("(","");
-        phone = phone.replace(")", "");
-        phone = phone.replace(" ", "");
-        phone = phone.replace("-", "");
+        var birth_date = "remove";
+        try{
+            if ($scope.dob && $scope.dob != ""){
+                birth_date = $scope.dob.split("-");
+                birth_date = birth_date[2] + '-' + birth_date[0] + '-' + birth_date[1];
+            } else {
+                birth_date = "remove";
+            }
+        } catch(e){
+            // nothing to do, won't send to backend
+            birth_date = undefined;
+        }
+        var phone;
+        try{
+            if ($scope.phone && $scope.phone != ""){
+                phone = $scope.phone.replace("(","");
+                phone = phone.replace(")", "");
+                phone = phone.replace(" ", "");
+                phone = phone.replace("-", "");
+            } else {
+                phone = "remove";
+            }
+        } catch(e){
+            // nothing to do, won't send to backend
+            phone = undefined;
+        }
 
         user.update({
             first_name: $scope.fname,
@@ -317,6 +337,19 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
         }, function(error){
             $scope.orderSectionText = "Something went wrong while retrieving orders, please refresh the page";
         });
+    }
+
+    /**
+     * Resets user data
+     */
+    function resetValues(){
+        $scope.fname = $scope.user.first_name;
+        $scope.lname = $scope.user.last_name;
+        $scope.email = $scope.user.user_email;
+        $scope.phone = $scope.user.phone_number;
+
+        $scope.dob = $scope.user.dob;
+        $scope.card = $scope.user.card;
     }
 
     // Initialize at the end of file!

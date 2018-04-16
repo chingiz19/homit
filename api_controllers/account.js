@@ -16,8 +16,21 @@ router.post('/update', Auth.validate(), async function (req, res, next) {
         return errorMessages.sendGenericError(res);        
     }
 
-    var allValidParams = ["user_email", "first_name", "last_name", "phone_number", "birth_date", "address"];
-    if (!req.body.user || HelperUtils.hasInvalidParams(req.body.user, allValidParams)){
+    var allValidParams = {
+        "user_email": {}, 
+        "first_name": {}, 
+        "last_name": {}, 
+        "phone_number": {
+            isRemovable: true
+        }, 
+        "birth_date": {
+            isRemovable: true
+        }, 
+        "address": {
+            isRemovable: true
+    }};
+    req.body.user = HelperUtils.validateParams(req.body.user, allValidParams);
+    if (!req.body.user){
         return errorMessages.sendMissingParams(res);
     }
     
