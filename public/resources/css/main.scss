@@ -84,8 +84,6 @@ body{
     background-image: url('/resources/images/non-catalog-image/homit_hub/homit-hub-cover.png');
     min-height: 100vh;
     display: flex; flex-direction: column; 
-    // justify-content: space-around; 
-    // padding-bottom: 50px;
 }
 
 .predictions-container{
@@ -104,7 +102,9 @@ body{
 
 .covergae-map-box{
     display: flex; justify-content: center;
-    width: 716px; height: 0px; 
+    width: calc(100% - 14px); 
+    height: 0px; 
+    border-radius: 0 0 2px 2px;
     background-color: white; 
     text-align: center; 
 }
@@ -311,12 +311,13 @@ body{
 .store-name{
     position: absolute; 
     left: -1px;
-    bottom: 5px; 
+    bottom: -1px; 
     width: calc(100% + 2px);
     height: 40px; 
     font-size: 20px; 
     background-color: rgba(42,81,145,1); 
     border: 1px solid rgba(42,81,145,1); 
+    border-radius: 0 0 5px 5px;
     color: rgba(255,255,255,1); 
     box-shadow: none;
     transition: background-color 0.3s;
@@ -580,6 +581,9 @@ body{
         font-size: 14px;
         text-align: center;
     }
+    .step-desc-2{
+        display: none;
+    }
 }
 
 @media screen and (max-device-width: 359px){
@@ -628,6 +632,10 @@ body{
         margin-right: 5px;
     }
 
+    .step-desc-2{
+        display: none;
+    }
+
 }
 
 //Out of Coverage grow box
@@ -641,10 +649,10 @@ body{
 }
 
 .address-box-grow-mob{
-    height: 600px;
+    height: 400px;
     transition: all 0.3s ease-in;
 }
 .covergae-map-box-grow-mob{
-    height: 480px;
+    height: 340px;
     transition: all 0.3s ease-in;
 }

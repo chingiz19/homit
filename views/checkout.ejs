@@ -62,10 +62,10 @@
                     <div class="input-center">
                         <md-input-container class="md-block no-mar-bottom" flex="80">
                             <label for="idCell" class="input-label">Phone</label>
-                            <input id="gP_number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" placeholder="(403) 404-6648" required/>
+                            <input id="gP_number" name="phone" minlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" placeholder="(403) 404-6648" required/>
                             <div ng-messages="checkoutInput.phone.$error">
                                 <div ng-message="pattern" class="error-message-txt">Numbers only</div>
-                                <div ng-message="minlength" class="error-message-txt">Required</div>
+                                <div ng-message="minlength" class="error-message-txt">Phone format only</div>
                             </div>
                         </md-input-container>
                     </div>

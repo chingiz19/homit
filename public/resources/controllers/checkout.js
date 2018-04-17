@@ -36,10 +36,12 @@ app.controller("checkoutController",
 
             // Check for user, if logged in populate 
             user.user().then(function(res){
+                let hasLiquor = $scope.userInfo.hasLiquor;
                 if (res.data.success){
                     $scope.userInfo = res.data.user;
                     $scope.userSignedIn = true;
                 }
+                $scope.userInfo.hasLiquor = hasLiquor;
             }, function(err){
                 // Nothing to do
             });
@@ -393,6 +395,7 @@ app.controller("checkoutController",
                 $scope.userCart = {};
                 $scope.clearCart();
                 $scope.delFee = 0;
+                sessionStorage.setAddress("");
                 sessionStorage.setAddressUnitNumber("");
                 $window.location.href = $window.location.origin + "/main";
             } else {
