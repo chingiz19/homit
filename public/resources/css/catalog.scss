@@ -139,7 +139,7 @@ body {
     top: -1px;
     left: -1px;
     width: 285px;
-    height: 100%;
+    height: calc(100% + 2px);
     min-height: 580px;
     background-color: white;
     border: lightgray solid 1px;
@@ -318,11 +318,14 @@ body {
 }
 
 .item-brand {
+    position: relative;
+    left: -11px;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 50px;
-    max-width: 240px;
+    // max-width: 240px;
+    width: 270px;
 }
 
 .item-brand div {
@@ -570,7 +573,7 @@ md-radio-button .md-label {
     .nav-mob-content {
         position: relative;
         top: 20px;
-        padding-bottom: 20px;
+        padding-bottom: 80px;
     }
 
     .str-ul {
@@ -757,12 +760,13 @@ md-radio-button .md-label {
     }
 
     .item-brand {
-        max-width: 150px;
+        width: 166px;
+        left: 2px;
     }
 
     .item-brand span {
         padding-left: 20px;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 500;
     }
 

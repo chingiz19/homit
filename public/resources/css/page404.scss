@@ -11,9 +11,10 @@ h1 {
 
 .image-404{
     position: absolute; 
-    top: 160px;
+    bottom: 133px;
     width: 100%; 
     display: flex; justify-content: center; 
+    padding-right: 22vw;
     z-index: 1;
 }
 
@@ -21,9 +22,18 @@ md-toolbar{
     background-color: rgba(42,81,145, 0.85) !important;
 }
 
-@media (min-device-width: 601px){
+/* start of phone styles */
+@media screen and (max-device-width: 479px) {
     .homit-header-bigscreen{
         border-bottom: 1px solid rgba(42,81,145,1);
         box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
     }
+    .image-404{
+        bottom: 118px;
+        padding-right: 0;
+    }
+    .image-404 img{
+        width: 100vw; height: 60vw;
+    }
+    
 }

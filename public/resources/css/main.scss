@@ -74,6 +74,7 @@ body{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    overflow-y: hidden;
 }
 .address-section{
     background-image: url('/resources/images/non-catalog-image/pages/calgary.jpg');
@@ -151,6 +152,7 @@ body{
 
 #homit-order-steps{
     background-color: white;
+    overflow-y: hidden;
 }
 .order-steps-section{
     display: flex; flex-direction: row; 
@@ -256,7 +258,11 @@ body{
     outline: none;
     background-color: rgba(250,250,250,1);
     box-shadow: 0 0px 5px 2px rgba(255,255,255,0.5);
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+}
+.store-window:hover{
+    box-shadow: 0 0px 4px 6px rgba(205,205,205,0.8);
+    transition: all 0.3s;
 }
 .store-background-image{
     background-color: rgba(255,255,255,0.4);
@@ -269,9 +275,8 @@ body{
     outline: 0;
 }
 .store-background-image{
-    height: calc(100% - 2px);
-    width: calc(100% - 2px);
-    margin: 1px;
+    height: 220px; width: 220px;
+    margin: calc((100% - 220px)/2);
     position: absolute;
     background-size: cover; 
     background-position: center;
@@ -289,7 +294,7 @@ body{
     background-image: url('/resources/images/non-catalog-image/homit_hub/liquor-station_icon.png'); 
 }
 .store-window a:hover{
-    color: rgba(0,0,0,1);
+    color: white;
 }
 .store-window h3{
     position: relative;
@@ -303,16 +308,16 @@ body{
     display: flex; align-items: center;
     justify-content: center;
 }
-.store-window button{
+.store-name{
     position: absolute; 
-    bottom: 10px; 
-    width: 220px;
+    left: -1px;
+    bottom: 5px; 
+    width: calc(100% + 2px);
     height: 40px; 
-    margin-left: 15px;
-    font-size: 20px !important; font-weight: 500; 
+    font-size: 20px; 
     background-color: rgba(42,81,145,1); 
-    border: 1px solid rgba(42,81,145,1); border-radius: 3px; 
-    color: rgba(255,255,255,1); text-transform: uppercase; 
+    border: 1px solid rgba(42,81,145,1); 
+    color: rgba(255,255,255,1); 
     box-shadow: none;
     transition: background-color 0.3s;
 }
@@ -437,6 +442,14 @@ body{
         height: 240px; width: 200px; 
         transition: all 0.3s ease-in;
     }
+    .store-background-image{
+        height: 180px;
+        width: 180px;
+        margin: calc((100% - 180px)/2);
+    }
+    .store-name{
+        font-size: 17px;
+    }
     .store-window h3{
         margin-top: 0px;
         font-size: 18px;
@@ -458,8 +471,16 @@ body{
         min-width: 400px;
     }
     .store-window{
-        height: 180px; width: 150px; 
+        height: 220px; width: 180px; 
         transition: all 0.3s ease-in;
+    }
+    .store-background-image{
+        height: 160px;
+        width: 160px;
+        margin: calc((100% - 160px)/2);
+    }
+    .store-name{
+        font-size: 16px;
     }
     .store-window h3{
         font-size: 14px;
@@ -545,6 +566,20 @@ body{
     .logIn-btn{
         margin-right: 5px;
     }
+    
+    .store-window{
+        height: 180px; width: 140px; 
+        transition: all 0.3s ease-in;
+    }
+    .store-background-image{
+        height: 120px;
+        width: 120px;
+        margin: calc((100% - 120px)/2);
+    }
+    .store-name{
+        font-size: 14px;
+        text-align: center;
+    }
 }
 
 @media screen and (max-device-width: 359px){
@@ -574,18 +609,21 @@ body{
         height: 140px; width: 110px; 
         transition: all 0.3s ease-in;
     }
-    .store-window button{
-        bottom: 3px; 
-        width: 100px;
-        height: 20px; 
-        margin-left: 5px;
-        font-size: 12px !important;
+    
+    .store-window{
+        height: 170px; width: 150px; 
         transition: all 0.3s ease-in;
     }
-    .store-window h3{
-        margin-top: 7px;
-        font-size: 10px;
+    .store-background-image{
+        height: 110px;
+        width: 110px;
+        margin: calc((100% - 110px)/2);
     }
+    .store-name{
+        font-size: 14px;
+        text-align: center;
+    }
+
     .logIn-btn{
         margin-right: 5px;
     }

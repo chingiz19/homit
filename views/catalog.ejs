@@ -84,11 +84,13 @@
                 <section id="category-box" class="cat-section-absolute cat-section">
                     <div class="cat-section-header section-header box-center" ng-click="filterCategories()">{{ '
                         <%= selectedCategory %> '}}</div>
-                    <md-radio-group ng-model="SubcategoryName">
-                        <md-radio-button class="cat-body-cat" id="radio_{{$index}}" ng-repeat="variant in subcategories | orderBy" ng-value="variant" ng-click="checkSubcategories(variant)">
-                            <span>{{ variant }}</span>
-                        </md-radio-button>
-                    </md-radio-group>
+                    <div style="max-height: calc(100vh - 200px); overflow-y: scroll;">
+                        <md-radio-group ng-model="SubcategoryName">
+                            <md-radio-button class="cat-body-cat" id="radio_{{$index}}" ng-repeat="variant in subcategories | orderBy" ng-value="variant" ng-click="checkSubcategories(variant)">
+                                <span>{{ variant }}</span>
+                            </md-radio-button>
+                        </md-radio-group>
+                    </div>
                     <!--Category Box start-->
                     <button id="category-button" ng-click="filterCategories()" class="filter-cat-btn">
                         <ng-md-icon id="show_cat_icon" icon="flip"></ng-md-icon>
