@@ -9,6 +9,7 @@
 }
 
 .flex-column {
+    margin-top: 35px;
     display: flex;
     flex-direction: column;
 }
@@ -56,6 +57,7 @@ label{
 }
 
 .divider {
+    width: calc(100% - 20px);
     margin: 10px;
     border: 1px solid black;
 }
@@ -93,15 +95,7 @@ label{
     }
 
     .close-button{
-        @media only screen and (min-width: 1000px){
-            display: none;    
-        }
-
-        @media only screen and (max-width: 1000px){
-            display: flex;
-            flex: 1 1 100%;
-            align-self: flex-end;
-        }
+        display: none;    
     }
 
     .vertical-lists{
@@ -141,13 +135,11 @@ main {
     flex-direction: column;
     flex: 1 1 70%;
     margin: 50px 0 0 0;
-    @media only screen and (max-width: 1000px){
-        flex: 1 100%;            
-    }
     justify-content: flex-start;
 
     section {
-        margin: 100px auto;
+        position: relative;
+        margin: 100px auto auto auto;
         width: 100%;
         display: flex;
         flex: 1 1 auto;
@@ -168,12 +160,66 @@ main {
         }
     }
 
+    .form-profile, .form-card, .form-password{
+        margin-bottom: 5px;
+    }
+
     .configButton {
-        width: 50px;
-        height: 40px;
+        color: white;
+        letter-spacing: 0.02em;
+        font-size: 16px;
+        border-radius: 5px;
         position: relative;
         align-self: flex-end;
+        border-style: none;
+        transition: background-color 0.3s ease;
     }
+
+    .edtitButton{
+        position: absolute;
+        top: 15px;
+        height: 30px;
+        width: 70px;
+        background-color: rgb(163, 163, 163);
+    }
+
+    .cancelButton{
+        height: 30px;
+        width: 100%;
+        background-color: rgb(163, 163, 163);
+    }
+
+    .updateButton{
+        align-self: flex-start;
+        height: 30px;
+        width: 70px;
+        background-color: rgba(0, 189, 149, 1);
+    }
+
+    .edtitButton:hover, .cancelButton:hover{
+        background-color: rgb(108, 108, 108);
+        box-shadow: 0 0px 3px 1px rgba(70,70,70,0.4);
+        transition: all 0.3s ease;
+    }
+
+    .updateButton:hover{
+        background-color: rgb(11, 163, 130);
+        box-shadow: 0 0px 3px 1px rgba(70,70,70,0.4);
+        transition: all 0.3s ease;
+    }
+
+    .margin-btom-5{
+        margin-bottom: 5px;
+    }
+
+    .margin-top-5{
+        margin-top: 5px;
+    }
+
+    .margin-top-40{
+        margin-top: 40px;
+    }
+
 }
 
 .address-input{
@@ -189,6 +235,12 @@ main {
     overflow-y: hidden;
     outline-width: 0;
 }
+
+.address-input-container{
+    max-height: 300px !important;
+    height: 300px !important;
+}
+
 .predictions-container{
     width: calc(100% - 4px);
 }
@@ -212,13 +264,32 @@ main {
     padding-left: 20px !important;
 }
 
+.view-link{
+    color: rgb(0, 149, 207); width: 43px;
+}
+
+.p-order{
+    padding-left: 10px; 
+}
+.p-order span{
+    font-weight: 600; width: auto;
+}
+
+.order-content{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .order{
+    width: 90%; 
+    margin: auto auto 10px auto; 
     border: 1px solid black;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
-    margin: 5px 0 5px 0;
+    margin: 5px auto;
 
     display: flex;
     flex: 1 1 100%;
@@ -228,9 +299,13 @@ main {
     .header{
         display: flex;
         width: 100%;
+        padding: 3px;
         flex-direction: row;
         justify-content: space-around;
         align-content: center;
+        border-bottom: 1px solid grey;
+        transition: background-color 0.3s;
+        border-radius: 4px 4px 0 0 ;
 
         h3{
             display: flex;
@@ -238,9 +313,18 @@ main {
         }
     }
 
+    .header:focus , .burger-menu:focus{
+        outline:0;
+    }
+
+    .header:hover{
+        background-color: rgba(240,240,240,1);
+        transition: background-color 0.3s;
+    }
+
     .order-items{
         display: flex;
-        width: 100%;
+        width: 50%;
         flex-direction: column;
 
         .item{
@@ -254,4 +338,130 @@ main {
             }
         }
     }
+}
+
+@media screen and (max-device-width: 479px) {
+
+    h1{
+        width: 60%;
+        font-size: 24px;
+    }
+
+    main{
+        margin: 50px 0 0 0;
+        width: calc(100% - 30px);
+    }
+
+    main section{
+        margin: 50px 0 0 0;
+        min-height: calc(100vh - 50px);
+    }
+
+    main section span{
+        width: 70%;
+    }
+
+    .cancelButton{
+        height: 35px !important;
+    }
+
+    .updateButton{
+        height: 35px !important;
+        width: 90px !important;
+    }
+
+    .back-drop{
+        position: absolute;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background-color: rgba(33,33,33,1.0);
+        opacity: 0.48;
+        z-index: 90;
+    }
+
+    .sidebar-default{
+        position: fixed;
+        top: 0;
+        height: 100vh;
+        width: 290px;
+        background-color: rgba(250,250,250,1);
+        z-index: 100;
+    }
+
+    .section-header span{
+        width: 40%;
+        font-size: 18px;
+        color: rgba(0,0,0,0.6);
+    }
+
+    .close-button{
+        height: 35px;
+        width: 290px;
+        color: rgb(39, 9, 9);
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: 600;
+        display: flex !important;
+        align-items: flex-end;
+        justify-content: flex-end;
+        border-bottom: 2px solid;
+    }
+
+    .close-button span{
+        padding-right: 5px;
+    }
+
+    .vertical-lists{
+
+        position: relative;
+        top: 10%;
+        margin: 0;
+        padding: 0;
+
+        li{
+            font-size: 16px;
+            padding: 10px;
+            margin: 0 0 5px 0;
+            outline: none;
+            border-radius: 5px;
+            
+
+            &.selected, &:hover.selected {
+                background-color: $purple;
+                color: white;                   
+            }
+
+            &:hover{
+                font-size: 16px;
+                padding: 10px;
+                background-color: transparent !important;
+            }
+        }
+    }
+    .predictions-container{
+        width: calc(100% - 4px) !important;
+    }
+    .address-input{
+        width: 100% !important;
+    }
+
+    .order{
+        width: 100%;        
+    }
+
+    .item{
+        margin: 5px 0;
+    }
+
+    .item img{
+        width: 60px; height: 60px;
+    }
+    .divider{
+        width: calc(100% - 20px);
+    }
+
+    .cad-name{
+        max-width: 100% !important;
+    }
+    
 }

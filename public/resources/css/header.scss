@@ -43,6 +43,10 @@ nav {
     justify-content: space-between;
 }
 
+#hdrMyAcc2 ul{
+    list-style-type: none;
+}
+
 .logo-img {
     width: 108px;
     height: 33px;
@@ -588,5 +592,8 @@ h3 {
         width: 90%;
         line-height: 1px;
         border-bottom: 1px solid rgba(105, 103, 103, 0.15);
+    }
+    .user-signed-btn{
+        padding: 0 7px;
     }
 }

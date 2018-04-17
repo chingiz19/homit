@@ -295,6 +295,7 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
      */
     $scope.openSidebar = function(){
         $(".sidebar-default").removeClass("hidden");
+        $(".back-drop").removeClass("hidden");
     };
 
     /**
@@ -304,6 +305,7 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
         var el = $(".sidebar-default");
         if (el.css("display") != "flex"){
             el.addClass("hidden");
+            $(".back-drop").addClass("hidden");
         }
     };
 
