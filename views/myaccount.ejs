@@ -4,7 +4,7 @@
     <%- include('partial/imports')%>
     <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/myaccount.css" rel="stylesheet">
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
 </head>
 
 <body class="flex-row flex-space-between flex-100 container" ng-controller="myaccountController" ng-cloak>
@@ -110,7 +110,7 @@
                         </div>
                         <div ng-if="withinCoverage == false" class="outPlgn_txt">Sorry, we do not deliver to your location at the moment</div>
                     </md-input-container>
-                    <button class="configButton updateButton margin-btom-5" ng-show="editEnabled" ng-click="updateDeliveryAddress(withinCoverage)">Update</button>
+                    <button class="configButton updateButton margin-btom-5" ng-show="editEnabled" ng-click="updateDeliveryAddress()">Update</button>
                     <button class="configButton cancelButton" ng-show="editEnabled" ng-click="resetDeliveryAddressSection();">Cancel</button>
                 </span>
             </div>
@@ -224,8 +224,8 @@
             <div class="flex-column flex-100">
                 <div ng-show="!orders || orders.length == 0" ng-bind="orderSectionText"></div>
                 <div ng-show="orders" ng-repeat="order in orders">
-                    <div class="order">
-                        <span class="header" ng-click="order.showDetails = !order.showDetails">
+                    <div class="order" ng-click="order.showDetails = !order.showDetails">
+                        <span class="header">
                             <h3 class="flex-center"><span class="view-link">View</span> Order #{{order.id}}</h3>
                             <span class="flex-center">|</span>
                             <h3 class="flex-center" ng-bind="order.date_delivered"></h3>

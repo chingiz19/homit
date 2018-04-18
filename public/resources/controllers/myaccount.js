@@ -1,4 +1,4 @@
-app.controller("myaccountController", function ($scope, $window, sessionStorage, user, notification) {
+app.controller("myaccountController", function ($scope, $window, $timeout, sessionStorage, user, notification, googleAnalytics, mapServices) {
 
     var confirmMessage = "Changes will be lost. Would you like to proceed?";
 
@@ -40,6 +40,7 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
                 $scope.lname = res.data.user.last_name;
                 $scope.email = res.data.user.user_email;
                 $scope.phone = res.data.user.phone_number;
+                $scope.autocomplete.setText(res.data.user.address);
 
                 $scope.dob = res.data.user.dob;
                 $scope.card = res.data.user.card;
@@ -59,6 +60,19 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
             hidePostalCode: false
         });
         $scope.cardElement.mount("#card");
+
+        $timeout(function () {
+            mapServices.createCoveragePolygon().then(function (polygon) {
+                if (polygon) {
+                    $scope.coveragePolygon = polygon;
+                    //TODO: change to dynamic
+                    $scope.bounds = new google.maps.LatLngBounds({ lat: 50.862122, lng: -114.173317 }, { lat: 51.172396, lng: -113.925171 });
+                    //Checks if address within coverage area
+                    var latLng = $scope.autocomplete.getLatLng();
+                    $scope.withinCoverage = mapServices.isPlaceInsidePolygon(latLng, polygon);
+                }
+            });
+        }, 500);
 
         jQuery(function ($) {
             $("#phone-number").mask("(999) 999-9999");
@@ -182,23 +196,27 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
             user_email: $scope.email,
             phone_number: phone,
             birth_date: birth_date
-        }).then(function success(res){
-            if (res.data.success){
-                notification.addSuccessMessage("Updated");
-                $window.location.reload();
-            } else {
-                notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
-            }
-        }, function error(err){
-            notification.addErrorMessage("Something went wrong while updating, please try again later");
-        });
+        }).then(defaultSuccessCallback, defaultErrorCallback);
     };
 
     /**
      * Called to update user delivery address
      */
-    $scope.updateDeliveryAddress = function(valid){
-        if(!valid) return;
+    $scope.updateDeliveryAddress = function(){
+        if(!$scope.withinCoverage && $scope.address && $scope.address != "") {
+            notification.addErrorMessage("Not within coverage");
+            return;
+        }
+
+        var addr;
+        if (!$scope.address || $scope.address == ""){
+            addr = "remove";
+        } else {
+            addr = $scope.address;
+        }
+        user.update({
+            address: addr
+        }).then(defaultSuccessCallback, defaultErrorCallback);
     };
 
     /**
@@ -216,16 +234,7 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
                 return;
             }
 
-            user.updateCardInfo(result.token.id).then(function success(res){
-                if (res.data.success){
-                    notification.addSuccessMessage("Updated");
-                    $window.location.reload();
-                } else {
-                    notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
-                }
-            }, function(err){
-                notification.addErrorMessage("Something went wrong while updating, please try again later");
-            });
+            user.updateCardInfo(result.token.id).then(defaultSuccessCallback, defaultErrorCallback);
         });
     };
 
@@ -234,17 +243,8 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
      */
     $scope.updateSecuritySettings = function(valid){
         if(!valid) return;
-
-        user.updatePassword($scope.security_set.current_pass.$modelValue, $scope.security_set.new_pass.$modelValue).then(function success(res){
-            if(res.data.success){
-                notification.addSuccessMessage("Updated");
-                $window.location.reload();
-            } else {
-                notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
-            }
-        }, function(error){
-            notification.addErrorMessage("Something went wrong while updating, please try again later");
-        });
+        user.updatePassword($scope.security_set.current_pass.$modelValue, $scope.security_set.new_pass.$modelValue)
+            .then(defaultSuccessCallback, defaultErrorCallback);
     };
 
     /**
@@ -309,6 +309,21 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
         }
     };
 
+    $scope.gotAddressResults = function () {
+        var latLng = $scope.autocomplete.getLatLng();
+        var place = $scope.autocomplete.getPlace();
+        if (mapServices.isPlaceInsidePolygon(latLng, $scope.coveragePolygon)) {
+            $scope.address = $scope.autocomplete.getText();
+            $scope.withinCoverage = true;
+        } else {
+            $scope.withinCoverage = false;
+            googleAnalytics.addEvent('out_of_coverage', {
+                "event_label": place.formatted_address,
+                "event_category": googleAnalytics.eventCategories.address_actions
+            });
+        }
+    };
+
     /**
      * Resets selector modified flag
      */
@@ -354,6 +369,25 @@ app.controller("myaccountController", function ($scope, $window, sessionStorage,
         $scope.card = $scope.user.card;
     }
 
+    /**
+     * Returns default response handler that notifies of operation success
+     */
+    function defaultSuccessCallback(res){
+        if (res.data.success){
+            notification.addSuccessMessage("Updated");
+            $window.location.reload();
+        } else {
+            notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
+        }
+    }   
+
+    /**
+     * Returns default response handler that notifies of operation error 
+     */
+    function defaultErrorCallback(err){
+        notification.addErrorMessage("Something went wrong while updating, please try again later");
+    }
+    
     // Initialize at the end of file!
     $scope.init();
 });

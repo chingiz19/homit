@@ -65,6 +65,13 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
         return privScopeAccess._searchedAddress;
     };
 
+    /**
+     * Returns text inside input element
+     */
+    publicFunctions.setText = function (text) {
+        privScopeAccess._searchedAddress = text;
+    };
+
     return {
         restrict: "E", // restrict to element
         scope: {

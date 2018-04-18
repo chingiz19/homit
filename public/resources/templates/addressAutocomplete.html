@@ -107,7 +107,7 @@
     <div id="placesServiceNode" style="display: none;"></div>
     
     <input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-disabled="inputDisabled" placeholder="Delivery Address" type="text" class="{{inputClass}}" autocomplete="off" autocorrect="off" spellcheck="false" required>
-    <md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0; ">
+    <md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0; " ng-hide="inputDisabled">
         <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
     </md-button>
     
