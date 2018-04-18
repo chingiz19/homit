@@ -333,15 +333,15 @@ pub.searchProducts = async function (searchText, limit) {
         FROM ( 
             SELECT DISTINCT ` + sqlSelect
         + ` ` + sqlFrom + ` ` + sqlWhere
-        + ` listing.brand LIKE '` + searchText + `%' OR listing.name LIKE '` + searchText + `%'
-            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '` + searchText + `%'`
+        + ` (listing.brand LIKE '` + searchText + `%' OR listing.name LIKE '` + searchText + `%'
+            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '` + searchText + `%')`
 
         + ` UNION ` +
 
         `SELECT DISTINCT ` + sqlSelect
         + ` ` + sqlFrom + ` ` + sqlWhere
-        + ` listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
-            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '%` + searchText + `%'`
+        + ` (listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
+            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '%` + searchText + `%')`
 
         + ` UNION ` +
 
