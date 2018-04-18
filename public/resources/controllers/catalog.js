@@ -115,6 +115,12 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     $scope.hrefPrdPage = function (product) {
         var path;
         path = "/catalog/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + product.listing_id;
+        
+        googleAnalytics.addEvent('product_clicked', {
+            "event_label": product.brand + " " + product.name,
+            "event_category": googleAnalytics.eventCategories.catalog_actions
+        });
+
         $window.location.href = $window.location.origin + _.toLower(clearProductUrl(path));
     };
 
