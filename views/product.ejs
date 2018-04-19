@@ -14,7 +14,7 @@
             <div class="product-content" itemscope itemtype="http://schema.org/Product">
                 <input id="recommendedProducts" class="none" value="<%= recommended_products %>">
                 <input id="product" class="none" value="<%= product %>">
-                <input id="default_container" class="none" value="<%= default_container %>">
+                <input id="product-images" class="none" value="<%= product_images %>">
                 <h2 class="product-name-h2-mob">
                     <span itemprop="name">
                         <%= product_brand %>
@@ -26,15 +26,15 @@
                     <section>
                         <!--googleoff: snippet-->
                         <div class="col-md-6 product-img product-image" layout="column">
-                            <img class="product-image-selected" ng-src="{{ container_info.image }}">
+                            <img class="product-image-selected" ng-src="{{ selectedImage }}">
                             <div class="store-colosed-image" ng-if="!product.store_open">
                                 <img ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
                             </div>
                             <div class="product-image-line"></div>
                             <div layout="row">
-                                <div ng-repeat="(key, value) in product.products" class="product-img-list">
-                                    <img class="product-image-to-select" ng-style="((key == selected_container)) && {'border':'1px solid rgba(0,0,0,0.1)', 'border-radius' : '4px'}"
-                                        ng-click="updateContainer(key)" ng-src="{{ value.image }}">
+                                <div ng-repeat="image in productImages" class="product-img-list">
+                                    <img class="product-image-to-select" ng-style="(image == selectedImage) && {'border':'1px solid rgba(0,0,0,0.1)', 'border-radius' : '4px'}"
+                                        ng-click="selectImage(image)" ng-src="{{ image }}">
                                 </div>
                             </div>
                         </div>
@@ -53,54 +53,47 @@
                                         <!--googleoff: snippet-->
                                         <div layout="row" class="size-section">
                                             <div class="size-buttons" layout="row">
-                                                <button class="size-button-left" ng-click="volumeLeft(product.products[selected_container])">
+                                                <button class="size-button-left" ng-click="volumeLeft(product)">
                                                     <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
                                                 </button>
-                                                <button class="size-button-right" ng-click="volumeRight(product.products[selected_container])">
+                                                <button class="size-button-right" ng-click="volumeRight(product)">
                                                     <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
                                                 </button>
                                             </div>
                                             <ul layout="row">
                                                 <li class="size-box-left text-verflow">
-                                                    {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume
-                                                    - 1] }}
+                                                    {{ product.product_variants.all_volumes[product.product_variants.selectedVolume - 1] }}
                                                 </li>
                                                 <li class="size-box-middle">
-                                                    {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]
-                                                    }}
+                                                    {{ product.product_variants.all_volumes[product.product_variants.selectedVolume] }}
                                                 </li>
                                                 <li class="size-box-right text-verflow">
-                                                    {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume
-                                                    + 1] }}
+                                                    {{ product.product_variants.all_volumes[product.product_variants.selectedVolume + 1] }}
                                                 </li>
                                             </ul>
                                         </div>
                                         <div class="size-section" layout="row">
                                             <div class="size-buttons" layout="row">
-                                                <button class="size-button-left" ng-click="packLeft(product.products[selected_container])">
+                                                <button class="size-button-left" ng-click="packLeft(product)">
                                                     <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
                                                 </button>
-                                                <button class="size-button-right" ng-click="packRight(product.products[selected_container])">
+                                                <button class="size-button-right" ng-click="packRight(product)">
                                                     <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
                                                 </button>
                                             </div>
                                             <ul layout="row">
                                                 <li class="size-box-left text-verflow">
-                                                    {{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack
-                                                    -1 ] + ' '}}
+                                                    {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack - 1 ] + ' '}}
                                                 </li>
                                                 <li class="size-box-middle">
-                                                    {{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]
-                                                    }}
+                                                    {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack ] + ' '}}
                                                 </li>
                                                 <li class="size-box-right text-verflow">
-                                                    {{ ' ' + product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack
-                                                    + 1] }}
+                                                    {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack + 1] + ' '}}
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="selected-product-price">C${{' ' + product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]][product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]].price
-                                            }}
+                                        <div class="selected-product-price">C${{' ' + product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]][product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack]].price }}
                                         </div>
                                         <button class="add-to-cart" ng-click="addToCart(product)">Add To Cart</button>
                                     </section>
@@ -108,10 +101,8 @@
                                         <h3 class="product-details-header sub-header">Product Details</h3>
                                         <ul class="bullet-description">
                                             <li>
-                                                <span class="bold">Product:</span> {{ product.products[selected_container].product_variants[product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]].all_packagings[product.products[selected_container].selectedPack]
-                                                }} x {{ product.products[selected_container].product_variants.all_volumes[product.products[selected_container].selectedVolume]
-                                                }}
-                                                <span class="product-details-container">{{ selected_container}}</span>
+                                                <span class="bold">Product:</span> {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack] }} x {{ product.product_variants.all_volumes[product.product_variants.selectedVolume] }}
+                                                <span class="product-details-container">{{ product.product_variants.container }}</span>
                                             </li>
                                             <!--googleon: snippet-->
                                             <%- store_type_display_name %>

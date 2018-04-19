@@ -94,14 +94,6 @@ app.service('sessionStorage', ["$window", function($window){
         return _get("category-clicked");
     };
 
-    var _setProductContainerSelected = function(value){
-        return _set("container-selected", value);
-    };
-
-    var _getProductContainerSelected = function(){
-        return _get("container-selected");
-    };
-
     var _setAddressUnitNumber = function(value){
         return _set("address-unit-number", value);
     };
@@ -137,8 +129,6 @@ app.service('sessionStorage', ["$window", function($window){
         getCoverageMap: _getCoverageMap,
         setCategoryClicked: _setCategoryClicked,
         getCategoryClicked: _getCategoryClicked,
-        setProductContainerSelected: _setProductContainerSelected,
-        getProductContainerSelected: _getProductContainerSelected,
         setAddressUnitNumber: _setAddressUnitNumber,
         getAddressUnitNumber: _getAddressUnitNumber,
         setAccountSection: _setAccountSection,

@@ -874,11 +874,10 @@ var recommended_products = {
     ],
 }
 
+router.get("/product/:storeName/:productName/:productId", async function (req, res, next) {
+    var product = await Catalog.getProductPageItemsByProductId(req.params.storeName,req.params.productId);
 
-router.get("/product/:productName/ls/:listingId", async function (req, res, next) {
-    var product = await Catalog.getProductPageProductsByListingId(req.params.listingId);
-
-    var validationUrl = clearProductUrl("/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + req.params.listingId);
+    var validationUrl = clearProductUrl("/product/" + product.store_type_api_name + "/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/" + product.product_id);
 
     if (!product || validationUrl != req.url) {
         return res.redirect("/notfound");
@@ -887,7 +886,6 @@ router.get("/product/:productName/ls/:listingId", async function (req, res, next
     // Assign variables
     req.options.ejs.product_brand = product.brand;
     req.options.ejs.product_name = product.name;
-    req.options.ejs.default_container = Object.keys(product.products)[0];
 
     if (product.store_type_api_name == "linas-italian-market") {
         req.options.ejs.store_type_display_name = '<li><span class="bold">Sold By: </span><a href="'+ "https://linasmarket.com/" +'" target="_blank" itemprop="additionalProperty">' + _.startCase(product.store_type_display_name, '-', ' ') + '</a></li>';
@@ -937,15 +935,18 @@ router.get("/product/:productName/ls/:listingId", async function (req, res, next
         req.options.ejs.serving_suggestions = "";
     }
     
-    req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="' + Object.values(product.products)[0].image + '">';
-    req.options.ejs.store_type_api_name = product.store_type_api_name;
+    if(!product.images[0].includes("nutritions")){
+        req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="' + product.images[0] + '">';
+    } else{
+        req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="' + product.images[1] + '">';
+    }
+
+    req.options.ejs.product_images = JSON.stringify({"images" : product.images});
     req.options.ejs.recommended_products = JSON.stringify(recommended_products[product.category]);
     req.options.ejs.see_more_url = "https://homit.ca/catalog/" + product.store_type_api_name + "/" + product.category;
 
 
-    if (Object.values(product.products).length > 0) {
-        req.options.ejs.og_image = Object.values(product.products)[0].image;
-    }
+    req.options.ejs.og_image = product.images[0];
 
     req.options.ejs.title = _.trim(product.brand + _.trimEnd(" " + product.name) + " - Delivered to Your Doorstep | Homit");
 
@@ -955,10 +956,9 @@ router.get("/product/:productName/ls/:listingId", async function (req, res, next
         req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. Let us Home It and liberate your precious time.");
     }
 
-    for (key in product.products) {
-        product.products[key].selectedVolume = 0;
-        product.products[key].selectedPack = 0;
-    }
+        product.product_variants.selectedVolume = 0;
+        product.product_variants.selectedPack = 0;
+        product.product_variants.container = product.container;
 
     req.options.ejs.product = JSON.stringify(product);
 
@@ -1004,7 +1004,7 @@ function convertHomitTags(string) {
 
 function clearProductUrl(path){
     var tempPath = path;
-    let characters = ["#", "&", "'"];
+    let characters = ["#", "&", "'", ",", ".", "%"];
     for(let i=0; i<characters.length; i++){
         tempPath = tempPath.replace(characters[i], "");
     }

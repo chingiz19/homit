@@ -508,38 +508,61 @@ pub.getStoreTypeById = async function (typeId) {
 }
 
 /**
- * Get store type by listing id
+ * Get all descriptions for the listing id
  * 
  * @param {*} listingId 
  */
-pub.getStoreTypeByListing = async function (listingId) {
+var getDescriptionsByListingId = async function (listingId) {
     var sqlQuery = `
-        SELECT store_type.name AS store_type
-        FROM catalog_listings AS listing JOIN catalog_products AS product ON(listing.id = product.listing_id)
-        JOIN catalog_items AS item ON(product.id = item.product_id)
-        JOIN catalog_depot AS depot ON(item.id = depot.item_id)
-        JOIN catalog_store_types AS store_type ON(depot.store_type_id = store_type.id)
-        WHERE ?
-        LIMIT 1`;
+        SELECT name.name AS name, description.description AS description
+        FROM catalog_listings AS listing
+        JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id)
+        JOIN catalog_description_names AS name ON (description.description_key = name.id)
+        WHERE ?`;
 
     var data = { "listing.id": listingId };
     var dbResult = await db.runQuery(sqlQuery, data);
-
-    // TODO: check for returned error, etc.
-    if (dbResult && dbResult.length > 0) {
-        return dbResult[0].store_type;
-    } else {
-        return false;
-    }
+    return dbResult;
 }
 
 /**
- * Get products by listing id
+ * Get all descriptions for the product id
  * 
- * @param {*} listingId 
+ * @param {*} productId 
+ */
+var getDescriptionsByProductId = async function (productId) {
+    var sqlQuery = `
+        SELECT name.name AS name, description.description AS description
+        FROM catalog_listings AS listing
+        JOIN catalog_products AS product ON (product.listing_id = listing.id)
+        JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id)
+        JOIN catalog_description_names AS name ON (description.description_key = name.id)
+        WHERE ?`;
+
+    var data = { "product.id": productId };
+    var dbResult = await db.runQuery(sqlQuery, data);
+    return dbResult;
+}
+
+var getImagesByProductId = async function (productId) {
+    var sqlQuery = `
+        SELECT name.name AS name, image.image AS image, image.product_id AS product_id
+        FROM catalog_image_names AS name
+        JOIN catalog_products_images AS image ON (name.id = image.image_key)
+        WHERE ?`;
+
+    var data = { "image.product_id": productId };
+    return await db.runQuery(sqlQuery, data);
+}
+
+/**
+ * Get products by product id and store type
+ * 
+ * @param {*} storeType 
+ * @param {*} productId 
  * @param {*} isStoreOpen 
  */
-pub.getProductsByListingId = async function (listingId, isStoreOpen) {
+var getItemsByProductId = async function (storeType, productId, isStoreOpen) {
     var sqlQuery = `
         SELECT
         depot.id AS depot_id,
@@ -573,69 +596,39 @@ pub.getProductsByListingId = async function (listingId, isStoreOpen) {
         JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
         JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
         
-        WHERE ?
-        AND store_type.available = true
+        WHERE store_type.available = true
+        AND ? AND ?
         
         ORDER BY listing_id, product_id, item_id, depot_id`;
 
-    var data = { "listing.id": listingId };
-    var dbResult = await db.runQuery(sqlQuery, data);
+    var data1 = {"store_type.name": storeType};
+    var data2 = {"product.id": productId};
+    var dbResult = await db.runQuery(sqlQuery, [data1, data2]);
     return getFormattedProducts(dbResult, isStoreOpen);
 }
 
-/**
- * Get all descriptions for the listing id
- * 
- * @param {*} listingId 
- */
-var getDescriptionsByListingId = async function (listingId) {
-    var sqlQuery = `
-        SELECT name.name AS name, description.description AS description
-        FROM catalog_listings AS listing
-        JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id)
-        JOIN catalog_description_names AS name ON (description.description_key = name.id)
-        WHERE ?`;
+pub.getProductPageItemsByProductId = async function (apiName, productId) {
+    var storeType = await pub.getStoreTypeByApi(apiName);
 
-    var data = { "listing.id": listingId };
-    var dbResult = await db.runQuery(sqlQuery, data);
-    return dbResult;
-}
-
-
-var getImagesByProductId = async function (productId) {
-    var sqlQuery = `
-        SELECT name.name AS name, image.image AS image, image.product_id AS product_id
-        FROM catalog_image_names AS name
-        JOIN catalog_products_images AS image ON (name.id = image.image_key)
-        WHERE ?`;
-
-    var data = { "image.product_id": productId };
-    return await db.runQuery(sqlQuery, data);
-}
-
-pub.getProductPageProductsByListingId = async function (listingId) {
-    // Get super category for listing
-    var storeType = await Catalog.getStoreTypeByListing(listingId);
-
-    // ListingId in URL might be wrong, need to check that
     if (!storeType) {
         return false;
     }
 
-    // get store open
-    var isStoreOpen = await Catalog.isStoreOpen(storeType);
-    var products = await Catalog.getProductsByListingId(listingId, isStoreOpen);
-    var descriptions = await getDescriptionsByListingId(listingId);
-    return convertToProductPageItem(products.products, descriptions);
+    var isStoreOpen = await pub.isStoreOpen(storeType);
+    var products = await getItemsByProductId(storeType, productId, isStoreOpen);
+    var descriptions = await getDescriptionsByProductId(productId);
+    var images = await getImagesByProductId(productId);
+    return convertToProductPageItem(products.products, descriptions, images);
 }
 
 /**
  * 
  * @param {*} products - array of products
  * @param {*} descriptions
+ * @param {*} images
  */
-var convertToProductPageItem = async function (products, descriptions) {
-    var tmpPr = products[0];
+var convertToProductPageItem = async function (product, descriptions, images) {
+    var tmpPr = product[0];
 
     var finalDescriptions = {};
 
@@ -648,15 +641,27 @@ var convertToProductPageItem = async function (products, descriptions) {
         "type": tmpPr.type,
         "brand": tmpPr.brand,
         "name": tmpPr.name,
+        "product_id": tmpPr.product_id,
         "description": tmpPr.description,
         "store_open": tmpPr.store_open,
         "tax": tmpPr.tax,
-        "products": {},
+        "other_images": images,
+        "container": tmpPr.container,
+        "images": [],
+        "product_variants": tmpPr.product_variants,
         "details": {}
     };
 
     for (let i = 0; i < descriptions.length; i++) {
         finalResult.details[descriptions[i].name] = descriptions[i].description;
+    }
+
+    for (let j = 0; j < images.length; j++){
+        if(images[j].name == "nutritions"){
+            finalResult.images.push("/resources/images/products/" + tmpPr.category + "/nutritions/" + images[j].image);
+        } else{
+            finalResult.images.push("/resources/images/products/" + tmpPr.category + "/" + images[j].image);
+        }
     }
 
     if (!finalResult.name) {
@@ -667,17 +672,6 @@ var convertToProductPageItem = async function (products, descriptions) {
         finalResult.brand = "";
     }
 
-    // Add product variants
-    // We expect not to have duplicate containers in the array
-    for (let i = 0; i < products.length; i++) {
-        let product = products[i];
-        let other_images = await getImagesByProductId(product.product_id);
-        finalResult.products[product.container] = {
-            "image": product.image,
-            "product_variants": product.product_variants,
-            "other_images": other_images
-        }
-    }
     return finalResult;
 }
 
@@ -699,7 +693,7 @@ pub.checkProductsForStoreOpen = async function (depotIds) {
 
         dbProducts = await db.runQuery(sqlQuery);
     } else {
-        dbProducts = [];        
+        dbProducts = [];
     }
 
     var products = {};

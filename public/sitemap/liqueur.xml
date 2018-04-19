@@ -2,118 +2,118 @@
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-<url>
-<loc>https://homit.ca/catalog/product/jagermeister/ls/7000</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/jagermeister-herbal-liqueur/3500</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/carolans-irish-cream/ls/7001</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/carolans-irish-cream/3501</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/sour-puss-apple/ls/7002</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/sour-puss-apple/3502</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/sour-puss-grape/ls/7003</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/sour-puss-grape/3503</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/sour-puss-raspberry/ls/7004</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/sour-puss-raspberry/3504</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/sour-puss-watermelon/ls/7005</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/sour-puss-watermelon/3505</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/frangelico-hazelnut-liqueur/ls/7006</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/frangelico-hazelnut-liqueur/3506</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/viniq-shimmery-liqueur/ls/7007</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/viniq-shimmery-liqueur/3507</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/chambord-black-raspberry/ls/7008</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/chambord-black-raspberry/3508</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/cointreau/ls/7009</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/cointreau-fruit-liqueur/3509</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/campari/ls/7010</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/campari-blended-liqueur/3510</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/kahlua-coffee-liqueur/ls/7011</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/kahlua-coffee-liqueur/3511</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/luxardo-sambuca-cream-liqueur/ls/7012</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/luxardo-sambuca-cream-liqueur/3512</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/rumchata-cream-liqueur/ls/7013</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/rumchata-cream-liqueur/3513</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/alize-bleu-passion/ls/7014</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/alize-bleu-passion/3514</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/grand-marnier-cordon-rouge/ls/7015</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/grand-marnier-cordon-rouge/3515</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/st.-germain-elderflower-liqueur/ls/7016</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/st-germain-elderflower-liqueur/3516</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/hpnotiq/ls/7017</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/hpnotiq-infused-wine/3517</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-<url>
-<loc>https://homit.ca/catalog/product/baileys-irish-cream-original/ls/7018</loc>
-<changefreq>weekly</changefreq>
-<priority>0.8</priority>
-</url>
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/baileys-irish-cream-original/3518</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
 </urlset>
