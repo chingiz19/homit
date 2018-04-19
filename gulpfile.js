@@ -42,7 +42,8 @@ var cssFilesToWatch = './public/**/*.scss';
 var imgFiles = './public/**/*.+(png|svg|jpg|jpeg|ico)';
 var miscFiles = [
     './public/*.*',
-    './public/**/templates/*.html'
+    './public/**/templates/*.html',
+    './public/sitemap/**/*.xml'
 ]
 var uglifyOptions = {
     output: {
@@ -127,7 +128,7 @@ gulp.task('img', function(){
 });
 
 gulp.task('misc', function(){
-    return gulp.src(miscFiles)
+    return gulp.src(miscFiles, {base: "./public"})
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = true;
         }))
