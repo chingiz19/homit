@@ -114,7 +114,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
 
     $scope.hrefPrdPage = function (product) {
         var path;
-        path = "/catalog/product/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/ls/" + product.listing_id;
+        path = "/catalog/product/" + product.store_type_api_name + "/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/" + product.product_id;
         
         googleAnalytics.addEvent('product_clicked', {
             "event_label": product.brand + " " + product.name,
