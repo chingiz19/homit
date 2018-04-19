@@ -51,10 +51,14 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
  * @param {*} orderTransactionId 
  * @param {*} storeType 
  */
-pub.createOrder = async function (orderTransactionId, storeType) {
+pub.createOrder = async function (orderTransactionId, storeType, prices) {
     var storeType = await Catalog.getStoreTypeIdByName(storeType);
     var data = {
         order_transaction_id: orderTransactionId,
+        total_price: prices.total_price,
+        total_amount: prices.cart_amount,
+        delivery_fee: prices.delivery_fee,
+        total_tax: prices.total_tax,
         store_type: storeType
     };
 

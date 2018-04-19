@@ -475,9 +475,12 @@ app.controller("checkoutController",
          * @param {*} products 
          */
         $scope.calculatePrice = function (products) {
+            var pricesPerOrder = {};
+
             var totalAmount = 0;
             var totalTax = 0;
             var totalDelivery = 0;
+            var totalPrice = 0;
         
             for (let storeType in products) {
                 var tmpAmount = 0;
@@ -491,24 +494,31 @@ app.controller("checkoutController",
                 var tmpDelivery = DELIVERY_FEE_1 + Math.floor(parseInt(tmpAmount / 100)) * DELIVERY_FEE_2;
                 tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
         
+                tmpTax = parseFloat(tmpTax.toFixed(2));
+                tmpAmount = parseFloat(tmpAmount.toFixed(2));
+                tmpDelivery = parseFloat(tmpDelivery.toFixed(2));
+        
+                var tmpTotalPrice = tmpTax + tmpAmount + tmpDelivery;
+        
+                pricesPerOrder[storeType] = {
+                    "cart_amount": tmpAmount,
+                    "delivery_fee": tmpDelivery,
+                    "total_tax": tmpTax,
+                    "total_price": tmpTotalPrice
+                };
+        
                 totalAmount = totalAmount + tmpAmount;
-                totalDelivery = totalDelivery + tmpDelivery;
                 totalTax = totalTax + tmpTax;
+                totalDelivery = totalDelivery + tmpDelivery;
+                totalPrice = totalPrice + tmpTotalPrice;
             }
-        
-            var totalPrice = totalAmount + totalTax + totalDelivery;
-        
-            // Updating display variables
-            totalTax = parseFloat(totalTax.toFixed(2));
-            totalAmount = parseFloat(totalAmount.toFixed(2));
-            totalDelivery = parseFloat(totalDelivery.toFixed(2));
-            totalPrice = parseFloat(totalPrice.toFixed(2));
         
             var finalPrices = {
                 "cart_amount": totalAmount,
                 "delivery_fee": totalDelivery,
                 "total_tax": totalTax,
-                "total_price": totalPrice
+                "total_price": totalPrice,
+                "order_prices": pricesPerOrder
             };
         
             return finalPrices;
