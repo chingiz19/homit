@@ -11,10 +11,9 @@ h1 {
 
 .image-404{
     position: absolute; 
-    bottom: 133px;
+    bottom: 90px;
     width: 100%; 
     display: flex; justify-content: center; 
-    padding-right: 22vw;
     z-index: 1;
 }
 
@@ -29,11 +28,10 @@ md-toolbar{
         box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
     }
     .image-404{
-        bottom: 118px;
-        padding-right: 0;
+        bottom: 90px;
     }
     .image-404 img{
-        width: 100vw; height: 60vw;
+        width: 90vw; height: calc(90vw * 1.1);
     }
     
 }
