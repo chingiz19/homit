@@ -395,9 +395,12 @@ pub.getAllPricesForProducts = function (products) {
  * @param {*} products 
  */
 pub.calculatePrice = function (products) {
+    var pricesPerOrder = {};
+
     var totalAmount = 0;
     var totalTax = 0;
     var totalDelivery = 0;
+    var totalPrice = 0;
 
     for (let storeType in products) {
         var tmpAmount = 0;
@@ -411,24 +414,31 @@ pub.calculatePrice = function (products) {
         var tmpDelivery = DELIVERY_FEE_1 + Math.floor(parseInt(tmpAmount / 100)) * DELIVERY_FEE_2;
         tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
 
+        tmpTax = parseFloat(tmpTax.toFixed(2));
+        tmpAmount = parseFloat(tmpAmount.toFixed(2));
+        tmpDelivery = parseFloat(tmpDelivery.toFixed(2));
+
+        var tmpTotalPrice = tmpTax + tmpAmount + tmpDelivery;
+
+        pricesPerOrder[storeType] = {
+            "cart_amount": tmpAmount,
+            "delivery_fee": tmpDelivery,
+            "total_tax": tmpTax,
+            "total_price": tmpTotalPrice
+        };
+
         totalAmount = totalAmount + tmpAmount;
-        totalDelivery = totalDelivery + tmpDelivery;
         totalTax = totalTax + tmpTax;
+        totalDelivery = totalDelivery + tmpDelivery;
+        totalPrice = totalPrice + tmpTotalPrice;
     }
-
-    var totalPrice = totalAmount + totalTax + totalDelivery;
-
-    // Updating display variables
-    totalTax = parseFloat(totalTax.toFixed(2));
-    totalAmount = parseFloat(totalAmount.toFixed(2));
-    totalDelivery = parseFloat(totalDelivery.toFixed(2));
-    totalPrice = parseFloat(totalPrice.toFixed(2));
 
     var finalPrices = {
         "cart_amount": totalAmount,
         "delivery_fee": totalDelivery,
         "total_tax": totalTax,
-        "total_price": totalPrice
+        "total_price": totalPrice,
+        "order_prices": pricesPerOrder
     };
 
     return finalPrices;
@@ -601,8 +611,8 @@ var getItemsByProductId = async function (storeType, productId, isStoreOpen) {
         
         ORDER BY listing_id, product_id, item_id, depot_id`;
 
-    var data1 = {"store_type.name": storeType};
-    var data2 = {"product.id": productId};
+    var data1 = { "store_type.name": storeType };
+    var data2 = { "product.id": productId };
     var dbResult = await db.runQuery(sqlQuery, [data1, data2]);
     return getFormattedProducts(dbResult, isStoreOpen);
 }
@@ -656,10 +666,10 @@ var convertToProductPageItem = async function (product, descriptions, images) {
         finalResult.details[descriptions[i].name] = descriptions[i].description;
     }
 
-    for (let j = 0; j < images.length; j++){
-        if(images[j].name == "nutritions"){
+    for (let j = 0; j < images.length; j++) {
+        if (images[j].name == "nutritions") {
             finalResult.images.push("/resources/images/products/" + tmpPr.category + "/nutritions/" + images[j].image);
-        } else{
+        } else {
             finalResult.images.push("/resources/images/products/" + tmpPr.category + "/" + images[j].image);
         }
     }
@@ -731,68 +741,6 @@ pub.checkProductsForStoreOpen = async function (depotIds) {
 
     return finalResult;
 }
-
-
-// old
-//CSR
-pub.getCartProductsWithInfo = function (cartProducts) {
-    var depotIds = Object.keys(cartProducts);
-    var sqlQuery = `
-        SELECT depot.id AS depot_id, depot.product_id AS product_id,
-        listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
-        listing.product_brand AS brand, listing.product_name AS name,
-        listing.product_description AS description, product.product_image AS image,
-        depot.price AS price, depot.tax AS tax, depot.quantity AS quantity, packaging.name AS packaging,
-        container.name AS container, volume.volume_name AS volume, category.name AS category,
-        super_category.name AS super_category
-
-        FROM catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
-        catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
-        catalog_containers AS container, catalog_packagings AS packaging, catalog_packaging_volumes AS volume,
-        catalog_super_categories AS super_category
-
-        WHERE depot.product_id = product.id AND product.listing_id = listing.id
-        AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
-        AND container.id = product.container_id AND packaging.id = depot.packaging_id
-        AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND
-        category.super_category_id = super_category.id
-        AND depot.id in (` + depotIds + `)
-
-        ORDER BY super_category`;
-
-    return db.runQuery(sqlQuery).then(function (dbResult) {
-        return dbResult;
-    });
-};
-
-pub.searchDepotProducts = function (searchText) {
-    var sqlQuery = `
-            SELECT depot.id AS depot_id, depot.product_id AS product_id,
-                listing.id AS listing_id, subcategory.name AS subcategory, type.name AS type,
-                    listing.product_brand AS brand, listing.product_name AS name,
-                        listing.product_description AS description, product.product_image AS image,
-                            depot.price AS price, depot.tax AS tax, depot.quantity AS quantity, packaging.name AS packaging,
-                                container.name AS container, volume.volume_name AS volume, category.name AS category,
-                                    super_category.name AS super_category
-
-            FROM catalog_depot AS depot, catalog_products AS product, catalog_listings AS listing,
-                catalog_categories AS category, catalog_types AS type, catalog_subcategories AS subcategory,
-                    catalog_containers AS container, catalog_packagings AS packaging, catalog_packaging_volumes AS volume,
-                        catalog_super_categories AS super_category
-
-            WHERE depot.product_id = product.id AND product.listing_id = listing.id
-            AND type.id = listing.type_id AND type.subcategory_id = subcategory.id
-            AND container.id = product.container_id AND packaging.id = depot.packaging_id
-            AND depot.packaging_volume_id = volume.id AND category.id = subcategory.category_id AND
-            category.super_category_id = super_category.id
-
-            AND(listing.product_brand LIKE '%` + searchText + `%' OR listing.product_name LIKE '%` + searchText + `%'
-        OR listing.product_description LIKE '%` + searchText + `%' OR listing.product_country LIKE '%` + searchText + `%') `;
-
-    return db.runQuery(sqlQuery).then(function (dbResult) {
-        return dbResult;
-    });
-};
 
 /**
  * Custom function to do alphanumeric sort

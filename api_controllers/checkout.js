@@ -167,9 +167,10 @@ var createOrders = async function (userId, address, address_lat, address_long, d
 
     var createFunctions = [];
     var userOrders = [];
+    var orderPrices = allPrices.order_prices;
 
     for (var storeType in products) {
-        createFunctions.push(Orders.createOrder(orderTransactionId, storeType));
+        createFunctions.push(Orders.createOrder(orderTransactionId, storeType, orderPrices[storeType]));
     }
 
     return Promise.all(createFunctions).then(function (orderIds) {
