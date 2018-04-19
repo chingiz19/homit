@@ -36,12 +36,12 @@ INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(37, "Pasta", 
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(38, "Beans", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(39, "Rice", "11");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(40, "Bouillon Mix", "12");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(41, "Soup and Potatoes", "13");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(41, "Soup & Potatoes", "13");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(42, "Soup", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(43, "Mixed Seasonings", "12");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(44, "Fish and Seafood", "10");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(44, "Fish & Seafood", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(45, "Bread Crumbs", "9");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(46, "Salt and Pepper", "12");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(46, "Salt & Pepper", "12");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(47, "Whole Spices", "12");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(48, "Rubbed Spices", "12");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(49, "Seed Spices", "12");
@@ -52,33 +52,33 @@ INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(53, "Pizza Sa
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(54, "Hot Sauce", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(55, "Horseradish", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(56, "Horseradish & Mustard", "14");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(57, "Smoke and BBQ", "14");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(57, "Smoke & BBQ", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(58, "Extra Hot Sauce", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(59, "Worcestershire Sauce", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(60, "Lemon Sauce", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(61, "Garlic Sauce", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(62, "Mixed Sauce", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(63, "Mayonnaise Based", "14");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(64, "Pesto and Spread", "14");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(64, "Pesto & Spread", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(65, "Ketchup", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(66, "Peppers", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(67, "Salsa", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(68, "Pasta Sauce", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(69, "Tomatoes", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(70, "Cooking Sauce", "14");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(71, "Crackers and Flatbread", "5");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(72, "Salmas and Salmitas", "5");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(71, "Crackers & Flatbread", "5");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(72, "Salmas & Salmitas", "5");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(73, "Whole Wheat Bread", "15");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(74, "Breadsticks", "15");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(75, "Taralli", "15");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(76, "Garlic and Beets", "10");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(76, "Garlic & Beets", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(77, "Antipasto", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(78, "Food Toppings", "14");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(79, "Olives", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(80, "Mushrooms", "10");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(81, "Eggplants and Zucchini", "10");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(82, "Asparagus and Onions", "10");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(83, "Capers and Caperberries", "10");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(81, "Eggplants & Zucchini", "10");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(82, "Asparagus & Onions", "10");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(83, "Capers & Caperberries", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(84, "Artichokes", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(85, "Cucumber", "10");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(86, "Classic Olive Oil", "16");
@@ -89,7 +89,7 @@ INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(90, "Mixed Fl
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(91, "Pizza Flavored", "16");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(92, "Rosemary Flavored", "16");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(93, "Bruschetta Flavored", "16");
-INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(94, "Seed and Nut Oil", "16");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(94, "Seed & Nut Oil", "16");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(95, "Fruit Oil", "16");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(96, "Hot Olive Oil", "16");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(97, "Juice", "6");
@@ -131,6 +131,7 @@ INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(132, "Cakes &
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(133, "Mixed Pasta", "9");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(134, "Macaroni", "9");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(135, "Lasagne & Spaghetti", "9");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(136, "Fish & Seafood", "13");
 
 
 /*Catalog - Types*/
@@ -210,7 +211,7 @@ INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(279, "Claims in Wa
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(280, "Pink Salmon", "44");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(281, "Snails in Water", "44");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(282, "Escargots in Water", "44");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(283, "Smoked Salmon", "44");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(283, "Smoked Salmon", "136");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(284, "Wheat Crumbs", "45");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(285, "Flavored Wheat Crumbs", "45");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(286, "Siracha Salt", "46");
@@ -480,7 +481,7 @@ INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(549, "Fig Balsamic
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(550, "Orange Balsamic Glaze", "102");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(551, "Lemon Balsamic Glaze", "102");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(552, "Wildberry Balsamic Glaze", "102");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(553, "Extra Virgin Olive Oil Spray", "103");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(553, "Extra Virgin Olive Oil Spray", "104");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(554, "Grapeseed Oil Spray", "104");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(555, "Truffle Flavored Oil Spray", "104");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(556, "Garlic Flavored Oil Spray", "104");
