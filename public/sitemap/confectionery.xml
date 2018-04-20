@@ -266,4 +266,22 @@
         <priority>0.8</priority>
     </url>
 
+    <url>
+        <loc>https://homit.ca/catalog/product/linas-italian-market/milka-hazelnutraisin/7362</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/linas-italian-market/milka-milkwhite-chocolate/7363</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/linas-italian-market/milka-cherry-cream/7364</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
 </urlset>

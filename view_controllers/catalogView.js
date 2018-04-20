@@ -1004,7 +1004,7 @@ function convertHomitTags(string) {
 
 function clearProductUrl(path){
     var tempPath = path;
-    let characters = ["#", "&", "'", ",", ".", "%"];
+    let characters = ["#", "&", "'", ",", ".", "%", "--"];
     for(let i=0; i<characters.length; i++){
         tempPath = tempPath.replace(characters[i], "");
     }

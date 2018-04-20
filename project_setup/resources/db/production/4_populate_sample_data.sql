@@ -505,7 +505,7 @@ INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (9523, "SunRype"
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (9524, "OASIS", "Exotic Mango", 171);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (9525, "Red Bull", "Diet", 174);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (9526, "Red Bull", "Classic", 175);
-INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (9527, "Rockstart", "Classic", 175);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (9527, "Rockstar", "Classic", 175);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (9528, "Arctic Glacier", "Ice", 176);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (9529, "Perrier", "Sparkling Water", 177);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (9530, "Perrier", "Lemon & Orange", 178);
