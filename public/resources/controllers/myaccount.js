@@ -39,7 +39,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
                 $scope.fname = res.data.user.first_name;
                 $scope.lname = res.data.user.last_name;
                 $scope.email = res.data.user.user_email;
-                $scope.phone = res.data.user.phone_number;
+                $scope.phone = res.data.user.phone_number.replace(/^(\d{3})(\d{3})(\d{4}).*/, '($1) $2-$3');
                 $scope.autocomplete.setText(res.data.user.address);
 
                 $scope.dob = res.data.user.dob;

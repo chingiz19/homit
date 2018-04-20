@@ -39,6 +39,9 @@ app.controller("checkoutController",
                 let hasLiquor = $scope.userInfo.hasLiquor;
                 if (res.data.success){
                     $scope.userInfo = res.data.user;
+                    if($scope.userInfo.phone_number){
+                        $scope.userInfo.phone_number = $scope.userInfo.phone_number.replace(/^(\d{3})(\d{3})(\d{4}).*/, '($1) $2-$3');
+                    }
                     $scope.userSignedIn = true;
                 }
                 $scope.userInfo.hasLiquor = hasLiquor;
