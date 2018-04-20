@@ -5,7 +5,6 @@ md-toolbar {
 body {
     position: relative;
     top: 50px;
-    background-color: rgba(250, 250, 250, 1);
     font-family: 'Nunito', sans-serif;
     color: rgba(70, 70, 70, 1);
     letter-spacing: 0.025em;
@@ -17,6 +16,10 @@ ul {
 
 li {
     list-style-type: none;
+}
+
+.none {
+    display: none;
 }
 
 .top-header {
@@ -46,6 +49,11 @@ li {
     width: 70%;
 }
 
+.page {
+    background-color: rgba(250, 250, 250, 1);
+    padding-bottom: 60px;
+}
+
 .center {
     margin-top: 30px;
     margin-bottom: 40px;
@@ -53,23 +61,42 @@ li {
 }
 
 .center img {
-    box-shadow: 0 0px 7px 3px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0px 4px 3px rgba(0, 0, 0, 0.35);
 }
 
 footer {
-    position: absolute;
-    bottom: -133px;
     width: 100%;
+}
+
+.card-section {
+    margin-top: 40px;
+}
+
+.cards-div {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cards-div img {
+    width: 220px;
+    height: 220px;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0px 4px 3px rgba(0, 0, 0, 0.23);
 }
 
 @media (max-width: 570px) {
     .homit-nav-content {
         width: 380px;
     }
-    .top-header{
+
+    .top-header {
         font-size: 35px;
     }
-    .about-top-subhead p{
+
+    .about-top-subhead p {
         font-size: 18px;
     }
 }
@@ -93,12 +120,12 @@ footer {
 }
 
 /* start of phone styles */
-@media screen and (max-device-width: 479px){
-    .top-header{
+@media screen and (max-device-width: 479px) {
+    .top-header {
         font-size: 28px;
     }
+
     .homit-nav-content {
         width: 100vw;
     }
-    
 }
