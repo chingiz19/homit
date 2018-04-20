@@ -38,9 +38,9 @@ pub.isStoreOpen = async function (storeType) {
         JOIN stores_hours AS hours ON (stores.id = hours.store_id)
         WHERE
         hours.day = DAYOFWEEK(CURRENT_TIMESTAMP)
-        AND hours.day = DAYOFWEEK(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
         AND (hours.open_time <= CURRENT_TIME
-        AND hours.close_time >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
+        AND hours.close_time >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)
+        AND hours.day = DAYOFWEEK(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)))
         OR hours.open_time_next <= CURRENT_TIME
         AND hours.close_time_next >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
         )
