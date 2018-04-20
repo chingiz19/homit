@@ -624,23 +624,23 @@ pub.getProductPageItemsByProductId = async function (apiName, productId) {
     if (!storeType) {
         return false;
     }
-    Logger.log.debug('Got store type: ' + storeType);    
+    Logger.log.debug('Got store type: ' + storeType);
 
     var isStoreOpen = await pub.isStoreOpen(storeType);
 
-    Logger.log.debug('Store open: ' + isStoreOpen);    
-    
+    Logger.log.debug('Store open: ' + isStoreOpen);
+
     var products = await getItemsByProductId(storeType, productId, isStoreOpen);
 
-    Logger.log.debug('Returned items...');        
+    Logger.log.debug('Returned items...' + JSON.stringify(products));
 
     var descriptions = await getDescriptionsByProductId(productId);
 
-    Logger.log.debug('Returned descriptions...');            
+    Logger.log.debug('Returned descriptions...' + JSON.stringify(descriptions));
 
     var images = await getImagesByProductId(productId);
 
-    Logger.log.debug('Returned images...');                
+    Logger.log.debug('Returned images...' + JSON.stringify(images));
 
     return convertToProductPageItem(products.products, descriptions, images);
 }
