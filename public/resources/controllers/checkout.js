@@ -89,7 +89,7 @@ app.controller("checkoutController",
                     }
                     if (checkedItems.all_stores_open == false) {
                         $window.onload = function () {
-                            $scope.paymentMessage_1 = "Closed Store";
+                            $scope.paymentMessage_1 = "Sorry ";
                             $scope.closedStoreMessage = "Shopping cart contains items from currnetly closed stores. Please";
                             activateCheckoutModal();
                             updateCheckoutModal("03");
@@ -109,6 +109,7 @@ app.controller("checkoutController",
             }, function errorCallback(response) {
                 updateUserCart(localStorage.getUserCart());
             });
+
         $scope.plusItem = function (product) {
             var tmpQuantity = 1;
             if ($scope.userCart.hasOwnProperty(product.store_type_api_name) && $scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
@@ -150,11 +151,10 @@ app.controller("checkoutController",
         };
 
         $scope.clearCart = function (product) {
-            updateUserCart({});
+            $scope.delFee = 0;
             $scope.numberOfItemsInCart = 0;
             $scope.totalAmount = 0;
-
-            sessionStorage.setAddress(undefined);
+            updateUserCart({});
             cartService.clearCart()
                 .then(function successCallback(response) {
                     if (response.data.error && response.data.error.code == "C001") { // use local storage
@@ -196,7 +196,7 @@ app.controller("checkoutController",
             }
         };
 
-        $scope.prepareItemForDB = function (depot_id, itemQuantity, action) {
+        $scope.prepareItemForDB = function (depot_id, itemQuantity) {
             cartService.modifyCartItem(depot_id, itemQuantity)
                 .then(function successCallback(response) {
                     if (response.data.error && response.data.error.code == "C001") { // use local storage
@@ -347,10 +347,6 @@ app.controller("checkoutController",
             $scope.receipt = prices.total_price.toFixed(2);
         };
 
-        $scope.updateBDays = function () {
-            $scope.b_days = date.getDays($scope.userInfo.birth_month, $scope.userInfo.birth_year);
-        };
-
         $scope.gotAddressResults = function () {
             var latLng = $scope.autocomplete.getLatLng();
             var place = $scope.autocomplete.getPlace();
@@ -392,9 +388,7 @@ app.controller("checkoutController",
         $scope.clearPage = function () {
             if ($scope.paymentResult == "11" || $scope.paymentResult == "1") {
                 $scope.userInfo = {};
-                $scope.userCart = {};
                 $scope.clearCart();
-                $scope.delFee = 0;
                 sessionStorage.setAddress("");
                 sessionStorage.setAddressUnitNumber("");
                 $window.location.href = $window.location.origin + "/main";
@@ -407,18 +401,16 @@ app.controller("checkoutController",
             for (var store_type in $scope.userCart) {
                 for (var b in $scope.userCart[store_type]) {
                     if (!$scope.userCart[store_type][b].store_open) {
+                        $scope.prepareItemForDB($scope.userCart[store_type][b].depot_id, 0);
                         delete $scope.userCart[store_type][b];
                     }
                 }
-                if ($scope.userCart[store_type]) {
+                if (Object.keys($scope.userCart[store_type]).length == 0) {
                     delete $scope.userCart[store_type];
                 }
             }
             localStorage.setUserCart($scope.userCart);
-            updateUserCart($scope.userCart);
-            $scope.updatePrices($scope.userCart);
-            $('#checkoutModal').modal('hide');
-            $scope.toggleRight();
+            location.reload();
         };
 
         // Checkout Page right-SideNav functionality
@@ -457,8 +449,6 @@ app.controller("checkoutController",
             $("#gP_number").mask("(999) 999-9999");
             $("#date_of_birth").mask("99-99-9999");
         });
-
-        $scope.init();
 
         /*
          * These variables are taken from B.E.
@@ -523,4 +513,7 @@ app.controller("checkoutController",
         
             return finalPrices;
         };
+
+        $scope.init();
+
     });
