@@ -568,11 +568,11 @@ var getImagesByProductId = async function (productId) {
 /**
  * Get products by product id and store type
  * 
- * @param {*} storeType 
+ * @param {*} storeTypeApi 
  * @param {*} productId 
  * @param {*} isStoreOpen 
  */
-var getItemsByProductId = async function (storeType, productId, isStoreOpen) {
+var getItemsByProductId = async function (storeTypeApi, productId, isStoreOpen) {
     var sqlQuery = `
         SELECT
         depot.id AS depot_id,
@@ -611,37 +611,23 @@ var getItemsByProductId = async function (storeType, productId, isStoreOpen) {
         
         ORDER BY listing_id, product_id, item_id, depot_id`;
 
-    var data1 = { "store_type.name": storeType };
+    var data1 = { "store_type.api_name": storeTypeApi };
     var data2 = { "product.id": productId };
     var dbResult = await db.runQuery(sqlQuery, [data1, data2]);
     return getFormattedProducts(dbResult, isStoreOpen);
 }
 
 pub.getProductPageItemsByProductId = async function (apiName, productId) {
-    Logger.log.debug('Getting product page items by product id');
     var storeType = await pub.getStoreTypeByApi(apiName);
 
     if (!storeType) {
         return false;
     }
-    Logger.log.debug('Got store type: ' + storeType);
 
     var isStoreOpen = await pub.isStoreOpen(storeType);
-
-    Logger.log.debug('Store open: ' + isStoreOpen);
-
-    var products = await getItemsByProductId(storeType, productId, isStoreOpen);
-
-    Logger.log.debug('Returned items...' + JSON.stringify(products));
-
+    var products = await getItemsByProductId(apiName, productId, isStoreOpen);
     var descriptions = await getDescriptionsByProductId(productId);
-
-    Logger.log.debug('Returned descriptions...' + JSON.stringify(descriptions));
-
     var images = await getImagesByProductId(productId);
-
-    Logger.log.debug('Returned images...' + JSON.stringify(images));
-
     return convertToProductPageItem(products.products, descriptions, images);
 }
 
@@ -669,7 +655,6 @@ var convertToProductPageItem = async function (product, descriptions, images) {
         "description": tmpPr.description,
         "store_open": tmpPr.store_open,
         "tax": tmpPr.tax,
-        "other_images": images,
         "container": tmpPr.container,
         "images": [],
         "product_variants": tmpPr.product_variants,
@@ -679,6 +664,8 @@ var convertToProductPageItem = async function (product, descriptions, images) {
     for (let i = 0; i < descriptions.length; i++) {
         finalResult.details[descriptions[i].name] = descriptions[i].description;
     }
+
+    finalResult.images.push(tmpPr.image);
 
     for (let j = 0; j < images.length; j++) {
         if (images[j].name == "nutritions") {
