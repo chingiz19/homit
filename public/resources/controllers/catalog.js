@@ -294,10 +294,12 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
 
     function clearProductUrl(path){
         var tempPath = path;
-        let characters = ["#", "&", "'", ",", ".", "%", "--"];
+        let characters = ["#", "&", "'", ",", ".", "%"];
         for(let i=0; i<characters.length; i++){
             tempPath = tempPath.replace(characters[i], "");
         }
+        tempPath = tempPath.replace("---", "-");
+        tempPath = tempPath.replace("--", "-");
         return tempPath;
     }
 

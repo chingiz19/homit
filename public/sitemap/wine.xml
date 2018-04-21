@@ -705,13 +705,13 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/moetchandon-imperial-brut-champagne/1117</loc>
+        <loc>https://homit.ca/catalog/product/liquor-station/moet-chandon-imperial-brut-champagne/1117</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/moetchandon-imperial-brut-rose/1118</loc>
+        <loc>https://homit.ca/catalog/product/liquor-station/moet-chandon-imperial-brut-rose/1118</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -753,7 +753,7 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/martinirossi-rose/1125</loc>
+        <loc>https://homit.ca/catalog/product/liquor-station/martini-rossi-rose/1125</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -771,7 +771,7 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/martinirossi-asti-spumante/1128</loc>
+        <loc>https://homit.ca/catalog/product/liquor-station/martini-rossi-asti-spumante/1128</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

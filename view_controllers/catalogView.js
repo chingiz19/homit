@@ -28,28 +28,28 @@ const api_categories = {
 var recommended_products = {
     "beer": [
         {
-            "brand": "Munchies",
-            "name": "Snack Mix Original",
-            "image": "/resources/images/products/snacks/p_9011.jpeg",
-            "url": "/catalog/product/munchies-snack-mix-original/ls/9011",
+            "brand": "Doritos",
+            "name": "Cheese",
+            "image": "/resources/images/products/snacks/p_9028.jpeg",
+            "url": "/catalog/product/snack-vendor/doritos-cheese/4528",
             "packaging": "1",
             "size": "family",
-            "price": 3.99
+            "price": 4.79
         },
         {
-            "brand": "Wonderful Pistachios",
-            "name": "Sweet Chili",
-            "image": "/resources/images/products/snacks/p_9032.jpeg",
-            "url": "/catalog/product/wonderful-pistachios-sweet-chili/ls/9032",
+            "brand": "Tostitos",
+            "name": "Round",
+            "image": "/resources/images/products/snacks/p_9031.jpeg",
+            "url": "/catalog/product/snack-vendor/tostitos-round/4531",
             "packaging": "1",
-            "size": "200mg",
-            "price": 4.99
+            "size": "regular",
+            "price": 4.49
         },
         {
             "brand": "Jack Link's",
             "name": "Cholula",
             "image": "/resources/images/products/snacks/p_9016.jpeg",
-            "url": "/catalog/product/jack-link's-cholula/ls/9016",
+            "url": "/catalog/product/snack-vendor/jack-links-cholula/4516",
             "packaging": "1",
             "size": "80gm",
             "price": 6.99
@@ -58,19 +58,19 @@ var recommended_products = {
             "brand": "Tostitos",
             "name": "Red Pepper Salsa",
             "image": "/resources/images/products/snacks/jr_9045.jpeg",
-            "url": "/catalog/product/tostitos-red-pepper-salsa/ls/9045",
+            "url": "/catalog/product/snack-vendor/tostitos-red-pepper-salsa/4545",
             "packaging": "1",
             "size": "425gm",
             "price": 4.59
         },
         {
-            "brand": "Doritos",
-            "name": "Cheese",
-            "image": "/resources/images/products/snacks/p_9028.jpeg",
-            "url": "/catalog/product/doritos-cheese/ls/9028",
+            "brand": "Browne",
+            "name": "Corkscrew Bottle Opener",
+            "image": "/resources/images/products/party-supply/o_10003.jpeg",
+            "url": "/product/liquor-station/browne-corkscrew-bottle-opener/6003",
             "packaging": "1",
-            "size": "family",
-            "price": 4.79
+            "size": "4.5in",
+            "price": 3.99
         },
     ],
     "wine": [
@@ -78,7 +78,7 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Chili Piment Rouge",
             "image": "/resources/images/products/snacks/br_9042.jpeg",
-            "url": "/catalog/product/lindt-chili-piment-rouge/ls/9042",
+            "url": "/catalog/product/snack-vendor/lindt-chili-piment-rouge/4542",
             "packaging": "1",
             "size": "100gm",
             "price": 3.89
@@ -87,7 +87,7 @@ var recommended_products = {
             "brand": "Browne",
             "name": "Corkscrew Wing Bottle Opener",
             "image": "/resources/images/products/party-supply/o_10023.jpeg",
-            "url": "/catalog/product/browne-corkscrew-wing-bottle-opener/ls/10023",
+            "url": "/catalog/product/liquor-station/browne-corkscrew-wing-bottle-opener/6023",
             "packaging": "1",
             "size": "6in",
             "price": 3.99
@@ -96,28 +96,28 @@ var recommended_products = {
             "brand": "Mozaik",
             "name": "Classic Wine Glass",
             "image": "/resources/images/products/party-supply/p_10013.jpeg",
-            "url": "/catalog/product/mozaik-classic-wine-glass/ls/10013",
+            "url": "/catalog/product/liquor-station/mozaik-classic-wine-glass/6013",
             "packaging": "4",
             "size": "15oz",
             "price": 9.49
         },
         {
-            "brand": "Senssations",
-            "name": "Salami Combo",
-            "image": "/resources/images/products/snacks/p_9057.jpeg",
-            "url": "/catalog/product/senssations-salami-combo/ls/9057",
+            "brand": "Sea Change Seafoods",
+            "name": "Candied Wild Smoked Salmon",
+            "image": "/resources/images/products/dry-packaged/cntr_11112.jpeg",
+            "url": "/catalog/product/linas-italian-market/sea-change-seafoods-candied-wild-smoked-salmon/6613",
             "packaging": "1",
-            "size": "100mg",
-            "price": 8.99
+            "size": "70mg",
+            "price": 14.99
         },
         {
-            "brand": "Babybel",
-            "name": "Edam Cheese",
-            "image": "/resources/images/products/snacks/p_9055.jpeg",
-            "url": "/catalog/product/babybel-edam-cheese/ls/9055",
+            "brand": "Rummo",
+            "name": "Fusilli #48",
+            "image": "/resources/images/products/pasta-and-baking/bx_11006.jpeg",
+            "url": "/catalog/product/linas-italian-market/rummo-fusilli-48/6506",
             "packaging": "1",
-            "size": "120gm",
-            "price": 6.89
+            "size": "500gm",
+            "price": 2.69
         }
     ],
     "spirit": [
@@ -125,7 +125,7 @@ var recommended_products = {
             "brand": "Patron",
             "name": "Silver",
             "image": "/resources/images/products/spirit/b_5097.jpeg",
-            "url": "/catalog/product/patron-silver/ls/5097",
+            "url": "/catalog/product/liquor-station/patron-silver/2596",
             "packaging": "1",
             "size": "750ml",
             "price": 71.99
@@ -134,16 +134,16 @@ var recommended_products = {
             "brand": "Arctic Glacier",
             "name": "Ice",
             "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.59
         },
         {
             "brand": "Red Bull",
-            "name": null,
+            "name": "Classic",
             "image": "/resources/images/products/beverages/c_9526.jpeg",
-            "url": "/catalog/product/red-bull/ls/9526",
+            "url": "/catalog/product/snack-vendor/red-bull-classic/5531",
             "packaging": "4",
             "size": "250",
             "price": 10.49
@@ -152,16 +152,16 @@ var recommended_products = {
             "brand": "Mott's",
             "name": "Clamato The Original",
             "image": "/resources/images/products/beverages/b_9511.jpeg",
-            "url": "/catalog/product/mott's-clamato-the-original/ls/9511",
+            "url": "/catalog/product/snack-vendor/motts-clamato-the-original/5516",
             "packaging": "1",
             "size": "32oz",
             "price": 3.99
         },
         {
             "brand": "Coca-Cola",
-            "name": null,
+            "name": "Classic",
             "image": "/resources/images/products/beverages/b_9500.jpeg",
-            "url": "/catalog/product/coca-cola/ls/9500",
+            "url": "/catalog/product/snack-vendor/coca-cola-classic/5500",
             "packaging": "1",
             "size": "1L",
             "price": 2.79
@@ -172,7 +172,7 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Intense Orange",
             "image": "/resources/images/products/snacks/br_9043.jpeg",
-            "url": "/catalog/product/lindt-chili-piment-rouge/ls/9043",
+            "url": "/catalog/product/snack-vendor/lindt-intense-orange/4543",
             "packaging": "1",
             "size": "100gm",
             "price": 3.89
@@ -181,7 +181,7 @@ var recommended_products = {
             "brand": "Arctic Glacier",
             "name": "Ice",
             "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.59
@@ -190,25 +190,25 @@ var recommended_products = {
             "brand": "Guinness",
             "name": "Draught",
             "image": "/resources/images/products/beer/c_1060.jpeg",
-            "url": "/catalog/product/guinness-draught/ls/1060",
+            "url": "/catalog/product/liquor-station/guinness-draught/83",
             "packaging": "4",
             "size": "440ml",
             "price": 14.99
         },
         {
-            "brand": "Safeway",
-            "name": "Fruit Tray",
-            "image": "/resources/images/products/snacks/o_9059.jpeg",
-            "url": "/catalog/product/safeway-fruit-tray/ls/9059",
+            "brand": "Natur Puglia",
+            "name": "Taralli with Pizza Flavour",
+            "image": "/resources/images/products/baked-goods/btc_11262.jpeg",
+            "url": "/catalog/product/linas-italian-market/natur-puglia-taralli-with-pizza-flavour/6830",
             "packaging": "1",
-            "size": "7in",
-            "price": 13.49
+            "size": "250gm",
+            "price": 3.99
         },
         {
             "brand": "Touch Bamboo",
             "name": "Paddle Skewer",
             "image": "/resources/images/products/party-supply/p_10014.jpeg",
-            "url": "/catalog/product/touch-bamboo-paddle-skewer/ls/10014",
+            "url": "/catalog/product/liquor-station/touch-bamboo-paddle-skewer/6014",
             "packaging": "50",
             "size": "60in",
             "price": 3.99
@@ -219,7 +219,7 @@ var recommended_products = {
             "brand": "Twizzler",
             "name": "Strawberry",
             "image": "/resources/images/products/snacks/p_9037.jpeg",
-            "url": "/catalog/product/twizzler-strawberry/ls/9037",
+            "url": "/catalog/product/snack-vendor/twizzler-strawberry/4537",
             "packaging": "1",
             "size": "227gm",
             "price": 2.99
@@ -228,25 +228,25 @@ var recommended_products = {
             "brand": "Pringles",
             "name": "Sour Cream & Onion",
             "image": "/resources/images/products/snacks/p_9001.jpeg",
-            "url": "/catalog/product/pringles-sour-cream-&-onion/ls/9001",
+            "url": "/catalog/product/snack-vendor/pringles-sour-cream-onion/4501",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.69
         },
         {
             "brand": "Stella Artois",
-            "name": null,
+            "name": "Pale Lager",
             "image": "/resources/images/products/beer/b_1039.jpeg",
-            "url": "/catalog/product/stella-artois/ls/1039",
+            "url": "/catalog/product/liquor-station/stella-artois-pale-lager/109",
             "packaging": "6",
             "size": "330ml",
             "price": 18.49
         },
         {
             "brand": "Cocktail Shaker",
-            "name": null,
+            "name": "30oz",
             "image": "/resources/images/products/party-supply/o_10012.jpeg",
-            "url": "/catalog/product/coctail-shaker/ls/10012",
+            "url": "/catalog/product/snack-vendor/cocktail-shaker-30oz/6012",
             "packaging": "1",
             "size": "30oz",
             "price": 14.49
@@ -255,7 +255,7 @@ var recommended_products = {
             "brand": "Hershey's",
             "name": "Cookies & Cream",
             "image": "/resources/images/products/snacks/br_9041.jpeg",
-            "url": "/catalog/product/hershey's-cookies-&-cream/ls/9041",
+            "url": "/catalog/product/snack-vendor/hersheys-cookies-cream/4541",
             "packaging": "1",
             "size": "100gm",
             "price": 3.19
@@ -266,7 +266,7 @@ var recommended_products = {
             "brand": "Scotties",
             "name": "Napkins",
             "image": "/resources/images/products/party-supply/p_10015.jpeg",
-            "url": "/catalog/product/scotties-napkins/ls/10015",
+            "url": "/catalog/product/liquor-station/scotties-napkins/6015",
             "packaging": "210",
             "size": "regular",
             "price": 2.49
@@ -275,16 +275,16 @@ var recommended_products = {
             "brand": "Bevara",
             "name": "Sealing Cleaps",
             "image": "/resources/images/products/party-supply/p_10022.jpeg",
-            "url": "/catalog/product/bevara-sealing-cleaps/ls/10022",
+            "url": "/catalog/product/liquor-station/bevara-sealing-cleaps/6022",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.69
         },
         {
-            "brand": "Shot Glass 35ml",
-            "name": null,
+            "brand": "Shot Glass",
+            "name": "35ml",
             "image": "/resources/images/products/party-supply/p_10020.jpeg",
-            "url": "/catalog/product/shot-glass-35ml/ls/10020",
+            "url": "/catalog/product/liquor-station/shot-glass-35ml/6020",
             "packaging": "6",
             "size": "330ml",
             "price": 18.49
@@ -293,7 +293,7 @@ var recommended_products = {
             "brand": "Mozaik",
             "name": "Cutlery Set",
             "image": "/resources/images/products/party-supply/p_10007.jpeg",
-            "url": "/catalog/product/mozaik-cutlery-set/ls/10007",
+            "url": "/catalog/product/liquor-station/mazaik-cutlery-set/6007",
             "packaging": "80",
             "size": "combo",
             "price": 10.99
@@ -302,7 +302,7 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
             "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
+            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
             "packaging": "1",
             "size": "100gm",
             "price": 3.19
@@ -313,7 +313,7 @@ var recommended_products = {
             "brand": "Arctic Glacier",
             "name": "Ice",
             "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.59
@@ -322,7 +322,7 @@ var recommended_products = {
             "brand": "Absolut",
             "name": "Vodka",
             "image": "/resources/images/products/spirit/b_5000.jpeg",
-            "url": "/catalog/product/absolut-vodka/ls/5000",
+            "url": "/catalog/product/liquor-station/absolut-vodka/2500",
             "packaging": "1",
             "size": "750ml",
             "price": 28.99
@@ -331,45 +331,45 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
             "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
+            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
             "packaging": "1",
             "size": "100gm",
             "price": 3.19
         },
         {
             "brand": "Jagermeister",
-            "name": null,
+            "name": "Herbal Liqueur",
             "image": "/resources/images/products/liqueur/b_7000.jpeg",
-            "url": "/catalog/product/jagermeister/ls/7000",
+            "url": "/catalog/product/liquor-station/jagermeister-herbal-liqueur/3500",
             "packaging": "1",
             "size": "750ml",
             "price": 31.99
         },
         {
-            "brand": "OASIS",
-            "name": "Exotic Mango",
-            "image": "/resources/images/products/beverages/b_9524.jpeg",
-            "url": "/catalog/product/oasis-exotic-mango/ls/9524",
+            "brand": "San Pellegrino",
+            "name": "Sparkling Blood Orange",
+            "image": "/resources/images/products/beverages/b_11610.jpeg",
+            "url": "/catalog/product/linas-italian-market/san-pellegrino-sparkling-blood-orange/7110",
             "packaging": "1",
-            "size": "960ml",
-            "price": 3.29
+            "size": "330ml",
+            "price": 1.69
         }
     ],
     "snacks": [
         {
-            "brand": "SunRype",
-            "name": "Apple Lime",
-            "image": "/resources/images/products/beverages/b_9522.jpeg",
-            "url": "/catalog/product/sunrype-apple-lime/ls/9522",
+            "brand": "Preservation",
+            "name": "Bloody Mary mix",
+            "image": "/resources/images/products/beverages/b_11607.jpeg",
+            "url": "/catalog/product/linas-italian-store/preservation-bloody-mary-mix/7107",
             "packaging": "1",
-            "size": "900ml",
-            "price": 1.99
+            "size": "946ml",
+            "price": 11.99
         },
         {
             "brand": "Bud Light",
-            "name": null,
+            "name": "Lager",
             "image": "/resources/images/products/beer/b_1052.jpeg",
-            "url": "/catalog/product/bud-light/ls/1052",
+            "url": "/catalog/product/liquor-station/bud-light-lager/71",
             "packaging": "6",
             "size": "341ml",
             "price": 15.99
@@ -378,7 +378,7 @@ var recommended_products = {
             "brand": "Purex",
             "name": "Bathroom Tissue Paper",
             "image": "/resources/images/products/everyday-needs/p_11000.jpeg",
-            "url": "/catalog/product/purex-bathroom-tissue-paper/ls/11000",
+            "url": "/catalog/product/snack-vendor/purex-bathroom-tissue-paper/6500",
             "packaging": "4",
             "size": "Double R.",
             "price": 5.29
@@ -387,7 +387,7 @@ var recommended_products = {
             "brand": "Perrier",
             "name": "Sparkling Water",
             "image": "/resources/images/products/beverages/b_9529.jpeg",
-            "url": "/catalog/product/perrier-sparkling-water/ls/9529",
+            "url": "/catalog/product/snack-vendor/perrier-lemon-orange/5535",
             "packaging": "6",
             "size": "500ml",
             "price": 10.74
@@ -396,7 +396,7 @@ var recommended_products = {
             "brand": "Simply",
             "name": "Lemonade Orange",
             "image": "/resources/images/products/beverages/b_9506.jpeg",
-            "url": "/catalog/product/simply-lemonade-orange/ls/9506",
+            "url": "/catalog/product/snack-vendor/simply-lemonade-orange/5509",
             "packaging": "1",
             "size": "1.75L",
             "price": 5.99
@@ -404,19 +404,19 @@ var recommended_products = {
     ],
     "canned-and-jarred": [
         {
-            "brand": "SunRype",
-            "name": "Apple Lime",
-            "image": "/resources/images/products/beverages/b_9522.jpeg",
-            "url": "/catalog/product/sunrype-apple-lime/ls/9522",
+            "brand": "Preservation",
+            "name": "Bloody Mary mix",
+            "image": "/resources/images/products/beverages/b_11607.jpeg",
+            "url": "/catalog/product/linas-italian-store/preservation-bloody-mary-mix/7107",
             "packaging": "1",
-            "size": "900ml",
-            "price": 1.99
+            "size": "946ml",
+            "price": 11.99
         },
         {
             "brand": "Bud Light",
-            "name": null,
+            "name": "Lager",
             "image": "/resources/images/products/beer/b_1052.jpeg",
-            "url": "/catalog/product/bud-light/ls/1052",
+            "url": "/catalog/product/liquor-station/bud-light-lager/71",
             "packaging": "6",
             "size": "341ml",
             "price": 15.99
@@ -425,7 +425,7 @@ var recommended_products = {
             "brand": "Purex",
             "name": "Bathroom Tissue Paper",
             "image": "/resources/images/products/everyday-needs/p_11000.jpeg",
-            "url": "/catalog/product/purex-bathroom-tissue-paper/ls/11000",
+            "url": "/catalog/product/snack-vendor/purex-bathroom-tissue-paper/6500",
             "packaging": "4",
             "size": "Double R.",
             "price": 5.29
@@ -434,7 +434,7 @@ var recommended_products = {
             "brand": "Perrier",
             "name": "Sparkling Water",
             "image": "/resources/images/products/beverages/b_9529.jpeg",
-            "url": "/catalog/product/perrier-sparkling-water/ls/9529",
+            "url": "/catalog/product/snack-vendor/perrier-lemon-orange/5535",
             "packaging": "6",
             "size": "500ml",
             "price": 10.74
@@ -443,7 +443,7 @@ var recommended_products = {
             "brand": "Simply",
             "name": "Lemonade Orange",
             "image": "/resources/images/products/beverages/b_9506.jpeg",
-            "url": "/catalog/product/simply-lemonade-orange/ls/9506",
+            "url": "/catalog/product/snack-vendor/simply-lemonade-orange/5509",
             "packaging": "1",
             "size": "1.75L",
             "price": 5.99
@@ -454,7 +454,7 @@ var recommended_products = {
             "brand": "Arctic Glacier",
             "name": "Ice",
             "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.59
@@ -463,7 +463,7 @@ var recommended_products = {
             "brand": "Absolut",
             "name": "Vodka",
             "image": "/resources/images/products/spirit/b_5000.jpeg",
-            "url": "/catalog/product/absolut-vodka/ls/5000",
+            "url": "/catalog/product/liquor-station/absolut-vodka/2500",
             "packaging": "1",
             "size": "750ml",
             "price": 28.99
@@ -472,54 +472,54 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
             "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
+            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
             "packaging": "1",
             "size": "100gm",
             "price": 3.19
         },
         {
             "brand": "Jagermeister",
-            "name": null,
+            "name": "Herbal Liqueur",
             "image": "/resources/images/products/liqueur/b_7000.jpeg",
-            "url": "/catalog/product/jagermeister/ls/7000",
+            "url": "/catalog/product/liquor-station/jagermeister-herbal-liqueur/3500",
             "packaging": "1",
             "size": "750ml",
             "price": 31.99
         },
         {
-            "brand": "OASIS",
-            "name": "Exotic Mango",
-            "image": "/resources/images/products/beverages/b_9524.jpeg",
-            "url": "/catalog/product/oasis-exotic-mango/ls/9524",
+            "brand": "San Pellegrino",
+            "name": "Sparkling Blood Orange",
+            "image": "/resources/images/products/beverages/b_11610.jpeg",
+            "url": "/catalog/product/linas-italian-market/san-pellegrino-sparkling-blood-orange/7110",
             "packaging": "1",
-            "size": "960ml",
-            "price": 3.29
+            "size": "330ml",
+            "price": 1.69
         }
     ],
     "grains-and-legumes": [
         {
-            "brand": "Munchies",
-            "name": "Snack Mix Original",
-            "image": "/resources/images/products/snacks/p_9011.jpeg",
-            "url": "/catalog/product/munchies-snack-mix-original/ls/9011",
+            "brand": "Doritos",
+            "name": "Cheese",
+            "image": "/resources/images/products/snacks/p_9028.jpeg",
+            "url": "/catalog/product/snack-vendor/doritos-cheese/4528",
             "packaging": "1",
             "size": "family",
-            "price": 3.99
+            "price": 4.79
         },
         {
-            "brand": "Wonderful Pistachios",
-            "name": "Sweet Chili",
-            "image": "/resources/images/products/snacks/p_9032.jpeg",
-            "url": "/catalog/product/wonderful-pistachios-sweet-chili/ls/9032",
+            "brand": "Tostitos",
+            "name": "Round",
+            "image": "/resources/images/products/snacks/p_9031.jpeg",
+            "url": "/catalog/product/snack-vendor/tostitos-round/4531",
             "packaging": "1",
-            "size": "200mg",
-            "price": 4.99
+            "size": "regular",
+            "price": 4.49
         },
         {
             "brand": "Jack Link's",
             "name": "Cholula",
             "image": "/resources/images/products/snacks/p_9016.jpeg",
-            "url": "/catalog/product/jack-link's-cholula/ls/9016",
+            "url": "/catalog/product/snack-vendor/jack-links-cholula/4516",
             "packaging": "1",
             "size": "80gm",
             "price": 6.99
@@ -528,7 +528,7 @@ var recommended_products = {
             "brand": "Tostitos",
             "name": "Red Pepper Salsa",
             "image": "/resources/images/products/snacks/jr_9045.jpeg",
-            "url": "/catalog/product/tostitos-red-pepper-salsa/ls/9045",
+            "url": "/catalog/product/snack-vendor/tostitos-red-pepper-salsa/4545",
             "packaging": "1",
             "size": "425gm",
             "price": 4.59
@@ -537,7 +537,7 @@ var recommended_products = {
             "brand": "Doritos",
             "name": "Cheese",
             "image": "/resources/images/products/snacks/p_9028.jpeg",
-            "url": "/catalog/product/doritos-cheese/ls/9028",
+            "url": "/catalog/product/snack-vendor/doritos-cheese/4528",
             "packaging": "1",
             "size": "family",
             "price": 4.79
@@ -548,7 +548,7 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Chili Piment Rouge",
             "image": "/resources/images/products/snacks/br_9042.jpeg",
-            "url": "/catalog/product/lindt-chili-piment-rouge/ls/9042",
+            "url": "/catalog/product/snack-vendor/lindt-chili-piment-rouge/4542",
             "packaging": "1",
             "size": "100gm",
             "price": 3.89
@@ -557,7 +557,7 @@ var recommended_products = {
             "brand": "Browne",
             "name": "Corkscrew Wing Bottle Opener",
             "image": "/resources/images/products/party-supply/o_10023.jpeg",
-            "url": "/catalog/product/browne-corkscrew-wing-bottle-opener/ls/10023",
+            "url": "/catalog/product/liquor-station/browne-corkscrew-wing-bottle-opener/6023",
             "packaging": "1",
             "size": "6in",
             "price": 3.99
@@ -566,28 +566,28 @@ var recommended_products = {
             "brand": "Mozaik",
             "name": "Classic Wine Glass",
             "image": "/resources/images/products/party-supply/p_10013.jpeg",
-            "url": "/catalog/product/mozaik-classic-wine-glass/ls/10013",
+            "url": "/catalog/product/liquor-station/mozaik-classic-wine-glass/6013",
             "packaging": "4",
             "size": "15oz",
             "price": 9.49
         },
         {
-            "brand": "Senssations",
-            "name": "Salami Combo",
-            "image": "/resources/images/products/snacks/p_9057.jpeg",
-            "url": "/catalog/product/senssations-salami-combo/ls/9057",
+            "brand": "Sea Change Seafoods",
+            "name": "Candied Wild Smoked Salmon",
+            "image": "/resources/images/products/dry-packaged/cntr_11112.jpeg",
+            "url": "/catalog/product/linas-italian-market/sea-change-seafoods-candied-wild-smoked-salmon/6613",
             "packaging": "1",
-            "size": "100mg",
-            "price": 8.99
+            "size": "70mg",
+            "price": 14.99
         },
         {
-            "brand": "Babybel",
-            "name": "Edam Cheese",
-            "image": "/resources/images/products/snacks/p_9055.jpeg",
-            "url": "/catalog/product/babybel-edam-cheese/ls/9055",
+            "brand": "Rummo",
+            "name": "Fusilli #48",
+            "image": "/resources/images/products/pasta-and-baking/bx_11006.jpeg",
+            "url": "/catalog/product/linas-italian-market/rummo-fusilli-48/6506",
             "packaging": "1",
-            "size": "120gm",
-            "price": 6.89
+            "size": "500gm",
+            "price": 2.69
         }
     ],
     "dry-packaged": [
@@ -595,7 +595,7 @@ var recommended_products = {
             "brand": "Patron",
             "name": "Silver",
             "image": "/resources/images/products/spirit/b_5097.jpeg",
-            "url": "/catalog/product/patron-silver/ls/5097",
+            "url": "/catalog/product/liquor-station/patron-silver/2596",
             "packaging": "1",
             "size": "750ml",
             "price": 71.99
@@ -604,16 +604,16 @@ var recommended_products = {
             "brand": "Arctic Glacier",
             "name": "Ice",
             "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.59
         },
         {
             "brand": "Red Bull",
-            "name": null,
+            "name": "Classic",
             "image": "/resources/images/products/beverages/c_9526.jpeg",
-            "url": "/catalog/product/red-bull/ls/9526",
+            "url": "/catalog/product/snack-vendor/red-bull-classic/5531",
             "packaging": "4",
             "size": "250",
             "price": 10.49
@@ -622,16 +622,16 @@ var recommended_products = {
             "brand": "Mott's",
             "name": "Clamato The Original",
             "image": "/resources/images/products/beverages/b_9511.jpeg",
-            "url": "/catalog/product/mott's-clamato-the-original/ls/9511",
+            "url": "/catalog/product/snack-vendor/motts-clamato-the-original/5516",
             "packaging": "1",
             "size": "32oz",
             "price": 3.99
         },
         {
             "brand": "Coca-Cola",
-            "name": null,
+            "name": "Classic",
             "image": "/resources/images/products/beverages/b_9500.jpeg",
-            "url": "/catalog/product/coca-cola/ls/9500",
+            "url": "/catalog/product/snack-vendor/coca-cola-classic/5500",
             "packaging": "1",
             "size": "1L",
             "price": 2.79
@@ -642,7 +642,7 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Intense Orange",
             "image": "/resources/images/products/snacks/br_9043.jpeg",
-            "url": "/catalog/product/lindt-chili-piment-rouge/ls/9043",
+            "url": "/catalog/product/snack-vendor/lindt-intense-orange/4543",
             "packaging": "1",
             "size": "100gm",
             "price": 3.89
@@ -651,7 +651,7 @@ var recommended_products = {
             "brand": "Arctic Glacier",
             "name": "Ice",
             "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.59
@@ -660,25 +660,25 @@ var recommended_products = {
             "brand": "Guinness",
             "name": "Draught",
             "image": "/resources/images/products/beer/c_1060.jpeg",
-            "url": "/catalog/product/guinness-draught/ls/1060",
+            "url": "/catalog/product/liquor-station/guinness-draught/83",
             "packaging": "4",
             "size": "440ml",
             "price": 14.99
         },
         {
-            "brand": "Safeway",
-            "name": "Fruit Tray",
-            "image": "/resources/images/products/snacks/o_9059.jpeg",
-            "url": "/catalog/product/safeway-fruit-tray/ls/9059",
+            "brand": "Natur Puglia",
+            "name": "Taralli with Pizza Flavour",
+            "image": "/resources/images/products/baked-goods/btc_11262.jpeg",
+            "url": "/catalog/product/linas-italian-market/natur-puglia-taralli-with-pizza-flavour/6830",
             "packaging": "1",
-            "size": "7in",
-            "price": 13.49
+            "size": "250gm",
+            "price": 3.99
         },
         {
             "brand": "Touch Bamboo",
             "name": "Paddle Skewer",
             "image": "/resources/images/products/party-supply/p_10014.jpeg",
-            "url": "/catalog/product/touch-bamboo-paddle-skewer/ls/10014",
+            "url": "/catalog/product/liquor-station/touch-bamboo-paddle-skewer/6014",
             "packaging": "50",
             "size": "60in",
             "price": 3.99
@@ -689,7 +689,7 @@ var recommended_products = {
             "brand": "Twizzler",
             "name": "Strawberry",
             "image": "/resources/images/products/snacks/p_9037.jpeg",
-            "url": "/catalog/product/twizzler-strawberry/ls/9037",
+            "url": "/catalog/product/snack-vendor/twizzler-strawberry/4537",
             "packaging": "1",
             "size": "227gm",
             "price": 2.99
@@ -698,25 +698,25 @@ var recommended_products = {
             "brand": "Pringles",
             "name": "Sour Cream & Onion",
             "image": "/resources/images/products/snacks/p_9001.jpeg",
-            "url": "/catalog/product/pringles-sour-cream-&-onion/ls/9001",
+            "url": "/catalog/product/snack-vendor/pringles-sour-cream-onion/4501",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.69
         },
         {
             "brand": "Stella Artois",
-            "name": null,
+            "name": "Pale Lager",
             "image": "/resources/images/products/beer/b_1039.jpeg",
-            "url": "/catalog/product/stella-artois/ls/1039",
+            "url": "/catalog/product/liquor-station/stella-artois-pale-lager/109",
             "packaging": "6",
             "size": "330ml",
             "price": 18.49
         },
         {
             "brand": "Cocktail Shaker",
-            "name": null,
+            "name": "30oz",
             "image": "/resources/images/products/party-supply/o_10012.jpeg",
-            "url": "/catalog/product/coctail-shaker/ls/10012",
+            "url": "/catalog/product/snack-vendor/cocktail-shaker-30oz/6012",
             "packaging": "1",
             "size": "30oz",
             "price": 14.49
@@ -725,7 +725,7 @@ var recommended_products = {
             "brand": "Hershey's",
             "name": "Cookies & Cream",
             "image": "/resources/images/products/snacks/br_9041.jpeg",
-            "url": "/catalog/product/hershey's-cookies-&-cream/ls/9041",
+            "url": "/catalog/product/snack-vendor/hersheys-cookiescream/4541",
             "packaging": "1",
             "size": "100gm",
             "price": 3.19
@@ -736,7 +736,7 @@ var recommended_products = {
             "brand": "Scotties",
             "name": "Napkins",
             "image": "/resources/images/products/party-supply/p_10015.jpeg",
-            "url": "/catalog/product/scotties-napkins/ls/10015",
+            "url": "/catalog/product/liquor-station/scotties-napkins/6015",
             "packaging": "210",
             "size": "regular",
             "price": 2.49
@@ -745,16 +745,16 @@ var recommended_products = {
             "brand": "Bevara",
             "name": "Sealing Cleaps",
             "image": "/resources/images/products/party-supply/p_10022.jpeg",
-            "url": "/catalog/product/bevara-sealing-cleaps/ls/10022",
+            "url": "/catalog/product/liquor-station/bevara-sealing-cleaps/6022",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.69
         },
         {
-            "brand": "Shot Glass 35ml",
-            "name": null,
+            "brand": "Shot Glass",
+            "name": "35ml",
             "image": "/resources/images/products/party-supply/p_10020.jpeg",
-            "url": "/catalog/product/shot-glass-35ml/ls/10020",
+            "url": "/catalog/product/liquor-station/shot-glass-35ml/6020",
             "packaging": "6",
             "size": "330ml",
             "price": 18.49
@@ -763,7 +763,7 @@ var recommended_products = {
             "brand": "Mozaik",
             "name": "Cutlery Set",
             "image": "/resources/images/products/party-supply/p_10007.jpeg",
-            "url": "/catalog/product/mozaik-cutlery-set/ls/10007",
+            "url": "/catalog/product/liquor-station/mazaik-cutlery-set/6007",
             "packaging": "80",
             "size": "combo",
             "price": 10.99
@@ -772,7 +772,7 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
             "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
+            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
             "packaging": "1",
             "size": "100gm",
             "price": 3.19
@@ -783,7 +783,7 @@ var recommended_products = {
             "brand": "Arctic Glacier",
             "name": "Ice",
             "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.59
@@ -792,7 +792,7 @@ var recommended_products = {
             "brand": "Absolut",
             "name": "Vodka",
             "image": "/resources/images/products/spirit/b_5000.jpeg",
-            "url": "/catalog/product/absolut-vodka/ls/5000",
+            "url": "/catalog/product/liquor-station/absolut-vodka/2500",
             "packaging": "1",
             "size": "750ml",
             "price": 28.99
@@ -801,28 +801,28 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
             "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
+            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
             "packaging": "1",
             "size": "100gm",
             "price": 3.19
         },
         {
             "brand": "Jagermeister",
-            "name": null,
+            "name": "Herbal Liqueur",
             "image": "/resources/images/products/liqueur/b_7000.jpeg",
-            "url": "/catalog/product/jagermeister/ls/7000",
+            "url": "/catalog/product/liquor-station/jagermeister-herbal-liqueur/3500",
             "packaging": "1",
             "size": "750ml",
             "price": 31.99
         },
         {
-            "brand": "OASIS",
-            "name": "Exotic Mango",
-            "image": "/resources/images/products/beverages/b_9524.jpeg",
-            "url": "/catalog/product/oasis-exotic-mango/ls/9524",
+            "brand": "San Pellegrino",
+            "name": "Sparkling Blood Orange",
+            "image": "/resources/images/products/beverages/b_11610.jpeg",
+            "url": "/catalog/product/linas-italian-market/san-pellegrino-sparkling-blood-orange/7110",
             "packaging": "1",
-            "size": "960ml",
-            "price": 3.29
+            "size": "330ml",
+            "price": 1.69
         }
     ],
     "confectionery": [
@@ -830,7 +830,7 @@ var recommended_products = {
             "brand": "Arctic Glacier",
             "name": "Ice",
             "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/arctic-glacier-ice/ls/9528",
+            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
             "packaging": "1",
             "size": "5.95lb",
             "price": 3.59
@@ -839,7 +839,7 @@ var recommended_products = {
             "brand": "Absolut",
             "name": "Vodka",
             "image": "/resources/images/products/spirit/b_5000.jpeg",
-            "url": "/catalog/product/absolut-vodka/ls/5000",
+            "url": "/catalog/product/liquor-station/absolut-vodka/2500",
             "packaging": "1",
             "size": "750ml",
             "price": 28.99
@@ -848,28 +848,28 @@ var recommended_products = {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
             "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/lindt-hazelnut-chocolate/ls/9039",
+            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
             "packaging": "1",
             "size": "100gm",
             "price": 3.19
         },
         {
             "brand": "Jagermeister",
-            "name": null,
+            "name": "Herbal Liqueur",
             "image": "/resources/images/products/liqueur/b_7000.jpeg",
-            "url": "/catalog/product/jagermeister/ls/7000",
+            "url": "/catalog/product/liquor-station/jagermeister-herbal-liqueur/3500",
             "packaging": "1",
             "size": "750ml",
             "price": 31.99
         },
         {
-            "brand": "OASIS",
-            "name": "Exotic Mango",
-            "image": "/resources/images/products/beverages/b_9524.jpeg",
-            "url": "/catalog/product/oasis-exotic-mango/ls/9524",
+            "brand": "San Pellegrino",
+            "name": "Sparkling Blood Orange",
+            "image": "/resources/images/products/beverages/b_11610.jpeg",
+            "url": "/catalog/product/linas-italian-market/san-pellegrino-sparkling-blood-orange/7110",
             "packaging": "1",
-            "size": "960ml",
-            "price": 3.29
+            "size": "330ml",
+            "price": 1.69
         }
     ],
 }
@@ -935,10 +935,8 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
         req.options.ejs.serving_suggestions = "";
     }
     
-    if(!product.images[0].includes("nutritions")){
+    if(product.images.length > 0){
         req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="' + product.images[0] + '">';
-    } else{
-        req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="' + product.images[1] + '">';
     }
 
     req.options.ejs.product_images = JSON.stringify({"images" : product.images});
@@ -1004,10 +1002,12 @@ function convertHomitTags(string) {
 
 function clearProductUrl(path){
     var tempPath = path;
-    let characters = ["#", "&", "'", ",", ".", "%", "--"];
+    let characters = ["#", "&", "'", ",", ".", "%"];
     for(let i=0; i<characters.length; i++){
         tempPath = tempPath.replace(characters[i], "");
     }
+    tempPath = tempPath.replace("---", "-");
+    tempPath = tempPath.replace("--", "-");
     return tempPath;
 }
 
