@@ -237,7 +237,7 @@ var recommended_products = {
             "brand": "Stella Artois",
             "name": "Pale Lager",
             "image": "/resources/images/products/beer/b_1039.jpeg",
-            "url": "/catalog/product/liquor-station/stella-artois-pale-lager/109",
+            "url": "/catalog/product/liquor-station/stella-artois-pale-lager/54",
             "packaging": "6",
             "size": "330ml",
             "price": 18.49
@@ -246,7 +246,7 @@ var recommended_products = {
             "brand": "Cocktail Shaker",
             "name": "30oz",
             "image": "/resources/images/products/party-supply/o_10012.jpeg",
-            "url": "/catalog/product/snack-vendor/cocktail-shaker-30oz/6012",
+            "url": "/catalog/product/liquor-station/cocktail-shaker-30oz/6012",
             "packaging": "1",
             "size": "30oz",
             "price": 14.49
@@ -360,7 +360,7 @@ var recommended_products = {
             "brand": "Preservation",
             "name": "Bloody Mary mix",
             "image": "/resources/images/products/beverages/b_11607.jpeg",
-            "url": "/catalog/product/linas-italian-store/preservation-bloody-mary-mix/7107",
+            "url": "/catalog/product/linas-italian-market/preservation-bloody-mary-mix/7107",
             "packaging": "1",
             "size": "946ml",
             "price": 11.99
@@ -407,7 +407,7 @@ var recommended_products = {
             "brand": "Preservation",
             "name": "Bloody Mary mix",
             "image": "/resources/images/products/beverages/b_11607.jpeg",
-            "url": "/catalog/product/linas-italian-store/preservation-bloody-mary-mix/7107",
+            "url": "/catalog/product/linas-italian-market/preservation-bloody-mary-mix/7107",
             "packaging": "1",
             "size": "946ml",
             "price": 11.99
@@ -716,7 +716,7 @@ var recommended_products = {
             "brand": "Cocktail Shaker",
             "name": "30oz",
             "image": "/resources/images/products/party-supply/o_10012.jpeg",
-            "url": "/catalog/product/snack-vendor/cocktail-shaker-30oz/6012",
+            "url": "/catalog/product/liquor-station/cocktail-shaker-30oz/6012",
             "packaging": "1",
             "size": "30oz",
             "price": 14.49
@@ -725,7 +725,7 @@ var recommended_products = {
             "brand": "Hershey's",
             "name": "Cookies & Cream",
             "image": "/resources/images/products/snacks/br_9041.jpeg",
-            "url": "/catalog/product/snack-vendor/hersheys-cookiescream/4541",
+            "url": "/catalog/product/snack-vendor/hersheys-cookies-cream/4541",
             "packaging": "1",
             "size": "100gm",
             "price": 3.19

@@ -9,14 +9,15 @@ body {
     letter-spacing: 0.025em;
 }
 
-.none{
+.none {
     display: none;
 }
 
-.description ul, .description li, .ingredients ul, .ingredients li{
+.description ul, .description li, .ingredients ul, .ingredients li {
     list-style-type: initial !important;
     font-size: 16px;
 }
+
 .bold {
     font-weight: 600;
     margin-bottom: 1px;
@@ -27,12 +28,12 @@ h1 {
     margin-bottom: 25px;
 }
 
-.product-name-h2-web{
-    text-align: center; 
-    margin-top: 0; 
-    font-weight: 600; 
-    color: rgba(39, 9, 9,0.9);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+.product-name-h2-web {
+    text-align: center;
+    margin-top: 0;
+    font-weight: 600;
+    color: rgba(39, 9, 9, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .controller {
@@ -64,6 +65,44 @@ footer {
 
 .section-box {
     margin-top: 10px;
+}
+
+.web-location-sec-mob{
+    display: none;
+}
+
+.web-location-sec {
+    margin-right: auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.web-location-a {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 7px;
+    background-color: rgba(195, 218, 228, 0.7);
+    font-size: 13px;
+    color: rgba(0, 0, 0, 1);
+    text-align: center;
+    border: 1px solid rgb(0, 62, 133);
+    border-radius: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.web-location-a:hover {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgb(124, 179, 204);
+    transition: background-color 0.3s ease;
+}
+
+.loc-category {
+    text-transform: capitalize;
+}
+.loc-errow{
+    display: flex; justify-content: center; align-items: center; font-size: 13px; color: rgba(0,0,0,0.4); width: 15px;
 }
 
 .product-image {
@@ -106,20 +145,22 @@ footer {
     height: 55px;
 }
 
-.ingredients-sec{
+.ingredients-sec {
     margin-top: 25px;
 }
 
-.ingredients{
+.ingredients {
     margin-bottom: 20px;
 }
 
-.ingredients li{
+.ingredients li {
     font-size: 16px;
 }
 
-.sub-header{
-    font-size: 18px; color: rgba(0,0,0,0.85); font-weight: 600;
+.sub-header {
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 600;
 }
 
 .size-section {
@@ -244,21 +285,20 @@ button:focus {
     text-transform: capitalize;
 }
 
-.description{
+.description {
     margin-bottom: 20px;
 }
 
-.preview-sec{
+.preview-sec {
     margin-top: 30px;
 }
-.recomended-products{
+
+.recomended-products {
     position: relative;
     right: calc((100vw - 100%)/2);
     margin-top: 80px;
     margin-bottom: 60px;
-    background-color: rgba(255,255,255,1);
-    // margin-top: 80px;
-    // margin-bottom: 70px;
+    background-color: rgba(255, 255, 255, 1);
     width: 100vw;
 }
 
@@ -346,17 +386,18 @@ button:focus {
 
 footer {
     position: relative;
+
     // top: 120px;
     bottom: initial;
 }
 
-footer{
+footer {
     position: relative;
     bottom: initial;
 }
 
-@media(max-width: 991px){
-    .product-property{
+@media (max-width: 991px) {
+    .product-property {
         width: 100%;
     }
 }
@@ -370,8 +411,8 @@ footer{
 
 /* start of window shrinkage affect solution */
 
-@media (max-width: 992px){
-    h2{
+@media (max-width: 992px) {
+    h2 {
         margin-top: 50px;
     }
 }
@@ -405,7 +446,7 @@ footer{
 
 /* start of non-mobile/tablet styles */
 @media screen and (min-device-width: 768px) {
-    .product-name-h2-mob{
+    .product-name-h2-mob {
         display: none;
     }
 }
@@ -415,16 +456,40 @@ footer{
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
-    body{
+
+    .web-location-sec{
+        display: none;
+    }
+
+    .web-location-sec-mob{
+        display: initial;
+        margin-right: auto;
+        justify-content: center;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+    }
+    .web-location-a{
+        font-size: 10px;
+        height: 20px;
+    }
+    
+    .ingredients-sec{
+        margin-top: 15px;
+    }
+
+    body {
         padding-top: 20px;
     }
+
     .product-content {
         max-width: calc(100vw - 40px);
         width: calc(100vw - 40px);
     }
 
-    .product-property{
-        padding-left: 0; padding-right: 0;
+    .product-property {
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .checkout-menu-btn-div {
@@ -444,17 +509,17 @@ footer{
         text-align: center;
     }
 
-    .product-name-h2-web{
+    .product-name-h2-web {
         display: none;
     }
 
-    .product-name-h2-mob{
-        margin-top: 0; 
-        text-align: center; 
-        font-weight: 600; 
+    .product-name-h2-mob {
+        margin-top: 0;
+        text-align: center;
+        font-weight: 600;
         color: rgb(39, 9, 9);
         font-size: 22px;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .product-image {

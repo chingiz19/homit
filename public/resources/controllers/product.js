@@ -3,10 +3,8 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
         $scope.recommended_products = JSON.parse($("#recommendedProducts").val());
         $scope.product = JSON.parse($("#product").val());
         $scope.productImages = JSON.parse($("#product-images").val()).images;
-        if (!$scope.productImages[0].includes("nutritions")) {
+        if($scope.productImages.length > 0){
             $scope.selectedImage = $scope.productImages[0];
-        } else {
-            $scope.selectedImage = $scope.productImages[1];
         }
     };
 
@@ -77,6 +75,16 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     $scope.hrefTo = function (path) {
         $window.location.href = $window.location.origin + path;
     };
+
+    $scope.hrefToStore = function(path){
+        $window.location.href = $window.location.origin + "/catalog/" + path;
+        sessionStorage.setCategoryClicked("store-switched");
+    };
+
+    $scope.hrefToSubcat = function(product){
+        $window.location.href = $window.location.origin + "/catalog/" + product.store_type_api_name + "/" + product.category;
+        sessionStorage.setSearchSubcategory(product.subcategory);
+    }
 
     $scope.init();
 });
