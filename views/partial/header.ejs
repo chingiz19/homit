@@ -14,59 +14,100 @@
                 <img class="logo-img" src="/resources/images/Homit_Logo_TM.jpeg" />
             </a>
         </section>
-        <button id="search-btn-mob" ng-show="screenMob" class="search-btn-mob" ng-click="focusSearchInput(); mobileSearchShow = !mobileSearchShow; searchRequest = '' ; searchDisplay = '';" ng-style="('<%= userLoggedIn %>' == 'true') && {'margin-right': '75px'}">
+        <button id="search-btn-mob" ng-show="screenMob" class="search-btn-mob" ng-click="focusSearchInput(); mobileSearchShow = !mobileSearchShow; searchRequest = '' ; searchDisplay = '';"
+            ng-style="('<%= userLoggedIn %>' == 'true') && {'margin-right': '75px'}">
             <ng-md-icon ng-show="!mobileSearchShow" icon="search" class="search-icon-mob"></ng-md-icon>
             <ng-md-icon ng-show="mobileSearchShow" icon="clear" class="search-icon-mob"></ng-md-icon>
         </button>
         <!-- search bar -->
-        <section class="search-sec" ng-show="!screenMob" flex="40">
+        <section class="search-sec" flex="40">
             <button class="search-btn" ng-click="searchRequest = '' ; searchDisplay = ''; ">
                 <ng-md-icon ng-if="!searchRequest" icon="search"></ng-md-icon>
                 <ng-md-icon ng-if="searchRequest" icon="clear"></ng-md-icon>
             </button>
             <input id="global-search-input" class="search-input" ng-model="searchRequest" placeholder="Search to Homit...">
 
-            <div ng-if="searchDisplay" class="NM-search-box">
-                <ul ng-if="resultStoreType.length" id="glbSrchA">
-                    <li ng-repeat="node in resultStoreType">
+            <div ng-if="searchDisplay" class="search-result-box">
+                <ul ng-if="resultStoreType.length" id="glbSrchA" class="store-ul">
+                    <li class="li-content" ng-repeat="node in resultStoreType">
                         <a class="navigate-search" href="/catalog/{{ node.store_type_api_name }}/" target="_self" id="store_type_{{ $index + 1 }}">
-                            <span>{{ node.store_type_display_name }}</span>
+                            <span class="store-text">
+                                <em class="match-em">{{ node.tree_matched }}</em>{{ node.tree_end }}</span>
                         </a>
                     </li>
-                    <li ng-if="resultCategory.length || resultSubcategory.length || resultProducts.length" class="NM-search-box-line">
+                    <li class="srch-result-sep-line" ng-if="resultCategory.length || resultSubcategory.length || resultProducts.length">
                         <div></div>
                     </li>
                 </ul>
-                <ul ng-if="resultCategory.length || resultSubcategory.length">
-                    <li ng-repeat="node in resultCategory">
+                <ul ng-if="resultCategory.length || resultSubcategory.length" class="cat-subcat-ul">
+                    <li class="li-content" ng-repeat="node in resultCategory">
                         <a class="navigate-search" href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" target="_self" id="category_{{$index + 1}}">
-                            <span>{{ node.category_display_name }}</span>
+                            <ul class="cat-subcat-ul">
+                                <li>{{ node.store_type_display_name }}
+                                    <span class="greater-char">></span>
+                                </li>
+                                <li>
+                                    <span class="match-cat-subcat-span">
+                                        <em class="match-em">{{ node.tree_matched }}</em>{{ node.tree_end }}</span>
+                                </li>
+                            </ul>
                         </a>
                     </li>
-                    <li ng-repeat="node in resultSubcategory">
-                        <a class="navigate-search" href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" target="_self" ng-click="goToSearchedNode(node.subcategory, 0)"
-                            id="subcategory_{{ $index + 1 }}">
-                            <span>{{ node.subcategory }}</span>
-                        </a>
+                    <li class="li-content" ng-repeat="node in resultSubcategory">
+                        <div class="navigate-search subcat-div" ng-click="goToSubcat(node)" id="subcategory_{{ $index + 1 }}">
+                            <ul class="cat-subcat-ul">
+                                <li>{{ node.store_type_display_name }}
+                                    <span class="greater-char">></span>{{ node.category_display_name }}
+                                    <span class="greater-char">></span>
+                                </li>
+                                <li>
+                                    <span class="match-cat-subcat-span">
+                                        <em class="match-em">{{ node.tree_matched }}</em>{{ node.tree_end }}</span>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
-                    <li ng-if="resultProducts.length" class="NM-search-box-line">
+                    <li class="cat-subcat-ul" ng-if="resultProducts_start.length || resultProducts_descr || resultProducts_end">
                         <div></div>
                     </li>
                 </ul>
-                <ul ng-if="resultProducts.length">
-                    <li ng-repeat="node in resultProducts">
-                        <a class="navigate-search" href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" target="_self" layout="row"
-                            ng-click="goToSearchedNode(node.subcategory, node.product_id)" id="product_{{ $index + 1 }}">
-                            <span>
-                                <img ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
-                            </span>
-                            <span class="NM-product-details">{{ node.brand + " " + node.name }}</span>
+                <ul ng-if="resultProducts_start.length" class="product-ul">
+                    <li ng-repeat="node in resultProducts_start">
+                        <div class="navigate-search flex-row srch-product-content" ng-click="hrefToPrdPage(node)" id="product_start_{{ $index + 1 }}">
+                            <img class="search-prd-img" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
+                            <span class="product-brand-txt">{{ node.brand_name_str }}
+                                <em class="match-em">{{ node.brand_name_matched }}</em>{{ node.brand_name_end }}</span>
+                        </div>
+                    </li>
+                </ul>
+                <ul ng-if="resultProducts_descr.length" class="product-ul">
+                    <li ng-repeat="node in resultProducts_descr">
+                        <div class="navigate-search flex-row srch-product-content" ng-click="hrefToPrdPage(node)" id="product_descr_{{ $index + 1 }}">
+                            <img class="search-prd-img" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
+                            <ul class="product-2-ul">
+                                <li class="product-brand-txt">{{ node.brand + " " + node.name }}</li>
+                                <li>
+                                    <span class="product-descr-txt">{{ node.description_key_display_name }}: {{ node.description_str }}
+                                        <em class="match-em">{{ node.description_matched }}</em>{{ node.description_end }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul ng-if="resultProducts_end.length" class="product-ul">
+                    <li ng-repeat="node in resultProducts_end">
+                        <a class="navigate-search flex-row srch-product-content" ng-click="hrefToPrdPage(node)" id="product_end_{{ $index + 1 }}">
+                            <img class="search-prd-img" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
+                            <ul class="product-2-ul">
+                                <span class="product-brand-txt">{{ node.brand_name_str }}
+                                    <em class="match-em">{{ node.brand_name_matched }}</em>{{ node.brand_name_end }}</span>
+                            </ul>
                         </a>
                     </li>
                 </ul>
-                <ul ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultStoreType.length">
-                    <li class="NM-not-found">
-                        <span>Not Found Yet...</span>
+                <ul class="not-found-ul" ng-if="!resultProducts_start.length && !resultProducts_descr.length && !resultProducts_end.length && !resultSubcategory.length  && !resultCategory.length && !resultStoreType.length">
+                    <li class="not-found-li">
+                        <span class="not-found-span">Not Found Yet...</span>
                     </li>
                 </ul>
             </div>
@@ -78,14 +119,13 @@
             </button>
             <div id="hdrHub" aria-hidden="true" class="header-hub" ng-style="('<%= userLoggedIn %>' == 'true') && {'right': '28px'} || {'right': '128px'}">
                 <div id="hdrHub1" class="box-extBox"></div>
-                <!-- <div id="hub-background-image"></div> -->
                 <div id="hdrHub2">
                     <div class="hub-box">
                         <div id="snack-vendor-dashboard" class="store-div snack-vendor-div" ng-click="hrefTo('/catalog/snack-vendor')">
                             <div>
                                 <img ng-src="/resources/images/non-catalog-image/homit_hub/snack-vendor_icon.png">
                             </div>
-                            <h3 style="font-size: 16px; padding-top: 10px;">
+                            <h3>
                                 <a href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a>
                             </h3>
                         </div>
@@ -93,7 +133,7 @@
                             <div>
                                 <img ng-src="/resources/images/non-catalog-image/homit_hub/linas-italian-store_icon.png">
                             </div>
-                            <h3 style="font-size: 16px; padding-top: 10px;">
+                            <h3>
                                 <a href="https://homit.ca/catalog/linas-italian-market">Lina's Italian Market</a>
                             </h3>
                         </div>
@@ -101,7 +141,7 @@
                             <div>
                                 <img ng-src="/resources/images/non-catalog-image/homit_hub/liquor-station_icon.png">
                             </div>
-                            <h3 style="font-size: 16px; padding-top: 10px;">
+                            <h3>
                                 <a href="https://homit.ca/catalog/liquor-station">Liquor Station</a>
                             </h3>
                         </div>
@@ -145,51 +185,6 @@
             <input id="global-search-input-mobile" class="mob-search-input" ng-model="searchRequest" placeholder="Search to Homit..."
                 autocomplete="none" autocorrect="off" spellcheck="false">
         </div>
-    </section>
-    <!-- Mobile global-search Result-->
-    <section ng-if="searchDisplay && screenMob" class="mob-search-result">
-        <ul ng-if="resultStoreType.length" class="search-res-ul">
-            <li ng-repeat="node in resultStoreType" class="search-res-li">
-                <a href="/catalog/{{ node.store_type_api_name }}/" class="search-res-a" target="_self" id="super_category_{{ $index + 1 }}">
-                    <span class="search-res-span">{{ node.store_type_display_name }}</span>
-                </a>
-            </li>
-            <li class="search-res-line" ng-if="resultCategory.length || resultSubcategory.length || resultProducts.length">
-                <div></div>
-            </li>
-        </ul>
-        <ul ng-if="resultCategory.length || resultSubcategory.length" class="search-res-ul">
-            <li ng-repeat="node in resultCategory" class="search-res-li">
-                <a href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" class="search-res-a" target="_self" id="category_{{ $index + 1 }}">
-                    <span class="search-res-span">{{ node.category_display_name }}</span>
-                </a>
-            </li>
-            <li ng-repeat="node in resultSubcategory" class="search-res-li">
-                <a href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" class="search-res-a" target="_self" ng-click="goToSearchedNode(node.subcategory, 0)"
-                    id="subcategory_{{ $index + 1 }}">
-                    <span class="search-res-span">{{ node.subcategory }}</span>
-                </a>
-            </li>
-            <li class="search-res-line" ng-if="resultProducts.length">
-                <div></div>
-            </li>
-        </ul>
-        <ul ng-if="resultProducts.length" class="search-res-ul-product">
-            <li ng-repeat="node in resultProducts" class="search-res-li-product">
-                <a href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" class="search-res-a-product" target="_self" layout="row"
-                    ng-click="goToSearchedNode(node.subcategory, node.product_id)" id="product_{{ $index + 1 }}">
-                    <span>
-                        <img class="search-res-product-img" ng-src="/resources/images/products/{{ node.category }}/{{ node.image }}">
-                    </span>
-                    <span class="search-res-span-product">{{ node.brand + " " + node.name }}</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="search-res-ul" ng-if="!resultProducts.length && !resultSubcategory.length  && !resultCategory.length && !resultStoreType.length">
-            <li class="search-res-a">
-                <span class="search-res-span">Not Found Yet...</span>
-            </li>
-        </ul>
     </section>
 </nav>
 

@@ -238,7 +238,6 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         $scope.screenIsMob = global_screenIsMob;
         var isCategoryClicked = sessionStorage.getCategoryClicked();
         var subcad = sessionStorage.getSearchSubcategory();
-        var prodID = sessionStorage.getSearchProduct();
         setTimeout(function () {
             if (subcad != 'undefined' && subcad != null) {
                 var x = document.querySelectorAll(".cat-body-cat");
@@ -258,23 +257,6 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             } else {
                 sessionStorage.setCategoryClicked(true);
                 clickRadioButton("radio_0");
-            }
-            if (prodID != 'undefined') {
-                var y = document.querySelectorAll(".item-box");
-                for (var j = 0; j < y.length; j++) {
-                    if (y[j].id == prodID) {
-                        var top = $("#" + y[j].id).offset().top - ($window.innerHeight / 5);
-                        animateScrollTo(top, 1600);
-                        $("#" + prodID).addClass("highlighted");
-                        if (subcad == 'undefined' && subcad == null) {
-                            $scope.filterCategories();
-                        }
-                        break;
-                    }
-                }
-                setTimeout(function () {
-                    $("#" + prodID).removeClass("highlighted");
-                }, 2500);
             }
         }, 20);
         $('#loading').fadeOut();

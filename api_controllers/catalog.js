@@ -47,13 +47,19 @@ router.post('/search', async function (req, res, next) {
         limit = limit - categories.length;
         var subcategories = await Catalog.searchSubcategory(searchText, limit);
         limit = limit - subcategories.length;
-        var products = await Catalog.searchProducts(searchText, limit);
+        var productsStart = await Catalog.searchProductsStart(searchText, limit);
+        limit = limit - productsStart.length;
+        var productsWithDescription = await Catalog.searchProductsWithDescription(searchText, limit);
+        limit = limit - productsWithDescription.length;        
+        var productsEnd = await Catalog.searchProductsEnd(searchText, limit);
 
         var finalResult = {
             store_type: storeTypes,
             category: categories,
             subcategory: subcategories,
-            products: products
+            products_start: productsStart,
+            products_end: productsEnd,
+            products_descr: productsWithDescription
         };
         response = {
             success: true,

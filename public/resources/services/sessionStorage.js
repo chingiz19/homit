@@ -30,12 +30,6 @@ app.service('sessionStorage', ["$window", function($window){
         return value;
     };
 
-    var _getSearchProduct = function(){
-        var value = _get("searchProduct");
-        _setSearchProduct(undefined);
-        return value;
-    };
-
     var _getCheckoutUserInfo = function(){
         var value = _get("setCheckoutUserInfo");
         _setCheckoutUserInfo(undefined);
@@ -44,10 +38,6 @@ app.service('sessionStorage', ["$window", function($window){
 
     var _setSearchSubcategory = function(value){
         return _set("searchSubcategory", value);
-    };
-
-    var _setSearchProduct = function(value){
-        return _set("searchProduct", value);
     };
 
     var _setCheckoutUserInfo = function(value){
@@ -114,10 +104,8 @@ app.service('sessionStorage', ["$window", function($window){
         get: _get,
         set: _set,
         getSearchSubcategory: _getSearchSubcategory,
-        getSearchProduct: _getSearchProduct,
         getCheckoutUserInfo: _getCheckoutUserInfo,
         setSearchSubcategory: _setSearchSubcategory,
-        setSearchProduct: _setSearchProduct,
         setCheckoutUserInfo: _setCheckoutUserInfo,
         setAddress: _setAddress,
         getAddress: _getAddress,

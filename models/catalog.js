@@ -212,7 +212,7 @@ pub.searchStoreType = async function (searchText, limit) {
         SELECT DISTINCT display_name AS store_type_display_name, image AS store_type_image, api_name AS store_type_api_name
         FROM catalog_store_types
         WHERE available = true
-        AND display_name LIKE '%` + searchText + `%'
+        AND display_name LIKE '` + searchText + `%'
         LIMIT ` + limit;
         var dbResult = await db.runQuery(sqlQuery);
         return dbResult;
@@ -247,7 +247,7 @@ pub.searchCategory = async function (searchText, limit) {
         JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
         
         WHERE store_type.available = true
-        AND category.name LIKE '%` + searchText + `%'   OR category.display_name LIKE '%` + searchText + `%'
+        AND category.name LIKE '` + searchText + `%'   OR category.display_name LIKE '%` + searchText + `%'
         LIMIT ` + limit;
 
         var dbResult = await db.runQuery(sqlQuery);
@@ -284,7 +284,7 @@ pub.searchSubcategory = async function (searchText, limit) {
         JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
         
         WHERE store_type.available = true
-        AND subcategory.name LIKE '%` + searchText + `%'
+        AND subcategory.name LIKE '` + searchText + `%'
         LIMIT ` + limit;
 
         var dbResult = await db.runQuery(sqlQuery);
@@ -294,13 +294,7 @@ pub.searchSubcategory = async function (searchText, limit) {
     }
 }
 
-/**
- * Search for the text in brand, name, and description
- * 
- * @param {*} searchText 
- * @param {*} limit
- */
-pub.searchProducts = async function (searchText, limit) {
+var searchProductsBase = async function (searchText, limit, sqlWhereExtra, sqlSelectExtra, sqlFromExtra) {
     var sqlSelect = `
         listing.id AS listing_id,
         product.id AS product_id,
@@ -326,35 +320,94 @@ pub.searchProducts = async function (searchText, limit) {
         JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)`;
 
     var sqlWhere = `
-        WHERE store_type.available = true AND depot.available = true AND`;
+        WHERE store_type.available = true AND depot.available = true`;
+
+    if (!sqlWhereExtra) {
+        sqlWhereExtra = ` `;
+    }
+
+    if (!sqlFromExtra) {
+        sqlFromExtra = ` `;
+    }
+
+    if (!sqlSelectExtra) {
+        sqlSelectExtra = ` `;
+    }
 
     var sqlQuery = `
-        SELECT *
-        FROM ( 
-            SELECT DISTINCT ` + sqlSelect
-        + ` ` + sqlFrom + ` ` + sqlWhere
-        + ` (listing.brand LIKE '` + searchText + `%' OR listing.name LIKE '` + searchText + `%'
-            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '` + searchText + `%')`
-
-        + ` UNION ` +
-
-        `SELECT DISTINCT ` + sqlSelect
-        + ` ` + sqlFrom + ` ` + sqlWhere
-        + ` (listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
-            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '%` + searchText + `%')`
-
-        + ` UNION ` +
-
-        `SELECT DISTINCT ` + sqlSelect
-        + ` ` + sqlFrom + ` `
-        + `JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id) `
-        + sqlWhere
-        + ` description.description LIKE '` + searchText + `%'`
-        + `) AS final_products
-        LIMIT ` + limit + `;`;
+        SELECT DISTINCT ` + sqlSelect + ` ` + sqlSelectExtra
+        + ` ` + sqlFrom + ` ` + sqlFromExtra
+        + ` ` + sqlWhere + ` ` + sqlWhereExtra
+        +    ` LIMIT ` + limit + ` ;`;
 
     var dbResult = await db.runQuery(sqlQuery);
     return dbResult;
+}
+
+/**
+ * Search for the beginning text in brand, name
+ * 
+ * @param {*} searchText 
+ * @param {*} limit
+ */
+pub.searchProductsStart = async function (searchText, limit) {
+    if (limit > 0) {
+        var sqlWhereExtra =
+            `AND (listing.brand LIKE '` + searchText + `%' OR listing.name LIKE '` + searchText + `%'
+            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '` + searchText + `%')`;
+
+        var result = await searchProductsBase(searchText, limit, sqlWhereExtra);
+        return result;
+    } else {
+        return [];
+    }
+}
+
+/**
+ * Search for the end text in brand, name
+ * 
+ * @param {*} searchText 
+ * @param {*} limit
+ */
+pub.searchProductsEnd = async function (searchText, limit) {
+    if (limit > 0) {
+        var sqlWhereExtra =
+            `AND (listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
+            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '%` + searchText + `%')
+            AND (listing.brand NOT LIKE '` + searchText + `%' AND listing.name NOT LIKE '` + searchText + `%'
+            AND CONCAT(listing.brand,  ' ', listing.name) NOT LIKE '` + searchText + `%')`;
+
+        var result = await searchProductsBase(searchText, limit, sqlWhereExtra);
+        return result;
+    } else {
+        return [];
+    }
+}
+
+/**
+ * Search for the text in description
+ * 
+ * @param {*} searchText 
+ * @param {*} limit
+ */
+pub.searchProductsWithDescription = async function (searchText, limit) {
+    if (limit > 0) {
+        var sqlSelectExtra = `
+            , description_names.name AS description_key,            
+            description_names.display_name AS description_key_display_name,            
+            description.description AS description`;
+
+        var sqlFromExtra = `
+            JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id)
+            JOIN catalog_description_names AS description_names ON (description_names.id = description.description_key)`;
+
+        var sqlWhereExtra = `AND description.description LIKE '` + searchText + `%'`
+
+        var result = await searchProductsBase(searchText, limit, sqlWhereExtra, sqlSelectExtra, sqlFromExtra);
+        return result;
+    } else {
+        return [];
+    }
 }
 
 /**

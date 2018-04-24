@@ -60,6 +60,7 @@ CREATE TABLE catalog_packaging_packagings (
 CREATE TABLE catalog_description_names (
 	id INT UNSIGNED NOT NULL,
 	name VARCHAR(225),
+	display_name VARCHAR(225),
 	
 	PRIMARY KEY (id)
 ) ENGINE = InnoDB;
