@@ -74,13 +74,13 @@ INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, ad
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (334, "s_", "7-eleven", "1919 Southland Dr SW Unit 102, Calgary, AB T2W 0K1", "50.9607798", "-114.104962399999", "4032522720", "3");
 
 /* Insert Store - Hours */
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (1, 1, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (1, 2, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (1, 3, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (1, 4, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (1, 5, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (1, 6, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (1, 7, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
+INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (1, 1, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
+INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (1, 2, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
+INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (1, 3, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
+INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (1, 4, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
+INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (1, 5, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
+INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (1, 6, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
+INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (1, 7, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
 INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (100, 1, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
 INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (100, 2, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
 INSERT INTO `stores_hours` (store_id, day, open_time, close_time, open_time_next, close_time_next) VALUES (100, 3, "10:00:00", "23:59:59", "00:00:00", "02:00:00");
@@ -524,11 +524,11 @@ INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (334, 6
 INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (334, 7, "00:00:00", "23:59:59");
 
 /* Insert Catalog - Description Name */
-INSERT INTO `catalog_description_names`(id, name) VALUES(1, "preview");
-INSERT INTO `catalog_description_names`(id, name) VALUES(2, "type");
-INSERT INTO `catalog_description_names`(id, name) VALUES(3, "producer");
-INSERT INTO `catalog_description_names`(id, name) VALUES(4, "country_of_origin");
-INSERT INTO `catalog_description_names`(id, name) VALUES(5, "alcohol_content");
+INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(1, "preview", "Preview");
+INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(2, "type", "Type");
+INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(3, "producer", "Producer");
+INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(4, "country_of_origin", "Country of Origin");
+INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(5, "alcohol_content", "Alcohol Content");
 
 /* Insert Catalog - Category */
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(1, "beer", "Beer");
