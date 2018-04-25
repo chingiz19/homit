@@ -16,8 +16,8 @@ INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (335, 6
 INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (335, 7, "08:00:00", "17:59:59");
 
 /*Catalog Description*/
-INSERT INTO `catalog_description_names`(id, name) VALUES(6, "ingredients");
-INSERT INTO `catalog_description_names`(id, name) VALUES(7, "serving_suggestions");
+INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(6, "ingredients", "Ingredients");
+INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(7, "serving_suggestions", "Serving Suggestions");
 
 /*Catalog - Categories*/
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(9, "pasta-and-baking", "Pasta and Baking");
