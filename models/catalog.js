@@ -32,20 +32,30 @@ pub.getStoreTypeByApi = async function (typeApi) {
  */
 pub.isStoreOpen = async function (storeType) {
     var sqlQuery = `
-        SELECT stores.id
+        SELECT 
+        stores.id
         FROM
-        catalog_stores AS stores JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
+        catalog_stores AS stores
+        JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
         JOIN stores_hours AS hours ON (stores.id = hours.store_id)
+        
         WHERE
-        hours.day = DAYOFWEEK(CURRENT_TIMESTAMP)
-        AND (hours.open_time <= CURRENT_TIME
-        AND hours.close_time >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)
-        AND hours.day = DAYOFWEEK(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)))
-        OR hours.open_time_next <= CURRENT_TIME
-        AND hours.close_time_next >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
-        )
-        AND ?
-        LIMIT 1
+            hours.day = DAYOFWEEK(CURRENT_TIMESTAMP)
+            AND ?
+            AND (
+                    (hours.open_time <= CURRENT_TIME
+                    AND hours.close_time >= CURRENT_TIME + INTERVAL 30 MINUTE
+                    AND hours.open_time_next IS NULL
+                    AND CURRENT_TIME + INTERVAL 30 MINUTE > '00:30:00')
+                    OR (
+                        hours.open_time_next IS NOT NULL
+                        AND ((hours.open_time <= CURRENT_TIME
+                        AND hours.close_time >= CURRENT_TIME)
+                        OR (hours.open_time_next <= CURRENT_TIME
+                        AND hours.close_time_next - INTERVAL 30 MINUTE >= CURRENT_TIME))
+                    )
+                )
+        LIMIT 1;
     `;
 
     var data = {
