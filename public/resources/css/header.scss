@@ -103,7 +103,6 @@ nav {
     transition: background-color 0.3s;
 }
 
-//Non-mobile search section - NM
 .search-result-box {
     position: absolute;
     top: 30px;
@@ -115,7 +114,13 @@ nav {
     background-color: rgba(255, 255, 255, 1);
     box-shadow: 0 0px 10px 5px rgba(0, 0, 0, 0.3);
     overflow-y: scroll;
+    overflow-x: hidden;
     z-index: -1;
+}
+
+.search-result-box a:hover{
+    cursor: pointer;
+    text-decoration: none !important;
 }
 
 .cat-subcat-ul {
@@ -128,12 +133,6 @@ nav {
     margin: 0;
 }
 
-.store-ul a, .cat-subcat-ul a {
-    text-decoration: none !important;
-    display: flex;
-    padding: 5px 0;
-}
-
 .store-text {
     margin: auto 0;
     padding-left: 25px;
@@ -141,7 +140,7 @@ nav {
     font-size: 18px;
 }
 
-.cat-subcat-ul {
+.cat-subcat-ul-2 {
     padding: 0 0 0 25px;
     margin: auto 0;
     display: flex;
@@ -152,9 +151,9 @@ nav {
 
 .greater-char {
     font-size: 13px;
-    color: rgba(0, 0, 0, 0.2);
+    color: rgba(36, 51, 80, 0.5);
     width: 15px;
-    padding: 0px 5px;
+    padding: 0px 5px 0 0;
 }
 
 .match-em {
@@ -171,7 +170,7 @@ nav {
 .subcat-div {
     text-decoration: none !important;
     display: flex;
-    padding: 5px 0;
+    padding: 10px 0;
 }
 
 .srch-result-sep-line {
@@ -183,7 +182,11 @@ nav {
     width: 90%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     line-height: 1px;
-    margin: 5px 0;
+    margin: 5px 0 0 0;
+}
+
+.cat-subcat-ul .srch-result-sep-line div{
+    margin-bottom: 5px;
 }
 
 .srch-product-content {
@@ -191,6 +194,8 @@ nav {
 }
 
 .search-prd-img {
+    margin-right: 15px;
+    min-width: 50px;
     width: 50px;
     height: 50px;
 }
@@ -198,11 +203,11 @@ nav {
 .product-2-ul {
     margin: 0;
     padding: 0;
-    padding-left: 15px;
     margin: auto 0;
 }
 
 .product-brand-txt {
+    // display: flex;
     margin: auto 0;
     font-size: 16px;
     font-weight: 500;
@@ -256,13 +261,13 @@ nav {
 .search-result-box .li-content:hover, .search-result-box .srch-product-content:hover {
     background-color: rgba(230, 230, 230, 1);
     transition: background-color 0.3s;
+    text-decoration: none;
 }
 
-.search-result-box li a {
+.li-content a {
     text-decoration: none !important;
     display: flex;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0;
 }
 
 #hdrHub1 {
@@ -649,7 +654,7 @@ h3 {
         margin-bottom: 0;
     }
     
-    .store-ul a, .cat-subcat-ul a{
+    .store-ul a, .cat-subcat-ul-2 a{
         padding: 10px 0;
     }
 

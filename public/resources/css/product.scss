@@ -117,10 +117,10 @@ footer {
 
 .store-colosed-image {
     position: absolute;
-    top: 0px;
+    top: 43px;
     display: flex;
     justify-content: center;
-    width: 328px;
+    width: 350px;
     height: 350px;
     border-radius: 3px;
     background-color: rgba(0, 0, 0, 0.1);
@@ -574,5 +574,15 @@ footer {
     .also-image-li img {
         width: 60px;
         height: 60px;
+    }
+    .store-colosed-image {
+        top: 20px;
+        width: 150px;
+        height: 150px;
+    }
+    
+    .store-colosed-image img {
+        height: 150px;
+        width: 130px;
     }
 }

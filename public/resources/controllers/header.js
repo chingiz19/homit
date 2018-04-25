@@ -186,11 +186,12 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
                 loc = brand_name.toLowerCase().indexOf(str.toLowerCase());
                 tmpSearchResult[i]["brand_name_str"] = brand_name.substring(0, loc);
                 tmpSearchResult[i]["brand_name_end"] = brand_name.substring(loc + searchedString.length);
-                if (loc >= 0) {
-                    tmpSearchResult[i]["brand_name_matched"] = capitalizeStrg(str);
-                } else {
-                    tmpSearchResult[i]["brand_name_matched"] = str;
-                }
+                tmpSearchResult[i]["brand_name_matched"] = brand_name.substring(loc, loc + searchedString.length);
+                // if (loc >= 0) {
+                //     tmpSearchResult[i]["brand_name_matched"] = capitalizeStrg(str);
+                // } else {
+                //     tmpSearchResult[i]["brand_name_matched"] = str;
+                // }
             }
         }
         return tmpSearchResult;
