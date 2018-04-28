@@ -78,8 +78,8 @@
                     <li ng-repeat="node in resultProducts_start">
                         <div class="navigate-search flex-row srch-product-content" ng-click="hrefToPrdPage(node)" id="product_start_{{ $index + 1 }}">
                             <img class="search-prd-img" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
-                            <span class="product-brand-txt">{{node.brand_name_str}}
-                                <em class="match-em">{{node.brand_name_matched}}</em>{{node.brand_name_end}}</span>
+                            <!-- IMPORTANT - Keep "span" tag content on the same line -->
+                            <span class="product-brand-txt">{{node.brand_name_str}}<em class="match-em">{{node.brand_name_matched}}</em>{{node.brand_name_end}}</span>
                         </div>
                     </li>
                 </ul>
@@ -90,8 +90,8 @@
                             <ul class="product-2-ul">
                                 <li class="product-brand-txt">{{ node.brand + " " + node.name }}</li>
                                 <li>
-                                    <span class="product-descr-txt">{{ node.description_key_display_name }}: {{ node.description_str }}
-                                        <em class="match-em">{{ node.description_matched }}</em>{{ node.description_end }}</span>
+                                    <!-- IMPORTANT - Keep "span" tag content on the same line -->
+                                    <span class="product-descr-txt">{{ node.description_key_display_name }}: {{ node.description_str }}<em class="match-em">{{ node.description_matched }}</em>{{ node.description_end }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -102,8 +102,8 @@
                         <a class="navigate-search flex-row srch-product-content" ng-click="hrefToPrdPage(node)" id="product_end_{{ $index + 1 }}">
                             <img class="search-prd-img" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
                             <ul class="product-2-ul">
-                                <span class="product-brand-txt" style="display: flex;">{{ node.brand_name_str }}
-                                    <em class="match-em">{{ node.brand_name_matched }}</em>{{ node.brand_name_end }}</span>
+                                <!-- IMPORTANT - Keep "span" tag content on the same line -->
+                                <span class="product-brand-txt">{{ node.brand_name_str }}<em class="match-em">{{ node.brand_name_matched }}</em>{{ node.brand_name_end }}</span>
                             </ul>
                         </a>
                     </li>

@@ -187,11 +187,6 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
                 tmpSearchResult[i]["brand_name_str"] = brand_name.substring(0, loc);
                 tmpSearchResult[i]["brand_name_end"] = brand_name.substring(loc + searchedString.length);
                 tmpSearchResult[i]["brand_name_matched"] = brand_name.substring(loc, loc + searchedString.length);
-                // if (loc >= 0) {
-                //     tmpSearchResult[i]["brand_name_matched"] = capitalizeStrg(str);
-                // } else {
-                //     tmpSearchResult[i]["brand_name_matched"] = str;
-                // }
             }
         }
         return tmpSearchResult;
@@ -211,8 +206,6 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
         }
         return tmpStrg;
     }
-
-
 
     function navigateSearchResult(evt, searchResult) {
         // TODO make arrow selected result node appear in the "input line"
