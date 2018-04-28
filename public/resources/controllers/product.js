@@ -1,4 +1,4 @@
-app.controller("productController", function ($scope, $rootScope, $window, sessionStorage) {
+app.controller("productController", function ($scope, $rootScope, $window, sessionStorage, notification) {
     $scope.init = function () {
         $scope.recommended_products = JSON.parse($("#recommendedProducts").val());
         $scope.product = JSON.parse($("#product").val());
@@ -24,6 +24,8 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
             p.brand = product.brand;
 
             $rootScope.$broadcast("addToCart", p);
+        } else{
+            notification.addImportantMessage("Store closed at the moment.");
         }
     };
 

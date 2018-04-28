@@ -22,6 +22,9 @@ app.controller("notificationController", function ($scope, $sce, notification, $
             case notification.EventType.ERROR_MESSAGE:
                 addErrorMessage(args.message);
                 break;
+            case notification.EventType.IMPORTANT_MESSAGE:
+                addImportantMessage(args.message);
+                break;
             default:
                 console.warn("Notification event type not supported");
         }
@@ -39,6 +42,12 @@ app.controller("notificationController", function ($scope, $sce, notification, $
         $scope.message = message;
         $scope.messageType = "success_msg"; // success message class name
         clearWithTimeout();
+    }
+
+    function addImportantMessage(message){
+        $scope.message = message;
+        $scope.messageType = "important_msg";
+        clearWithTimeout($scope.defaultTimeout * 2);
     }
 
     function addErrorMessage(message){

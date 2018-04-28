@@ -34,9 +34,9 @@
                                 <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                             </section>
                             <img class="product-image-selected" ng-src="{{ selectedImage }}">
-                            <div class="store-colosed-image" ng-if="!product.store_open">
+                            <!-- <div class="store-colosed-image" ng-if="!product.store_open">
                                 <img ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
-                            </div>
+                            </div> -->
                             <div class="product-image-line"></div>
                             <div layout="row">
                                 <div ng-repeat="image in productImages" class="product-img-list">

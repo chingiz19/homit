@@ -115,22 +115,6 @@ footer {
     height: 350px;
 }
 
-.store-colosed-image {
-    position: absolute;
-    top: 43px;
-    display: flex;
-    justify-content: center;
-    width: 350px;
-    height: 350px;
-    border-radius: 3px;
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.store-colosed-image img {
-    height: 343px;
-    width: 278px;
-}
-
 .product-image-line {
     width: 60%;
     height: 1px;
@@ -574,16 +558,6 @@ footer {
     .also-image-li img {
         width: 60px;
         height: 60px;
-    }
-    .store-colosed-image {
-        top: 20px;
-        width: 150px;
-        height: 150px;
-    }
-    
-    .store-colosed-image img {
-        height: 150px;
-        width: 130px;
     }
 }
 

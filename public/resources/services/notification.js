@@ -47,5 +47,16 @@ app.service('notification', function($rootScope){
         });
     };
 
+    /**
+     * Shows notification for error message
+     * @param {*} message 
+     */
+    pub.addImportantMessage = function(message){
+        $rootScope.$broadcast("addNotification", {
+            event_type: pub.EventType.IMPORTANT_MESSAGE,
+            message: message
+        });
+    };
+
     return pub;
 });

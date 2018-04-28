@@ -26,7 +26,17 @@
                 </div>
             </div>
 
-            <!-- <div style="height: 200px; width: 100%; border: 1px solid black;"></div> -->
+            <section class="catalog-store-info" ng-cloak>
+                <div>
+                    <div class="catalog-store-cover fadeIn"></div>
+                </div>
+                <div class="store-info-txt-box" ng-cloak>
+                    <div class="store-name-txt">{{ storeInfo.display_name }}</div>
+                    <div ng-show="storeInfo.open" class="store-hrs-txt">Open for Delivery {{ storeInfo.close_time }}</div>
+                    <div ng-show="!storeInfo.open" class="store-oval store-open-hrs">Store Closed. Opens at {{ storeInfo.open_time }}</div>
+                    <div class="store-oval store-DF">C$4.99 Delivery Fee</div>
+                </div>
+            </section>
 
             <div class="catalog-content" ng-cloak>
                 <!--Mob-version Navigate-->
@@ -96,9 +106,7 @@
                         <ng-md-icon id="show_cat_icon" icon="flip"></ng-md-icon>
                     </button>
                     <div id="category_box" class="cat-body-cubcat">
-                        <div class="cat-section-header section-header box-center same-line" ng-click="filterCategories()">
-                            <%= loadedStore %>
-                        </div>
+                        <div class="cat-section-header section-header box-center" style="padding-right: 30px" ng-click="filterCategories()"><!-- <%= loadedStore %> -->Store Aisle</div>
                         <ul class="cat-list same-line" layout="column">
                             <li ng-repeat='category in <%= categories %> track by $index' ng-click="hrefToCat(category)" style="outline: none;">
                                 <div class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': 'rgba(0,189,149,0.7)'}">
@@ -156,7 +164,6 @@
                                     <li class="item-pic" ng-click="hrefPrdPage(product)">
                                         <img ng-src="{{ product.image }}">
                                     </li>
-                                    <img ng-if="!product.store_open" class="catalog-store-closed" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
                                     <li class="catalog-text item-brand" ng-click="hrefPrdPage(product)">
                                         <div>
                                             <ng-md-icon icon="info" class="item-info-icon"></ng-md-icon>

@@ -19,6 +19,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     $scope.availableTypes = [];
     $scope.availableBrands = [];
     $scope.allBrands = [];
+    $scope.storeinfo = {};
     $http({
         method: 'GET',
         url: $scope.productUrl
@@ -33,6 +34,17 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             });
             $scope.subcategories = response.data.subcategories;
             $scope.userSelectedSubcategories = $scope.subcategories[0].subcategory_name;
+            $scope.storeInfo = response.data.store_info;
+            if($scope.storeInfo.display_name == "Lina's Italian Market"){
+                $scope.storeInfo.open_time = "08:00am";
+                $scope.storeInfo.close_time = "untill: 18:30";
+            } else if($scope.storeInfo.display_name == "Liquor Station"){
+                $scope.storeInfo.open_time = "10:00am";
+                $scope.storeInfo.close_time = "untill: 01:30am";
+            } else if($scope.storeInfo.display_name == "Snack Vendor"){
+                $scope.storeInfo.close_time = "24/7";
+            }
+            $(".catalog-store-cover").css("background-image", "url('/resources/images/non-catalog-image/cover-image/" + $scope.storeInfo.image.split(".")[0] + ".jpeg");
         }
     }, function errorCallback(response) {
 
@@ -100,7 +112,8 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             delete p.container;
 
             $rootScope.$broadcast("addToCart", p);
-            // notification.addCartItem(p);
+        } else{
+            notification.addImportantMessage("Store closed at the moment.");
         }
     };
 
@@ -234,35 +247,6 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         $scope.$apply();
     }
 
-    $window.onload = function () {
-        $scope.screenIsMob = global_screenIsMob;
-        var isCategoryClicked = sessionStorage.getCategoryClicked();
-        var subcad = sessionStorage.getSearchSubcategory();
-        setTimeout(function () {
-            if (subcad != 'undefined' && subcad != null) {
-                var x = document.querySelectorAll(".cat-body-cat");
-                for (var i = 0; i < x.length; i++) {
-                    if (x[i].textContent.trim() == subcad) {
-                        clickRadioButton(x[i].id);
-                        $scope.filterCategories();
-                        break;
-                    }
-                }
-            } else if (isCategoryClicked == "true") {
-                $scope.filterCategories();
-                clickRadioButton("radio_0");
-            } else if (isCategoryClicked == "store-switched") {
-                sessionStorage.setCategoryClicked(true);
-                clickRadioButton("radio_0");
-            } else {
-                sessionStorage.setCategoryClicked(true);
-                clickRadioButton("radio_0");
-            }
-        }, 20);
-        $('#loading').fadeOut();
-    };
-
-
     function hrefChangeCategory(pathname, category) {
         let pathname_1 = pathname.split("/");
         let pathname_final = "";
@@ -294,14 +278,46 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         $scope.scroll_prev = $scope.scroll_current;
         $scope.scroll_current = elementOffset - scrollTop;
 
-        if ($scope.scroll_prev > $scope.scroll_current && $scope.scroll_current <= 54) {
+        if ($scope.scroll_prev > $scope.scroll_current && $scope.scroll_current <= 52) {
             $("#category-box").removeClass("cat-section-absolute");
             $("#category-box").addClass("cat-section-fixed");
-        } else if ($scope.scroll_prev < $scope.scroll_current && $scope.scroll_current >= 54) {
+            $(".checkout-menu-btn-div").removeClass("cart-btn-catalog");
+        } else if ($scope.scroll_prev < $scope.scroll_current && $scope.scroll_current >= 52) {
             $("#category-box").removeClass("cat-section-fixed");
             $("#category-box").addClass("cat-section-absolute");
+            if(!$(".checkout-menu-btn-div").hasClass("cart-btn-catalog")){
+                $(".checkout-menu-btn-div").addClass("cart-btn-catalog");
+            }
         }
     });
+
+    $window.onload = function () {
+        $scope.screenIsMob = global_screenIsMob;
+        var isCategoryClicked = sessionStorage.getCategoryClicked();
+        var subcad = sessionStorage.getSearchSubcategory();
+        setTimeout(function () {
+            if (subcad != 'undefined' && subcad != null) {
+                var x = document.querySelectorAll(".cat-body-cat");
+                for (var i = 0; i < x.length; i++) {
+                    if (x[i].textContent.trim() == subcad) {
+                        clickRadioButton(x[i].id);
+                        $scope.filterCategories();
+                        break;
+                    }
+                }
+            } else if (isCategoryClicked == "true") {
+                $scope.filterCategories();
+                clickRadioButton("radio_0");
+            } else if (isCategoryClicked == "store-switched") {
+                sessionStorage.setCategoryClicked(true);
+                clickRadioButton("radio_0");
+            } else {
+                sessionStorage.setCategoryClicked(true);
+                clickRadioButton("radio_0");
+            }
+        }, 20);
+        $('#loading').fadeOut();
+    };
 
 
 });
