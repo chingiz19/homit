@@ -646,7 +646,6 @@ md-sidenav {
     .side-nav-header {
         position: fixed;
         border-width: 0 0 1px 0 !important;
-
         /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
@@ -775,4 +774,11 @@ md-sidenav {
         width: 20px;
         height: 20px;
     }
+}
+
+#autocompleteAddressInputBox{
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(200, 200, 200, 0.8) !important;
 }

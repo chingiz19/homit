@@ -113,7 +113,7 @@
                     <div ng-repeat="product in products">
                         <div ng-if="isInSelectedSubcategories(product.subcategory)">
                             <div class="item-box" id="{{ product.product_id }}">
-                                <ul class="item-box-ul">
+                                <ul class="item-box-ul fadeIn">
                                     <button class="add-to-cart-btn" ng-click="addToCart(product, v_index)">
                                         <ng-md-icon icon="add_shopping_cart"></ng-md-icon>
                                     </button>

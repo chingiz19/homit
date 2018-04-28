@@ -103,6 +103,8 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
 
                 var addrSelected = sessionStorage.getAddress();
                 if (addrSelected) {
+                    //Not Working
+                    // scope._inptFocused();
                     scope._searchedAddress = addrSelected.formatted_address;
                     // if address is already selected, set that address
                     selectedPlace = addrSelected;
@@ -158,6 +160,19 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
                     });
                 };
 
+                scope._inptFocused = function () {
+                    if(scope._searchedAddress) return;
+                    $('.address-input-sec').css('box-shadow', '0 0px 10px 0px rgba(0, 0, 0, 0.8)');
+                    $('.place-icon').css('fill', 'rgba(42,81,145,0.9)');
+                    $('#autocompleteAddressInputBox').css({'border': '1px solid rgba(42,81,145,0.5)', 'border-radius': '3px'});
+                };
+
+                scope._inptBlured = function () {
+                    if(scope._searchedAddress) return;
+                    $('.address-input-sec').css('box-shadow', 'none');
+                    $('.place-icon').css('fill', 'rgba(0,0,0,0.6)');
+                    $('#autocompleteAddressInputBox').css({'border': '1px solid rgba(200,200,200,0.8)', 'border-radius': '1px'});
+                };
 
                 function navigatePredictions(evt) {
                     //event key "down"

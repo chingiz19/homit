@@ -799,7 +799,13 @@ md-radio-button .md-label {
 
 @media screen and (max-device-width: 359px){
     .item-box{
-        width: 160px;
+        width: 157px;
+        margin: 3px 1px 0 2px;
+    }
+
+    .item-brand {
+        width: 155px;
+        left: 0px;
     }
 
 }
@@ -932,4 +938,19 @@ md-radio-button .md-label {
     height: 200px !important;
     -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
     transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+}
+
+
+.fadeIn {
+    animation: fadein 0.7s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

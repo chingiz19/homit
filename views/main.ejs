@@ -5,58 +5,58 @@
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/main.css" rel="stylesheet">
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
-            <meta name="description" content="Homit is your very local and personal shopper in Calgary. Get your Italian gorecy (Lina's Italian Market) delivered right to your door. 
+            <meta name="description" content="Homit is your very local and personal shopper in Calgary. Get your Italian grocery (Lina's Italian Market) delivered right to your door. 
             Snack, grocery and liquor delivery service in Calgary. We also deliver snacks for 24/7. Place your order online and watch us appear 
             at your doorstep shortly after." />
 </head>
 
 <body ng-cloak>
-    <div ng-controller="mainController">
+    <div ng-controller="mainController" style="background-color: rgb(251,251,251);">
         <img class="none" src="/resources/images/non-catalog-image/pages/calgary.jpg">
-        <img class="none" src="/resources/images/non-catalog-image/homit_hub/homit-hub-cover.png">
-        <img class="none" src="/resources/images/non-catalog-image/homit_hub/linas-italian-store_icon.png">
-        <img class="none" src="/resources/images/non-catalog-image/homit_hub/snack-vendor_icon.png">
-        <img class="none" src="/resources/images/non-catalog-image/homit_hub/liquor-station_icon.png">
+
+        <section id="address" class="full-screen address-section box-center">
+            <div class="address-div">
+                <div class="store-div-main fadeIn">
+                    <ul class="store-list-ul">
+                        <li class="store-li LS-move" ng-click="hrefTo('/catalog/liquor-station')">
+                            <img class="none" src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
+                            <img src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
+                            <span class="main-trans-prop">Liquor Station</span>
+                        </li>
+                        <li class="store-li LIM-move" ng-click="hrefTo('/catalog/linas-italian-market')">
+                            <img class="none" src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
+                            <img src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
+                            <span class="main-trans-prop">Lina's Italian Market</span>
+                        </li>
+                        <li class="store-li LS-move" ng-click="hrefTo('/catalog/snack-vendor')">
+                            <img class="none" src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
+                            <img src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
+                            <span class="main-trans-prop">Snack Vendor</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="main-page-address-box">
+                    <span class="address-input-sec">
+                        <ng-md-icon class="place-icon" icon="place"></ng-md-icon>
+                        <span class="address-input-span fadeIn" ng-cloak>
+                            <address-autocomplete input-class="address-input" icon-class="address-input-icon" button-class="address-input-btn" autocomplete="autocomplete"
+                                on-address-selected="gotAddressResults" autocomplete-bounds="bounds" show-coverage-map="showCoverageMap"></address-autocomplete>
+                        </span>
+                    </span>
+                    <h1 class="loc-sucsess-msg loc-sucsess-msg-txt">We Deliver!</h1>
+                    <div class="ul-zero">
+                        <h1 class="landing-message fadeIn">From Local Stores to your Doors</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
         <img class="none" src="/resources/images/non-catalog-image/pages/homit-step_1.png">
         <img class="none" src="/resources/images/non-catalog-image/pages/homit-step_2.png">
         <img class="none" src="/resources/images/non-catalog-image/pages/homit-step_3.png">
-
-        <section id="address" class="full-screen address-section box-center">
-            <div class="main-page-address-box">
-                <div class="ul-zero-margin-padding">
-                    <h1 class="main-page-address-box-text">There is No Such Thing as Shopping Too Much</h1>
-                </div>
-                <span class="address-input-sec">
-                    <span class="address-input-span" ng-cloak>
-                        <i>
-                            <ng-md-icon icon="place" size="35"></ng-md-icon>
-                        </i>
-                        <address-autocomplete input-class="address-input" icon-class="address-input-icon" button-class="address-input-btn" autocomplete="autocomplete"
-                            on-address-selected="gotAddressResults" autocomplete-bounds="bounds" show-coverage-map="showCoverageMap"></address-autocomplete>
-                    </span>
-                    <div id="coverage" class="covergae-map-box" ng-show="showCoverageMap">
-                        <!--googleoff: snippet-->
-                        <div class="address-message">
-                            <div class="message-cover"></div>
-                            <span class="address-message-text">Comming to your area soon.</span>
-                        </div>
-                        <!--googleon: snippet-->
-                        <div id="map" class="area-map"></div>
-                    </div>
-                </span>
-            </div>
-            <div class="go-to-homit-hub">
-                <button id="goToHomitHubArrowBtn" ng-click="scrollTo('homitHub')">
-                    <div layout="column">
-                        <img class="go-to-homit-hub-icon" src="/resources/images/non-catalog-image/arrow_down.png">
-                    </div>
-                </button>
-            </div>
-        </section>
         <section id="homit-order-steps" class="full-screen about-homit-section box-center">
             <div flex="100" class="order-steps-section">
                 <div flex="30" class="order-step box-center">
-                    <img class="order-step-img order-stp-1-img" src="/resources/images/non-catalog-image/pages/homit-step_1.png">
+                    <img class="order-step-img order-stp-1-img fadeIn" src="/resources/images/non-catalog-image/pages/homit-step_1.png">
                     <article>
                         <h2 class="order-step-header">Shop at Store Catalog</h2>
                         <br class="test">
@@ -67,7 +67,7 @@
                     </article>
                 </div>
                 <div flex="30" class="order-step box-center">
-                    <img class="order-step-img" src="/resources/images/non-catalog-image/pages/homit-step_2.png">
+                    <img class="order-step-img fadeIn" src="/resources/images/non-catalog-image/pages/homit-step_2.png">
                     <article>
                         <h2 class="order-step-header">Keep Doing What You Love</h2>
                         <p class="order-step-p">Every single piece of us will start working towards getting your products delivered to you in a timely manner the very same
@@ -77,7 +77,7 @@
                     </article>
                 </div>
                 <div flex="30" class="order-step box-center">
-                    <img class="order-step-img" src="/resources/images/non-catalog-image/pages/homit-step_3.png">
+                    <img class="order-step-img fadeIn" src="/resources/images/non-catalog-image/pages/homit-step_3.png">
                     <article>
                         <h2 class="order-step-header">Experience "Homit" Magic</h2>
                         <p class="order-step-p">Homit offers 24-hour delivery service and location independent delivery fee in Calgary area since
@@ -87,35 +87,24 @@
                 </div>
             </div>
         </section>
-
-        <section id="homitHub" class="full-screen homit-hub-section homit-hub">
-            <div class="hub-container">
-                <h2 class="homit-hub-header homit-hub-text">Homit Hub</h2>
-                <div class="homit-hub-stores">
-                    <div id="snack-vendor" class="store-window snack-vendor" ng-click="hrefTo('/catalog/snack-vendor')">
-                        <div id="snack-vendor-icon" class="store-background-image"></div>
-                        <div class="homit-hub-text store-name">
-                            <a class="homit-hub-text" href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a>
-                        </div>
-                    </div>
-                    <div id="lina-store" class="store-window" ng-click="hrefTo('/catalog/linas-italian-market')">
-                        <div id="lina-store-icon" class="store-background-image"></div>
-                        <div class="homit-hub-text store-name">
-                            <a class="homit-hub-text" href="https://homit.ca/catalog/linas-italian-market">Lina's Italian Market</a>
-                        </div>
-                    </div>
-                    <div id="liquor-station" class="store-window liquor-station" ng-click="hrefTo('/catalog/liquor-station')">
-                        <div id="liquor-station-icon" class="store-background-image"></div>
-                        <div class="homit-hub-text store-name">
-                            <a class="homit-hub-text" href="https://homit.ca/catalog/liquor-station">Liquor Station</a>
-                        </div>
-                    </div>
+        <img class="none" src="/resources/images/non-catalog-image/cover-image/map_cover.png">
+        <section id="coverage-map" class="full-screen coverage-map-sec">
+            <div class="map-container">
+                <!--googleoff: snippet-->
+                <div class="address-message" ng-if="showMapMessage">
+                    <div class="message-cover"></div>
+                    <span class="address-message-text">Comming to your area soon.</span>
+                </div>
+                <div id="map"></div>
+                <!--googleon: snippet-->
+                <div class="coverage-txt">
+                    <h2>Homit Coverage Area</h2>
+                    <p>Calgary, AB</p>
                 </div>
             </div>
         </section>
     </div>
     </div>
-
     <% if (!production) { %>
         <script src="/resources/directives/addressAutocomplete.js"></script>
         <script src="/resources/services/mapServices.js"></script>

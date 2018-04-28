@@ -330,9 +330,9 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             "ht_ul": "<ul>",
             "d_ht_li": "</li>",
             "ht_li": "<li>"
-        }
+        };
         var tmpString = string;
-        for (tag in homit_tags) {
+        for (let tag in homit_tags) {
             tmpString = tmpString.replace(new RegExp(tag, 'g'), "");
         }
         return tmpString;

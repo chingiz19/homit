@@ -84,7 +84,7 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     $scope.hrefToSubcat = function(product){
         $window.location.href = $window.location.origin + "/catalog/" + product.store_type_api_name + "/" + product.category;
         sessionStorage.setSearchSubcategory(product.subcategory);
-    }
+    };
 
     $scope.init();
 });

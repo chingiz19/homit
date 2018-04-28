@@ -1,7 +1,8 @@
 app.controller("mainController", function ($scope, $http, sessionStorage, $cookies, $window, $location, $anchorScroll, mapServices, $timeout, googleAnalytics) {
     $scope.map = undefined;
     $scope.userDropDown = false;
-    $scope.showCoverageMap = false;
+    $scope.showMapMessage = false;
+    // $scope.showCoverageMap = false;
     $scope.bounds = undefined;
 
 
@@ -53,27 +54,18 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
             sessionStorage.setAddress(place);
             sessionStorage.setAddressLat(latLng.lat());
             sessionStorage.setAddressLng(latLng.lng());
+            if($scope.screenIsMob){
+                $scope.scrollTo('address');
+            }
             $timeout(function(){
-                $scope.scrollTo('homitHub');                
+                $(".loc-sucsess-msg").css({'opacity': '1', 'width': '100%', 'z-index': '2', 'transition' : 'opacity 0.8s ease-out', 'transition' : 'width 0.6s ease-out'});
+                clearLocSucMsg(3500);
             }, 200);
         } else {
-            $scope.showCoverageMap = true;
-            var mapGrowClass = [];
-            if(!$scope.screenIsMob){
-                mapGrowClass[0] = "address-box-grow-screen";
-                mapGrowClass[1] = "covergae-map-box-grow-screen";
-            } else{
-                mapGrowClass[0] = "address-box-grow-mob";
-                mapGrowClass[1] = "covergae-map-box-grow-mob";
-            }
-            $timeout(function() {
-                $(".address-input-sec").addClass(mapGrowClass[0]);
-                $(".covergae-map-box").addClass(mapGrowClass[1]);
-                $(".address-message").addClass("address-message-show");
-                if($scope.screenIsMob){
-                    animateScrollTo(0, { speed: 2000 });
-                }
-            }, 100);
+            $timeout(function(){
+                $scope.showMapMessage = true;
+                $scope.scrollTo('coverage-map');                
+            }, 200);
             googleAnalytics.addEvent('out_of_coverage', {
                 "event_label": place.formatted_address,
                 "event_category": googleAnalytics.eventCategories.address_actions
@@ -81,22 +73,32 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
         }
     };
 
-    $scope.$watch('showCoverageMap', function(newValue){
-        if (!newValue){
-            $timeout(function() {
-                if(!$scope.screenIsMob){
-                    $(".address-input-sec").removeClass("address-box-grow-screen");
-                } else{
-                    $(".address-input-sec").removeClass("address-box-grow-mob");
-                }
-            }, 50);
-        }
-    });
+    // $scope.$watch('showCoverageMap', function(newValue){
+    //     if (!newValue){
+    //         $timeout(function() {
+    //             if(!$scope.screenIsMob){
+    //                 $(".address-input-sec").removeClass("address-box-grow-screen");
+    //             } else{
+    //                 $(".address-input-sec").removeClass("address-box-grow-mob");
+    //             }
+    //         }, 50);
+    //     }
+    // });
 
     $scope.hrefTo = function (path) {
         $window.location.href = $window.location.origin + path;
         sessionStorage.setCategoryClicked("store-switched");
     };
+
+    function clearLocSucMsg(time){
+        setTimeout(() => {
+            $(".loc-sucsess-msg").css({'opacity': '0', 'width': '0', 'z-index': '-1', 'transition' : 'all 0.8s ease-out'});
+            setTimeout(() => {
+                $(".loc-sucsess-msg").removeAttr('style');
+            }, 600);
+        }, time);
+        
+    }
 
     /**
      * When called this method will scroll view to the element with 'id'
