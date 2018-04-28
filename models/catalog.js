@@ -25,6 +25,110 @@ pub.getStoreTypeByApi = async function (typeApi) {
     }
 }
 
+pub.getStoreTypeInfo = async function(storeType) {
+    let data = {"name": storeType};
+    var dbResult = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, data);
+    return dbResult[0];
+}
+
+pub.getStoreHours = async function (storeType) {
+    var sqlQuery = `
+        SELECT *
+        FROM (
+        SELECT
+            MAX(open_time) AS open_time,
+            MAX(close_time) - INTERVAL 30 MINUTE AS close_time,
+            MAX(open_time_next) AS open_time_next,
+            MAX(close_time_next) - INTERVAL 30 MINUTE AS close_time_next
+        FROM
+            (SELECT 
+                MIN(stores_hours.open_time) AS open_time,
+                    MAX(stores_hours.close_time) AS close_time,
+                    NULL AS open_time_next,
+                    NULL AS close_time_next
+            FROM
+                stores_hours
+            JOIN catalog_stores AS stores ON (stores.id = stores_hours.store_id)
+            JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
+            WHERE
+                stores_hours.day = DAYOFWEEK(CURRENT_TIMESTAMP)
+                    AND ? UNION SELECT 
+                NULL AS open_time,
+                    NULL AS close_time,
+                    MIN(stores_hours.open_time_next) AS open_time_next,
+                    MAX(stores_hours.close_time_next) AS close_time_next
+            FROM
+                stores_hours
+            JOIN catalog_stores AS stores ON (stores.id = stores_hours.store_id)
+            JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
+            WHERE
+                stores_hours.day = MOD(DAYOFWEEK(CURRENT_TIMESTAMP) + 1, 7) + 1
+                    AND ?) AS T11
+                    
+                    ) AS T12
+                    
+            WHERE CURRENT_TIME NOT BETWEEN open_time_next AND close_time_next
+            
+        UNION ALL
+
+        SELECT *
+
+        FROM (
+            
+        SELECT 
+        MAX(open_time) AS open_time,
+        MAX(close_time) - INTERVAL 30 MINUTE AS close_time,
+        MAX(open_time_next) AS open_time_next,
+        MAX(close_time_next) - INTERVAL 30 MINUTE AS close_time_next
+        FROM
+            (SELECT 
+                MIN(stores_hours.open_time) AS open_time,
+                    MAX(stores_hours.close_time) AS close_time,
+                    NULL AS open_time_next,
+                    NULL AS close_time_next
+            FROM
+                stores_hours
+            JOIN catalog_stores AS stores ON (stores.id = stores_hours.store_id)
+            JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
+            WHERE
+                stores_hours.day = MOD(DAYOFWEEK(CURRENT_TIMESTAMP) - 1, 7) + 1
+                    AND ? UNION SELECT 
+                NULL AS open_time,
+                    NULL AS close_time,
+                    MIN(stores_hours.open_time_next) AS open_time_next,
+                    MAX(stores_hours.close_time_next) AS close_time_next
+            FROM
+                stores_hours
+            JOIN catalog_stores AS stores ON (stores.id = stores_hours.store_id)
+            JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
+            WHERE
+                stores_hours.day = DAYOFWEEK(CURRENT_TIMESTAMP)
+                    AND ?) AS T21
+                    
+        ) AS T22
+
+        WHERE CURRENT_TIME BETWEEN open_time_next AND close_time_next
+    `;
+
+
+    var data = {
+        "store_types.name": storeType
+    };
+
+    var dbResult = await db.runQuery(sqlQuery, [data, data, data, data]);
+
+    let closeTime = dbResult[0].close_time;
+    if (dbResult[0].close_time_next) {
+        closeTime = dbResult[0].close_time_next;
+    }
+    let result = {
+        open_time: dbResult[0].open_time,
+        close_time: closeTime
+    }
+
+    return result;
+}
+
 /**
  * Returns true if any of the stores related to the store type is open
  * 

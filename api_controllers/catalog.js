@@ -21,9 +21,19 @@ router.use('/', async function (req, res, next) {
         if (storeType) {
             var storeOpen = await Catalog.isStoreOpen(storeType);
             var result = await Catalog.getAllProductsByCategory(storeType, categoryName, storeOpen);
+            var hours = await Catalog.getStoreHours(storeType);
+            var storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
+            var storeInfo = {
+                open: storeOpen,
+                open_time: hours.open_time,
+                close_time: hours.close_time,
+                display_name: storeTypeInfo.display_name,
+                image: storeTypeInfo.image
+            };
+
             var response = {
                 success: true,
-                store_open: storeOpen,
+                store_info: storeInfo,
                 subcategories: result.subcategories,
                 products: result.products
             };
