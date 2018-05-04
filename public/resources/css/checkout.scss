@@ -694,6 +694,14 @@ md-sidenav {
         width: calc(100vw - 20px) !important;
     }
 
+    .checkout-content {
+        height: auto;
+    }
+    .checkout-content-col-left{
+        height: auto;
+        overflow-y: hidden;
+    }
+
     .dob-input {
         max-width: 55% !important;
     }
@@ -754,7 +762,7 @@ md-sidenav {
     }
 
     .item-div-right li {
-        font-size: 12px;
+        font-size: 10px;
     }
 
     .item-div-left {

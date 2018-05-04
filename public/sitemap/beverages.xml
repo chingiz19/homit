@@ -57,25 +57,7 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/schweppes-tonic-water/5514</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/ocean-spray-cranberry-juice/5515</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/motts-clamato-the-original/5516</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/motts-clamato-extra-spicy/5517</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -94,60 +76,6 @@
 
     <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/aquafina-still-water/5520</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/sunrype-pineapple-orange-guava/5521</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/sunrype-pineapple/5522</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/sunrype-mango/5523</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/sunrype-blackberry-pomegranate/5524</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/sunrype-strawberry-kiwi/5525</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/sunrype-apple-orange-peach/5526</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/sunrype-apple-lime/5527</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/sunrype-wildberry/5528</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/oasis-exotic-mango/5529</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

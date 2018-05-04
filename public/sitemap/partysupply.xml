@@ -9,12 +9,6 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/cake-mate-birthday-candle/6001</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://homit.ca/catalog/product/liquor-station/browne-beer-opener/6002</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -100,12 +94,6 @@
 
     <url>
         <loc>https://homit.ca/catalog/product/liquor-station/touch-mint-toothpicks/6016</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/sponge-towels-ultra/6017</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

@@ -25,15 +25,15 @@
                     <div></div>
                 </div>
             </div>
-
+            <!--googleoff: snippet-->
             <section class="catalog-store-info" ng-cloak>
                 <div>
                     <div class="catalog-store-cover fadeIn"></div>
                 </div>
                 <div class="store-info-txt-box" ng-cloak>
                     <div class="store-name-txt">{{ storeInfo.display_name }}</div>
-                    <div ng-show="storeInfo.open" class="store-hrs-txt">Open for Delivery {{ storeInfo.close_time }}</div>
-                    <div ng-show="!storeInfo.open" class="store-oval store-open-hrs">Store Closed. Opens at {{ storeInfo.open_time }}</div>
+                    <div ng-show="storeInfo.open == true" class="store-hrs-txt">Open for Delivery {{ storeInfo.close_time }}</div>
+                    <div ng-show="storeInfo.open == false" class="store-oval store-open-hrs">Store Closed. Opens at {{ storeInfo.open_time }}</div>
                     <div class="store-oval store-DF">C$4.99 Delivery Fee</div>
                 </div>
             </section>
@@ -185,6 +185,7 @@
                     </div>
                 </section>
             </div>
+            <!--googleon: snippet-->
         </div>
 
         </div>

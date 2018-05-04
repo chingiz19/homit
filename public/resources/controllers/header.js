@@ -341,7 +341,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
      */
     function clearProductUrl(path) {
         var tempPath = path;
-        let characters = ["#", "&", "'", ",", ".", "%"];
+        let characters = ["#", "&", "'", ",", ".", "%","/"];
         for (let i = 0; i < characters.length; i++) {
             tempPath = tempPath.replace(characters[i], "");
         }
@@ -355,14 +355,14 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
      */
     $scope.hrefToPrdPage = function (product) {
         var path;
-        path = "/catalog/product/" + product.store_type_api_name + "/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/" + product.product_id;
+        path = "/catalog/product/" + product.store_type_api_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
 
         googleAnalytics.addEvent('product_clicked', {
             "event_label": product.brand + " " + product.name,
             "event_category": googleAnalytics.eventCategories.catalog_actions
         });
 
-        $window.location.href = $window.location.origin + _.toLower(clearProductUrl(path));
+        $window.location.href = $window.location.origin + path;
     };
 
     $scope.init();

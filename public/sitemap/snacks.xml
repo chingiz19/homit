@@ -15,18 +15,6 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/pringles-cheddar-cheese/4502</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/pringles-barbecue/4503</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/cheetos-crunchy/4504</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -45,12 +33,6 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/lays-sour-cream-onion/4507</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/lays-salt-vinegar/4508</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -63,24 +45,6 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/lays-barbecue/4510</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/munchies-snack-mix-original/4511</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/munchies-snack-mix-bbq/4512</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/smartfood-gouda-chive/4513</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -88,12 +52,6 @@
 
     <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/smartfood-white-cheddar/4514</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/smartfood-jalapeno-cheddar/4515</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -159,18 +117,6 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/ruffles-classic/4526</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/ruffles-all-dressed/4527</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/doritos-cheese/4528</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -190,36 +136,6 @@
 
     <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/tostitos-round/4531</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/wonderful-pistachios-sweet-chili/4532</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/wonderful-pistachios-salt-pepper/4533</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/wonderful-pistachios-roasted-salted/4534</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/planters-roasted-peanuts/4535</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/planters-nut-mix/4536</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -250,18 +166,6 @@
 
     <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/hersheys-cookies-cream/4541</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/lindt-chili-piment-rouge/4542</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/lindt-intense-orange/4543</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -304,60 +208,6 @@
 
     <url>
         <loc>https://homit.ca/catalog/product/snack-vendor/tostitos-hot-salsa/4550</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/kernels-seasoning-salt-vinegar/4551</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/kernels-seasoning-ketchup/4552</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/kernels-seasoning-white-cheddar/4553</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/orville-redenbachers-popcorn/4554</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/babybel-edam-cheese/4555</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/bothwell-sliced-cheese/4556</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/senssations-salami-combo/4557</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/safeway-vegetable-tray/4558</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/snack-vendor/safeway-fruit-tray/4559</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

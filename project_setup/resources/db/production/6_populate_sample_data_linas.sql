@@ -3947,7 +3947,7 @@ INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (10
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (10568, 6567, 9, 61);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (10569, 6568, 9, 66);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (10570, 6569, 9, 15);
-INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (10571, 6569, 9, 15);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (10571, 6570, 9, 15);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (10572, 6571, 9, 31);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (10573, 6572, 9, 31);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (10574, 6573, 9, 66);
