@@ -515,7 +515,11 @@ pub.searchProductsWithDescription = async function (searchText, limit) {
             JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id)
             JOIN catalog_description_names AS description_names ON (description_names.id = description.description_key)`;
 
-        var sqlWhereExtra = `AND description.description LIKE '` + searchText + `%'`
+        var sqlWhereExtra = `
+        AND listing.brand NOT LIKE '%` + searchText + `%' AND listing.name NOT LIKE '%` + searchText + `%'
+        AND CONCAT(listing.brand,  ' ', listing.name) NOT LIKE '%` + searchText + `%'
+
+        AND description.description LIKE '` + searchText + `%'`
 
         var result = await searchProductsBase(searchText, limit, sqlWhereExtra, sqlSelectExtra, sqlFromExtra);
         return result;
