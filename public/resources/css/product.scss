@@ -67,7 +67,7 @@ footer {
     margin-top: 10px;
 }
 
-.web-location-sec-mob{
+.web-location-sec-mob {
     display: none;
 }
 
@@ -100,8 +100,14 @@ footer {
 .loc-category {
     text-transform: capitalize;
 }
-.loc-errow{
-    display: flex; justify-content: center; align-items: center; font-size: 13px; color: rgba(0,0,0,0.4); width: 15px;
+
+.loc-errow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.4);
+    width: 15px;
 }
 
 .product-image {
@@ -312,6 +318,7 @@ button:focus {
     z-index: 1;
 }
 
+
 .recomended-item {
     padding: 10px 0;
     display: flex;
@@ -319,13 +326,22 @@ button:focus {
     align-content: center;
 }
 
+.recomended-item-name {
+    text-align: center;
+    padding: 0 3px;
+    margin: 3px 0 2px 0;
+    font-size: 12px;
+}
+
 .recomended-item-div {
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
+    -webkit-font-smoothing: antialiased;
 }
 
 .recomended-item ul {
+    width: 120px;
     margin: 0;
     padding: 0;
     margin-left: 15px;
@@ -338,6 +354,10 @@ button:focus {
     justify-content: center;
 }
 
+.rec-item-mob{
+    display: none !important;
+}
+
 .also-image-li img {
     padding-bottom: 5px;
     width: 100px;
@@ -345,7 +365,7 @@ button:focus {
 }
 
 .recomended-item-text {
-    font-size: 12px;
+    font-size: 11px;
     text-align: center;
 }
 
@@ -440,11 +460,23 @@ footer {
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
 
-    .web-location-sec{
+    .rec-item-mob{
+        display: flex !important;
+    }
+
+    .rec-item-web {
+        display: none !important;
+    }
+
+    .recomended-item-name{
+        font-size: 13px;
+    }
+
+    .web-location-sec {
         display: none;
     }
 
-    .web-location-sec-mob{
+    .web-location-sec-mob {
         display: initial;
         margin-right: auto;
         justify-content: center;
@@ -452,12 +484,13 @@ footer {
         display: flex;
         flex-direction: row;
     }
-    .web-location-a{
+
+    .web-location-a {
         font-size: 10px;
         height: 20px;
     }
-    
-    .ingredients-sec{
+
+    .ingredients-sec {
         margin-top: 15px;
     }
 
@@ -536,6 +569,7 @@ footer {
     }
 
     .recomended-item ul {
+        width: 100px;
         margin: 0 5px 0 5px;
     }
 
@@ -556,8 +590,8 @@ footer {
     }
 
     .also-image-li img {
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
     }
 }
 

@@ -88,6 +88,24 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
         sessionStorage.setSearchSubcategory(product.subcategory);
     };
 
+    $scope.hrefPrdPage = function (product) {
+        var path;
+        path = "/catalog/product/" + product.store_type_api_name + "/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/" + product.product_id;
+        
+        $window.location.href = $window.location.origin + _.toLower(clearProductUrl(path));
+    };
+
+    function clearProductUrl(path){
+        var tempPath = path;
+        let characters = ["#", "&", "'", ",", ".", "%"];
+        for(let i=0; i<characters.length; i++){
+            tempPath = tempPath.replace(characters[i], "");
+        }
+        tempPath = tempPath.replace("---", "-");
+        tempPath = tempPath.replace("--", "-");
+        return tempPath;
+    }
+
     $scope.init();
 });
 

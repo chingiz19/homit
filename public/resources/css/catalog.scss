@@ -96,25 +96,27 @@ body {
 }
 
 .store-DF {
-    width: 180px;
-    margin-top: 5px;
+    width: 175px;
+    height: 26px;
+    margin-top: 7px;
+    padding: 2px;
     font-size: 16px;
     color: rgba(0, 0, 0, 0.6);
     background-color: #fff;
 }
 
 .store-oval {
-    height: 30px;
     text-align: center;
-    padding: 3px 4px;
     border-radius: 15px;
     border: none;
 }
 
 .store-open-hrs {
+    height: 30px;
+    width: 280px;
+    padding: 3px 4px;
     background-color: rgb(223, 88, 88);
     color: #fff;
-    width: 280px;
     font-size: 17px;
     font-weight: 600;
 }
@@ -133,7 +135,7 @@ body {
 
 .cat-section {
     width: 285px;
-    margin: 4px 0 0 0;
+    margin: 2px 0 0 0;
     min-height: 300px;
     background-color: rgb(255, 255, 255);
     border: rgb(211, 211, 211) solid 1px;
@@ -265,7 +267,7 @@ body {
 .item-box {
     position: relative;
     width: 281px;
-    margin: 4px 0 0 4px;
+    margin: 2px 0 2px 4px;
     padding-top: 45px;
     border: lightgray solid 1px;
     border-radius: 5px;

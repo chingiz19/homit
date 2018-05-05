@@ -915,6 +915,238 @@ pub.checkProductsForStoreOpen = async function (depotIds) {
 }
 
 /**
+ * Returns suggested products based on product id
+ * 
+ * @param {*} productId 
+ */
+pub.getSimilarProducts = async function (productId) {
+    var result = [];
+    let limit = 12;
+    let sameTransaction = await getSimilarProductsBySameTransaction(productId, limit);
+    limit = limit - sameTransaction.length;
+    result = result.concat(sameTransaction);
+    if (limit > 0) {
+        let sameCustomer = await getSimilarProductsBySameCustomer(productId, limit);
+        let tmpResult = [];
+
+        for (let i = 0; i < sameCustomer.length; i++) {
+            let same = false;
+            for (let j = 0; j < result.length; j++) {
+                if (sameCustomer[i].product_id == result[j].product_id
+                    && sameCustomer[i].store_type_api_name == result[j].store_type_api_name) {
+                    result[j].sum_point = sameCustomer[i].sum_point;
+                    same = true;
+                    break;
+                }
+            }
+
+            if (!same) {
+                tmpResult.push(sameCustomer[i]);
+            }
+        }
+        result = result.concat(tmpResult);
+
+        result.sort(function (a, b) { return (a.sum_point < b.sum_point) ? 1 : ((b.sum_point > a.sum_point) ? -1 : 0); });
+    }
+
+
+    for (let i = 0; i < result.length; i++) {
+        var item = await getItemByProductId(result[i].store_type_api_name, result[i].product_id);
+        result[i].type = item.type;
+        result[i].subcategory = item.subcategory;
+        result[i].category = item.category;
+        result[i].type = item.type;
+        result[i].brand = item.brand;
+        result[i].name = item.name;
+        result[i].image = item.image;
+        result[i].price = item.price;
+        result[i].container = item.container;
+        result[i].volume = item.volume;
+        result[i].packaging = item.packaging;
+    }
+
+    return result;
+}
+
+/**
+ * Get similar products bought at the same transaction
+ * 
+ * @param {*} productId 
+ * @param {*} limit 
+ */
+var getSimilarProductsBySameTransaction = async function (productId, limit) {
+    if (limit > 0) {
+        let sqlQuery = `
+            SELECT 
+            product.id AS product_id,
+            store_type.api_name AS store_type_api_name,
+            COUNT(*) AS sum_point
+
+            FROM orders_cart_items
+            JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
+            JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
+            JOIN catalog_items AS item ON (item.id = depot.item_id)
+            JOIN catalog_products AS product ON (product.id = item.product_id)
+            JOIN catalog_store_types AS store_type ON (store_type.id = depot.store_type_id)
+
+            WHERE store_type.available = true
+            AND product.id <>  ` + productId + `
+            AND orders_history.order_transaction_id IN
+            (
+                SELECT
+                DISTINCT orders_history.order_transaction_id
+                FROM orders_cart_items
+                JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
+                JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
+                JOIN catalog_items AS item ON (item.id = depot.item_id)
+                JOIN catalog_products AS product ON (product.id = item.product_id)
+                WHERE ?
+            )
+            GROUP BY product_id, store_type_api_name
+            ORDER BY sum_point DESC
+            LIMIT ` + limit + `;`;
+
+        let data = { "product.id": productId };
+        let dbResult = await db.runQuery(sqlQuery, data);
+        return dbResult;
+    } else {
+        return [];
+    }
+}
+
+/**
+ * Get similar products bought by the same customer
+ * 
+ * @param {*} productId 
+ * @param {*} limit 
+ */
+var getSimilarProductsBySameCustomer = async function (productId, limit) {
+    if (limit > 0) {
+        let sqlQuery = `
+            SELECT              
+            product_id,
+            store_type_api_name,
+            COUNT(*) AS sum_point
+            FROM
+                (
+                SELECT 
+                product.id AS product_id,
+                store_type.api_name AS store_type_api_name
+
+                FROM orders_cart_items
+                JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
+                JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
+                JOIN catalog_items AS item ON (item.id = depot.item_id)
+                JOIN catalog_products AS product ON (product.id = item.product_id)
+                JOIN catalog_store_types AS store_type ON (store_type.id = depot.store_type_id)
+                JOIN orders_transactions_history AS transaction ON (orders_history.order_transaction_id = transaction.id)
+
+                WHERE store_type.available = true
+                AND product.id <> ` + productId + `
+                AND (
+                transaction.guest_id IN
+                (
+                    SELECT
+                    DISTINCT transaction.guest_id
+                    FROM orders_cart_items
+                    JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
+                    JOIN orders_transactions_history AS transaction ON (transaction.id = orders_history.order_transaction_id)
+                    JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
+                    JOIN catalog_items AS item ON (item.id = depot.item_id)
+                    JOIN catalog_products AS product ON (product.id = item.product_id)
+                    WHERE ?
+                )
+                )
+                UNION ALL
+                SELECT 
+                
+                product.id AS product_id,
+                store_type.api_name AS store_type_api_name
+
+                FROM orders_cart_items
+                JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
+                JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
+                JOIN catalog_items AS item ON (item.id = depot.item_id)
+                JOIN catalog_products AS product ON (product.id = item.product_id)
+                JOIN catalog_store_types AS store_type ON (store_type.id = depot.store_type_id)
+                JOIN orders_transactions_history AS transaction ON (orders_history.order_transaction_id = transaction.id)
+
+                WHERE store_type.available = true
+                AND product.id <> ` + productId + `
+                AND (
+                transaction.user_id IN
+                (
+                    SELECT
+                    DISTINCT transaction.user_id
+                    FROM orders_cart_items
+                    JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
+                    JOIN orders_transactions_history AS transaction ON (transaction.id = orders_history.order_transaction_id)
+                    JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
+                    JOIN catalog_items AS item ON (item.id = depot.item_id)
+                    JOIN catalog_products AS product ON (product.id = item.product_id)
+                    WHERE ?
+                )
+                )
+            ) AS T
+            GROUP BY product_id, store_type_api_name
+            ORDER BY sum_point DESC
+            LIMIT ` + limit + `;`;
+
+        let data = { "product.id": productId };
+        let dbResult = await db.runQuery(sqlQuery, [data, data]);
+        return dbResult;
+    } else {
+        return [];
+    }
+}
+
+/**
+ * Get a single item by product id
+ * 
+ * @param {*} storeTypeApi 
+ * @param {*} productId 
+ */
+var getItemByProductId = async function (storeTypeApi, productId) {
+    var sqlQuery = `
+        SELECT
+        product.id AS product_id,
+        type.name AS type,
+        subcategory.name AS subcategory,
+        category.name AS category,
+        store_type.api_name AS store_type_api_name,
+        listing.brand AS brand,
+        listing.name AS name,
+        product.image AS image,
+        depot.price AS price,
+        container.name AS container,
+        volume.name AS volume,
+        packaging.name AS packaging
+        
+        FROM
+        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
+        JOIN catalog_products AS product ON (item.product_id = product.id)
+        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
+        JOIN catalog_types AS type ON (listing.type_id = type.id)
+        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
+        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
+        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
+        JOIN catalog_packaging_containers AS container ON (container.id = product.container_id)
+        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
+        JOIN catalog_packaging_volumes AS volume ON (volume.id = item.volume_id)
+
+        WHERE store_type.available = true
+        AND ? AND ?
+        
+        ORDER BY price
+        LIMIT 1`;
+
+    var data1 = { "store_type.api_name": storeTypeApi };
+    var data2 = { "product.id": productId };
+    var dbResult = await db.runQuery(sqlQuery, [data1, data2]);
+    return dbResult[0];
+}
+
+/**
  * Custom function to do alphanumeric sort
  * Source: http://stackoverflow.com/questions/4340227/sort-mixed-alpha-numeric-array
  */

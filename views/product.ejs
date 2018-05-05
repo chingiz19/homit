@@ -147,11 +147,13 @@
                             <section class="recomended-item">
                                 <div class="recomended-item-div">
                                     <div ng-repeat="item in recommended_products">
-                                        <ul ng-click="hrefTo(item.url)">
+                                        <ul ng-click="hrefPrdPage(item)">
                                             <li class="also-image-li">
-                                                <img ng-src="{{item.image}}">
+                                                <img ng-src="/resources/images/products/{{ item.category }}/{{ item.image }}">
                                             </li>
-                                            <li class="recomended-item-text">{{ item.packaging + " X " + item.size }}</li>
+                                            <li class="recomended-item-name rec-item-web">{{ item.brand + " " + item.name }}</span></li>
+                                            <li class="recomended-item-name rec-item-mob">{{ item.brand }}</li>
+                                            <li class="recomended-item-text">{{ item.packaging + "x" + item.volume }}</li>
                                             <li class="recomended-item-text">C${{ item.price }}</li>
                                         </ul>
                                     </div>

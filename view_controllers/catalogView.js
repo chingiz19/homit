@@ -24,859 +24,1038 @@ const api_categories = {
     "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'confectionery', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
 }
 
-
 var recommended_products = {
     "beer": [
         {
             "brand": "Doritos",
             "name": "Cheese",
-            "image": "/resources/images/products/snacks/p_9028.jpeg",
-            "url": "/catalog/product/snack-vendor/doritos-cheese/4528",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4528,
+            "category": "snacks",
+            "image": "p_9028.jpeg",
             "packaging": "1",
-            "size": "family",
+            "volume": "family",
             "price": 4.79
+        },
+        {
+            "brand": "D.L Jardine's",
+            "name": "Salsa Bobos Medium",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6733,
+            "category": "condiments",
+            "image": "jr_11360.jpeg",
+            "packaging": "1",
+            "volume": "453gm",
+            "price": 9.99
         },
         {
             "brand": "Tostitos",
             "name": "Round",
-            "image": "/resources/images/products/snacks/p_9031.jpeg",
-            "url": "/catalog/product/snack-vendor/tostitos-round/4531",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4531,
+            "category": "snacks",
+            "image": "p_9031.jpeg",
             "packaging": "1",
-            "size": "regular",
+            "volume": "regular",
             "price": 4.49
         },
         {
             "brand": "Jack Link's",
             "name": "Cholula",
-            "image": "/resources/images/products/snacks/p_9016.jpeg",
-            "url": "/catalog/product/snack-vendor/jack-links-cholula/4516",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4516,
+            "category": "snacks",
+            "image": "p_9016.jpeg",
             "packaging": "1",
-            "size": "80gm",
+            "volume": "80gm",
             "price": 6.99
-        },
-        {
-            "brand": "Tostitos",
-            "name": "Red Pepper Salsa",
-            "image": "/resources/images/products/snacks/jr_9045.jpeg",
-            "url": "/catalog/product/snack-vendor/tostitos-red-pepper-salsa/4545",
-            "packaging": "1",
-            "size": "425gm",
-            "price": 4.59
         },
         {
             "brand": "Browne",
             "name": "Corkscrew Bottle Opener",
-            "image": "/resources/images/products/party-supply/o_10003.jpeg",
-            "url": "/product/liquor-station/browne-corkscrew-bottle-opener/6003",
+            "store_type_api_name": "liquor-station",
+            "product_id": 6003,
+            "category": "party-supply",
+            "image": "o_10003.jpeg",
             "packaging": "1",
-            "size": "4.5in",
+            "volume": "4.5in",
             "price": 3.99
-        },
+        }
     ],
     "wine": [
         {
-            "brand": "Lindt",
-            "name": "Chili Piment Rouge",
-            "image": "/resources/images/products/snacks/br_9042.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-chili-piment-rouge/4542",
+            "brand": "Loacker",
+            "name": "Coconut",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7300,
+            "category": "confectionery",
+            "image": "bx_11800.jpeg",
             "packaging": "1",
-            "size": "100gm",
-            "price": 3.89
+            "volume": "100gm",
+            "price": 4.49
         },
         {
             "brand": "Browne",
             "name": "Corkscrew Wing Bottle Opener",
-            "image": "/resources/images/products/party-supply/o_10023.jpeg",
-            "url": "/catalog/product/liquor-station/browne-corkscrew-wing-bottle-opener/6023",
+            "store_type_api_name": "liquor-station",
+            "product_id": 6023,
+            "category": "party-supply",
+            "image": "o_10023.jpeg",
             "packaging": "1",
-            "size": "6in",
+            "volume": "6in",
             "price": 3.99
-        },
-        {
-            "brand": "Mozaik",
-            "name": "Classic Wine Glass",
-            "image": "/resources/images/products/party-supply/p_10013.jpeg",
-            "url": "/catalog/product/liquor-station/mozaik-classic-wine-glass/6013",
-            "packaging": "4",
-            "size": "15oz",
-            "price": 9.49
         },
         {
             "brand": "Sea Change Seafoods",
             "name": "Candied Wild Smoked Salmon",
-            "image": "/resources/images/products/dry-packaged/cntr_11112.jpeg",
-            "url": "/catalog/product/linas-italian-market/sea-change-seafoods-candied-wild-smoked-salmon/6613",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6613,
+            "category": "dry-packaged",
+            "image": "cntr_11112.jpeg",
             "packaging": "1",
-            "size": "70mg",
+            "volume": "70mg",
             "price": 14.99
         },
         {
-            "brand": "Rummo",
-            "name": "Fusilli #48",
-            "image": "/resources/images/products/pasta-and-baking/bx_11006.jpeg",
-            "url": "/catalog/product/linas-italian-market/rummo-fusilli-48/6506",
+            "brand": "Mozaik",
+            "name": "Classic Wine Glass",
+            "store_type_api_name": "liquor-station",
+            "product_id": 6013,
+            "category": "party-supply",
+            "image": "p_10013.jpeg",
             "packaging": "1",
-            "size": "500gm",
-            "price": 2.69
+            "volume": "15oz",
+            "price": 9.49
+        },
+        {
+            "brand": "Perugina",
+            "name": "Milk Chocolate",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7287,
+            "category": "confectionery",
+            "image": "br_11787.jpeg",
+            "packaging": "1",
+            "volume": "99gm",
+            "price": 3.99
         }
     ],
     "spirit": [
         {
-            "brand": "Patron",
-            "name": "Silver",
-            "image": "/resources/images/products/spirit/b_5097.jpeg",
-            "url": "/catalog/product/liquor-station/patron-silver/2596",
-            "packaging": "1",
-            "size": "750ml",
-            "price": 71.99
-        },
-        {
             "brand": "Arctic Glacier",
             "name": "Ice",
-            "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 5533,
+            "category": "beverages",
+            "image": "p_9528.jpeg",
             "packaging": "1",
-            "size": "5.95lb",
+            "volume": "5.95lb",
             "price": 3.59
         },
         {
             "brand": "Red Bull",
             "name": "Classic",
-            "image": "/resources/images/products/beverages/c_9526.jpeg",
-            "url": "/catalog/product/snack-vendor/red-bull-classic/5531",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 5531,
+            "category": "beverages",
+            "image": "c_9526.jpeg",
             "packaging": "4",
-            "size": "250",
+            "volume": "250ml",
             "price": 10.49
+        },
+        {
+            "brand": "Lazzaroni",
+            "name": "Crackers with Pizza Flavor",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6832,
+            "category": "snacks",
+            "image": "btc_11264.jpeg",
+            "packaging": "1",
+            "volume": "200gm",
+            "price": 4.99
         },
         {
             "brand": "Mott's",
             "name": "Clamato The Original",
-            "image": "/resources/images/products/beverages/b_9511.jpeg",
-            "url": "/catalog/product/snack-vendor/motts-clamato-the-original/5516",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 5516,
+            "category": "beverages",
+            "image": "b_9511.jpeg",
             "packaging": "1",
-            "size": "32oz",
+            "volume": "32oz",
             "price": 3.99
         },
         {
-            "brand": "Coca-Cola",
-            "name": "Classic",
-            "image": "/resources/images/products/beverages/b_9500.jpeg",
-            "url": "/catalog/product/snack-vendor/coca-cola-classic/5500",
+            "brand": "Apothic",
+            "name": "Blend Red",
+            "store_type_api_name": "liquor-station",
+            "product_id": 1044,
+            "category": "wine",
+            "image": "b_3044.jpeg",
             "packaging": "1",
-            "size": "1L",
-            "price": 2.79
-        },
+            "volume": "750ml",
+            "price": 14.99
+        }
     ],
     "liqueur": [
         {
-            "brand": "Lindt",
-            "name": "Intense Orange",
-            "image": "/resources/images/products/snacks/br_9043.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-intense-orange/4543",
+            "brand": "Grand Aroma",
+            "name": "Lemon Flavoured Extra Virgin Olive Oil",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 4543,
+            "category": "oil-and-vinegar",
+            "image": "b_11280.jpeg",
             "packaging": "1",
-            "size": "100gm",
-            "price": 3.89
+            "volume": "250ml",
+            "price": 7.99
         },
         {
-            "brand": "Arctic Glacier",
-            "name": "Ice",
-            "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
+            "brand": "Maitre Truffout",
+            "name": "Fancy Truffles with Coffee",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7283,
+            "category": "confectionery",
+            "image": "bx_11783.jpeg",
             "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.59
+            "volume": "200gm",
+            "price": 4.99
         },
         {
             "brand": "Guinness",
             "name": "Draught",
-            "image": "/resources/images/products/beer/c_1060.jpeg",
-            "url": "/catalog/product/liquor-station/guinness-draught/83",
+            "store_type_api_name": "liquor-station",
+            "product_id": 83,
+            "category": "beer",
+            "image": "c_1060.jpeg",
             "packaging": "4",
-            "size": "440ml",
+            "volume": "440ml",
             "price": 14.99
         },
         {
-            "brand": "Natur Puglia",
-            "name": "Taralli with Pizza Flavour",
-            "image": "/resources/images/products/baked-goods/btc_11262.jpeg",
-            "url": "/catalog/product/linas-italian-market/natur-puglia-taralli-with-pizza-flavour/6830",
+            "brand": "Krino's",
+            "name": "Cocktail - Gigantic Green Stuffed Olives",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6909,
+            "category": "canned-and-jarred",
+            "image": "jr_11495.jpeg",
             "packaging": "1",
-            "size": "250gm",
-            "price": 3.99
+            "volume": "500ml",
+            "price": 7.99
         },
         {
             "brand": "Touch Bamboo",
             "name": "Paddle Skewer",
-            "image": "/resources/images/products/party-supply/p_10014.jpeg",
-            "url": "/catalog/product/liquor-station/touch-bamboo-paddle-skewer/6014",
+            "store_type_api_name": "liquor-station",
+            "product_id": 6014,
+            "category": "party-supply",
+            "image": "p_10014.jpeg",
             "packaging": "50",
-            "size": "60in",
+            "volume": "60in",
             "price": 3.99
-        },
+        }
     ],
     "beverages": [
         {
             "brand": "Twizzler",
             "name": "Strawberry",
-            "image": "/resources/images/products/snacks/p_9037.jpeg",
-            "url": "/catalog/product/snack-vendor/twizzler-strawberry/4537",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4537,
+            "category": "snacks",
+            "image": "p_9037.jpeg",
             "packaging": "1",
-            "size": "227gm",
+            "volume": "227gm",
             "price": 2.99
         },
         {
-            "brand": "Pringles",
-            "name": "Sour Cream & Onion",
-            "image": "/resources/images/products/snacks/p_9001.jpeg",
-            "url": "/catalog/product/snack-vendor/pringles-sour-cream-onion/4501",
+            "brand": "Natur Puglia",
+            "name": "Taralli with Pizza Flavour",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6830,
+            "category": "baked-goods",
+            "image": "btc_11262.jpeg",
             "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.69
+            "volume": "250gm",
+            "price": 3.99
         },
         {
             "brand": "Stella Artois",
             "name": "Pale Lager",
-            "image": "/resources/images/products/beer/b_1039.jpeg",
-            "url": "/catalog/product/liquor-station/stella-artois-pale-lager/54",
+            "store_type_api_name": "liquor-station",
+            "product_id": 54,
+            "category": "beer",
+            "image": "b_1039.jpeg",
             "packaging": "6",
-            "size": "330ml",
+            "volume": "330gm",
             "price": 18.49
         },
         {
             "brand": "Cocktail Shaker",
             "name": "30oz",
-            "image": "/resources/images/products/party-supply/o_10012.jpeg",
-            "url": "/catalog/product/liquor-station/cocktail-shaker-30oz/6012",
+            "store_type_api_name": "liquor-station",
+            "product_id": 6012,
+            "category": "party-supply",
+            "image": "o_10012.jpeg",
             "packaging": "1",
-            "size": "30oz",
+            "volume": "30oz",
             "price": 14.49
         },
         {
             "brand": "Hershey's",
             "name": "Cookies & Cream",
-            "image": "/resources/images/products/snacks/br_9041.jpeg",
-            "url": "/catalog/product/snack-vendor/hersheys-cookies-cream/4541",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4541,
+            "category": "snacks",
+            "image": "br_9041.jpeg",
             "packaging": "1",
-            "size": "100gm",
+            "volume": "100gm",
             "price": 3.19
         }
     ],
     "everyday-needs": [
         {
-            "brand": "Scotties",
-            "name": "Napkins",
-            "image": "/resources/images/products/party-supply/p_10015.jpeg",
-            "url": "/catalog/product/liquor-station/scotties-napkins/6015",
-            "packaging": "210",
-            "size": "regular",
-            "price": 2.49
+            "brand": "Saltwest Naturas",
+            "name": "Sun Dried Tomato Basil",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6668,
+            "category": "herbs-and-spices",
+            "image": "cntr_11167.jpeg",
+            "packaging": "1",
+            "volume": "40gm",
+            "price": 5.99
         },
         {
             "brand": "Bevara",
             "name": "Sealing Cleaps",
-            "image": "/resources/images/products/party-supply/p_10022.jpeg",
-            "url": "/catalog/product/liquor-station/bevara-sealing-cleaps/6022",
-            "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.69
-        },
-        {
-            "brand": "Shot Glass",
-            "name": "35ml",
-            "image": "/resources/images/products/party-supply/p_10020.jpeg",
-            "url": "/catalog/product/liquor-station/shot-glass-35ml/6020",
-            "packaging": "6",
-            "size": "330ml",
-            "price": 18.49
+            "store_type_api_name": "liquor-station",
+            "product_id": 6022,
+            "category": "party-supply",
+            "image": "p_10022.jpeg",
+            "packaging": "10",
+            "volume": "4in",
+            "price": 1.39
         },
         {
             "brand": "Mozaik",
             "name": "Cutlery Set",
-            "image": "/resources/images/products/party-supply/p_10007.jpeg",
-            "url": "/catalog/product/liquor-station/mazaik-cutlery-set/6007",
+            "store_type_api_name": "party-supply",
+            "product_id": 6007,
+            "category": "party-supply",
+            "image": "p_10007.jpeg",
             "packaging": "80",
-            "size": "combo",
+            "volume": "combo",
             "price": 10.99
         },
         {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
-            "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4539,
+            "category": "snacks",
+            "image": "br_9039.jpeg",
             "packaging": "1",
-            "size": "100gm",
+            "volume": "100gm",
             "price": 3.19
+        },
+        {
+            "brand": "Grissini Bon",
+            "name": "Breadsticks with Olive Oil",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6838,
+            "category": "baked-goods",
+            "image": "bx_11270.jpeg",
+            "packaging": "1",
+            "volume": "250gm",
+            "price": 3.99
         }
     ],
     "party-supply": [
         {
             "brand": "Arctic Glacier",
             "name": "Ice",
-            "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 5533,
+            "category": "beverages",
+            "image": "p_9528.jpeg",
             "packaging": "1",
-            "size": "5.95lb",
+            "volume": "5.95lb",
             "price": 3.59
         },
         {
             "brand": "Absolut",
             "name": "Vodka",
-            "image": "/resources/images/products/spirit/b_5000.jpeg",
-            "url": "/catalog/product/liquor-station/absolut-vodka/2500",
+            "store_type_api_name": "liquor-station",
+            "product_id": 2500,
+            "category": "spirit",
+            "image": "b_5000.jpeg",
             "packaging": "1",
-            "size": "750ml",
+            "volume": "750ml",
             "price": 28.99
         },
         {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
-            "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4539,
+            "category": "snacks",
+            "image": "br_9039.jpeg",
             "packaging": "1",
-            "size": "100gm",
+            "volume": "100gm",
             "price": 3.19
         },
         {
             "brand": "Jagermeister",
             "name": "Herbal Liqueur",
-            "image": "/resources/images/products/liqueur/b_7000.jpeg",
-            "url": "/catalog/product/liquor-station/jagermeister-herbal-liqueur/3500",
+            "store_type_api_name": "liquor-station",
+            "product_id": 3500,
+            "category": "liqueur",
+            "image": "b_7000.jpeg",
             "packaging": "1",
-            "size": "750ml",
+            "volume": "750ml",
             "price": 31.99
         },
         {
-            "brand": "San Pellegrino",
-            "name": "Sparkling Blood Orange",
-            "image": "/resources/images/products/beverages/b_11610.jpeg",
-            "url": "/catalog/product/linas-italian-market/san-pellegrino-sparkling-blood-orange/7110",
+            "brand": "Rockstar",
+            "name": "Classic",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 5532,
+            "category": "beverages",
+            "image": "c_9527.jpeg",
             "packaging": "1",
-            "size": "330ml",
-            "price": 1.69
+            "volume": "473ml",
+            "price": 3.59
         }
     ],
     "snacks": [
         {
             "brand": "Preservation",
             "name": "Bloody Mary mix",
-            "image": "/resources/images/products/beverages/b_11607.jpeg",
-            "url": "/catalog/product/linas-italian-market/preservation-bloody-mary-mix/7107",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7107,
+            "category": "beverages",
+            "image": "b_11607.jpeg",
             "packaging": "1",
-            "size": "946ml",
+            "volume": "946ml",
             "price": 11.99
         },
         {
             "brand": "Bud Light",
             "name": "Lager",
-            "image": "/resources/images/products/beer/b_1052.jpeg",
-            "url": "/catalog/product/liquor-station/bud-light-lager/71",
+            "store_type_api_name": "liquor-station",
+            "product_id": 71,
+            "category": "beer",
+            "image": "b_1052.jpeg",
             "packaging": "6",
-            "size": "341ml",
+            "volume": "341ml",
             "price": 15.99
         },
         {
             "brand": "Purex",
             "name": "Bathroom Tissue Paper",
-            "image": "/resources/images/products/everyday-needs/p_11000.jpeg",
-            "url": "/catalog/product/snack-vendor/purex-bathroom-tissue-paper/6500",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 6500,
+            "category": "everyday-needs",
+            "image": "p_11000.jpeg",
             "packaging": "4",
-            "size": "Double R.",
+            "volume": "Double R.",
             "price": 5.29
         },
         {
             "brand": "Perrier",
             "name": "Sparkling Water",
-            "image": "/resources/images/products/beverages/b_9529.jpeg",
-            "url": "/catalog/product/snack-vendor/perrier-lemon-orange/5535",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 5534,
+            "category": "beverages",
+            "image": "b_9529.jpeg",
             "packaging": "6",
-            "size": "500ml",
+            "volume": "500ml",
             "price": 10.74
         },
         {
             "brand": "Simply",
             "name": "Lemonade Orange",
-            "image": "/resources/images/products/beverages/b_9506.jpeg",
-            "url": "/catalog/product/snack-vendor/simply-lemonade-orange/5509",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 5509,
+            "category": "beverages",
+            "image": "b_9506.jpeg",
             "packaging": "1",
-            "size": "1.75L",
+            "volume": "1.75L",
             "price": 5.99
         }
     ],
     "canned-and-jarred": [
         {
-            "brand": "Preservation",
-            "name": "Bloody Mary mix",
-            "image": "/resources/images/products/beverages/b_11607.jpeg",
-            "url": "/catalog/product/linas-italian-market/preservation-bloody-mary-mix/7107",
+            "brand": "Joe tea",
+            "name": "Peach",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7099,
+            "category": "beverages",
+            "image": "b_11599.jpeg",
             "packaging": "1",
-            "size": "946ml",
-            "price": 11.99
+            "volume": "591ml",
+            "price": 6.49
         },
         {
-            "brand": "Bud Light",
-            "name": "Lager",
-            "image": "/resources/images/products/beer/b_1052.jpeg",
-            "url": "/catalog/product/liquor-station/bud-light-lager/71",
+            "brand": "Krave",
+            "name": "Chili Lime",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4524,
+            "category": "snacks",
+            "image": "p_9024.jpeg",
+            "packaging": "1",
+            "volume": "75gm",
+            "price": 7.99
+        },
+        {
+            "brand": "Heineken",
+            "name": "Pale Lager",
+            "store_type_api_name": "liquor-station",
+            "product_id": 41,
+            "category": "beer",
+            "image": "b_1028.jpeg",
             "packaging": "6",
-            "size": "341ml",
-            "price": 15.99
+            "volume": "330ml",
+            "price": 17.99
         },
         {
             "brand": "Purex",
             "name": "Bathroom Tissue Paper",
-            "image": "/resources/images/products/everyday-needs/p_11000.jpeg",
-            "url": "/catalog/product/snack-vendor/purex-bathroom-tissue-paper/6500",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 6500,
+            "category": "everyday-needs",
+            "image": "p_11000.jpeg",
             "packaging": "4",
-            "size": "Double R.",
+            "volume": "Double R.",
             "price": 5.29
         },
         {
-            "brand": "Perrier",
-            "name": "Sparkling Water",
-            "image": "/resources/images/products/beverages/b_9529.jpeg",
-            "url": "/catalog/product/snack-vendor/perrier-lemon-orange/5535",
-            "packaging": "6",
-            "size": "500ml",
-            "price": 10.74
-        },
-        {
-            "brand": "Simply",
-            "name": "Lemonade Orange",
-            "image": "/resources/images/products/beverages/b_9506.jpeg",
-            "url": "/catalog/product/snack-vendor/simply-lemonade-orange/5509",
+            "brand": "Rummo",
+            "name": "Rigatoni",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6509,
+            "category": "pasta-and-baking",
+            "image": "bx_11009.jpeg",
             "packaging": "1",
-            "size": "1.75L",
-            "price": 5.99
+            "volume": "500gm",
+            "price": 2.69
         }
     ],
     "pasta-and-baking": [
         {
-            "brand": "Arctic Glacier",
-            "name": "Ice",
-            "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
+            "brand": "Dalla Terra",
+            "name": "Mediterranean Appetizer",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6843,
+            "category": "canned-and-jarred",
+            "image": "jr_11429.jpeg",
             "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.59
-        },
-        {
-            "brand": "Absolut",
-            "name": "Vodka",
-            "image": "/resources/images/products/spirit/b_5000.jpeg",
-            "url": "/catalog/product/liquor-station/absolut-vodka/2500",
-            "packaging": "1",
-            "size": "750ml",
-            "price": 28.99
-        },
-        {
-            "brand": "Lindt",
-            "name": "Hazelnut Chocolate",
-            "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
-            "packaging": "1",
-            "size": "100gm",
-            "price": 3.19
-        },
-        {
-            "brand": "Jagermeister",
-            "name": "Herbal Liqueur",
-            "image": "/resources/images/products/liqueur/b_7000.jpeg",
-            "url": "/catalog/product/liquor-station/jagermeister-herbal-liqueur/3500",
-            "packaging": "1",
-            "size": "750ml",
-            "price": 31.99
+            "volume": "375ml",
+            "price": 3.99
         },
         {
             "brand": "San Pellegrino",
             "name": "Sparkling Blood Orange",
-            "image": "/resources/images/products/beverages/b_11610.jpeg",
-            "url": "/catalog/product/linas-italian-market/san-pellegrino-sparkling-blood-orange/7110",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7110,
+            "category": "beverages",
+            "image": "b_11610.jpeg",
             "packaging": "1",
-            "size": "330ml",
+            "volume": "330ml",
             "price": 1.69
+        },
+        {
+            "brand": "Gouda's Glorie",
+            "name": "Curry Kruiden Ketchup Original",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6719,
+            "category": "condiments",
+            "image": "cntr_11218.jpeg",
+            "packaging": "1",
+            "volume": "930gm",
+            "price": 9.99
+        },
+        {
+            "brand": "Mott's Clamato",
+            "name": "The Original",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 5516,
+            "category": "beverages",
+            "image": "b_9511.jpeg",
+            "packaging": "1",
+            "volume": "32oz",
+            "price": 3.99
+        },
+        {
+            "brand": "Miller",
+            "name": "Lite",
+            "store_type_api_name": "liquor-station",
+            "product_id": 27,
+            "category": "beer",
+            "image": "b_1018.jpeg",
+            "packaging": "12",
+            "volume": "341ml",
+            "price": 27.99
         }
     ],
     "grains-and-legumes": [
         {
-            "brand": "Doritos",
-            "name": "Cheese",
-            "image": "/resources/images/products/snacks/p_9028.jpeg",
-            "url": "/catalog/product/snack-vendor/doritos-cheese/4528",
+            "brand": "Bellei",
+            "name": "Balsamic Vinegar of Modena White Label",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7022,
+            "category": "oil-and-vinegar",
+            "image": "b_11522.jpeg",
             "packaging": "1",
-            "size": "family",
-            "price": 4.79
+            "volume": "250ml",
+            "price": 15.99
         },
         {
-            "brand": "Tostitos",
-            "name": "Round",
-            "image": "/resources/images/products/snacks/p_9031.jpeg",
-            "url": "/catalog/product/snack-vendor/tostitos-round/4531",
+            "brand": "Peller Estates",
+            "name": "Chardonnay",
+            "store_type_api_name": "liquor-station",
+            "product_id": 1015,
+            "category": "wine",
+            "image": "b_3015.jpeg",
             "packaging": "1",
-            "size": "regular",
-            "price": 4.49
+            "volume": "750ml",
+            "price": 12.69
         },
         {
-            "brand": "Jack Link's",
-            "name": "Cholula",
-            "image": "/resources/images/products/snacks/p_9016.jpeg",
-            "url": "/catalog/product/snack-vendor/jack-links-cholula/4516",
+            "brand": "Allessia's",
+            "name": "Breadsticks with Olive Oil",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6815,
+            "category": "baked-goods",
+            "image": "bx_11247.jpeg",
             "packaging": "1",
-            "size": "80gm",
-            "price": 6.99
+            "volume": "100gm",
+            "price": 2.49
         },
         {
-            "brand": "Tostitos",
-            "name": "Red Pepper Salsa",
-            "image": "/resources/images/products/snacks/jr_9045.jpeg",
-            "url": "/catalog/product/snack-vendor/tostitos-red-pepper-salsa/4545",
-            "packaging": "1",
-            "size": "425gm",
-            "price": 4.59
+            "brand": "Advil",
+            "name": "Liqui Gels",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 6503,
+            "category": "everyday-needs",
+            "image": "p_11003.jpeg",
+            "packaging": "16ct",
+            "volume": "200gm",
+            "price": 7.19
         },
         {
-            "brand": "Doritos",
-            "name": "Cheese",
-            "image": "/resources/images/products/snacks/p_9028.jpeg",
-            "url": "/catalog/product/snack-vendor/doritos-cheese/4528",
+            "brand": "Acqua Panna",
+            "name": "Toscana Spring Water",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7165,
+            "category": "beverages",
+            "image": "b_11665.jpeg",
             "packaging": "1",
-            "size": "family",
-            "price": 4.79
-        },
+            "volume": "750ml",
+            "price": 2.49
+        }
     ],
     "herbs-and-spices": [
         {
-            "brand": "Lindt",
-            "name": "Chili Piment Rouge",
-            "image": "/resources/images/products/snacks/br_9042.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-chili-piment-rouge/4542",
-            "packaging": "1",
-            "size": "100gm",
-            "price": 3.89
-        },
-        {
-            "brand": "Browne",
-            "name": "Corkscrew Wing Bottle Opener",
-            "image": "/resources/images/products/party-supply/o_10023.jpeg",
-            "url": "/catalog/product/liquor-station/browne-corkscrew-wing-bottle-opener/6023",
-            "packaging": "1",
-            "size": "6in",
-            "price": 3.99
-        },
-        {
-            "brand": "Mozaik",
-            "name": "Classic Wine Glass",
-            "image": "/resources/images/products/party-supply/p_10013.jpeg",
-            "url": "/catalog/product/liquor-station/mozaik-classic-wine-glass/6013",
-            "packaging": "4",
-            "size": "15oz",
-            "price": 9.49
-        },
-        {
-            "brand": "Sea Change Seafoods",
-            "name": "Candied Wild Smoked Salmon",
-            "image": "/resources/images/products/dry-packaged/cntr_11112.jpeg",
-            "url": "/catalog/product/linas-italian-market/sea-change-seafoods-candied-wild-smoked-salmon/6613",
-            "packaging": "1",
-            "size": "70mg",
-            "price": 14.99
-        },
-        {
             "brand": "Rummo",
-            "name": "Fusilli #48",
-            "image": "/resources/images/products/pasta-and-baking/bx_11006.jpeg",
-            "url": "/catalog/product/linas-italian-market/rummo-fusilli-48/6506",
+            "name": "Lasagne",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6510,
+            "category": "pasta-and-baking",
+            "image": "bx_11010.jpeg",
             "packaging": "1",
-            "size": "500gm",
+            "volume": "500gm",
             "price": 2.69
+        },
+        {
+            "brand": "Augusto",
+            "name": "Paprika Pesto",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6720,
+            "category": "condiments",
+            "image": "jr_11219.jpeg",
+            "packaging": "1",
+            "volume": "180gm",
+            "price": 6.99
+        },
+        {
+            "brand": "Lavazza",
+            "name": "Gran Selezione Dark Roast",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7197,
+            "category": "coffee-and-tea",
+            "image": "bg_11697.jpeg",
+            "packaging": "1",
+            "volume": "340gm",
+            "price": 11.49
+        },
+        {
+            "brand": "Matua",
+            "name": "Pinot Noir Rose",
+            "store_type_api_name": "liquor-station",
+            "product_id": 1144,
+            "category": "wine",
+            "image": "b_3144.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 18.99
+        },
+        {
+            "brand": "Lindt",
+            "name": "White Chocolate",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4540,
+            "category": "snacks",
+            "image": "br_9040.jpeg",
+            "packaging": "1",
+            "volume": "100gm",
+            "price": 3.19
         }
     ],
     "dry-packaged": [
         {
-            "brand": "Patron",
-            "name": "Silver",
-            "image": "/resources/images/products/spirit/b_5097.jpeg",
-            "url": "/catalog/product/liquor-station/patron-silver/2596",
+            "brand": "Canada Dry",
+            "name": "Ginger Ale",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 5506,
+            "category": "beverages",
+            "image": "b_9503.jpeg",
             "packaging": "1",
-            "size": "750ml",
-            "price": 71.99
-        },
-        {
-            "brand": "Arctic Glacier",
-            "name": "Ice",
-            "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
-            "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.59
-        },
-        {
-            "brand": "Red Bull",
-            "name": "Classic",
-            "image": "/resources/images/products/beverages/c_9526.jpeg",
-            "url": "/catalog/product/snack-vendor/red-bull-classic/5531",
-            "packaging": "4",
-            "size": "250",
-            "price": 10.49
-        },
-        {
-            "brand": "Mott's",
-            "name": "Clamato The Original",
-            "image": "/resources/images/products/beverages/b_9511.jpeg",
-            "url": "/catalog/product/snack-vendor/motts-clamato-the-original/5516",
-            "packaging": "1",
-            "size": "32oz",
-            "price": 3.99
-        },
-        {
-            "brand": "Coca-Cola",
-            "name": "Classic",
-            "image": "/resources/images/products/beverages/b_9500.jpeg",
-            "url": "/catalog/product/snack-vendor/coca-cola-classic/5500",
-            "packaging": "1",
-            "size": "1L",
+            "volume": "1L",
             "price": 2.79
         },
+        {
+            "brand": "Steven Smith Teamaker",
+            "name": "Mao Feng Shui",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7218,
+            "category": "coffee-and-tea",
+            "image": "bx_11718.jpeg",
+            "packaging": "1",
+            "volume": "37gm",
+            "price": 12.99
+        },
+        {
+            "brand": "Riso Cariotti",
+            "name": "Arborio Superfine",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6542,
+            "category": "grains-and-legumes",
+            "image": "bx_11041.jpeg",
+            "packaging": "1",
+            "volume": "1kg",
+            "price": 5.99
+        },
+        {
+            "brand": "Baileys",
+            "name": "Irish Cream Original",
+            "store_type_api_name": "liquor-station",
+            "product_id": 3518,
+            "category": "liqueur",
+            "image": "b_7018.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 29.99
+        },
+        {
+            "brand": "Duo Penotti",
+            "name": "Hazelnut Pasta",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7231,
+            "category": "condiments",
+            "image": "jr_11731.jpeg",
+            "packaging": "1",
+            "volume": "750gm",
+            "price": 9.99
+        }
     ],
     "condiments": [
         {
-            "brand": "Lindt",
-            "name": "Intense Orange",
-            "image": "/resources/images/products/snacks/br_9043.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-intense-orange/4543",
-            "packaging": "1",
-            "size": "100gm",
-            "price": 3.89
-        },
-        {
-            "brand": "Arctic Glacier",
-            "name": "Ice",
-            "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
-            "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.59
-        },
-        {
-            "brand": "Guinness",
-            "name": "Draught",
-            "image": "/resources/images/products/beer/c_1060.jpeg",
-            "url": "/catalog/product/liquor-station/guinness-draught/83",
-            "packaging": "4",
-            "size": "440ml",
-            "price": 14.99
-        },
-        {
             "brand": "Natur Puglia",
             "name": "Taralli with Pizza Flavour",
-            "image": "/resources/images/products/baked-goods/btc_11262.jpeg",
-            "url": "/catalog/product/linas-italian-market/natur-puglia-taralli-with-pizza-flavour/6830",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6830,
+            "category": "baked-goods",
+            "image": "btc_11262.jpeg",
             "packaging": "1",
-            "size": "250gm",
+            "volume": "250gm",
             "price": 3.99
         },
         {
-            "brand": "Touch Bamboo",
-            "name": "Paddle Skewer",
-            "image": "/resources/images/products/party-supply/p_10014.jpeg",
-            "url": "/catalog/product/liquor-station/touch-bamboo-paddle-skewer/6014",
-            "packaging": "50",
-            "size": "60in",
+            "brand": "Safie's",
+            "name": "Pickled Asparagus",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6861,
+            "category": "canned-and-jarred",
+            "image": "jr_11447.jpeg",
+            "packaging": "1",
+            "volume": "750gm",
+            "price": 15.99
+        },
+        {
+            "brand": "ITALISSIMA",
+            "name": "Sparkling Grapefruit Juice",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7118,
+            "category": "beverages",
+            "image": "b_11618.jpeg",
+            "packaging": "1",
+            "volume": "1L",
             "price": 3.99
         },
+        {
+            "brand": "Knorr",
+            "name": "Beef",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6552,
+            "category": "herbs-and-spices",
+            "image": "cbe_11052.jpeg",
+            "packaging": "6",
+            "volume": "11gm",
+            "price": 4.49
+        },
+        {
+            "brand": "Blasted Church",
+            "name": "Merlot",
+            "store_type_api_name": "liquor-station",
+            "product_id": 1021,
+            "category": "wine",
+            "image": "b_3021.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 37.99
+        }
     ],
     "baked-goods": [
         {
-            "brand": "Twizzler",
-            "name": "Strawberry",
-            "image": "/resources/images/products/snacks/p_9037.jpeg",
-            "url": "/catalog/product/snack-vendor/twizzler-strawberry/4537",
-            "packaging": "1",
-            "size": "227gm",
-            "price": 2.99
+            "brand": "Scotties",
+            "name": "Napkins",
+            "store_type_api_name": "liquor-station",
+            "product_id": 6015,
+            "category": "party-supply",
+            "image": "p_10015.jpeg",
+            "packaging": "210",
+            "volume": "regular",
+            "price": 2.49
         },
         {
-            "brand": "Pringles",
-            "name": "Sour Cream & Onion",
-            "image": "/resources/images/products/snacks/p_9001.jpeg",
-            "url": "/catalog/product/snack-vendor/pringles-sour-cream-onion/4501",
+            "brand": "Painted Turtle",
+            "name": "Cabernet Sauvignon",
+            "store_type_api_name": "liquor-station",
+            "product_id": 1001,
+            "category": "wine",
+            "image": "b_3001.jpeg",
             "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.69
+            "volume": "750ml",
+            "price": 12.49
         },
         {
-            "brand": "Stella Artois",
-            "name": "Pale Lager",
-            "image": "/resources/images/products/beer/b_1039.jpeg",
-            "url": "/catalog/product/liquor-station/stella-artois-pale-lager/109",
-            "packaging": "6",
-            "size": "330ml",
-            "price": 18.49
+            "brand": "GIGI",
+            "name": "Premium Sweet Antipasto",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6855,
+            "category": "canned-and-jarred",
+            "image": "jr_11441.jpeg",
+            "packaging": "1",
+            "volume": "580ml",
+            "price": 7.99
         },
         {
-            "brand": "Cocktail Shaker",
-            "name": "30oz",
-            "image": "/resources/images/products/party-supply/o_10012.jpeg",
-            "url": "/catalog/product/liquor-station/cocktail-shaker-30oz/6012",
+            "brand": "Forno Steno",
+            "name": "Almond Biscuits",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7310,
+            "category": "confectionery",
+            "image": "bg_11810.jpeg",
             "packaging": "1",
-            "size": "30oz",
-            "price": 14.49
+            "volume": "150gm",
+            "price": 7.69
         },
         {
-            "brand": "Hershey's",
-            "name": "Cookies & Cream",
-            "image": "/resources/images/products/snacks/br_9041.jpeg",
-            "url": "/catalog/product/snack-vendor/hersheys-cookies-cream/4541",
+            "brand": "Cape Herb & Spice",
+            "name": "Lemon Pepper",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6622,
+            "category": "herbs-and-spices",
+            "image": "cntr_11121.jpeg",
             "packaging": "1",
-            "size": "100gm",
-            "price": 3.19
+            "volume": "210gm",
+            "price": 15.99
         }
     ],
     "oil-and-vinegar": [
         {
-            "brand": "Scotties",
-            "name": "Napkins",
-            "image": "/resources/images/products/party-supply/p_10015.jpeg",
-            "url": "/catalog/product/liquor-station/scotties-napkins/6015",
-            "packaging": "210",
-            "size": "regular",
-            "price": 2.49
-        },
-        {
-            "brand": "Bevara",
-            "name": "Sealing Cleaps",
-            "image": "/resources/images/products/party-supply/p_10022.jpeg",
-            "url": "/catalog/product/liquor-station/bevara-sealing-cleaps/6022",
+            "brand": "Divella",
+            "name": "Lasagne",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7329,
+            "category": "pasta-and-baking",
+            "image": "bx_11829.jpeg",
             "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.69
+            "volume": "500gm",
+            "price": 3.99
         },
         {
-            "brand": "Shot Glass",
-            "name": "35ml",
-            "image": "/resources/images/products/party-supply/p_10020.jpeg",
-            "url": "/catalog/product/liquor-station/shot-glass-35ml/6020",
-            "packaging": "6",
-            "size": "330ml",
-            "price": 18.49
-        },
-        {
-            "brand": "Mozaik",
-            "name": "Cutlery Set",
-            "image": "/resources/images/products/party-supply/p_10007.jpeg",
-            "url": "/catalog/product/liquor-station/mazaik-cutlery-set/6007",
-            "packaging": "80",
-            "size": "combo",
-            "price": 10.99
-        },
-        {
-            "brand": "Lindt",
-            "name": "Hazelnut Chocolate",
-            "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
+            "brand": "Grand Marnier",
+            "name": "Cordon Rouge",
+            "store_type_api_name": "liquor-station",
+            "product_id": 3515,
+            "category": "liqueur",
+            "image": "b_7015.jpeg",
             "packaging": "1",
-            "size": "100gm",
-            "price": 3.19
+            "volume": "750ml",
+            "price": 46.99
+        },
+        {
+            "brand": "Tylenol",
+            "name": "Regular",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 6501,
+            "category": "everyday-needs",
+            "image": "p_11001.jpeg",
+            "packaging": "24ct",
+            "volume": "325mg",
+            "price": 4.99
+        },
+        {
+            "brand": "Golosini",
+            "name": "Grilled Artichokes in Oil",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6913,
+            "category": "canned-and-jarred",
+            "image": "jr_11499.jpeg",
+            "packaging": "1",
+            "volume": "314ml",
+            "price": 7.99
+        },
+        {
+            "brand": "Xochitl",
+            "name": "Sea Salt Chips",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7084,
+            "category": "snacks",
+            "image": "btc_11584.jpeg",
+            "packaging": "1",
+            "volume": "340gm",
+            "price": 7.99
         }
     ],
     "coffee-and-tea": [
         {
-            "brand": "Arctic Glacier",
-            "name": "Ice",
-            "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
+            "brand": "Balocco",
+            "name": "Biscuits with Lemon Flavor",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7305,
+            "category": "confectionery",
+            "image": "bg_11805.jpeg",
             "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.59
+            "volume": "700gm",
+            "price": 5.99
         },
         {
-            "brand": "Absolut",
-            "name": "Vodka",
-            "image": "/resources/images/products/spirit/b_5000.jpeg",
-            "url": "/catalog/product/liquor-station/absolut-vodka/2500",
+            "brand": "Milka",
+            "name": "Cherry Cream",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7364,
+            "category": "confectionery",
+            "image": "br_11874.jpeg",
             "packaging": "1",
-            "size": "750ml",
-            "price": 28.99
+            "volume": "100gm",
+            "price": 3.99
         },
         {
-            "brand": "Lindt",
-            "name": "Hazelnut Chocolate",
-            "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
+            "brand": "Nutella",
+            "name": "Chocolate Spread",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7227,
+            "category": "condiments",
+            "image": "jr_11727.jpeg",
             "packaging": "1",
-            "size": "100gm",
-            "price": 3.19
+            "volume": "725gm",
+            "price": 9.99
         },
         {
-            "brand": "Jagermeister",
-            "name": "Herbal Liqueur",
-            "image": "/resources/images/products/liqueur/b_7000.jpeg",
-            "url": "/catalog/product/liquor-station/jagermeister-herbal-liqueur/3500",
+            "brand": "Kahlua",
+            "name": "Coffee Liqueur",
+            "store_type_api_name": "liquor-station",
+            "product_id": 3511,
+            "category": "liqueur",
+            "image": "b_7011.jpeg",
             "packaging": "1",
-            "size": "750ml",
-            "price": 31.99
+            "volume": "750ml",
+            "price": 30.99
         },
         {
-            "brand": "San Pellegrino",
-            "name": "Sparkling Blood Orange",
-            "image": "/resources/images/products/beverages/b_11610.jpeg",
-            "url": "/catalog/product/linas-italian-market/san-pellegrino-sparkling-blood-orange/7110",
+            "brand": "Loacker",
+            "name": "Lemon Quadratini",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7307,
+            "category": "confectionery",
+            "image": "bg_11807.jpeg",
             "packaging": "1",
-            "size": "330ml",
-            "price": 1.69
+            "volume": "250gm",
+            "price": 5.49
         }
     ],
     "confectionery": [
         {
-            "brand": "Arctic Glacier",
-            "name": "Ice",
-            "image": "/resources/images/products/beverages/p_9528.jpeg",
-            "url": "/catalog/product/snack-vendor/arctic-glacier-ice/5533",
+            "brand": "Cartwright & Butler",
+            "name": "English Breakfast",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7216,
+            "category": "coffee-and-tea",
+            "image": "bx_11716.jpeg",
             "packaging": "1",
-            "size": "5.95lb",
-            "price": 3.59
+            "volume": "45gm",
+            "price": 9.99
         },
         {
-            "brand": "Absolut",
-            "name": "Vodka",
-            "image": "/resources/images/products/spirit/b_5000.jpeg",
-            "url": "/catalog/product/liquor-station/absolut-vodka/2500",
+            "brand": "Good Drink",
+            "name": "Mango Tea with Hibiscus and Vanilla",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7155,
+            "category": "beverages",
+            "image": "b_11655.jpeg",
             "packaging": "1",
-            "size": "750ml",
-            "price": 28.99
+            "volume": "473ml",
+            "price": 2.99
         },
         {
-            "brand": "Lindt",
-            "name": "Hazelnut Chocolate",
-            "image": "/resources/images/products/snacks/br_9039.jpeg",
-            "url": "/catalog/product/snack-vendor/lindt-hazelnut-chocolate/4539",
+            "brand": "Lina's",
+            "name": "Dark Roast Organic",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7186,
+            "category": "coffee-and-tea",
+            "image": "bx_11716.jpeg",
             "packaging": "1",
-            "size": "100gm",
-            "price": 3.19
+            "volume": "454gm",
+            "price": 16.99
         },
         {
-            "brand": "Jagermeister",
-            "name": "Herbal Liqueur",
-            "image": "/resources/images/products/liqueur/b_7000.jpeg",
-            "url": "/catalog/product/liquor-station/jagermeister-herbal-liqueur/3500",
+            "brand": "Fluggi",
+            "name": "Natural Mineral Water",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7169,
+            "category": "beverages",
+            "image": "b_11669.jpeg",
             "packaging": "1",
-            "size": "750ml",
-            "price": 31.99
+            "volume": "1L",
+            "price": 3.99
         },
         {
-            "brand": "San Pellegrino",
-            "name": "Sparkling Blood Orange",
-            "image": "/resources/images/products/beverages/b_11610.jpeg",
-            "url": "/catalog/product/linas-italian-market/san-pellegrino-sparkling-blood-orange/7110",
+            "brand": "Browne",
+            "name": "Corkscrew Wing Bottle Opener",
+            "store_type_api_name": "liquor-station",
+            "product_id": 6023,
+            "category": "party-supply",
+            "image": "o_10023.jpeg",
             "packaging": "1",
-            "size": "330ml",
-            "price": 1.69
+            "volume": "6in",
+            "price": 3.99
         }
     ],
 }
 
 router.get("/product/:storeName/:productName/:productId", async function (req, res, next) {
-    var product = await Catalog.getProductPageItemsByProductId(req.params.storeName,req.params.productId);
-
+    var product = await Catalog.getProductPageItemsByProductId(req.params.storeName, req.params.productId);
+    var similarProducts = await Catalog.getSimilarProducts(req.params.productId);
     var validationUrl = "/product/" + product.store_type_api_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
 
     if (!product || validationUrl != req.url) {
@@ -888,61 +1067,66 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     req.options.ejs.product_name = product.name;
 
     if (product.store_type_api_name == "linas-italian-market") {
-        req.options.ejs.store_type_display_name = '<li><span class="bold">Sold By: </span><a href="'+ "https://linasmarket.com/" +'" target="_blank" itemprop="additionalProperty">' + _.startCase(product.store_type_display_name, '-', ' ') + '</a></li>';
+        req.options.ejs.store_type_display_name = '<li><span class="bold">Sold By: </span><a href="' + "https://linasmarket.com/" + '" target="_blank" itemprop="additionalProperty">' + _.startCase(product.store_type_display_name, '-', ' ') + '</a></li>';
     } else {
         req.options.ejs.store_type_display_name = undefined;
     }
 
-    if(product.details.country_of_origin){
+    if (product.details.country_of_origin) {
         req.options.ejs.country_of_origin = '<li><span class="bold">Country of Origin:</span><span itemprop="additionalProperty"> ' + product.details.country_of_origin + '</span></li>';
-    } else{
-        req.options.ejs.country_of_origin ="";
+    } else {
+        req.options.ejs.country_of_origin = "";
     }
 
-    if(product.details.producer){
+    if (product.details.producer) {
         req.options.ejs.producer = '<li><span class="bold">Made by:</span><span itemprop="manufacturer"> ' + product.details.producer + '</span></li>';
-    }else{
+    } else {
         req.options.ejs.producer = "";
     }
 
-    if(product.details.alcohol_content){
-        req.options.ejs.alcohol_content = '<li><span class="bold">Alcohol/Vol:</span><span itemprop="additionalProperty"> '+ product.details.alcohol_content + '</span></li>';
-    } else{
+    if (product.details.alcohol_content) {
+        req.options.ejs.alcohol_content = '<li><span class="bold">Alcohol/Vol:</span><span itemprop="additionalProperty"> ' + product.details.alcohol_content + '</span></li>';
+    } else {
         req.options.ejs.alcohol_content = "";
     }
 
-    if(product.type){
+    if (product.type) {
         req.options.ejs.product_type = '<li><span class="bold">Type:</span><span itemprop="additionalType"> ' + product.type + '</span></li>';
-    } else{
+    } else {
         req.options.ejs.product_type = "";
     }
 
-    if(product.details.preview){
+    if (product.details.preview) {
         req.options.ejs.preview = '<section class="preview-sec" itemprop="description"><div class="description"><h3 class="sub-header">Product Description:</h3><p> ' + convertHomitTags(product.details.preview) + '</p></div></section>';
-    } else{
+    } else {
         req.options.ejs.preview = "";
     }
 
-    if(product.details.ingredients){
+    if (product.details.ingredients) {
         req.options.ejs.ingredients = '<section class="ingredients-sec" itemprop="disambiguatingDescription"><div class="ingredients"><h3 class="sub-header">Ingredients:</h3><span> ' + convertHomitTags(product.details.ingredients) + '</span></div></section>';
-    } else{
+    } else {
         req.options.ejs.ingredients = "";
     }
 
-    if(product.details.serving_suggestions){
+    if (product.details.serving_suggestions) {
         req.options.ejs.serving_suggestions = '<section class="preview-sec" itemprop="additionalProperty"><div class="description"><h3 class="sub-header">Serving Sugestions:</h3><p> ' + convertHomitTags(product.details.serving_suggestions) + '</p></div></section>';
-    }else{
+    } else {
         req.options.ejs.serving_suggestions = "";
     }
-    
-    if(product.images.length > 0){
+
+    if (product.images.length > 0) {
         req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="' + product.images[0] + '">';
     }
 
-    req.options.ejs.product_images = JSON.stringify({"images" : product.images});
-    req.options.ejs.recommended_products = JSON.stringify(recommended_products[product.category]);
+    req.options.ejs.product_images = JSON.stringify({ "images": product.images });
     req.options.ejs.see_more_url = "https://homit.ca/catalog/" + product.store_type_api_name + "/" + product.category;
-
+    if (similarProducts.length < 12) {
+        let remainder = 12 - similarProducts.length;
+        let tmpRecommended = recommended_products[product.category].slice(0, remainder);
+        req.options.ejs.recommended_products = JSON.stringify(similarProducts.concat(tmpRecommended));
+    } else {
+        req.options.ejs.recommended_products = JSON.stringify(similarProducts);
+    }
 
     req.options.ejs.og_image = product.images[0];
 
@@ -954,9 +1138,9 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
         req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. Let us Home It and liberate your precious time.");
     }
 
-        product.product_variants.selectedVolume = 0;
-        product.product_variants.selectedPack = 0;
-        product.product_variants.container = product.container;
+    product.product_variants.selectedVolume = 0;
+    product.product_variants.selectedPack = 0;
+    product.product_variants.container = product.container;
 
     req.options.ejs.product = JSON.stringify(product);
 
@@ -1000,10 +1184,10 @@ function convertHomitTags(string) {
     return tmpString;
 }
 
-function clearProductUrl(path){
+function clearProductUrl(path) {
     var tempPath = path;
-    let characters = ["#", "&", "'", ",", ".", "%","/"];
-    for(let i=0; i<characters.length; i++){
+    let characters = ["#", "&", "'", ",", ".", "%", "/"];
+    for (let i = 0; i < characters.length; i++) {
         tempPath = tempPath.replace(characters[i], "");
     }
     tempPath = tempPath.replace("---", "-");
