@@ -4,7 +4,7 @@
 
 var pub = {};
 
-pub.sendMissingParams = function(res){
+pub.sendMissingParams = function (res) {
     var message = {
         success: false,
         "error": {
@@ -16,18 +16,18 @@ pub.sendMissingParams = function(res){
 }
 
 // User already exists
-pub.sendUserAlreadyExists = function(res){
+pub.sendUserAlreadyExists = function (res) {
     res.status(200).json({
         success: false,
         error: {
             code: "A002",
             "ui_message": "User already exists"
-        }  
+        }
     });
 }
 
 // Invalid email, or password
-pub.sendInvalidCredentials = function(res){
+pub.sendInvalidCredentials = function (res) {
     res.json({
         success: false,
         error: {
@@ -37,7 +37,7 @@ pub.sendInvalidCredentials = function(res){
     });
 }
 // passwords should match
-pub.sendPasswordsMismatch = function(res){
+pub.sendPasswordsMismatch = function (res) {
     res.status(200).json({
         error: {
             dev_message: "new_password should match confirm_password"
@@ -46,7 +46,7 @@ pub.sendPasswordsMismatch = function(res){
 }
 
 // invalid token
-pub.sendInvalidToken = function(res){
+pub.sendInvalidToken = function (res) {
     res.status(200).json({
         success: false,
         ui_message: "Invalid token"
@@ -54,7 +54,7 @@ pub.sendInvalidToken = function(res){
 }
 
 // password update problem
-pub.sendPasswordNotUpdated = function(res){
+pub.sendPasswordNotUpdated = function (res) {
     res.json({
         success: false,
         ui_message: "Something went wrong while updating password, please try again. If error persists contact us at info@homit.ca or 403.800.3460"

@@ -84,6 +84,9 @@ pub.receiver = async function (jsonResponse) {
         };
         NM.sendToDriver(driverIdString, jsonFinal);
 
+        //Zaman is this the right place
+        Store.newOrder(jsonFinal.details.store.id);
+
         await Driver.dispatchOrder(driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded);
 
         //Add to email temp

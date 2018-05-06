@@ -350,6 +350,7 @@ CREATE TABLE orders_history (
 	delivery_fee DECIMAL(6,2) NOT NULL,
 	total_tax DECIMAL(6,2) NOT NULL,
 	date_assigned TIMESTAMP NULL,
+	date_store_ready TIMESTAMP NULL,
 	date_arrived_store TIMESTAMP NULL,
 	date_picked TIMESTAMP NULL,
 	date_arrived_customer TIMESTAMP NULL,	
@@ -378,6 +379,7 @@ CREATE TABLE orders_cart_items (
 	price_sold DECIMAL(6,2) NOT NULL,
 	modified_quantity INT NULL,
 	tax BOOLEAN NOT NULL,
+	store_ready BOOLEAN DEFAULT FALSE,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_orders_cart_items_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -469,6 +471,7 @@ CREATE TABLE orders_history_add (
 	CONSTRAINT fk_orders_history_add_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
 ) ENGINE = InnoDB;
 
+
 CREATE TABLE stores_hours (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	store_id INT UNSIGNED NOT NULL,
@@ -480,4 +483,17 @@ CREATE TABLE stores_hours (
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_stores_hours_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE
+ ) ENGINE = InnoDB;
+
+
+ CREATE TABLE stores_authentication (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	store_id INT UNSIGNED NOT NULL,
+	user_name VARCHAR(225) NOT NULL,
+	password VARCHAR(225) NOT NULL,
+	auth_token VARCHAR(225),	
+	
+	PRIMARY KEY (id),
+	UNIQUE (user_name),
+	CONSTRAINT fk_stores_authentication_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE
  ) ENGINE = InnoDB;

@@ -17,15 +17,15 @@ switch (process.env.n_mode) {
 		process.exit(1);
 }
 
-/* Global variables */
-global.express = require('express');
-global.secretKey = "secretSession";
-require("./model-factory").init();
-
 /*Building metadata for log*/
 var logMeta = {
 	directory: __filename
 }
+
+/* Start declaring Global variables */
+global.express = require('express');
+global.secretKey = "secretSession";
+require("./model-factory").init();
 
 /* Variables */
 var session = require("express-session");
@@ -45,8 +45,24 @@ var sessionStore = new RedisStore({
 	db: db.redisTable.sessions
 });
 
-var cart_version = 2;
+/* Global Session variable to be used by NM */
+var homitSharedSessions = session({
+	store: sessionStore,
+	name: "session_sid", 
+	secret: process.env.SESSION_KEY,
+	resave: true,
+	saveUninitialized: false,	
+	cookie: {
+		secure: false, // Setting to false as reverse proxy is used in production
+		httpOnly: true,
+		expires: new Date(Date.now() + (24 * 60 * 60 * 1000)),
+		maxAge: 24 * 60 * 60 * 1000  // 24 hours
+	}
+})
 
+NM.setSharedSessionMiddleware(homitSharedSessions);
+
+var cart_version = 2;
 
 /* make logs folder */
 var errorLog = ".logs/error_log";
@@ -71,20 +87,7 @@ var sslOptions = {
 };
 
 /* Server Middleware */
-webServer.use(session({
-	store: sessionStore,
-	name: "session_sid", 
-	secret: process.env.SESSION_KEY,
-	resave: true,
-	saveUninitialized: false,	
-	cookie: {
-		secure: false, // Setting to false as reverse proxy is used in production
-		httpOnly: true,
-		expires: new Date(Date.now() + (24 * 60 * 60 * 1000)),
-		maxAge: 24 * 60 * 60 * 1000  // 24 hours
-	}
-}));
-
+webServer.use(homitSharedSessions);
 
 // webServer.use(limiter);
 webServer.use(bodyParser.json());

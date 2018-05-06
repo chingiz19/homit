@@ -3,70 +3,85 @@
  */
 
 var pub = {};
-var fs = require("fs");
+const fs = require("fs");
 const path = require('path');
 const redis = require('socket.io-redis');
+const sharedsession = require("express-socket.io-session");
 const KEY_PATH = path.normalize(process.cwd() + "/ssl/server.enc.key");
 const CERTIFICATE_PATH = path.normalize(process.cwd() + "/ssl/server.crt");
 const DRIVER_NAMESPACE = "/drivers";
 const CM_NAMESPACE = "/chikimiki";
-const SOCKET_PORT = 3000;
-const CM_SOCKET_PORT = 6262;
+const STORES_NAMESPACE = "/stores";
+const EXTERNAL_PORT = 3000;
+const INTERNAL_PORT = 6262;
 const DEFAULT_EMIT = "data";
 const CM_DEFAULT_EMIT = "message";
 const CM_SECRET_KEY = "hF)Zf:NR2W+gBGF]"
+
 
 /* Building metadata for log */
 var logMeta = {
     directory: __filename
 }
 
-/* Building Server for socket io */
-var sockIOServer = require("https").createServer({
+/**
+ * Generic parameters for connections ping interval and timeout
+ */
+var genericConParams = {
+    pingInterval: 2000,
+    pingTimeout: 10000
+};
+
+
+/**
+ * Creating Servers:
+ * 1. Secure for external connections
+ * 2. Non secure for internal (localhost only) connections 
+ */
+var driversIOServer = require("https").createServer({
     key: fs.readFileSync(KEY_PATH),
     cert: fs.readFileSync(CERTIFICATE_PATH),
     passphrase: 'test'
 });
+var localCMServer = require("http").createServer();
 
-/* Attaching socket io server */
-var io = require("socket.io")(sockIOServer, {
-    pingInterval: 2000,
-    pingTimeout: 10000
-});
 
-/* Attaching redis server as adapter to local server for CM */
-io.adapter(redis({
+/* Attaching Servers */
+var externalIO = require("socket.io")(driversIOServer, genericConParams);
+var localhostIO = require("socket.io")(localCMServer, genericConParams);
+
+
+/* Attaching redis servers as adapter for socket objects */
+externalIO.adapter(redis({
     host: 'localhost',
     port: 6379,
     user: process.env.REDIS_USER,
     db: db.redisTable.io_drivers
 }));
 
-
-/**
- * Separate local server for CM connections
- */
-
-/* Creating local server for CM */
-var localServer = require("http").createServer();
-
-/* Attaching Redis to local server to socketio */
-var chikimikiIO = require("socket.io")(localServer, {
-    pingInterval: 2000,
-    pingTimeout: 10000
-});
-
-/* Attaching redis server as adapter to local server for CM */
-chikimikiIO.adapter(redis({
+localhostIO.adapter(redis({
     host: 'localhost',
     port: 6379,
-    user: process.env.REDIS_USER
+    user: process.env.REDIS_USER,
+    db: db.redisTable.io_cm
 }));
 
+/* Assigning namespaces */
+var drivers = externalIO.of(DRIVER_NAMESPACE);
+var stores = externalIO.of(STORES_NAMESPACE);
+var chikimiki = localhostIO.of(CM_NAMESPACE);
 
-/* Building drivers namespace */
-var drivers = io.of(DRIVER_NAMESPACE);
-var chikimiki = chikimikiIO.of(CM_NAMESPACE);
+
+/**
+ * Getting session from connected sockets 
+ * For now only (/stores) namespace
+ * @param {*} session 
+ */
+pub.setSharedSessionMiddleware = function (session) {
+    stores.use(sharedsession(session, {
+        autoSave: true
+    }));
+}
 
 /**
  * Connection handler for Drivers
@@ -137,6 +152,7 @@ drivers.on("connection", function (socket) {
                                 Logger.log.verbose("store_id: " + driverDetails.pick_up.store_id);
                                 Logger.log.verbose("order_ids: " + driverDetails.pick_up.order_ids + "\n");
                                 Driver.savePickUp(driverIdInt, driverDetails.pick_up.order_ids);
+                                Store.driverAction(driverDetails.pick_up.store_id);
                                 break;
                             case "drop_off":
                                 Logger.log.verbose("Data received from driver: drop_off");
@@ -224,15 +240,70 @@ chikimiki.on('connection', function (client) {
     })
 });
 
+/**
+ * Connection handler for CM
+ */
+stores.on('connection', function (client) {
+    if (Auth.validateStoreWebSocket(client)) {
+        //Welcome, join room with your ID
+        let stringStoreID = "s_" + client.handshake.session.store_id;
 
-pub.sendToCM = async function (json, isOrder) { 
+        Logger.log.debug("Connection to Store app with ID:" + stringStoreID + " established", logMeta);
+        console.log("Store with ID: " + stringStoreID + " Auth and Connected!");
+
+        client.join(stringStoreID, async () => {
+            Logger.log.verbose("Store has been joined to room");
+        });
+
+        //we don't expect data from Stores app yet
+        client.on('data', function (data) { });
+
+        //Store app remote logger is going to fire 'app_error' events
+        client.on('app_error', function (data) {
+            Logger.storeLog.error(data);
+        });
+
+        client.on('disconnect', function () {
+            Logger.log.warn("Connection to store app has been lost", logMeta);
+            console.log("Connection lost")
+        });
+
+        client.on('error', function (data) {
+            Logger.log.error("Store app connection is experiencing issues", logMeta);
+        })
+    } else {
+        client.disconnect();
+    }
+});
+
+/**
+ * Sends data to stores 
+ * @param {*} id store id
+ * @param {*} json data to be sent
+ */
+pub.sendToStores = async function (id, json) {
+    stores.to(id).emit(DEFAULT_EMIT, JSON.stringify(json) + "\n");
+}
+
+/**
+ * Sends data to CM
+ * @param {*} json data to be sent
+ * @param {*} isOrder if it is order or not
+ */
+pub.sendToCM = async function (json, isOrder) {
     if (isOrder) {
         Logger.log.debug('Sending order to CM \n Store type: ' + json.details.order.store_type, logMeta);
     }
     chikimiki.emit(CM_DEFAULT_EMIT, json);
 }
 
-
+/**
+ * Prepares order with given data and sends it to CM using function above
+ * @param {*} customerId customer id
+ * @param {*} customerAddress adress
+ * @param {*} orderId order id
+ * @param {*} storeType store type 
+ */
 pub.sendOrderToCM = function (customerId, customerAddress, orderId, storeType) {
     var newOrder = {
         "action": "neworder",
@@ -250,7 +321,11 @@ pub.sendOrderToCM = function (customerId, customerAddress, orderId, storeType) {
     pub.sendToCM(newOrder, true);
 }
 
-
+/**
+ * 
+ * @param {*} orderId order id 
+ * @param {*} driverId driver id
+ */
 pub.cancelCMOrder = function (orderId, driverId) {
     var driverIdString = "d_" + driverId;
     var orderIdString = "o_" + orderId;
@@ -268,12 +343,11 @@ pub.cancelCMOrder = function (orderId, driverId) {
     pub.sendToCM(json);
 };
 
-
 /**
- * Send data to driver
+ * Sends data to driver
  * 
- * @param {*} id 
- * @param {*} json 
+ * @param {*} id driver id 
+ * @param {*} json data to be sent
  */
 pub.sendToDriver = async function (id, json) {
     var driverId = id.split("_")[1];
@@ -285,17 +359,20 @@ pub.sendToDriver = async function (id, json) {
     } else {
         await Driver.addToDriversRequest(driverId, json);
         var driverInfo = await Driver.findDriverById(driverId);
-        SMS.notifyDriver("Your app is disconnected and you have been dispatched for an order " +
-            json.details.customer.order.id,
-            driverInfo.first_name, driverInfo.phone_number, function response() { });
+        if (process.env.n_mode == "production") {
+            SMS.notifyDriver("Your app is disconnected and you have been dispatched for an order " +
+                json.details.customer.order.id,
+                driverInfo.first_name, driverInfo.phone_number, function response() { });
+        }
     }
 }
 
+/* Start listening to internal and external ports */
 try {
-    sockIOServer.listen(SOCKET_PORT);
-    localServer.listen(CM_SOCKET_PORT);
+    driversIOServer.listen(EXTERNAL_PORT);
+    localCMServer.listen(INTERNAL_PORT);
 } catch (err) {
-    Logger.log.error("Can't listen to port " + SOCKET_PORT + "Please close other apps that might be using the same port", logMeta);
+    Logger.log.error("Can't listen to ports. Please close other apps that might be using the same port", logMeta);
 }
 
 module.exports = pub;

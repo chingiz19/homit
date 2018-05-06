@@ -5,11 +5,16 @@
 
 var jwt = require('jsonwebtoken');
 const secretKey = "secretToken";
+const defaultExpire = "10h";
 var pub = {};
 
 /* Helper functions below */
-pub.createToken = function (data) {
-    var token = jwt.sign(data, secretKey, { expiresIn: '10h' });
+pub.createToken = function (data, expiresIn) {
+    var expires = defaultExpire;
+    if (expiresIn) {
+        expires = expiresIn;
+    }
+    var token = jwt.sign(data, secretKey, { expiresIn: expires });
     return token;
 };
 
@@ -23,10 +28,6 @@ pub.createResetPasswordToken = function (data, secret) {
 
 pub.validateResetPasswordToken = function (token, secret) {
     return _validateToken(token, secret);
-};
-
-var destroyToken = function (token) {
-    Logger.log.debug("JWT token has been destroyed");
 };
 
 /**
@@ -47,7 +48,7 @@ function _validateToken(token, secret) {
                 error_message: err.message
             }
             Logger.log.error("Tried to validate wrong JWT token", metaData);
-            return "wrong";
+            return false;
         }
     }
 }

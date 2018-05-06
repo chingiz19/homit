@@ -452,6 +452,237 @@ pub.getGuestsByOrderPhone = async function (phoneNumber) {
     return dbResult;
 }
 
+/**
+ * Format order products 
+ * 
+ * @param {*} orderProducts 
+ */
+var getFormattedOrdersForStore = function (orderProducts) {
+    var result = [];
+    var currentItems = [];
+
+    for (let i = 0; i < orderProducts.length; i++) {
+        var item = {
+            "depot_id": orderProducts[i].depot_id,
+            "category": orderProducts[i].category,
+            "category_display_name": orderProducts[i].category_display_name,
+            "subcategory": orderProducts[i].subcategory,
+            "type": orderProducts[i].type,
+            "brand": orderProducts[i].brand,
+            "name": orderProducts[i].name,
+            "container": orderProducts[i].container,
+            "packaging": orderProducts[i].packaging,
+            "volume": orderProducts[i].volume,
+            "price": orderProducts[i].price,
+            "image": orderProducts[i].image,
+            "quantity": orderProducts[i].quantity,
+            "price_sold": orderProducts[i].price_sold,
+            "tax": orderProducts[i].tax,
+            "store_ready": orderProducts[i].store_ready
+        };
+        if (i == 0) {
+            currentItems.push(item);
+        } else {
+            if (orderProducts[i].order_id != orderProducts[i - 1].order_id) {
+                var order = {
+                    "order_id": orderProducts[i - 1].order_id,
+                    "order_id_prefix": orderProducts[i - 1].order_id_prefix,
+                    "date_placed": orderProducts[i - 1].date_placed,
+                    "date_assigned": orderProducts[i - 1].date_assigned,
+                    "date_store_ready": orderProducts[i - 1].date_store_ready,
+                    "date_arrived_store": orderProducts[i - 1].date_arrived_store,
+                    "date_delivered": orderProducts[i - 1].date_delivered,
+                    "driver": {
+                        "driver_id_prefix": orderProducts[i - 1].driver_id_prefix,
+                        "driver_id": orderProducts[i - 1].driver_id,
+                        "driver_first_name": orderProducts[i - 1].driver_first_name,
+                        "driver_last_name": orderProducts[i - 1].driver_last_name,
+                        "driver_phone_number": orderProducts[i - 1].driver_phone_number
+                    },
+                    "products": currentItems
+                };
+                result.push(order);
+                currentItems = [];
+            }
+            currentItems.push(item);
+        }
+
+        if (i == orderProducts.length - 1) {
+            var order = {
+                "order_id": orderProducts[i].order_id,
+                "order_id_prefix": orderProducts[i].order_id_prefix,
+                "date_placed": orderProducts[i].date_placed,
+                "date_assigned": orderProducts[i].date_assigned,
+                "date_store_ready": orderProducts[i].date_store_ready,
+                "date_arrived_store": orderProducts[i].date_arrived_store,
+                "date_delivered": orderProducts[i].date_delivered,
+                "driver": {
+                    "driver_id_prefix": orderProducts[i].driver_id_prefix,
+                    "driver_id": orderProducts[i].driver_id,
+                    "driver_first_name": orderProducts[i].driver_first_name,
+                    "driver_last_name": orderProducts[i].driver_last_name,
+                    "driver_phone_number": orderProducts[i].driver_phone_number
+                },
+                "products": currentItems
+            };
+            result.push(order);
+        }
+    }
+    return result;
+}
+
+/**
+ * Get pending orders by store id
+ * 
+ * @param {*} storeId 
+ */
+pub.getPendingOrdersWithItemsByStoreId = async function (storeId) {
+    let sqlCondition = "history.date_picked IS NULL";
+    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
+}
+
+/**
+ * Get pending orders by store id
+ * 
+ * @param {*} storeId 
+ */
+pub.getAllOrdersWithItemsByStoreId = async function (storeId) {
+    let sqlCondition = "1=1";
+    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
+}
+
+/**
+ * Get pevious orders by store id
+ * 
+ * @param {*} storeId 
+ */
+pub.getPreviousOrdersWithItemsByStoreId = async function (storeId) {
+    let sqlCondition = "history.date_picked IS NOT NULL";
+    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
+}
+
+/**
+ * Get orders by store id based on condition
+ * 
+ * @param {*} storeId 
+ * @param {*} sqlCondition 
+ */
+var getOrdersWithItemsByStoreId = async function (storeId, sqlCondition) {
+    var sqlGeneric = `
+        history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
+        history.date_assigned AS date_assigned, history.date_store_ready AS date_store_ready,
+        history.date_arrived_store AS date_arrived_store, history.date_delivered AS date_delivered,
+        history.driver_id AS driver_id, 
+        cart_item.depot_id AS depot_id,
+        category.name AS category,
+        category.display_name AS category_display_name,
+        subcategory.name AS subcategory,
+        type.name AS type,
+        listing.brand AS brand,
+        listing.name AS name,
+        container.name AS container,
+        packaging.name AS packaging,
+        volume.name AS volume,
+        depot.price AS price,
+        product.image AS image,
+        cart_item.quantity AS quantity,
+        cart_item.price_sold AS price_sold,
+        cart_item.tax AS tax,
+        cart_item.store_ready AS store_ready
+        
+        FROM orders_history AS history JOIN orders_transactions_history AS transaction ON (history.order_transaction_id = transaction.id)
+        JOIN orders_cart_items AS cart_item ON (cart_item.order_id = history.id)
+        JOIN catalog_depot AS depot ON (cart_item.depot_id = depot.id)
+        JOIN catalog_items AS item ON (depot.item_id = item.id)
+        JOIN catalog_products AS product ON (item.product_id = product.id)
+        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
+        JOIN catalog_types AS type ON (listing.type_id = type.id)
+        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
+        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
+        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
+        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
+        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
+        JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
+    `;
+
+    var sqlQuery = `
+        SELECT driver.first_name AS driver_first_name, driver.last_name AS driver_last_name,
+        driver.phone_number AS driver_phone_number, driver.id_prefix AS driver_id_prefix,`
+        + sqlGeneric + `
+        JOIN drivers AS driver ON (history.driver_id = driver.id)        
+        WHERE `
+        + sqlCondition + `
+        AND ?
+        
+        ORDER BY order_id DESC
+    `;
+
+    var data = { "history.store_id": storeId };
+    var dbResult = await db.runQuery(sqlQuery, [data, data]);
+    return getFormattedOrdersForStore(dbResult);
+}
+
+/**
+ * Update store ready in orders_cart_items
+ * 
+ * @param {*} orderIds 
+ * @param {*} depotId 
+ * @param {*} picked 
+ */
+pub.updateItemPicked = async function (orderIds, depotId, picked) {
+    var sqlQuery = `
+        UPDATE orders_cart_items
+        SET store_ready = ` + picked + `
+        WHERE order_id IN (` + orderIds + `)
+        AND ?`;
+
+    var data = { "depot_id": depotId };
+    await db.runQuery(sqlQuery, data);
+}
+
+/**
+ * Update store ready date if all items are picked by store
+ * 
+ * @param {*} orderId 
+ */
+pub.checkForStoreReady = async function (orderId) {
+    var sqlQuery = `
+        SELECT id
+        FROM orders_cart_items
+        WHERE store_ready = false
+        AND ? 
+        LIMIT 1`;
+
+    var data = { "order_id": orderId };
+    var dbResult = await db.runQuery(sqlQuery, data);
+    if (dbResult.length == 0) {
+        updateDateStoreReady(orderId, "CURRENT_TIMESTAMP");
+    }
+}
+
+/**
+ * Updates date store ready column to NULL
+ * 
+ * @param {*} orderId 
+ */
+pub.checkForStoreNotReady = async function (orderId) {
+    updateDateStoreReady(orderId, "NULL");
+}
+
+/**
+ * Update date store ready column with value given
+ * 
+ * @param {*} orderId 
+ * @param {*} sqlDate 
+ */
+var updateDateStoreReady = function (orderId, sqlDate) {
+    var sqlQuery = `
+        UPDATE orders_history
+        SET date_store_ready = ` + sqlDate + `
+        WHERE ?`;
+    var data = { "id": orderId };
+    db.runQuery(sqlQuery, data);
+}
 
 // Below are refund methods - they need to be revisited
 pub.isDelivered = function (orderId) {

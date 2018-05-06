@@ -45,7 +45,8 @@ pub.tables = {
   drivers_request: "drivers_request",
   orders_emails: "orders_emails",
   orders_transactions_history: "orders_transactions_history",
-  stores_hours: "stores_hours"
+  stores_hours: "stores_hours",
+  stores_authentication: "stores_authentication"
 }
 
 /**
@@ -53,6 +54,8 @@ pub.tables = {
  */
 pub.redisTable = {
   io_drivers: 1,
+  io_drivers: 3,
+  io_cm: 5,
   sessions: 10
 }
 

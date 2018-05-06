@@ -6,29 +6,39 @@ var bcrypt = require('bcrypt');
 var pub = {};
 const saltRounds = 10;
 
-/* Building metadata for log */                                   
+/* Building metadata for log */
 var logMeta = {
     directory: __filename
-  }
+}
 
-
-const UserRoles = {
+var UserRoles = {
     customer: "customer",
-    csr: "csr"
+    csr: "csr",
+    store: "store"
 }
 
 /* Signing customer cookie*/
-pub.signCustomerSession = function(req, user){
+pub.signCustomerSession = function (req, user) {
     return signSession(req, user, UserRoles.customer);
 }
 
-/* Signing customer cookie*/
-pub.signCSRSession = function(req, csr){
+/* Signing CSR cookie*/
+pub.signCSRSession = function (req, csr) {
     return signSession(req, csr, UserRoles.csr);
 }
 
+/* Signing Stores cookie*/
+pub.signStoreSession = function (req, storeId) {
+    req.session.signedIn = true;
+    req.session.role = UserRoles.store;
+    req.session.store_id = storeId;
+    return true;
+}
+
 pub.invalidate = function (req) {
-    req.session.destroy();
+    if (req.session) {
+        req.session.destroy();
+    }
 };
 
 pub.validate = function (options) {
@@ -74,6 +84,16 @@ pub.validateCsr = function (options) {
     }
 };
 
+/* HTTP calls */
+pub.validateStore = function (req) {
+    return req.session && req.session.signedIn && req.session.role == UserRoles.store;
+}
+
+/* Socket IO */
+pub.validateStoreWebSocket = function (scoket) {
+    return scoket.handshake && scoket.handshake.session && scoket.handshake.session.signedIn && scoket.handshake.session.role == UserRoles.store;
+}
+
 function checkAuth(req) {
     return req.session && req.session.signedIn;
 }
@@ -89,7 +109,7 @@ function signSession(req, user, role) {
     return true;
 }
 
-pub.getSignedUser = function(req) {
+pub.getSignedUser = function (req) {
     if (req.session && req.session.user) {
         return Object.assign({}, req.session.user);
     }

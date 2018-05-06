@@ -8,15 +8,39 @@ require('winston-daily-rotate-file');
 var dateFormat = require('dateformat');
 var fs = require('fs');
 const path = require('path');
-var filename = path.normalize(process.env.LOG_FILE_PATH + process.env.LOG_FILE_NAME);
-var filename_error = path.normalize(process.env.LOG_FILE_PATH + "_error_" + process.env.LOG_FILE_NAME);
-var nameDate = dateFormat(new Date().setUTCHours(13), "isoDateTime").split('T')[0];
-var activeLogLocation = process.env.LOG_FILE_PATH + nameDate + "." + process.env.LOG_FILE_NAME;
+const filename = path.normalize(process.env.LOG_FILE_PATH + process.env.LOG_FILE_NAME);
+const storeLogFilename = path.normalize(process.env.LOG_FILE_PATH + "store_log");
+const filename_error = path.normalize(process.env.LOG_FILE_PATH + "_error_" + process.env.LOG_FILE_NAME);
+const nameDate = dateFormat(new Date().setUTCHours(13), "isoDateTime").split('T')[0];
+const activeLogLocation = process.env.LOG_FILE_PATH + nameDate + "." + process.env.LOG_FILE_NAME;
 
 /**
  * Log levels used --> error: 0 | warn: 1 | info: 2 | verbose: 3 | debug: 4 | silly: 5 
  * It seems that winston only support GMT (UTC +0), it means 7 hours of difference
- * Therefore we are using custom timestamp
+ */
+pub.storeLog = new (winston.Logger)({
+    exitOnError: false,
+    handleExceptions: true,
+    humanReadableUnhandledException: true,
+    transports: [
+        new (winston.transports.DailyRotateFile)({
+            timestamp: true,
+            maxFiles: 365,
+            eol: ",\n",
+            level: process.env.DEBUG_LEVEL,
+            tailable: true,
+            prepend: true,
+            colorize: true,
+            name: "app.combined",
+            filename: storeLogFilename,
+            prettyPrint: true,
+        })
+    ]
+});
+
+/**
+ * Logger specifically for Store App 
+ * App is going to remotely logs its errors and exceptions
  */
 pub.log = new (winston.Logger)({
     exitOnError: false,
