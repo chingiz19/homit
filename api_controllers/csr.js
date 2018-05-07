@@ -132,7 +132,7 @@ router.post('/getdriverroutes', Auth.validateCsr(), function (req, res, next) {
 
 /* View logs from CSR's browser */
 router.post('/streamlog', Auth.validateCsr(), function (req, res, next) {
-    Logger.stream(res);
+    Logger.streamServerLogs(res);
 });
 
 // these methods are old, they need to be revisited

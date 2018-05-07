@@ -123,7 +123,9 @@ pub.receiver = async function (jsonResponse) {
         } else {
             await Email.saveTransactionEmail(orderDetails.order_transaction_id, emailTransaction);
         }
-    } else {
+    } else if (jsonResponse.action == "chikimiki_report") {
+        NM.sendToCSR(jsonResponse.details);
+    }else {
         Logger.log.error("Error while processing order from CM due to wrong 'action' value received from CM", logMeta);
     }
 };

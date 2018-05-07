@@ -94,6 +94,11 @@ pub.validateStoreWebSocket = function (scoket) {
     return scoket.handshake && scoket.handshake.session && scoket.handshake.session.signedIn && scoket.handshake.session.role == UserRoles.store;
 }
 
+/* Socket IO */
+pub.validateCSRWebSocket = function (scoket) {
+    return scoket.handshake && scoket.handshake.session && scoket.handshake.session.signedIn && scoket.handshake.session.role == UserRoles.csr;
+}
+
 function checkAuth(req) {
     return req.session && req.session.signedIn;
 }

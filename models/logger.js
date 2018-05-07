@@ -74,7 +74,10 @@ pub.log = new (winston.Logger)({
     ]
 });
 
-pub.stream = function (res) {
+pub.streamServerLogs = function (res) {
+
+    let activeLogLocation = getActiveLogLocation();
+
     if (fs.existsSync(activeLogLocation)) {
         res.setHeader("content-type", "text/html");
         fs.createReadStream(activeLogLocation).pipe(res);
@@ -87,6 +90,11 @@ pub.stream = function (res) {
         Logger.log.debug("Could not locate log file at " + activeLogLocation);
     }
 };
+
+function getActiveLogLocation() {
+    let nameDate = dateFormat(new Date().setUTCHours(13), "isoDateTime").split('T')[0];
+    return process.env.LOG_FILE_PATH + nameDate + "." + process.env.LOG_FILE_NAME;
+}
 
 
 module.exports = pub;

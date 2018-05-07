@@ -12,9 +12,12 @@ const CERTIFICATE_PATH = path.normalize(process.cwd() + "/ssl/server.crt");
 const DRIVER_NAMESPACE = "/drivers";
 const CM_NAMESPACE = "/chikimiki";
 const STORES_NAMESPACE = "/stores";
+const CSR_NAMESPACE = "/csr";
 const EXTERNAL_PORT = 3000;
 const INTERNAL_PORT = 6262;
 const DEFAULT_EMIT = "data";
+const CSR_DEFAULT_EMIT = "cm_report";
+const CSR_CONNECTIVITY_EMIT = "cm_con_report";
 const CM_DEFAULT_EMIT = "message";
 const CM_SECRET_KEY = "hF)Zf:NR2W+gBGF]"
 
@@ -69,6 +72,7 @@ localhostIO.adapter(redis({
 /* Assigning namespaces */
 var drivers = externalIO.of(DRIVER_NAMESPACE);
 var stores = externalIO.of(STORES_NAMESPACE);
+var csr = externalIO.of(CSR_NAMESPACE);
 var chikimiki = localhostIO.of(CM_NAMESPACE);
 
 
@@ -79,6 +83,9 @@ var chikimiki = localhostIO.of(CM_NAMESPACE);
  */
 pub.setSharedSessionMiddleware = function (session) {
     stores.use(sharedsession(session, {
+        autoSave: true
+    }));
+    csr.use(sharedsession(session, {
         autoSave: true
     }));
 }
@@ -220,6 +227,8 @@ chikimiki.on('connection', function (client) {
     }
     pub.sendToCM(verification);
     Logger.log.debug("Connection to CM established", logMeta);
+    pub.sendToCSR({ "connected": true }, true);
+    refreshCMReport();
 
     client.on('data', function (data) {
         CM.receiver(JSON.parse(data));
@@ -228,6 +237,7 @@ chikimiki.on('connection', function (client) {
     client.on('disconnect', function () {
         Logger.log.warn("Connection to CM has been lost", logMeta);
         SMS.alertDirectors("\u26A0 CM is down \u26A0");
+        pub.sendToCSR({ "connected": false }, true);
     });
 
     /* CM error listener that will be logged here as well */
@@ -270,6 +280,29 @@ stores.on('connection', function (client) {
 
         client.on('error', function (data) {
             Logger.log.error("Store app connection is experiencing issues", logMeta);
+        })
+    } else {
+        client.disconnect();
+    }
+});
+
+/**
+ * Connection handler for CSR
+ */
+csr.on('connection', function (client) {
+    if(Auth.validateCSRWebSocket(client)){
+        refreshCMReport();
+    
+        client.on('disconnect', function () {
+            console.log("csr disconnected!");
+        });
+    
+        client.on('error', function (data) {
+            console.log("CM connection is experiencing issues");
+        })
+    
+        client.on('error', function (data) {
+            console.log("CM connection is experiencing issues");
         })
     } else {
         client.disconnect();
@@ -365,6 +398,21 @@ pub.sendToDriver = async function (id, json) {
                 driverInfo.first_name, driverInfo.phone_number, function response() { });
         }
     }
+}
+
+pub.sendToCSR = function (data, connectivity) {
+    if (!connectivity) {
+        csr.emit(CSR_DEFAULT_EMIT, JSON.stringify(data));
+    } else {
+        csr.emit(CSR_CONNECTIVITY_EMIT, JSON.stringify(data));
+    }
+}
+
+function refreshCMReport() {
+    let json = {
+        "action": "refresh_report"
+    };
+    pub.sendToCM(json);
 }
 
 /* Start listening to internal and external ports */

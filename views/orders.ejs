@@ -41,10 +41,10 @@
                     <md-radio-group>
                         <md-radio-button id="usrRbtn" aria-label="selectUser" class="gtDataAA" ng-value="user" ng-repeat="user in foundUsers" ng-click="selectedUserID(user)">
                             <ul layout="row" class="gtDataAAA" style="width: 60%; display: flex; justify-content: space-between;">
-                                <li class="gtDataAAAA">First Name: {{' ' + user.first_name + ';  '}}</li>
-                                <li class="gtDataAAAA">Last Name: {{' ' + user.last_name + ';  '}}</li>
-                                <li class="gtDataAAAA">Email: {{' ' + user.user_email + ';  '}}</li>
-                                <li ng-show="!user.is_guest" class="gtDataAAAA">Phone: {{' ' + user.phone_number + ';  '}}</li>
+                                <li class="gtDataAAAA">First Name: {{' ' + user.first_name + '; '}}</li>
+                                <li class="gtDataAAAA">Last Name: {{' ' + user.last_name + '; '}}</li>
+                                <li class="gtDataAAAA">Email: {{' ' + user.user_email + '; '}}</li>
+                                <li ng-show="!user.is_guest" class="gtDataAAAA">Phone: {{' ' + user.phone_number + '; '}}</li>
                                 <li ng-show="user.is_guest" class="gtDataAAAA">User : Guest</li>
                             </ul>
                         </md-radio-button>
@@ -54,14 +54,15 @@
 
                 <div class="gtDataA">
                     <md-radio-group>
-                        <md-radio-button aria-label="transactions" class="gtDataAA" ng-repeat="transaction in foundTransactions" ng-value="transaction" ng-click="selectedTransactionID(transaction)">
+                        <md-radio-button aria-label="transactions" class="gtDataAA" ng-repeat="transaction in foundTransactions" ng-value="transaction"
+                            ng-click="selectedTransactionID(transaction)">
                             <ul layout="row" class="gtDataAAA">
-                                <li class="gtDataAAAA">Date Placed: {{' ' + transaction.date_placed + ';  '}}</li>
-                                <li class="gtDataAAAA">Total Paid: {{' C$' + transaction.total_price + ';  '}}</li>
-                                <li class="gtDataAAAA">Cart Total: {{' C$' + transaction.total_amount + ';  '}}</li>
-                                <li class="gtDataAAAA">Delivery Fee: {{' C$' + transaction.delivery_fee + ';  '}}</li>
-                                <li class="gtDataAAAA">Phone: {{ transaction.phone_number + ';  '}}</li>
-                                <li class="gtDataAAAA">Delivery Address: {{' ' + transaction.delivery_address + ';  '}}</li>
+                                <li class="gtDataAAAA">Date Placed: {{' ' + transaction.date_placed + '; '}}</li>
+                                <li class="gtDataAAAA">Total Paid: {{' C$' + transaction.total_price + '; '}}</li>
+                                <li class="gtDataAAAA">Cart Total: {{' C$' + transaction.total_amount + '; '}}</li>
+                                <li class="gtDataAAAA">Delivery Fee: {{' C$' + transaction.delivery_fee + '; '}}</li>
+                                <li class="gtDataAAAA">Phone: {{ transaction.phone_number + '; '}}</li>
+                                <li class="gtDataAAAA">Delivery Address: {{' ' + transaction.delivery_address + '; '}}</li>
                             </ul>
                         </md-radio-button>
                     </md-radio-group>
@@ -123,22 +124,22 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="foundOrderContent  != '' " style="position: relative; top: 60px; display: flex; justify-content: center; align-items: center;" class="gtDataCA"
-                        layout="column">
-                        <div layout="row">
-                            <div style="font-size: 14px;">
-                                <md-input-container class="adminPtopBD" style="min-width: 120px; width: 150px;">
-                                    <md-select ng-model="adctrl.reqeustType" placeholder="Request" ng-change="reqeustType_change(adctrl.reqeustType)">
-                                        <md-option ng-value="1" ng-disabled="!selectedOrder.date_arrived_customer">Refund Order</md-option>
-                                        <md-option ng-value="2" ng-disabled="!selectedOrder.date_arrived_customer">Refund Product</md-option>
-                                        <md-option ng-value="3" ng-disabled="selectedOrder.date_arrived_customer">Cancel Order</md-option>
-                                        <md-option ng-value="4" ng-disabled="selectedOrder.date_arrived_customer">Cancel Product</md-option>
-                                        <md-option ng-value="5" ng-disabled="selectedOrder.date_arrived_customer">Add New Item</md-option>
-                                    </md-select>
-                                </md-input-container>
-                            </div>
+                <div ng-if="foundOrderContent  != '' " style="position: relative; top: 60px; display: flex; justify-content: center; align-items: center;"
+                    class="gtDataCA" layout="column">
+                    <div layout="row">
+                        <div style="font-size: 14px;">
+                            <md-input-container class="adminPtopBD" style="min-width: 120px; width: 150px;">
+                                <md-select ng-model="adctrl.reqeustType" placeholder="Request" ng-change="reqeustType_change(adctrl.reqeustType)">
+                                    <md-option ng-value="1" ng-disabled="!selectedOrder.date_arrived_customer">Refund Order</md-option>
+                                    <md-option ng-value="2" ng-disabled="!selectedOrder.date_arrived_customer">Refund Product</md-option>
+                                    <md-option ng-value="3" ng-disabled="selectedOrder.date_arrived_customer">Cancel Order</md-option>
+                                    <md-option ng-value="4" ng-disabled="selectedOrder.date_arrived_customer">Cancel Product</md-option>
+                                    <md-option ng-value="5" ng-disabled="selectedOrder.date_arrived_customer">Add New Item</md-option>
+                                </md-select>
+                            </md-input-container>
                         </div>
                     </div>
+                </div>
             </div>
             <div ng-if="adctrl.reqeustType == 3" style="width: 60%;">
                 <ul style="margin: 0; padding: 0; font-size: 14px; color: rgba(0,0,0,0.9);">
@@ -286,6 +287,43 @@
             </div>
         </div>
 
+        <!-- CM Dashboard -->
+        <!-- Start -->
+        <div ng-show="page == 4" style="background-color: rgba(253,253,253,1);">
+            <div class="container">
+                <h2 style="text-align: center;">Connection to CM (
+                    <span id="connection">fetching data...</span>)</h2>
+                <h3>
+                    <span style="color: #ff0000;">Uptime:</span>&nbsp;
+                    <span class="w3-center w3-animate-top" id="uptime">N/A</span>
+                </h3>
+                <h3>
+                    <span style="color: #ff0000;">Core Engine:</span>
+                    <span class="w3-center w3-animate-top" id="running">N/A</span>
+                </h3>
+                <h3>
+                    <span style="color: #ff0000;">Exceptions:</span>
+                    <span class="w3-center w3-animate-top" id="exceptions">N/A</span>
+                </h3>
+                <h3>
+                    <span style="color: #ff0000;">Online Drivers:</span>
+                    <span class="w3-center w3-animate-top" id="online_drivers">N/A</span>
+                </h3>
+                <h3>
+                    <span style="color: #ff0000;">Orders in que:</span>
+                    <span class="w3-center w3-animate-top" id="order_queue">N/A</span>
+                </h3>
+                <h3>
+                    <span style="color: #ff0000;">Dispatched Orders:</span>
+                    <span class="w3-center w3-animate-top" id="dispatched_orders">N/A</span>&nbsp;
+                </h3>
+                <h3>
+                    <span style="color: #ff0000;">Database connection:</span>
+                    <span class="w3-center w3-animate-top" id="db_connection">N/A</span>&nbsp;
+                </h3>
+            </div>
+        </div>
+
         <div layout="column" class="doc">
             <md-button aria-label="OH" id="pg_1" ng-click="toPage(1)" flex="33" class="pageDocBtn">
                 <ng-md-icon icon="history" class="pageDocHvrIcon1 pageDocIcon"></ng-md-icon>
@@ -296,13 +334,19 @@
             <md-button aria-label="DR" id="pg_3" ng-click="toPage(3)" flex="33" class="pageDocBtn">
                 <ng-md-icon icon="insert_comment" class="pageDocHvrIcon3 pageDocIcon"></ng-md-icon>
             </md-button>
+            <md-button aria-label="DR" id="pg_4" ng-click="toPage(4)" flex="33" class="pageDocBtn">
+                <span ng-class="cm_icon" class="pageDocHvrIcon3 pageDocIcon">
+                    <i class="material-icons">favorite</i>
+                </span>
+            </md-button>
         </div>
     </div>
     <% if (!production) { %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
         <script src="/resources/services/sessionStorage.js"></script>
         <script src="/resources/services/mapServices.js"></script>
         <script src="/resources/controllers/orders.js"></script>
-    <% } %>
+        <% } %>
 </body>
 
 </html>

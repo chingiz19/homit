@@ -14,6 +14,13 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     $scope.logStreamPrevious = "";
     $scope.logStreamNew = "";
 
+    /*CM dashboard variables */
+    const ENGINE_STATUS_ON = "running";
+    const ENGINE_STATUS_OFF = "idle";
+    const CONNECTION_STATUS_ON = "live";
+    const CONNECTION_STATUS_OFF = "disconnected";
+    const DEFAULT_VALUE = "N/A";
+
     $scope.callSearch = function () {
         $scope.searchCriteria = "";
         $scope.foundUsers = [];
@@ -303,6 +310,10 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             $scope.pageName = "Log Stream";
             $scope.page = 3;
         }
+        if (num == 4) {
+            $scope.pageName = "CM Dashboard";
+            $scope.page = 4;
+        }
     };
 
     function getListActiveDriverCustomer() {
@@ -460,8 +471,76 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         }
     }
 
+    /* CM dahsboard functions start here */
+
+    function initiateSocket() {
+        let socket = io.connect("https://www.homit.ca/csr");
+        var received_data;
+
+        socket.on('cm_report', function (data) {
+            received_data = JSON.parse(data);
+
+            if (received_data.exceptions > 0) {
+                $scope.cm_icon = "cm_icon_bad";
+            }
+
+            if (received_data.uptime=="") {
+                received_data.uptime="less than a minute"
+            }
+
+            $("#uptime").text(received_data.uptime);
+            $("#exceptions").text(received_data.exceptions);
+            $("#online_drivers").text(received_data.online_drivers);
+            $("#order_queue").text(received_data.order_queue);
+            $("#dispatched_orders").text(received_data.dispatched_orders);
+            $("#connection").text(CONNECTION_STATUS_ON).addClass("cm_icon_good");
+            setEngineStatus(received_data);
+            setDBConnectionStatus(received_data);
+        });
+
+        socket.on('cm_con_report', function (data) {
+            received_data = JSON.parse(data);
+
+            if (received_data.connected) {
+                $("#connection").text(CONNECTION_STATUS_ON).removeClass("cm_icon_bad").addClass("cm_icon_good");
+            } else {
+                $("#connection").text(CONNECTION_STATUS_OFF).removeClass("cm_icon_good").addClass("cm_icon_bad");
+                window.location.reload();
+            }
+        });
+    }
+
+    function setEngineStatus(received_data) {
+        if (received_data.running) {
+            $("#running").text(ENGINE_STATUS_ON);
+        } else {
+            $("#running").text(ENGINE_STATUS_OFF);
+        }
+    }
+
+    function setDBConnectionStatus(received_data) {
+        if (received_data.db_connected) {
+            $("#db_connection").text(CONNECTION_STATUS_ON).removeClass("cm_icon_bad").addClass("cm_icon_good");
+        } else {
+            $("#db_connection").text(CONNECTION_STATUS_OFF).removeClass("cm_icon_good").addClass("cm_icon_bad");
+        }
+    }
+
+    function putDefaultValues() {
+        $("#uptime").text(DEFAULT_VALUE);
+        $("#exceptions").text(DEFAULT_VALUE);
+        $("#online_drivers").text(DEFAULT_VALUE);
+        $("#order_queue").text(DEFAULT_VALUE);
+        $("#dispatched_orders").text(DEFAULT_VALUE);
+        $("#running").text(DEFAULT_VALUE);
+    }
+
+    /* CM dashboard functions end here */
+
     $scope.init = function () {
         $scope.toPage($scope.page);
+        $scope.cm_icon = "cm_icon_good";
+        initiateSocket();
         getListActiveDriverCustomer();
         getLogs();
         setInterval(getLogs, 2000);
