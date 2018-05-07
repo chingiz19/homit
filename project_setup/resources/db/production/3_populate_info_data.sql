@@ -657,7 +657,7 @@ INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(75, "Cherry Vodka"
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(76, "Grape Vodka", "14");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(77, "Green Apple Vodka", "14");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(78, "Orange Vodka", "14");
-INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(79, "Malt Vodka", "14");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(79, "Malt Iced Vodka", "5");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(80, "Raspberry Vodka", "14");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(81, "Blueberry Vodka", "14");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(82, "Pineapple Vodka", "14");

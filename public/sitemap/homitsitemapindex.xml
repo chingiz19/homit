@@ -5,20 +5,25 @@
     <loc>https://homit.ca/sitemap/beer.xml</loc>
     <lastmod>2018-04-15</lastmod>
   </sitemap>
+
+  <sitemap>
+    <loc>https://homit.ca/sitemap/cider-and-cooler.xml</loc>
+    <lastmod>2018-05-06</lastmod>
+  </sitemap>
   
   <sitemap>
     <loc>https://homit.ca/sitemap/wine.xml</loc>
-    <lastmod>2018-04-15</lastmod>
+    <lastmod>2018-05-06</lastmod>
   </sitemap>
   
   <sitemap>
     <loc>https://homit.ca/sitemap/liqueur.xml</loc>
-    <lastmod>2018-04-15</lastmod>
+    <lastmod>2018-05-06</lastmod>
   </sitemap>
   
   <sitemap>
     <loc>https://homit.ca/sitemap/spirit.xml</loc>
-    <lastmod>2018-04-15</lastmod>
+    <lastmod>2018-05-06</lastmod>
   </sitemap>
   
   <sitemap>

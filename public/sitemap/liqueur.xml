@@ -116,4 +116,10 @@
         <priority>0.8</priority>
     </url>
 
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/disaronno-originale-amaretto/7476</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
 </urlset>

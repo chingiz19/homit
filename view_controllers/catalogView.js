@@ -13,13 +13,13 @@ var homit_tags = {
 }
 
 const categories = {
-    "liquor-station": ['beer', 'liqueur', 'spirit', 'wine', 'party supply'],
+    "liquor-station": ['beer', 'cider and cooler', 'liqueur', 'party supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday needs', 'snacks'],
     "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'confectionery', 'dry packaged', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
 }
 
 const api_categories = {
-    "liquor-station": ['beer', 'liqueur', 'spirit', 'wine', 'party-supply'],
+    "liquor-station": ['beer', 'cider-and-cooler', 'liqueur', 'party-supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday-needs', 'snacks'],
     "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'confectionery', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
 }
@@ -80,6 +80,63 @@ var recommended_products = {
             "packaging": "1",
             "volume": "4.5in",
             "price": 3.99
+        }
+    ],
+    "cider-and-cooler": [
+        {
+            "brand": "Jack Link's",
+            "name": "Sriracha",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4518,
+            "category": "snacks",
+            "image": "p_9018.jpeg",
+            "packaging": "1",
+            "volume": "80gm",
+            "price": 6.99
+        },
+        {
+            "brand": "Shock Top",
+            "name": "Belgian White",
+            "store_type_api_name": "liquor-station",
+            "product_id": 7468,
+            "category": "beer",
+            "image": "b_1173.jpeg",
+            "packaging": "6",
+            "volume": "341ml",
+            "price": 16.73
+        },
+        {
+            "brand": "Cheetos",
+            "name": "Cheddar Jalapeno",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4505,
+            "category": "snacks",
+            "image": "p_9005.jpeg",
+            "packaging": "1",
+            "volume": "regular",
+            "price": 3.69
+        },
+        {
+            "brand": "Rummo",
+            "name": "Linguine",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6508,
+            "category": "pasta-and-baking",
+            "image": "bx_11008.jpeg",
+            "packaging": "1",
+            "volume": "500gm",
+            "price": 2.69
+        },
+        {
+            "brand": "Augusto",
+            "name": "Truffle Pesto",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6747,
+            "category": "condiments",
+            "image": "jr_11374.jpeg",
+            "packaging": "1",
+            "volume": "180gm",
+            "price": 6.99
         }
     ],
     "wine": [

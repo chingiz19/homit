@@ -782,4 +782,160 @@
         <priority>0.8</priority>
     </url>
 
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/bacardi-oakheart-spiced-rum/7471</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/ballantines-scotch-whiskey/7472</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/balvenie-doublewood-scotch-whiskey-12-yo/7473</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/courvoisier-vs-cognac/7474</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/dewars-white-label-scotch-whiskey/7475</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/el-dorado-12-years-old-rum/7477</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/forty-creek-barrel-select/7478</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/fundador-solera-reserva/7479</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/gibsons-finest-rare-12-year-old-whiskey/7480</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/gibsons-finest-sterling-edition-whisky/7481</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/hendricks-gin/7482</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/red-tassel-vodka/7483</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/sauza-gold-tequila/7484</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/sauza-silver-tequila/7485</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/seagrams-vo-whisky/7486</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/sobieski-vodka/7487</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/three-olives-vodka/7488</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/ciroc-apple/7576</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/ciroc-coconut/7578</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/the-glenlivet-founders-reserve-scotch-whisky/7579</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/jack-daniels-tennessee-fire/7580</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/lambs-palm-breeze-rum/7581</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/lambs-navy-rum/7582</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/remy-martin-vsop-cognac/7583</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/st-remy-vsop-brandy/7584</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://homit.ca/catalog/product/liquor-station/jp-wisers-deluxe-whisky/7585</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
 </urlset>
