@@ -474,7 +474,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     /* CM dahsboard functions start here */
 
     function initiateSocket() {
-        let socket = io.connect("https://www.homit.ca/csr");
+        let socket = io.connect("/csr");
         var received_data;
 
         socket.on('cm_report', function (data) {
