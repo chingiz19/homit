@@ -279,12 +279,6 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/beringer-knights-valley-cabernet-sauvignon/1046</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://homit.ca/catalog/product/liquor-station/boom-boom-syrah/1047</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -442,12 +436,6 @@
 
     <url>
         <loc>https://homit.ca/catalog/product/liquor-station/carnivor-cabernet-sauvignon/1073</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/beringer-white-zinfandel/1074</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -1317,12 +1305,6 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/carmen-gran-reserva-cabernet-sauvignon/7506</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://homit.ca/catalog/product/liquor-station/casillero-del-diablo-reserva-cabernet-sauvignon/7507</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -1402,12 +1384,6 @@
 
     <url>
         <loc>https://homit.ca/catalog/product/liquor-station/gabbiano-pinot-grigio-docg/7520</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/graffigna-malbec/7521</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -1636,12 +1612,6 @@
 
     <url>
         <loc>https://homit.ca/catalog/product/liquor-station/wolf-blass-yellow-label-cabernet-sauvignon/7559</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/wolf-blass-yellow-label-chardonnay/7560</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

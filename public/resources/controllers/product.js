@@ -34,7 +34,7 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     };
 
     $scope.volumeLeft = function (product) {
-        let i = product.product_variants.selectedPack;
+        let i = product.product_variants.selectedVolume;
         i = i - 1;
         if (i < 0) {
             $scope.product.product_variants.selectedVolume = i + 1;
@@ -44,7 +44,7 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     };
 
     $scope.volumeRight = function (product) {
-        let i = product.product_variants.selectedPack;
+        let i = product.product_variants.selectedVolume;
         i = i + 1;
         if (i >= product.product_variants.all_volumes.length) {
             $scope.product.product_variants.selectedVolume = i - 1;

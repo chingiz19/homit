@@ -117,24 +117,6 @@
     </url>
 
     <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/smirnoff-ice-classic-caesar/2519</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/smirnoff-ice-light/2520</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://homit.ca/catalog/product/liquor-station/smirnoff-ice-green-apple/2521</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://homit.ca/catalog/product/liquor-station/alberta-pure-vodka/2522</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
