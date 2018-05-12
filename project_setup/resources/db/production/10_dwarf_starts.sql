@@ -7,13 +7,13 @@ INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUE
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (336, "s_", "Dwarf Stars", "34 132 3rd Ave SE, Calgary AB", "51.050405", "-114.060812", "4039188836", "7");
 
 /*Catalog - Store Hours*/
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (336, 1, "00:00:00", "00:00:00");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (336, 2, "06:59:59", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (336, 3, "06:59:59", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (336, 4, "06:59:59", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (336, 5, "06:59:59", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (336, 6, "06:59:59", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (336, 7, "00:00:00", "00:00:00");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (336, 1, "09:00:00", "600");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (336, 2, "09:00:00", "600");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (336, 3, "09:00:00", "600");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (336, 4, "09:00:00", "600");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (336, 5, "09:00:00", "600");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (336, 6, "09:00:00", "600");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (336, 7, "09:00:00", "600");
 
 /*Catalog - Catalog Category*/
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(20, "chocolate-and-bar", "Chocolate and Bar");
