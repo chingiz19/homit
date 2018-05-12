@@ -37,12 +37,15 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             $scope.storeInfo = response.data.store_info;
             if($scope.storeInfo.display_name == "Lina's Italian Market"){
                 $scope.storeInfo.open_time = "08:00am";
-                $scope.storeInfo.close_time = "until: 18:30";
+                $scope.storeInfo.close_time = "until: 6:30pm";
             } else if($scope.storeInfo.display_name == "Liquor Station"){
                 $scope.storeInfo.open_time = "10:00am";
                 $scope.storeInfo.close_time = "until: 01:30am";
             } else if($scope.storeInfo.display_name == "Snack Vendor"){
                 $scope.storeInfo.close_time = "24/7";
+            } else if($scope.storeInfo.display_name == "Dwarf Stars"){
+                $scope.storeInfo.open_time = "07:00am";
+                $scope.storeInfo.close_time = "until: 6:30pm";
             }
             $(".catalog-store-cover").css("background-image", "url('/resources/images/non-catalog-image/cover-image/" + $scope.storeInfo.image.split(".")[0] + ".jpeg");
         }

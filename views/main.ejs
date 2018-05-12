@@ -9,29 +9,41 @@
             Snack, grocery and liquor delivery service in Calgary. We also deliver snacks for 24/7. Place your order online and watch us appear 
             at your doorstep shortly after." />
 </head>
+<img class="none" src="/resources/images/non-catalog-image/cover-image/calgary.jpg">
+<img class="none" src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
+<img class="none" src="/resources/images/non-catalog-image/store-logo/dwarf-stars_icon.png">
+<img class="none" src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
+<img class="none" src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
 
 <body ng-cloak>
     <div ng-controller="mainController" style="background-color: rgb(251,251,251);">
-        <img class="none" src="/resources/images/non-catalog-image/pages/calgary.jpg">
-
         <section id="address" class="full-screen address-section box-center">
             <div class="address-div">
                 <div class="store-div-main fadeIn">
                     <ul class="store-list-ul" ng-cloak>
-                        <li class="store-li LS-move" ng-click="hrefTo('/catalog/liquor-station')">
-                            <img class="none" src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
-                            <img src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
-                            <span class="main-trans-prop">Liquor Station</span>
+                        <li class="store-li LIM-move move-x" ng-click="hrefTo('/catalog/liquor-station')">
+                            <div class="img-object">
+                                <img src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
+                                <span class="main-trans-prop">Liquor Station</span>
+                            </div>
                         </li>
-                        <li class="store-li LIM-move" ng-click="hrefTo('/catalog/linas-italian-market')">
-                            <img class="none" src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
-                            <img src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
-                            <span class="main-trans-prop">Lina's Italian Market</span>
+                        <li class="store-li LS-move move-x" ng-click="hrefTo('/catalog/dwarf-stars')">
+                            <div class="img-object">
+                                <img src="/resources/images/non-catalog-image/store-logo/dwarf-stars_icon.png">
+                                <span class="main-trans-prop">Dwarf Stars</span>
+                            </div>
                         </li>
-                        <li class="store-li LS-move" ng-click="hrefTo('/catalog/snack-vendor')">
-                            <img class="none" src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
-                            <img src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
-                            <span class="main-trans-prop">Snack Vendor</span>
+                        <li class="store-li LIM-move move-x" ng-click="hrefTo('/catalog/linas-italian-market')">
+                            <div class="img-object">
+                                <img src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
+                                <span class="main-trans-prop">Lina's Italian Market</span>
+                            </div>
+                        </li>
+                        <li class="store-li LS-move move-x" ng-click="hrefTo('/catalog/snack-vendor')">
+                            <div class="img-object">
+                                <img src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
+                                <span class="main-trans-prop">Snack Vendor</span>
+                            </div>
                         </li>
                     </ul>
                 </div>

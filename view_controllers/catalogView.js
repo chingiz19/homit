@@ -13,18 +13,77 @@ var homit_tags = {
 }
 
 const categories = {
+    "dwarf-stars": ['chocolate and bar'],
     "liquor-station": ['beer', 'cider and cooler', 'liqueur', 'party supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday needs', 'snacks'],
     "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'confectionery', 'dry packaged', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
 }
 
 const api_categories = {
+    "dwarf-stars": ['chocolate-and-bar'],
     "liquor-station": ['beer', 'cider-and-cooler', 'liqueur', 'party-supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday-needs', 'snacks'],
     "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'confectionery', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
 }
 
 var recommended_products = {
+    "chocolate-and-bar": [
+        {
+            "brand": "Doritos",
+            "name": "Cheese",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4528,
+            "category": "snacks",
+            "image": "p_9028.jpeg",
+            "packaging": "1",
+            "volume": "family",
+            "price": 4.79
+        },
+        {
+            "brand": "D.L Jardine's",
+            "name": "Salsa Bobos Medium",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6733,
+            "category": "condiments",
+            "image": "jr_11360.jpeg",
+            "packaging": "1",
+            "volume": "453gm",
+            "price": 9.99
+        },
+        {
+            "brand": "Tostitos",
+            "name": "Round",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4531,
+            "category": "snacks",
+            "image": "p_9031.jpeg",
+            "packaging": "1",
+            "volume": "regular",
+            "price": 4.49
+        },
+        {
+            "brand": "Jack Link's",
+            "name": "Cholula",
+            "store_type_api_name": "snack-vendor",
+            "product_id": 4516,
+            "category": "snacks",
+            "image": "p_9016.jpeg",
+            "packaging": "1",
+            "volume": "80gm",
+            "price": 6.99
+        },
+        {
+            "brand": "Browne",
+            "name": "Corkscrew Bottle Opener",
+            "store_type_api_name": "liquor-station",
+            "product_id": 6003,
+            "category": "party-supply",
+            "image": "o_10003.jpeg",
+            "packaging": "1",
+            "volume": "4.5in",
+            "price": 3.99
+        }
+    ],
     "beer": [
         {
             "brand": "Doritos",

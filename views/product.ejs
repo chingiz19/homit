@@ -25,18 +25,19 @@
                 <div layout="column">
                     <section>
                         <!--googleoff: snippet-->
-                        <div class="col-md-6 product-img product-image" layout="column">
+                        <div class="col-md-6 product-img box-center" layout="column">
                             <section class="web-location-sec">
+                                <a class="web-location-a" href="/main" target="_self">hub</a>
+                                <span class="loc-errow"> > </span>
                                 <a class="web-location-a" ng-click="hrefToStore(product.store_type_api_name)" href="" target="_self">{{ product.store_type_display_name }}</a>
                                 <span class="loc-errow"> > </span>
                                 <a class="web-location-a loc-category" href="/catalog/{{ product.store_type_api_name }}/{{ product.category }}" target="_self">{{ product.category }}</a>
                                 <span class="loc-errow"> > </span>
                                 <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                             </section>
-                            <img class="product-image-selected" ng-src="{{ selectedImage }}">
-                            <!-- <div class="store-colosed-image" ng-if="!product.store_open">
-                                <img ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
-                            </div> -->
+                            <div class="selected-img-frame box-center">
+                                <img class="product-image-selected" ng-src="{{ selectedImage }}">
+                            </div>
                             <div class="product-image-line"></div>
                             <div layout="row">
                                 <div ng-repeat="image in productImages" class="product-img-list">
@@ -55,11 +56,15 @@
                                     <%= product_name %>
                                 </span> - Deliver Now</h2>
                             <section class="web-location-sec-mob">
-                                <a class="web-location-a" ng-click="hrefToStore(product.store_type_api_name)" href="" target="_self">{{ product.store_type_display_name }}</a>
-                                <span class="loc-errow"> > </span>
-                                <a class="web-location-a loc-category" href="/catalog/{{ product.store_type_api_name }}/{{ product.category }}" target="_self">{{ product.category }}</a>
-                                <span class="loc-errow"> > </span>
-                                <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
+                                <div>
+                                    <a class="web-location-a" href="/main" target="_self">hub</a>
+                                    <span class="loc-errow"> > </span>
+                                    <a class="web-location-a" ng-click="hrefToStore(product.store_type_api_name)" href="" target="_self">{{ product.store_type_display_name }}</a>
+                                    <span class="loc-errow"> > </span>
+                                    <a class="web-location-a loc-category" href="/catalog/{{ product.store_type_api_name }}/{{ product.category }}" target="_self">{{ product.category }}</a>
+                                    <span class="loc-errow"> > </span>
+                                    <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
+                                </div>
                             </section>
                             <%- product_image %>
                                 <%- ingredients %>

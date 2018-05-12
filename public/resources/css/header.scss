@@ -259,17 +259,6 @@ nav {
     font-weight: 500;
 }
 
-#hub-background-image {
-    position: fixed;
-    width: 270px;
-    height: 400px;
-    background-size: cover;
-    background-image: url("/resources/images/non-catalog-image/homit_hub/homit-hub-cover.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0;
-}
-
 .search-result-box .li-content:hover, .search-result-box .srch-product-content:hover {
     background-color: rgba(230, 230, 230, 1);
     transition: background-color 0.3s;
@@ -431,32 +420,40 @@ nav {
     width: 270px;
     border: 1px rgba(220, 220, 220, 0.99) solid;
     border-radius: 2px;
-    background-color: rgba(250, 250, 250, 1);
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
+    background-color: rgba(251, 251, 251, 1);
+    box-shadow: 0 0px 10px 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
 }
 
 .hub-box {
-    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 40px;
 }
 
 .hub-box h3{
-    font-size: 16px; padding-top: 10px;
+    font-size: 13px; 
+    padding-top: 10px;
 }
 
 .store-div {
-    height: 100px;
-    width: 100%;
+    height: 140px;
+    width: 50%;
+    margin-bottom: 30px;
     text-align: center;
 }
 
 .store-div img {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
+    border-radius: 45px;
+    box-shadow: 0 0px 6px 3px rgba(0, 0, 0, 0.15);
 }
 
 .store-div:hover {
     background-color: rgba(220, 220, 220, 1);
+    border-radius: 3px;
     transition: background-color 0.3s;
 }
 
@@ -470,7 +467,7 @@ h3 {
 }
 
 .hub-box a {
-    color: rgba(0, 0, 0, 0.9);
+    color: #20475f;
 }
 
 .hub-box a:hover {

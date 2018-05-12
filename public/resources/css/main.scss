@@ -56,7 +56,7 @@ body {
     justify-content: space-around;
     flex-direction: row;
     align-items: center;
-    width: 750px;
+    width: 850px;
     height: 100%;
     margin: 0 auto;
     padding: 0;
@@ -433,6 +433,14 @@ body {
         width: 855px;
     }
 
+    .store-list-ul{
+        width: 800px;
+    }
+    .store-li img{
+        width: 150px;
+        height: 150px;
+    }
+
     .order-step-img {
         width: 200px;
         height: 200px;
@@ -460,7 +468,12 @@ body {
     }
 
     .store-list-ul {
-        width: 700px;
+        width: 650px;
+    }
+
+    .store-li img{
+        width: 130px;
+        height: 130px;
     }
 }
 
@@ -472,7 +485,12 @@ body {
     }
 
     .store-list-ul {
-        width: 650px;
+        width: 550px;
+    }
+
+    .store-li img{
+        width: 100px;
+        height: 100px;
     }
 }
 
@@ -482,33 +500,54 @@ body {
         height: 145px;
         transition: all 0.3s ease;
     }
+}
+
+@media (max-width: 699px) and (min-width: 560px) {
 
     .store-list-ul {
         width: 600px;
     }
+
+    .store-li img{
+        width: 130px;
+        height: 130px;
+    }
+
+    .img-object{
+        animation:icon-move-x 20000ms linear infinite;
+    }
+
 }
 
-@media (max-width: 649px) and (min-width: 600px) {
-    .store-li img {
-        width: 140px;
-        height: 140px;
-        transition: all 0.3s ease;
-    }
-
-    .store-list-ul {
-        width: 550px;
-    }
-}
-
-@media (max-width: 599px) and (min-width: 571px) {
-    .store-li img {
-        width: 135px;
-        height: 135px;
-        transition: all 0.3s ease;
-    }
+@media (max-width: 559px) and (min-width: 480px) {
 
     .store-list-ul {
         width: 500px;
+    }
+
+    .store-li img{
+        width: 120px;
+        height: 120px;
+    }
+
+    .img-object{
+        animation:icon-move-x 20000ms linear infinite;
+    }
+}
+
+@media (max-width: 579px) and (min-width: 400px) {
+
+    .store-list-ul {
+        width: 450px;
+    }
+
+    .store-li img{
+        width: 110px;
+        height: 110px;
+    }
+
+    .img-object{
+        animation:icon-move-x 20000ms linear infinite;
     }
 }
 
@@ -567,16 +606,6 @@ body {
 
     #sign-btns {
         display: flex;
-    }
-
-    .store-li img {
-        width: 100px;
-        height: 100px;
-        transition: all 0.3s ease;
-    }
-
-    .store-list-ul {
-        width: 400px;
     }
 
     .address-input {
@@ -658,6 +687,22 @@ body {
     }
 }
 
+.LS-move {
+    animation-name: icon-move-y;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.LIM-move {
+    animation-name: icon-move-y;
+    animation-duration: 6s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
 /* start of non-mobile/tablet styles */
 @media screen and (min-device-width: 768px) {}
 
@@ -677,6 +722,9 @@ body {
 
     .store-li {
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-content: center;
         margin: 0 10px;
     }
 
@@ -688,6 +736,22 @@ body {
         user-select: none;
     }
 
+    .address-div{
+        overflow-x: hidden;
+    }
+
+    .img-object{
+        animation:icon-move-x 20000ms linear infinite;
+    }
+
+    .LS-move {
+        animation-duration: 4500ms;
+    }
+    
+    .LIM-move {
+        animation-duration: 7s;
+    }
+
     .store-li:hover span {
         opacity: initial;
         -webkit-transform: translate(-50%, -15px);
@@ -695,7 +759,8 @@ body {
     }
 
     .store-li span {
-        bottom: -30px;
+        bottom: -20px;
+        left: 50%;
         padding: 4px;
         font-size: 11px;
         transform: translate(-50%, -15px);
@@ -766,6 +831,7 @@ body {
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
     }
+
 }
 
 @media screen and (max-device-width: 359px) {
@@ -860,24 +926,9 @@ body {
     }
 }
 
-.LS-move {
-    animation-name: icon-move;
-    animation-duration: 5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
-.LIM-move {
-    animation-name: icon-move;
-    animation-duration: 6s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-}
-
-@keyframes icon-move {
+@keyframes icon-move-y {
     0%, 100% {
-        transform: translate(0, -25px);
+        transform: translate(0, -23px);
     }
 
     25% {
@@ -885,11 +936,29 @@ body {
     }
 
     50% {
-        transform: translate(0, 20px);
+        transform: translate(0, 23px);
     }
 
     75% {
         transform: translate(0, 0);
+    }
+}
+
+@keyframes icon-move-x {
+    0%, 100% {
+        transform: translateX(-65px);
+    }
+
+    25% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(65px);
+    }
+
+    75% {
+        transform: translateX(0);
     }
 }
 

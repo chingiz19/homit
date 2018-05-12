@@ -38,6 +38,7 @@ h1 {
 
 .controller {
     background-color: rgba(255, 255, 255, 1);
+    overflow-x: hidden;
 }
 
 .product-content {
@@ -110,15 +111,22 @@ footer {
     width: 15px;
 }
 
-.product-image {
+.box-center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.product-image-selected {
+.selected-img-frame{
     width: 350px;
     height: 350px;
+}
+
+.product-image-selected {
+    max-width: 350px;
+    max-height: 350px;
+    width: auto;
+    height: auto;
 }
 
 .product-image-line {
@@ -336,7 +344,7 @@ button:focus {
 .recomended-item-div {
     display: flex;
     flex-direction: row;
-    overflow-x: scroll;
+    overflow-x: auto;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -477,17 +485,29 @@ footer {
     }
 
     .web-location-sec-mob {
-        display: initial;
-        margin-right: auto;
-        justify-content: center;
-        margin-top: 20px;
         display: flex;
-        flex-direction: row;
+        justify-content: center;
+        position: relative;
+        right: calc((100vw - 100%)/2);
+        width: 100vw;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .web-location-a:hover {
+        color: rgba(0, 0, 0, 1);
+        background-color: rgba(195, 218, 228, 0.4);
+    }
+
+    .web-location-sec-mob div{
+        padding-left: 5px;
+        display: -webkit-inline-box;
+        overflow-x: auto;
     }
 
     .web-location-a {
         font-size: 10px;
-        height: 20px;
+        height: 30px;
     }
 
     .ingredients-sec {
@@ -538,13 +558,18 @@ footer {
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
-    .product-image {
+    .product-img {
         padding: 20px 20px 0 20px;
     }
 
-    .product-image-selected {
-        width: auto;
+    .selected-img-frame{
+        width: 150px;
         height: 150px;
+    }
+
+    .product-image-selected {
+        max-width: 150px;
+        max-height: 150px;
     }
 
     .product-img-list {

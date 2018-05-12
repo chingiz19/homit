@@ -56,6 +56,11 @@
                             <section class="nav-mob-content">
                                 <div class="nav-sep-line-str">STORE</div>
                                 <ul class="str-ul">
+                                    <li class="nav-mob-str-ln str-ln-1" ng-style="('<%= loadedStore %>' == 'Dwarf Stars') && {'margin-left': '0px'} || {'margin-left': '10px'}" ng-click="hrefToStore('/catalog/linas-italian-market')">
+                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Dwarf Stars')" icon="shopping_cart"></ng-md-icon>
+                                        <a ng-style="('<%= loadedStore %>' == 'Dwarf Stars') && {'margin-left': '10px', 'font-weight':'600', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
+                                            target="_self">Dwarf Stars</a>
+                                    </li>
                                     <li class="nav-mob-str-ln str-ln-1" ng-style="('<%= loadedStore %>' == 'Linas Italian Market') && {'margin-left': '0px'} || {'margin-left': '10px'}" ng-click="hrefToStore('/catalog/linas-italian-market')">
                                         <ng-md-icon ng-show="('<%= loadedStore %>' == 'Linas Italian Market')" icon="shopping_cart"></ng-md-icon>
                                         <a ng-style="('<%= loadedStore %>' == 'Linas Italian Market') && {'margin-left': '10px', 'font-weight':'600', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
@@ -92,9 +97,8 @@
                 </div>
                 <!--End-->
                 <section id="category-box" class="cat-section-absolute cat-section">
-                    <div class="cat-section-header section-header box-center" ng-click="filterCategories()">{{ '
-                        <%= selectedCategory %> '}}</div>
-                    <div style="max-height: calc(100vh - 200px); overflow-y: scroll;">
+                    <div class="cat-section-header section-header box-center" ng-click="filterCategories()">{{ '<%= selectedCategory %>'}}</div>
+                    <div class="subcat-box">
                         <md-radio-group ng-model="SubcategoryName">
                             <md-radio-button class="cat-body-cat" id="radio_{{$index}}" ng-repeat="variant in subcategories | orderBy" ng-value="variant" ng-click="checkSubcategories(variant)">
                                 <span>{{ variant }}</span>
@@ -106,7 +110,7 @@
                         <ng-md-icon id="show_cat_icon" icon="flip"></ng-md-icon>
                     </button>
                     <div id="category_box" class="cat-body-cubcat">
-                        <div class="cat-section-header section-header box-center" style="padding-right: 30px" ng-click="filterCategories()"><!-- <%= loadedStore %> -->Store Aisle</div>
+                        <div class="cat-section-header section-header box-center" style="padding-right: 30px" ng-click="filterCategories()">Store Aisle</div>
                         <ul class="cat-list same-line" layout="column">
                             <li ng-repeat='category in <%= categories %> track by $index' ng-click="hrefToCat(category)" style="outline: none;">
                                 <div class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': 'rgba(0,189,149,0.7)'}">

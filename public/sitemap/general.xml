@@ -9,6 +9,12 @@
     </url>
 
     <url>
+        <loc>https://www.homit.ca/catalog/dwarf-stars/chocolate-and-bar</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
         <loc>https://www.homit.ca/catalog/liquor-station/beer</loc> 
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
