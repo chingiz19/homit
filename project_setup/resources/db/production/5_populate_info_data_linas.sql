@@ -7,13 +7,13 @@ INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUE
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (335, "s_", "Lina's Italian Market", "2202 Centre St NE, Calgary, AB T2E 2T5", "51.071908", "-114.062205", "4032779166", "6");
 
 /* Insert Store - Hours */
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (335, 1, "08:00:00", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (335, 2, "08:00:00", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (335, 3, "08:00:00", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (335, 4, "08:00:00", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (335, 5, "08:00:00", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (335, 6, "08:00:00", "18:59:59");
-INSERT INTO `stores_hours` (store_id, day, open_time, close_time) VALUES (335, 7, "08:00:00", "17:59:59");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (335, 1, "08:00:00", "660");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (335, 2, "08:00:00", "660");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (335, 3, "08:00:00", "660");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (335, 4, "08:00:00", "660");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (335, 5, "08:00:00", "660");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (335, 6, "08:00:00", "660");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration) VALUES (335, 7, "08:00:00", "600");
 
 /*Catalog Description*/
 INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(6, "ingredients", "Ingredients");
