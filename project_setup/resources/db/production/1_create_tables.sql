@@ -416,62 +416,6 @@ CREATE TABLE orders_emails (
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE csr_actions (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	csr_id INT UNSIGNED NOT NULL,
-	note VARCHAR(225),
-
-	PRIMARY KEY(id),
-	CONSTRAINT fk_csr_actions_csr_id FOREIGN KEY (csr_id) REFERENCES users_employees(id) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB;
-
-CREATE TABLE orders_history_refund (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	order_id INT UNSIGNED NOT NULL,
-	csr_action_id INT UNSIGNED NOT NULL,
-	transaction_id INT,
-	refund_amount DECIMAL(6,2),
-	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	date_picked TIMESTAMP NULL,
-	date_refunded TIMESTAMP NULL,
-	driver_id INT UNSIGNED,
-	date_scheduled TIMESTAMP NULL,
-	date_scheduled_note VARCHAR(225),	
-	
-	PRIMARY KEY (id),
-	CONSTRAINT fk_orders_history_refund_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
-	CONSTRAINT fk_orders_history_refund_driver_id FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_orders_history_refund_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
-) ENGINE = InnoDB;
-
-
-CREATE TABLE orders_history_cancel (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	order_id INT UNSIGNED NOT NULL,
-	csr_action_id INT UNSIGNED NOT NULL,
-	transaction_id INT,
-	refund_amount DECIMAL(6,2),	
-	date_placed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	date_refunded TIMESTAMP NULL,
-	
-	PRIMARY KEY (id),
-	CONSTRAINT fk_orders_history_cancel_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
-	CONSTRAINT fk_orders_history_cancel_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
-) ENGINE = InnoDB;
-
-
-CREATE TABLE orders_history_add (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	order_id INT UNSIGNED NOT NULL,
-	csr_action_id INT UNSIGNED NOT NULL,
-	charge_amount DECIMAL(6,2),
-	
-	PRIMARY KEY (id),
-	CONSTRAINT fk_orders_history_add_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,	
-	CONSTRAINT fk_orders_history_add_csr_action_id FOREIGN KEY (csr_action_id) REFERENCES csr_actions(id) ON DELETE RESTRICT ON UPDATE CASCADE	
-) ENGINE = InnoDB;
-
-
 CREATE TABLE stores_hours (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	store_id INT UNSIGNED NOT NULL,
