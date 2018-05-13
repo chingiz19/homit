@@ -12,12 +12,7 @@ router.use('/', async function (req, res, next) {
     var categoryName = tempArray[2];
 
     if (categoryName) {
-        var storeType;
-        if (categoryName == HOMIT_CAR_CATEGORY) {
-            storeType = HOMIT_CAR_STORE_TYPE;
-        } else {
-            storeType = await Catalog.getStoreTypeByApi(storeTypeApi);
-        }
+        var storeType = await Catalog.getStoreTypeByApi(storeTypeApi);
         if (storeType) {
             var storeOpen = await Catalog.isStoreOpen(storeType);
             var result = await Catalog.getAllProductsByCategory(storeType, categoryName, storeOpen);
