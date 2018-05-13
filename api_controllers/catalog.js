@@ -3,9 +3,6 @@
  */
 var router = require("express").Router();
 
-const HOMIT_CAR_STORE_TYPE = "homitcar";
-const HOMIT_CAR_CATEGORY = "party-supply";
-
 router.use('/', async function (req, res, next) {
     var tempArray = req.path.split('/');
     var storeTypeApi = tempArray[1];
