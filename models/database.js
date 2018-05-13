@@ -38,7 +38,6 @@ pub.tables = {
   users_customers_history: "users_customers_history",
   users_employees: "users_employees",
   user_cart_items: "user_cart_items",
-  csr_actions: "csr_actions",
   drivers_request: "drivers_request",
   orders_emails: "orders_emails",
   orders_transactions_history: "orders_transactions_history",
