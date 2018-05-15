@@ -1013,6 +1013,7 @@ var getSimilarProductsBySameTransaction = async function (productId, limit) {
             JOIN catalog_store_types AS store_type ON (store_type.id = depot.store_type_id)
 
             WHERE store_type.available = true
+            AND depot.available = true
             AND product.id <>  ` + productId + `
             AND orders_history.order_transaction_id IN
             (
@@ -1065,6 +1066,7 @@ var getSimilarProductsBySameCustomer = async function (productId, limit) {
                 JOIN orders_transactions_history AS transaction ON (orders_history.order_transaction_id = transaction.id)
 
                 WHERE store_type.available = true
+                AND depot.available = true
                 AND product.id <> ` + productId + `
                 AND (
                 transaction.guest_id IN
@@ -1095,6 +1097,7 @@ var getSimilarProductsBySameCustomer = async function (productId, limit) {
                 JOIN orders_transactions_history AS transaction ON (orders_history.order_transaction_id = transaction.id)
 
                 WHERE store_type.available = true
+                AND depot.available = true
                 AND product.id <> ` + productId + `
                 AND (
                 transaction.user_id IN
