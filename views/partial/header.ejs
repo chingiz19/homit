@@ -28,7 +28,7 @@
                 <ng-md-icon ng-if="!searchRequest" icon="search"></ng-md-icon>
                 <ng-md-icon ng-if="searchRequest" icon="clear"></ng-md-icon>
             </button>
-            <input id="global-search-input" class="search-input" ng-model="searchRequest" placeholder="Search to Homit...">
+            <input id="global-search-input" class="search-input" ng-model="searchRequest" placeholder="Search to Homit..." data-hj-whitelist>
 
             <div ng-if="searchDisplay" class="search-result-box">
                 <ul ng-if="resultStoreType.length" id="glbSrchA" class="store-ul">
@@ -194,7 +194,7 @@
         <div>
             <ng-md-icon icon="search" class="mob-search-input-icon"></ng-md-icon>
             <input id="global-search-input-mobile" class="mob-search-input" ng-model="searchRequest" placeholder="Search to Homit..."
-                autocomplete="none" autocorrect="off" spellcheck="false">
+                autocomplete="none" autocorrect="off" spellcheck="false" data-hj-whitelist>
         </div>
     </section>
 </nav>
