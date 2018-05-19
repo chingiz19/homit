@@ -9,26 +9,6 @@ var pub = {};
  */
 pub.getUserCart = async function (userId) {
     var sqlQuery = `
-        SELECT DISTINCT stores.store_type
-        FROM
-        catalog_stores AS stores JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
-        JOIN stores_hours AS hours ON (stores.id = hours.store_id)
-        WHERE
-        hours.day = DAYOFWEEK(CURRENT_TIMESTAMP)
-        AND (hours.open_time <= CURRENT_TIME
-        AND hours.close_time >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
-        OR hours.open_time_next <= CURRENT_TIME
-        AND hours.close_time_next >= TIME(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE))
-        )`;
-
-    var storeTypeDb = await db.runQuery(sqlQuery);
-    var openStoreTypes = [];
-
-    for (var i = 0; i < storeTypeDb.length; i++) {
-        openStoreTypes.push(storeTypeDb[i].store_type);
-    }
-
-    var sqlQuery = `
         SELECT
         usercart.quantity AS quantity,
         depot.id AS depot_id,
@@ -62,47 +42,6 @@ pub.getUserCart = async function (userId) {
         AND item.packaging_id = packaging.id
         AND item.volume_id = volume.id
         AND depot.store_type_id = store_type.id
-
-        AND store_type.id IN (` + openStoreTypes + `)
-        AND ?
-
-        UNION ALL
-
-        SELECT
-        usercart.quantity AS quantity,
-        depot.id AS depot_id,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        category.name AS category,
-        depot.price AS price,
-        depot.tax AS tax,
-        packaging.name AS packaging,
-        volume.name AS volume,
-        store_type.name as store_type,
-        store_type.api_name AS store_type_api_name,
-        false AS store_open
-
-        FROM
-        user_cart_items AS usercart,
-        catalog_categories AS category, catalog_subcategories AS subcategory, catalog_types AS type,
-        catalog_listings AS listing, catalog_products AS product, catalog_items AS item, catalog_depot AS depot,
-        catalog_store_types AS store_type,
-        catalog_packaging_volumes AS volume, catalog_packaging_packagings AS packaging
-        
-        WHERE
-        usercart.depot_id = depot.id
-        AND category.id = subcategory.category_id
-        AND subcategory.id = type.subcategory_id
-        AND type.id = listing.type_id
-        AND listing.id = product.listing_id
-        AND product.id = item.product_id
-        AND item.id = depot.item_id
-        AND item.packaging_id = packaging.id
-        AND item.volume_id = volume.id
-        AND depot.store_type_id = store_type.id
-
-        AND store_type.id NOT IN (` + openStoreTypes + `)
         AND ?
 
         ORDER BY depot_id`;

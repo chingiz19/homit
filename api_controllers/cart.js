@@ -34,7 +34,7 @@ router.post('/modifyitem', async function (req, res, next) {
 
     if (signedUser) {
         var userId = signedUser.id;
-        var result = Cart.modifyProductInCart(userId, depotId, quantity);
+        var result = await Cart.modifyProductInCart(userId, depotId, quantity);
         var isSuccess = false;
         if (result) {
             isSuccess = true;
