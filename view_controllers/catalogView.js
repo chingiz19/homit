@@ -1170,6 +1170,10 @@ var recommended_products = {
 }
 
 router.get("/product/:storeName/:productName/:productId", async function (req, res, next) {
+    if (!req.query || Object.keys(req.query) > 0){
+        return res.redirect("/catalog" + req.path);
+    }
+    
     var product = await Catalog.getProductPageItemsByProductId(req.params.storeName, req.params.productId);
     var similarProducts = await Catalog.getSimilarProducts(req.params.productId);
     var validationUrl = "/product/" + product.store_type_api_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
