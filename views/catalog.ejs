@@ -5,7 +5,7 @@
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/catalog.css" rel="stylesheet">
 </head>
-
+<!--googleoff: snippet-->
 <body style="top: 51px;">
     <%- include('partial/checkout_menu')%>
         <div ng-controller="catalogController" id="ctnCont">
@@ -25,92 +25,100 @@
                     <div></div>
                 </div>
             </div>
-            <!--googleoff: snippet-->
             <section class="catalog-store-info" ng-cloak>
                 <div>
                     <div class="catalog-store-cover fadeIn"></div>
                 </div>
-                <div class="store-info-txt-box" ng-cloak>
-                    <div class="store-name-txt">{{ storeInfo.display_name }}</div>
-                    <div ng-show="storeInfo.open == true" class="store-hrs-txt">Open for Delivery {{ storeInfo.close_time }}</div>
-                    <div ng-show="storeInfo.open == false" class="store-oval store-open-hrs">Store Closed. Opens at {{ storeInfo.open_time }}</div>
-                    <div class="store-oval store-DF">C$4.99 Delivery Fee</div>
+                <div id="del-opt-background" class="del-opt-background"></div>
+                <div class="store-info-txt-box" ng-show="deliveryOption">
+                    <div class="store-name-txt">{{ display_storeInfo.display_name }}</div>
+                    <scheduler store-type="storeType" delivery-option="deliveryOption" delivery-date="deliveryDate" open-time="open_time" close-time="close_time"></scheduler>
+                    <div class="del-opt-info" ng-cloak>
+                        <div ng-show="display_storeInfo.open == false && deliveryOption == 'ASAP Delivery'" class="store-oval store-open-hrs">Store Closed. Opens at {{ open_time }}</div>
+                        <div ng-show="display_storeInfo.open == true && deliveryOption == 'ASAP Delivery'" class="store-hrs-txt">Open {{ close_time }}</div>
+                        <div ng-show="deliveryOption == 'Scheduled Delivery'" class="store-hrs-txt">{{ deliveryDate.month + " " + deliveryDate.day + ", " + deliveryDate.time}}</div>
+                        <ng-md-icon icon="fiber_manual_record"></ng-md-icon>
+                        <div class="store-oval store-DF">C$4.99 Delivery Fee</div>
+                    </div>
                 </div>
             </section>
-
             <div class="catalog-content" ng-cloak>
-                <!--Mob-version Navigate-->
-                <!-- Start -->
                 <div ng-if="screenIsMob">
-                    <button id="nav-btn-mob" class="nav-btn-mob box-center" ng-click="toggleNavLeft()" ng-hide="NavigateOpen()">
-                        <ng-md-icon icon="dehaze"></ng-md-icon>
+                    <button ng-click="mobHub()" class="fadeIn mob-hub-btn">
+                        <ng-md-icon ng-class="mob_hub_icon_c" icon="arrow_drop_down"></ng-md-icon>hub
                     </button>
-                    <md-sidenav md-component-id="nav-btn-mob" md-whiteframe="4" class="md-sidenav-mob">
-                        <md-content class="md-content-mob">
-                            <div class="nav-mob-header">
-                                <div class="nav-mob-header-txt">NAVIGATE</div>
-                                <button ng-click="close()" class="nav-mob-cls-btn" hide-gt-md>
-                                    <ng-md-icon icon="chevron_left"></ng-md-icon>
-                                </button>
+                    <section class="mobile-hub-section" ng-class="mob_hub_grow_c">
+
+                        <global-search ng-show="showMobHub" class="global-search-catalog" style="width: 100vw;"></global-search>
+
+                        <div ng-show="showMobHub" class="m-hub-header">
+                            <div ng-click="selectHubSec(1)" class="p-1">
+                                <div class="mh-header-txt mhh-highlight">Store List</div>
+                                <div class="mh-header-line header-line-grow"></div>
                             </div>
-                            <section class="nav-mob-content">
-                                <div class="nav-sep-line-str">STORE</div>
-                                <ul class="str-ul">
-                                    <li class="nav-mob-str-ln str-ln-1" ng-style="('<%= loadedStore %>' == 'Dwarf Stars') && {'margin-left': '0px'} || {'margin-left': '10px'}" ng-click="hrefToStore('/catalog/linas-italian-market')">
-                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Dwarf Stars')" icon="shopping_cart"></ng-md-icon>
-                                        <a ng-style="('<%= loadedStore %>' == 'Dwarf Stars') && {'margin-left': '10px', 'font-weight':'600', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
-                                            target="_self">Dwarf Stars</a>
-                                    </li>
-                                    <li class="nav-mob-str-ln str-ln-1" ng-style="('<%= loadedStore %>' == 'Linas Italian Market') && {'margin-left': '0px'} || {'margin-left': '10px'}" ng-click="hrefToStore('/catalog/linas-italian-market')">
-                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Linas Italian Market')" icon="shopping_cart"></ng-md-icon>
-                                        <a ng-style="('<%= loadedStore %>' == 'Linas Italian Market') && {'margin-left': '10px', 'font-weight':'600', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
-                                            target="_self">Lina's Italian Market</a>
-                                    </li>
-                                    <li class="nav-mob-str-ln str-ln-1" ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '0px'} || {'margin-left': '10px'}" ng-click="hrefToStore('/catalog/liquor-station')">
-                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Liquor Station')" icon="shopping_cart"></ng-md-icon>
-                                        <a ng-style="('<%= loadedStore %>' == 'Liquor Station') && {'margin-left': '10px', 'font-weight':'600', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
-                                            target="_self">Liquor Station</a>
-                                    </li>
-                                    <li class="nav-mob-str-ln" ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '0px'} || {'margin-left': '10px'}" ng-click="hrefToStore('/catalog/snack-vendor')">
-                                        <ng-md-icon ng-show="('<%= loadedStore %>' == 'Snack Vendor')" icon="shopping_cart"></ng-md-icon>
-                                        <a ng-style="('<%= loadedStore %>' == 'Snack Vendor') && {'margin-left': '10px', 'font-weight':'900', 'color':'rgba(255,255,255,1)'} || {'margin-left': '22px', 'color':'rgba(255,255,255,1)'}"
-                                         target="_self">Snack Vendor</a>
-                                    </li>
-                                </ul>
-                                <div class="nav-sep-line-aisle">STORE AISLE</div>
-                                <ul class="str-aisle-ul">
-                                    <li class="nav-mob-aisle-ln" ng-repeat="category in <%= categories %> track by $index" ng-click="hrefToCat(category)">
-                                        <ng-md-icon ng-show="('<%= selectedCategory %>' == category)" icon="label"></ng-md-icon>
-                                        <a ng-style="('<%= selectedCategory %>' == category) && {'margin-left': '10px', 'font-weight':'600'} || {'margin-left': '30px'}"
-                                           target="_self">{{ category }}</a>
-                                    </li>
-                                </ul>
-                                <div class="nav-sep-line-cat">CATEGORY</div>
+                            <div ng-click="selectHubSec(2)" class="p-2">
+                                <div class="mh-header-txt">Store Aisle</div>
+                                <div class="mh-header-line"></div>
+                            </div>
+                            <div ng-click="selectHubSec(3)" class="p-3">
+                                <div class="mh-header-txt store-shelf">Shelf</div>
+                                <div class="mh-header-line"></div>
+                            </div>
+                        </div>
+                        <div ng-show="showMobHub" class="mh-store-box">
+                            <div ng-show="hubSecSelected == 1" class="fadeIn mh-body mh-store">
+                                <div class="mh-store-div" ng-class="('<%= loadedStore %>' == 'Liquor Station') ? 'mh-store-selected' : ''" ng-click="hrefToStore('/catalog/liquor-station')">
+                                    <img src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
+                                    <span>Liquor Station</span>
+                                </div>
+                                <div class="mh-store-div" ng-class="('<%= loadedStore %>' == 'Dwarf Stars') ? 'mh-store-selected' : ''" ng-click="hrefToStore('/catalog/dwarf-stars')">
+                                    <img src="/resources/images/non-catalog-image/store-logo/dwarf-stars_icon.png">
+                                    <span>Dwarfs Stars</span>
+                                </div>
+                                <div class="mh-store-div" ng-class="('<%= loadedStore %>' == 'Linas Italian Market') ? 'mh-store-selected' : ''" ng-click="hrefToStore('/catalog/linas-italian-market')">
+                                    <img src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
+                                    <span>Lina's Italian Market</span>
+                                </div>
+                                <div class="mh-store-div" ng-class="('<%= loadedStore %>' == 'Snack Vendor') ? 'mh-store-selected' : ''" ng-click="hrefToStore('/catalog/snack-vendor')">
+                                    <img src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
+                                    <span>Snack Vendor</span>
+                                </div>
+                            </div>
+                            <div ng-show="hubSecSelected == 2" class="fadeIn mh-body">
+                                <div class="mh-cat-div" ng-repeat="category in <%= categories %> track by $index" ng-click="hrefToCat(category)" ng-class="('<%= selectedCategory %>' == category) ? 'mh-cat-selected' : ''">
+                                    {{ category }}
+                                </div>
+                            </div>
+                            <div ng-show="hubSecSelected == 3" class="fadeIn mh-body">
                                 <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
                                     <md-radio-button class="cat-body-cat" ng-repeat="variant in subcategories | orderBy" id="radio_{{ $index }}" ng-value="variant" ng-click="checkSubcategories(variant)">
                                         <span class="variant-txt">{{ variant }}</span>
                                     </md-radio-button>
                                 </md-radio-group>
-                            </section>
-                        </md-content>
-                    </md-sidenav>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-                <!--End-->
-                <section id="category-box" class="cat-section-absolute cat-section">
-                    <div class="cat-section-header section-header box-center" ng-click="filterCategories()">{{ '<%= selectedCategory %>'}}</div>
-                    <div class="subcat-box">
+                <section id="cat-subcat-sec" class="cat-subcat-absolute cat-section">
+                    <div ng-click="showHideCategory()" class="cat-subcat-header">
+                        <div class="flex-column">
+                            <div ng-class="header_aisle_wc">Store Aisle</div>
+                            <div ng-class="aisle_line_wc" class="header-line"></div>
+                        </div>
+                        <div class="sep-line-hdr-cs">|</div>
+                        <div class="flex-column">
+                            <div ng-class="header_cat_wc" class="store-shelf">Shelf</div>
+                            <div ng-class="cat_line_wc" class="header-line"></div>
+                        </div>
+                    </div>
+                    <div id="subcategory_box" class="cat-subcat-body">
                         <md-radio-group ng-model="SubcategoryName">
                             <md-radio-button class="cat-body-cat" id="radio_{{$index}}" ng-repeat="variant in subcategories | orderBy" ng-value="variant" ng-click="checkSubcategories(variant)">
                                 <span>{{ variant }}</span>
                             </md-radio-button>
                         </md-radio-group>
                     </div>
-                    <!--Category Box start-->
-                    <button id="category-button" ng-click="filterCategories()" class="filter-cat-btn">
-                        <ng-md-icon id="show_cat_icon" icon="flip"></ng-md-icon>
-                    </button>
-                    <div id="category_box" class="cat-body-cubcat">
-                        <div class="cat-section-header section-header box-center" style="padding-right: 30px" ng-click="filterCategories()">Store Aisle</div>
+                    <div id="category_box" class="cat-subcat-body category-box">
                         <ul class="cat-list same-line" layout="column">
                             <li ng-repeat='category in <%= categories %> track by $index' ng-click="hrefToCat(category)" style="outline: none;">
                                 <div class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': 'rgba(0,189,149,0.7)'}">
@@ -119,9 +127,8 @@
                             </li>
                         </ul>
                     </div>
-                    <!--End-->
                 </section>
-                <section class="items-section" id="items-section">
+                <section id="items-section" class="items-section" ng-class="cat_content_mob_c">
                     <div ng-repeat="product in products">
                         <div ng-if="isInSelectedSubcategories(product.subcategory)">
                             <div class="item-box" id="{{ product.product_id }}">
@@ -129,59 +136,15 @@
                                     <button class="add-to-cart-btn" ng-click="addToCart(product, v_index)">
                                         <ng-md-icon icon="add_shopping_cart"></ng-md-icon>
                                     </button>
-                                    <section class="pack-vol-section">
-                                        <ul class="pac-vol-ul">
-                                            <li class="pac-vol-li pac-vol-li-left volume-minus">
-                                                <button class="pac-vol-btn box-center" ng-if="product.product_variants.all_volumes[product.volumeI-1]" ng-click="previousVolume(product)">
-                                                    <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
-                                                </button>
-                                            </li>
-                                            <li class="pac-vol-li pac-vol-li-mid">
-                                                <span class="pac-vol-text">{{ product.product_variants.all_volumes[product.volumeI] }}</span>
-                                            </li>
-                                            <li class="pac-vol-li pac-vol-li-right volume-plus">
-                                                <button class="pac-vol-btn box-center" ng-if="product.product_variants.all_volumes[product.volumeI+1]" ng-click="nextVolume(product)">
-                                                    <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                        <ul class="pac-vol-ul">
-                                            <li class="pac-vol-li pac-vol-li-left pack-minus">
-                                                <button class="pac-vol-btn box-center" ng-if="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ-1]"
-                                                    ng-click="previousPack(product)">
-                                                    <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
-                                                </button>
-                                            </li>
-                                            <li class="pac-vol-li pac-vol-li-mid">
-                                                <span class="pac-vol-text">X{{ product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]
-                                                    }}
-                                                </span>
-                                            </li>
-                                            <li class="pac-vol-li pac-vol-li-right pack-plus">
-                                                <button class="pac-vol-btn box-center" ng-if="product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ+1]"
-                                                    ng-click="nextPack(product)">
-                                                    <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </section>
                                     <li class="item-pic" ng-click="hrefPrdPage(product)">
                                         <img ng-src="{{ product.image }}">
                                     </li>
                                     <li class="catalog-text item-brand" ng-click="hrefPrdPage(product)">
-                                        <div>
-                                            <ng-md-icon icon="info" class="item-info-icon"></ng-md-icon>
-                                            <span>{{ product.brand }} {{ product.name }}</span>
-                                        </div>
+                                        <div ng-if="product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] > 1"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] }} x {{ product.product_variants.all_volumes[0] }})</div>
+                                        <div ng-if="product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] <= 1"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants.all_volumes[0] }})</div>
                                     </li>
-                                    <li class="item-pack-vlo-mob pack-vol-prc-mob-txt box-center">
-                                        <span>{{ product.product_variants.all_volumes[product.volumeI] + " x" + product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]
-                                            }}</span>
-                                    </li>
-                                    <li class="catalog-text item-price pack-vol-prc-mob-txt">
-                                        <span>{{ product.product_variants[product.product_variants.all_volumes[product.volumeI]][product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings[product.packJ]].price
-                                            }}C$
-                                        </span>
+                                    <li class="catalog-text item-price">
+                                        <span>{{ product.product_variants[product.product_variants.all_volumes[0]][product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0]].price}}C$</span>
                                     </li>
                                 </ul>
                             </div>
@@ -189,15 +152,15 @@
                     </div>
                 </section>
             </div>
-            <!--googleon: snippet-->
         </div>
-
         </div>
         <% if (!production) { %>
             <script src="/resources/services/localStorage.js"></script>
             <script src="/resources/services/cartService.js"></script>
+            <script src="/resources/directives/scheduler.js"></script>
             <script src="/resources/controllers/catalog.js"></script>
             <% } %>
 </body>
+<!--googleon: snippet-->
 
 </html>

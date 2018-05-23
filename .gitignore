@@ -4,6 +4,7 @@ node_modules/
 .vscode
 ./.logs
 .logs
+*.rdb
 *.env
 *.ini
 .nyc_output

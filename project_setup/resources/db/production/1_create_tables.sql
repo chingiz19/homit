@@ -11,10 +11,14 @@ CREATE TABLE catalog_store_types (
 	name VARCHAR(225) NOT NULL,
 	display_name VARCHAR(225) NOT NULL,	
 	image VARCHAR(225),  
+	image_cover VARCHAR(225),  
 	api_name VARCHAR(225) NOT NULL,		
 	available BOOLEAN DEFAULT TRUE,
 	
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	UNIQUE(name),
+	UNIQUE(display_name),
+	UNIQUE(api_name)	
 ) ENGINE = InnoDB;
 
 
@@ -197,11 +201,12 @@ CREATE TABLE users_customers (
 	password VARCHAR(225) NOT NULL,
 	phone_number VARCHAR(10),
 	birth_date DATE NULL,
-	address VARCHAR(225),
 	stripe_customer_id VARCHAR(225) NOT NULL,
-	card_token VARCHAR(225) NULL,
-	card_type VARCHAR(225) NULL,
-	card_digits VARCHAR(4) NULL,
+	address VARCHAR(225),
+	address_latitude DOUBLE NULL,
+	address_longitude DOUBLE NULL,
+	address_unit_number VARCHAR(225),
+
 	
 	PRIMARY KEY (id),
 	UNIQUE (user_email, stripe_customer_id)
@@ -217,6 +222,8 @@ CREATE TABLE users_customers_history (
 	phone_number VARCHAR(10),
 	birth_date DATE NULL,
 	address VARCHAR(225),
+	address_unit_number VARCHAR(225),	
+	updated_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,	
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_users_customers_history_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -331,6 +338,7 @@ CREATE TABLE orders_transactions_history (
 	delivery_latitude DOUBLE NOT NULL,
 	delivery_longitude DOUBLE NOT NULL,
 	driver_instruction VARCHAR(225),
+	unit_number VARCHAR(225),
 	phone_number VARCHAR(10),
 	
 	PRIMARY KEY (id),
@@ -349,6 +357,7 @@ CREATE TABLE orders_history (
 	total_amount DECIMAL(6,2) NOT NULL,
 	delivery_fee DECIMAL(6,2) NOT NULL,
 	total_tax DECIMAL(6,2) NOT NULL,
+	date_scheduled TIMESTAMP NULL,	
 	date_assigned TIMESTAMP NULL,
 	date_store_ready TIMESTAMP NULL,
 	date_arrived_store TIMESTAMP NULL,

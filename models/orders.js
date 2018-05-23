@@ -18,7 +18,7 @@ var pub = {};
  * @param {*} cardNumber 
  * @param {*} allPrices 
  */
-pub.createTransactionOrder = async function (userId, address, address_lat, address_long, driverInstruction, phoneNumber, isGuest, chargeId, cardNumber, allPrices) {
+pub.createTransactionOrder = async function (userId, address, address_lat, address_long, driverInstruction, unitNumber, phoneNumber, isGuest, chargeId, cardNumber, allPrices) {
     var data = {
         delivery_address: address,
         delivery_latitude: address_lat,
@@ -41,6 +41,10 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
         data.driver_instruction = driverInstruction;
     };
 
+    if (unitNumber) {
+        data.unit_number = unitNumber;
+    }
+
     var inserted = await db.insertQuery(db.tables.orders_transactions_history, data);
     return inserted.insertId;
 }
@@ -51,7 +55,7 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
  * @param {*} orderTransactionId 
  * @param {*} storeType 
  */
-pub.createOrder = async function (orderTransactionId, storeType, prices) {
+pub.createOrder = async function (orderTransactionId, storeType, prices, dateScheduled) {
     var storeType = await Catalog.getStoreTypeIdByName(storeType);
     var data = {
         order_transaction_id: orderTransactionId,
@@ -61,6 +65,10 @@ pub.createOrder = async function (orderTransactionId, storeType, prices) {
         total_tax: prices.total_tax,
         store_type: storeType
     };
+
+    if (dateScheduled) {
+        data.date_scheduled = dateScheduled;
+    }
 
     var inserted = await db.insertQuery(db.tables.orders_history, data);
     return inserted.insertId;
@@ -176,7 +184,7 @@ pub.getOrderItemsById = async function (orderId) {
         SELECT
         cart_item.depot_id AS depot_id,
         store_type.name AS store_type,
-        store_type.name AS store_type_display_name,
+        store_type.display_name AS store_type_display_name,
         category.name AS category,
         subcategory.name AS subcategory,
         type.name AS type,
@@ -256,6 +264,7 @@ pub.getPendingOrders = async function () {
         history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
         transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
         transaction.driver_instruction AS driver_instruction,
+        transaction.unit_number AS unit_number,
         history.driver_id AS driver_id, history.store_id AS store_id,
         stores.id_prefix AS store_id_prefix, stores.name AS store_name,
         stores.address AS store_address, store_type.name AS store_type,
@@ -285,6 +294,7 @@ pub.getPendingOrders = async function () {
         history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
         transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
         transaction.driver_instruction AS driver_instruction,
+        transaction.unit_number AS unit_number,
         history.driver_id AS driver_id, history.store_id AS store_id,
         stores.id_prefix AS store_id_prefix,
         stores.name AS store_name, stores.address AS store_address, store_type.name AS store_type,
@@ -314,6 +324,7 @@ pub.getPendingOrders = async function () {
         history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
         transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
         transaction.driver_instruction AS driver_instruction,
+        transaction.unit_number AS unit_number,
         history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
         NULL AS store_address, store_type.name AS store_type, users.id AS user_id, users.id_prefix AS user_id_prefix,
         users.user_email AS user_email, users.first_name AS first_name, users.last_name AS last_name,
@@ -340,6 +351,7 @@ pub.getPendingOrders = async function () {
         history.date_delivered AS date_delivered, transaction.delivery_address AS delivery_address,
         transaction.delivery_latitude AS delivery_latitude, transaction.delivery_longitude AS delivery_longitude,
         transaction.driver_instruction AS driver_instruction,
+        transaction.unit_number AS unit_number,
         history.driver_id AS driver_id, NULL AS store_id, NULL AS store_id_prefix, NULL AS store_name,
         NULL AS store_address, store_type.name AS store_type, guests.id AS user_id, guests.id_prefix AS user_id_prefix,
         guests.user_email AS user_email, guests.first_name AS first_name, guests.last_name AS last_name,
@@ -682,6 +694,24 @@ var updateDateStoreReady = function (orderId, sqlDate) {
         WHERE ?`;
     var data = { "id": orderId };
     db.runQuery(sqlQuery, data);
+}
+
+pub.updateDateAssigned = async function (orderId, storeId, driverId) {
+    var sqlQuery = `
+        UPDATE orders_history
+        SET 
+        driver_id = `+ driverId + `,
+        store_id = ` + storeId + `,
+        date_assigned = CURRENT_TIMESTAMP
+        WHERE ?
+    `;
+
+    var key = {
+        id: orderId
+    };
+
+    // Updating orders_history table
+    await db.runQuery(sqlQuery, key);
 }
 
 module.exports = pub;

@@ -24,8 +24,7 @@
     <!-- Message section -->
     <div ng-if="message">
         <div class="notification_box" ng-class="messageType">
-            <!-- <ng-md-icon ng-class="iconType" icon="announcement" fill="red"></ng-md-icon> -->
-            <img ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
+            <img ng-if="storeClose" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
             <p>{{ message }}</p>
         </div>
     </div>

@@ -58,7 +58,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
                 $scope.scrollTo('address');
             }
             $timeout(function(){
-                $(".loc-sucsess-msg").css({'opacity': '1', 'width': '100%', 'z-index': '2', 'transition' : 'opacity 0.8s ease-out', 'transition' : 'width 0.6s ease-out'});
+                $(".loc-sucsess-msg").css({'opacity': '1', 'width': '100%', 'z-index': '2', 'transition' : 'opacity 0.8s ease-out, width 0.6s ease-out'});
                 clearLocSucMsg(3500);
             }, 200);
         } else {

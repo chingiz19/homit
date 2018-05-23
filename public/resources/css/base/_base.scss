@@ -1,3 +1,59 @@
 html, body {
     background-color: white;
 }
+
+.box-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column{
+    display: flex; 
+    flex-direction: column;
+}
+
+.seperation-line{
+    display: flex;
+    flex-direction: row;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 13px;
+    width: 100%;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+.seperation-line:before {
+    content: "";
+    width: 10%;
+    height: 1px;
+    margin: auto 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.seperation-line:after {
+    content: "";
+    flex-grow: 3;
+    height: 1px;
+    margin: auto 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.same-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fadeIn {
+    animation: fadein 0.4s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

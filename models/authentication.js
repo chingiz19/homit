@@ -51,7 +51,7 @@ pub.validate = function (options) {
             Logger.log.verbose("Redirected", logMeta);
             res.redirect("/");
         } else {
-            Logger.log.verbose("R400");
+            Logger.log.verbose("Not Authorized", logMeta);
             res.status(400).send("Not Authorized");
         }
     }

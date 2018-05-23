@@ -2,6 +2,10 @@
  * @copyright Homit 2018
  */
 
+
+/**
+ * This is feature branch for scheduled delivery
+ */
 var pub = {};
 
 pub.HOMIT_CAR_STORE_TYPE = "homitcar";
@@ -31,134 +35,48 @@ pub.getStoreTypeInfo = async function (storeType) {
     return dbResult[0];
 }
 
-pub.getStoreHours = async function (storeType, storeOpen) {
-    var sqlQuery;
-    var storeTypeData = {
-        "store_types.name": storeType
-    };
-    var data = [];
-    data.push(storeTypeData);
-    data.push(storeTypeData);
-    if (storeOpen) {
-        sqlQuery = `
-            SELECT MIN(open_time) AS open_time, MAX(close_time) AS close_time
-            FROM
-            (
-            SELECT 
-            MIN(hours.open_time) AS open_time,
-            MAX(hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE) AS close_time
-            FROM
-            catalog_stores AS stores
-            JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
-            JOIN stores_hours AS hours ON (stores.id = hours.store_id)
-            WHERE 
-            (
-            hours.day = DAYOFWEEK(CURRENT_TIME)
-            AND CURRENT_TIME > hours.open_time
-            AND CURRENT_TIME < hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE
-            AND ?
-            )
+/**
+ * Get daily store hours by store type
+ * 
+ * @param {*} storeType 
+ */
+pub.getStoreHours = async function (storeType) {
+    let sqlQuery = `
+        SELECT 
+        hours.day AS day, MIN(hours.open_time) AS open_time, MAX(hours.open_time + INTERVAL hours.open_duration MINUTE) AS close_time
+        FROM
+        catalog_stores AS stores
+        JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
+        JOIN stores_hours AS hours ON (stores.id = hours.store_id)
+        WHERE ?
+        GROUP BY day
+    `;
 
-            UNION
+    let data = { "store_types.name": storeType }
+    let dbResult = await db.runQuery(sqlQuery, data);
 
-            SELECT 
-            MIN(hours.open_time) AS open_time,
-            MAX(hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE) AS close_time
-            FROM
-            catalog_stores AS stores
-            JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
-            JOIN stores_hours AS hours ON (stores.id = hours.store_id)
-            WHERE 
-            (
-            hours.day = DAYOFWEEK(CURRENT_DATE - INTERVAL 1 DAY)
-            AND CURRENT_TIME + INTERVAL 24 HOUR < hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE
-            AND CURRENT_TIME + INTERVAL 24 HOUR > hours.open_time
-            AND ?
-            )
-
-            UNION
-
-            SELECT 
-            MIN(hours.open_time) AS open_time,
-            MAX(hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE) AS close_time
-            FROM
-            catalog_stores AS stores
-            JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
-            JOIN stores_hours AS hours ON (stores.id = hours.store_id)
-            WHERE 
-            (
-            hours.day = DAYOFWEEK(CURRENT_DATE + INTERVAL 1 DAY)
-            AND CURRENT_TIME + INTERVAL 30 MINUTE  > hours.open_time
-            AND CURRENT_TIME + INTERVAL 30 MINUTE < hours.open_time + INTERVAL hours.open_duration MINUTE 
-            AND ?
-            )
-        ) AS T
-        `;
-        data.push(storeTypeData);
-    } else {
-        sqlQuery = `
-            SELECT MIN(open_time) AS open_time, MAX(close_time) AS close_time
-            FROM
-            (
-            SELECT 
-            MIN(hours.open_time) AS open_time,
-            MAX(hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE) AS close_time
-            FROM
-            catalog_stores AS stores
-            JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
-            JOIN stores_hours AS hours ON (stores.id = hours.store_id)
-            WHERE 
-            (
-                hours.day = DAYOFWEEK(CURRENT_TIME)
-                AND CURRENT_TIME < hours.open_time
-                AND ?
-            )
-
-            UNION
-
-            SELECT 
-            MIN(hours.open_time) AS open_time,
-            MAX(hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE) AS close_time
-            FROM
-            catalog_stores AS stores
-            JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
-            JOIN stores_hours AS hours ON (stores.id = hours.store_id)
-            WHERE 
-            (
-                hours.day = DAYOFWEEK(CURRENT_TIME + INTERVAL 1 DAY)
-                AND hours.store_id IN (
-                SELECT hours.store_id
-                FROM 
-                catalog_stores AS stores
-                JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
-                JOIN stores_hours AS hours ON (stores.id = hours.store_id)
-                WHERE 
-                    hours.day = DAYOFWEEK(CURRENT_TIME)
-                    AND CURRENT_TIME > hours.open_time
-                    AND CURRENT_TIME > hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE
-                    AND ?
-                )
-            )
-        ) AS T
-        `;
+    let result = {};
+    for (let i = 0; i < dbResult.length; i++) {
+        let today = {
+            open: dbResult[i].open_time,
+            close: dbResult[i].close_time
+        };
+        if (today.close == "24:30:00") {
+            today.close = "24:00:00";
+        }
+        result[dbResult[i].day] = today;
     }
 
-    var dbResult = await db.runQuery(sqlQuery, data);
-
-    let result = dbResult[0];
-
-    if (result.open_time == "00:00:00" && result.close_time == "23:30:00") {
-        result.close_time = "00:00:00";
-    }
     return result;
 }
 
 /**
  * Returns true if any of the stores related to the store type is open
  * 
- * @param {*String} storeType
+ * @param {*} storeType 
+ * @param {*} intereval defaults to 30
  */
-pub.isStoreOpen = async function (storeType) {
+pub.isStoreOpen = async function (storeType, intereval = 30) {
     var sqlQuery = `
         SELECT 
         stores.id
@@ -173,12 +91,12 @@ pub.isStoreOpen = async function (storeType) {
             (
                 hours.day = DAYOFWEEK(CURRENT_TIME)
                 AND CURRENT_TIME > hours.open_time
-                AND CURRENT_TIME < hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE
+                AND CURRENT_TIME < hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL ` + intereval + ` MINUTE
             )
         OR
             (
                 hours.day = DAYOFWEEK(CURRENT_DATE - INTERVAL 1 DAY)
-                AND CURRENT_TIME + INTERVAL 24 HOUR < hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL 30 MINUTE
+                AND CURRENT_TIME + INTERVAL 24 HOUR < hours.open_time + INTERVAL hours.open_duration MINUTE - INTERVAL ` + intereval + ` MINUTE
                 AND CURRENT_TIME + INTERVAL 24 HOUR > hours.open_time
             )
         )
@@ -190,6 +108,55 @@ pub.isStoreOpen = async function (storeType) {
     };
 
     var dbResult = await db.runQuery(sqlQuery, data);
+    return dbResult.length > 0;
+}
+
+/**
+ * Returns true if any of the stores related to the store type is open for delivery
+ * Interval will be 20 minutes
+ * 
+ * @param {*String} storeType
+ */
+pub.isStoreOpenForDelivery = async function (storeType) {
+    return await pub.isStoreOpen(storeType, 20);
+}
+
+/**
+ * Returns true if any of the stores related to the store type is open during the schedule time
+ * 
+ * @param {*} storeType 
+ * @param {*} timestamp 
+ */
+pub.isStoreOpenForScheduled = async function (storeType, timestamp) {
+    let sqlTime = HelperUtils.timestampToSqlTime(timestamp);
+    let sqlDayOfWeek = HelperUtils.timestampToSqlDatOfWeek(timestamp);
+
+    let sqlQuery = `
+        SELECT 
+        stores.id
+        FROM
+        catalog_stores AS stores
+        JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
+        JOIN stores_hours AS hours ON (stores.id = hours.store_id)
+        WHERE ?
+        AND 
+        (
+                ?
+                AND TIME('`+ sqlTime + `') >= hours.open_time + INTERVAL 60 MINUTE
+                AND TIME('`+ sqlTime + `') <= hours.open_time + INTERVAL hours.open_duration MINUTE
+        )
+        LIMIT 1;
+    `;
+
+    let data1 = {
+        "store_types.name": storeType
+    };
+
+    let data2 = {
+        "hours.day": sqlDayOfWeek
+    };
+
+    var dbResult = await db.runQuery(sqlQuery, [data1, data2]);
     return dbResult.length > 0;
 }
 

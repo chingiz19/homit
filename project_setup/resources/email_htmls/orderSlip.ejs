@@ -1,771 +1,201 @@
 <html>
 
 <head>
-	<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
-	<meta name=Generator content="Microsoft Word 15 (filtered)">
+	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 	<style>
-		<!--
-		/* Font Definitions */
-
-		@font-face {
-			font-family: "Cambria Math";
-			panose-1: 2 4 5 3 5 4 6 3 2 4;
+		body {
+			width: 595px;
+			background-color: rgb(254, 254, 254);
+			letter-spacing: 0.01em;
 		}
 
-		@font-face {
-			font-family: Calibri;
-			panose-1: 2 15 5 2 2 2 4 3 2 4;
+		.logo-div {
+			position: relative;
+			top: 3pt;
+			margin: 0 auto 0 auto;
+			height: 92px;
+			width: 92;
+			background-color: black;
+			border-radius: 46px;
+			z-index: 0;
 		}
 
-		/* Style Definitions */
-
-		p.MsoNormal,
-		li.MsoNormal,
-		div.MsoNormal {
-			margin-top: 0in;
-			margin-right: 0in;
-			margin-bottom: 8.0pt;
-			margin-left: 0in;
-			line-height: 107%;
-			font-size: 11.0pt;
-			font-family: "Calibri", sans-serif;
+		.logo-div img {
+			width: 70px;
+			height: 70px;
+			margin: 10px 0 0 10px;
+			z-index: 10;
 		}
 
-		h1 {
-			mso-style-link: "Heading 1 Char";
-			margin-top: .25in;
-			margin-right: 0in;
-			margin-bottom: 8.0pt;
-			margin-left: .3in;
-			text-indent: -.3in;
-			line-height: 107%;
-			page-break-after: avoid;
-			border: none;
-			padding: 0in;
-			font-size: 18.0pt;
-			font-family: "Calibri Light", sans-serif;
-			font-variant: small-caps;
-			color: black;
+		.customer-details-table {
+			width: 100%;
+			padding: 0px 0 15px 0;
+			font-size: 14px;
 		}
 
-		h2 {
-			mso-style-link: "Heading 2 Char";
-			margin-top: .25in;
-			margin-right: 0in;
-			margin-bottom: 0in;
-			margin-left: .4in;
-			margin-bottom: .0001pt;
-			text-indent: -.4in;
-			line-height: 107%;
-			page-break-after: avoid;
-			font-size: 14.0pt;
-			font-family: "Calibri Light", sans-serif;
-			font-variant: small-caps;
-			color: black;
+		.customer-details-table-tr {
+			width: 100%;
+			font-weight: 500;
 		}
 
-		h3 {
-			mso-style-link: "Heading 3 Char";
-			margin-top: 10.0pt;
-			margin-right: 0in;
-			margin-bottom: 0in;
-			margin-left: .5in;
-			margin-bottom: .0001pt;
-			text-indent: -.5in;
-			line-height: 107%;
-			page-break-after: avoid;
-			font-size: 11.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: black;
+		.customer-details-table-td-hdr {
+			width: 120px;
+			text-align: left;
+			font-weight: 600;
 		}
 
-		h4 {
-			mso-style-link: "Heading 4 Char";
-			margin-top: 10.0pt;
-			margin-right: 0in;
-			margin-bottom: 0in;
-			margin-left: .6in;
-			margin-bottom: .0001pt;
-			text-indent: -.6in;
-			line-height: 107%;
-			page-break-after: avoid;
-			font-size: 11.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: black;
-			font-style: italic;
+		.customer-details-table-td-cnt {
+			width: 465px;
+			text-align: left;
+			font-weight: 500;
+			font-family: 'Nunito', sans-serif;
 		}
 
-		h5 {
-			mso-style-link: "Heading 5 Char";
-			margin-top: 10.0pt;
-			margin-right: 0in;
-			margin-bottom: 0in;
-			margin-left: .7in;
-			margin-bottom: .0001pt;
-			text-indent: -.7in;
-			line-height: 107%;
-			page-break-after: avoid;
-			font-size: 11.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: #323E4F;
-			font-weight: normal;
+		.order-details-hdr {
+			margin: 15px 0 15px 0;
+			font-size: 18px;
+			font-weight: 500;
+			text-align: left;
+			border-bottom: 2px solid black;
+			font-weight: 600;
 		}
 
-		h6 {
-			mso-style-link: "Heading 6 Char";
-			margin-top: 10.0pt;
-			margin-right: 0in;
-			margin-bottom: 0in;
-			margin-left: .8in;
-			margin-bottom: .0001pt;
-			text-indent: -.8in;
-			line-height: 107%;
-			page-break-after: avoid;
-			font-size: 11.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: #323E4F;
-			font-weight: normal;
-			font-style: italic;
+		.orders-details-table {
+			width: 100%;
+			padding: 0px 0 15px 0;
+			font-size: 14px;
 		}
 
-		p.MsoHeading7,
-		li.MsoHeading7,
-		div.MsoHeading7 {
-			mso-style-link: "Heading 7 Char";
-			margin-top: 10.0pt;
-			margin-right: 0in;
-			margin-bottom: 0in;
-			margin-left: .9in;
-			margin-bottom: .0001pt;
-			text-indent: -.9in;
-			line-height: 107%;
-			page-break-after: avoid;
-			font-size: 11.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: #404040;
-			font-style: italic;
+		.orders-details-table-tr {
+			width: 100%;
+			font-weight: 500;
 		}
 
-		p.MsoHeading8,
-		li.MsoHeading8,
-		div.MsoHeading8 {
-			mso-style-link: "Heading 8 Char";
-			margin-top: 10.0pt;
-			margin-right: 0in;
-			margin-bottom: 0in;
-			margin-left: 1.0in;
-			margin-bottom: .0001pt;
-			text-indent: -1.0in;
-			line-height: 107%;
-			page-break-after: avoid;
-			font-size: 10.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: #404040;
+		.orders-details-table-td-hdr {
+			width: 120px;
+			text-align: left;
+			font-weight: 600;
 		}
 
-		p.MsoHeading9,
-		li.MsoHeading9,
-		div.MsoHeading9 {
-			mso-style-link: "Heading 9 Char";
-			margin-top: 10.0pt;
-			margin-right: 0in;
-			margin-bottom: 0in;
-			margin-left: 1.1in;
-			margin-bottom: .0001pt;
-			text-indent: -1.1in;
-			line-height: 107%;
-			page-break-after: avoid;
-			font-size: 10.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: #404040;
-			font-style: italic;
+		.orders-details-table-td-input {
+			width: 465px;
+			text-align: left;
+			font-weight: 500;
+			font-family: 'Nunito', sans-serif;
 		}
 
-		p.MsoHeader,
-		li.MsoHeader,
-		div.MsoHeader {
-			mso-style-link: "Header Char";
-			margin: 0in;
-			margin-bottom: .0001pt;
-			font-size: 11.0pt;
-			font-family: "Calibri", sans-serif;
+		.order-id-orders-details {
+			width: 100%;
+			text-align: left;
+			margin-bottom: 5px;
+			border-bottom: 1px solid rgb(95, 93, 93);
+			font-size: 13px;
 		}
 
-		p.MsoFooter,
-		li.MsoFooter,
-		div.MsoFooter {
-			mso-style-link: "Footer Char";
-			margin: 0in;
-			margin-bottom: .0001pt;
-			font-size: 11.0pt;
-			font-family: "Calibri", sans-serif;
+		#order-details-append {
+			height: 1px;
 		}
 
-		p.MsoCaption,
-		li.MsoCaption,
-		div.MsoCaption {
-			margin-top: 0in;
-			margin-right: 0in;
-			margin-bottom: 10.0pt;
-			margin-left: 0in;
-			font-size: 9.0pt;
-			font-family: "Calibri", sans-serif;
-			color: #44546A;
-			font-style: italic;
+		.order-content-sep {
+			margin: 30px 0 15px 0;
+			font-size: 18px;
+			font-weight: 500;
+			text-align: left;
+			border-bottom: 2px solid black;
+			font-weight: 600;
 		}
 
-		p.MsoTitle,
-		li.MsoTitle,
-		div.MsoTitle {
-			mso-style-link: "Title Char";
-			margin: 0in;
-			margin-bottom: .0001pt;
-			font-size: 28.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: black;
-		}
-
-		p.MsoTitleCxSpFirst,
-		li.MsoTitleCxSpFirst,
-		div.MsoTitleCxSpFirst {
-			mso-style-link: "Title Char";
-			margin: 0in;
-			margin-bottom: .0001pt;
-			font-size: 28.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: black;
-		}
-
-		p.MsoTitleCxSpMiddle,
-		li.MsoTitleCxSpMiddle,
-		div.MsoTitleCxSpMiddle {
-			mso-style-link: "Title Char";
-			margin: 0in;
-			margin-bottom: .0001pt;
-			font-size: 28.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: black;
-		}
-
-		p.MsoTitleCxSpLast,
-		li.MsoTitleCxSpLast,
-		div.MsoTitleCxSpLast {
-			mso-style-link: "Title Char";
-			margin: 0in;
-			margin-bottom: .0001pt;
-			font-size: 28.0pt;
-			font-family: "Calibri Light", sans-serif;
-			color: black;
-		}
-
-		p.MsoSubtitle,
-		li.MsoSubtitle,
-		div.MsoSubtitle {
-			mso-style-link: "Subtitle Char";
-			margin-top: 0in;
-			margin-right: 0in;
-			margin-bottom: 8.0pt;
-			margin-left: 0in;
-			line-height: 107%;
-			font-size: 11.0pt;
-			font-family: "Calibri", sans-serif;
-			color: #5A5A5A;
-			letter-spacing: .5pt;
-		}
-
-		strong {
-			color: black;
-		}
-
-		em {
-			color: windowtext;
-		}
-
-		p.MsoNoSpacing,
-		li.MsoNoSpacing,
-		div.MsoNoSpacing {
-			mso-style-link: "No Spacing Char";
-			margin: 0in;
-			margin-bottom: .0001pt;
-			font-size: 11.0pt;
-			font-family: "Calibri", sans-serif;
-		}
-
-		p.MsoQuote,
-		li.MsoQuote,
-		div.MsoQuote {
-			mso-style-link: "Quote Char";
-			margin-top: 8.0pt;
-			margin-right: .5in;
-			margin-bottom: 8.0pt;
-			margin-left: .5in;
-			line-height: 107%;
-			font-size: 11.0pt;
-			font-family: "Calibri", sans-serif;
-			color: black;
-			font-style: italic;
-		}
-
-		p.MsoIntenseQuote,
-		li.MsoIntenseQuote,
-		div.MsoIntenseQuote {
-			mso-style-link: "Intense Quote Char";
-			margin-top: 12.0pt;
-			margin-right: .65in;
-			margin-bottom: 12.0pt;
-			margin-left: .65in;
-			text-align: center;
-			line-height: 107%;
-			background: #F2F2F2;
-			border: none;
-			padding: 0in;
-			font-size: 11.0pt;
-			font-family: "Calibri", sans-serif;
-			color: black;
-		}
-
-		span.MsoSubtleEmphasis {
-			color: #404040;
-			font-style: italic;
-		}
-
-		span.MsoIntenseEmphasis {
-			text-transform: uppercase;
-			font-weight: bold;
-			font-style: italic;
-		}
-
-		span.MsoSubtleReference {
-			font-variant: small-caps;
-			color: #404040;
-			text-decoration: underline;
-		}
-
-		span.MsoIntenseReference {
-			font-variant: small-caps;
-			font-weight: bold;
-			text-decoration: underline;
-		}
-
-		span.MsoBookTitle {
-			font-variant: small-caps;
-			letter-spacing: .25pt;
-			font-weight: normal;
-		}
-
-		p.MsoTocHeading,
-		li.MsoTocHeading,
-		div.MsoTocHeading {
-			margin-top: .25in;
-			margin-right: 0in;
-			margin-bottom: 8.0pt;
-			margin-left: .3in;
-			text-indent: -.3in;
-			line-height: 107%;
-			page-break-after: avoid;
-			border: none;
-			padding: 0in;
-			font-size: 18.0pt;
-			font-family: "Calibri Light", sans-serif;
-			font-variant: small-caps;
-			color: black;
+		.order-id {
+			width: 100%;
+			text-align: left;
+			margin-bottom: 5px;
+			border-bottom: 1px solid rgb(95, 93, 93);
+			font-size: 13px;
 			font-weight: bold;
 		}
 
-		span.Heading1Char {
-			mso-style-name: "Heading 1 Char";
-			mso-style-link: "Heading 1";
-			font-family: "Calibri Light", sans-serif;
-			font-variant: small-caps;
-			color: black;
-			font-weight: bold;
+		.order-content-table {
+			width: 100%;
+			font-size: 13px;
+			padding-bottom: 20px;
 		}
 
-		span.Heading2Char {
-			mso-style-name: "Heading 2 Char";
-			mso-style-link: "Heading 2";
-			font-family: "Calibri Light", sans-serif;
-			font-variant: small-caps;
-			color: black;
-			font-weight: bold;
+		.order-content-table-tr {
+			width: 100%;
+			font-weight: 500;
 		}
 
-		span.Heading3Char {
-			mso-style-name: "Heading 3 Char";
-			mso-style-link: "Heading 3";
-			font-family: "Calibri Light", sans-serif;
-			color: black;
-			font-weight: bold;
+		.order-content-table-hdr-tr-1 {
+			width: 70%;
+			text-align: left;
+			font-weight: 600;
 		}
 
-		span.Heading4Char {
-			mso-style-name: "Heading 4 Char";
-			mso-style-link: "Heading 4";
-			font-family: "Calibri Light", sans-serif;
-			color: black;
-			font-weight: bold;
-			font-style: italic;
+		.order-content-table-hdr-tr-2-3 {
+			width: 15%;
+			text-align: left;
+			font-weight: 600;
 		}
 
-		span.Heading5Char {
-			mso-style-name: "Heading 5 Char";
-			mso-style-link: "Heading 5";
-			font-family: "Calibri Light", sans-serif;
-			color: #323E4F;
+		.order-cnt-table-cnt-tr-1 {
+			width: 70%;
+			text-align: left;
+			font-family: 'Nunito', sans-serif;
 		}
 
-		span.Heading6Char {
-			mso-style-name: "Heading 6 Char";
-			mso-style-link: "Heading 6";
-			font-family: "Calibri Light", sans-serif;
-			color: #323E4F;
-			font-style: italic;
+		.order-cnt-table-cnt-tr-2-3 {
+			width: 15%;
+			text-align: left;
+			font-family: 'Nunito', sans-serif;
 		}
 
-		span.Heading7Char {
-			mso-style-name: "Heading 7 Char";
-			mso-style-link: "Heading 7";
-			font-family: "Calibri Light", sans-serif;
-			color: #404040;
-			font-style: italic;
+		.order-totals-rable {
+			width: 100%;
+			font-size: 13px;
 		}
 
-		span.Heading8Char {
-			mso-style-name: "Heading 8 Char";
-			mso-style-link: "Heading 8";
-			font-family: "Calibri Light", sans-serif;
-			color: #404040;
+		.order-totals-rable-tr {
+			width: 100%;
+			font-weight: 500;
 		}
 
-		span.Heading9Char {
-			mso-style-name: "Heading 9 Char";
-			mso-style-link: "Heading 9";
-			font-family: "Calibri Light", sans-serif;
-			color: #404040;
-			font-style: italic;
+		.order-totals-rable-tr-hdr {
+			width: 80%;
+			text-align: right;
+			font-weight: 600;
 		}
 
-		span.TitleChar {
-			mso-style-name: "Title Char";
-			mso-style-link: Title;
-			font-family: "Calibri Light", sans-serif;
-			color: black;
+		.order-totals-rable-tr-num {
+			width: 20%;
+			text-align: left;
+			font-family: 'Nunito', sans-serif;
 		}
-
-		span.SubtitleChar {
-			mso-style-name: "Subtitle Char";
-			mso-style-link: Subtitle;
-			color: #5A5A5A;
-			letter-spacing: .5pt;
-		}
-
-		span.QuoteChar {
-			mso-style-name: "Quote Char";
-			mso-style-link: Quote;
-			color: black;
-			font-style: italic;
-		}
-
-		span.IntenseQuoteChar {
-			mso-style-name: "Intense Quote Char";
-			mso-style-link: "Intense Quote";
-			color: black;
-			background: #F2F2F2;
-		}
-
-		span.NoSpacingChar {
-			mso-style-name: "No Spacing Char";
-			mso-style-link: "No Spacing";
-		}
-
-		span.HeaderChar {
-			mso-style-name: "Header Char";
-			mso-style-link: Header;
-		}
-
-		span.FooterChar {
-			mso-style-name: "Footer Char";
-			mso-style-link: Footer;
-		}
-
-		.MsoChpDefault {
-			font-family: "Calibri", sans-serif;
-		}
-
-		.MsoPapDefault {
-			margin-bottom: 8.0pt;
-			line-height: 107%;
-		}
-
-		/* Page Definitions */
-
-		@page WordSection1 {
-			size: 8.5in 11.0in;
-			margin: .5in .5in .5in .5in;
-		}
-
-		div.WordSection1 {
-			page: WordSection1;
-		}
-
-		/* List Definitions */
-
-		ol {
-			margin-bottom: 0in;
-		}
-
-		ul {
-			margin-bottom: 0in;
-		}
-
-		-->
 	</style>
-
 </head>
 
-<body lang=EN-US>
-
-	<div class=WordSection1>
-
-		<div style="position: relative; top: 3pt; margin: 0 auto 0 auto; height: 92px; width: 92; background-color: black; border-radius: 46px; z-index: 0;">
-			<img style="margin: 10px 0 0 10px; z-index: 10;" width=70 height=70 src="data:image/png;base64,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">
-		</div>
-		
-
-		<p class=MsoNormal>
-			<b>
-				<span style='font-size:2.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-			</b>
-		</p>
-
-		<p class=MsoNormal>
-			<b>
-				<span style='font-size:2.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-			</b>
-		</p>
-
-			<div id="order_details" style='font-size:14.0pt; font-weight: 650; line-height:107%;font-family:"Arial; margin-top: 15pt;",sans-serif'>{#123456} ORDER DETAILS</div>
-			<div style='width: 100%;border-bottom: 3pt solid black; position: relative; top: 5pt;margin-bottom: 10pt;'></div>
-
-		<p class=MsoNormal>
-			<u>
-				<span style='font-size:1.0pt;line-height:107%;font-family:
-	"Arial",sans-serif;text-transform:uppercase'>
-					<span style='text-decoration:none'>&nbsp;</span>
-				</span>
-			</u>
-		</p>
-		<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 align=left width=712 style='width:534.2pt;border-collapse:collapse;border:none;
-	 margin-left:6.75pt;margin-right:6.75pt'>
-			<tr style='height:16.45pt'>
-				<td width=121 valign=top style='width:90.5pt;border:none;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.45pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<b>
-							<span style='font-size:10.0pt;font-family:"Arial",sans-serif'>Customer</span>
-						</b>
-						<span style='font-size:10.0pt;font-family:"Arial",sans-serif'>:</span>
-					</p>
-				</td>
-				<td width=592 valign=top style='width:443.7pt;border:none;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.45pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<span id="customer" style='font-family:"Arial",sans-serif'>{Customer name}</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='height:16.15pt'>
-				<td width=121 valign=top style='width:90.5pt;border:none;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.15pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<b>
-							<span style='font-size:10.0pt;font-family:"Arial",sans-serif'>Address</span>
-						</b>
-						<span style='font-size:10.0pt;font-family:"Arial",sans-serif'>:</span>
-					</p>
-				</td>
-				<td width=592 valign=top style='width:443.7pt;border:none;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.15pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<span id="customer_address" style='font-family:"Arial",sans-serif'>{Customer Address}</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='height:17.1pt'>
-				<td width=121 valign=top style='width:90.5pt;border:none;padding:0in 5.4pt 0in 5.4pt;
-	  height:17.1pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<b>
-							<span style='font-size:10.0pt;font-family:"Arial",sans-serif'>Phone</span>
-						</b>
-						<span style='font-size:10.0pt;font-family:"Arial",sans-serif'>
-							<b>Number</b>:</span>
-					</p>
-				</td>
-				<td width=592 valign=top style='width:443.7pt;border:none;padding:0in 5.4pt 0in 5.4pt;
-	  height:17.1pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<span id="customer_phone" style='font-family:"Arial",sans-serif'>{Customer phone number}</span>
-					</p>
-				</td>
-			</tr>
-		</table>
-
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:5%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
-			<div style='width: 100%;border-bottom: 3pt solid black; position: relative; top: 20pt;margin-bottom: 15pt;'></div>
-
-		<br clear=ALL>
-
-		
-
-		<p class=MsoNormal style='margin-left:9.0pt'>
-			<span id="date_stamp" style='font-size:10.0pt;
-	line-height:107%;font-family:"Arial",sans-serif'>Date: {Date &amp; Time stamp}</span>
-		</p>
-
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
-		<table id="table" class=MsoTableGrid border=0 cellspacing=0 cellpadding=0 align=left width=716 style='width:100%;border-collapse:collapse;border:none;
-	 margin-left:6.75pt;margin-right:6.75pt'>
-		
-		</table>
-
-		<p class=MsoNormal style='margin-right:824.25pt'>
-			<span style='font-size:10.0pt;
-	line-height:107%;font-family:"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
-		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=275 style='width:216.6pt;border-collapse:collapse; margin-left:auto;'>
-			<tr style='height:16.5pt'>
-				<td width=137 nowrap valign=bottom style='width:103.1pt;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.5pt'>
-					<p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
-	  text-align:right;line-height:normal'>
-						<b>
-							<span style='font-family:"Arial",sans-serif'>Cart Total</span>
-						</b>
-					</p>
-				</td>
-				<td width=138 nowrap valign=bottom style='width:103.5pt;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.5pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<span id="total_amount" style='font-family:"Arial",sans-serif;color:black'>{Total Amount}
-						</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='height:16.5pt'>
-				<td width=150 nowrap valign=bottom style='width:103.1pt;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.5pt'>
-					<p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
-	  text-align:right;line-height:normal'>
-						<b>
-							<span style='font-family:"Arial",sans-serif'>Delivery Charge*
-							</span>
-						</b>
-					</p>
-				</td>
-				<td width=150 nowrap valign=bottom style='width:103.5pt;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.5pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<span id="delivery_fee" style='font-family:"Arial",sans-serif;color:black'>{Delivery Fee}
-						</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='height:16.5pt'>
-				<td width=150 nowrap valign=bottom style='width:103.1pt;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.5pt'>
-					<p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
-	  text-align:right;line-height:normal'>
-						<b>
-							<span style='font-family:"Arial",sans-serif'>GST</span>
-						</b>
-					</p>
-				</td>
-				<td width=138 nowrap valign=bottom style='width:103.5pt;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.5pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<span id="gst" style='font-family:"Arial",sans-serif;color:black'>{GST}</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='height:16.5pt'>
-				<td width=137 nowrap valign=bottom style='width:103.1pt;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.5pt'>
-					<p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
-	  text-align:right;line-height:normal'>
-						<b>
-							<span style='font-family:"Arial",sans-serif'>TOTAL</span>
-						</b>
-					</p>
-				</td>
-				<td width=138 nowrap valign=bottom style='width:103.5pt;padding:0in 5.4pt 0in 5.4pt;
-	  height:16.5pt'>
-					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-	  normal'>
-						<span id="total_price" style='font-family:"Arial",sans-serif;color:black'>{Total Price}
-						</span>
-					</p>
-				</td>
-			</tr>
-		</table>
-
-		<p class=MsoNormal style='margin-right:837.75pt'>
-			<span style='font-size:10.0pt;
-	line-height:107%;font-family:"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
-		<p class=MsoNormal>
-			<span style='font-size:10.0pt;line-height:107%;font-family:
-	"Arial",sans-serif'>&nbsp;</span>
-		</p>
-
+<body>
+	<div class="logo-div">
+		<img src="data:image/png;base64,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">
 	</div>
-
+	<div class="order-details-hdr">ORDER DETAILS</div>
+	<table class="customer-details-table">
+		<tr class="customer-details-table-tr">
+			<td class="customer-details-table-td-hdr">Customer:</td>
+			<td id="customer" class="customer-details-table-td-cnt">Elnar Sharifli</td>
+		</tr>
+		<tr class="customer-details-table-tr">
+			<td class="customer-details-table-td-hdr">Address:</td>
+			<td id="customer_address" class="customer-details-table-td-cnt">2439 Chicoutimi Dr NW, Calgary, AB T2L 0W2, Canada</td>
+		</tr>
+		<tr class="customer-details-table-tr">
+			<td class="customer-details-table-td-hdr">Phone Number:</td>
+			<td id="customer_phone" class="customer-details-table-td-cnt">4033977020</td>
+		</tr>
+	</table>
+	<div id="order-details-append"></div>
 </body>
-
 <footer id="footer" style="font-size: 10px; position: fixed; bottom: 0; left: 0;">
 	<ul layout="row" style="list-style-type: none; display: -webkit-inline-box; margin: 0; padding-left: 5px;">
-		<li style="list-style-type: none;">*Liquor is sold by: </li>
 		<li id="store_name" style="list-style-type: none;"></li>
 		<li id="store_address" style="list-style-type: none;"></li>
 		<li id="store_phone" style="list-style-type: none;"></li>
@@ -774,4 +204,5 @@
 		<li style="list-style-type: none;" id="licence-id"></li>
 	</ul>
 </footer>
+
 </html>

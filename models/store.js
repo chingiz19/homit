@@ -42,7 +42,7 @@ pub.getStoreInfo = async function (storeId) {
 
     var data = { "store.id": storeId };
     var storeInfo = await db.runQuery(sqlQuery, data);
-    return storeInfo;
+    return storeInfo[0];
 }
 
 /**

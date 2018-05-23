@@ -40,15 +40,15 @@
                             <button id="item-remove-button" class="item-btn remove-btn" ng-click="removeFromCart(product)">
                                 <ng-md-icon icon="clear"></ng-md-icon>
                             </button>
-                            <img class="item-img" ng-src="{{ product.image }}">
+                            <span class="product-quantity">{{ product.quantity }}</span>
+                            <img class="item-img" ng-src='{{ product.image }}'>
                         </div>
-                        <div class="box-center item-right-div">
-                            <ul>
-                                <li>{{ product.brand }} {{ product.name }}</li>
-                                <li>{{ product.volume }}</li>
-                                <li>{{ product.quantity + " x" + product.packaging }}</li>
-                                <li>{{ "C$" + product.price }}</li>
-                            </ul>
+                        <div class="item-right-div">
+                            <div class="produc-name">{{ product.brand }} {{ product.name }} 
+                                <span ng-if="product.packaging > 1">({{product.packaging }} x {{ product.volume }})</span>
+                                <span ng-if="product.packaging <= 1">({{ product.volume }})</span>
+                            </div>
+                            <div class="cart-prd-price" style="text-align: center;">C${{ product.price }}</div>
                         </div>
                     </div>
                 </div>

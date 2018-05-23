@@ -2,15 +2,16 @@
  * @copyright Homit 2018
  */
 
-const nodemailer = require('nodemailer');
-const fs = require('fs');
-const cheerio = require('cheerio')
 var pdf = require('html-pdf');
 var pub = {};
 var priceObject = {};
 var products = {};
 var path = require("path");
 var ejs = require("ejs");
+const nodemailer = require('nodemailer');
+const fs = require('fs');
+const cheerio = require('cheerio')
+const MESSAGE_IF_STORE_NA = "Sorry but address is not available, contact us for more details";
 
 /* Create reusable transporter object for orders */
 let orderTransporter = nodemailer.createTransport({
@@ -78,14 +79,8 @@ var sendEmailViaNoReply = function (mailOptions) {
     });
 }
 
-
-/** 
-* Orders modifed by CSR
-* @action is used to differentiate between 'cancel' order, 'refund' and 'modified' order
-*/
 pub.sendOrderSlip = function (orderInfo) {
-    orders = orderInfo.orders;
-    priceObject = getTotalPriceForProducts(orders);
+    priceObject = getTotalPriceForProducts(orderInfo.orders);
     var html = getEmailHtml(orderInfo.customer);
 
     prepareOrderSlip(orderInfo, function (pdfFileFath) {
@@ -106,94 +101,15 @@ pub.sendOrderSlip = function (orderInfo) {
     });
 };
 
-pub.sendModifiedOrderSlip = function (orderInfo, action) {
-    products = orderInfo.customer.order.products;
-    priceObject = getTotalPriceForProducts(products);
-
-    if (action == "cancel") {
-        var html = getCancelledOrderEmailHtml(orderInfo);
-        prepareOrderSlip(orderInfo, function (pdfFileFath) {
-            var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
-            let mailOptions = {
-                from: fromValue,
-                to: orderInfo.customer.email,
-                subject: orderInfo.customer.first_name + '\'s order',
-                html: html,
-            };
-            sendEmailViaOrders(mailOptions);
-        });
-    } else if (action == "modified") {
-        var html = getModifiedOrderEmailHtml(orderInfo);
-        prepareOrderSlip(orderInfo, function (pdfFileFath) {
-            var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
-            let mailOptions = {
-                from: fromValue,
-                to: orderInfo.customer.email,
-                subject: orderInfo.customer.first_name + '\'s order',
-                html: html,
-                attachments: [
-                    {
-                        filename: 'Delivery Slip.pdf',
-                        path: pdfFileFath
-                    },
-                ]
-            };
-            sendEmailViaOrders(mailOptions);
-        });
-    } else if (action == "refund") {
-        var html = getRefundedOrderEmailHtml(orderInfo);
-        prepareOrderSlip(orderInfo, function (pdfFileFath) {
-            var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
-            let mailOptions = {
-                from: fromValue,
-                to: orderInfo.customer.email,
-                subject: orderInfo.customer.first_name + '\'s order',
-                html: html,
-                attachments: [
-                    {
-                        filename: 'Delivery Slip.pdf',
-                        path: pdfFileFath
-                    },
-                ]
-            };
-            sendEmailViaOrders(mailOptions);
-        });
-    }
-};
-
 
 /* Prepare mail options and send notification email to customer, respectively */
-pub.sendRefundEmail = function (orderInfo) {
-    var html = getRefundedOrderEmailHtml(orderInfo);
+pub.sendStoreAssignedEmail = function (orderInfo) {                                            //change this
+    var html = getStoreAssingdedEmailHtml(orderInfo);
     var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
     let mailOptions = {
         from: fromValue,
-        to: orderInfo.customer.email,
-        subject: orderInfo.customer.first_name + '\'s order',
-        html: html,
-    };
-    sendEmailViaOrders(mailOptions);
-};
-
-pub.sendPartialRefundEmail = function (orderInfo) {
-    var html = getPartialRefundedOrderEmailHtml(orderInfo);
-    var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
-    let mailOptions = {
-        from: fromValue,
-        to: orderInfo.customer.email,
-        subject: orderInfo.customer.first_name + '\'s order',
-        html: html,
-    };
-    sendEmailViaOrders(mailOptions);
-};
-
-pub.sendCancelEmail = function (orderInfo) {
-    var html = getCancelledOrderEmailHtml(orderInfo);
-    var fromValue = "Homit Orders <" + process.env.ORDER_EMAIL_USER + ">";
-    let mailOptions = {
-        from: fromValue,
-        to: orderInfo.customer.email,
-        subject: orderInfo.customer.first_name + '\'s order',
+        to: orderInfo.user_email,
+        subject: orderInfo.user_name + '\'s order',
         html: html,
     };
     sendEmailViaOrders(mailOptions);
@@ -218,72 +134,36 @@ pub.sendResetPasswordEmail = async function (orderInfo) {
 
 /* Retrieving <html> to further edit */
 var getEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/order.html", "utf8");
+    let htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/order.html", "utf8");
     const $ = cheerio.load(htmlSource);
 
-    if (orderInfo.card_digits) {
-        $('#credit_card').text("**** **** **** " + orderInfo.card_digits);
-    }
-    $('#user_greeting').text("Hello, " + orderInfo.first_name);
-    $('#total_amount').text(priceObject.totalAmount);
-    $('#gst').text(priceObject.totalTax);
-    $('#total_price').text(priceObject.totalPrice);
-    $('#delivery_fee').text(priceObject.deliveryFee);
+
+    $('#credit_card').text("**** **** **** " + filterInputField(orderInfo.card_digit, "****"));
+    $('#user_greeting').text("Hello, " + filterInputField(orderInfo.first_name, "Dear Customer"));
+    $('#total_amount').text(filterInputField(priceObject.totalAmount));
+    $('#gst').text(filterInputField(priceObject.totalTax));
+    $('#total_price').text(filterInputField(priceObject.totalPrice));
+    $('#delivery_fee').text(filterInputField(priceObject.deliveryFee));
 
     return $.html();
 };
 
 /* Retrieving <html> and loading it to variable for further edit */
-var getModifiedOrderEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/modifiedOrder.html", "utf8");
-    var orderNumber = orderInfo.customer.order.id.split('_')[1];
+var getStoreAssingdedEmailHtml = function (orderInfo) {
+    let htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/storeNotification.html", "utf8");
+    let orderNumber = orderInfo.order_id.split("_")[1];
     const $ = cheerio.load(htmlSource);
 
-    $('#customer').text(orderInfo.customer.first_name);
-    $('#order_id').text("#" + orderNumber);
-
-    return $.html();
-};
-
-var getCancelledOrderEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/cancelledOrder.html", "utf8");
-    var orderNumber = orderInfo.order_id;
-    const $ = cheerio.load(htmlSource);
-
-    $('#customer').text(orderInfo.first_name);
-    $('#order_id').text("#" + orderNumber);
-    $('#refund_amount').text(orderInfo.refund_amount);
-
-    return $.html();
-};
-
-var getRefundedOrderEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/refundOrder.html", "utf8");
-    var orderNumber = orderInfo.order_id;
-    const $ = cheerio.load(htmlSource);
-
-    $('#customer').text(orderInfo.customer_name);
-    $('#order_id').text("#" + orderNumber);
-    $('#refund_amount').text(orderInfo.refund_amount);
-
-    return $.html();
-};
-
-var getPartialRefundedOrderEmailHtml = function (orderInfo) {
-    var htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/refundOrder.html", "utf8");
-    var orderNumber = orderInfo.order_id;
-    const $ = cheerio.load(htmlSource);
-
-    $('#customer').text(orderInfo.customer_name);
-    $('#order_id').text("#" + orderNumber);
-    $('#refund_amount').text(orderInfo.refund_amount);
-    $('#action').text("partially");
+    $('#user_name').text(filterInputField(orderInfo.user_name, "Dear Customer"));
+    $('#order_id').text(filterInputField("(#" + orderNumber + ")", "Order with liquor"));
+    $('#store_name').text(filterInputField(orderInfo.store_name, "Solo Liquor"));
+    $('#store_address').text(filterInputField(orderInfo.store_address, MESSAGE_IF_STORE_NA));
 
     return $.html();
 };
 
 var getResetPasswordHTML = function (link) {
-    var file = fs.readFileSync(path.join(process.cwd(), "/project_setup/resources/email_htmls/resetpassword.ejs"), "utf8");
+    let file = fs.readFileSync(path.join(process.cwd(), "/project_setup/resources/email_htmls/resetpassword.ejs"), "utf8");
     return ejs.render(file, {
         resetLink: link
     });
@@ -294,85 +174,81 @@ var getOrderSlipHtml = function (htmlSource, OI) {
     const $ = cheerio.load(htmlSource);
     const now = new Date();
     const dateArray = now.toString().split(" ");
-    var timeStamp = dateArray[0] + " " + dateArray[1] + " " + dateArray[2] + " " + dateArray[3] + " at " + dateArray[4];
-    var CustomerName = OI.customer.first_name + " " + OI.customer.last_name
+    var CustomerName = filterInputField(OI.customer.first_name, "Dear,") + " " + filterInputField(OI.customer.last_name);
+    let orders = OI.orders;
 
-    $('#order_details').text("ORDER DETAILS");
+    var html_email = "";
+
+    $('#customer').text(CustomerName);
+    $('#customer_address').text(filterInputField(OI.customer.address, "Customer address"));
+    $('#customer_phone').text(formatPhoneNumber(OI.customer.phone, "Customer phone number"));
+
 
     for (sub_order in orders) {
-        $('#table').append(
-            "<tr style='width: 100vw;'><table>" +
-            "<tr style='text-align: left;'><td style='width: 100%; font-size: 11px;'>" + OI.orders[sub_order].store_type_display_name + "</td></tr>" +
-            "<tr style='text-align: left;'><td style='width: 100%; font-size: 11px; padding-bottom: 4pt; border-bottom: 1px solid black;'>" + "Order ID: " + OI.orders[sub_order].id.split('_')[1] + "</td></tr>" +
-            "<tr style='height:8pt'></tr>" +
-            "</table></tr>" +
-            "<tr style='height:13.85pt'>" +
-            "<td width=407 valign=top style='width:305.6pt;padding:0in 5.4pt 0in 5.4pt;" +
-            "height:13.85pt'>" +
-            "<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:" +
-            "normal'>" +
-            "<b>" +
-            "<span style='font-size:10.0pt;font-family:'Arial',sans-serif'>DESCRIPTION</span>" +
-            "</b>" +
-            "</p>" +
-            "</td>" +
-            "<td width=150 valign=top style='width:112.5pt;padding:0in 5.4pt 0in 5.4pt;" +
-            "height:13.85pt'>" +
-            "<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;" +
-            "text-align:center;line-height:normal'>" +
-            "<b>" +
-            "<span style='font-size:10.0pt;" +
-            "font-family:'Arial',sans-serif'>QUANTITY</span>" +
-            "</b>" +
-            "</p>" +
-            "</td>" +
-            "<td width=159 valign=top style='width:119.15pt;padding:0in 5.4pt 0in 5.4pt;" +
-            "height:13.85pt'>" +
-            "<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;" +
-            "text-align:center;line-height:normal'>" +
-            "<b>" +
-            "<span style='font-size:10.0pt;" +
-            "font-family:'Arial',sans-serif'>PRICE</span>" +
-            "</b>" +
-            "</p>" +
-            "</td>" +
-            "</tr>"
-        );
-        if (OI.orders[sub_order].store.name.toLowerCase().includes("liquor")) {
-            $('#store_name').text(OI.orders[sub_order].store.name + ", ");
-            $('#store_address').text(" Ad: " + OI.orders[sub_order].store.address + ", ");
-            $('#store_phone').text(" Ph: " + OI.orders[sub_order].store.phone_number + ".");
-            $('#licence-id').text("*Liquor delivered in accordance with AGLC policies under Class D License No. 777481-1");
-        }
-        $('#customer').text(CustomerName);
-        $('#customer_address').text(OI.customer.address);
-        $('#customer_phone').text(OI.customer.phone);
-        $('#date_stamp').text("Your order placed: " + timeStamp);
-        $('#total_amount').text(priceObject.totalAmount);
-        $('#gst').text(priceObject.totalTax);
-        $('#total_price').text(priceObject.totalPrice);
-        $('#delivery_fee').text(priceObject.deliveryFee);
-        for (var k = 0; k < orders[sub_order].products.length; k++) {
-            var product = orders[sub_order].products[k];
-            var Description = product.brand + " " + product.name + " " + product.volume + " " + " x" + product.packaging;
-            var Quantity = product.quantity;
-            var Price = product.price_sold;
-            $('#table').append(
-                "<tr style='height:13.85pt'>" +
-                "<td width=407 valign=top style='width:305.6pt;padding:0in 5.4pt 0in 5.4pt;height:13.85pt'>" +
-                "<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>" +
-                "<span style='font-size:10.0pt;font-family:'Arial',sans-serif'>" + Description + "</span></p></td>" +
-                "<td width=150 valign=top style='width:112.5pt;padding:0in 5.4pt 0in 5.4pt;height:13.85pt'>" +
-                "<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;text-align:center;line-height:normal'>" +
-                "<span style='font-size:10.0pt;font-family:'Arial',sans-serif'>" + Quantity + "</span></p></td>" +
-                "<td width=159 valign=top style='width:119.15pt;padding:0in 5.4pt 0in 5.4pt;height:13.85pt'>" +
-                "<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;text-align:center;line-height:normal'>" +
-                "<span style='font-size:10.0pt;font-family:'Arial',sans-serif'>" + Price + "</span></p></td></tr>");
-        }
-        $('#table').append(
-            "<tr style='height:10pt'></tr>"
-        );
+        html_email +=
+            "<div class='order-id'>Order ID:" + filterInputField(OI.orders[sub_order].id.split('_')[1]) + "</div>" +
+            "<table class='orders-details-table'>" +
+            "<tr class='orders-details-table-tr'>" +
+            "<td class='orders-details-table-td-hdr'>Store:</td>" +
+            "<td class='orders-details-table-td-input'>" + filterInputField(OI.orders[sub_order].store_type_display_name) + "</td>" +
+            "</tr>" +
+            "<tr class='orders-details-table-tr'>" +
+            "<td class='orders-details-table-td-hdr'>Delivery Option:</td>" +
+            "<td class='orders-details-table-td-input'>" + filterInputField(createDeliveryOptionsText(OI.orders[sub_order].scheduledTime)) + "</td>" +
+            "</tr>" +
+            "</table>"
+            ;
     }
+
+    html_email += "<div class='order-content-sep'>ORDER CONTENT</div>";
+
+    for (sub_order in orders) {
+        html_email +=
+            "<div class='order-id'>Order ID:" + filterInputField(OI.orders[sub_order].id.split('_')[1]) + "</div>" +
+            "<table class='order-content-table'>" +
+            "<tr class='order-content-table-tr'>" +
+            "<td class='order-content-table-hdr-tr-1'>Description</td>" +
+            "<td class='order-content-table-hdr-tr-2-3'>Quantity</td>" +
+            "<td class='order-content-table-hdr-tr-2-3'>Price</td>" +
+            "</tr>"
+            ;
+        for (var k = 0; k < orders[sub_order].products.length; k++) {
+            let product = orders[sub_order].products[k];
+            let Description = filterInputField(product.brand) + " " + filterInputField(product.name) + " " + filterInputField(product.volume) + " " + " x" + filterInputField(product.packaging);
+            let Quantity = product.quantity;
+            let Price = product.price_sold;
+            html_email +=
+                "<tr>" +
+                "<td class='order-cnt-table-cnt-tr-1'>" + filterInputField(Description) + "</td>" +
+                "<td class='order-cnt-table-cnt-tr-2-3'>" + filterInputField(Quantity) + "</td>" +
+                "<td class='order-cnt-table-cnt-tr-2-3'>C$" + filterInputField(Price) + "</td>" +
+                "</tr>"
+                ;
+        }
+        html_email += "</table>";
+    }
+
+    html_email += "<table class='order-totals-rable'>" +
+        "<tr class='order-totals-rable-tr'>" +
+        "<td class='order-totals-rable-tr-hdr'>Cart Total</td>" +
+        "<td class='order-totals-rable-tr-num'>" + filterInputField(priceObject.totalAmount) + "</td>" +
+        "</tr>" +
+        "<tr class='order-totals-rable-tr'>" +
+        "<td class='order-totals-rable-tr-hdr'>Delivery Charge</td>" +
+        "<td class='order-totals-rable-tr-num'>" + filterInputField(priceObject.deliveryFee) + "</td>" +
+        "</tr>" +
+        "<tr class='order-totals-rable-tr'>" +
+        "<td class='order-totals-rable-tr-hdr'>GST</td>" +
+        "<td class='order-totals-rable-tr-num'>" + filterInputField(priceObject.totalTax) + "</td>" +
+        "</tr>" +
+        "<tr class='order-totals-rable-tr'>" +
+        "<td class='order-totals-rable-tr-hdr'>TOTAL</td>" +
+        "<td class='order-totals-rable-tr-num'>" + filterInputField(priceObject.totalPrice) + "</td>" +
+        "</tr>" +
+        "</table>";
+
+    $('#order-details-append').append(html_email);
+
     return $.html();
 };
 
@@ -473,6 +349,65 @@ pub.deleteTransactionEmail = async function (transactionId) {
         transaction_id: transactionId
     };
     await db.deleteQuery(db.tables.orders_emails, data);
+}
+
+/* Helpers functions for time formatting */
+function createDeliveryOptionsText(time) {
+    let ASAP_WORDING = "ASAP, Placed: ";
+    let SCHEDULED_WORDING = "Scheduled: ";
+
+    if (time == 0) {
+        return ASAP_WORDING + createTimeText(new Date());
+    } else {
+        return SCHEDULED_WORDING + createTimeText(new Date(time), new Date(time + 15 * 60 * 1000)); //show 15 minute range for scheduled
+    }
+}
+
+function createTimeText(date, range) {
+    var array = date.toString().split(" ");
+    var text = array[0] + " " + array[1] + " " + array[2] + "," + array[3] + " @ " + formatTime(array[4]);
+
+    if (range) {
+        text += " - " + formatTime(range.toString().split(" ")[4]);
+    }
+    return text;
+}
+
+function formatTime(time) {
+    let splitArray = time.split(":");
+    let hours = parseInt(splitArray[0]);
+    let hourTag = "pm";
+    if (hours < 12) {
+        hourTag = "am";
+    }
+    hours = hours % 12;
+    return ((hours == 0) ? 12 : hours) + ":" + splitArray[1] + hourTag;
+}
+
+function filterInputField(data, substitute) {
+    if (data) {
+        return data;
+    } else {
+        if (substitute) {
+            return substitute;
+        } else {
+            return "";
+        }
+    }
+}
+
+function formatPhoneNumber(number, substitute) {
+    if (number) {
+        let array = number.toString().split("");
+        if (array.length == 10) {
+            return "(" + array[0] + array[1] + array[2] + ") " + array[3] + array[4] + array[5] +
+                "-" + array[6] + array[7] + array[8] + array[9];
+        } else {
+            return number;
+        }
+    } else {
+        return substitute;
+    }
 }
 
 module.exports = pub;

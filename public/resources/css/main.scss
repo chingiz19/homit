@@ -834,6 +834,12 @@ body {
 
 }
 
+@media screen and (max-device-width: 479px){
+    .log-in-icon{
+        fill: rgb(42, 81, 145);
+    }
+}
+
 @media screen and (max-device-width: 359px) {
     .store-div-main {
         width: 100vw;

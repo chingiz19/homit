@@ -33,7 +33,6 @@
 
 h1 {
     font-size: 40px;
-    text-align: right;
     padding: 0;
     margin: 0;
 }
@@ -60,19 +59,61 @@ label{
     }
 }
 
-.divider {
-    width: calc(100% - 20px);
-    margin: 10px;
+.edit-icon{
+    padding: 0 10px 0 10px;
+    cursor: pointer;
+}
+
+.clear-icon{
+    color: #DD431F;
+    cursor: pointer;
+
+    &:hover{
+        color: #912C14;
+    }
+}
+
+.plus-icon{
+    color: #18910A;
+    cursor: pointer;
+
+    &:hover{
+        color: #0F5E07;
+    }
+}
+
+.card-type{
     border: 1px solid black;
+    border-radius: 5px;
+    font-size: 2em;
+    padding: 5px 10px 5px 10px;
+}
+
+.card-numbers{
+    font-size: 2em;
+    padding: 8px;
+}
+
+.card-exp{
+    font-size: 2em;
+    padding: 8px;
+}
+
+.divider {
+    width: calc(100% - 6px);
+    margin: 10 3 10 3;
+    border: 1px solid white;
 }
 
 .section-header{
     align-items: flex-end;
     justify-content: flex-end;
     flex: 1 1;
+    display: none;
 
     @media only screen and (max-width: 1000px){
         justify-content: space-between;
+        display: block;
     }
 
     span{
@@ -80,53 +121,99 @@ label{
     }
 }
 
-.sidebar-default{
+.hide-mobile{
+    @media only screen and (max-width: 1000px){
+        display: none !important;
+    }
+}
+
+.icon{
+    font-size: 40px;
+    user-select: none;
+}
+
+.sidebar-div{
+    position: fixed;
+    left: 0;
+    top: 50px;
+    color: white;
+    z-index: 10;
+
     @media only screen and (min-width: 1000px){
-        display: flex;    
+        display: block;    
         align-content: center;            
-        flex: 1 1 30%;
+        width: auto;
+        background-color: #5689DD;
+        height: calc(100vh - 50px);
     }
 
     @media only screen and (max-width: 1000px){
-        position: fixed;
-        left:0;
-        top: 50px;
         display: block;
-        width: 80%;
+        width: 80%;        
         background-color: white;
-        -webkit-transition: all 2s ease;
+        transition: all 2s ease;
         z-index: 3;
     }
+}
 
-    .close-button{
-        display: none;    
+.sidebar-default{
+    display: flex;    
+    flex-direction: column;
+
+    @media only screen and (max-width: 1000px){
+        position: fixed;
+        display: block;
+        height: 100vh;
+        width: 290px;
+        background-color: #5689DD;
+        z-index: 100;
+    }
+
+    .sidebar-button{
+        align-self: flex-end;
+        margin: 10px;
+        text-align: end;
+        outline: none;
+
+        @media only screen and (min-width: 1000px) {
+            width: 100%;
+        }
     }
 
     .vertical-lists{
         display: flex;
         flex: 1 auto;
         flex-direction: column;
-        text-align: center;
-        list-style: none;
         justify-content: center;
 
-        li{
+        .li{
             font-size: 20px;
             padding: 10px;
             margin: 0 0 5px 0;
             outline: none;
-            border-radius: 10px;
+            display: flex;
+            align-items: center;
+
+            .label{
+                color: white;
+                font-size: 20px;
+                font-weight: 400;
+            }
+
+            &.selected .label{
+                color: $brand_color;
+            }
             
 
             &.selected, &:hover.selected {
-                background-color: $purple;
-                color: white;                   
+                background-color: white;
+                color: $brand_color;                   
             }
 
             &:hover{
                 font-size: 20px;
                 padding: 10px;
-                background-color: rgba($purple, 0.5);
+                background-color: rgba($brand_color, 0.5);
                 // color: white;                       
             }
         }
@@ -137,7 +224,7 @@ label{
 main {
     display: flex;
     flex-direction: column;
-    flex: 1 1 70%;
+    flex: 1 1 100%;
     margin: 50px 0 0 0;
     justify-content: flex-start;
 
@@ -195,9 +282,9 @@ main {
 
     .updateButton{
         align-self: flex-start;
-        height: 30px;
-        width: 70px;
-        background-color: rgba(0, 189, 149, 1);
+        height: 40px;
+        width: 100%;
+        background-color: #5689DD;
     }
 
     .edtitButton:hover, .cancelButton:hover{
@@ -299,6 +386,9 @@ main {
     flex: 1 1 100%;
     flex-direction: column;
 
+    outline: none;
+    user-select: none;
+
 
     .header{
         display: flex;
@@ -380,16 +470,7 @@ main {
         width: 100vw; height: 100vh;
         background-color: rgba(33,33,33,1.0);
         opacity: 0.48;
-        z-index: 90;
-    }
-
-    .sidebar-default{
-        position: fixed;
-        top: 0;
-        height: 100vh;
-        width: 290px;
-        background-color: rgba(250,250,250,1);
-        z-index: 100;
+        z-index: 1;
     }
 
     .section-header span{

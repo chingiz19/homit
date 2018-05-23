@@ -204,7 +204,7 @@ INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1166, "Old Milw
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1167, "Pabst Blue Ribbon", "American Lager", 803);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1168, "Peroni", "Nastro Azzurro", 813);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1169, "Phillips", "Blue Buck", 20);
-INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1170, "Rainer", "Beer", 815);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1170, "Rainier", "Beer", 815);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1171, "Rickard's Red", "Beer", 816);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1172, "Rolling Rock", "Extra Pale", 803);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1173, "Shock Top", "Belgian White", 817);

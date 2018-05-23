@@ -49,9 +49,9 @@ pub.tables = {
  * Redis Database tables
  */
 pub.redisTable = {
-  io_drivers: 1,
-  io_drivers: 3,
-  io_cm: 5,
+  io_external: 1,
+  io_internal: 2,
+  scheduler: 5,
   sessions: 10
 }
 

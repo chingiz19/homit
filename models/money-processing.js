@@ -55,6 +55,19 @@ pub.updateCustomerPaymentMethod = async function(custId, token){
     });
 }
 
+pub.removeCustomerPaymentMethod = async function(custId, token){
+    return await new Promise(function (resolve, reject) {
+        stripe.customers.deleteCard(custId, token, 
+            function (err, source) {
+            if (err) {
+                return reject(false);
+            } else {
+                return resolve(source.deleted);
+            }
+        });
+    });
+}
+
 pub.getCustomerPaymentMethod = async function(custId){
     return await new Promise(function (resolve, reject) {
         stripe.customers.retrieve(custId, function (err, customer) {
@@ -70,6 +83,22 @@ pub.getCustomerPaymentMethod = async function(custId){
                     card = false;
                 }
                 return resolve(card);
+            }
+        });
+    });
+}
+
+pub.getCustomerPaymentMethodAsToken = async function(custId){
+    return await new Promise(function (resolve, reject) {
+        stripe.customers.retrieve(custId, function (err, customer) {
+            if (err) {
+                return reject(false);
+            } else {
+                try{
+                    return resolve(customer.sources.data[0].id);
+                } catch(e){
+                    return resolve(false);
+                }
             }
         });
     });

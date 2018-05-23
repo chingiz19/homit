@@ -474,7 +474,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     /* CM dahsboard functions start here */
 
     function initiateSocket() {
-        let socket = io.connect("/csr");
+        let socket = io.connect("http://localhost:3000/csr");
         var received_data;
 
         socket.on('cm_report', function (data) {
@@ -485,7 +485,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             }
 
             if (received_data.uptime=="") {
-                received_data.uptime="less than a minute"
+                received_data.uptime="less than a minute";
             }
 
             $("#uptime").text(received_data.uptime);

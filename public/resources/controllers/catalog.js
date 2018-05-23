@@ -1,24 +1,31 @@
-app.controller("catalogController", function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, notification, googleAnalytics) {
+app.controller("catalogController", function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, notification, googleAnalytics, localStorage) {
     var catalogCtrl = this;
 
+    $scope.scroll_prev = 0;
+    $scope.scroll_current = 0;
     $scope.selection = $location.path();
     $scope.showCategories = false;
-    $scope.isBeers = false;
-    $scope.isWines = false;
-    $scope.isSpirits = false;
-    $scope.isOthers = false;
-
+    $scope.deliveryTime = "";
     $scope.selectedCategory = undefined;
+    $scope.header_aisle_wc = "hdr-hilight-cs";
+    $scope.header_cat_wc ="";
+    $scope.aisle_line_wc = "header-line-grow";
+    $scope.cat_line_wc = "";
+    $scope.showMobHub = false;
+    $scope.mob_hub_icon_c = "";
+    $scope.mob_hub_grow_c = "";
+    $scope.cat_content_mob_c = "";
 
     $scope.productUrl = '/api' + $scope.selection;
-    $scope.searchedBrand = "";
+    try{
+        $scope.storeType = $scope.selection.split("/")[2];
+    } catch (e){
+        // oops
+    }
 
     // Get initial list of products
     $scope.products = undefined;
     $scope.subcategories = [];
-    $scope.availableTypes = [];
-    $scope.availableBrands = [];
-    $scope.allBrands = [];
     $scope.storeinfo = {};
     $http({
         method: 'GET',
@@ -26,56 +33,20 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     }).then(function successCallback(response) {
         if (response.data.success) {
             $scope.products = response.data.products;
-            $scope.products.forEach(function (product) {
-                product.selectedVolume = product.product_variants.all_volumes[0];
-                product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
-                product.volumeI = 0;
-                product.packJ = 0;
-            });
             $scope.subcategories = response.data.subcategories;
             $scope.userSelectedSubcategories = $scope.subcategories[0].subcategory_name;
-            $scope.storeInfo = response.data.store_info;
-            if($scope.storeInfo.display_name == "Lina's Italian Market"){
-                $scope.storeInfo.open_time = "08:00am";
-                $scope.storeInfo.close_time = "until: 6:30pm";
-            } else if($scope.storeInfo.display_name == "Liquor Station"){
-                $scope.storeInfo.open_time = "10:00am";
-                $scope.storeInfo.close_time = "until: 01:30am";
-            } else if($scope.storeInfo.display_name == "Snack Vendor"){
-                $scope.storeInfo.close_time = "24/7";
-            } else if($scope.storeInfo.display_name == "Dwarf Stars"){
-                $scope.storeInfo.open_time = "07:00am";
-                $scope.storeInfo.close_time = "until: 6:30pm";
-            }
-            $(".catalog-store-cover").css("background-image", "url('/resources/images/non-catalog-image/cover-image/" + $scope.storeInfo.image.split(".")[0] + ".jpeg");
+            $scope.display_storeInfo = response.data.store_info;
+            $(".catalog-store-cover").css("background-image", "url('/resources/images/non-catalog-image/cover-image/" + $scope.display_storeInfo.image.split(".")[0] + ".jpeg");
         }
     }, function errorCallback(response) {
 
     });
-
-    function getElementIdByName(subcategory) {
-        var result = -1;
-        for (i = 0; i < $scope.subcategories.length; i++) {
-            if ($scope.subcategories[i].subcategory_name == subcategory) {
-                result = i;
-                break;
-            }
-        }
-        return result;
-    }
 
     $scope.checkSubcategories = function (subcategory) {
         if (subcategory == $scope.userSelectedSubcategories) {
             return;
         }
         $scope.userSelectedSubcategories = subcategory;
-        var i = getElementIdByName(subcategory);
-        if (i < 0) {
-            $scope.availableBrands = $scope.subcategories[0].brands;
-        } else {
-            $scope.availableBrands = $scope.subcategories[i].brands;
-        }
-        $scope.userSelectedBrands = [];
 
         googleAnalytics.addEvent('subcategory_selected', {
             "event_label": subcategory,
@@ -94,13 +65,13 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     };
 
     $scope.addToCart = function (product) {
-        if (product.store_open) {
+        if (product.store_open || $scope.deliveryOption == "Scheduled Delivery") {
             var p = jQuery.extend(true, {}, product);
 
-            p.volume = p.selectedVolume;
-            p.packaging = p.selectedPack;
-            p.price = p.product_variants[p.volume][p.packaging].price;
-            p.depot_id = p.product_variants[p.volume][p.packaging].depot_id;
+            p.volume = p.product_variants.all_volumes[0];
+            p.packaging = p.product_variants[p.product_variants.all_volumes[0]].all_packagings[0];
+            p.price = p.product_variants[p.product_variants.all_volumes[0]][p.product_variants[p.product_variants.all_volumes[0]].all_packagings[0]].price;
+            p.depot_id = p.product_variants[p.product_variants.all_volumes[0]][p.product_variants[p.product_variants.all_volumes[0]].all_packagings[0]].depot_id;
 
             //TODO: reverse implementation: assign what is required
             delete p.description;
@@ -115,7 +86,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             delete p.container;
 
             $rootScope.$broadcast("addToCart", p);
-        } else{
+        } else {
             notification.addImportantMessage("Store closed at the moment.");
         }
     };
@@ -131,7 +102,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
     $scope.hrefPrdPage = function (product) {
         var path;
         path = "/catalog/product/" + product.store_type_api_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
-        
+
         googleAnalytics.addEvent('product_clicked', {
             "event_label": product.brand + " " + product.name,
             "event_category": googleAnalytics.eventCategories.catalog_actions
@@ -140,110 +111,22 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         $window.location.href = $window.location.origin + path;
     };
 
-    $scope.nextVolume = function (product) {
-        $scope.numberOfVolumes = product.product_variants.all_volumes.length;
-        $scope.volumeI = product.volumeI;
-        if (product.volumeI < $scope.numberOfVolumes - 1) {
-            $scope.volumeI = $scope.volumeI + 1;
-        }
-        product.volumeI = $scope.volumeI;
-        product.selectedVolume = product.product_variants.all_volumes[product.volumeI];
-        product.packJ = 0;
-        product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
-
-        googleAnalytics.addEvent('next_volume', {
-            "event_label": product.brand + " " + product.name,
-            "event_category": googleAnalytics.eventCategories.catalog_actions
-        });
-    };
-
-    $scope.previousVolume = function (product) {
-        $scope.volumeI = product.volumeI;
-        if ($scope.volumeI > 0) {
-            $scope.volumeI = $scope.volumeI - 1;
-        }
-        product.volumeI = $scope.volumeI;
-        product.selectedVolume = product.product_variants.all_volumes[product.volumeI];
-        product.packJ = 0;
-        product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[0];
-
-        googleAnalytics.addEvent('prev_volume', {
-            "event_label": product.brand + " " + product.name,
-            "event_category": googleAnalytics.eventCategories.catalog_actions
-        });
-    };
-
-    $scope.nextPack = function (product) {
-        $scope.numberOfPacks = product.product_variants[product.product_variants.all_volumes[product.volumeI]].all_packagings.length;
-        $scope.packJ = product.packJ;
-        if (product.packJ < $scope.numberOfPacks - 1) {
-            $scope.packJ = $scope.packJ + 1;
-        }
-        product.packJ = $scope.packJ;
-        product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[product.packJ];
-    };
-
-    $scope.previousPack = function (product) {
-        $scope.packJ = product.packJ;
-        if ($scope.packJ > 0) {
-            $scope.packJ = $scope.packJ - 1;
-        }
-        product.packJ = $scope.packJ;
-        product.selectedPack = product.product_variants[product.selectedVolume].all_packagings[product.packJ];
-    };
-
     catalogCtrl.scope = $scope;
 
-
-    $scope.filterCategories = function () {
+    $scope.showHideCategory = function () {
         $('#category_box').animate({ width: 'toggle' });
-        if ($scope.showCategories) {
-            $scope.showCategories = false;
-            document.getElementById("show_cat_icon").classList.add('rot-cat-btn_2');
-            var el = document.getElementById("show_cat_icon").classList;
-            setTimeout(function () {
-                el.remove('rot-cat-btn_1', 'rot-cat-btn_2');
-            }, 500);
-        } else {
-            $scope.showCategories = true;
-            document.getElementById("show_cat_icon").classList.add('rot-cat-btn_1');
+        if($scope.header_aisle_wc){
+            $scope.header_aisle_wc = "";
+            $scope.header_cat_wc = "hdr-hilight-cs";
+            $scope.aisle_line_wc = "";
+            $scope.cat_line_wc = "header-line-grow";
+        } else{
+            $scope.header_aisle_wc = "hdr-hilight-cs";
+            $scope.header_cat_wc = "";
+            $scope.aisle_line_wc = "header-line-grow";
+            $scope.cat_line_wc = "";
         }
     };
-
-    // USer Cart right-SideNav functionality
-    // Start
-    $scope.toggleNavLeft = buildToggler('nav-btn-mob');
-    $scope.NavigateOpen = function () {
-        return $mdSidenav('nav-btn-mob').isOpen();
-    };
-    function debounce(func, wait, context) {
-        var timer;
-        return function debounced() {
-            var context = $scope,
-                args = Array.prototype.slice.call(arguments);
-            $timeout.cancel(timer);
-            timer = $timeout(function () {
-                timer = undefined;
-                func.apply(context, args);
-            }, wait || 10);
-        };
-    }
-    function buildToggler(navID) {
-        return function () {
-            $mdSidenav(navID)
-                .toggle()
-                .then(function () {
-                    $log.debug("toggle " + navID + " is done");
-                });
-        };
-    }
-    $scope.close = function () {
-        $mdSidenav('nav-btn-mob').close()
-            .then(function () {
-                $log.debug("close NAVIGATE is done");
-            });
-    };
-    // End
 
     function clickRadioButton(id) {
         $("#" + id).click();
@@ -261,19 +144,16 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         return pathname_final;
     }
 
-    function clearProductUrl(path){
+    function clearProductUrl(path) {
         var tempPath = path;
-        let characters = ["#", "&", "'", ",", ".", "%","/"];
-        for(let i=0; i<characters.length; i++){
+        let characters = ["#", "&", "'", ",", ".", "%", "/", "(", ")"];
+        for (let i = 0; i < characters.length; i++) {
             tempPath = tempPath.replace(characters[i], "");
         }
         tempPath = tempPath.replace("---", "-");
         tempPath = tempPath.replace("--", "-");
         return tempPath;
     }
-
-    $scope.scroll_prev = 0;
-    $scope.scroll_current = 0;
 
     $(window).on('scroll', function () {
         var scrollTop = $(window).scrollTop();
@@ -282,17 +162,43 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         $scope.scroll_current = elementOffset - scrollTop;
 
         if ($scope.scroll_prev > $scope.scroll_current && $scope.scroll_current <= 52) {
-            $("#category-box").removeClass("cat-section-absolute");
-            $("#category-box").addClass("cat-section-fixed");
+            $("#cat-subcat-sec").removeClass("cat-subcat-absolute");
+            $("#cat-subcat-sec").addClass("cat-section-fixed");
             $(".checkout-menu-btn-div").removeClass("cart-btn-catalog");
         } else if ($scope.scroll_prev < $scope.scroll_current && $scope.scroll_current >= 52) {
-            $("#category-box").removeClass("cat-section-fixed");
-            $("#category-box").addClass("cat-section-absolute");
-            if(!$(".checkout-menu-btn-div").hasClass("cart-btn-catalog")){
+            $("#cat-subcat-sec").removeClass("cat-section-fixed");
+            $("#cat-subcat-sec").addClass("cat-subcat-absolute");
+            if (!$(".checkout-menu-btn-div").hasClass("cart-btn-catalog")) {
                 $(".checkout-menu-btn-div").addClass("cart-btn-catalog");
             }
         }
     });
+
+    $scope.mobHub = function(){
+        if(!$scope.showMobHub){
+            $scope.mob_hub_icon_c = "icon-rot-1";
+            $scope.mob_hub_grow_c = "mobile-hub-section-grow";
+            $scope.cat_content_mob_c = "catalog-content-mobile";
+        } else{
+            $scope.mob_hub_icon_c = "icon-rot-2";
+            $scope.mob_hub_grow_c = "";
+            $scope.cat_content_mob_c = "";
+        }
+        $timeout(function () {
+            $scope.showMobHub = !$scope.showMobHub;
+        }, 150);
+    };
+
+    $scope.hubSecSelected = 1;
+
+    $scope.selectHubSec = function(num){
+        let num_old = $scope.hubSecSelected;
+        $('.p-' + num_old + ' .mh-header-txt').removeClass('mhh-highlight');
+        $('.p-' + num_old + ' .mh-header-line').removeClass('header-line-grow');
+        $('.p-' + num + ' .mh-header-txt').addClass('mhh-highlight');
+        $('.p-' + num + ' .mh-header-line').addClass('header-line-grow');
+        $scope.hubSecSelected = num;        
+    };
 
     $window.onload = function () {
         $scope.screenIsMob = global_screenIsMob;
@@ -304,12 +210,12 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                 for (var i = 0; i < x.length; i++) {
                     if (x[i].textContent.trim() == subcad) {
                         clickRadioButton(x[i].id);
-                        $scope.filterCategories();
+                        $scope.showHideCategory();
                         break;
                     }
                 }
             } else if (isCategoryClicked == "true") {
-                $scope.filterCategories();
+                $scope.showHideCategory();
                 clickRadioButton("radio_0");
             } else if (isCategoryClicked == "store-switched") {
                 sessionStorage.setCategoryClicked(true);
@@ -321,7 +227,6 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         }, 20);
         $('#loading').fadeOut();
     };
-
 
 });
 

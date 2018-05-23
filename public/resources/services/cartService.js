@@ -164,6 +164,10 @@ app.service('cartService', function ($http, localStorage, $cookies) {
         return new_cart;
     }
 
+    var _getStoreAPIs = function (cart){
+        return Object.keys(cart);
+    }
+
     /**
      * Used to convert userCart object to object consisting of "depot_id: quantity"
      * @param {*} cart  - user cart
@@ -200,6 +204,7 @@ app.service('cartService', function ($http, localStorage, $cookies) {
         getCart: _getCart,
         mergeCarts: _mergeCarts,
         getViewUserCart: _getViewUserCart,
-        parseCartToSend: _parseCartToSend
+        parseCartToSend: _parseCartToSend,
+        getStoreAPIs: _getStoreAPIs
     };
 });

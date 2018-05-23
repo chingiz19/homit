@@ -31,5 +31,17 @@ app.service('localStorage', ["$window", function($window){
         return pub.get("cart_version");
     };
 
+    pub.setOrderDeliveryHrs = function(value){
+        return pub.set("order_delivery_hrs", value);
+    };
+
+    pub.getOrderDeliveryHrs = function(){
+        return pub.get("order_delivery_hrs");
+    };
+
+    pub.clearAfterCheckout = function(){
+        return pub.setOrderDeliveryHrs({}) && pub.setUserCart({});
+    }
+
     return pub;
 }]);

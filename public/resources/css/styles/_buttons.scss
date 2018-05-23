@@ -1,4 +1,4 @@
-.homit-btn{
+.homit-btn {
     border-radius: 6px;
 }
 
@@ -7,14 +7,42 @@
     color: rgba(42, 81, 145, 1);
 }
 
-.rgb-color{
-    color: rgba(42,81,145,1);
+.rgb-color {
+    color: rgba(42, 81, 145, 1);
 }
 
-.rgb-background{
-    background-color: rgba(42,81,145,1);
+.rgb-background {
+    background-color: rgba(42, 81, 145, 1);
 }
 
-.rgb-border{
-    border-color: rgba(42,81,145,1);
+.rgb-border {
+    border-color: rgba(42, 81, 145, 1);
+}
+
+.mob-hub-btn {
+    position: fixed;
+    top: 0;
+    left: calc(( 100vw - 60px) / 2);
+    height: 50px;
+    padding: 0;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-family: 'Dosis', sans-serif;
+    font-size: 25px;
+    user-select: none;
+    z-index: 8;
+}
+
+.mob-hub-btn ng-md-icon{
+    fill: #fff;
+}
+
+.mob-hub-btn svg{
+    width: 30px;
+    height: 30px;
 }

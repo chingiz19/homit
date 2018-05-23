@@ -158,7 +158,7 @@ function isHistoryNull(user) {
 /**
  * Update user data from checkout.
  * Updates user's birth_date and saves previous birth_date in history.
- * Updates address and phone number, if they were empty
+ * Updates address, address latitude, longitude, unit_number, and phone number, if they were empty
  * 
  * @param {*} newData 
  * @param {*} key 
@@ -209,6 +209,9 @@ pub.updateUser = async function (newData, key) {
                 var historyData = {
                     user_id: key.id
                 };
+                // No need to update address_latitude and address_longitude in history
+                delete user.address_latitude;
+                delete user.address_longitude;
                 historyData = Object.assign(historyData, user);
                 await db.insertQuery(db.tables.users_customers_history, historyData);
             }

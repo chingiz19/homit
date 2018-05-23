@@ -100,6 +100,11 @@ app.service('sessionStorage', ["$window", function($window){
         return _get("account-section");
     };
 
+    var _clearAfterCheckout = function(){
+        _setAddressUnitNumber("");
+        _setCheckoutUserInfo("");
+    }
+
     return {
         get: _get,
         set: _set,
@@ -120,6 +125,7 @@ app.service('sessionStorage', ["$window", function($window){
         setAddressUnitNumber: _setAddressUnitNumber,
         getAddressUnitNumber: _getAddressUnitNumber,
         setAccountSection: _setAccountSection,
-        getAccountSection: _getAccountSection
+        getAccountSection: _getAccountSection,
+        clearAfterCheckout: _clearAfterCheckout
     };
 }]);

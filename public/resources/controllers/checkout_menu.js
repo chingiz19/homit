@@ -142,12 +142,10 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
             var super_c = product.store_type_api_name;
             delete $scope.userCart[product.store_type_api_name][product.depot_id];
             decreaseCartItemIndexes(super_c, index);
-
             // if store_type_api_name doesn't contain objects, then remove from list
             if (Object.entries($scope.userCart[product.store_type_api_name]).length == 0){
                 delete $scope.userCart[product.store_type_api_name];
             }
-
             updateUserCart($scope.userCart);
             $scope.numberOfItemsInCart = $scope.numberOfItemsInCart - product.quantity;
             $scope.totalAmount = $scope.totalAmount - (product.price * product.quantity);

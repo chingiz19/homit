@@ -18,7 +18,7 @@ router.post('/signin', async function (req, res, next) {
             Auth.signStoreSession(req, storeId);
             var response = {
                 success: true,
-                store: store[0],
+                store: store,
                 auth_token: authToken
             };
             res.send(response);

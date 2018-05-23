@@ -19,33 +19,17 @@ pub.receiver = async function (jsonResponse) {
         var orderId = orderIdString.split("_")[1];
         var storeId = storeIdString.split("_")[1];
 
-        var sqlQuery = `
-            UPDATE orders_history
-            SET 
-            driver_id = `+ driverId + `,
-            store_id = ` + storeId + `,
-            date_assigned = CURRENT_TIMESTAMP
-            WHERE ?
-        `;
-
-        var key = {
-            id: orderId
-        };
-
-        // Updating orders_history table
-        await db.runQuery(sqlQuery, key);
+        Orders.updateDateAssigned(orderId, storeId, driverId);
 
         // Building json
-        var storeKey = {
-            id: storeId
-        };
-        var dbStore = await db.selectAllWhereLimitOne(db.tables.catalog_stores, storeKey);
+
+        var dbStore = await Store.getStoreInfo(storeId);
+
         var jsonStore = {
             id: storeIdString,
-            address: dbStore[0].address,
-            phone_number: dbStore[0].phone_number,
-            name: dbStore[0].name,
-            store_type: dbStore[0].store_type,
+            address: dbStore.store_address,
+            phone_number: dbStore.phone_number,
+            name: dbStore.store_name,
             nextnodeid: jsonResponse.details.nextnodeid
         };
 
@@ -71,6 +55,7 @@ pub.receiver = async function (jsonResponse) {
             phone: transactionDetails.phone_number,
             address: transactionDetails.delivery_address,
             comments: transactionDetails.driver_instruction,
+            unit_number: transactionDetails.unit_number,
             card_digits: transactionDetails.card_digits,
             order: jsonOrder
         };
@@ -82,50 +67,25 @@ pub.receiver = async function (jsonResponse) {
                 customer: jsonCustomer
             }
         };
-        NM.sendToDriver(driverIdString, jsonFinal);
 
-        //Zaman is this the right place
+        /* Notify stakeholders */
+        NM.sendToDriver(driverIdString, jsonFinal);
         Store.newOrder(jsonFinal.details.store.id);
 
-        await Driver.dispatchOrder(driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded);
+        Driver.dispatchOrder(driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded);
 
-        //Add to email temp
-        var emailTransaction = {};
-        var emailOrders = {};
-        var emailOrder = {};
-
-        var emailTransactionTemp = await Email.getTransactionEmail(orderDetails.order_transaction_id);
-        if (emailTransactionTemp) {
-            emailTransaction = JSON.parse(emailTransactionTemp);
-
-            if (emailTransaction.orders) {
-                emailOrders = emailTransaction.orders;
-            }
-        }
-
-        var storeType = await Catalog.getStoreTypeById(jsonStore.store_type);
-
-        emailOrder = jsonOrder;
-        emailOrder.store = jsonStore;
-        emailOrder.store_type_display_name = storeType.display_name;
-
-        emailOrders[storeType.name] = emailOrder;
-        emailTransaction.orders = emailOrders;
-
-        // Check if email is ready to send
-        var allAssigned = await Orders.areAllDispatched(orderDetails.order_transaction_id);
-        if (allAssigned) {
-            emailTransaction.customer = jsonCustomer;
-
-            Email.sendOrderSlip(emailTransaction);
-
-            await Email.deleteTransactionEmail(orderDetails.order_transaction_id);
-        } else {
-            await Email.saveTransactionEmail(orderDetails.order_transaction_id, emailTransaction);
+        if (jsonStore.name.toLowerCase().includes("liquor")) {
+           Email.sendStoreAssignedEmail({
+               store_name: dbStore.store_name,
+               store_address: dbStore.store_address,
+               user_name: user.first_name,
+               user_email: user.user_email,
+               order_id: orderIdString
+           });
         }
     } else if (jsonResponse.action == "chikimiki_report") {
         NM.sendToCSR(jsonResponse.details);
-    }else {
+    } else {
         Logger.log.error("Error while processing order from CM due to wrong 'action' value received from CM", logMeta);
     }
 };

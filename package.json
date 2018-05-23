@@ -37,6 +37,8 @@
     "jsdom": "^11.5.1",
     "jsonwebtoken": "^8.0.1",
     "jwt-simple": "^0.5.1",
+    "kue": "^0.11.6",
+    "kue-scheduler": "^0.7.4",
     "lodash": "^4.17.4",
     "nodemailer": "^4.4.1",
     "nodemon": "^1.11.0",
@@ -51,6 +53,7 @@
     "stripe": "^5.5.0",
     "twilio": "^3.10.1",
     "unique-concat": "^0.2.2",
+    "validator": "^10.1.0",
     "winston": "^2.4.0",
     "winston-daily-rotate-file": "^1.7.2",
     "xml2js": "^0.4.19"

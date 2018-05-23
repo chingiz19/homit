@@ -3,49 +3,67 @@
  */
 
 var router = require("express").Router();
+var _ = require("lodash");
 
 router.post('/update', Auth.validate(), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
 
     /* Checks and validations */
 
-    if (!signedUser.id){
+    if (!signedUser.id) {
         // TODO: log error for degubbing
         Auth.invalidate(req);
         // TODO: need a way to let F.E know that a page refresh is required after showing error message
-        return errorMessages.sendGenericError(res);        
+        return errorMessages.sendGenericError(res);
     }
 
     var allValidParams = {
-        "user_email": {}, 
-        "first_name": {}, 
-        "last_name": {}, 
+        "user_email": {
+            validateWith: Validator.isEmail
+        },
+        "first_name": {
+            validateWith: Validator.isText
+        },
+        "last_name": {
+            validateWith: Validator.isText
+        },
         "phone_number": {
-            isRemovable: true
-        }, 
+            validateWith: Validator.isPhoneNumber
+        },
         "birth_date": {
-            isRemovable: true
-        }, 
+            validateWith: Validator.isDate
+        },
         "address": {
-            isRemovable: true
-    }};
+            validateWith: Validator.isAddress
+        },
+        "address_unit_number": {
+            isRemovable: true,
+            validateWith: Validator.isNumber
+        },
+        "address_latitude": {
+            validateWith: Validator.isDouble
+        },
+        "address_longitude": {
+            validateWith: Validator.isDouble
+        }
+    };
     req.body.user = HelperUtils.validateParams(req.body.user, allValidParams);
-    if (!req.body.user){
+    if (!req.body.user) {
         return errorMessages.sendMissingParams(res);
     }
-    
+
     /* Update user info */
 
     var key = {
         id: signedUser.id
     };
 
-    if (!(await User.updateUser(req.body.user, key))){
+    if (!(await User.updateUser(req.body.user, key))) {
         return errorMessages.sendGenericError(res);
     }
 
     var newUser = await User.findUserById(signedUser.id);
-    if (!newUser){
+    if (!newUser) {
         return errorMessages.sendGenericError(res);
     }
 
@@ -111,17 +129,17 @@ router.post('/viewordertransactions', async function (req, res, next) {
     }
 });
 
-router.post("/viewallorders", Auth.validate(), async function(req, res, next){
+router.post("/viewallorders", Auth.validate(), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
-    if (!signedUser){
+    if (!signedUser) {
         return errorMessages.sendGenericError(res);
     }
     var orders = [];
     var transactions = await Orders.getOrderTransactionsByUserId(signedUser.id);
 
-    for (let tr of transactions){
+    for (let tr of transactions) {
         var individualOrders = await Orders.getOrdersByTransactionIdWithUserId(tr.id, signedUser.id);
-        for (let individualOrder of individualOrders){            
+        for (let individualOrder of individualOrders) {
             var order = {
                 id: individualOrder.order_id,
                 card_digits: tr.card_digits,
@@ -129,21 +147,25 @@ router.post("/viewallorders", Auth.validate(), async function(req, res, next){
                 date_delivered: individualOrder.date_delivered
             }
 
-            order.items = await Orders.getDisplayOrderItemsById(order.id);
+            order.items = await Orders.getOrderItemsById(order.id);
 
-            if (!order.date_delivered){
+            if (order.items.length > 0) {
+                order.store = order.items[0].store_type_display_name;
+            }
+
+            if (!order.date_delivered) {
                 order.date_delivered = "Pending...";
             }
-            order.store = order.items[0].store_type_display_name;
+
             orders.push(order);
         }
-}
+    }
 
+    orders = _.reverse(orders);
     res.status(200).json({
         success: true,
         orders: orders
     });
-
 });
 
 router.post('/vieworders', Auth.validate(), async function (req, res, next) {
@@ -231,12 +253,12 @@ router.get('/user', Auth.validate(), async function (req, res, next) {
     delete signedUser.password; // enforcing safety
 
     var card = await MP.getCustomerPaymentMethod(signedUser.stripe_customer_id);
-    delete signedUser.stripe_customer_id;    
+    delete signedUser.stripe_customer_id;
     if (card) {
         signedUser.card = card;
     }
 
-    if (signedUser.birth_date){
+    if (signedUser.birth_date) {
         var date = signedUser.birth_date.split("T")[0].split("-");
         signedUser.dob = date[1] + '-' + date[2] + '-' + date[0];
         delete signedUser.birth_date;
@@ -253,18 +275,45 @@ router.post('/paymentmethod/update', Auth.validate(), async function (req, res, 
         return errorMessages.sendGenericError(res);
     }
 
-    if (!req.body.token){
+    if (!req.body.token) {
         return errorMessages.sendMissingParams(res);
     }
 
     // add token to the user
-    try{
-        if(await MP.updateCustomerPaymentMethod(signedUser.stripe_customer_id, req.body.token)){
+    try {
+        if (await MP.updateCustomerPaymentMethod(signedUser.stripe_customer_id, req.body.token)) {
             res.send({
                 success: true
             });
         }
-    } catch(err){
+    } catch (err) {
+        res.send({
+            success: false,
+            ui_message: "Couldn't update payment method, please try again"
+        });
+    }
+});
+
+router.post('/paymentmethod/remove', Auth.validate(), async function (req, res, next) {
+    var signedUser = Auth.getSignedUser(req);
+    if (!signedUser) {
+        return errorMessages.sendGenericError(res);
+    }
+
+    // add token to the user
+    try {
+        var card = await MP.getCustomerPaymentMethodAsToken(signedUser.stripe_customer_id);
+        if (await MP.removeCustomerPaymentMethod(signedUser.stripe_customer_id, card)) {
+            res.send({
+                success: true
+            });
+        } else {
+            res.send({
+                success: false,
+                ui_message: "There was an issue while removing payment method. Please contect customer service if it wasn't removed"
+            })
+        }
+    } catch (err) {
         res.send({
             success: false,
             ui_message: "Couldn't update payment method, please try again"

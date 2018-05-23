@@ -2,10 +2,10 @@ use homit;
 
 /* Insert Catalog - Store Type */
 INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(1,"solo-liquor", "Liquor Station", "liquor-station", "liquor-station_icon.png");
-INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image, available) VALUES(2,"safeway", "Snack Vendor", "old-snack-vendor", "snack-vendor_icon.png", 0);
+INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image, available) VALUES(2,"safeway", "Snack Vendor - Safeway", "old-snack-vendor", "snack-vendor_icon.png", 0);
 INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(3,"7-eleven", "Snack Vendor", "snack-vendor", "snack-vendor_icon.png");
-INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image) VALUES(4,"homitcar", "Liquor Station", "liquor-station", "liquor-station_icon.png");
-INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image, available) VALUES(5,"liquor-depot", "Liquor Station", "old-liquor-depot", "old-liquor-depot_icon.png", 0);
+INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image, available) VALUES(4,"homitcar", "Liquor Station - Homitcar", "liquor-station-homitcar", "liquor-station_icon.png", 0);
+INSERT INTO `catalog_store_types`(id, name, display_name, api_name, image, available) VALUES(5,"liquor-depot", "Liquor Station - Liquor Depot", "old-liquor-depot", "old-liquor-depot_icon.png", 0);
 
 /* Insert Catalog - Store */
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (1, "s_", "Homit Store", "Calgary, AB", "0", "0", "4038003460", "4");

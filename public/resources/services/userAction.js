@@ -64,6 +64,13 @@ app.service('user', function ($cookies, $http) {
         });
     };
 
+    publicFunctions.removeCard = function(){
+        return $http({
+            method: "POST",
+            url: 'api/account/paymentmethod/remove'
+        });
+    };
+
     publicFunctions.updatePassword = function(currentPass, newPass){
         return $http({
             method: "POST",

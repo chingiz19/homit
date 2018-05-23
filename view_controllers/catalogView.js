@@ -16,73 +16,254 @@ const categories = {
     "dwarf-stars": ['chocolate and bar'],
     "liquor-station": ['beer', 'cider and cooler', 'liqueur', 'party supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday needs', 'snacks'],
-    "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'confectionery', 'dry packaged', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
+    "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'confectionery', 'dairy', 'deli and meat', 'dry packaged', 'frozen food', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
 }
 
 const api_categories = {
     "dwarf-stars": ['chocolate-and-bar'],
     "liquor-station": ['beer', 'cider-and-cooler', 'liqueur', 'party-supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday-needs', 'snacks'],
-    "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'confectionery', 'dry-packaged', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
+    "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'confectionery', 'dairy', 'deli-and-meat', 'dry-packaged', 'frozen-food', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
+}
+
+const default_category = {
+    "dwarf-stars": 0,
+    "liquor-station": 1,
+    "snack-vendor": 2,
+    "linas-italian-market": 6
 }
 
 var recommended_products = {
-    "chocolate-and-bar": [
+    "frozen-food": [
         {
-            "brand": "Doritos",
-            "name": "Cheese",
-            "store_type_api_name": "snack-vendor",
-            "product_id": 4528,
-            "category": "snacks",
-            "image": "p_9028.jpeg",
+            "brand": "Painted Turtle",
+            "name": "Cabernet Sauvignon",
+            "store_type_api_name": "liquor-station",
+            "product_id": 1001,
+            "category": "wine",
+            "image": "b_3001.jpeg",
             "packaging": "1",
-            "volume": "family",
-            "price": 4.79
+            "volume": "750ml",
+            "price": 12.49
         },
         {
-            "brand": "D.L Jardine's",
-            "name": "Salsa Bobos Medium",
+            "brand": "Strongbow",
+            "name": "Dark Fruit Cider",
+            "store_type_api_name": "liquor-station",
+            "product_id": 80,
+            "category": "cider-and-cooler",
+            "image": "b_3001.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 12.49
+        },
+        {
+            "brand": "Lina's Market",
+            "name": "Fresh Pizza Dough",
             "store_type_api_name": "linas-italian-market",
-            "product_id": 6733,
-            "category": "condiments",
-            "image": "jr_11360.jpeg",
+            "product_id": 7646,
+            "category": "pasta-and-baking",
+            "image": "wrp_1348.jpeg",
             "packaging": "1",
-            "volume": "453gm",
-            "price": 9.99
+            "volume": "500g",
+            "price": 12.49
         },
         {
-            "brand": "Tostitos",
-            "name": "Round",
-            "store_type_api_name": "snack-vendor",
-            "product_id": 4531,
-            "category": "snacks",
-            "image": "p_9031.jpeg",
+            "brand": "Dwarf Stars",
+            "name": "Pumpkin Seed Butter Cups",
+            "store_type_api_name": "dwarf-stars",
+            "product_id": 7646,
+            "category": "chocolate-and-bar",
+            "image": "bg_1289.jpeg",
             "packaging": "1",
-            "volume": "regular",
+            "volume": "42g",
+            "price": 5
+        },
+        {
+            "brand": "Aurora",
+            "name": "Sardines in Oil",
+            "store_type_api_name": "linas-italian-store",
+            "product_id": 6582,
+            "category": "canned-and-jarred",
+            "image": "c_11081.jpeg",
+            "packaging": "1",
+            "volume": "120g",
+            "price": 1.99
+        }
+        
+        
+    ],
+    "deli-and-meat": [
+        {
+            "brand": "Dwarf Stars",
+            "name": "Originals",
+            "store_type_api_name": "dwarf-stars",
+            "product_id": 7586,
+            "category": "chocolate-and-bar",
+            "image": "bg_1288.jpeg",
+            "packaging": "1",
+            "volume": "120g",
+            "price": 11.99
+        },
+        {
+            "brand": "Grissini Bon",
+            "name": "Breadsticks with Rosemary",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 6837,
+            "category": "baked-goods",
+            "image": "btc_11269.jpeg",
+            "packaging": "1",
+            "volume": "250g",
             "price": 4.49
         },
         {
-            "brand": "Jack Link's",
-            "name": "Cholula",
+            "brand": "Molson",
+            "name": "Canadian Cider",
+            "store_type_api_name": "liquor-station",
+            "product_id": 31,
+            "category": "cider-and-cooler",
+            "image": "b_1020.jpeg",
+            "packaging": "6",
+            "volume": "341ml",
+            "price": 17.49
+        },
+        {
+            "brand": "Advil",
+            "name": "Liqui Gels",
             "store_type_api_name": "snack-vendor",
-            "product_id": 4516,
-            "category": "snacks",
-            "image": "p_9016.jpeg",
+            "product_id": 6503,
+            "category": "everyday-needs",
+            "image": "p_11003.jpeg",
+            "packaging": "16ct",
+            "volume": "200mg",
+            "price": 7.19
+        },
+        {
+            "brand": "19 Crimes",
+            "name": "Shiraz Durif",
+            "store_type_api_name": "liquor-station",
+            "product_id": 1161,
+            "category": "wine",
+            "image": "b_3161.jpeg",
             "packaging": "1",
-            "volume": "80gm",
+            "volume": "750ml",
+            "price": 18.09
+        }
+        
+    ],
+    "dairy": [
+        {
+            "brand": "GiGi",
+            "name": "Fig Spread",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7249,
+            "category": "condiments",
+            "image": "jr_11749.jpeg",
+            "packaging": "1",
+            "volume": "380ml",
             "price": 6.99
         },
         {
-            "brand": "Browne",
-            "name": "Corkscrew Bottle Opener",
+            "brand": "Blasted Church",
+            "name": "Unorthodox Chardonnay",
             "store_type_api_name": "liquor-station",
-            "product_id": 6003,
-            "category": "party-supply",
-            "image": "o_10003.jpeg",
+            "product_id": 1022,
+            "category": "wine",
+            "image": "b_3022.jpeg",
             "packaging": "1",
-            "volume": "4.5in",
-            "price": 3.99
+            "volume": "750ml",
+            "price": 29.99
+        },
+        {
+            "brand": "Taylors of Horrogate",
+            "name": "Organic Chamomile",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7213,
+            "category": "coffee-and-tea",
+            "image": "bx_11713.jpeg",
+            "packaging": "1",
+            "volume": "30g",
+            "price": 6.99
+        },
+        {
+            "brand": "Duo Penotti",
+            "name": "Hazelnut Pasta",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7231,
+            "category": "condiments",
+            "image": "jr_11731.jpeg",
+            "packaging": "1",
+            "volume": "750g",
+            "price": 9.99
+        },
+        {
+            "brand": "Perrier",
+            "name": "Carbonated Natural Spring Water",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7164,
+            "category": "beverages",
+            "image": "b_11664.jpeg",
+            "packaging": "1",
+            "volume": "1L",
+            "price": 1.29
         }
+    ],
+    "chocolate-and-bar": [
+        {
+            "brand": "Guinness",
+            "name": "Draught",
+            "store_type_api_name": "liquor-station",
+            "product_id": 83,
+            "category": "beer",
+            "image": "c_1060.jpeg",
+            "packaging": "4",
+            "volume": "440ml",
+            "price": 13.39
+        },
+        {
+            "brand": "Anna's Country Kitchen",
+            "name": "Fontina",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7612,
+            "category": "dairy",
+            "image": "wrp_1314.jpeg",
+            "packaging": "1",
+            "volume": "227g",
+            "price": 11.99
+        },
+        {
+            "brand": "Peller Estates",
+            "name": "Sauvignon Blanc",
+            "store_type_api_name": "liquor-station",
+            "product_id": 1017,
+            "category": "wine",
+            "image": "b_3017.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 12.69
+        },
+        {
+            "brand": "Augusto Espresso",
+            "name": "Organic Dark Roast Ground",
+            "store_type_api_name": "linas-italian-market",
+            "product_id": 7180,
+            "category": "coffee-and-tea",
+            "image": "cntr_11680.jpeg",
+            "packaging": "1",
+            "volume": "225g",
+            "price": 15.99
+        },
+        {
+            "brand": "Jackson-Triggs",
+            "name": "Shiraz",
+            "store_type_api_name": "liquor-station",
+            "product_id": 1037,
+            "category": "wine",
+            "image": "b_3037.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 12.69
+        }  
     ],
     "beer": [
         {
@@ -1270,7 +1451,9 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
 
 router.get('/:parent/', function (req, res, next) {
     try {
-        res.redirect("/catalog/" + req.params.parent + "/" + api_categories[req.params.parent][0]);
+        // res.redirect("/catalog/" + req.params.parent + "/" + api_categories[req.params.parent][0]);
+        res.redirect("/catalog/" + req.params.parent + "/" + api_categories[req.params.parent][default_category[req.params.parent]]);
+        default_category
     } catch (e) {
         next()
     }
@@ -1306,7 +1489,7 @@ function convertHomitTags(string) {
 
 function clearProductUrl(path) {
     var tempPath = path;
-    let characters = ["#", "&", "'", ",", ".", "%", "/"];
+    let characters = ["#", "&", "'", ",", ".", "%", "/", "(", ")"];
     for (let i = 0; i < characters.length; i++) {
         tempPath = tempPath.replace(characters[i], "");
     }

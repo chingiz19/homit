@@ -17,10 +17,12 @@ router.use('/', async function (req, res, next) {
             var storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
             var storeInfo = {
                 open: storeOpen,
-                // open_time: hours.open_time,
-                // close_time: hours.close_time,
+                api_name: storeTypeInfo.api_name,
+                name: storeTypeInfo.name,
                 display_name: storeTypeInfo.display_name,
-                image: storeTypeInfo.image
+                image: storeTypeInfo.image,
+                image_cover: storeTypeInfo.image_cover
+                // hours: hours
             };
 
             var response = {
@@ -38,6 +40,41 @@ router.use('/', async function (req, res, next) {
     }
 });
 
+
+router.use('/getstoreinfo', async function (req, res, next) {
+    let storeTypeApis = req.body.store_type;
+    let store_infos = [];
+
+    for (let storeTypeApi of storeTypeApis){
+        let storeType = await Catalog.getStoreTypeByApi(storeTypeApi);
+        if (storeType) {
+            let storeOpen = await Catalog.isStoreOpen(storeType);
+            let hours = await Catalog.getStoreHours(storeType);
+            let storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
+            let storeInfo = {
+                open: storeOpen,
+                api_name: storeTypeInfo.api_name,
+                name: storeTypeInfo.name,
+                display_name: storeTypeInfo.display_name,
+                image: storeTypeInfo.image,
+                hours: hours
+            };
+            store_infos.push(storeInfo);
+        }
+    }
+
+    if (store_infos.length > 0){
+        res.send({
+            success: true,
+            store_infos: store_infos
+        });
+    } else {
+        res.send({
+            success: false
+        });
+    }
+});
+
 router.post('/search', async function (req, res, next) {
     var searchText = req.body.search;
     var response;
@@ -52,7 +89,7 @@ router.post('/search', async function (req, res, next) {
         var productsStart = await Catalog.searchProductsStart(searchText, limit);
         limit = limit - productsStart.length;
         var productsWithDescription = await Catalog.searchProductsWithDescription(searchText, limit);
-        limit = limit - productsWithDescription.length;        
+        limit = limit - productsWithDescription.length;
         var productsEnd = await Catalog.searchProductsEnd(searchText, limit);
 
         var finalResult = {

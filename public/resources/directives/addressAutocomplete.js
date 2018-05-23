@@ -25,6 +25,8 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
      */
     function clearText() {
         sessionStorage.setAddress(undefined);
+        sessionStorage.setAddressUnitNumber("");
+        publicFunctions.modified = true;
         privScopeAccess._searchedAddress = "";
         privScopeAccess._unitNumber = "";
         privScopeAccess.showCoverageMap = false;
@@ -96,6 +98,7 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
                 var places = new google.maps.places.PlacesService(document.getElementById('placesServiceNode'));
 
                 //variable assignment
+                publicFunctions.modified = false;
                 scope.autocomplete = publicFunctions;
                 scope.clearText = clearText;
                 privScopeAccess = scope;
@@ -103,12 +106,12 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
 
                 var addrSelected = sessionStorage.getAddress();
                 if (addrSelected) {
-                    //Not Working
-                    // scope._inptFocused();
                     scope._searchedAddress = addrSelected.formatted_address;
                     // if address is already selected, set that address
                     selectedPlace = addrSelected;
                 }
+
+                scope.searchedStringLength = 0;
 
                 /* Helper functions */
 
@@ -116,6 +119,7 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
                  * Called on keypress event in address input box
                  */
                 scope._addressTyped = function () {
+                    publicFunctions.modified = true;
                     var tmpSearchedAddress;
                     elementNumber = 0;
                     if (!scope._searchedAddress) {
@@ -123,6 +127,13 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
                         return;
                     } else {
                         tmpSearchedAddress = scope._searchedAddress;
+                    }
+
+                    if(scope.searchedStringLength < scope._searchedAddress.length){
+                        scope.searchedStringLength = scope._searchedAddress.length;
+                    } else if(scope.searchedStringLength > scope._searchedAddress.length){
+                        sessionStorage.setAddressUnitNumber("");
+                        scope._unitNumber = "";
                     }
 
                     if (scope._unitNumber) {

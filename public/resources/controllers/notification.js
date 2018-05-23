@@ -45,6 +45,7 @@ app.controller("notificationController", function ($scope, $sce, notification, $
     }
 
     function addImportantMessage(message){
+        $scope.storeClose = true;
         $scope.message = message;
         $scope.messageType = "important_msg";
         clearWithTimeout($scope.defaultTimeout * 2);

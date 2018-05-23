@@ -105,7 +105,25 @@
     </url>
 
     <url>
+        <loc>https://www.homit.ca/catalog/linas-italian-market/dairy</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/catalog/linas-italian-market/deli-and-meat</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
         <loc>https://www.homit.ca/catalog/linas-italian-market/dry-packaged</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/catalog/linas-italian-market/frozen-food</loc> 
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

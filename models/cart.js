@@ -44,6 +44,7 @@ pub.getUserCart = async function (userId) {
         AND depot.store_type_id = store_type.id
         AND ?
 
+    
         ORDER BY depot_id`;
 
     var data = { "usercart.user_id": userId };

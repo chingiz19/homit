@@ -29,6 +29,8 @@ class modelFactory {
         global.NM =             require("./models/network_manager");
         global.Store =          require("./models/store");
         global.HelperUtils =    require("./models/helper_utils");
+        global.Validator =      require("./models/validator");
+        global.Scheduler =      require("./models/scheduler");
 
         if (process.env.n_mode == "production"){
             global.machineHostname = "https://www.homit.ca";

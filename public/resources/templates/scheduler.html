@@ -1,0 +1,392 @@
+<style>
+    .del-opt-icon {
+        fill: rgba(39, 9, 9, 0.9);
+    }
+
+    .hmt-radio-container {
+        font-size: 16px;
+        font-weight: 400;
+        position: relative;
+        margin-top: 13px;
+        display: block;
+        margin-bottom: 0px;
+        padding-left: 40px;
+        cursor: pointer;
+    }
+
+    .hmt-radio-container-time {
+        font-size: 15px;
+        padding-bottom: 5px;
+        margin-top: 0px;
+        padding-top: 5px;
+    }
+
+    .hmt-radio-container input {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+    }
+
+    .control_indicator {
+        position: absolute;
+        top: 2px;
+        left: 15px;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 1px solid #d9d9d9;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .control_indicator_time {
+        top: 7px;
+        width: 15px;
+        height: 15px;
+    }
+
+    /* Checked state */
+
+    .hmt-radio-container input:checked~.control_indicator {
+        box-shadow: 0 0 0 10px rgba(42, 81, 145, 1) inset;
+        border: none;
+    }
+
+    /* Check mark */
+
+    .control_indicator:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
+        -webkit-transition: all 0.2s ease-in-out 0.1s;
+        transition: all 0.2s ease-in-out 0.1s;
+        opacity: 0;
+        width: 4px;
+        height: 4px;
+        margin-left: -1.5px;
+        margin-top: -1.5px;
+        background-color: #fff;
+        border-radius: 50%;
+    }
+
+    /* Show check mark */
+
+    .hmt-radio-container input:checked~.control_indicator:after {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .del-opt-background {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100vw;
+        background-color: black;
+        opacity: 0;
+        z-index: 4;
+    }
+
+    .del-options-sec {
+        position: relative;
+        display: flex;
+        align-items: center;
+        font-size: 17px;
+    }
+
+    .del-opt-btn {
+        position: relative;
+        height: 30px;
+        padding: 0;
+        min-width: 190px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border: 1px solid rgb(251, 251, 251);
+        padding: 0px;
+        border-radius: 4px;
+        background-color: rgb(253, 253, 253);
+        z-index: 4;
+    }
+
+    .del-opt-btn ng-md-icon {
+        padding: 0 3px;
+    }
+
+    .del-opt-btn ng-md-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .del-opt-btn span {
+        color: rgba(39, 9, 9, 0.9);
+    }
+
+    .del-opt-box {
+        position: absolute;
+        top: 30px;
+        width: 190px;
+        height: 0;
+        background-color: rgb(254, 254, 254);
+        border-radius: 0 0 5px 5px;
+        border: none;
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 0.6);
+        z-index: 5;
+    }
+
+    .del-opt-box-dev {
+        height: calc(100% - 10px);
+    }
+
+    .txt-select-tm {
+        margin-top: 19px;
+        font-size: 16px;
+        padding-left: 15px;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .sch-month {
+        display: flex;
+        flex-direction: row;
+        padding: 2px 5px;
+        justify-content: space-around;
+        border: 1px solid rgb(230, 230, 230);
+        background-color: white;
+        border-left: none;
+        border-right: none;
+    }
+
+    .delivery-day {
+        display: flex;
+        padding: 4px 5px;
+        flex-direction: column;
+        text-align: center;
+        border-radius: 2px;
+        color: rgb(126, 55, 55);
+        outline: none;
+    }
+
+    .delivery-day:hover {
+        cursor: pointer;
+        background-color: rgb(235, 235, 235);
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .del-week-day {
+        font-size: 12px;
+    }
+
+    .del-month-day {
+        font-size: 20px;
+    }
+
+    .sch-hrs {
+        display: flex;
+        flex-direction: column;
+        height: 205px;
+        overflow-y: auto;
+        padding-top: 4px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sch-hrs div {
+        background-color: transparent;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .sch-hrs div:hover {
+        cursor: pointer;
+        background-color: rgb(225, 225, 255);
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .del-opt-info {
+        display: flex;
+        align-items: center;
+        height: 30px;
+        margin-top: 5px;
+        color: rgb(255, 247, 247);
+        font-size: 17px;
+    }
+
+    .del-opt-info ng-md-icon {
+        margin: 0 10px 0 10px;
+        fill: white;
+    }
+
+    .del-opt-info ng-md-icon svg {
+        width: 7px;
+        height: 7px;
+    }
+
+    .del-opt-icon-svg-1 {
+        transform: rotate(180deg);
+        transition: transform 0.4s ease-out;
+    }
+
+    .del-opt-icon-svg-2 {
+        transform: rotate(0deg);
+        transition: transform 0.4s ease-out;
+    }
+
+    .del-opt-btn-1 {
+        border-radius: 4px 4px 0 0;
+        z-index: 11;
+        transition: border-radius 0.1s ease-out;
+    }
+
+    .del-opt-btn-2 {
+        border-radius: 4px 4px 4px 4px;
+        transition: border-radius 0.7s ease-out;
+    }
+
+    .del-opt-background-1 {
+        height: 130vh;
+        opacity: 0.25;
+        transition: opacity 0.3s ease-out;
+    }
+
+    .del-opt-background-2 {
+        height: 0;
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+    }
+
+    .del-opt-box-2 {
+        height: 0;
+        border: none;
+        border-top-right-radius: 0px;
+        z-index: 4;
+        transition: all 0.4s ease-out;
+    }
+
+    .del-opt-box-3 {
+        height: 380px;
+        width: 320px;
+        border-top-right-radius: 5px;
+        z-index: 10;
+        transition: all 0.4s ease-out;
+    }
+
+    .del-opt-box-4 {
+        height: 120px;
+        width: 190px;
+        border-top-right-radius: 0px;
+        z-index: 10;
+        transition: all 0.4s ease-out;
+    }
+
+    .delivery-day-2 {
+        background-color: rgba(0, 0, 0, 0);
+        color: rgb(126, 55, 55);
+        transition: all 0.2s ease-out;
+    }
+
+    .delivery-day-3 {
+        background-color: rgba(42, 81, 145, 0.9) !important;
+        color: white;
+        transition: all 0.2s ease-out;
+    }
+
+    /* start of phone styles */
+
+    @media screen and (max-device-width: 479px) {
+
+        .delivery-day:hover {
+            background-color: transparent;
+        }
+
+        .catalog-content-mobile{
+            height: calc(100vh - 250px);
+            overflow-y: hidden;
+        }
+
+        .del-options-sec {
+            font-size: 15px;
+        }
+
+        .del-opt-btn {
+            height: 28px;
+            min-width: 170px;
+        }
+
+        .store-name-txt {
+            margin-bottom: 5px;
+        }
+
+        .del-opt-box {
+            top: 28px;
+            left: calc(-1*(100vw - 100%)/2);
+            width: 100vw;
+        }
+
+        .del-opt-background-1{
+            height: calc(100vh - 200px);
+        }
+
+        .del-opt-box-3 {
+            height: calc(100vh - 200px);
+        }
+
+        .del-month-day {
+            font-size: 17px;
+        }
+
+        .del-week-day {
+            font-size: 10px;
+        }
+
+        .sch-hrs {
+            height: calc(100% - 160px);
+        }
+    }
+</style>
+
+
+<section id="{{storeType}}" class="del-options-sec">
+    <button type="button" class="del-opt-btn" ng-click="deliveryOptions()">
+        <ng-md-icon class="del-opt-icon" icon="arrow_drop_down"></ng-md-icon>
+        <span>{{ deliveryOption }}</span>
+    </button>
+    <div ng-if="_deliveryError">
+        Sorry, scheduled delivery is not available at this point
+    </div>
+    <div class="del-opt-box" ng-if="!_deliveryError">
+        <div ng-show="showDeliveryOptions" class="del-opt-box-dev">
+            <section>
+                <label id="{{storeType}} + opt_1" class="hmt-radio-container">ASAP Delivery
+                    <input type="radio" ng-click="changeDelOption('ASAP Delivery')" ng-model="deliveryOption" value="ASAP Delivery" ng-checked="deliveryOption == 'ASAP Delivery'"
+                    />
+                    <div class="control_indicator"></div>
+                </label>
+                <label id="{{storeType}} + opt_2" class="hmt-radio-container">Scheduled Delivery
+                    <input type="radio" ng-click="changeDelOption('Scheduled Delivery')" ng-model="deliveryOption" value="Scheduled Delivery"
+                        ng-checked="deliveryOption == 'Scheduled Delivery'" />
+                    <div class="control_indicator"></div>
+                </label>
+            </section>
+            <section ng-show="showScheduleOptions" class="fadeIn">
+                <div class="txt-select-tm">Select Delivery Time</div>
+                <div class="sch-month">
+                    <div class="delivery-day delivery-day_{{ $index }}" ng-repeat="day in dates.date_array track by $index" ng-click="chooseDay($index)">
+                        <span class="del-month-day">{{ day.display_month_day }}</span>
+                        <span class="del-week-day">{{ day.display_week_day }}</span>
+                    </div>
+                </div>
+                <div class="sch-hrs">
+                    <div class="delivery-time_{{ $index }}" ng-repeat="time in dates.date_array[ choosenDay ].hours_array track by $index">
+                        <label class="hmt-radio-container hmt-radio-container-time">{{ time.display_hour }}
+                            <input type="radio" ng-click="chooseTime($index)" ng-checked="dates.selected.time == $index && dates.selected.date == choosenDay"
+                                ng-model="deliveryTime" value="{{storeType}}$index" />
+                            <div class="control_indicator control_indicator_time"></div>
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>

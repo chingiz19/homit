@@ -41,11 +41,13 @@ var genericConParams = {
  * 1. Secure for external connections
  * 2. Non secure for internal (localhost only) connections 
  */
-var driversIOServer = require("https").createServer({
-    key: fs.readFileSync(KEY_PATH),
-    cert: fs.readFileSync(CERTIFICATE_PATH),
-    passphrase: 'test'
-});
+// var driversIOServer = require("https").createServer({
+//     key: fs.readFileSync(KEY_PATH),
+//     cert: fs.readFileSync(CERTIFICATE_PATH),
+//     passphrase: 'test'
+// });
+
+var driversIOServer = require("http").createServer();
 var localCMServer = require("http").createServer();
 
 
@@ -59,14 +61,14 @@ externalIO.adapter(redis({
     host: 'localhost',
     port: 6379,
     user: process.env.REDIS_USER,
-    db: db.redisTable.io_drivers
+    db: db.redisTable.io_external
 }));
 
 localhostIO.adapter(redis({
     host: 'localhost',
     port: 6379,
     user: process.env.REDIS_USER,
-    db: db.redisTable.io_cm
+    db: db.redisTable.io_internal
 }));
 
 /* Assigning namespaces */
@@ -275,7 +277,7 @@ stores.on('connection', function (client) {
 
         client.on('disconnect', function () {
             Logger.log.warn("Connection to store app has been lost", logMeta);
-            console.log("Connection lost")
+            console.log("Store lost connection")
         });
 
         client.on('error', function (data) {
@@ -292,7 +294,7 @@ stores.on('connection', function (client) {
 csr.on('connection', function (client) {
     if(Auth.validateCSRWebSocket(client)){
         refreshCMReport();
-    
+        console.log("csr is connected!");
         client.on('disconnect', function () {
             console.log("csr disconnected!");
         });

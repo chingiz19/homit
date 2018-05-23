@@ -9,7 +9,7 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     };
 
     $scope.addToCart = function (product) {
-        if (product.store_open) {
+        // if (product.store_open) {
             var p = {};
             p.store_type_api_name = product.store_type_api_name;
             p.volume = product.product_variants.all_volumes[product.product_variants.selectedVolume];
@@ -24,9 +24,9 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
             p.brand = product.brand;
 
             $rootScope.$broadcast("addToCart", p);
-        } else{
-            notification.addImportantMessage("Store closed at the moment.");
-        }
+        // } else{
+        //     notification.addImportantMessage("Store closed at the moment.");
+        // }
     };
 
     $scope.selectImage = function (image) {
