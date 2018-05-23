@@ -124,6 +124,8 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
                     elementNumber = 0;
                     if (!scope._searchedAddress) {
                         scope._predictions = [];
+                        sessionStorage.setAddressUnitNumber("");
+                        scope._unitNumber = "";
                         return;
                     } else {
                         tmpSearchedAddress = scope._searchedAddress;

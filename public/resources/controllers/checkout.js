@@ -52,6 +52,10 @@ app.controller("checkoutController",
                     }
 
                     $scope.userInfo.dateOfBirth = res.data.user.dob;
+
+                    if ($scope.userInfo.card){
+                        $scope.useDefaultCard = true;
+                    }
                 }
                 $scope.userInfo.hasLiquor = hasLiquor;
             }, function (err) {
@@ -249,24 +253,37 @@ app.controller("checkoutController",
 
             //Check if address unit number presents
             var addressUnitNumber = sessionStorage.getAddressUnitNumber();
-            if(addressUnitNumber || $scope.userInfo.address_unit_number){
-                if($scope.userInfo.address_unit_number){
-                    userInfoToSend.unit_number = $scope.userInfo.address_unit_number;
-                }else if(addressUnitNumber){
-                    userInfoToSend.unit_number = addressUnitNumber;
-                }
-                if ($scope.userInfo.drInstruction) {
-                    userInfoToSend.driver_instruction = $scope.userInfo.drInstruction + "; Unit Number: " + userInfoToSend.unit_number;
-                } else {
-                    userInfoToSend.driver_instruction = "Unit Number: " + userInfoToSend.unit_number;
-                }
-                userInfoToSend.address = _.trim(_.trimStart($scope.userInfo.address, userInfoToSend.unit_number));
+            if(addressUnitNumber){
+                userInfoToSend.unit_number = addressUnitNumber;
+                userInfoToSend.address = _.trim(_.trimStart($scope.checkout.address, userInfoToSend.unit_number));
             } else{
-                userInfoToSend.address = $scope.userInfo.address;
+                userInfoToSend.address = $scope.checkout.address;
                 userInfoToSend.driver_instruction = $scope.userInfo.drInstruction;
             }
-            userInfoToSend.address_latitude = $scope.userInfo.address_latitude;
-            userInfoToSend.address_longitude = $scope.userInfo.address_longitude;
+            userInfoToSend.address_latitude = $scope.checkout.address_latitude;
+            userInfoToSend.address_longitude = $scope.checkout.address_longitude;
+
+            if ($scope.userInfo.drInstruction) {
+                userInfoToSend.driver_instruction = $scope.userInfo.drInstruction + "; Unit Number: " + userInfoToSend.unit_number;
+            } else if(userInfoToSend.unit_number && userInfoToSend.unit_number != "") {
+                userInfoToSend.driver_instruction = "Unit Number: " + userInfoToSend.unit_number;
+            }
+
+            if($scope.userSignedIn && $scope.userInfo.address && $scope.userInfo.address_latitude && $scope.userInfo.address_longitude){
+                if (!$scope.checkout.address || $scope.checkout.address == ""){
+                    userInfoToSend.unit_number = $scope.userInfo.address_unit_number;
+
+                    if ($scope.userInfo.drInstruction){
+                        userInfoToSend.driver_instruction = $scope.userInfo.drInstruction + "; Unit Number: " + userInfoToSend.unit_number;
+                    } else if(userInfoToSend.unit_number && userInfoToSend.unit_number != ""){
+                        userInfoToSend.driver_instruction = "Unit Number: " + userInfoToSend.unit_number;
+                    }
+
+                    userInfoToSend.address = _.trim(_.trimStart($scope.userInfo.address, userInfoToSend.unit_number));
+                    userInfoToSend.address_latitude = $scope.userInfo.address_latitude;
+                    userInfoToSend.address_longitude = $scope.userInfo.address_longitude;
+                }
+            }
 
             let scheduled_delivery = localStorage.getOrderDeliveryHrs();
             let order_scheduled_time = {};

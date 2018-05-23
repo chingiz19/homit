@@ -25,7 +25,7 @@ router.post('/placeorder', async function (req, res, next) {
     let cardToken = req.body.token_id;
     let saveCard = req.body.save_card;
     let scheduleDetails = req.body.schedule_details;
-    let unitNumber = req.body.unit_number;
+    let unitNumber = req.body.user.unit_number;
 
     Logger.log.info("Order has been placed", {
         email: email,
