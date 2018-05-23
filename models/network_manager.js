@@ -41,13 +41,12 @@ var genericConParams = {
  * 1. Secure for external connections
  * 2. Non secure for internal (localhost only) connections 
  */
-// var driversIOServer = require("https").createServer({
-//     key: fs.readFileSync(KEY_PATH),
-//     cert: fs.readFileSync(CERTIFICATE_PATH),
-//     passphrase: 'test'
-// });
+var driversIOServer = require("https").createServer({
+    key: fs.readFileSync(KEY_PATH),
+    cert: fs.readFileSync(CERTIFICATE_PATH),
+    passphrase: 'test'
+});
 
-var driversIOServer = require("http").createServer();
 var localCMServer = require("http").createServer();
 
 

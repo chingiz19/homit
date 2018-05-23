@@ -152,6 +152,6 @@ webServer.listen(8080, '0.0.0.0', function () {
 	Logger.log.debug("Listening to http port 8080", logMeta);
 });
 
-// https.createServer(sslOptions, webServer).listen(8081, function () {
-// 	Logger.log.debug("Listening to https port 8081", logMeta);
-// });
+https.createServer(sslOptions, webServer).listen(8081, function () {
+	Logger.log.debug("Listening to https port 8081", logMeta);
+});
