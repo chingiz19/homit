@@ -166,7 +166,7 @@ app.service('cartService', function ($http, localStorage, $cookies) {
 
     var _getStoreAPIs = function (cart){
         return Object.keys(cart);
-    }
+    };
 
     /**
      * Used to convert userCart object to object consisting of "depot_id: quantity"

@@ -210,30 +210,32 @@
         transition: background-color 0.3s;
     }
 
-    @media (max-width: 855px) and (min-width: 571px) {
-        .search-sec {
-            display: none;
-        }
-    }
-
-    @media (max-width: 570px) {
-        .search-sec{
-            display: none;
-        }
-    }
-
     /* start of phone styles */
-    @media screen and (max-device-width: 479px) {
+    @media screen and (max-device-width: 776px) {
+        .global-search-header{
+            display: none;
+        }
+
         .search-sec{
-            height: 40px;
+            height: 50px;
             display: flex;
         }
 
         .search-btn{
+            width: 50px;
             border-bottom: 1px solid rgba(42,81,145,1);
             border-top: none;
             border-left: none;
             border-radius: 0;
+        }
+
+        .search-btn svg{
+            width: 30px;
+            height: 30px;
+        }
+
+        .search-sec input::-webkit-input-placeholder {
+            font-size: 19px;
         }
 
         .search-input{
@@ -241,10 +243,11 @@
             border-top: none;
             border-right: none;
             border-radius: 0;
+            font-size: 19px;
         }
 
         .search-result-box{
-            top: 40px;
+            top: 50px;
             max-height: calc(100vh - 90px);
             -webkit-overflow-scrolling: touch;
         }
@@ -268,13 +271,12 @@
     }
 </style>
 
-
 <section id="search-sec" class="search-sec">
     <button class="search-btn" ng-click="searchRequest = '' ; searchDisplay = ''; ">
         <ng-md-icon ng-if="!searchRequest" icon="search"></ng-md-icon>
         <ng-md-icon ng-if="searchRequest" icon="clear"></ng-md-icon>
     </button>
-    <input id="global-search-input" class="search-input" ng-blur="searchRequest = '' ; searchDisplay = '';" ng-model="searchRequest" placeholder="Search to Homit...">
+    <input id="{{inputId}}" class="search-input" ng-model="searchRequest" placeholder="Search to Homit...">
     <div ng-if="searchDisplay" class="search-result-box">
         <ul ng-if="resultStoreType.length" id="glbSrchA" class="store-ul">
             <li class="li-content" ng-repeat="node in resultStoreType">

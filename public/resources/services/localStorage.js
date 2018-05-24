@@ -41,7 +41,7 @@ app.service('localStorage', ["$window", function($window){
 
     pub.clearAfterCheckout = function(){
         return pub.setOrderDeliveryHrs({}) && pub.setUserCart({});
-    }
+    };
 
     return pub;
 }]);

@@ -43,15 +43,13 @@
                 </div>
             </section>
             <div class="catalog-content" ng-cloak>
-                <div ng-if="screenIsMob">
+                <div class="mobile-hub">
                     <button ng-click="mobHub()" class="fadeIn mob-hub-btn">
                         <ng-md-icon ng-class="mob_hub_icon_c" icon="arrow_drop_down"></ng-md-icon>hub
                     </button>
                     <section class="mobile-hub-section" ng-class="mob_hub_grow_c">
-
-                        <global-search ng-show="showMobHub" class="global-search-catalog" style="width: 100vw;"></global-search>
-
-                        <div ng-show="showMobHub" class="m-hub-header">
+                        <global-search input-id="inputId" ng-show="showMobHub" class="global-search-catalog fadeIn-h-search"></global-search>
+                        <div ng-show="showMobHub" class="m-hub-header fadeIn-h-hdr">
                             <div ng-click="selectHubSec(1)" class="p-1">
                                 <div class="mh-header-txt mhh-highlight">Store List</div>
                                 <div class="mh-header-line header-line-grow"></div>
@@ -65,8 +63,8 @@
                                 <div class="mh-header-line"></div>
                             </div>
                         </div>
-                        <div ng-show="showMobHub" class="mh-store-box">
-                            <div ng-show="hubSecSelected == 1" class="fadeIn mh-body mh-store">
+                        <div ng-show="showMobHub" class="mh-store-box fadeIn-h-body">
+                            <div ng-show="hubSecSelected == 1" class="mh-body mh-store">
                                 <div class="mh-store-div" ng-class="('<%= loadedStore %>' == 'Liquor Station') ? 'mh-store-selected' : ''" ng-click="hrefToStore('/catalog/liquor-station')">
                                     <img src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
                                     <span>Liquor Station</span>
@@ -84,12 +82,12 @@
                                     <span>Snack Vendor</span>
                                 </div>
                             </div>
-                            <div ng-show="hubSecSelected == 2" class="fadeIn mh-body">
+                            <div ng-show="hubSecSelected == 2" class="mh-body">
                                 <div class="mh-cat-div" ng-repeat="category in <%= categories %> track by $index" ng-click="hrefToCat(category)" ng-class="('<%= selectedCategory %>' == category) ? 'mh-cat-selected' : ''">
                                     {{ category }}
                                 </div>
                             </div>
-                            <div ng-show="hubSecSelected == 3" class="fadeIn mh-body">
+                            <div ng-show="hubSecSelected == 3" class="mh-body">
                                 <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
                                     <md-radio-button class="cat-body-cat" ng-repeat="variant in subcategories | orderBy" id="radio_{{ $index }}" ng-value="variant" ng-click="checkSubcategories(variant)">
                                         <span class="variant-txt">{{ variant }}</span>
@@ -122,7 +120,7 @@
                         <ul class="cat-list same-line" layout="column">
                             <li ng-repeat='category in <%= categories %> track by $index' ng-click="hrefToCat(category)" style="outline: none;">
                                 <div class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': 'rgba(0,189,149,0.7)'}">
-                                    <span ng-style="( '<%= selectedCategory %>' == category ) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'20px'}">{{ category }}</span>
+                                    <span ng-style="( '<%= selectedCategory %>' == category ) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'22px'}">{{ category }}</span>
                                 </div>
                             </li>
                         </ul>

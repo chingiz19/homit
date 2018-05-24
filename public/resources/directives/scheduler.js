@@ -34,7 +34,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
             localArray.push(getOrdinaryDayObject(
                 new Date(timeStamp), weekObject[weekDay], weekObject[previousDay])); //handle it for the rest of the week
 
-        } while (weekDay != today)
+        } while (weekDay != today);
 
         localObject.selected = {
             time: 0,
@@ -402,12 +402,16 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                         $("#" + scope.storeType + " .del-opt-box").removeClass('del-opt-box-4').addClass('del-opt-box-3');
                         $timeout(function () {
                             scope.showScheduleOptions = true;
+                            $("#" + scope.storeType + "schd_options").addClass('fadeIn').removeClass('fadeOut');
                         }, 200);
                         updateOrderDeliveryHrs("Scheduled Delivery");
                     } else if ("ASAP Delivery") {
-                        scope.showScheduleOptions = false;
+                        $("#" + scope.storeType + "schd_options").addClass('fadeOut').removeClass('fadeIn');
                         $("#" + scope.storeType + " .del-opt-box").removeClass('del-opt-box-3').addClass('del-opt-box-4');
                         updateOrderDeliveryHrs("ASAP Delivery");
+                        $timeout(function () {
+                            scope.showScheduleOptions = false;
+                        }, 300);
                     }
                 };
 

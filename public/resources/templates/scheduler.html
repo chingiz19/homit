@@ -369,7 +369,7 @@
                     <div class="control_indicator"></div>
                 </label>
             </section>
-            <section ng-show="showScheduleOptions" class="fadeIn">
+            <section id="{{storeType}}schd_options" ng-show="showScheduleOptions" class="fadeIn">
                 <div class="txt-select-tm">Select Delivery Time</div>
                 <div class="sch-month">
                     <div class="delivery-day delivery-day_{{ $index }}" ng-repeat="day in dates.date_array track by $index" ng-click="chooseDay($index)">

@@ -103,7 +103,7 @@ app.service('sessionStorage', ["$window", function($window){
     var _clearAfterCheckout = function(){
         _setAddressUnitNumber("");
         _setCheckoutUserInfo("");
-    }
+    };
 
     return {
         get: _get,

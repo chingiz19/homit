@@ -1,6 +1,7 @@
 app.controller("catalogController", function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $mdSidenav, $log, sessionStorage, notification, googleAnalytics, localStorage) {
     var catalogCtrl = this;
 
+    $scope.inputId = "mh-search";
     $scope.scroll_prev = 0;
     $scope.scroll_current = 0;
     $scope.selection = $location.path();
@@ -146,12 +147,9 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
 
     function clearProductUrl(path) {
         var tempPath = path;
-        let characters = ["#", "&", "'", ",", ".", "%", "/", "(", ")"];
-        for (let i = 0; i < characters.length; i++) {
-            tempPath = tempPath.replace(characters[i], "");
-        }
-        tempPath = tempPath.replace("---", "-");
-        tempPath = tempPath.replace("--", "-");
+        tempPath = tempPath.replace(/[#&',.%/()]/g, "");
+        tempPath = tempPath.replace(/[---]/g, "-");
+        tempPath = tempPath.replace(/[--]/g, "-");
         return tempPath;
     }
 
@@ -179,14 +177,17 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             $scope.mob_hub_icon_c = "icon-rot-1";
             $scope.mob_hub_grow_c = "mobile-hub-section-grow";
             $scope.cat_content_mob_c = "catalog-content-mobile";
+            $timeout(function () {
+                $scope.showMobHub = !$scope.showMobHub;
+            }, 200);
         } else{
             $scope.mob_hub_icon_c = "icon-rot-2";
             $scope.mob_hub_grow_c = "";
             $scope.cat_content_mob_c = "";
+            $timeout(function () {
+                $scope.showMobHub = !$scope.showMobHub;
+            }, 10);
         }
-        $timeout(function () {
-            $scope.showMobHub = !$scope.showMobHub;
-        }, 150);
     };
 
     $scope.hubSecSelected = 1;

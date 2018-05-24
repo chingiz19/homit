@@ -513,7 +513,7 @@ app.controller("checkoutController",
 
         $scope.cardCheckbox = function(){
             $scope.useDefaultCard = !$scope.useDefaultCard;
-        }
+        };
 
         $scope.init();
 

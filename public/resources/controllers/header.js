@@ -1,6 +1,7 @@
 app.controller("headerController", function ($scope, $window, $http, user, notification, $cookies, sessionStorage, googleAnalytics, $timeout) {
     $scope.init = function () {
 
+        $scope.inputId = "header-search";
         $scope.showModal = false;
         $scope.screenMob = global_screenIsMob;
         $scope.searchListNode = 0;
@@ -62,7 +63,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             }, 10);
         }
         $scope.showAccountBox = !$scope.showAccountBox;
-     }
+     };
 
      /**
      * Following 2 functions perform "Close upon Click Oustide of Hub Box" event
@@ -84,7 +85,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             }, 10);
         }
         $scope.showHubBox = !$scope.showHubBox;
-     }
+     };
 
     $scope.init();
 });

@@ -272,6 +272,9 @@ h3 {
 }
 
 @media (max-width: 855px) and (min-width: 571px) {
+    .global-search-header {
+        display: none;
+    }
     .homit-nav-content {
         width: 570px;
     }
@@ -285,18 +288,29 @@ h3 {
     #sign-btns {
         display: none;
     }
+    .global-search-header{
+        display: none;
+    }
 }
 
 /* start of non-mobile/tablet styles */
-@media screen and (min-device-width: 768px) {
+@media screen and (min-device-width: 777px) {
     .log-in-icon{
         display: none;
     }
 }
 
 /* start of medium tablet styles */
-@media screen and (min-device-width: 480px) and (max-device-width: 767px) {
+@media screen and (min-device-width: 480px) and (max-device-width: 776px) {
+    .homit-nav-content{
+        width: calc(100vw - 20px);
+    }
+    
     .log-in-icon{
+        display: none;
+    }
+   
+    .hub-btn{
         display: none;
     }
 }

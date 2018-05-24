@@ -57,3 +57,17 @@ html, body {
         opacity: 1;
     }
 }
+
+.fadeOut {
+    animation: fadeout 0.4s;
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

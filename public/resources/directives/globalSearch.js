@@ -161,19 +161,16 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
      */
     function clearProductUrl(path) {
         var tempPath = path;
-        let characters = ["#", "&", "'", ",", ".", "%","/", "(", ")"];
-        for (let i = 0; i < characters.length; i++) {
-            tempPath = tempPath.replace(characters[i], "");
-        }
-        tempPath = tempPath.replace("---", "-");
-        tempPath = tempPath.replace("--", "-");
+        tempPath = tempPath.replace(/[#&',.%/()]/g, "");
+        tempPath = tempPath.replace(/[---]/g, "-");
+        tempPath = tempPath.replace(/[--]/g, "-");
         return tempPath;
     }
 
     return {
         restrict: "E", // restrict to element
         scope: {
-
+            inputId: "<inputId",
         },
         templateUrl: '/resources/templates/globalSearch.html',
         link: function (scope, element, attrs) {
@@ -181,10 +178,12 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
             scope.searchListNode = 0;
 
             function addEvLisToSearch() {
-                document.getElementById('global-search-input').addEventListener('keyup', globalSearch, false);
+                document.getElementById(scope.inputId).addEventListener('keyup', globalSearch, false);
             }
-
-            addEvLisToSearch();
+            
+            setTimeout(() => {
+                addEvLisToSearch();
+            }, 2000);
 
             function globalSearch(evt) {
                 if (scope.searchRequest && scope.searchRequest.length >= 3 && evt.keyCode != 40 && evt.keyCode != 38 && evt.keyCode != 13 && evt.keyCode != 27) {

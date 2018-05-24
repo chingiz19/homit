@@ -271,7 +271,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
 
     $scope.removePaymentMethod = function(){
         user.removeCard().then(defaultSuccessCallback, defaultErrorCallback);
-    }
+    };
 
     /**
      * Called to update user security settings
