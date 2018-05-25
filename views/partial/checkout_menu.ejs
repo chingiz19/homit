@@ -1,4 +1,5 @@
 <link href="/resources/css/checkout_menu.css" rel="stylesheet">
+<!--googleoff: snippet-->
 <div ng-controller="cartController" ng-cloak>
     <div class="checkout-menu-btn-div cart-btn-catalog">
         <button id="cart" class="checkout-menu-btn" ng-click="toggleRight()" ng-hide="isOpenRight()">
@@ -56,6 +57,7 @@
         </md-content>
     </md-sidenav>
 </div>
+<!--googleon: snippet-->
 
 <% if (!production) { %>
     <script src="/resources/controllers/checkout_menu.js"></script>

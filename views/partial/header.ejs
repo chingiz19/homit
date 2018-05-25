@@ -4,10 +4,10 @@
 
 <link href="/resources/css/header.css" rel="stylesheet">
 
+<!--googleoff: snippet-->
 <nav class="homit-nav" ng-controller="headerController" ng-cloak>
     <input id="searchBarBoolean" type="hidden" value="<%= showSearchBar %>">
     <div class="homit-nav-content" ng-cloak>
-        <!-- homit icon -->
         <section>
             <a class="white-logo" href="/main" target="_self">
                 <img class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM.png" />
@@ -16,9 +16,7 @@
                 <img class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM_rgb.png" />
             </a>
         </section>
-        <!-- search bar -->
         <global-search ng-if="!screenMob" input-id="inputId" class="global-search-header" flex="40"></global-search>
-        <!-- buttons -->
         <section class="button-sec">
             <button class="hub-btn" ng-click="showHubBoxFun()">
                 hub
@@ -26,6 +24,7 @@
             <div id="hdrHub" ng-if="showHubBox" class="header-hub fadeIn-hdr" ng-style="('<%= userLoggedIn %>' == 'true') && {'right': '28px'} || {'right': '128px'}">
                 <div id="hdrHub1" class="box-extBox"></div>
                 <div id="hdrHub2">
+<!--googleon: snippet-->
                     <div class="hub-box">
                         <div id="liquor-store-dashboard" class="store-div" ng-click="hrefTo('/catalog/liquor-station')">
                             <div>
@@ -62,7 +61,7 @@
                     </div>
                 </div>
             </div>
-
+<!--googleoff: snippet-->
             <% if(!userLoggedIn) { %>
                 <span id="sign-btns" ng-cloak>
                     <button class="homit-btn logIn-btn rgb-background btn-font" ng-click="modal(true, 'login');">
@@ -88,6 +87,7 @@
                         </div>
                     </div>
                     <% } %>
+<!--googleon: snippet-->
         </section>
         <modal class="header-sign-modal" show="showModal" ng-show="showModal" show-login="showLogInModal"></modal>
     </div>

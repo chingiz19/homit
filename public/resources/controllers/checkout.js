@@ -28,11 +28,6 @@ app.controller("checkoutController",
             if ($scope.checkout.getCheckoutUserInfo != "undefined" && $scope.checkout.getCheckoutUserInfo != null && $scope.checkout.getCheckoutUserInfo != "") {
                 $scope.userInfo = $scope.checkout.getCheckoutUserInfo;
             }
-            if (sessionStorage.getAddress()) {
-                $scope.userInfo.address = sessionStorage.getAddress().formatted_address;
-                $scope.userInfo.address_latitude = sessionStorage.getAddressLat();
-                $scope.userInfo.address_longitude = sessionStorage.getAddressLng();
-            }
 
             // TODO: Jeyhun, Elnar please take a look. this gives an error 
             // Check for user, if logged in populate 
@@ -61,6 +56,17 @@ app.controller("checkoutController",
             }, function (err) {
                 // Nothing to do
             });
+
+            if (sessionStorage.getAddress()) {
+                if(sessionStorage.getAddressUnitNumber()){
+                    $scope.userInfo.address_unit_number = sessionStorage.getAddressUnitNumber();
+                } else{
+                    $scope.userInfo.address_unit_number = "";
+                }
+                $scope.userInfo.address = sessionStorage.getAddress().formatted_address;
+                $scope.userInfo.address_latitude = sessionStorage.getAddressLat();
+                $scope.userInfo.address_longitude = sessionStorage.getAddressLng();
+            }
 
             $timeout(function () {
                 mapServices.createCoveragePolygon().then(function (polygon) {
@@ -251,38 +257,33 @@ app.controller("checkoutController",
                 userInfoToSend.birth_year = parseInt($scope.userInfo.dateOfBirth.split("-")[2]);
             }
 
-            //Check if address unit number presents
-            var addressUnitNumber = sessionStorage.getAddressUnitNumber();
-            if(addressUnitNumber){
-                userInfoToSend.unit_number = addressUnitNumber;
-                userInfoToSend.address = _.trim(_.trimStart($scope.checkout.address, userInfoToSend.unit_number));
-            } else{
-                userInfoToSend.address = $scope.checkout.address;
-                userInfoToSend.driver_instruction = $scope.userInfo.drInstruction;
-            }
-            userInfoToSend.address_latitude = $scope.checkout.address_latitude;
-            userInfoToSend.address_longitude = $scope.checkout.address_longitude;
 
-            if ($scope.userInfo.drInstruction) {
-                userInfoToSend.driver_instruction = $scope.userInfo.drInstruction + "; Unit Number: " + userInfoToSend.unit_number;
-            } else if(userInfoToSend.unit_number && userInfoToSend.unit_number != "") {
-                userInfoToSend.driver_instruction = "Unit Number: " + userInfoToSend.unit_number;
-            }
-
-            if($scope.userSignedIn && $scope.userInfo.address && $scope.userInfo.address_latitude && $scope.userInfo.address_longitude){
-                if (!$scope.checkout.address || $scope.checkout.address == ""){
-                    userInfoToSend.unit_number = $scope.userInfo.address_unit_number;
-
-                    if ($scope.userInfo.drInstruction){
-                        userInfoToSend.driver_instruction = $scope.userInfo.drInstruction + "; Unit Number: " + userInfoToSend.unit_number;
-                    } else if(userInfoToSend.unit_number && userInfoToSend.unit_number != ""){
-                        userInfoToSend.driver_instruction = "Unit Number: " + userInfoToSend.unit_number;
-                    }
-
-                    userInfoToSend.address = _.trim(_.trimStart($scope.userInfo.address, userInfoToSend.unit_number));
-                    userInfoToSend.address_latitude = $scope.userInfo.address_latitude;
-                    userInfoToSend.address_longitude = $scope.userInfo.address_longitude;
+            if (sessionStorage.getAddress()) {
+                if(sessionStorage.getAddressUnitNumber()){
+                    $scope.userInfo.address_unit_number = sessionStorage.getAddressUnitNumber();
+                } else{
+                    $scope.userInfo.address_unit_number = "";
                 }
+                $scope.userInfo.address = sessionStorage.getAddress().formatted_address;
+                $scope.userInfo.address_latitude = sessionStorage.getAddressLat();
+                $scope.userInfo.address_longitude = sessionStorage.getAddressLng();
+            } 
+
+            if($scope.userInfo.address_unit_number && $scope.userInfo.address_unit_number != ""){
+                userInfoToSend.unit_number = $scope.userInfo.address_unit_number;
+                userInfoToSend.address = _.trim(_.trimStart($scope.userInfo.address, userInfoToSend.unit_number));
+                userInfoToSend.address_latitude = $scope.userInfo.address_latitude;
+                userInfoToSend.address_longitude = $scope.userInfo.address_longitude;
+                if ($scope.userInfo.drInstruction) {
+                    userInfoToSend.driver_instruction = $scope.userInfo.drInstruction + "; Unit Number: " + userInfoToSend.unit_number;
+                } else if(userInfoToSend.unit_number && userInfoToSend.unit_number != "") {
+                    userInfoToSend.driver_instruction = "Unit Number: " + userInfoToSend.unit_number;
+                }
+            } else{
+                userInfoToSend.driver_instruction = $scope.userInfo.drInstruction;
+                userInfoToSend.address = $scope.userInfo.address;
+                userInfoToSend.address_latitude = $scope.userInfo.address_latitude;
+                userInfoToSend.address_longitude = $scope.userInfo.address_longitude;
             }
 
             let scheduled_delivery = localStorage.getOrderDeliveryHrs();
