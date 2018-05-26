@@ -297,7 +297,7 @@ var createOrders = async function (userId, address, address_lat, address_long, d
         createFunctions.push(Orders.createOrder(orderTransactionId, storeType, orderPrices[storeType], HelperUtils.timestampToSqlDate(scheduleDetails[storeType])));
     }
 
-    return Promise.all(createFunctions).then(function (orderIds) {
+    return Promise.all(createFunctions).then(async function (orderIds) {
         let cmUserId = "";
         if (isGuest) {
             cmUserId = "g_" + userId;
@@ -312,7 +312,7 @@ var createOrders = async function (userId, address, address_lat, address_long, d
         let i = 0;
         for (let storeType in products) {
             let hasSchedDel = false;
-            let inserted = Orders.insertProducts(orderIds[i], products[storeType]);
+            let inserted = await Orders.insertProducts(orderIds[i], products[storeType]);
             let userOrder = {
                 store_type: storeType,
                 order_id: orderIds[i]

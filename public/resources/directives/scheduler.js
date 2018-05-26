@@ -343,7 +343,15 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                     } else if (scope.storeInfo.open) {
                         scope.deliveryOption = "ASAP Delivery";
                     } else {
+                        let initialScheduleJson = {};
+                        initialScheduleJson[store_info.name] = {
+                            "date_selected": 0,
+                            "hrs_selected": 0,
+                            "value": scope.dates.date_array[0].hours_array[0].value
+                        };
                         scope.deliveryOption = "Scheduled Delivery";
+                        localStorage.setOrderDeliveryHrs();
+                        updateOrderDeliveryHrs();
                     }
 
                     scope.showDeliveryOptions = false;
