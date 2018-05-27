@@ -33,7 +33,7 @@ pub.createCustomer = function (userEmail) {
             description: "Account for: " + userEmail
         }, function (err, customer) {
             if (err) {
-                return reject(false);
+                return resolve(false);
             } else {
                 return resolve(customer.id);
             }
@@ -47,7 +47,7 @@ pub.updateCustomerPaymentMethod = async function(custId, token){
             source: token
         }, function (err, card) {
             if (err) {
-                return reject(false);
+                return resolve(false);
             } else {
                 return resolve(true);
             }
@@ -60,7 +60,7 @@ pub.removeCustomerPaymentMethod = async function(custId, token){
         stripe.customers.deleteCard(custId, token, 
             function (err, source) {
             if (err) {
-                return reject(false);
+                return resolve(false);
             } else {
                 return resolve(source.deleted);
             }
@@ -72,7 +72,7 @@ pub.getCustomerPaymentMethod = async function(custId){
     return await new Promise(function (resolve, reject) {
         stripe.customers.retrieve(custId, function (err, customer) {
             if (err) {
-                return reject(false);
+                return resolve(false);
             } else {
                 var card = {};
                 try{
@@ -92,7 +92,7 @@ pub.getCustomerPaymentMethodAsToken = async function(custId){
     return await new Promise(function (resolve, reject) {
         stripe.customers.retrieve(custId, function (err, customer) {
             if (err) {
-                return reject(false);
+                return resolve(false);
             } else {
                 try{
                     return resolve(customer.sources.data[0].id);

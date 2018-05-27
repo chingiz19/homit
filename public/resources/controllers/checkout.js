@@ -1,6 +1,6 @@
 app.controller("checkoutController",
     function ($scope, $http, $location, $rootScope, $cookies, $window, $mdSidenav,
-        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval, googleAnalytics, $timeout, user) {
+        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval, googleAnalytics, $timeout, user, $injector) {
 
         $scope.userInfo = {};
 
@@ -39,11 +39,16 @@ app.controller("checkoutController",
                         $scope.userInfo.phone_number = $scope.userInfo.phone_number.replace(/^(\d{3})(\d{3})(\d{4}).*/, '($1) $2-$3');
                     }
                     $scope.userSignedIn = true;
-                    if ($scope.userInfo.address && $scope.userInfo.address_latitude && $scope.userInfo.address_longitude){
+                    if (res.data.user.address && res.data.user.address_latitude && res.data.user.address_longitude){
                         if (!res.data.user.address_unit_number){
                             res.data.user.address_unit_number = "";
                         }
-                        $scope.autocomplete.setText(_.trimStart(res.data.user.address_unit_number + " " + res.data.user.address));
+
+                        $scope.userInfo.address = res.data.user.address;
+                        $scope.userInfo.address_unit_number = res.data.user.address_unit_number;
+                        if (!$scope.userInfo.address_unit_number){
+                            $scope.userInfo.address_unit_number = "";
+                        }
                     }
 
                     $scope.userInfo.dateOfBirth = res.data.user.dob;
@@ -53,20 +58,34 @@ app.controller("checkoutController",
                     }
                 }
                 $scope.userInfo.hasLiquor = hasLiquor;
+
+                if (sessionStorage.getAddress()) {
+                    if(sessionStorage.getAddressUnitNumber()){
+                        $scope.userInfo.address_unit_number = sessionStorage.getAddressUnitNumber();
+                    } else{
+                        $scope.userInfo.address_unit_number = "";
+                    }
+                    $scope.userInfo.address = sessionStorage.getAddress().formatted_address;
+                    $scope.userInfo.address_latitude = sessionStorage.getAddressLat();
+                    $scope.userInfo.address_longitude = sessionStorage.getAddressLng();
+                }
+
+                var addrInterval = $interval(function(){
+                    if ($injector.has('addressAutocompleteDirective')){
+                        $interval.cancel(addrInterval);
+                        if ($scope.userInfo.address){
+                            // formatted_address from google returns 
+                            if (_.startsWith($scope.userInfo.address, $scope.userInfo.address_unit_number)){
+                                $scope.userInfo.address = _.trimStart(_.replace($scope.userInfo.address, $scope.userInfo.address_unit_number, ""));
+                            }
+                            $scope.autocomplete.setText(_.trimStart($scope.userInfo.address_unit_number + " " + $scope.userInfo.address));
+                        }
+                    }
+                }, 100);
             }, function (err) {
                 // Nothing to do
             });
 
-            if (sessionStorage.getAddress()) {
-                if(sessionStorage.getAddressUnitNumber()){
-                    $scope.userInfo.address_unit_number = sessionStorage.getAddressUnitNumber();
-                } else{
-                    $scope.userInfo.address_unit_number = "";
-                }
-                $scope.userInfo.address = sessionStorage.getAddress().formatted_address;
-                $scope.userInfo.address_latitude = sessionStorage.getAddressLat();
-                $scope.userInfo.address_longitude = sessionStorage.getAddressLng();
-            }
 
             $timeout(function () {
                 mapServices.createCoveragePolygon().then(function (polygon) {
