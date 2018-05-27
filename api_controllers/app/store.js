@@ -23,10 +23,10 @@ router.post('/signin', async function (req, res, next) {
             };
             res.send(response);
         } else {
-            return errorMessages.sendInvalidCredentials(res);
+            return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_CREDENTIALS);
         }
     } else {
-        return errorMessages.sendMissingParams(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 });
 
@@ -41,7 +41,7 @@ router.post('/authenticate', async function (req, res, next) {
         res.send(response);
     } else {
         Auth.invalidate(req);
-        return errorMessages.sendInvalidToken(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_TOKEN);
     }
 });
 
@@ -56,7 +56,7 @@ router.post('/getpendingorders', async function (req, res, next) {
         res.send(response);
     } else {
         Auth.invalidate(req);
-        return errorMessages.sendInvalidToken(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_TOKEN);
     }
 });
 
@@ -71,7 +71,7 @@ router.post('/getallorders', async function (req, res, next) {
         res.send(response);
     } else {
         Auth.invalidate(req);
-        return errorMessages.sendInvalidToken(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_TOKEN);
     }
 });
 
@@ -86,7 +86,7 @@ router.post('/getpreviousorders', async function (req, res, next) {
         res.send(response);
     } else {
         Auth.invalidate(req);
-        return errorMessages.sendInvalidToken(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_TOKEN);
     }
 });
 
@@ -112,11 +112,11 @@ router.post('/itempicked', async function (req, res, next) {
             res.send(response);
         } else {
             Auth.invalidate(req);
-            return errorMessages.sendInvalidToken(res);
+            return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_TOKEN);
         }
     } else {
         Auth.invalidate(req);
-        return errorMessages.sendMissingParams(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 });
 

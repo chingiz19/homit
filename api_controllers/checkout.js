@@ -57,7 +57,7 @@ router.post('/placeorder', async function (req, res, next) {
             let allPrices = Catalog.getAllPricesForProducts(products);
             let totalPrice = allPrices.total_price;
 
-            if (cardToken == 1){
+            if (cardToken == 1) {
                 var custId = Auth.getSignedUser(req).stripe_customer_id;
                 MP.chargeCustomer(custId, totalPrice).then(async function (chargeResult) {
                     let cardDigits = chargeResult.source.last4;
@@ -75,11 +75,11 @@ router.post('/placeorder', async function (req, res, next) {
                         data.address_latitude = address_lat;
                         data.address_longitude = address_long;
                         data.phone_number = phone;
-                
+
                         if (unitNumber) {
                             data.address_unit_number = unitNumber;
                         }
-                
+
                         userId = signedUser.id
                         let key = {
                             id: userId
@@ -92,7 +92,7 @@ router.post('/placeorder', async function (req, res, next) {
                         let guestUserFound = await User.findGuestUser(email);
                         if (guestUserFound) {
                             userId = guestUserFound.id;
-                
+
                             let key = {
                                 id: userId
                             };
@@ -102,7 +102,7 @@ router.post('/placeorder', async function (req, res, next) {
                             userId = await User.addGuestUser(data);
                         }
                     }
-                
+
                     // create orders
                     let placedOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction,
                         unitNumber, phone, isGuest, chargeId, cardDigits, allPrices, products, scheduleDetails);
@@ -110,9 +110,9 @@ router.post('/placeorder', async function (req, res, next) {
                         success: true,
                         orders: placedOrders
                     };
-                
+
                     sendOrderEmail(email, fname, lname, phone, address, cardDigits, placedOrders.orders, scheduleDetails);
-                
+
                     res.send(response);
                 }, async function (error) {
                     if (error) {
@@ -145,13 +145,7 @@ router.post('/placeorder', async function (req, res, next) {
                                 Logger.log.error("Handle any other types of unexpected errors", error);
                                 break;
                         }
-                        res.status(200).json({
-                            success: false,
-                            error: {
-                                "code": "U000",
-                                "message": errMessage
-                            }
-                        });
+                        errorMessages.sendErrorResponse(res, errMessage);
                     }
                 });
             } else {
@@ -171,11 +165,11 @@ router.post('/placeorder', async function (req, res, next) {
                         data.address_latitude = address_lat;
                         data.address_longitude = address_long;
                         data.phone_number = phone;
-                
+
                         if (unitNumber) {
                             data.address_unit_number = unitNumber;
                         }
-                
+
                         userId = signedUser.id
                         let key = {
                             id: userId
@@ -188,7 +182,7 @@ router.post('/placeorder', async function (req, res, next) {
                         let guestUserFound = await User.findGuestUser(email);
                         if (guestUserFound) {
                             userId = guestUserFound.id;
-                
+
                             let key = {
                                 id: userId
                             };
@@ -198,7 +192,7 @@ router.post('/placeorder', async function (req, res, next) {
                             userId = await User.addGuestUser(data);
                         }
                     }
-                
+
                     // create orders
                     let placedOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction,
                         unitNumber, phone, isGuest, chargeId, cardDigits, allPrices, products, scheduleDetails);
@@ -206,9 +200,9 @@ router.post('/placeorder', async function (req, res, next) {
                         success: true,
                         orders: placedOrders
                     };
-                
+
                     sendOrderEmail(email, fname, lname, phone, address, cardDigits, placedOrders.orders, scheduleDetails);
-                
+
                     res.send(response);
                 }, async function (error) {
                     if (error) {
@@ -241,33 +235,16 @@ router.post('/placeorder', async function (req, res, next) {
                                 Logger.log.error("Handle any other types of unexpected errors", error);
                                 break;
                         }
-                        res.status(200).json({
-                            success: false,
-                            error: {
-                                "code": "U000",
-                                "message": errMessage
-                            }
-                        });
+                        errorMessages.sendErrorResponse(res, errMessage);
                     }
                 });
             }
         } else {
-            res.status(200).json({
-                success: false,
-                error: {
-                    "code": "U000",
-                    "message": "Ooops... Something went wrong, please try again."
-                }
-            });
+            errorMessages.sendErrorResponse(res);
             Logger.log.error("Order placed, but store was closed: ");
         }
     } else {
-        res.status(403).json({
-            error: {
-                "code": "U000",
-                "dev_message": "Missing params"
-            }
-        });
+        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 });
 
@@ -409,7 +386,7 @@ var validateStoresOpen = async function (storeTypes, scheduleDetails) {
     return true;
 }
 
-function filterScheduledTime (time) {
+function filterScheduledTime(time) {
     if (time) {
         return time;
     } else {

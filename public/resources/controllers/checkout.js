@@ -195,7 +195,7 @@ app.controller("checkoutController",
         $scope.prepareItemForDB = function (depot_id, itemQuantity) {
             cartService.modifyCartItem(depot_id, itemQuantity)
                 .then(function successCallback(response) {
-                    if (response.data.error && response.data.error.code == "C001") { // use local storage
+                    if (!response.data.success) { // use local storage
                         localStorage.setUserCart($scope.userCart);
                     }
                 }, function errorCallback(response) {
@@ -322,7 +322,7 @@ app.controller("checkoutController",
             }).then(function successCallback(response) {
                 if (!response.data.success) {
                     $scope.paymentMessage_1 = "We are sorry, ";
-                    $scope.paymentMessage_2 = response.data.error.message;
+                    $scope.paymentMessage_2 = response.data.ui_message;
                     updateCheckoutModal("10");
                     return;
                 }
@@ -418,7 +418,7 @@ app.controller("checkoutController",
                 sessionStorage.setAddressUnitNumber("");
                 cartService.clearCart()
                 .then(function successCallback(response) {
-                    if (response.data.error && response.data.error.code == "C001") { // use local storage
+                    if (!response.data.success) { // use local storage
                         localStorage.setUserCart($scope.userCart);
                     }
                     $window.location.href = $window.location.origin + "/main";

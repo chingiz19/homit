@@ -4,67 +4,56 @@
 
 var pub = {};
 
-pub.sendMissingParams = function (res) {
-    var message = {
-        success: false,
-        "error": {
-            "code": "U000",
-            "dev_message": "Missing params"
-        }
-    };
-    res.status(200).json(message);
+pub.UIMessageJar = {
+    MISSING_PARAMS:         "Missing params",
+    USER_EXISTS:            "User already exists",
+    INVALID_CREDENTIALS:    "Invalid email, or password",
+    PASSWORD_MISMATCH:      "new_password should match confirm_password",
+    INVALID_TOKEN:          "Invalid token",
+    CANT_UPDATE_PASSWORDL:  "Something went wrong while updating password, please try again. If error persists contact us at info@homit.ca or 403.800.3460",
+    GENERIC_MESSAGE:        "Ooops... Something went wrong, please try again. If error persists contact us at info@homit.ca or 403.800.3460",
+    USER_NOT_SIGNED:        "User is not signed in",
+    FAILED_EMAIL:           "Couldn't send email, make sure email is valid. If persists contact customer service at at info@homit.ca or 403.800.3460",
+    NOT_AUTHORIZED:         "Not Authorized",
+    PASSWORD_FAILED_UPDATE: "Couldn't update payment method, please try again"
 }
 
-// User already exists
-pub.sendUserAlreadyExists = function (res) {
+/**
+ * Fundamental function that will add sent message,
+ * if not will send generic 'Oooopss..' message. Uses status 200
+ * @param {*} res response stream from HTTP request  
+ * @param {*} message message required to send
+ */
+pub.sendErrorResponse = function (res, message) {
+    let localMessage = pub.UIMessageJar.GENERIC_MESSAGE;
+
+    if (message) {
+        localMessage = message;
+    }
+
     res.status(200).json({
         success: false,
-        error: {
-            code: "A002",
-            "ui_message": "User already exists"
-        }
+        ui_message: localMessage
     });
 }
 
-// Invalid email, or password
-pub.sendInvalidCredentials = function (res) {
-    res.json({
-        success: false,
-        error: {
-            code: "A003",
-            ui_message: "Invalid email, or password"
-        }
-    });
-}
-// passwords should match
-pub.sendPasswordsMismatch = function (res) {
-    res.status(200).json({
-        error: {
-            dev_message: "new_password should match confirm_password"
-        }
-    });
-}
 
-// invalid token
-pub.sendInvalidToken = function (res) {
-    res.status(200).json({
-        success: false,
-        ui_message: "Invalid token"
-    });
-}
+/**
+ * Fundamental function that will add sent message,
+ * if not will send generic 'Oooopss..' message. Uses status 400
+ * @param {*} res response stream from HTTP request  
+ * @param {*} message message required to send
+ */
+pub.sendBadRequest = function (res, message) {
+    let localMessage = pub.UIMessageJar.GENERIC_MESSAGE;
 
-// password update problem
-pub.sendPasswordNotUpdated = function (res) {
-    res.json({
-        success: false,
-        ui_message: "Something went wrong while updating password, please try again. If error persists contact us at info@homit.ca or 403.800.3460"
-    });
-}
+    if (message) {
+        localMessage = message;
+    }
 
-pub.sendGenericError = function(res){
-    res.status(200).json({
+    res.status(403).json({
         success: false,
-        ui_message: "Ooops... Something went wrong, please try again"
+        ui_message: localMessage
     });
 }
 

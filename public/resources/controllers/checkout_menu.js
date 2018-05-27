@@ -127,7 +127,7 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
 
         cartService.clearCart()
             .then(function successCallback(response) {
-                if (response.data.error && response.data.error.code == "C001") { // use local storage
+                if (!response.data.success) { // use local storage
                     localStorage.setUserCart($scope.userCart);
                 }
             }, function errorCallback(response) {
@@ -171,7 +171,7 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
     $scope.prepareItemForDB = function (depot_id, itemQuantity, action) {
         cartService.modifyCartItem(depot_id, itemQuantity)
             .then(function successCallback(response) {
-                if (response.data.error && response.data.error.code == "C001") { // use local storage
+                if (!response.data.success) { // use local storage
                     localStorage.setUserCart($scope.userCart);
                 }
             }, function errorCallback(response) {

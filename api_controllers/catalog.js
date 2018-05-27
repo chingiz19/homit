@@ -69,9 +69,7 @@ router.use('/getstoreinfo', async function (req, res, next) {
             store_infos: store_infos
         });
     } else {
-        res.send({
-            success: false
-        });
+        errorMessages.sendErrorResponse(res);
     }
 });
 

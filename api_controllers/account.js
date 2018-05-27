@@ -14,7 +14,7 @@ router.post('/update', Auth.validate(), async function (req, res, next) {
         // TODO: log error for degubbing
         Auth.invalidate(req);
         // TODO: need a way to let F.E know that a page refresh is required after showing error message
-        return errorMessages.sendGenericError(res);
+        return errorMessages.sendErrorResponse(res);
     }
 
     var allValidParams = {
@@ -49,7 +49,7 @@ router.post('/update', Auth.validate(), async function (req, res, next) {
     };
     req.body.user = HelperUtils.validateParams(req.body.user, allValidParams);
     if (!req.body.user) {
-        return errorMessages.sendMissingParams(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 
     /* Update user info */
@@ -59,12 +59,12 @@ router.post('/update', Auth.validate(), async function (req, res, next) {
     };
 
     if (!(await User.updateUser(req.body.user, key))) {
-        return errorMessages.sendGenericError(res);
+        return errorMessages.sendErrorResponse(res);
     }
 
     var newUser = await User.findUserById(signedUser.id);
     if (!newUser) {
-        return errorMessages.sendGenericError(res);
+        return errorMessages.sendErrorResponse(res);
     }
 
     Auth.signCustomerSession(req, newUser);
@@ -72,7 +72,6 @@ router.post('/update', Auth.validate(), async function (req, res, next) {
         success: true,
         ui_message: "Successfully updated"
     });
-
 });
 
 router.post('/resetpassword', Auth.validate(), function (req, res, next) {
@@ -83,7 +82,7 @@ router.post('/resetpassword', Auth.validate(), function (req, res, next) {
         var newPassword = req.body.new_password;
 
         if (!currentPassword || !newPassword) {
-            return errorMessages.sendMissingParams(res);
+            return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
         } else {
             User.updatePassword(id, currentPassword, newPassword).then(function (updatedUser) {
                 if (updatedUser) {
@@ -92,21 +91,12 @@ router.post('/resetpassword', Auth.validate(), function (req, res, next) {
                     };
                     res.send(response);
                 } else {
-                    let response = {
-                        success: false,
-                        ui_message: "Wrong credintials"
-                    };
-                    res.send(response);
+                    errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_CREDENTIALS)
                 }
             });
         }
     } else {
-        res.status(403).json({
-            error: {
-                "code": "",
-                "dev_message": "User is not signed in"
-            }
-        });
+        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
@@ -120,19 +110,14 @@ router.post('/viewordertransactions', async function (req, res, next) {
             transactions: data
         });
     } else {
-        res.status(403).json({
-            error: {
-                "code": "",
-                "dev_message": "User is not signed in"
-            }
-        });
+        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
 router.post("/viewallorders", Auth.validate(), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (!signedUser) {
-        return errorMessages.sendGenericError(res);
+        return errorMessages.sendErrorResponse(res);
     }
     var orders = [];
     var transactions = await Orders.getOrderTransactionsByUserId(signedUser.id);
@@ -187,24 +172,12 @@ router.post('/vieworders', Auth.validate(), async function (req, res, next) {
             }
 
         } else {
-            res.status(403).json({
-                error: {
-                    "code": "U000",
-                    "dev_message": "Missing params",
-                    "required_params": ["transaction_id"]
-                }
-            });
+            errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.MISSING_PARAMS);
         }
     } else {
-        res.status(403).json({
-            error: {
-                "code": "",
-                "dev_message": "User is not signed in"
-            }
-        });
+        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
-
 
 router.post('/getorder', async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
@@ -224,28 +197,17 @@ router.post('/getorder', async function (req, res, next) {
                 });
             }
         } else {
-            res.status(403).json({
-                error: {
-                    "code": "U000",
-                    "dev_message": "Missing params",
-                    "required_params": ["order_id"]
-                }
-            });
+            errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.MISSING_PARAMS);
         }
     } else {
-        res.status(403).json({
-            error: {
-                "code": "",
-                "dev_message": "User is not signed in"
-            }
-        });
+        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
 router.get('/user', Auth.validate(), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (!signedUser) {
-        return errorMessages.sendGenericError(res);
+        return errorMessages.sendErrorResponse(res);
     }
 
     delete signedUser.id;
@@ -272,11 +234,11 @@ router.get('/user', Auth.validate(), async function (req, res, next) {
 router.post('/paymentmethod/update', Auth.validate(), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (!signedUser) {
-        return errorMessages.sendGenericError(res);
+        return errorMessages.sendErrorResponse(res);
     }
 
     if (!req.body.token) {
-        return errorMessages.sendMissingParams(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 
     // add token to the user
@@ -287,17 +249,14 @@ router.post('/paymentmethod/update', Auth.validate(), async function (req, res, 
             });
         }
     } catch (err) {
-        res.send({
-            success: false,
-            ui_message: "Couldn't update payment method, please try again"
-        });
+        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.PASSWORD_FAILED_UPDATE);
     }
 });
 
 router.post('/paymentmethod/remove', Auth.validate(), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (!signedUser) {
-        return errorMessages.sendGenericError(res);
+        return errorMessages.sendErrorResponse(res);
     }
 
     // add token to the user
@@ -308,16 +267,10 @@ router.post('/paymentmethod/remove', Auth.validate(), async function (req, res, 
                 success: true
             });
         } else {
-            res.send({
-                success: false,
-                ui_message: "There was an issue while removing payment method. Please contect customer service if it wasn't removed"
-            })
+            errorMessages.sendErrorResponse(res)
         }
     } catch (err) {
-        res.send({
-            success: false,
-            ui_message: "Couldn't update payment method, please try again"
-        });
+        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.PASSWORD_FAILED_UPDATE);
     }
 });
 

@@ -10,12 +10,7 @@ router.post('/signin', function (req, res, next) {
     var password = req.body.password;
 
     if (!(email && password)) {
-        res.status(400).json({
-            "error": {
-                "code": "U000",
-                "dev_message": "Missing params"
-            }
-        });
+        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     } else {
         Driver.authenticateDriver(email, password).then(function (driver) {
             if (driver != false) { 
@@ -38,10 +33,7 @@ router.post('/signin', function (req, res, next) {
                 res.send(response);
 
             } else {
-                res.json({
-                    success: false,
-                    ui_message: "Email or password don't match"
-                });
+                errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.INVALID_CREDENTIALS);
             }
         });
     }

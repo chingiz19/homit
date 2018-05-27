@@ -9,7 +9,7 @@ var crypto = require("crypto");
 router.post('/userexists', async function (req, res, next) {
     var email = req.body.email;
     if (!email) {
-        return errorMessages.sendMissingParams(res, ["email"]);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     } else {
         var userExists = await User.findUser(email);
         if (!userExists) {
@@ -34,7 +34,7 @@ router.post('/signup', async function (req, res, next) {
     var password = req.body.password;
 
     if (!(fname && lname && email && password)) {
-        return errorMessages.sendMissingParams(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     } else {
         var hashedPassword = await Auth.hashPassword(password);
         var userExists = await User.findUser(email);
@@ -56,7 +56,7 @@ router.post('/signup', async function (req, res, next) {
                 ui_message: "Successfully signed up. You will receive an email with confirmation"
             });
         } else {
-            return errorMessages.sendUserAlreadyExists(res);
+            return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_EXISTS);
         }
     }
 });
@@ -66,11 +66,11 @@ router.post('/signin', async function (req, res, next) {
     var email = req.body.email;
     var password = req.body.password;
     if (!(email && password)) {
-        return errorMessages.sendMissingParams(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.UIMessageJar.MISSING_PARAMS);
     } else {
         var user = await User.authenticateUser(email, password);
         if (!user) {
-            return errorMessages.sendInvalidCredentials(res);
+            return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_CREDENTIALS);
         } else {
             Auth.signCustomerSession(req, user);
             res.json({
@@ -94,7 +94,7 @@ router.all('/signout', function (req, res, next) {
 router.post('/forgotpassword', async function (req, res, next) {
     // Require email in body
     if (!req.body.email) {
-        return errorMessages.sendMissingParams(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 
     // Create jwt token
@@ -125,10 +125,7 @@ router.post('/forgotpassword', async function (req, res, next) {
             ui_message: "Email has been sent with instructions"
         });
     } else {
-        res.status(200).json({
-            success: false,
-            ui_message: "Couldn't send email, make sure email is valid. If persists contact customer service at at info@homit.ca or 403.800.3460"
-        });
+        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.FAILED_EMAIL);
     }
 });
 
@@ -136,28 +133,24 @@ router.post('/forgotpassword', async function (req, res, next) {
 router.post('/resetpassword', async function (req, res, next) {
     // Check for email and token params
     if (!req.body.email || !req.body.token || !req.body.new_password || !req.body.confirm_password) {
-        return errorMessages.sendMissingParams(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 
     // Assert that n_p, c_p match
     if (req.body.new_password != req.body.confirm_password) {
-        return res.status(200).json({
-            error: {
-                dev_message: "new_password should match confirm_password"
-            }
-        });
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.PASSWORD_MISMATCH);
     }
 
     // Check for valid email and token
     var pHash = await User.getUserPasswordHash(req.body.email);
     if (!pHash) {
-        return errorMessages.sendInvalidToken(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_TOKEN);
     }
 
     var tokenValue = JWTToken.validateResetPasswordToken(req.body.token, pHash);
     pHash = crypto.randomBytes(62).toString(); // clean up
     if (!tokenValue || tokenValue.email != req.body.email) {
-        return errorMessages.sendInvalidToken(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_TOKEN);
     }
 
     // Change password in db
@@ -180,7 +173,7 @@ router.post('/resetpassword', async function (req, res, next) {
 router.get("/csrlogin", async function (req, res, next) {
     var user = await CSR.authenticateCsrUser(req.query.username, req.query.password);
     if (!user) {
-        return errorMessages.sendInvalidCredentials(res);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_CREDENTIALS);
     } else {
         Auth.signCSRSession(req, user);
         res.redirect("/vieworders");

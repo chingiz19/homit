@@ -82,11 +82,7 @@ pub.streamServerLogs = function (res) {
         res.setHeader("content-type", "text/html");
         fs.createReadStream(activeLogLocation).pipe(res);
     } else {
-        var response = {
-            success: false,
-            error_message: "Log file does not exist"
-        };
-        res.send(response);
+        errorMessages.sendErrorResponse(res, "Log file does not exist");
         Logger.log.debug("Could not locate log file at " + activeLogLocation);
     }
 };

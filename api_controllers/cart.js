@@ -16,15 +16,9 @@ router.get('/usercart', async function (req, res, next) {
         }
         res.send(response);
     } else {
-        res.json({
-            error: {
-                code: "C001",
-                "ui_message": "User is not signed in"
-            }
-        });
+        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
-
 
 /* Modify item in user's cart */
 router.post('/modifyitem', async function (req, res, next) {
@@ -44,12 +38,7 @@ router.post('/modifyitem', async function (req, res, next) {
         };
         res.send(response);
     } else {
-        res.json({
-            error: {
-                code: "C001",
-                "ui_message": "User is not signed in"
-            }
-        });
+        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
@@ -68,12 +57,7 @@ router.post('/clear', async function (req, res, next) {
         };
         res.send(response);
     } else {
-        res.json({
-            error: {
-                code: "C001",
-                "ui_message": "User is not signed in"
-            }
-        });
+        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 

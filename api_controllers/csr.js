@@ -17,7 +17,7 @@ router.post('/findusersbyphone', async function (req, res, next) {
         };
         res.send(response);
     } else {
-        return errorMessages.sendMissingParams(res, ["phone_number"]);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 });
 
@@ -33,7 +33,7 @@ router.post('/findusersbyemail', async function (req, res, next) {
         };
         res.send(response);
     } else {
-        return errorMessages.sendMissingParams(res, ["user_email"]);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 });
 
@@ -52,7 +52,7 @@ router.post('/finduserbyorderid', Auth.validateCsr(), async function (req, res, 
             });
         }
     } else {
-        return errorMessages.sendMissingParams(res, ["order_id"]);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     }
 });
 
@@ -61,7 +61,7 @@ router.post('/viewordertransactions', Auth.validateCsr(), async function (req, r
     var guestId = req.body.guest_id;
 
     if (!userId && !guestId) {
-        return errorMessages.sendMissingParams(res, ["user_id", "guest_id"]);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     } else {
         var data;
         if (!userId) {
@@ -80,7 +80,7 @@ router.post('/viewordertransactions', Auth.validateCsr(), async function (req, r
 router.post('/vieworders', Auth.validateCsr(), async function (req, res, next) {
     var orderTransactionId = req.body.transaction_id;
     if (!orderTransactionId) {
-        return errorMessages.sendMissingParams(res, ["transaction_id"]);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     } else {
         var data = await Orders.getOrdersByTransactionId(orderTransactionId);
         res.json({
@@ -93,7 +93,7 @@ router.post('/vieworders', Auth.validateCsr(), async function (req, res, next) {
 router.post('/getorder', Auth.validateCsr(), async function (req, res, next) {
     var orderId = req.body.order_id;
     if (!orderId) {
-        return errorMessages.sendMissingParams(res, ["order_id"]);
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
     } else {
         var data = await Orders.getOrderItemsById(orderId);
         res.json({
