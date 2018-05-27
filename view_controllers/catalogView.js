@@ -52,7 +52,7 @@ var recommended_products = {
             "store_type_api_name": "liquor-station",
             "product_id": 80,
             "category": "cider-and-cooler",
-            "image": "b_3001.jpeg",
+            "image": "c_1057.jpeg",
             "packaging": "1",
             "volume": "750ml",
             "price": 12.49
@@ -752,7 +752,7 @@ var recommended_products = {
             "category": "everyday-needs",
             "image": "p_11000.jpeg",
             "packaging": "4",
-            "volume": "Double R.",
+            "volume": "D. Roll",
             "price": 5.29
         },
         {

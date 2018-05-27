@@ -7,20 +7,20 @@ INSERT INTO `catalog_packaging_containers` (id, name) VALUES(17, "tetra pak");
 INSERT INTO `catalog_packaging_containers` (id, name) VALUES(18, "wrapped");
 
 /*Catalog - Volume*/
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(200, "116gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(201, "140gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(202, "148gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(203, "146gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(204, "193gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(205, "118gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(206, "93gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(207, "480gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(208, "475gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(209, "168gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(210, "306gm");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(211, "12ea.");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(200, "116g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(201, "140g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(202, "148g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(203, "146g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(204, "193g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(205, "118g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(206, "93g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(207, "480g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(208, "475g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(209, "168g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(210, "306g");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(211, "12ea");
 INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(212, "562ml");
-INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(213, "521gm");
+INSERT INTO `catalog_packaging_volumes` (id, name) VALUES(213, "521g");
 
 /*Catalog - Category*/
 INSERT INTO `catalog_categories` (id, name, display_name) VALUES(21, "dairy", "Dairy");

@@ -90,9 +90,9 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
 
     $scope.hrefPrdPage = function (product) {
         var path;
-        path = "/catalog/product/" + product.store_type_api_name + "/" + _.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-") + "/" + product.product_id;
+        path = "/catalog/product/" + product.store_type_api_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
         
-        $window.location.href = $window.location.origin + _.toLower(clearProductUrl(path));
+        $window.location.href = $window.location.origin + path;
     };
 
     function clearProductUrl(path){

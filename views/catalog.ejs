@@ -139,7 +139,7 @@
                                     </li>
                                     <li class="catalog-text item-brand" ng-click="hrefPrdPage(product)">
                                         <div ng-if="product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] > 1"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] }} x {{ product.product_variants.all_volumes[0] }})</div>
-                                        <div ng-if="product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] <= 1"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants.all_volumes[0] }})</div>
+                                        <div ng-if="!(product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] > 1)"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants.all_volumes[0] }})</div>
                                     </li>
                                     <li class="catalog-text item-price">
                                         <span>{{ product.product_variants[product.product_variants.all_volumes[0]][product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0]].price}}C$</span>
