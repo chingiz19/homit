@@ -296,18 +296,16 @@
                     <input name="login_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="login_email" type="email" required/>
                     <div ng-messages="logIn.login_email.$error">
                         <div ng-message="pattern" class="inptErMsg">Email format only</div>
-                        <div ng-message="maxlength">30 caracters maximum</div>
+                        <div ng-message="maxlength">30 characters maximum</div>
                         <div ng-message="required" class="inptErMsg">Required</div>
                     </div>
                 </md-input-container>
                 <md-input-container class="input-width-1">
                     <label class="inptLbl">Password</label>
-                    <input name="login_password" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" maxlength="30" ng-model="login_password"
+                    <input name="login_password" ng-pattern="passPattern" ng-model="login_password" maxlength="30"
                         type="password" required/>
                     <div ng-messages="logIn.login_password.$error">
-                        <div ng-message="pattern">Avoid - ?$!^%'/{[(
-                            <|>)]}\,+”;&#@</div>
-                        <div ng-message="maxlength">30 caracters maximum</div>
+                        <div ng-message="maxlength">30 characters maximum</div>
                         <div ng-message="required">Required</div>
                     </div>
                 </md-input-container>
@@ -393,12 +391,12 @@
                 </div>
                 <md-input-container class="input-width-1">
                     <label class="inptLbl">Password</label>
-                    <input name="signup_password" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" maxlength="30"
+                    <input name="signup_password" ng-pattern="passPattern" maxlength="30" minlength="8"
                         ng-model="signup_password" type="password" required/>
                     <div ng-messages="logIn.signup_password.$error">
-                        <div ng-message="pattern">Avoid - ?$!^%'/{[(
-                            <|>)]}\,+”;&#@</div>
-                        <div ng-message="maxlength">30 caracters maximum</div>
+                        <div ng-message="pattern">Invalid characters</div>
+                        <div ng-message="maxlength">30 characters maximum</div>
+                        <div ng-message="minlength">8 characters minimum</div>
                         <div ng-message="required">Required</div>
                     </div>
                 </md-input-container>

@@ -5,6 +5,8 @@ app.controller("accountsController", function ($scope, $window, $timeout, user) 
         } else {
             $scope.isReqLogIn = false;
         }
+
+        $scope.passPattern = '^(?:([^\ ]))*$';
     };
 
     $scope.loginMob = function (valid) {

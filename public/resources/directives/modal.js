@@ -130,6 +130,8 @@ app.directive("modal", function ($timeout, user, $window) {
                 }
                 pScope = scope;
 
+                scope.passPattern = '^(?:([^\ ]))*$';
+
                 /* Helper functions */
 
             }, 0);

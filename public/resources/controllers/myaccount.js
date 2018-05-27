@@ -15,6 +15,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      */
     $scope.init = function () {
         $scope.dobPattern = /^((0[13578]|1[02])[-.](29|30|31)[-.](18|19|20)[0-9]{2})|((01|0[3-9]|1[1-2])[-.](29|30)[-.](18|19|20)[0-9]{2})|((0[1-9]|1[0-2])[-.](0[1-9]|1[0-9]|2[0-8])[-.](18|19|20)[0-9]{2})|((02)[\/.]29[-.](((18|19|20)(04|08|[2468][048]|[13579][26]))|2000))$/;
+        $scope.passPattern = '^(?:([^\ ]))*$';
 
         $scope.modified = false;
         let selectedSection = sessionStorage.getAccountSection();
@@ -367,6 +368,19 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
                 "event_category": googleAnalytics.eventCategories.address_actions
             });
         }
+    };
+
+    $scope.validateConfirmPass = function(){
+        var valid;
+        if (!$scope.confirm_pass || $scope.confirm_pass == ""){
+            valid = true;
+        } else if ($scope.confirm_pass != $scope.new_pass){
+            valid = false;
+        } else {
+            valid = true;
+        }
+
+        $scope.security_set.confirm_pass.$setValidity("confirm_pass", valid);
     };
 
     /**

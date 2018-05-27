@@ -246,26 +246,27 @@
                         <form class="form-password" name="security_set" ng-submit="updateSecuritySettings(security_set.$valid)">
                             <md-input-container class="md-block container-margin" flex="100">
                                 <label>Old Password</label>
-                                <input id="current_pass" name="current_pass" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" ng-model="current_pass" ng-disabled="!editEnabled" type="password"/>
+                                <input id="current_pass" name="current_pass" ng-model="current_pass" ng-disabled="!editEnabled" type="password"/>
                                 <div ng-messages="security_set.current_pass.$error">
-                                    <div ng-message="pattern">Invalid Characters</div>
                                     <div ng-message="minlength">Required</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block container-margin" flex="100">
                                 <label>New Password</label>
-                                <input id="new_pass" name="new_pass" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" ng-disabled="!editEnabled" ng-model="new_pass" ng-required="old_pass" type="password"/>
+                                <input id="new_pass" name="new_pass" ng-pattern="passPattern" ng-disabled="!editEnabled" ng-model="new_pass" ng-required="old_pass" type="password" maxlength="30" minlength="8"/>
                                 <div ng-messages="security_set.new_pass.$error">
-                                    <div ng-message="pattern">Invalid Characters</div>
-                                    <div ng-message="minlength">Required</div>
+                                    <div ng-message="pattern">Invalid characters</div>
+                                    <div ng-message="maxlength">30 characters maximum</div>
+                                    <div ng-message="minlength">8 characters minimum</div>
+                                    <div ng-message="required">Required</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block container-margin" flex="100">
                                 <label>Confirm Password</label>
-                                <input id="confirm_pass" name="confirm_pass" ng-pattern="/^(?:([^\?\$\{\}\^\(\)\!\'\[\<\ \>\,\+\”\/\;\\\|\%\&\#\@]))*$/" ng-disabled="!editEnabled" ng-model="confirm_pass" ng-required="old_pass" type="password"/>
+                                <input id="confirm_pass" name="confirm_pass" ng-disabled="!editEnabled" ng-model="confirm_pass" ng-change="validateConfirmPass()"ng-required="old_pass" type="password"/>
                                 <div ng-messages="security_set.confirm_pass.$error">
-                                    <div ng-message="pattern">Invalid Characters</div>
-                                    <div ng-message="minlength">Required</div>
+                                    <div ng-message="required">Required</div>
+                                    <div ng-message="confirm_pass">Passwords don't match</div>
                                 </div>
                             </md-input-container>
                             <button class="configButton updateButton margin-top-40" type="submit" ng-show="editEnabled">Update</button>
