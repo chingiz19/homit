@@ -38,7 +38,7 @@ router.post('/modifyitem', async function (req, res, next) {
         };
         res.send(response);
     } else {
-        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
@@ -57,7 +57,7 @@ router.post('/clear', async function (req, res, next) {
         };
         res.send(response);
     } else {
-        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 

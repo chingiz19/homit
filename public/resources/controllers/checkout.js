@@ -194,11 +194,8 @@ app.controller("checkoutController",
 
         $scope.prepareItemForDB = function (depot_id, itemQuantity) {
             cartService.modifyCartItem(depot_id, itemQuantity)
-                .then(function successCallback(response) {
-                    if (!response.data.success) { // use local storage
-                        localStorage.setUserCart($scope.userCart);
-                    }
-                }, function errorCallback(response) {
+                .then(function successCallback(response) {}, function errorCallback(response) {
+                    localStorage.setUserCart($scope.userCart); // use local storage
                     console.log("ERROR");
                 });
 

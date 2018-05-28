@@ -126,11 +126,8 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
         $scope.totalAmount = 0;
 
         cartService.clearCart()
-            .then(function successCallback(response) {
-                if (!response.data.success) { // use local storage
-                    localStorage.setUserCart($scope.userCart);
-                }
-            }, function errorCallback(response) {
+            .then(function successCallback(response) {}, function errorCallback(response) {
+                localStorage.setUserCart($scope.userCart);  // use local storage
                 Logger.log("ERROR");
             });
     };
@@ -170,11 +167,8 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
 
     $scope.prepareItemForDB = function (depot_id, itemQuantity, action) {
         cartService.modifyCartItem(depot_id, itemQuantity)
-            .then(function successCallback(response) {
-                if (!response.data.success) { // use local storage
-                    localStorage.setUserCart($scope.userCart);
-                }
-            }, function errorCallback(response) {
+            .then(function successCallback(response) {}, function errorCallback(response) {
+                localStorage.setUserCart($scope.userCart); // use local storage
                 Logger.log("ERROR");
             });
     };
