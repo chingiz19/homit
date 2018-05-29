@@ -128,7 +128,6 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
         cartService.clearCart()
             .then(function successCallback(response) {}, function errorCallback(response) {
                 localStorage.setUserCart($scope.userCart);  // use local storage
-                Logger.log("ERROR");
             });
     };
 
@@ -169,7 +168,6 @@ function ($scope, $sce, $rootScope, $http, localStorage, cartService,$timeout, $
         cartService.modifyCartItem(depot_id, itemQuantity)
             .then(function successCallback(response) {}, function errorCallback(response) {
                 localStorage.setUserCart($scope.userCart); // use local storage
-                Logger.log("ERROR");
             });
     };
 

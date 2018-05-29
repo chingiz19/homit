@@ -292,10 +292,10 @@ var getTotalPriceForProducts = function (orders) {
     var calcProducts = Catalog.getCartProductsWithStoreType(prices);
 
     price = Catalog.calculatePrice(calcProducts);
-    priceObject.deliveryFee = "C$ " + price.delivery_fee.toFixed(2);
-    priceObject.totalTax = "C$ " + price.total_tax.toFixed(2);
-    priceObject.totalAmount = "C$ " + price.cart_amount.toFixed(2);
-    priceObject.totalPrice = "C$ " + price.total_price.toFixed(2);
+    priceObject.deliveryFee = (price.delivery_fee == 0 ? "FREE" : "C$ " + price.delivery_fee);
+    priceObject.totalTax = "C$ " + price.total_tax;
+    priceObject.totalAmount = "C$ " + price.cart_amount;
+    priceObject.totalPrice = "C$ " + price.total_price;
 
     return priceObject;
 };

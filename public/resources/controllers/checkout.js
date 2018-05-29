@@ -39,30 +39,30 @@ app.controller("checkoutController",
                         $scope.userInfo.phone_number = $scope.userInfo.phone_number.replace(/^(\d{3})(\d{3})(\d{4}).*/, '($1) $2-$3');
                     }
                     $scope.userSignedIn = true;
-                    if (res.data.user.address && res.data.user.address_latitude && res.data.user.address_longitude){
-                        if (!res.data.user.address_unit_number){
+                    if (res.data.user.address && res.data.user.address_latitude && res.data.user.address_longitude) {
+                        if (!res.data.user.address_unit_number) {
                             res.data.user.address_unit_number = "";
                         }
 
                         $scope.userInfo.address = res.data.user.address;
                         $scope.userInfo.address_unit_number = res.data.user.address_unit_number;
-                        if (!$scope.userInfo.address_unit_number){
+                        if (!$scope.userInfo.address_unit_number) {
                             $scope.userInfo.address_unit_number = "";
                         }
                     }
 
                     $scope.userInfo.dateOfBirth = res.data.user.dob;
 
-                    if ($scope.userInfo.card){
+                    if ($scope.userInfo.card) {
                         $scope.useDefaultCard = true;
                     }
                 }
                 $scope.userInfo.hasLiquor = hasLiquor;
 
                 if (sessionStorage.getAddress()) {
-                    if(sessionStorage.getAddressUnitNumber()){
+                    if (sessionStorage.getAddressUnitNumber()) {
                         $scope.userInfo.address_unit_number = sessionStorage.getAddressUnitNumber();
-                    } else{
+                    } else {
                         $scope.userInfo.address_unit_number = "";
                     }
                     $scope.userInfo.address = sessionStorage.getAddress().formatted_address;
@@ -70,12 +70,12 @@ app.controller("checkoutController",
                     $scope.userInfo.address_longitude = sessionStorage.getAddressLng();
                 }
 
-                var addrInterval = $interval(function(){
-                    if ($injector.has('addressAutocompleteDirective')){
+                var addrInterval = $interval(function () {
+                    if ($injector.has('addressAutocompleteDirective')) {
                         $interval.cancel(addrInterval);
-                        if ($scope.userInfo.address){
+                        if ($scope.userInfo.address) {
                             // formatted_address from google returns 
-                            if (_.startsWith($scope.userInfo.address, $scope.userInfo.address_unit_number)){
+                            if (_.startsWith($scope.userInfo.address, $scope.userInfo.address_unit_number)) {
                                 $scope.userInfo.address = _.trimStart(_.replace($scope.userInfo.address, $scope.userInfo.address_unit_number, ""));
                             }
                             $scope.autocomplete.setText(_.trimStart($scope.userInfo.address_unit_number + " " + $scope.userInfo.address));
@@ -101,55 +101,55 @@ app.controller("checkoutController",
             }, 500);
 
             cartService.getCart()
-            .then(function successCallback(response) {
-                if (response.data.success === true) {
-                    updateUserCart(cartService.mergeCarts($scope.userCart, response.data.cart));
-                } else {
-                    updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {})); //REQUIRED to convert to new convention with store_type
-                }
-                localStorage.setUserCart({});
-
-                $scope.stores = [];
-                let storeKeys = Object.keys($scope.userCart);
-                for (let i = 0; i < storeKeys.length; i++){
-                    $scope.stores.push({
-                        type: storeKeys[i]
-                    });
-                }
-
-                $http({
-                    method: 'POST',
-                    url: "/api/checkout/checkout",
-                    data: {
-                        products: Object.keys(cartService.parseCartToSend($scope.userCart))
-                    }
-                }).then(function successCallback(response) {
-                    var checkedItems = response.data;
-                    for (var store_type in $scope.userCart) {
-                        for (var a in $scope.userCart[store_type]) {
-                            $scope.totalAmount = $scope.totalAmount + ($scope.userCart[store_type][a].quantity * $scope.userCart[store_type][a].price);
-                            $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[store_type][a].quantity;
-                            $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
-                            $scope.prepareItemForDB(a, $scope.userCart[store_type][a].quantity);
-
-                            $scope.userCart[store_type][a]["store_open"] = checkedItems.products[store_type][a];
-                        }
-                    }
-                    if ($scope.userCart.hasOwnProperty("liquor-station")) {
-                        $scope.userInfo.hasLiquor = true;
+                .then(function successCallback(response) {
+                    if (response.data.success === true) {
+                        updateUserCart(cartService.mergeCarts($scope.userCart, response.data.cart));
                     } else {
-                        $scope.userInfo.dob_not_valid = false;
+                        updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {})); //REQUIRED to convert to new convention with store_type
                     }
+                    localStorage.setUserCart({});
+
+                    $scope.stores = [];
+                    let storeKeys = Object.keys($scope.userCart);
+                    for (let i = 0; i < storeKeys.length; i++) {
+                        $scope.stores.push({
+                            type: storeKeys[i]
+                        });
+                    }
+
+                    $http({
+                        method: 'POST',
+                        url: "/api/checkout/checkout",
+                        data: {
+                            products: Object.keys(cartService.parseCartToSend($scope.userCart))
+                        }
+                    }).then(function successCallback(response) {
+                        var checkedItems = response.data;
+                        for (var store_type in $scope.userCart) {
+                            for (var a in $scope.userCart[store_type]) {
+                                $scope.totalAmount = $scope.totalAmount + ($scope.userCart[store_type][a].quantity * $scope.userCart[store_type][a].price);
+                                $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[store_type][a].quantity;
+                                $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
+                                $scope.prepareItemForDB(a, $scope.userCart[store_type][a].quantity);
+
+                                $scope.userCart[store_type][a]["store_open"] = checkedItems.products[store_type][a];
+                            }
+                        }
+                        if ($scope.userCart.hasOwnProperty("liquor-station")) {
+                            $scope.userInfo.hasLiquor = true;
+                        } else {
+                            $scope.userInfo.dob_not_valid = false;
+                        }
+
+                    }, function errorCallback(response) {
+                    });
+
+                    // Calculation For receipt
+                    $scope.updatePrices($scope.userCart);
 
                 }, function errorCallback(response) {
+                    updateUserCart(localStorage.getUserCart());
                 });
-
-                // Calculation For receipt
-                $scope.updatePrices($scope.userCart);
-
-            }, function errorCallback(response) {
-                updateUserCart(localStorage.getUserCart());
-            });
         };
 
         $scope.plusItem = function (product) {
@@ -194,7 +194,7 @@ app.controller("checkoutController",
 
         $scope.prepareItemForDB = function (depot_id, itemQuantity) {
             cartService.modifyCartItem(depot_id, itemQuantity)
-                .then(function successCallback(response) {}, function errorCallback(response) {
+                .then(function successCallback(response) { }, function errorCallback(response) {
                     localStorage.setUserCart($scope.userCart); // use local storage
                     console.log("ERROR");
                 });
@@ -207,9 +207,9 @@ app.controller("checkoutController",
             if ($scope.userInfo.dob_not_valid) {
                 $("#date_of_birth").click();
                 return;
-            } 
-            
-            if (!($scope.userInfo.address && $scope.userInfo.address_latitude && $scope.userInfo.address_longitude)){
+            }
+
+            if (!($scope.userInfo.address && $scope.userInfo.address_latitude && $scope.userInfo.address_longitude)) {
                 if (!$scope.userInfo.withinCoverage) {
                     $("#autocompleteAddressInputBox").click();
                     return;
@@ -217,7 +217,7 @@ app.controller("checkoutController",
             }
 
             if (valid) {
-                if ($scope.useDefaultCard){ 
+                if ($scope.useDefaultCard) {
                     $scope.HomeIt(1); // 1 for default payment option, TODO: could be better implemented
                     return;
                 }
@@ -275,27 +275,27 @@ app.controller("checkoutController",
 
 
             if (sessionStorage.getAddress()) {
-                if(sessionStorage.getAddressUnitNumber()){
+                if (sessionStorage.getAddressUnitNumber()) {
                     $scope.userInfo.address_unit_number = sessionStorage.getAddressUnitNumber();
-                } else{
+                } else {
                     $scope.userInfo.address_unit_number = "";
                 }
                 $scope.userInfo.address = sessionStorage.getAddress().formatted_address;
                 $scope.userInfo.address_latitude = sessionStorage.getAddressLat();
                 $scope.userInfo.address_longitude = sessionStorage.getAddressLng();
-            } 
+            }
 
-            if($scope.userInfo.address_unit_number && $scope.userInfo.address_unit_number != ""){
+            if ($scope.userInfo.address_unit_number && $scope.userInfo.address_unit_number != "") {
                 userInfoToSend.unit_number = $scope.userInfo.address_unit_number;
                 userInfoToSend.address = _.trim(_.trimStart($scope.userInfo.address, userInfoToSend.unit_number));
                 userInfoToSend.address_latitude = $scope.userInfo.address_latitude;
                 userInfoToSend.address_longitude = $scope.userInfo.address_longitude;
                 if ($scope.userInfo.drInstruction) {
                     userInfoToSend.driver_instruction = $scope.userInfo.drInstruction + "; Unit Number: " + userInfoToSend.unit_number;
-                } else if(userInfoToSend.unit_number && userInfoToSend.unit_number != "") {
+                } else if (userInfoToSend.unit_number && userInfoToSend.unit_number != "") {
                     userInfoToSend.driver_instruction = "Unit Number: " + userInfoToSend.unit_number;
                 }
-            } else{
+            } else {
                 userInfoToSend.driver_instruction = $scope.userInfo.drInstruction;
                 userInfoToSend.address = $scope.userInfo.address;
                 userInfoToSend.address_latitude = $scope.userInfo.address_latitude;
@@ -304,7 +304,7 @@ app.controller("checkoutController",
 
             let scheduled_delivery = localStorage.getOrderDeliveryHrs();
             let order_scheduled_time = {};
-            for(let store in scheduled_delivery){
+            for (let store in scheduled_delivery) {
                 order_scheduled_time[store] = scheduled_delivery[store].value;
             }
             $http({
@@ -360,13 +360,27 @@ app.controller("checkoutController",
         }
 
         $scope.updatePrices = function (products) {
-            var prices = $scope.calculatePrice(products);
+            $http({
+                method: 'POST',
+                url: '/api/checkout/calculate',
+                data: {
+                    products: cartService.parseCartToSend($scope.userCart),
+                }
+            }).then(function successCallback(response) {
+              if (response.data.success) {
+                let prices = response.data.prices;
 
-            // Updating display variables
-            $scope.delFee = prices.delivery_fee.toFixed(2);
-            $scope.totalAmount = prices.cart_amount.toFixed(2);
-            $scope.GST = prices.total_tax.toFixed(2);
-            $scope.receipt = prices.total_price.toFixed(2);
+                // Updating display variables
+                $scope.delFee = prices.delivery_fee;
+                $scope.totalAmount = prices.cart_amount;
+                $scope.GST = prices.total_tax;
+                $scope.receipt = prices.total_price;
+              } else {
+                alert("Refresh your page");
+              }
+            }, function errorCallback(error) {
+                alert("Error, check your internet and refresh your page");
+            });
         };
 
         $scope.gotAddressResults = function () {
@@ -414,14 +428,14 @@ app.controller("checkoutController",
                 sessionStorage.setAddress("");
                 sessionStorage.setAddressUnitNumber("");
                 cartService.clearCart()
-                .then(function successCallback(response) {
-                    if (!response.data.success) { // use local storage
-                        localStorage.setUserCart($scope.userCart);
-                    }
-                    $window.location.href = $window.location.origin + "/main";
-                }, function errorCallback(response) {
-                    console.log.log("ERROR");
-                });
+                    .then(function successCallback(response) {
+                        if (!response.data.success) { // use local storage
+                            localStorage.setUserCart($scope.userCart);
+                        }
+                        $window.location.href = $window.location.origin + "/main";
+                    }, function errorCallback(response) {
+                        console.log.log("ERROR");
+                    });
             } else {
                 location.reload();
             }
@@ -464,71 +478,7 @@ app.controller("checkoutController",
             $("#date_of_birth").mask("99-99-9999");
         });
 
-        /*
-         * These variables are taken from B.E.
-         * Do NOT modify them
-        */
-        const ALBERTA_GST = 0.05;
-        const DELIVERY_FEE_1 = 4.99;
-        const DELIVERY_FEE_2 = 2.99;
-
-        /**
-         * This method is same as the one in B.E.
-         * This method should NOT be modified
-         * 
-         * @param {*} products 
-         */
-        $scope.calculatePrice = function (products) {
-            var pricesPerOrder = {};
-
-            var totalAmount = 0;
-            var totalTax = 0;
-            var totalDelivery = 0;
-            var totalPrice = 0;
-
-            for (let storeType in products) {
-                var tmpAmount = 0;
-                var tmpTax = 0;
-                for (let item in products[storeType]) {
-                    tmpAmount = tmpAmount + parseFloat(products[storeType][item].price) * products[storeType][item].quantity;
-                    if (products[storeType][item].tax) {
-                        tmpTax = tmpTax + parseFloat(products[storeType][item].price) * products[storeType][item].quantity * ALBERTA_GST;
-                    }
-                }
-                var tmpDelivery = DELIVERY_FEE_1 + Math.floor(parseInt(tmpAmount / 100)) * DELIVERY_FEE_2;
-                tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
-
-                tmpTax = parseFloat(tmpTax.toFixed(2));
-                tmpAmount = parseFloat(tmpAmount.toFixed(2));
-                tmpDelivery = parseFloat(tmpDelivery.toFixed(2));
-
-                var tmpTotalPrice = tmpTax + tmpAmount + tmpDelivery;
-
-                pricesPerOrder[storeType] = {
-                    "cart_amount": tmpAmount,
-                    "delivery_fee": tmpDelivery,
-                    "total_tax": tmpTax,
-                    "total_price": tmpTotalPrice
-                };
-
-                totalAmount = totalAmount + tmpAmount;
-                totalTax = totalTax + tmpTax;
-                totalDelivery = totalDelivery + tmpDelivery;
-                totalPrice = totalPrice + tmpTotalPrice;
-            }
-
-            var finalPrices = {
-                "cart_amount": totalAmount,
-                "delivery_fee": totalDelivery,
-                "total_tax": totalTax,
-                "total_price": totalPrice,
-                "order_prices": pricesPerOrder
-            };
-
-            return finalPrices;
-        };
-
-        $scope.cardCheckbox = function(){
+        $scope.cardCheckbox = function () {
             $scope.useDefaultCard = !$scope.useDefaultCard;
         };
 

@@ -136,7 +136,10 @@
                             <div style="display: flex; align-items: center; justify-content: center;">
                                 <ul class="sn-header-body-ul sn-header-body-right">
                                     <li>C${{totalAmount}}</li>
-                                    <li>C${{delFee}}</li>
+                                    <li>
+                                        <span ng-if="delFee != 0">C${{delFee}}</span>
+                                        <span ng-if="delFee == 0">FREE</span>
+                                    </li>
                                     <li>C${{GST}}</li>
                                 </ul>
                             </div>

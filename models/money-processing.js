@@ -104,8 +104,6 @@ pub.getCustomerPaymentMethodAsToken = async function(custId){
     });
 }
 
-
-
 /**
  * Helper method to create charges to stripe
  * @param {*} stripe_obj - stripe.charges.create method's options

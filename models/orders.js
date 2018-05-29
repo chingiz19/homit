@@ -197,7 +197,9 @@ pub.getOrderItemsById = async function (orderId) {
         product.image AS image,
         cart_item.quantity AS quantity,
         cart_item.price_sold AS price_sold,
-        cart_item.tax AS tax
+        cart_item.tax AS tax,
+        store_type.del_fee_primary,
+        store_type.del_fee_secondary
         
         FROM
         orders_cart_items AS cart_item JOIN catalog_depot AS depot ON (cart_item.depot_id = depot.id)

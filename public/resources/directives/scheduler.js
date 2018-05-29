@@ -350,7 +350,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                             "value": scope.dates.date_array[0].hours_array[0].value
                         };
                         scope.deliveryOption = "Scheduled Delivery";
-                        localStorage.setOrderDeliveryHrs();
+                        localStorage.setOrderDeliveryHrs(initialScheduleJson);
                         updateOrderDeliveryHrs();
                     }
 

@@ -50,11 +50,11 @@ router.post('/placeorder', async function (req, res, next) {
 
     if (!paramsMissing) {
         let dbProducts = await Catalog.getCartProducts(cartProducts);
-        let products = Catalog.getCartProductsWithStoreType(dbProducts, cartProducts);
+        let storeProducts = Catalog.getCartProductsWithStoreType(dbProducts, cartProducts);
 
-        let allStoresOpen = await validateStoresOpen(Object.keys(products), scheduleDetails);
+        let allStoresOpen = await validateStoresOpen(Object.keys(storeProducts), scheduleDetails);
         if (allStoresOpen) {
-            let allPrices = Catalog.getAllPricesForProducts(products);
+            let allPrices = Catalog.getAllPricesForProducts(storeProducts);
             let totalPrice = allPrices.total_price;
 
             if (cardToken == 1) {
@@ -105,7 +105,7 @@ router.post('/placeorder', async function (req, res, next) {
 
                     // create orders
                     let placedOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction,
-                        unitNumber, phone, isGuest, chargeId, cardDigits, allPrices, products, scheduleDetails);
+                        unitNumber, phone, isGuest, chargeId, cardDigits, allPrices, storeProducts, scheduleDetails);
                     let response = {
                         success: true,
                         orders: placedOrders
@@ -195,7 +195,7 @@ router.post('/placeorder', async function (req, res, next) {
 
                     // create orders
                     let placedOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction,
-                        unitNumber, phone, isGuest, chargeId, cardDigits, allPrices, products, scheduleDetails);
+                        unitNumber, phone, isGuest, chargeId, cardDigits, allPrices, storeProducts, scheduleDetails);
                     let response = {
                         success: true,
                         orders: placedOrders
@@ -260,6 +260,36 @@ router.post('/checkout', async function (req, res, next) {
     res.send(response);
 });
 
+router.post('/calculate', async function (req, res, next) {
+    var allValidParams = {
+        "products": {}
+    };
+    req.body = HelperUtils.validateParams(req.body, allValidParams);
+    
+    if (!req.body) {
+        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+    }
+
+    let cartProducts = req.body.products;
+    let dbProducts = await Catalog.getCartProducts(cartProducts);
+    
+    if (!dbProducts) {
+        errorMessages.sendErrorResponse(res);
+        return;
+    }
+
+    let products = Catalog.getCartProductsWithStoreType(dbProducts, cartProducts);
+    let allPrices = Catalog.getAllPricesForProducts(products);
+
+    let localResponse = {
+        success: true,
+        prices: allPrices
+    }
+
+    res.send(localResponse);
+});
+
+
 var createOrders = async function (userId, address, address_lat, address_long, driverInstruction, unitNumber,
     phoneNumber, isGuest, chargeId, cardDigits, allPrices, products, scheduleDetails) {
     let orderTransactionId = await Orders.createTransactionOrder(userId, address, address_lat, address_long, driverInstruction, unitNumber, phoneNumber, isGuest, chargeId, cardDigits, allPrices);
@@ -289,7 +319,7 @@ var createOrders = async function (userId, address, address_lat, address_long, d
         let i = 0;
         for (let storeType in products) {
             let hasSchedDel = false;
-            let inserted = await Orders.insertProducts(orderIds[i], products[storeType]);
+            let inserted = await Orders.insertProducts(orderIds[i], products[storeType].products);
             let userOrder = {
                 store_type: storeType,
                 order_id: orderIds[i]

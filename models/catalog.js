@@ -563,16 +563,17 @@ pub.calculatePrice = function (products) {
     var totalDelivery = 0;
     var totalPrice = 0;
 
+
     for (let storeType in products) {
         var tmpAmount = 0;
         var tmpTax = 0;
-        for (let item in products[storeType]) {
-            tmpAmount = tmpAmount + parseFloat(products[storeType][item].price) * products[storeType][item].quantity;
-            if (products[storeType][item].tax) {
-                tmpTax = tmpTax + parseFloat(products[storeType][item].price) * products[storeType][item].quantity * ALBERTA_GST;
+        for (let item in products[storeType].products) {
+            tmpAmount = tmpAmount + parseFloat(products[storeType].products[item].price) * products[storeType].products[item].quantity;
+            if (products[storeType].products[item].tax) {
+                tmpTax = tmpTax + parseFloat(products[storeType].products[item].price) * products[storeType].products[item].quantity * ALBERTA_GST;
             }
         }
-        var tmpDelivery = DELIVERY_FEE_1 + Math.floor(parseInt(tmpAmount / 100)) * DELIVERY_FEE_2;
+        var tmpDelivery = products[storeType].del_fee_primary + Math.floor(parseInt(tmpAmount / 100)) * products[storeType].del_fee_secondary;
         tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
 
         tmpTax = parseFloat(tmpTax.toFixed(2));
@@ -581,6 +582,11 @@ pub.calculatePrice = function (products) {
 
         var tmpTotalPrice = tmpTax + tmpAmount + tmpDelivery;
 
+        tmpAmount = Math.round(tmpAmount * 100) / 100;
+        tmpTax = Math.round(tmpTax * 100) / 100;
+        tmpDelivery = Math.round(tmpDelivery * 100) / 100;
+        tmpTotalPrice = Math.round(tmpTotalPrice * 100) / 100;
+
         pricesPerOrder[storeType] = {
             "cart_amount": tmpAmount,
             "delivery_fee": tmpDelivery,
@@ -588,12 +594,18 @@ pub.calculatePrice = function (products) {
             "total_price": tmpTotalPrice
         };
 
-        totalAmount = totalAmount + tmpAmount;
-        totalTax = totalTax + tmpTax;
-        totalDelivery = totalDelivery + tmpDelivery;
-        totalPrice = totalPrice + tmpTotalPrice;
+        totalAmount += tmpAmount;
+        totalTax += tmpTax;
+        totalDelivery += tmpDelivery;
+        totalPrice += tmpTotalPrice;
     }
 
+    totalAmount = Math.round(totalAmount * 100) / 100;
+    totalTax = Math.round(totalTax * 100) / 100;
+    totalDelivery = Math.round(totalDelivery * 100) / 100;
+    totalPrice = Math.round(totalPrice * 100) / 100;
+
+   
     var finalPrices = {
         "cart_amount": totalAmount,
         "delivery_fee": totalDelivery,
@@ -614,9 +626,12 @@ pub.getCartProducts = async function (cartProducts) {
     var depotIds = Object.keys(cartProducts);
 
     var sqlQuery = `
-        SELECT depot.id AS depot_id,
-        depot.price AS price, depot.tax AS tax,
-        store_type.name AS store_type
+        SELECT depot.id             AS depot_id,
+        depot.price                 AS price, 
+        depot.tax                   AS tax,
+        store_type.name             AS store_type,
+        store_type.del_fee_primary,
+        store_type.del_fee_secondary
         FROM catalog_depot AS depot JOIN catalog_store_types AS store_type ON(depot.store_type_id = store_type.id)
         WHERE depot.id in (` + depotIds + `)
         ORDER BY store_type`;
@@ -633,7 +648,9 @@ pub.getCartProducts = async function (cartProducts) {
  */
 pub.getCartProductsWithStoreType = function (dbProducts, cartProducts) {
     var products = {};
-    var currentStoreType = {};
+    var currentStoreType = {
+        products: {}
+    };
     for (var i = 0; i < dbProducts.length; i++) {
         var tmpQuantity;
         if (cartProducts) {
@@ -650,14 +667,18 @@ pub.getCartProductsWithStoreType = function (dbProducts, cartProducts) {
 
 
         if (i == 0) {
-            currentStoreType[dbProducts[i].depot_id] = currentItem;
+            currentStoreType.products[dbProducts[i].depot_id] = currentItem;
         } else {
             if (dbProducts[i - 1].store_type != dbProducts[i].store_type) {
                 products[dbProducts[i - 1].store_type] = currentStoreType;
-                currentStoreType = {};
+                currentStoreType = {
+                    products: {}
+                };
             }
-            currentStoreType[dbProducts[i].depot_id] = currentItem;
+            currentStoreType.products[dbProducts[i].depot_id] = currentItem;
         }
+        currentStoreType.del_fee_primary = dbProducts[i].del_fee_primary;
+        currentStoreType.del_fee_secondary = dbProducts[i].del_fee_secondary;
 
         if (i == dbProducts.length - 1) {
             products[dbProducts[i].store_type] = currentStoreType;
