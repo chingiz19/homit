@@ -32,13 +32,13 @@
                 <div id="del-opt-background" class="del-opt-background"></div>
                 <div class="store-info-txt-box" ng-show="deliveryOption">
                     <div class="store-name-txt">{{ display_storeInfo.display_name }}</div>
-                    <scheduler store-type="storeType" delivery-option="deliveryOption" delivery-date="deliveryDate" open-time="open_time" close-time="close_time"></scheduler>
+                    <scheduler store-type="storeType" delivery-option="deliveryOption" delivery-date="deliveryDate" open-time="open_time" close-time="close_time" del-fee="del_fee"></scheduler>
                     <div class="del-opt-info" ng-cloak>
                         <div ng-show="display_storeInfo.open == false && deliveryOption == 'ASAP Delivery'" class="store-oval store-open-hrs">Store Closed. Opens at {{ open_time }}</div>
                         <div ng-show="display_storeInfo.open == true && deliveryOption == 'ASAP Delivery'" class="store-hrs-txt">Open {{ close_time }}</div>
                         <div ng-show="deliveryOption == 'Scheduled Delivery'" class="store-hrs-txt">{{ deliveryDate.month + " " + deliveryDate.day + ", " + deliveryDate.time}}</div>
                         <ng-md-icon icon="fiber_manual_record"></ng-md-icon>
-                        <div class="store-oval store-DF">C$4.99 Delivery Fee</div>
+                        <div class="store-oval store-DF">{{del_fee}}</div>
                     </div>
                 </div>
             </section>

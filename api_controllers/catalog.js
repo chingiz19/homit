@@ -57,7 +57,8 @@ router.use('/getstoreinfo', async function (req, res, next) {
                 name: storeTypeInfo.name,
                 display_name: storeTypeInfo.display_name,
                 image: storeTypeInfo.image,
-                hours: hours
+                hours: hours,
+                delFee: storeTypeInfo.del_fee_primary
             };
             store_infos.push(storeInfo);
         }

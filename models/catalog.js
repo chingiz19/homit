@@ -11,8 +11,6 @@ var pub = {};
 pub.HOMIT_CAR_STORE_TYPE = "homitcar";
 pub.SOLO_LIQUOR_STORE_TYPE = "solo-liquor";
 const ALBERTA_GST = 0.05;
-const DELIVERY_FEE_1 = 4.99;
-const DELIVERY_FEE_2 = 2.99;
 
 /**
  * Get store type name by store type api

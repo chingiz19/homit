@@ -13,6 +13,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
         let oneDayInMilliseconds = 24 * 60 * 60 * 1000;
         let previousDay = weekDay - 1;
 
+
         if (previousDay <= 0) {
             previousDay += 7;
         }
@@ -224,6 +225,31 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
         return localObject;
     }
 
+    function getOpenCloseHours(data) {
+        let localObject = {};
+        let weekObject = purifyObject(data);
+        let today = new Date().getDay() + 1;
+        let closeTime = weekObject[today].close % (24 * 60);
+
+        if (closeTime == 0) {   // for stores that are open 000 - 2400
+            localObject.open = undefined;
+            localObject.close = "24/7";
+        } else {
+            localObject.open = beautifulizeSingleTime(weekObject[today].open);
+            localObject.close = "Until: " + beautifulizeSingleTime(closeTime - 30);
+        }
+        return localObject;
+    }
+
+    function formatDelFeeText(rawText, freeDeliveryText) {
+        if (rawText != undefined) {
+            return (rawText == 0 ? freeDeliveryText : "C$ " + rawText + " Delivery Fee")
+        } else {
+            throw "Error while fomatting delivery fee text, Scheduler.js directive";
+            return "";
+        }
+    }
+
     function getStringWeekDay(data) {
         switch (data) {
             case 0:
@@ -276,23 +302,6 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
         }
     }
 
-    function getOpenCloseHours(data) {
-        let localObject = {};
-        let weekObject = purifyObject(data);
-        let today = new Date().getDay() + 1;
-        let closeTime = weekObject[today].close % (24 * 60);
-
-        if (closeTime == 0) {   // for stores that are open 000 - 2400
-            localObject.open = undefined;
-            localObject.close = "24/7";
-        } else {
-            localObject.open = beautifulizeSingleTime(weekObject[today].open);
-            localObject.close = "Until: " + beautifulizeSingleTime(closeTime - 30);
-        }
-        return localObject;
-    }
-
-
     return {
         restrict: "E", // restrict to element
         scope: {
@@ -303,7 +312,8 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
             closeTime: "=?closeTime",
             storeName: "=?storeName",
             storeImage: "=?storeImg",
-            storeOpen: "=?storeOpen"
+            storeOpen: "=?storeOpen",
+            delFee: "=delFee"
         },
         templateUrl: '/resources/templates/scheduler.html',
         link: function (scope, element, attrs) {
@@ -315,7 +325,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                         store_type: [scope.storeType]
                     }
                 }).then(function successCallback(response) {
-                    if (response.data.success){
+                    if (response.data.success) {
                         init(response.data.store_infos[0]);
                     } else {
                         scope.deliveryOption = "ASAP Delivery";
@@ -331,6 +341,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                     scope.storeInfo = store_info;
                     scope.store_name = store_info.name;
                     scope.storeName = store_info.display_name;
+                    scope.delFee = formatDelFeeText(store_info.delFee, "FREE delivery");
                     scope.storeImage = "/resources/images/non-catalog-image/store-logo/" + store_info.image;
 
                     scope.dates = buildDatesArray(scope.storeInfo.hours);
