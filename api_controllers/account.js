@@ -5,13 +5,18 @@
 var router = require("express").Router();
 var _ = require("lodash");
 
+/* Building metadata for log */
+var metaData = {
+    directory: __filename
+}
+
 router.post('/update', Auth.validate(), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
 
     /* Checks and validations */
 
     if (!signedUser.id) {
-        // TODO: log error for degubbing
+        Logger.log.error("Undefined user id for signed user! Invalidated session", metaData);
         Auth.invalidate(req);
         // TODO: need a way to let F.E know that a page refresh is required after showing error message
         return errorMessages.sendErrorResponse(res);

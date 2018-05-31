@@ -1,0 +1,77 @@
+.fadeIn {
+    animation: fadein 0.4s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeOut {
+    animation: fadeout 0.4s;
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.turn-back {
+    animation: rotate180 1.5s, fadein 0.5s;
+}
+
+@keyframes rotate180 {
+    from {
+        transform: rotateY(180deg);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes icon-move-y {
+    0%, 100% {
+        transform: translate(0, -23px);
+    }
+
+    25% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(0, 23px);
+    }
+
+    75% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes icon-move-x {
+    0%, 100% {
+        transform: translateX(-65px);
+    }
+
+    25% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(65px);
+    }
+
+    75% {
+        transform: translateX(0);
+    }
+}

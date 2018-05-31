@@ -113,6 +113,10 @@ router.post('/placeorder', async function (req, res, next) {
 
                     sendOrderEmail(email, fname, lname, phone, address, cardDigits, placedOrders.orders, scheduleDetails);
 
+                    if (isGuest) {
+                        Email.subscribeToGuestUsers(email, fname, lname);
+                    }
+
                     res.send(response);
                 }, async function (error) {
                     if (error) {
@@ -202,6 +206,10 @@ router.post('/placeorder', async function (req, res, next) {
                     };
 
                     sendOrderEmail(email, fname, lname, phone, address, cardDigits, placedOrders.orders, scheduleDetails);
+
+                    if (isGuest) {
+                        Email.subscribeToGuestUsers(email, fname, lname);
+                    }
 
                     res.send(response);
                 }, async function (error) {

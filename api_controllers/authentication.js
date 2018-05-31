@@ -48,13 +48,20 @@ router.post('/signup', async function (req, res, next) {
                 stripe_customer_id: stripeCustomerId
             };
             var insertedUser = await User.addUser(userData);
-            //TODO: check for success
-            var user = await User.findUser(email);
-            Auth.signCustomerSession(req, user);
-            res.json({
-                success: true,
-                ui_message: "Successfully signed up. You will receive an email with confirmation"
-            });
+            if (!isNaN(insertedUser)) {
+                var user = await User.findUser(email);
+                Auth.signCustomerSession(req, user);
+                Email.subscribeToSignedUsers(email, fname, lname);
+                res.json({
+                    success: true,
+                    ui_message: "Successfully signed up. You will receive an email with confirmation"   // do they? 
+                });
+            } else {
+                res.json({
+                    success: false,
+                    ui_message: "Sign up error, please refresh page and try again."   
+                });
+            }
         } else {
             return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_EXISTS);
         }

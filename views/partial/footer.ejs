@@ -1,62 +1,66 @@
 <link href="/resources/css/footer.css" rel="stylesheet">
 <div ng-controller="footerController" ng-cloak>
-    <main layout="columns" layout-align="center start">
-        <!-- Left column -->
-        <!--googleoff: snippet-->
-        <ul class="col_1" flex="40">
-            <li layout="column" class="col_1_A">
-                <div id="tu_tx" class="col_1_AA col_1_2_A">
-                    <a itemprop="url" class="text" href="/terms-of-use" target="_self">Terms of Use</a>
-                </div>
-                <div id="tu_ln" class="lnk_ln"></div>
-            </li>
-            <li layout="column" class="col_1_A">
-                <div id="pp_tx" class="col_1_AA col_1_3_A">
-                    <a itemprop="url"class="text" href="/privacy" target="_self">Privacy Policy</a>
-                </div>
-                <div id="pp_ln" class="lnk_ln"></div>
-            </li>
-            <li layout="column" class="col_1_A">
-                <div id="cu_tx" class="col_1_AA col_1_4_A">
-                    <a itemprop="url" class="text" href="/about" target="_self">About Us</a>
-                </div>
-                <div id="cu_ln" class="lnk_ln"></div>
-            </li>
-        </ul>
-        <!--googleon: snippet-->
-        <!-- Center column -->
-        <section class="col_2">
-            <a href="/main" target="_self" title="Homit">
-                <img class="ftr-logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_white.jpeg" width="60" height="60">
-            </a>
-        </section>
-        <!-- Right column -->
-        <!--googleoff: snippet-->
-        <ul class="col_3" flex="40">
-            <li layout="column" class="col_3_A">
-                <div id="fd_tx" class="col_3_AA col_3_2_A">
-                    <a itemprop="url" class="text" href="https://facebook.com/homit.ca" target="_blank">Facebook</a>
-                </div>
-                <div id="fd_ln" class="lnk_ln"></div>
-            </li>
-            <li layout="column" class="col_3_A">
-                <div id="if_tx" class="col_3_AA col_3_3_A">
-                    <a itemprop="url" class="text" href="/refund" target="_self">Refund Policy</a>
-                </div>
-                <div id="if_ln" class="lnk_ln"></div>
-            </li>
-            <li layout="column" class="col_3_A">
-                <div id="is_tx" class="col_3_AA col_3_4_A">
-                    <a itemprop="url" class="text" href="/contactus" target="_self">Contact Us</a>
-                </div>
-                <div id="is_ln" class="lnk_ln"></div>
-            </li>
-        </ul>
-        <!--googleon: snippet-->
-    </main>
-    <div class="homit-copyright">2018 © Homit</div>    
-</div>
-
+    <section class="footer-sec-web">
+        <div class="footer-sec-div">
+            <div class="box-center footer-div-1">
+                <a href="/main" target="_self" title="Homit">
+                    <img src="/resources/images/non-catalog-image/homit_logo/Homit_Logo.jpeg">
+                </a>
+            </div>
+            <div class="footer-div">
+                <h4>ABOUT</h4>
+                <a itemprop="url" class="text" href="/about" target="_self">About Homit</a>
+                <a itemprop="url" class="text" href="/contactus" target="_self">Contact Us</a>
+            </div>
+            <div class="footer-div">
+                <h4>FOLLOW US</h4>
+                <a itemprop="url" class="text" href="https://www.instagram.com/homit_official" target="_blank">Instagram</a>
+                <a itemprop="url" class="text" href="https://facebook.com/homit.ca" target="_blank">Facebook</a>
+                <a itemprop="url" class="text" href="https://twitter.com/homitca" target="_blank">Twitter</a>
+            </div>
+            <div class="footer-div">
+                <h4>POLICIES and TERMS</h4>
+                <a itemprop="url" class="text" href="/terms-of-use" target="_self">Terms of Use</a>
+                <a itemprop="url"class="text" href="/privacy" target="_self">Privacy Policy</a>
+                <a itemprop="url" class="text" href="/refund" target="_self">Refund Policy</a>
+            </div>
+            <div class="footer-div-5">
+                <h4>PAYMENT OPTIONS</h4>
+                <img src="/resources/images/non-catalog-image/pages/visa_icon.png">
+                <img src="/resources/images/non-catalog-image/pages/mastercard_icon.png">
+                <img src="/resources/images/non-catalog-image/pages/american_express_icon.png">
+            </div>
+        </div>
+    </section>
+    <section class="footer-sec-mob">
+        <div class="footer-div-mob">
+            <div class="div-mob div-mob-1">
+                <a itemprop="url" class="text" href="/about" target="_self">About Homit</a>
+                <a itemprop="url" class="text" href="/contactus" target="_self">Contact Us</a>
+            </div>
+            <div class="div-mob div-mob-2">
+                <a itemprop="url"class="text" href="/privacy" target="_self">Privacy</a>
+                <a itemprop="url" class="text" href="/refund" target="_self">Refund Policy</a>
+                <a itemprop="url" class="text" href="/terms-of-use" target="_self">Terms</a>
+            </div>
+            <div class="div-mob-payment">
+                <img src="/resources/images/non-catalog-image/pages/visa_icon.png">
+                <img src="/resources/images/non-catalog-image/pages/mastercard_icon.png">
+                <img src="/resources/images/non-catalog-image/pages/american_express_icon.png">
+            </div>
+            <div class="div-mob div-mob-4">
+                <a itemprop="url" class="text" href="https://twitter.com/homitca" target="_blank">
+                    <ng-md-icon icon="twitter" size="40"></ng-md-icon>
+                </a>
+                <a itemprop="url" class="text" href="https://www.instagram.com/homit_official" target="_blank">
+                    <img src="/resources/images/non-catalog-image/pages/instagram_icon.png">
+                </a>
+                <a itemprop="url" class="text" href="https://facebook.com/homit.ca" target="_blank">
+                    <ng-md-icon icon="facebook" size="36"></ng-md-icon>
+                </a>
+            </div>
+        </div>
+    </section>
 <% if (!production) { %>
     <script src="/resources/controllers/footer.js"></script>
 <% } %>

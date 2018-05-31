@@ -119,7 +119,7 @@
                     <div id="category_box" class="cat-subcat-body category-box">
                         <ul class="cat-list same-line" layout="column">
                             <li ng-repeat='category in <%= categories %> track by $index' ng-click="hrefToCat(category)" style="outline: none;">
-                                <div class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': 'rgba(0,189,149,0.7)'}">
+                                <div class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': '#00cc99'}">
                                     <span ng-style="( '<%= selectedCategory %>' == category ) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'22px'}">{{ category }}</span>
                                 </div>
                             </li>
@@ -142,7 +142,7 @@
                                         <div ng-if="!(product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] > 1)"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants.all_volumes[0] }})</div>
                                     </li>
                                     <li class="catalog-text item-price">
-                                        <span>{{ product.product_variants[product.product_variants.all_volumes[0]][product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0]].price}}C$</span>
+                                        <span>C${{ product.product_variants[product.product_variants.all_volumes[0]][product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0]].price}}</span>
                                     </li>
                                 </ul>
                             </div>

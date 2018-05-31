@@ -9,5 +9,6 @@ router.use("/checkout", require(path.join(__dirname, "./checkout")));
 router.use("/map", require(path.join(__dirname, "./map")));
 router.use("/sms", require(path.join(__dirname, "./sms")));
 router.use("/csr", require(path.join(__dirname, "./csr")));
+router.use("/marketing", require(path.join(__dirname, "./marketing")));
 
 module.exports = router;

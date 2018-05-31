@@ -368,11 +368,11 @@ md-radio-button:focus {
 }
 
 md-radio-button .md-on {
-    background-color: rgba(0, 189, 149, 0.67);
+    background-color: #00cc99;
 }
 
 md-radio-button.md-checked .md-off {
-    border-color: rgba(0, 189, 149, 0.67);
+    border-color: #00cc99;
 }
 
 md-radio-button .md-label {
@@ -585,7 +585,7 @@ md-radio-button .md-label {
     }
     
     .mh-cat-selected {
-        background-color: rgba(0, 189, 149, 0.7);
+        background-color: #00cc99;
         font-size: 21px !important;
         color: white !important;
         font-weight: 600;

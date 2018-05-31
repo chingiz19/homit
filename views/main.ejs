@@ -14,9 +14,10 @@
 <img class="none" src="/resources/images/non-catalog-image/store-logo/dwarf-stars_icon.png">
 <img class="none" src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
 <img class="none" src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
-
+<img class="none" src="/resources/images/non-catalog-image/pages/main_promotion_1.jpeg">
+<img class="none" src="/resources/images/non-catalog-image/pages/main_promotion_2.jpeg">
 <body ng-cloak>
-    <div ng-controller="mainController" style="background-color: rgb(251,251,251);">
+    <div ng-controller="mainController" class="main-controller">
         <section id="address" class="full-screen address-section box-center">
             <div class="address-div">
                 <div class="store-div-main fadeIn">
@@ -55,67 +56,82 @@
                                 on-address-selected="gotAddressResults" autocomplete-bounds="bounds" show-coverage-map="showCoverageMap"></address-autocomplete>
                         </span>
                     </span>
-                    <h1 class="loc-sucsess-msg loc-sucsess-msg-txt">We Deliver!</h1>
+                    <h1 class="loc-sucsess-msg loc-sucsess-msg-txt">{{ addressMessage }}</h1>
                     <div class="ul-zero">
                         <h1 class="landing-message fadeIn">From Local Stores to Your Doors</h1>
                     </div>
                 </div>
             </div>
         </section>
-        <img class="none" src="/resources/images/non-catalog-image/pages/homit-step_1.png">
-        <img class="none" src="/resources/images/non-catalog-image/pages/homit-step_2.png">
-        <img class="none" src="/resources/images/non-catalog-image/pages/homit-step_3.png">
-        <section id="homit-order-steps" class="full-screen about-homit-section box-center">
-            <div flex="100" class="order-steps-section">
-                <div flex="30" class="order-step box-center">
-                    <img class="order-step-img order-stp-1-img fadeIn" src="/resources/images/non-catalog-image/pages/homit-step_1.png">
-                    <article>
-                        <h2 class="order-step-header">Shop at Store Catalog</h2>
-                        <br class="test">
-                        <p class="order-step-p">We are here to bring shopping experience to the next level! Shopping for local stores without leaving
-                            your comfort zone was never this easy. <span class="step-desc-2">Browse our conveniently designed product catalogs through
-                            variety of stores with more than 1,500 popular items to choose from. Place your order online and
-                            watch us appear at your doorstep shortly after.</span></p>
-                    </article>
+        <section class="promotion-sec">
+            <div class="steps-div">
+                <div class="fadeIn">
+                    <h2>Shop at Store Catalog</h2>
+                    <p><span class="span-text-step">Shopping for local stores was never this easy.</span> Browse conveniently designed product catalogs through variety of stores with over 1,700 popular items.</p>
                 </div>
-                <div flex="30" class="order-step box-center">
-                    <img class="order-step-img fadeIn" src="/resources/images/non-catalog-image/pages/homit-step_2.png">
-                    <article>
-                        <h2 class="order-step-header">Keep Doing What You Love</h2>
-                        <p class="order-step-p">Every single piece of us will start working towards getting your products delivered to you in a timely manner the very same
-                            moment you place order online. <span class="step-desc-2">Homit has one of the biggest delivery coverages in Calgary area.
-                            All we want from you is to continue spending quality time by doing what you love to do the most.</span>
-                        </p>
-                    </article>
+                <div class="fadeIn">
+                    <h2>Keep Doing What You Love</h2>
+                    <p>Every single piece of us will start working towards getting your products delivered to you in a timely manner the very same
+                        moment you place order online.</p>
                 </div>
-                <div flex="30" class="order-step box-center">
-                    <img class="order-step-img fadeIn" src="/resources/images/non-catalog-image/pages/homit-step_3.png">
-                    <article>
-                        <h2 class="order-step-header">Experience "Homit" Magic</h2>
-                        <p class="order-step-p">Homit offers 24-hour delivery service and location independent delivery fee in Calgary area since
-                            customer satisfaction is our driving force. <span class="step-desc-2">Also Homit helps local businesses to grow by delivering
-                            from local stores in communities. Thank you for letting us be your very local and personal shopper.</span></p>
-                    </article>
+                <div class="fadeIn">
+                    <h2>Expirience Homit Magic</h2>
+                    <p>24/7 and location independent delivery fee in Calgary area, because customer satisfaction is our driving force. <span class="span-text-step">Let us be your local and personal shopper.</span></p>
+                </div>
+            </div>
+            <div class="promotion-1-2-sec">
+                <div class="promotion-img-1">
+                </div>
+                <div class="fadeIn promotion-1-div">
+                    <h2>Fresh pizza toppings and dough</h2>
+                    <p>Making homemade pizza from prepared in Italian style dough was never so quick and easy. Pile on your favorite toppings and get ready to chow down.</p>
+                    <button ng-click="hrefTo('/catalog/linas-italian-market/pasta-and-baking')" class="CG-cur-button box-center">SHOP NOW<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                </div>
+            </div>
+            <div class="promotion-1-2-sec prm-sec-2-mob">
+                <div class="fadeIn promotion-2-div">
+                    <h2>Vegan chocolates and crunchy snacks</h2>
+                    <p>Ever craved nut-free, dairy-free and vegan chocolates? Or late night munchies? Or forgot to stock your bar? Shop now - receive in 45-MINUTES.</p>
+                    <button ng-click="hrefTo('/catalog/dwarf-stars/chocolate-and-bar')" class="CG-cur-button box-center">SHOP NOW<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                </div>
+                <div class="promotion-img-2">
                 </div>
             </div>
         </section>
-        <img class="none" src="/resources/images/non-catalog-image/cover-image/map_cover.png">
-        <section id="coverage-map" class="full-screen coverage-map-sec">
-            <div class="map-container">
-                <!--googleoff: snippet-->
-                <div class="address-message" ng-if="showMapMessage">
-                    <div class="message-cover"></div>
-                    <span class="address-message-text">Comming to your area soon.</span>
+<!--googleoff: snippet-->
+        <section class="trending-prd-sec">
+            <div class="tranding-hdr">
+                <span>Trending Products</span>
+            </div>
+            <div class="tranding-body">
+                <div>
+                    <ul ng-click="hrefPrdPage(item)" ng-repeat="item in trandingProducts[trandingSelected]" class="prom-item-ul turn-back">
+                        <li class="box-center">
+                            <img ng-src="/resources/images/products/{{ item.category }}/{{ item.image }}">
+                        </li>
+                        <li class="box-center prom-item-brand" ng-if="item.packaging > 1"><span>{{ item.brand + " " + item.name }}<span class="prom-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span></span></li>
+                        <li class="box-center prom-item-brand" ng-if="!(item.packaging > 1)"><span>{{ item.brand + " " + item.name }}<span class="prom-item-size"> {{ "(" + item.volume + ")"}}</span></span></li>
+                        <li class="prom-item-price">{{ item.price }}</li>
+                    </ul>
                 </div>
-                <div id="map"></div>
-                <!--googleon: snippet-->
-                <div class="coverage-txt">
-                    <h2>Homit Coverage Area</h2>
-                    <p>Calgary, AB</p>
+            </div>
+            <div class="box-center tranding-ftr">
+                <div>
+                    <button id="homit_mix" ng-click="changeTranPrd('homit_mix')" class="CG-cur-button box-center pad-zero tranding-type-btn tranding-btn-mob">HOMIT MIX</button>
+                    <button id="popular" ng-click="changeTranPrd('popular')" class="CG-cur-button pad-zero box-center tranding-btn-mob">POPULAR</button>
+                    <button id="new_on_homit" ng-click="changeTranPrd('new_on_homit')" class="CG-cur-button pad-zero box-center tranding-type-btn tranding-btn-mob">NEW ON HOMIT</button>
                 </div>
             </div>
         </section>
-    </div>
+        <section class="subscribe-section">
+            <div class="subscribe-div">
+                <div style="display: flex; flex-direction: row;">
+                    <input type="text" id="subscribe-input" ng-class="subscribeClassInput" class="homit-font" placeholder="your.email@example.com" name="email" ng-focus = "subscribeOnFocus()" ng-pattern="/^.+@.+\..+$/" type="email" ng-model="subscribeEmail" required>
+                    <button ng-click="subscribe()" ng-class="subscribeClassBtn" class="box-center homit-font">{{subscribeButtonText}}<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                </div>
+                <span class="subscribe-error-message">{{subscribeErrorMessage}}</span>
+            </div>
+        </section>
     </div>
     <% if (!production) { %>
         <script src="/resources/services/localStorage.js"></script>

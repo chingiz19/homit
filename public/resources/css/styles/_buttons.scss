@@ -46,3 +46,40 @@
     width: 30px;
     height: 30px;
 }
+
+//Caribbean Green curvy button
+.CG-cur-button {
+    overflow-x: hidden;
+    width: 180px;
+    height: 54px;
+    padding-left: 20px;
+    border-style: none;
+    color: #fff;
+    background-color: rgb(0, 204, 153);;
+    border-radius: 27px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.CG-cur-button:hover {
+    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.25);
+    transition: all 0.4s ease;
+}
+
+.CG-cur-button:focus {
+    outline: 0;
+}
+
+.CG-cur-button:hover .CG-done-icon {
+    right: -5px;
+}
+
+.CG-done-icon {
+    position: relative;
+    right: -100px;
+    top: -2px;
+    fill: #fff;
+    transition: right 0.3s ease;
+}

@@ -15,6 +15,7 @@
   "homepage": "https://bitbucket.org/jgurbano/deliverystartup#readme",
   "dependencies": {
     "Promise": "^1.0.5",
+    "axios": "^0.18.0",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.16.1",
     "cheerio": "^1.0.0-rc.2",

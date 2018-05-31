@@ -9,9 +9,14 @@ var products = {};
 var path = require("path");
 var ejs = require("ejs");
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 const fs = require('fs');
 const cheerio = require('cheerio')
-const MESSAGE_IF_STORE_NA = "Sorry but address is not available, contact us for more details";
+const MESSAGE_IF_STORE_NA = "Sorry, address is not available, contact us for more details";
+const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
+
+/* Metada used by logger */
+
 
 /* Create reusable transporter object for orders */
 let orderTransporter = nodemailer.createTransport({
@@ -55,7 +60,6 @@ var sendEmailViaOrders = function (mailOptions) {
         }
     });
 }
-
 
 /* Send reset password emails using no-reply transporter object. 
  * <no-reply@homit.ca> account 
@@ -351,15 +355,151 @@ pub.deleteTransactionEmail = async function (transactionId) {
     await db.deleteQuery(db.tables.orders_emails, data);
 }
 
+/**
+ * Subscribes to Guest users list 
+ * @param {*} email customer email
+ * @param {*} fname first name should be accompanied by last name
+ * @param {*} lname last name should be accompanied by first name
+ */
+pub.subscribeToGuestUsers = async function (email, fname, lname) {
+    if (email) {
+        let GUEST_USERS_LIST = process.env.GUEST_USERS_LIST;
+        let JsonRequest = {
+            "email_address": email,
+            "status": "subscribed"
+        };
+
+        if (fname && lname) {
+            JsonRequest.merge_fields = {
+                "FNAME": fname,
+                "LNAME": lname,
+                "ADDRESS": "",
+                "PHONE": ""
+            }
+        }
+
+        return axios.post('https://us18.api.mailchimp.com/3.0/lists/' + GUEST_USERS_LIST + '/members', JsonRequest, {
+            headers: { 'Authorization': 'apikey ' + MAILCHIMP_API_KEY }
+        })
+            .then(response => {
+                if (response.data.status == "subscribed") {
+                    Logger.log.info("Successfully subscribed " + response.data.email_address + " to Guest users list");
+                    subscribeToAllUsers(email, fname, lname);
+                    return true;
+                }
+            })
+            .catch(error => {
+                console.log(error.response.data.title);
+                var metaData = {
+                    directory: __filename,
+                    error_message: error.response.data.title,
+                }
+                Logger.log.error("Error happened while subscribing member to Guest users list" + metaData);
+                return false;
+            });
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Subscribes to Signed Up users list 
+ * NOTE: Signed up users are also part of All users list
+ * @param {*} email customer email
+ * @param {*} fname first name should be accompanied by last name
+ * @param {*} lname last name should be accompanied by first name
+ */
+pub.subscribeToSignedUsers = async function (email, fname, lname) {
+    if (email) {
+        let SIGNED_USERS_LIST = process.env.SIGNED_USERS_LIST;
+        let JsonRequest = {
+            "email_address": email,
+            "status": "subscribed"
+        };
+
+        if (fname && lname) {
+            JsonRequest.merge_fields = {
+                "FNAME": fname,
+                "LNAME": lname,
+                "ADDRESS": "",
+                "PHONE": ""
+            }
+        }
+
+        axios.post('https://us18.api.mailchimp.com/3.0/lists/' + SIGNED_USERS_LIST + '/members', JsonRequest, {
+            headers: { 'Authorization': 'apikey ' + MAILCHIMP_API_KEY }
+        })
+            .then(response => {
+                if (response.data.status == "subscribed") {
+                    Logger.log.info("Successfully subscribed " + response.data.email_address + " to Signed users list");
+                    subscribeToAllUsers(email, fname, lname);
+                }
+            })
+            .catch(error => {
+                console.log(error.response.data.title);
+                var metaData = {
+                    directory: __filename,
+                    error_message: error.response.data.title,
+                }
+                Logger.log.error("Error happened while subscribing member to Signed users list" + metaData);
+            });
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Seubscribes email to All users list at Mail Chimp
+ * @param {*} email customer email
+ * @param {*} fname first name should be accompanied by last name
+ * @param {*} lname last name should be accompanied by first name
+ */
+async function subscribeToAllUsers(email, fname, lname) {
+    if (email) {
+        let ALL_USERS_LIST = process.env.ALL_USERS_LIST
+        let JsonRequest = {
+            "email_address": email,
+            "status": "subscribed"
+        };
+
+        if (fname && lname) {
+            JsonRequest.merge_fields = {
+                "FNAME": fname,
+                "LNAME": lname,
+                "ADDRESS": "",
+                "PHONE": ""
+            }
+        }
+
+        axios.post('https://us18.api.mailchimp.com/3.0/lists/' + ALL_USERS_LIST + '/members', JsonRequest, {
+            headers: { 'Authorization': 'apikey ' + MAILCHIMP_API_KEY }
+        })
+            .then(response => {
+                if (response.data.status == "subscribed") {
+                    Logger.log.info("Successfully subscribed " + response.data.email_address + " to All users list");
+                }
+            })
+            .catch(error => {
+                console.log(error.response.data.title);
+                var metaData = {
+                    directory: __filename,
+                    error_message: error.response.data.title,
+                }
+                Logger.log.error("Error happened while subscribing member to All users list" + metaData);
+            });
+    } else {
+        return false;
+    }
+}
+
 /* Helpers functions for time formatting */
 function createDeliveryOptionsText(time) {
     let ASAP_WORDING = "ASAP, Placed: ";
     let SCHEDULED_WORDING = "Scheduled: ";
-
     if (time == 0) {
         return ASAP_WORDING + createTimeText(new Date());
     } else {
-        return SCHEDULED_WORDING + createTimeText(new Date(time), new Date(time + 15 * 60 * 1000)); //show 15 minute range for scheduled
+        return SCHEDULED_WORDING + createTimeText(new Date(time), new Date(time + 15 * 60 * 1000)); //show 15 minute range for scheduled orders
     }
 }
 
@@ -396,6 +536,11 @@ function filterInputField(data, substitute) {
     }
 }
 
+/**
+ * Helper function to format phone number
+ * @param {phone} number received raw phone number
+ * @param {*text} substitute should not be undefined
+ */
 function formatPhoneNumber(number, substitute) {
     if (number) {
         let array = number.toString().split("");

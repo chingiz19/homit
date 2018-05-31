@@ -242,8 +242,6 @@ var recommended_products = {
             "volume": "120g",
             "price": 1.99
         }
-        
-        
     ],
     "deli-and-meat": [
         {

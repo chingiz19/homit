@@ -57,4 +57,11 @@ pub.sendBadRequest = function (res, message) {
     });
 }
 
+pub.sendEmailSubscribeError = function(res){
+    res.status(200).json({
+        success: false,
+        ui_message: "Please check your email or use different one"
+    });
+}
+
 module.exports = pub;
