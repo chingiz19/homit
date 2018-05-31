@@ -18,8 +18,8 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-.main-controller{
-    background-color: rgb(249,249,249);
+.main-controller {
+    background-color: rgb(249, 249, 249);
 }
 
 .user-signed-btn ng-md-icon {
@@ -34,6 +34,7 @@ body {
 }
 
 .store-list-ul {
+    position: relative;
     display: flex;
     justify-content: space-around;
     flex-direction: row;
@@ -42,6 +43,44 @@ body {
     height: 100%;
     margin: 0 auto;
     padding: 0;
+}
+
+.img-object {
+    position: relative;
+}
+
+.store-li-free-delivery {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    margin: 0;
+    padding: 10px;
+    background-color: rgb(0, 204, 153);
+    border-radius: 50%;
+}
+
+.free-txt {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.8px;
+}
+
+.delivery-txt {
+    color: white;
+    font-size: 11px;
+    text-align: center;
+}
+
+.store-li-footer {
+    position: absolute;
+    top: -60px;
+    left: calc((100% - 240px)/2);
+    font-size: 35px;
+    opacity: 0.6;
+    color: #717171;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .store-list-ul li {
@@ -59,7 +98,7 @@ body {
     will-change: opacity, transform;
 }
 
-.loc-sucsess-msg {
+.location-msg {
     position: absolute;
     top: -25px;
     left: 0;
@@ -75,7 +114,7 @@ body {
     will-change: opacity, width;
 }
 
-.loc-sucsess-msg-txt {
+.location-msg-txt {
     color: #396885;
     font-size: 45px;
     font-weight: 500;
@@ -437,8 +476,6 @@ body {
     height: calc(100% - 25px);
     padding: 0 30px;
     font-size: 33px;
-    color: #bbb;
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
 }
 
 .tranding-body {
@@ -535,9 +572,9 @@ body {
 }
 
 .tranding-type-btn {
-    color: rgb(4, 160, 121);;
+    color: rgb(4, 160, 121);
     background-color: transparent;
-    border: 2px solid rgb(4, 160, 121);;
+    border: 2px solid rgb(4, 160, 121);
     transition: all 0.4s ease;
 }
 
@@ -563,8 +600,9 @@ body {
     padding: 12px;
     border-radius: 2px 0 0 2px;
     margin: auto;
-    border: 1px solid rgb(0, 204, 153);;
+    border: 1px solid rgb(0, 204, 153);
     border-right: none;
+    transition: width 0.4s ease;
 }
 
 .subscribe-input::placeholder {
@@ -593,10 +631,10 @@ body {
     border: none;
     border-radius: 0 2px 2px 0;
     cursor: pointer;
-    transition: padding-left 0.3s ease; 
+    transition: padding-left 0.3s ease, width 0.4s ease;
 }
 
-.subscribe-button-suc{
+.subscribe-button-suc {
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -608,12 +646,12 @@ body {
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    transition: padding-left 0.3s ease; 
+    transition: padding-left 0.3s ease;
     border-radius: 2px;
     transition: all 0.8s ease;
 }
 
-.subscribe-input-suc{
+.subscribe-input-suc {
     width: 0px;
     border: 0;
     padding: 0;
@@ -632,42 +670,42 @@ body {
 .subscribe-error-message {
     padding: 1px 1px 1px 1px;
     font-size: 18px;
-    color: rgb(221,44,0);
+    color: rgb(221, 44, 0);
 }
 
 /* start of window shrinkage affect solution */
 @media (max-width: 1140px) and (min-width: 856px) {
-    .homit-nav-content, .steps-div, .subscribe-section{
+    .homit-nav-content, .steps-div, .subscribe-section {
         width: 855px;
     }
 
-    .promotion-1-div{
+    .promotion-1-div {
         width: 45%;
     }
 
-    .promotion-2-div{
+    .promotion-2-div {
         width: 45%;
         margin-left: 4%;
         padding-right: 1%;
     }
 
-    .steps-div{
+    .steps-div {
         padding: 5vh 0;
     }
 
-    .span-text-step{
+    .span-text-step {
         display: none;
     }
 
-    .steps-div h2{
+    .steps-div h2 {
         font-size: 30px;
     }
 
-    .tranding-body{
+    .tranding-body {
         width: calc(100vw - 10px);
     }
 
-    .tranding-body div{
+    .tranding-body div {
         flex-direction: column;
         overflow-x: scroll;
     }
@@ -680,11 +718,10 @@ body {
         width: 150px;
         height: 150px;
     }
-
 }
 
-@media (max-width: 855px) and (min-width: 400px), screen and (max-device-width: 479px){
-    .main-controller{
+@media (max-width: 855px) and (min-width: 400px), screen and (max-device-width: 479px) {
+    .main-controller {
         background-color: #fff;
     }
 
@@ -697,7 +734,7 @@ body {
         fill: rgb(42, 81, 145);
     }
 
-    .promotion-sec{
+    .promotion-sec {
         width: 100vw;
         height: 1550px;
     }
@@ -730,13 +767,13 @@ body {
         letter-spacing: 0.1px;
     }
 
-    .steps-div p{
+    .steps-div p {
         font-size: 16px;
         margin-bottom: 0;
         color: #8f95a3;
     }
 
-    .span-text-step{
+    .span-text-step {
         display: none;
     }
 
@@ -748,7 +785,7 @@ body {
         flex-direction: column;
     }
 
-    .prm-sec-2-mob{
+    .prm-sec-2-mob {
         flex-direction: column-reverse;
     }
 
@@ -778,13 +815,13 @@ body {
         margin-left: 0;
     }
 
-    .promotion-1-div p, .promotion-2-div p{
+    .promotion-1-div p, .promotion-2-div p {
         margin-bottom: 16px;
         margin-top: 16px;
         text-align: center;
     }
 
-    .CG-cur-button{
+    .CG-cur-button {
         margin: 0 auto;
     }
 
@@ -797,49 +834,49 @@ body {
         background-size: cover;
     }
 
-    .tranding-body{
+    .tranding-body {
         width: calc(100vw - 10px);
         height: 380px;
     }
 
-    .tranding-body div{
+    .tranding-body div {
         flex-direction: column;
         overflow-x: scroll;
     }
 
-    .prom-item-ul{
+    .prom-item-ul {
         width: calc(( 100vw - 30px)/2);
         height: 180px;
     }
 
-    .trending-prd-sec{
+    .trending-prd-sec {
         height: 630px;
     }
 
-    .tranding-ftr{
+    .tranding-ftr {
         height: 55px;
     }
 
-   .tranding-btn-mob{
-       width: 33%;
-   }
+    .tranding-btn-mob {
+        width: 33%;
+    }
 
-    .subscribe-section{
+    .subscribe-section {
         width: 100vw;
         height: 110px;
     }
 
-    .subscribe-div{
+    .subscribe-div {
         width: calc(100% - 10px);
     }
 
-    .subscribe-button{
+    .subscribe-button {
         width: 100px;
         font-size: 14px;
         padding: 0;
     }
 
-    .subscribe-input{
+    .subscribe-input {
         width: calc(100% - 100px);
         font-size: 16px;
     }
@@ -849,12 +886,11 @@ body {
         font-size: 16px;
     }
 
-    .CG-done-icon{
+    .CG-done-icon {
         display: none;
         padding-left: 0;
     }
 }
-
 
 @media (max-width: 855px) and (min-width: 571px) {
     .main-page-address-box, .address-input-sec, .predictions-container {
@@ -866,7 +902,7 @@ body {
         width: 556px;
     }
 
-    .landing-message, .loc-sucsess-msg {
+    .landing-message, .location-msg {
         font-size: 35px;
     }
 }
@@ -885,7 +921,7 @@ body {
         width: 386px;
     }
 
-    .landing-message, .loc-sucsess-msg {
+    .landing-message, .location-msg {
         font-size: 28px;
     }
 }
@@ -970,8 +1006,7 @@ body {
 }
 
 @media (max-width: 699px) and (min-width: 560px) {
-
-    .address-section{
+    .address-section {
         overflow-x: hidden;
     }
 
@@ -1005,8 +1040,7 @@ body {
 }
 
 @media (max-width: 579px) and (min-width: 400px) {
-
-    .address-section{
+    .address-section {
         overflow-x: hidden;
     }
 
@@ -1021,6 +1055,15 @@ body {
 
     .img-object {
         animation: icon-move-x 20000ms linear infinite;
+    }
+
+    .free-txt {
+        font-size: 13px;
+        letter-spacing: 0.3px;
+    }
+    
+    .delivery-txt {
+        font-size: 8px;
     }
 }
 
@@ -1128,9 +1171,34 @@ body {
 }
 
 @media screen and (max-device-width: 479px) {
-
     .log-in-icon {
         fill: rgb(42, 81, 145);
+    }
+
+    .store-li-footer {
+        top: -40px;
+        left: calc((100% - 220px)/2);
+        font-size: 25px;
+        opacity: 0.8;
+        color: #717171;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .store-li-free-delivery {
+        top: -15px;
+        right: -15px;
+        padding: 8px;
+    }
+    
+    .free-txt {
+        font-size: 12px;
+        letter-spacing: 0.6px;
+    }
+    
+    .delivery-txt {
+        color: white;
+        font-size: 8px;
+        text-align: center;
     }
 
     .address-section {
@@ -1195,16 +1263,15 @@ body {
         margin-right: 5px;
     }
 
-    .promotion-sec{
+    .promotion-sec {
         height: 1610px;
     }
 
-    .promotion-1-2-sec{
+    .promotion-1-2-sec {
         height: 500px;
     }
 
-    .tranding-hdr span{
+    .tranding-hdr span {
         font-size: 31px;
     }
-
 }

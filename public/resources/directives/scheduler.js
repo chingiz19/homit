@@ -243,10 +243,9 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
 
     function formatDelFeeText(rawText, freeDeliveryText) {
         if (rawText != undefined) {
-            return (rawText == 0 ? freeDeliveryText : "C$ " + rawText + " Delivery Fee")
+            return (rawText == 0 ? freeDeliveryText : "C$ " + rawText + " Delivery Fee");
         } else {
             throw "Error while fomatting delivery fee text, Scheduler.js directive";
-            return "";
         }
     }
 

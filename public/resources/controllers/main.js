@@ -4,6 +4,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
     $scope.trandingSelected = "popular";
     $scope.bounds = undefined;
     $scope.addressMessage = undefined;
+    $scope.userSubscribed = false;
 
     $scope.init = function () {
 
@@ -49,13 +50,13 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
                 $scope.scrollTo('address');
             }
             $timeout(function () {
-                $(".loc-sucsess-msg").css({ 'opacity': '1', 'width': '100%', 'z-index': '2', 'transition': 'opacity 0.8s ease-out, width 0.6s ease-out' });
+                $(".location-msg").css({ 'opacity': '1', 'width': '100%', 'z-index': '2', 'transition': 'opacity 0.8s ease-out, width 0.6s ease-out' });
                 $scope.addressMessage = "We Deliver!";
                 clearLocSucMsg(3500);
             }, 200);
         } else {
             $timeout(function () {
-                $(".loc-sucsess-msg").css({ 'opacity': '1', 'width': '100%', 'z-index': '2', 'transition': 'opacity 0.8s ease-out, width 0.6s ease-out' });
+                $(".location-msg").css({ 'opacity': '1', 'width': '100%', 'z-index': '2', 'transition': 'opacity 0.8s ease-out, width 0.6s ease-out' });
                 $scope.addressMessage = "Out of Coverage Area.";
                 clearLocSucMsg(3500);
             }, 200);
@@ -96,9 +97,9 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
 
     function clearLocSucMsg(time) {
         setTimeout(() => {
-            $(".loc-sucsess-msg").css({ 'opacity': '0', 'width': '0', 'z-index': '-1', 'transition': 'all 0.8s ease-out' });
+            $(".location-msg").css({ 'opacity': '0', 'width': '0', 'z-index': '-1', 'transition': 'all 0.8s ease-out' });
             setTimeout(() => {
-                $(".loc-sucsess-msg").removeAttr('style');
+                $(".location-msg").removeAttr('style');
             }, 600);
         }, time);
     }
@@ -124,30 +125,37 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
      */
     $scope.subscribe = function () {
         let userEmail = $scope.subscribeEmail;
-        if (userEmail) {
-            $http({
-                method: 'POST',
-                url: '/api/marketing/subscribe',
-                data: {
-                    email: userEmail,
-                }
-            }).then(function successCallback(response) {
-                if (response.data.success) {
-                    $scope.subscribeClassBtn = "subscribe-button-suc";
-                    $scope.subscribeClassInput = "subscribe-input-suc";
-                    $timeout(function () {
-                        $scope.subscribeButtonText = response.data.ui_message;
-                    }, 400);
-                } else {
+        if(!$scope.userSubscribed){
+            if (userEmail) {
+                $http({
+                    method: 'POST',
+                    url: '/api/marketing/subscribe',
+                    data: {
+                        email: userEmail,
+                    }
+                }).then(function successCallback(response) {
+                    if (response.data.success) {
+                        $scope.subscribeClassBtn = "subscribe-button-suc";
+                        $scope.subscribeClassInput = "subscribe-input-suc";
+                        $timeout(function () {
+                            $scope.subscribeButtonText = response.data.ui_message;
+                        }, 400);
+                        $scope.userSubscribed = true;
+                    } else {
+                        $scope.subscribeClassBtn = "subscribe-button";
+                        $scope.subscribeErrorMessage = response.data.ui_message;
+                    }
+                }, function errorCallback(error) {
                     $scope.subscribeClassBtn = "subscribe-button";
-                    $scope.subscribeErrorMessage = response.data.ui_message;
-                }
-            }, function errorCallback(error) {
-                $scope.subscribeClassBtn = "subscribe-button";
-                console.log('errorCallback'); //error notification, on a side
-            });
-        } else {
-            $scope.subscribeErrorMessage = "Valid email only";
+                    console.log('errorCallback'); //error notification, on a side
+                });
+            } else {
+                $scope.subscribeErrorMessage = "Valid email only";
+            }
+        } else{
+            $scope.subscribeClassBtn = "subscribe-button";
+            $scope.subscribeClassInput = "subscribe-input";
+            $scope.subscribeButtonText = "SUBSCRIBE";
         }
     };
 

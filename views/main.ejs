@@ -22,6 +22,7 @@
             <div class="address-div">
                 <div class="store-div-main fadeIn">
                     <ul class="store-list-ul" ng-cloak>
+                        <li class="store-li-footer">Stores We Deliver</li>
                         <li class="store-li LIM-move move-x" ng-click="hrefTo('/catalog/liquor-station')">
                             <div class="img-object">
                                 <img src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
@@ -29,9 +30,13 @@
                             </div>
                         </li>
                         <li class="store-li LS-move move-x" ng-click="hrefTo('/catalog/dwarf-stars')">
-                            <div class="img-object">
+                            <div class="img-object" style="position: relative;">
                                 <img src="/resources/images/non-catalog-image/store-logo/dwarf-stars_icon.png">
                                 <span class="main-trans-prop">Dwarf Stars</span>
+                                <ul class="store-li-free-delivery">
+                                    <li class="free-txt">FREE</li>
+                                    <li class="delivery-txt">Delivery</li>
+                                </ul>
                             </div>
                         </li>
                         <li class="store-li LIM-move move-x" ng-click="hrefTo('/catalog/linas-italian-market')">
@@ -56,7 +61,7 @@
                                 on-address-selected="gotAddressResults" autocomplete-bounds="bounds" show-coverage-map="showCoverageMap"></address-autocomplete>
                         </span>
                     </span>
-                    <h1 class="loc-sucsess-msg loc-sucsess-msg-txt">{{ addressMessage }}</h1>
+                    <h1 class="location-msg location-msg-txt">{{ addressMessage }}</h1>
                     <div class="ul-zero">
                         <h1 class="landing-message fadeIn">From Local Stores to Your Doors</h1>
                     </div>
@@ -101,7 +106,7 @@
 <!--googleoff: snippet-->
         <section class="trending-prd-sec">
             <div class="tranding-hdr">
-                <span>Trending Products</span>
+                <span class="text-affect-3D">Trending Products</span>
             </div>
             <div class="tranding-body">
                 <div>
