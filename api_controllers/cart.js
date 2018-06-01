@@ -57,7 +57,7 @@ router.post('/clear', async function (req, res, next) {
         };
         res.send(response);
     } else {
-        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
