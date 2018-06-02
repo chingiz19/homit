@@ -1,0 +1,27 @@
+.prom-item-brand {
+    font-size: 13px;
+    text-align: center;
+    color: rgb(143, 149, 163);
+    height: 50px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+.prom-item-size {
+    font-size: 12px;
+    color: rgb(174, 181, 199);
+}
+
+.prom-item-price{
+    position: absolute;
+    right: 5px;
+    top: 0px;
+    height: 45px;
+    width: 37px;
+    text-align: center;
+    border-radius: 0 0 15px 15px;
+    font-size: 13px;
+    background-color: #89c72c;
+    color: white;
+    padding-top: 12px;
+}

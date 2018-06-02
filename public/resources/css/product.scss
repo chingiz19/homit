@@ -1,3 +1,5 @@
+@import "default/module";
+
 md-toolbar {
     background-color: rgba(42, 81, 145, 0.95) !important;
 }
@@ -312,7 +314,7 @@ button:focus {
     position: absolute;
     width: 100%;
     height: 2px;
-    border-bottom: 1px solid rgba(200, 200, 200, 0.5);
+    border-bottom: 1px solid rgba(220, 220, 220, 0.5);
     z-index: 0;
 }
 
@@ -326,44 +328,28 @@ button:focus {
     z-index: 1;
 }
 
-
-.recomended-item {
-    padding: 10px 0;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
-
-.recomended-item-name {
-    text-align: center;
-    padding: 0 3px;
-    margin: 3px 0 2px 0;
-    font-size: 12px;
-}
-
 .recomended-item-div {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     overflow-x: auto;
     -webkit-font-smoothing: antialiased;
 }
 
-.recomended-item ul {
-    width: 120px;
-    margin: 0;
-    padding: 0;
-    margin-left: 15px;
-    margin-right: 15px;
-    border-bottom: 2px solid transparent;
+.prom-item-ul {
+    position: relative;
+    width: 175px;
+    height: 195px;
+    padding: 10px;
+    background-color: #fff;
+    width: 175px;
+    margin: 5px;
+    box-shadow: 0 0px 5px 2px rgba(0, 0, 0, 0.20);
+    transition: box-shadow 0.4s ease;
 }
 
-.recomended-item ul li {
-    display: flex;
-    justify-content: center;
-}
-
-.rec-item-mob{
-    display: none !important;
+.prom-item-brand{
+    height: 75px !important;
 }
 
 .also-image-li img {
@@ -372,33 +358,8 @@ button:focus {
     height: 100px;
 }
 
-.recomended-item-text {
-    font-size: 11px;
-    text-align: center;
-}
-
-.recomended-item ul:hover {
-    border-bottom: 2px solid rgba(0, 0, 0, 1);
-    transition: all 0.3s ease;
-}
-
-.recomended-products-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5px;
-}
-
-.recomended-products-footer div {
-    height: 2px;
-    width: 100%;
-    border-bottom: 1px solid rgba(200, 200, 200, 0.5);
-}
-
 footer {
     position: relative;
-
-    // top: 120px;
     bottom: initial;
 }
 
@@ -485,18 +446,6 @@ footer {
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
-
-    .rec-item-mob{
-        display: flex !important;
-    }
-
-    .rec-item-web {
-        display: none !important;
-    }
-
-    .recomended-item-name{
-        font-size: 13px;
-    }
 
     .web-location-sec {
         display: none;
@@ -598,43 +547,8 @@ footer {
         width: 100%;
     }
 
-    .recomended-item ul {
-        width: 100px;
-        margin: 0 5px 0 5px;
-    }
-
-    .recomended-item-text {
-        font-size: 10px;
-    }
-
-    .recomended-item ul:hover {
-        border-bottom-color: transparent;
-    }
-
-    .product-details-container {
-        margin-bottom: 2px;
-    }
-
-    .also-image-li {
-        padding: 5px;
-    }
-
-    .also-image-li img {
-        width: 80px;
-        height: 80px;
+    .recomended-item-div {
+        -webkit-overflow-scrolling: touch;
     }
 }
 
-.fadeIn {
-    animation: fadein 0.5s;
-}
-
-@keyframes fadein {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}

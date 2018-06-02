@@ -149,23 +149,19 @@
                                 <div class="recomended-products-header-line"></div>
                                 <div class="recomended-products-header-text">People also Homit</div>
                             </section>
-                            <section class="recomended-item">
+                            <section class="recomended-item fadeIn">
                                 <div class="recomended-item-div">
                                     <div ng-repeat="item in recommended_products">
-                                        <ul ng-click="hrefPrdPage(item)">
-                                            <li class="also-image-li">
+                                        <ul ng-click="hrefPrdPage(item)" class="prom-item-ul">
+                                            <li class="also-image-li box-center">
                                                 <img ng-src="/resources/images/products/{{ item.category }}/{{ item.image }}">
                                             </li>
-                                            <li class="recomended-item-name rec-item-web">{{ item.brand + " " + item.name }}</span></li>
-                                            <li class="recomended-item-name rec-item-mob">{{ item.brand }}</li>
-                                            <li class="recomended-item-text">{{ item.packaging + "x" + item.volume }}</li>
-                                            <li class="recomended-item-text">C${{ item.price }}</li>
+                                            <li class="box-center prom-item-brand" ng-if="item.packaging > 1"><span>{{ item.brand + " " + item.name }}<span class="prom-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span></span></li>
+                                            <li class="box-center prom-item-brand" ng-if="!(item.packaging > 1)"><span>{{ item.brand + " " + item.name }}<span class="prom-item-size"> {{ "(" + item.volume + ")"}}</span></span></li>
+                                            <li class="prom-item-price">{{ item.price }}</li>
                                         </ul>
                                     </div>
                                 </div>
-                            </section>
-                            <section layout="row" class="recomended-products-footer">
-                                <div class="recomended-products-header-line"></div>
                             </section>
                             <!--googleoff: snippet-->
                         </div>

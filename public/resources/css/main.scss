@@ -505,44 +505,10 @@ body {
     transition: box-shadow 0.4s ease;
 }
 
-.prom-item-ul:hover {
-    box-shadow: 0 0px 6px 2px rgba(3, 189, 142, 0.5);
-    transition: box-shadow 0.4s ease;
-}
-
 .prom-item-ul li img {
     height: calc(100% - 60px);
     width: auto;
     padding: 5px 0;
-}
-
-.prom-item-brand {
-    font-size: 13px;
-    color: #141414;
-    text-align: center;
-    color: rgb(143, 149, 163);
-    height: 50px;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-}
-
-.prom-item-size {
-    font-size: 12px;
-    color: rgb(174, 181, 199);
-}
-
-.prom-item-price {
-    position: absolute;
-    right: 5px;
-    top: 0px;
-    height: 45px;
-    width: 37px;
-    text-align: center;
-    border-radius: 0 0 15px 15px;
-    font-size: 13px;
-    background-color: rgb(137, 199, 44);
-    color: white;
-    padding-top: 12px;
 }
 
 .tranding-ftr {
