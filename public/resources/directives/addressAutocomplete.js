@@ -230,8 +230,7 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
                     }
                     //event key "escape"
                     else if (evt.keyCode == 27) {
-                        scope._searchedAddress = "";
-                        scope._predictions = [];
+                        $("#address-clear-btn").click();
                         scope.$apply();
                     }
                 }
@@ -244,6 +243,13 @@ app.directive("addressAutocomplete", function (sessionStorage, $interval, $timeo
                 function addEvLisToAddressInput() {
                     var addressInput = document.getElementById('autocompleteAddressInputBox');
                     addressInput.addEventListener('keyup', navigatePredictions, false);
+                    window.addEventListener('click', clearInputOnClick, false);
+                }
+
+                function clearInputOnClick(evt){
+                    if ( scope._predictions.length == 0 || !evt || (evt.target.className && evt.target.className.includes(scope.inputClass)) || $(evt.target).parents("#autocompleteAddressInputBox").length) return;
+                    $("#address-clear-btn").click();
+                    scope.$apply();
                 }
 
                 addEvLisToAddressInput();

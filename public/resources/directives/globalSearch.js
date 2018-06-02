@@ -179,6 +179,7 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
 
             function addEvLisToSearch() {
                 document.getElementById(scope.inputId).addEventListener('keyup', globalSearch, false);
+                window.addEventListener('click', closeSearchOnClick, false);
             }
             
             setTimeout(() => {
@@ -213,10 +214,14 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
                         }
         
                     }, function errorCallback(response) {
-                        console.error("error");
                     });
                 }
                 navigateSearchResult(evt, scope.searchResult);
+            }
+
+            function closeSearchOnClick(evt){
+                if (!evt || (evt.target.className && evt.target.className.includes("search-input")) || $(evt.target).parents("#search-sec").length) return;
+                $(".search-btn").click();
             }
 
             function navigateSearchResult(evt, searchResult) {

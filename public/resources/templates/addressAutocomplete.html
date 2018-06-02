@@ -107,7 +107,7 @@
     
     <!-- <ng-md-icon class="place-icon" style="fill: rgba(0,0,0,0.6);" icon="place" size="37"></ng-md-icon> -->
     <input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-focus="_inptFocused()" ng-blur="_inptBlured()" ng-disabled="inputDisabled" placeholder="Enter your address" type="text" class="{{inputClass}}" autocomplete="off" autocorrect="off" spellcheck="false" required>
-    <md-button aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0; _inptBlured();" ng-hide="inputDisabled">
+    <md-button id="address-clear-btn" aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0; _inptBlured();" ng-hide="inputDisabled">
         <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
     </md-button>
     
