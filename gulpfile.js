@@ -45,6 +45,13 @@ var miscFiles = [
     './public/**/templates/*.html',
     './public/sitemap/**/*.xml'
 ]
+
+var nodeFiles = [
+    './models/**/*',
+    './api_controllers/**/*',
+    './view_controllers/**/*'
+]
+
 var uglifyOptions = {
     output: {
         comments: false
@@ -109,6 +116,19 @@ gulp.task('js', function(){
         .pipe(gulpFn(function(file){
             wwwChangedViaGulp = false;
         }));
+});
+
+gulp.task('scan:nodejs', function(){
+    return gulp.src(nodeFiles)
+        .pipe(plumber({
+            errorHandler: errorHandling
+        }))
+        .pipe(jshint({
+            sub: true,
+            esversion: 6
+        }))
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(plumber.stop());
 });
 
 gulp.task('img', function(){
@@ -244,6 +264,8 @@ gulp.task('default', function(){
     img                     |  copy img files to www folder
     
     misc                    |  copy files inside public folder (doesn't include subfolders)
+
+    scan:nodejs             |  scan nodeJS files with jshint
 
 
     test-views              |  run test for views
