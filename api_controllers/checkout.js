@@ -256,18 +256,6 @@ router.post('/placeorder', async function (req, res, next) {
     }
 });
 
-router.post('/checkout', async function (req, res, next) {
-    var cartProducts = req.body.products;
-    var productsResult = await Catalog.checkProductsForStoreOpen(cartProducts);
-
-    var response = {
-        success: true,
-        all_stores_open: productsResult.all_stores_open,
-        products: productsResult.products
-    };
-    res.send(response);
-});
-
 router.post('/calculate', async function (req, res, next) {
     var allValidParams = {
         "products": {}

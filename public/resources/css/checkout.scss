@@ -308,6 +308,7 @@ md-content {
     display: flex;
     flex-direction: column;
     margin-top: 30px;
+    padding-bottom: 30px;
 }
 
 .HomeItBtn button {
@@ -339,6 +340,10 @@ md-content {
     border: rgb(233, 233, 233) solid 1px;
     border-radius: 5px;
     box-shadow: none;
+}
+
+.checkout-side-nav md-content{
+    overflow-y: auto;
 }
 
 .side-nav-header {
@@ -443,94 +448,12 @@ md-content {
     border-bottom-right-radius: 5px;
 }
 
-.side-nav-content {
-    position: relative;
-    height: calc( 100vh - 155px);
-    top: 150px;
-    overflow-y: auto;
+.item-left-div, .item-right-div{
+    margin-top: 0 !important;
 }
 
-.side-nav-content-div {
-    padding: 0;
-    background-color: rgb(255, 255, 255);
-    padding-bottom: 20px;
-}
-
-.item-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-bottom: 35px;
-}
-
-.item-div-left {
-    flex-direction: column;
-}
-
-.item-div-mid {
-    position: relative;
-    margin: 0;
-    padding: 0;
-    width: 30%;
-}
-
-.product-quantity {
-    position: absolute;
-    top: -5px;
-    left: 0px;
-    height: 20px;
-    min-width: 20px;
-    text-align: center;
-    font-weight: 500;
-    background-color: rgba(39, 9, 9, 0.4);
-    color: #fff;
-    box-sizing: border-box;
-    border-radius: 10px;
-    font-size: 13px;
-    padding-top: 2px;
-}
-
-.item-div-mid img {
-    width: 115px;
-    height: 115px;
-}
-
-.item-div-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 40%;
-}
-
-.produc-name {
-    margin-bottom: 2px;
-    text-align: left;
-    font-size: 15px;
-    color: rgb(50, 50, 50);
-}
-
-.produc-name span {
-    font-size: 14px;
-    color: rgb(150, 150, 150);
-}
-
-.item-btn {
-    width: 85px;
-    height: 35px;
-    background-color: transparent;
-    border: none;
-    border-radius: 3px;
-    transition: background-color 0.3s ease;
-}
-
-.item-btn svg {
-    width: 25px;
-    height: 25px;
-}
-
-.item-btn:hover, .modal-cls-btn:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+.sidenav-body{
+    padding-top: 70px !important;
 }
 
 .remove-btn {
@@ -705,12 +628,6 @@ md-content {
 
 .result-msg-ln2 span {
     font-size: 16px;
-}
-
-.cart-prd-price {
-    text-align: center;
-    font-size: 14px;
-    padding-top: 3px;
 }
 
 .del-opt-btn {
@@ -899,50 +816,6 @@ md-content {
 
     .store-seper:before {
         width: 20px;
-    }
-
-    .item-div-mid img {
-        width: 70px;
-        height: 70px;
-    }
-
-    .product-quantity {
-        top: -10px;
-    }
-
-    .produc-name {
-        font-size: 12px;
-    }
-
-    .cart-prd-price {
-        font-size: 11px;
-    }
-
-    .item-div-right {
-        margin-top: 1em;
-        width: 46%;
-    }
-
-    .item-div-right li {
-        font-size: 10px;
-    }
-
-    .item-div-left {
-        margin-top: 1em;
-    }
-
-    .item-btn:hover {
-        background-color: transparent;
-    }
-
-    .item-btn {
-        width: 60px;
-        height: 30px;
-    }
-
-    .item-btn svg {
-        width: 20px;
-        height: 20px;
     }
 
     .del-options-div-2 {

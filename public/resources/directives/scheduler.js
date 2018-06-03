@@ -312,7 +312,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
             storeName: "=?storeName",
             storeImage: "=?storeImg",
             storeOpen: "=?storeOpen",
-            delFee: "=delFee"
+            delFee: "=?delFee"
         },
         templateUrl: '/resources/templates/scheduler.html',
         link: function (scope, element, attrs) {

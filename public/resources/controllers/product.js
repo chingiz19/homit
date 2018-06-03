@@ -9,7 +9,6 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     };
 
     $scope.addToCart = function (product) {
-        // if (product.store_open) {
             var p = {};
             p.store_type_api_name = product.store_type_api_name;
             p.volume = product.product_variants.all_volumes[product.product_variants.selectedVolume];
@@ -22,11 +21,24 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
                 p.image = $scope.productImages[1];
             }
             p.brand = product.brand;
+            p.name = product.name;
 
             $rootScope.$broadcast("addToCart", p);
-        // } else{
-        //     notification.addImportantMessage("Store closed at the moment.");
-        // }
+            googleAnalytics.addEvent('add_to_cart', {
+                "event_label": product.brand + " " + product.name,
+                "event_category": googleAnalytics.eventCategories.cart_actions,
+                "value": "product_page",
+                "items": [
+                    {
+                        name: product.name,
+                        brand: product.brand,
+                        quantity: tmpQuantity,
+                        price: product.price,
+                        category: product.packaging,
+                        variant: product.volume,
+                    }
+                ]
+            });
     };
 
     $scope.selectImage = function (image) {

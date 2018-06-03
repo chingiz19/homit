@@ -182,9 +182,9 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
                 window.addEventListener('click', closeSearchOnClick, false);
             }
             
-            setTimeout(() => {
+            $timeout(function () {
                 addEvLisToSearch();
-            }, 2000);
+            }, 0);
 
             function globalSearch(evt) {
                 if (scope.searchRequest && scope.searchRequest.length >= 3 && evt.keyCode != 40 && evt.keyCode != 38 && evt.keyCode != 13 && evt.keyCode != 27) {

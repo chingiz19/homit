@@ -157,34 +157,7 @@
                             </div>
                         </div>
                     </section>
-                    <section class="side-nav-content">
-                        <div class="side-nav-content-div" ng-repeat="store_type in userCartToView">
-                            <div class="seperation-line">{{ store_type[0] }}</div>
-                            <div ng-repeat="product in store_type[1]">
-                                <div class="item-div">
-                                    <div class="box-center item-div-left">
-                                        <button class="item-btn" ng-click="plusItem(product)">
-                                            <ng-md-icon icon="add_circle_outline"></ng-md-icon>
-                                        </button>
-                                        <button class="item-btn" ng-click="minusItem(product)">
-                                            <ng-md-icon icon="remove_circle_outline"></ng-md-icon>
-                                        </button>
-                                    </div>
-                                    <div class="item-div-mid box-center">
-                                        <span class="product-quantity">{{ product.quantity }}</span>
-                                        <img ng-src='{{ product.image }}'>
-                                    </div>
-                                    <div class="item-div-right">
-                                        <div class="produc-name">{{ product.brand }} {{ product.name }} 
-                                            <span ng-if="product.packaging > 1">({{product.packaging }} x {{ product.volume }})</span>
-                                            <span ng-if="product.packaging <= 1">({{ product.volume }})</span>
-                                        </div>
-                                        <div class="cart-prd-price">C${{ product.price }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <cart can-remove="false" cart-ctrl="cart" on-cart-load="onCartLoad"></cart>
                 </md-content>
             </md-sidenav>
         </section>
@@ -229,14 +202,15 @@
                 </div>
             </div>
         </div>
-        <% if (!production) { %>
-            <script src="/resources/directives/addressAutocomplete.js"></script>
-            <script src="/resources/directives/scheduler.js"></script>
+        <% if (!production) { %>            
             <script src="/resources/services/localStorage.js"></script>
             <script src="/resources/services/cartService.js"></script>
             <script src="/resources/services/mapServices.js"></script>
             <script src="/resources/services/date.js"></script>
             <script src="/resources/services/userAction.js"></script>
+            <script src="/resources/directives/addressAutocomplete.js"></script>
+            <script src="/resources/directives/scheduler.js"></script>
+            <script src="/resources/directives/cart.js"></script>
             <script src="/resources/controllers/checkout.js"></script>
             <% } %>
     </div>

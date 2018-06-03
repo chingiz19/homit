@@ -4,11 +4,7 @@ app.controller("checkoutController",
 
         $scope.userInfo = {};
 
-
         $scope.init = function () {
-            $scope.userCart = localStorage.getUserCart() || {};
-
-            $scope.numberOfItemsInCart = 0;
             $scope.totalAmount = 0;
             $scope.delFee = 0;
             $scope.GST = 0;
@@ -100,107 +96,17 @@ app.controller("checkoutController",
                 });
             }, 500);
 
-            cartService.getCart()
-                .then(function successCallback(response) {
-                    if (response.data.success === true) {
-                        updateUserCart(cartService.mergeCarts($scope.userCart, response.data.cart));
-                    } else {
-                        updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {})); //REQUIRED to convert to new convention with store_type
-                    }
-                    localStorage.setUserCart({});
-
-                    $scope.stores = [];
-                    let storeKeys = Object.keys($scope.userCart);
-                    for (let i = 0; i < storeKeys.length; i++) {
-                        $scope.stores.push({
-                            type: storeKeys[i]
-                        });
-                    }
-
-                    $http({
-                        method: 'POST',
-                        url: "/api/checkout/checkout",
-                        data: {
-                            products: Object.keys(cartService.parseCartToSend($scope.userCart))
-                        }
-                    }).then(function successCallback(response) {
-                        var checkedItems = response.data;
-                        for (var store_type in $scope.userCart) {
-                            for (var a in $scope.userCart[store_type]) {
-                                $scope.totalAmount = $scope.totalAmount + ($scope.userCart[store_type][a].quantity * $scope.userCart[store_type][a].price);
-                                $scope.numberOfItemsInCart = $scope.numberOfItemsInCart + $scope.userCart[store_type][a].quantity;
-                                $scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
-                                $scope.prepareItemForDB(a, $scope.userCart[store_type][a].quantity);
-
-                                $scope.userCart[store_type][a]["store_open"] = checkedItems.products[store_type][a];
-                            }
-                        }
-                        if ($scope.userCart.hasOwnProperty("liquor-station")) {
-                            $scope.userInfo.hasLiquor = true;
-                        } else {
-                            $scope.userInfo.dob_not_valid = false;
-                        }
-
-                    }, function errorCallback(response) {
-                    });
-
-                    // Calculation For receipt
-                    $scope.updatePrices($scope.userCart);
-
-                }, function errorCallback(response) {
-                    updateUserCart(localStorage.getUserCart());
-                });
-        };
-
-        $scope.plusItem = function (product) {
-            var tmpQuantity = 1;
-            if ($scope.userCart.hasOwnProperty(product.store_type_api_name) && $scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
-                var currentQuantity = $scope.userCart[product.store_type_api_name][product.depot_id].quantity;
-                if (currentQuantity < 10) {
-                    currentQuantity++;
-                    $scope.userCart[product.store_type_api_name][product.depot_id].quantity = currentQuantity;
-                    $scope.numberOfItemsInCart++;
-
-                    updateUserCart($scope.userCart);
-                    $scope.prepareItemForDB(product.depot_id, currentQuantity);
-                    $scope.updatePrices($scope.userCart);
-                    googleAnalytics.addEvent('plus_cart_item', {
-                        "event_label": product.brand + " " + product.name,
-                        "event_category": googleAnalytics.eventCategories.cart_actions
-                    });
+            $scope.stores = [];
+            $timeout(function(){
+                if ($scope.cart.getCart().hasOwnProperty("liquor-station")) {
+                    $scope.userInfo.hasLiquor = true;
+                } else {
+                    $scope.userInfo.dob_not_valid = false;
                 }
-            }
-        };
 
-        $scope.minusItem = function (product) {
-            if ($scope.userCart.hasOwnProperty(product.store_type_api_name) && $scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
-                var currentQuantity = $scope.userCart[product.store_type_api_name][product.depot_id].quantity;
-                if (currentQuantity > 1) {
-                    currentQuantity--;
-
-                    $scope.userCart[product.store_type_api_name][product.depot_id].quantity = currentQuantity;
-                    $scope.numberOfItemsInCart--;
-                    updateUserCart($scope.userCart);
-                    $scope.prepareItemForDB(product.depot_id, currentQuantity);
-
-                    $scope.updatePrices($scope.userCart);
-                    googleAnalytics.addEvent('minus_cart_item', {
-                        "event_label": product.brand + " " + product.name,
-                        "event_category": googleAnalytics.eventCategories.cart_actions
-                    });
-                }
-            }
-        };
-
-        $scope.prepareItemForDB = function (depot_id, itemQuantity) {
-            cartService.modifyCartItem(depot_id, itemQuantity)
-                .then(function successCallback(response) { }, function errorCallback(response) {
-                    localStorage.setUserCart($scope.userCart); // use local storage
-                    console.log("ERROR");
-                });
-
-            // Calculation For receipt
-            $scope.updatePrices($scope.userCart);
+                // Calculation For receipt
+                $scope.updatePrices($scope.cart.getCart());
+            }, 250);
         };
 
         $scope.submitCheckout = function (valid) {
@@ -312,7 +218,7 @@ app.controller("checkoutController",
                 url: '/api/checkout/placeorder',
                 data: {
                     user: userInfoToSend,
-                    products: cartService.parseCartToSend($scope.userCart),
+                    products: cartService.parseCartToSend($scope.cart.getCart()),
                     token_id: tokenID,
                     schedule_details: order_scheduled_time
                 }
@@ -364,7 +270,7 @@ app.controller("checkoutController",
                 method: 'POST',
                 url: '/api/checkout/calculate',
                 data: {
-                    products: cartService.parseCartToSend($scope.userCart),
+                    products: cartService.parseCartToSend($scope.cart.getCart()),
                 }
             }).then(function successCallback(response) {
               if (response.data.success) {
@@ -416,26 +322,14 @@ app.controller("checkoutController",
             }
         };
 
-        function updateUserCart(cart) {
-            $scope.userCart = cart;
-            $scope.userCartToView = cartService.getViewUserCart($scope.store_type, $scope.userCart);
-        }
 
         $scope.clearPage = function () {
             if ($scope.paymentResult == "11" || $scope.paymentResult == "1") {
                 $scope.userInfo = {};
-                updateUserCart({});
+                $scope.cart.clear();
                 sessionStorage.setAddress("");
                 sessionStorage.setAddressUnitNumber("");
-                cartService.clearCart()
-                    .then(function successCallback(response) {
-                        if (!response.data.success) { // use local storage
-                            localStorage.setUserCart($scope.userCart);
-                        }
-                        $window.location.href = $window.location.origin + "/main";
-                    }, function errorCallback(response) {
-                        console.log.log("ERROR");
-                    });
+                $window.location.href = $window.location.origin + "/main";
             } else {
                 location.reload();
             }
@@ -482,6 +376,15 @@ app.controller("checkoutController",
             $scope.useDefaultCard = !$scope.useDefaultCard;
         };
 
-        $scope.init();
+        $scope.onCartLoad = function(){
+            let storeKeys = Object.keys($scope.cart.getCart());
+            for (let i = 0; i < storeKeys.length; i++) {
+                $scope.stores.push({
+                    type: storeKeys[i]
+                });
+            }
+        }
+
+        $timeout($scope.init, 0);
 
     });

@@ -87,6 +87,20 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             delete p.container;
 
             $rootScope.$broadcast("addToCart", p);
+            googleAnalytics.addEvent('add_to_cart', {
+                "event_label": product.brand + " " + product.name,
+                "event_category": googleAnalytics.eventCategories.cart_actions,
+                "value": "catalog_page",
+                "items": [
+                    {
+                        name: product.name,
+                        brand: product.brand,
+                        price: product.price,
+                        category: product.packaging,
+                        variant: product.volume,
+                    }
+                ]
+            });
         } else {
             notification.addImportantMessage("Store closed at the moment.");
         }

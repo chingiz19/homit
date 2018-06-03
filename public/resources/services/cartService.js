@@ -113,54 +113,6 @@ app.service('cartService', function ($http, localStorage, $cookies) {
             new_cart.splice(0, 0, [store_type_api_name, orderedItems]);
         }
 
-        // WORKAROUND (TODO)
-        // temp workaround for many super_categories
-        // var tempObj = {};
-        // var indexesToRemove = [];
-        // for (var i = 0; i < new_cart.length; i++){
-        //     var item = new_cart[i];
-        //     // if not 'liquor-station', combine under 'snack-vendor'
-        //     if (item[0] != "liquor-station"){
-        //         tempObj = Object.assign(tempObj, item[1]);
-        //         indexesToRemove.splice(0, 0, i);
-        //     }
-        // }
-
-        // if (Object.keys(tempObj).length != 0){
-        //     // Re-Order snack-vendor
-        //     var keys = Object.keys(tempObj);
-        //     var orderedItems = [];
-        //     for (var expectedOrderIndex = 0; expectedOrderIndex < keys.length; expectedOrderIndex++){
-        //         failBack = true;
-        //         for (var j = 0; j < keys.length; j++){
-        //             if (tempObj[keys[j]].orderIndex == expectedOrderIndex){
-        //                 orderedItems.splice(expectedOrderIndex, 0, tempObj[keys[j]]);
-        //                 failBack = false;
-        //                 break;
-        //             }
-        //         }
-        //         // failBack if orderIndex did not match
-        //         // Add item at second index (good approach as item will be visible, but not first)
-        //         if (failBack){
-        //             console.warn("Cart ordering runs in failBack mode");
-        //             orderedItems.splice(1, 0, tempObj[keys[j]]);
-        //         }
-        //     }
-
-
-        //     if (store_type_api_name == "snack-vendor"){
-        //         new_cart.splice(0, 0, ['snack-vendor', orderedItems]);
-        //     } else {
-        //         new_cart.push(['snack-vendor', orderedItems]);
-        //     }
-        // }
-
-        // // reverse order
-        // new_cart = new_cart.filter(function(item){
-        //     return item[0] == 'liquor-station' || item[0] == 'snack-vendor';
-        // });
-        // END WORKAROUND
-
         return new_cart;
     }
 

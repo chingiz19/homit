@@ -1,0 +1,255 @@
+<style>
+    
+    @import "default/module";
+
+    .sidenav-body {
+        position: relative;
+        top: 85px;
+        padding: 0;
+        background-color: rgb(255, 255, 255);
+        padding-bottom: 20px;
+    }
+
+    .item-div {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+
+    .item-left-div {
+        flex-direction: column;
+        align-items: flex-end;
+        margin-top: 3em;
+        width: 25%;
+    }
+
+    .item-btn {
+        width: 85px;
+        height: 35px;
+        background-color: transparent;
+        border: none;
+        border-radius: 3px;
+        transition: background-color 0.3s ease;
+    }
+
+    .item-btn:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+    }
+
+    .item-btn ng-md-icon {
+        fill: rgba(0, 0, 0, 0.8);
+    }
+
+    .item-btn ng-md-icon svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .item-mid-div {
+        position: relative;
+        width: 35%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .remove-btn {
+        margin-left: auto;
+        margin-bottom: 10px;
+        width: 50px !important;
+    }
+
+    .remove-btn ng-md-icon {
+        fill: rgb(198, 70, 5);
+    }
+
+    .remove-btn ng-md-icon svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .product-quantity {
+        position: absolute;
+        top: 25px;
+        left: 10px;
+        height: 20px;
+        min-width: 20px;
+        text-align: center;
+        font-weight: 500;
+        background-color: rgba(39, 9, 9, 0.4);
+        color: #fff;
+        box-sizing: border-box;
+        border-radius: 10px;
+        font-size: 13px;
+        padding-top: 2px;
+    }
+
+    .item-img {
+        width: 115px;
+        height: 115px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .item-right-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 35%;
+        margin-top: 3em;
+    }
+
+    .produc-name {
+        margin-bottom: 2px;
+        text-align: left;
+        font-size: 15px;
+        color: rgb(50, 50, 50);
+    }
+
+    .produc-name span {
+        font-size: 14px;
+        color: rgb(150, 150, 150);
+    }
+
+    .cart-prd-price{
+        padding-top: 3px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .cart-empty{
+        height: 80%; 
+        width: 60%;
+        margin: 0 auto; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        flex-direction: column; 
+        opacity: 0.6;
+    }
+
+    .cart-empty img{
+        filter: grayscale(100%); 
+        height: 175px; 
+        width: auto; 
+        margin-bottom: 30px;
+    }
+
+    .cart-empty span{
+        color: #8f95a3; 
+        letter-spacing: 0.2px; 
+        font-size: 18px; 
+        text-align: center; 
+        text-rendering: optimizeLegibility; 
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* start of phone styles */
+    @media screen and (max-device-width: 479px) {
+        .item-left-div {
+            margin-top: 30px;
+        }
+
+        .item-btn {
+            width: 100%;
+            height: 30px;
+            padding: 0;
+        }
+
+        .item-btn ng-md-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .remove-btn{
+            height: 40px !important;
+            margin-bottom: 0;
+        }
+
+        .product-quantity {
+            top: -10px;    
+        }
+
+        .item-img {
+            width: 70px;
+            height: 70px;
+        }
+
+        .item-right-div {
+            margin-top: 20px;
+            width: 40%;
+        }
+
+        .item-right-div ul {
+            font-size: 10px;
+        }
+
+        .produc-name {
+            font-size: 12px;
+        }
+
+        .produc-name span {
+            font-size: 11px;
+        }
+        
+        .cart-prd-price{
+            font-size: 11px;
+        }
+
+        .cart-empty{
+            width: 80%;
+            height: 70%;
+        }
+
+        .cart-empty img{
+            height: 105px;
+            margin-bottom: 20px;
+        }
+
+        .cart-empty span{
+            font-size: 17px;
+        }
+
+    }
+</style>
+
+<section class="sidenav-body">
+    <div ng-repeat="store_type in userCartToView track by $index">
+        <div class="seperation-line">{{ store_type[0] }}</div>
+        <div ng-repeat="product in store_type[1] track by $index">
+            <div class="item-div fadeIn">
+                <div class="box-center item-left-div">
+                    <button class="item-btn" ng-click="plusItem(product)">
+                        <ng-md-icon  icon="add_circle_outline"></ng-md-icon>
+                    </button>
+                    <button  class="item-btn" ng-click="minusItem(product)">
+                        <ng-md-icon icon="remove_circle_outline"></ng-md-icon>
+                    </button>
+                </div>
+                <div class="item-mid-div">
+                    <button id="item-remove-button" class="item-btn remove-btn" ng-click="removeItem(product)" ng-if="canRemove">
+                        <ng-md-icon icon="clear"></ng-md-icon>
+                    </button>
+                    <span class="product-quantity">{{ product.quantity }}</span>
+                    <img class="item-img" ng-src='{{ product.image }}'>
+                </div>
+                <div class="item-right-div">
+                    <div class="produc-name">{{ product.brand }} {{ product.name }} 
+                        <span ng-if="product.packaging > 1">({{product.packaging }} x {{ product.volume }})</span>
+                        <span ng-if="product.packaging <= 1">({{ product.volume }})</span>
+                    </div>
+                    <div class="cart-prd-price" style="text-align: center;">C${{ product.price }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="userCartToView.length == 0">
+        <div class="cart-empty">
+            <img ng-src="/resources/images/non-catalog-image/pages/cart-icon.png">
+            <span>Your shopping cart is empty, but it doesn't have to be.</span>
+        </div>
+    </div>
+</section>

@@ -11,7 +11,7 @@ h1 {
 
 .image-404{
     position: absolute; 
-    bottom: 90px;
+    bottom: 200px;
     width: 100%; 
     display: flex; justify-content: center; 
     z-index: 1;
@@ -28,7 +28,7 @@ md-toolbar{
         box-shadow: 0 0px 1px 0px rgba(0,0,0,.26);
     }
     .image-404{
-        bottom: 90px;
+        bottom: 200px;
     }
     .image-404 img{
         width: 90vw; height: calc(90vw * 1.1);

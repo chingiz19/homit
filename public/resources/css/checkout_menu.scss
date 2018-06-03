@@ -157,19 +157,6 @@ li {
     transition: all 0.4s ease;
 }
 
-.sidenav-body {
-    position: relative;
-    top: 85px;
-    padding: 0;
-    background-color: rgb(255, 255, 255);
-    padding-bottom: 20px;
-}
-
-.store-seper {
-    flex-direction: row;
-    width: 100%;
-}
-
 .store-name {
     text-align: center;
     padding: 5px;
@@ -179,136 +166,7 @@ li {
     text-transform: uppercase;
 }
 
-.store-seper:before {
-    content: "";
-    width: 50px;
-    height: 1px;
-    margin: auto 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
-}
 
-.store-seper:after {
-    content: "";
-    flex-grow: 3;
-    height: 1px;
-    margin: auto 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-::after,
-::before {
-    box-sizing: border-box;
-}
-
-.item-div {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 10px;
-}
-
-.item-btn {
-    width: 85px;
-    height: 35px;
-    background-color: transparent;
-    border: none;
-    border-radius: 3px;
-    transition: background-color 0.3s ease;
-}
-
-.item-btn:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-}
-
-.item-btn ng-md-icon {
-    fill: rgba(0, 0, 0, 0.8);
-}
-
-.item-btn ng-md-icon svg {
-    width: 25px;
-    height: 25px;
-}
-
-.remove-btn {
-    margin-left: auto;
-    margin-bottom: 10px;
-    width: 50px !important;
-}
-
-.remove-btn ng-md-icon {
-    fill: rgb(198, 70, 5);
-}
-
-.remove-btn ng-md-icon svg {
-    width: 25px;
-    height: 25px;
-}
-
-.item-left-div {
-    flex-direction: column;
-    align-items: flex-end;
-    margin-top: 3em;
-    width: 25%;
-}
-
-.item-mid-div {
-    position: relative;
-    width: 35%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.product-quantity {
-    position: absolute;
-    top: 25px;
-    left: 10px;
-    height: 20px;
-    min-width: 20px;
-    text-align: center;
-    font-weight: 500;
-    background-color: rgba(39, 9, 9, 0.4);
-    color: #fff;
-    box-sizing: border-box;
-    border-radius: 10px;
-    font-size: 13px;
-    padding-top: 2px;
-}
-
-.produc-name {
-    margin-bottom: 2px;
-    text-align: left;
-    font-size: 15px;
-    color: rgb(50, 50, 50);
-}
-
-.produc-name span {
-    font-size: 14px;
-    color: rgb(150, 150, 150);
-}
-
-.item-right-div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 35%;
-    margin-top: 3em;
-}
-
-.item-img {
-    width: 125px;
-    height: 125px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-
-.cart-prd-price{
-    text-align: center;
-    font-size: 14px;
-    padding-top: 3px;
-}
 
 /* start of non-mobile/tablet styles */
 @media screen and (min-device-width: 768px) {
@@ -364,40 +222,6 @@ li {
         font-size: 10px;
     }
 
-    .item-btn {
-        width: 100%;
-        height: 30px;
-        padding: 0;
-    }
-
-    .remove-btn{
-        height: 40px !important;
-        margin-bottom: 0;
-    }
-
-    .item-btn ng-md-icon svg {
-        width: 20px;
-        height: 20px;
-    }
-
-    .item-img {
-        width: 70px;
-        height: 70px;
-    }
-
-    .item-left-div {
-        margin-top: 30px;
-    }
-
-    .item-right-div {
-        margin-top: 20px;
-        width: 40%;
-    }
-
-    .item-right-div ul {
-        font-size: 10px;
-    }
-
     .sidenav-cls-btn ng-md-icon svg {
         width: 30px;
         height: 30px;
@@ -412,16 +236,5 @@ li {
         height: 30px;
         font-size: 17px;
     }
-
-    .produc-name {
-        font-size: 12px;
-    }
-
-    .produc-name span {
-        font-size: 11px;
-    }
-
-    .cart-prd-price{
-        font-size: 11px;
-    }
+    
 }
