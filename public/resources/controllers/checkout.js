@@ -79,7 +79,6 @@ app.controller("checkoutController",
                     }
                 }, 100);
             }, function (err) {
-                notification.addErrorMessage("Sorry. Something went wrong.")
             });
 
 
