@@ -261,8 +261,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
             name: $scope.card_name
         }).then(function(result){
             if (result.error || !result.token.id){
-                //TODO: notify user that something is wrong, and they should try again
-                alert("Card false");
+                notification.addErrorMessage("False Card")
                 return;
             }
 
@@ -433,8 +432,10 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      */
     function defaultSuccessCallback(res){
         if (res.data.success){
-            notification.addSuccessMessage("Updated");
-            $window.location.reload();
+            notification.addSuccessMessage("Successfully Updated");
+            setTimeout(() => {
+                $window.location.reload();
+            }, 1000);
         } else {
             notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
         }
@@ -444,7 +445,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      * Returns default response handler that notifies of operation error 
      */
     function defaultErrorCallback(err){
-        notification.addErrorMessage("Something went wrong while updating, please try again later");
+        notification.addErrorMessage("Something went wrong, please try again later");
     }
     
     // Initialize at the end of file!

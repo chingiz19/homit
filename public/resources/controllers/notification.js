@@ -1,29 +1,34 @@
-app.controller("notificationController", function ($scope, $sce, notification, $timeout) {
+app.controller("notificationController", function ($scope, $sce, notification, $timeout, helpers) {
 
     $scope.init = function(){
-        $scope.clearAll();
         $scope.defaultTimeout = 2000; // 2 seconds
-    };
+        $scope.notifications = [];
 
-    $scope.clearAll = function () {
-        $scope.product = undefined;
-        $scope.message = undefined;
-        $scope.messageType = "";
+        $scope.types = {
+            "cart_item": 0,
+            "success_message": 1,
+            "error_message": 2,
+            "warning_message": 3,
+            "store_closed": 4
+        }
     };
 
     $scope.$on("addNotification", function (event, args) {
         switch(args.event_type){
             case notification.EventType.ADD_CART_ITEM:
-                addCartItem(args.product);
+                addCartItem(args.product, $scope.types["cart_item"]);
                 break;
             case notification.EventType.SUCCESS_MESSAGE:
-                addSuccessMessage(args.message);
+                addSuccessMessage(args.message, $scope.types["success_message"]);
                 break;
             case notification.EventType.ERROR_MESSAGE:
-                addErrorMessage(args.message);
+                addErrorMessage(args.message, $scope.types["error_message"]);
                 break;
-            case notification.EventType.IMPORTANT_MESSAGE:
-                addImportantMessage(args.message);
+            case notification.EventType.WARNING_MESSAGE:
+                addWarningMessage(args.message, $scope.types["warning_message"]);
+                break;
+            case notification.EventType.STORE_CLOSED:
+                addStoreClosedMessage(args.message, $scope.types["store_closed"]);
                 break;
             default:
                 console.warn("Notification event type not supported");
@@ -33,28 +38,54 @@ app.controller("notificationController", function ($scope, $sce, notification, $
 
     /* Private helper methods */
 
-    function addCartItem(product){
-        $scope.product = product;
-        clearWithTimeout();
+    function addCartItem(product, type){
+        let item = {
+            id: helpers.randomDigitGenerator(),
+            type: type,
+            product: product
+        }
+        $scope.notifications.push(item);
+        $scope.clearWithTimeout(item.id, 2000);
     }   
 
-    function addSuccessMessage(message){
-        $scope.message = message;
-        $scope.messageType = "success_msg"; // success message class name
-        clearWithTimeout();
+    function addSuccessMessage(message, type){
+        let item = {
+            id: helpers.randomDigitGenerator(),
+            type: type,
+            message: message
+        }
+        $scope.notifications.push(item);
+        $scope.clearWithTimeout(item.id, 2500);
     }
 
-    function addImportantMessage(message){
-        $scope.storeClose = true;
-        $scope.message = message;
-        $scope.messageType = "important_msg";
-        clearWithTimeout($scope.defaultTimeout * 2);
+    function addErrorMessage(message, type){
+        let item = {
+            id: helpers.randomDigitGenerator(),
+            type: type,
+            message: message
+        }
+        $scope.notifications.push(item);
+        $scope.clearWithTimeout(item.id, 5000);
     }
 
-    function addErrorMessage(message){
-        $scope.message = message;
-        $scope.messageType = "error_msg"; // success message class name
-        clearWithTimeout($scope.defaultTimeout * 2); // sticky message, wait twice longer before removing from UI
+    function addWarningMessage(message, type){
+        let item = {
+            id: helpers.randomDigitGenerator(),
+            type: type,
+            message: message
+        }
+        $scope.notifications.push(item);
+        $scope.clearWithTimeout(item.id, 4000);
+    }
+
+    function addStoreClosedMessage(message, type){
+        let item = {
+            id: helpers.randomDigitGenerator(),
+            type: type,
+            message: message
+        }
+        $scope.notifications.push(item);
+        $scope.clearWithTimeout(item.id, 3000);
     }
 
     /**
@@ -62,18 +93,20 @@ app.controller("notificationController", function ($scope, $sce, notification, $
      * @param {*} timeout 
      */
 
-    function clearWithTimeout(timeout){
-        var time = timeout;
+    $scope.clearWithTimeout = function(id, timeout){
+        let time = timeout;
+        let itemId = id;
         if (!time){
             time = $scope.defaultTimeout;
         }
 
-        if($scope.timeoutIsSet){
-            $timeout.cancel($scope.timeoutIsSet);
-        }
-
         $scope.timeoutIsSet = $timeout(function(){
-            $scope.clearAll();
+            for (let i = 0; i < $scope.notifications.length; i++){
+                if ($scope.notifications[i].id == itemId){
+                    $scope.notifications.splice(i, 1);
+                    break;
+                }
+            }
         }, time);
     }
 

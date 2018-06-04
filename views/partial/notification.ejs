@@ -1,33 +1,78 @@
 <link href="/resources/css/notification.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
 <div ng-controller="notificationController" ng-cloak class="notification-body">
-    <!-- Product information section -->
-    <div ng-if="product">
-        <div class="notification_box" layout="row">
-            <div layout="column">
-                <li>
-                    <img class="addItem_img" ng-src={{product.image}}>
-                </li>
+    <section class="notification-sec">
+        <div ng-repeat="item in notifications track by item.id">
+            <!-- ADD-TO-CART -->
+            <div ng-if="item.type == 0">
+                <div class="notification_box box-normal fadeIn-notif">
+                    <button class="notification-cls-btn" ng-click="clearWithTimeout(item.id, 10)">
+                        <ng-md-icon icon="clear" ></ng-md-icon>
+                    </button>
+                    <div layout="column">
+                        <li>
+                            <img class="addItem_img" ng-src={{item.product.image}}>
+                        </li>
+                    </div>
+                    <ul class="addItem_ul">
+                        <li class="addItem_ulA">
+                            <span>{{item.product.brand}}</span>
+                        </li>
+                        <li class="addItem_ulB">
+                            <span>{{item.product.volume}} &#8202X{{item.product.packaging}}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <ul class="addItem_ul">
-                <li class="addItem_ulA">
-                    <span>{{product.brand}}</span>
-                </li>
-                <li class="addItem_ulB">
-                    <span>{{product.volume}} &#8202X{{product.packaging}}</span>
-                </li>
-            </ul>
+            <!-- SUCCESS-MESSAGE -->
+            <div ng-if="item.type == 1">
+                <div class="notification_box box-success fadeIn-notif">
+                    <button class="notification-cls-btn" ng-click="clearWithTimeout(item.id, 10)">
+                        <ng-md-icon icon="clear" ></ng-md-icon>
+                    </button>
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark_circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark_check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                    <p>{{ item.message }}</p>
+                </div>
+            </div>
+            <!-- ERROR-MESSAGE -->
+            <div ng-if="item.type == 2">
+                <div class="notification_box box-error fadeIn-notif">
+                    <button class="notification-cls-btn" ng-click="clearWithTimeout(item.id, 10)">
+                        <ng-md-icon icon="clear" ></ng-md-icon>
+                    </button>
+                    <div class="error-sign box-center">
+                        <ng-md-icon icon="error_outline" class="box-center"></ng-md-icon>
+                    </div>
+                    <p>{{ item.message }}</p>
+                </div>
+            </div>
+            <!-- WARNING-MESSAGE -->
+            <div ng-if="item.type == 3">
+                <div class="notification_box box-warning fadeIn-notif">
+                    <button class="notification-cls-btn" ng-click="clearWithTimeout(item.id, 10)">
+                        <ng-md-icon icon="clear" ></ng-md-icon>
+                    </button>
+                    <div class="warning-sign box-center">
+                        <ng-md-icon icon="accessibility" class="box-center"></ng-md-icon>
+                    </div>
+                    <p>{{ item.message }}</p>
+                </div>
+            </div>
+            <!-- STORE-CLOSED-MESSAGE -->
+            <div ng-if="item.type == 4">
+                <div class="notification_box box-store-closed fadeIn-notif">
+                    <button class="notification-cls-btn" ng-click="clearWithTimeout(item.id, 10)">
+                        <ng-md-icon icon="clear" ></ng-md-icon>
+                    </button>
+                    <img ng-src="/resources/images/non-catalog-image/pages/homit_closed.png">
+                    <p>{{ item.message }}</p>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Message section -->
-    <div ng-if="message">
-        <div class="notification_box" ng-class="messageType">
-            <img ng-if="storeClose" ng-src="{{'/resources/images/non-catalog-image/homit_closed.png'}}">
-            <p>{{ message }}</p>
-        </div>
-    </div>
+    </section>
 </div>
 
 <% if (!production) { %>

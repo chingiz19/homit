@@ -40,7 +40,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             $(".catalog-store-cover").css("background-image", "url('/resources/images/non-catalog-image/cover-image/" + $scope.display_storeInfo.image.split(".")[0] + ".jpeg");
         }
     }, function errorCallback(response) {
-
+        notification.addErrorMessage("Sorry. Something went wrong.")
     });
 
     $scope.checkSubcategories = function (subcategory) {
@@ -87,6 +87,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             delete p.container;
 
             $rootScope.$broadcast("addToCart", p);
+
             googleAnalytics.addEvent('add_to_cart', {
                 "event_label": product.brand + " " + product.name,
                 "event_category": googleAnalytics.eventCategories.cart_actions,
@@ -102,7 +103,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                 ]
             });
         } else {
-            notification.addImportantMessage("Store closed at the moment.");
+            notification.addStoreClosedMessage("Store closed at the moment.");
         }
     };
 

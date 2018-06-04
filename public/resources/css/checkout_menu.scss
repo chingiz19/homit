@@ -49,7 +49,7 @@ li {
 }
 
 .checkout-menu-btn ng-md-icon {
-    fill: #e2dede;
+    fill: #f9f9f9;
 }
 
 .checkout-menu-btn ng-md-icon svg {
@@ -186,6 +186,10 @@ li {
 @media screen and (max-device-width: 479px) {
     .checkout-menu-btn-div {
         right: -1 !important;
+    }
+
+    .product-quantity{
+        top: 25px !important;
     }
 
     .checkout-menu-btn {

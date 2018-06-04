@@ -8,6 +8,9 @@
 app.service('helpers', function(){
     var pub = {};
 
+    pub.randomDigitGenerator = function(){
+        return Math.floor(Math.random()*90000000) + 10000000;
+    }
 
     return pub;
 });

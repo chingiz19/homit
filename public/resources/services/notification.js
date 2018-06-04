@@ -9,9 +9,11 @@ app.service('notification', function($rootScope){
     var pub = {};
 
     pub.EventType = {
-        ADD_CART_ITEM: "add_cart_item",
-        SUCCESS_MESSAGE: "success_message",
-        ERROR_MESSAGE: "error_message"
+        ADD_CART_ITEM: 0,
+        SUCCESS_MESSAGE: 1,
+        ERROR_MESSAGE: 2,
+        WARNING_MESSAGE: 3,
+        STORE_CLOSED: 4
     };
 
     /**
@@ -51,9 +53,20 @@ app.service('notification', function($rootScope){
      * Shows notification for error message
      * @param {*} message 
      */
-    pub.addImportantMessage = function(message){
+    pub.addWarningMessage = function(message){
         $rootScope.$broadcast("addNotification", {
-            event_type: pub.EventType.IMPORTANT_MESSAGE,
+            event_type: pub.EventType.WARNING_MESSAGE,
+            message: message
+        });
+    };
+
+    /**
+     * Shows notification for error message
+     * @param {*} message 
+     */
+    pub.addStoreClosedMessage = function(message){
+        $rootScope.$broadcast("addNotification", {
+            event_type: pub.EventType.STORE_CLOSED,
             message: message
         });
     };

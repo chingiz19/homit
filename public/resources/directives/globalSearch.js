@@ -220,7 +220,7 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
             }
 
             function closeSearchOnClick(evt){
-                if (!evt || (evt.target.className && evt.target.className.includes("search-input")) || $(evt.target).parents("#search-sec").length) return;
+                if ( !scope.searchRequest || (evt.target.className && evt.target.className.includes("search-input")) || $(evt.target).parents("#search-sec").length) return;
                 $(".search-btn").click();
             }
 

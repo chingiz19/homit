@@ -17,6 +17,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
             if (tmpQuantity > 10) {
                 tmpQuantity = 10;
                 pScope.numberOfItemsInCart = pScope.numberOfItemsInCart;
+                notification.addWarningMessage("Limit of a kind is 10.");
             } else{
                 pScope.numberOfItemsInCart ++;
                 notification.addCartItem(product);

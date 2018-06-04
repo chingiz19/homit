@@ -21,13 +21,15 @@
             }
         }).then(function successCallback(response) {
             if (response.data.success) {
-                $window.location.href= "/main";
+                notification.addSuccessMessage("Updated");
+                setTimeout(() => {
+                    $window.location.href= "/main";
+                }, 1000);
             } else {
-                alert(response.data.ui_message);
-                console.log("password not reset. Try again");
+                notification.addErrorMessage("Password not reset. Try again");
             }
         }, function errorCallback(response) {
-            console.log("ERROR in password reset");
+            notification.addErrorMessage("ERROR in password reset");
         });
     };
 

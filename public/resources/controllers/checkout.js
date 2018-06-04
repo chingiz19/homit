@@ -1,6 +1,6 @@
 app.controller("checkoutController",
     function ($scope, $http, $location, $rootScope, $cookies, $window, $mdSidenav,
-        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval, googleAnalytics, $timeout, user, $injector) {
+        $log, localStorage, cartService, sessionStorage, date, mapServices, $sce, $interval, googleAnalytics, $timeout, user, $injector, notification) {
 
         $scope.userInfo = {};
 
@@ -79,7 +79,7 @@ app.controller("checkoutController",
                     }
                 }, 100);
             }, function (err) {
-                // Nothing to do
+                notification.addErrorMessage("Sorry. Something went wrong.")
             });
 
 

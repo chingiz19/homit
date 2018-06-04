@@ -1,99 +1,216 @@
-.notification_box{
+.fadeIn-notif {
+    visibility: visible;
+    animation: fadein 0.5s;
+}
+
+.checkmark {
+    margin-right: 10px;
+}
+
+.notification-sec{
     position: fixed; 
-    bottom: 30px; right: 30px; 
-    height: 90px; width: 250px; 
-    display: flex; align-items: center; justify-content: center;
-    border: 1px solid rgba(44, 37, 37, 0.733);
+    bottom: 30px; 
+    right: 30px; 
+    display: flex; 
+    flex-direction: column;
+    z-index: 200;
+}
+
+.notification_box {
+    position: relative;
+    height: 74px;
+    width: 270px;
+    margin: 2px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    border: 1px solid rgba(195, 191, 191, 0.733);
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 1);   
     box-shadow: 0 0px 8px 2px rgba(0, 0, 0, 0.4);
     z-index: 100;
-    animation: fadeIn 0.2s ease;
 }
 
-.notification_box p {
-    margin: 0;
-}
-.addItem_img{
-    width: 70px; height: 70px;
-}
-.addItem_ul{
-    margin: 0; padding: 0; 
-    margin-left: 10px;
-}
-.addItem_ulA{
-    text-align: center;
-    font-size: 15px;
-}
-.addItem_ulB{
-    text-align: center;
-    font-weight: 600;
-    font-size: 12px;
-}
-.notification-body{
-    letter-spacing: 0.01em;
-    font-family: 'Nunito', sans-serif;
+.box-normal {
+    background-color: rgb(255, 255, 255);
 }
 
-/* Message Type backgrounds */
-.success_msg {
-    background-color: rgba(0, 189, 149,1);
-    color: black; font-weight: 500; font-size: 15px;
+.box-success {
+    background-color: #dff7ed;
 }
 
-.important_msg{
+.box-store-closed {
     background-color: #fce4b1;
-    border-color: #eec979;
-    color: rgb(54, 49, 49); font-weight: 500; 
-    font-size: 19px;
+}
+
+.box-success p, .box-error p, .box-warning p, .box-store-closed p {
+    color: #454646;
+    font-size: 17px;
+    max-width: 70%;
+    min-width: 45%;
     text-align: center;
+    margin: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
-.important_msg p{
-    padding-right: 5px;
+.notification-cls-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 0;
+    padding: 0;
+    outline-style: none;
+    border: none;
+    background-color: transparent;
+    fill: rgb(175, 175, 175);
 }
 
-.important_msg img{
-    min-width: 75px !important; 
-    width: 75px;
-    height: 90px;
+.notification-cls-btn svg{
+    width: 18px; height: 18px;
 }
-.error_msg {
-    background-color: red;
-    color: black;
+
+.addItem_img {
+    width: 65px;
+    height: 65px;
+}
+
+.box-store-closed img {
+    height: 70px;
+    width: auto;
+}
+
+.addItem_ul {
+    max-width: 65%;
+    min-width: 40%;
+    margin: 0;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.addItem_ulA {
+    color: #454646;
+    text-align: center;
+    font-size: 16px;
+}
+
+.addItem_ulB {
+    color: #454646;
+    text-align: center;
+    font-size: 11px;
+}
+
+.box-error {
+    background-color: #f7dfdf;
+}
+
+.error-sign {
+    width: 45px;
+    height: 45px;
+    margin-right: 10px;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 0px #ee5353;
+    animation: fill-error .3s ease-in-out .5s forwards, scale .4s ease-in-out .9s both;
+}
+
+.error-sign ng-md-icon, .warning-sign ng-md-icon{
+    fill: #fff;
+    animation: fadeout 0.5s;
+}
+
+.error-sign ng-md-icon svg {
+    width: 45px; 
+    height: 45px;
+}
+
+.box-warning {
+    background-color: #ffede1;
+}
+
+.warning-sign {
+    width: 45px;
+    height: 45px;
+    margin-right: 10px;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 0px #d48957;
+    animation: fill-warning .3s ease-in-out .5s forwards, scale .4s ease-in-out .9s both;
+}
+
+.warning-sign ng-md-icon svg {
+    width: 30px; 
+    height: 30px;
 }
 
 /* start of phone styles */
-@media screen and (max-device-width: 479px){
-    .notification_box{
-        position: fixed; 
-        top: 60px; left: 20px; 
-        height: 60px; width: 200px; 
+@media screen and (max-device-width: 479px) {
+
+    .notification-sec{
+        bottom: 10px; 
+        left: 10px; 
     }
-    .addItem_img{
-        width: 40px; height: 40px;
+
+    .notification_box {
+        position: relative;
+        height: 60px;
+        width: 210px;
     }
-    .addItem_ulB{
-        display: flex; justify-content: center; 
-        font-size: 10px;
+
+    .addItem_img {
+        width: 40px;
+        height: 40px;
     }
-    .important_msg{
+
+    .error-sign ng-md-icon {
+        width: 40px; 
+        height: 40px;
+    }
+
+    .notification-cls-btn {
+        top: 1px; 
+        right: 1px;
+        width: 25px;
+        height: 25px;
+        fill: rgb(190, 190, 190);
+    }
+
+    .notification-cls-btn svg{
+        margin: 0 0 10px 10px;
+        width: 15px; height: 15px;
+    }
+
+    .box-success p, .box-error p, .box-warning p, .box-store-closed p {
         font-size: 15px;
     }
-    .important_msg img{
+
+    .error-sign, .warning-sign {
+        margin-right: 10px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .error-sign ng-md-icon svg {
+        width: 45px; 
+        height: 45px;
+    }
+
+    .warning-sign ng-md-icon svg {
+        width: 30px; 
+        height: 30px;
+    }    
+
+    .addItem_ulB {
+        display: flex;
+        justify-content: center;
+        font-size: 10px;
+    }
+
+    .important_msg {
+        font-size: 15px;
+    }
+
+    .important_msg img {
         min-width: 55px !important;
         width: 55px;
         height: 60px;
-    }
-}
-
-@keyframes fadeIn {
-    0% {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: #e5e5e5;
-    }
-    100% {
-        background: rgba(255, 255, 255, 1);
-        border-color: #e5e5e5;
     }
 }

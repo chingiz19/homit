@@ -7,7 +7,7 @@
  * </modal>
  * 
  */
-app.directive("modal", function ($timeout, user, $window) {
+app.directive("modal", function ($timeout, user, $window, notification) {
 
     var publicFunctions = {};
     var pScope;
@@ -29,9 +29,10 @@ app.directive("modal", function ($timeout, user, $window) {
                 if (response.data.success) {
                     $("#sucLogIn").removeClass("sucSign");
                     $("#sucLogIn").addClass("sign-showSucMessage foldIn");
+                    notification.addSuccessMessage("Wellcome back.");
                     setTimeout(() => {
                         $window.location.reload();
-                    }, 1000);
+                    }, 2000);
                 } else {
                     $("#invalidLogIn").removeClass("invalidLogIn");
                     $("#invalidLogIn").addClass("sign-showErrorMessage foldIn");
@@ -79,9 +80,10 @@ app.directive("modal", function ($timeout, user, $window) {
                 if (response.data.success) {
                     $("#sucSignUp").removeClass("sucSign");
                     $("#sucSignUp").addClass("sign-showSucMessage foldIn");
+                    notification.addSuccessMessage("Wellcome to Homit, " + pScope.signup_fname);
                     setTimeout(() => {
                         $window.location.reload();
-                    }, 1000);
+                    }, 2000);
                 } else {
                     pScope.logIn_message = "Fail to Sign Up. Please refresh page, and try again.";
                     $("#signUpNotification").removeClass("signUpNotification");
