@@ -1,4 +1,4 @@
-app.controller("productController", function ($scope, $rootScope, $window, sessionStorage, notification) {
+app.controller("productController", function ($scope, $rootScope, $window, sessionStorage, notification, helpers) {
     $scope.init = function () {
         $scope.recommended_products = JSON.parse($("#recommendedProducts").val());
         $scope.product = JSON.parse($("#product").val());
@@ -91,29 +91,22 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     };
 
     $scope.hrefToStore = function(path){
-        $window.location.href = $window.location.origin + "/catalog/" + path;
         sessionStorage.setCategoryClicked("store-switched");
+        $window.location.href = $window.location.origin + "/catalog/" + path;
     };
 
     $scope.hrefToSubcat = function(product){
-        $window.location.href = $window.location.origin + "/catalog/" + product.store_type_api_name + "/" + product.category;
         sessionStorage.setSearchSubcategory(product.subcategory);
+        $window.location.href = $window.location.origin + "/catalog/" + product.store_type_api_name + "/" + helpers.urlReplaceSpaceWithDash(product.category);
     };
 
     $scope.hrefPrdPage = function (product) {
-        var path;
-        path = "/catalog/product/" + product.store_type_api_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
-        
-        $window.location.href = $window.location.origin + path;
+        googleAnalytics.addEvent('product_clicked', {
+            "event_label": product.brand + " " + product.name + "; People also Homit",
+            "event_category": googleAnalytics.eventCategories.catalog_actions
+        });
+        $window.location.href = $window.location.origin + helpers.buildProductPagePath(product);
     };
-
-    function clearProductUrl(path){
-        var tempPath = path;
-        tempPath = tempPath.replace(/[#&',.%/()]/g, "");
-        tempPath = tempPath.replace(/[---]/g, "-");
-        tempPath = tempPath.replace(/[--]/g, "-");
-        return tempPath;
-    }
 
     $scope.init();
 });

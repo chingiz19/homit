@@ -1,4 +1,4 @@
-app.controller("mainController", function ($scope, $http, sessionStorage, $cookies, $window, $location, $anchorScroll, mapServices, $timeout, googleAnalytics) {
+app.controller("mainController", function ($scope, $http, sessionStorage, $cookies, $window, $location, $anchorScroll, mapServices, $timeout, googleAnalytics, helpers) {
     $scope.map = undefined;
     $scope.showMapMessage = false;
     $scope.trandingSelected = "popular";
@@ -68,8 +68,8 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
     };
 
     $scope.hrefTo = function (path) {
-        $window.location.href = $window.location.origin + path;
         sessionStorage.setCategoryClicked("store-switched");
+        $window.location.href = $window.location.origin + path;
     };
 
     $scope.changeTranPrd = function(type){
@@ -81,19 +81,12 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
     };
 
     $scope.hrefPrdPage = function (product) {
-        var path;
-        path = "/catalog/product/" + product.store_type_api_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
-
-        $window.location.href = $window.location.origin + path;
+        googleAnalytics.addEvent('product_clicked', {
+            "event_label": product.brand + " " + product.name + "; Trending Products",
+            "event_category": googleAnalytics.eventCategories.catalog_actions
+        });
+        $window.location.href = $window.location.origin + helpers.buildProductPagePath(product);
     };
-
-    function clearProductUrl(path){
-        var tempPath = path;
-        tempPath = tempPath.replace(/[#&',.%/()]/g, "");
-        tempPath = tempPath.replace(/[---]/g, "-");
-        tempPath = tempPath.replace(/[--]/g, "-");
-        return tempPath;
-    }
 
     function clearLocSucMsg(time) {
         setTimeout(() => {

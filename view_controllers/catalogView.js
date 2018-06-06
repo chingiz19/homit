@@ -165,8 +165,8 @@ function convertHomitTags(string) {
 function clearProductUrl(path) {
     var tempPath = path;
     tempPath = tempPath.replace(/[#&',.%/()]/g, "");
-    tempPath = tempPath.replace(/[---]/g, "-");
-    tempPath = tempPath.replace(/[--]/g, "-");
+    tempPath = tempPath.replace(/---/g, "-");
+    tempPath = tempPath.replace(/--/g, "-");
     return tempPath;
 }
 
