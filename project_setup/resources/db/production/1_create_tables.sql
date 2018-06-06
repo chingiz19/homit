@@ -15,7 +15,7 @@ CREATE TABLE catalog_store_types (
 	api_name VARCHAR(225) NOT NULL,		
 	available BOOLEAN DEFAULT TRUE,
 	del_fee_primary DOUBLE DEFAULT 4.99,
-	del_fee_secondary DOUBLE DEFAULT 2.99
+	del_fee_secondary DOUBLE DEFAULT 2.99,
 	
 	PRIMARY KEY (id),
 	UNIQUE(name),

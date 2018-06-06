@@ -340,7 +340,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                     scope.storeInfo = store_info;
                     scope.store_name = store_info.name;
                     scope.storeName = store_info.display_name;
-                    scope.delFee = formatDelFeeText(store_info.delFee, "FREE delivery");
+                    scope.delFee = formatDelFeeText(store_info.del_fee, "FREE delivery");
                     scope.storeImage = "/resources/images/non-catalog-image/store-logo/" + store_info.image;
 
                     scope.dates = buildDatesArray(scope.storeInfo.hours);
