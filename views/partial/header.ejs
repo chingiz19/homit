@@ -66,11 +66,11 @@
 <!--googleoff: snippet-->
             <% if(!userLoggedIn) { %>
                 <span id="sign-btns" ng-cloak>
-                    <button class="homit-btn logIn-btn rgb-background btn-font" ng-click="modal(true, 'login');">
+                    <button class="sign-btn logIn-btn rgb-background" ng-click="modal(true, 'login');">
                         Sign In <ng-md-icon class="log-in-icon" icon="account_circle" size="35"></ng-md-icon>
                     </button>
-                    <button class="homit-btn default-btn signUp-btn btn-font" ng-click="modal(false, 'signup');">
-                        Sign up
+                    <button class="sign-btn signUp-btn" ng-click="modal(false, 'signup');">
+                        Sign Up
                     </button>
                 </span>
                 <%} else {%>

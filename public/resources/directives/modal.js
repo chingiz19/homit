@@ -1,13 +1,4 @@
-/**
- * This directive is used to add google address autocomplete input box
- * 
- * Example usage:
- * <modal 
- *      show="true|false" // To show/hide modal (preferrably two way binded)
- * </modal>
- * 
- */
-app.directive("modal", function ($timeout, user, $window, notification) {
+app.directive("modal", function ($timeout, user, $window) {
 
     var publicFunctions = {};
     var pScope;
@@ -27,21 +18,17 @@ app.directive("modal", function ($timeout, user, $window, notification) {
         user.login(pScope.login_email, pScope.login_password)
             .then(function successCallback(response) {
                 if (response.data.success) {
-                    $("#sucLogIn").removeClass("sucSign");
-                    $("#sucLogIn").addClass("sign-showSucMessage foldIn");
-                    notification.addSuccessMessage("Wellcome back.");
+                    $("#sucLogIn").removeClass("sucSign").addClass("sign-showSucMessage");
                     setTimeout(() => {
                         $window.location.reload();
                     }, 2000);
                 } else {
-                    $("#invalidLogIn").removeClass("invalidLogIn");
-                    $("#invalidLogIn").addClass("sign-showErrorMessage foldIn");
+                    $("#invalidLogIn").removeClass("invalidLogIn").addClass("sign-showErrorMessage messageIn");
                 }
             }, function errorCallback(response) {
                 pScope.logIn_message = "Couldn't connect. Please refresh the page and try again.";
                 $("#emailNotification").addClass("sign-showErrorMessage");
-                $("#invalidLogIn").removeClass("sign-showErrorMessage");
-                $("#invalidLogIn").addClass("invalidLogIn");
+                $("#invalidLogIn").removeClass("sign-showErrorMessage").addClass("invalidLogIn");
             });
     };
 
@@ -52,19 +39,16 @@ app.directive("modal", function ($timeout, user, $window, notification) {
                 if (response.data.success) {
                     pScope.logIn_message = "Reset email has been successifully sent to " + pScope.login_email;
                     $("#emailNotification").addClass("sign-showErrorMessage");
-                    $("#invalidLogIn").removeClass("sign-showErrorMessage");
-                    $("#invalidLogIn").addClass("invalidLogIn");
+                    $("#invalidLogIn").removeClass("sign-showErrorMessage").addClass("invalidLogIn");
                 } else {
                     pScope.logIn_message = "Fail to sent password reset email to " + pScope.login_email + ". Please, try again.";
                     $("#emailNotification").addClass("sign-showErrorMessage");
-                    $("#invalidLogIn").removeClass("sign-showErrorMessage");
-                    $("#invalidLogIn").addClass("invalidLogIn");
+                    $("#invalidLogIn").removeClass("sign-showErrorMessage").addClass("invalidLogIn");
                 }
             }, function errorCallback(response) {
                 pScope.logIn_message = "ERROR in password reset. Please contact info@homit.ca";
                 $("#emailNotification").addClass("sign-showErrorMessage");
-                $("#invalidLogIn").removeClass("sign-showErrorMessage");
-                $("#invalidLogIn").addClass("invalidLogIn");
+                $("#invalidLogIn").removeClass("sign-showErrorMessage").addClass("invalidLogIn");
             });
     };
 
@@ -78,46 +62,32 @@ app.directive("modal", function ($timeout, user, $window, notification) {
         })
             .then(function successCallback(response) {
                 if (response.data.success) {
-                    $("#sucSignUp").removeClass("sucSign");
-                    $("#sucSignUp").addClass("sign-showSucMessage foldIn");
-                    notification.addSuccessMessage("Wellcome to Homit, " + pScope.signup_fname);
+                    $("#sucSignUp").removeClass("sucSign").addClass("sign-showSucMessage");
                     setTimeout(() => {
                         $window.location.reload();
                     }, 2000);
                 } else {
                     pScope.logIn_message = "Fail to Sign Up. Please refresh page, and try again.";
-                    $("#signUpNotification").removeClass("signUpNotification");
-                    $("#signUpNotification").addClass("sign-showErrorMessage foldIn");
+                    $("#signUpNotification").removeClass("signUpNotification").addClass("sign-showErrorMessage messageIn");
                 }
             }, function errorCallback(response) {
                 pScope.logIn_message = "Fail to Sign Up. Please refresh page, and try again.";
-                $("#signUpNotification").removeClass("signUpNotification");
-                $("#signUpNotification").addClass("sign-showErrorMessage foldIn");
+                $("#signUpNotification").removeClass("signUpNotification").addClass("sign-showErrorMessage messageIn");
             });
     };
 
     _scope._tryAgainLogIn = function () {
         pScope.login_email = "";
         pScope.login_password = "";
-        $("#invalidLogIn").addClass("foldOut");
-        $("#invalidLogIn").removeClass("foldIn");
+        $("#invalidLogIn").addClass("messageOut").removeClass("messageIn");
         setTimeout(() => {
-            $("#invalidLogIn").removeClass("sign-showErrorMessage foldOut");
-            $("#invalidLogIn").addClass("invalidLogIn");
-        }, 600);
+            $("#invalidLogIn").addClass("invalidLogIn").removeClass("sign-showErrorMessage messageOut");
+        }, 400);
     };
 
     return {
         restrict: "E", // restrict to element
         scope: {
-            // _searchedAddress: "@", // itself, only used locally
-            // addressChangeEvent: "<onAddressSelected", // required addressChanged event (one way binding)
-            // autocomplete: "=", // public functions (two way binding)
-            // inputClass: "@?inputClass",  // optional input element class(es) (as is biding)
-            // iconClass: "@?iconClass", // optional x icon class(es) (as is biding)
-            // inputDisabled: "@?inputDisabled", // optional input element
-            // buttonClass: "@?buttonClass", // optional x button class(es) (as is biding)
-            // bounds: "<autocompleteBounds" // autocomplete results in these bounds are shown first
             _show: "=show", // To show/hide modal
             _showLogIn: "=showLogin" // To show Login or Signup
         },
@@ -131,11 +101,7 @@ app.directive("modal", function ($timeout, user, $window, notification) {
                     scope[func] = _scope[func];
                 }
                 pScope = scope;
-
                 scope.passPattern = '^(?:([^\ ]))*$';
-
-                /* Helper functions */
-
             }, 0);
         }
     };

@@ -79,8 +79,8 @@ body {
     left: calc((100% - 240px)/2);
     font-size: 35px;
     opacity: 0.6;
-    color: #717171;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    color: #c1c1c1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .store-list-ul li {
@@ -153,14 +153,12 @@ body {
 .store-li img {
     height: 160px;
     width: 160px;
-    filter: grayscale(100%);
     border-radius: 75px;
     will-change: padding, height, width;
     transition: all 0.4s ease-out;
 }
 
 .store-li:hover img {
-    filter: grayscale(0%);
     box-shadow: 0 0px 6px 3px rgba(0, 0, 0, 0.15);
     transition: all 0.4s ease-out;
 }
@@ -181,12 +179,10 @@ body {
     border-color: rgba(42, 81, 145, 0.5);
     color: rgb(42, 81, 145);
     background-color: transparent;
-    transition: all 0.3s ease;
 }
 
 .logIn-btn:hover {
-    background-color: rgba(42, 81, 145, 0.05);
-    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.2);
+    background-color: rgba(42, 81, 145, 0.03);
     transition: all 0.3s ease;
 }
 
@@ -198,7 +194,6 @@ body {
 
 .signUp-btn:hover {
     background-color: rgba(42, 81, 145, 0.95);
-    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -1146,8 +1141,6 @@ body {
         left: calc((100% - 220px)/2);
         font-size: 25px;
         opacity: 0.8;
-        color: #717171;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
     .store-li-free-delivery {

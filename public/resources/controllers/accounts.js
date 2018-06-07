@@ -14,43 +14,37 @@ app.controller("accountsController", function ($scope, $window, $timeout, user) 
         user.login($scope.login_email_mob, $scope.login_password_mob)
             .then(function successCallback(response) {
                 if (response.data.success) {
-                    $("#sucLogIn-mob").removeClass("sucSign-mob");
-                    $("#sucLogIn-mob").addClass("sign-showSucMessage-mob foldIn-mob");
+                    $("#sucLogIn-mob").removeClass("sucSign-mob").addClass("sign-showSucMessage-mob");
                     setTimeout(() => {
                         $window.location.href = $window.location.origin + "/main";
                     }, 1100);
                 } else {
-                    $("#invalidLogIn-mob").removeClass("invalidLogIn-mob");
-                    $("#invalidLogIn-mob").addClass("sign-showErrorMessage-mob foldIn-mob");
+                    $("#invalidLogIn-mob").removeClass("invalidLogIn-mob").addClass("sign-showErrorMessage-mob messageIn-mob");
                 }
             }, function errorCallback(response) {
                 $scope.sign_message_mob = "Couldn't connect. Please refresh the page and try again.";
-                $("#emailNotification-mob").addClass("sign-showErrorMessage-mob");
+                $("#emailNotification-mob").addClass("sign-showErrorMessage-mob invalidLogIn-mob messageIn-mob");
                 $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob");
-                $("#emailNotification-mob").addClass("invalidLogIn-mob foldIn-mob");
             });
     };
 
     $scope.forgotPasswordMob = function (valid) {
         if (!valid) return;
-        user.forgotPassword($scope.signup_email_mob)
+        user.forgotPassword($scope.login_email_mob)
             .then(function successCallback(response) {
                 if (response.data.success) {
-                    pScope.sign_message_mob = "Reset email has been successifully sent to " + $scope.signup_email_mob;
-                    $("#emailNotification-mob").addClass("sign-showErrorMessage");
-                    $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob");
-                    $("#invalidLogIn-mob").addClass("invalidLogIn-mob");
+                    $scope.sign_message_mob = "Reset email has been successifully sent to " + $scope.login_email_mob;
+                    $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob").addClass("invalidLogIn-mob");
+                    $("#emailNotification-mob").addClass("sign-showErrorMessage-mob messageIn-mob");
                 } else {
-                    pScope.sign_message_mob = "Fail to sent password reset email to " + $scope.signup_email_mob + ". Please, try again.";
-                    $("#emailNotification-mob").addClass("sign-showErrorMessage-mob");
-                    $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob");
-                    $("#invalidLogIn-mob").addClass("invalidLogIn-mob");
+                    $scope.sign_message_mob = "Fail to sent password reset email to " + $scope.login_email_mob + ". Please, try again.";
+                    $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob").addClass("invalidLogIn-mob");
+                    $("#emailNotification-mob").addClass("sign-showErrorMessage-mob messageIn-mob");
                 }
             }, function errorCallback(response) {
-                pScope.sign_message_mob = "ERROR in password reset. Please contact info@homit.ca";
-                $("#emailNotification-mob").addClass("sign-showErrorMessage-mob");
-                $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob");
-                $("#invalidLogIn-mob").addClass("invalidLogIn-mob foldIn-mob");
+                $scope.sign_message_mob = "ERROR in password reset. Please contact info@homit.ca";
+                $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob").addClass("invalidLogIn-mob");
+                $("#emailNotification-mob").addClass("sign-showErrorMessage-mob messageIn-mob");
             });
     };
 
@@ -64,31 +58,26 @@ app.controller("accountsController", function ($scope, $window, $timeout, user) 
         })
             .then(function successCallback(response) {
                 if (response.data.success) {
-                    $("#sucSignUp-mob").removeClass("sucSign-mob");
-                    $("#sucSignUp-mob").addClass("sign-showSucMessage-mob foldIn-mob");
+                    $("#sucSignUp-mob").removeClass("sucSign-mob").addClass("sign-showSucMessage-mob");
                     setTimeout(() => {
                         $window.location.href = $window.location.origin + "/main";
                     }, 1000);
                 } else {
                     $scope.sign_message_mob = "Failed to Sign Up. Please refresh page, and try again.";
-                    $("#signUpNotification-mob").removeClass("signUpNotification-mob");
-                    $("#signUpNotification-mob").addClass("sign-showErrorMessage-mob foldIn");
+                    $("#signUpNotification-mob").removeClass("signUpNotification-mob").addClass("sign-showErrorMessage-mob messageIn-mob");
                 }
             }, function errorCallback(response) {
                 pScope.sign_message_mob = "Fail to Sign Up. Please refresh page, and try again.";
-                $("#signUpNotification-mob").removeClass("signUpNotification-mob");
-                $("#signUpNotification-mob").addClass("sign-showErrorMessage-mob foldIn");
+                $("#signUpNotification-mob").removeClass("signUpNotification-mob").addClass("sign-showErrorMessage-mob messageIn-mob");
             });
     };
 
     $scope.tryAgainLogIn = function () {
         $scope.login_email_mob = "";
         $scope.login_password_mob = "";
-        $("#invalidLogIn-mob").addClass("foldOut-mob");
-        $("#invalidLogIn-mob").removeClass("foldIn-mob");
+        $("#invalidLogIn-mob").addClass("messageOut-mob").removeClass("messageIn-mob");
         setTimeout(() => {
-            $("#invalidLogIn-mob").removeClass("sign-showErrorMessage-mob foldOut-mob");
-            $("#invalidLogIn-mob").addClass("invalidLogIn-mob");
+            $("#invalidLogIn-mob").addClass("invalidLogIn-mob").removeClass("sign-showErrorMessage-mob foldOut-mob");
         }, 600);
         $scope.$apply();
     };

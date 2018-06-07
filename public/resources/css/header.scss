@@ -97,21 +97,17 @@ nav {
 .signUp-btn {
     border-style: solid;
     border-width: 1px;
-    transition: background-color 0.3s;
+    color: rgb(42,81,145);
 }
 
 .logIn-btn:hover {
-    background-color: rgb(22, 62, 128);
+    background-color: rgb(46, 88, 155);
     transition: background-color 0.3s;
 }
 
 .signUp-btn:hover {
-    background-color: rgba(230, 230, 230, 1);
+    background-color: rgba(250, 250, 250, 1);
     transition: background-color 0.3s;
-}
-
-.btn-font {
-    font-size: 19px;
 }
 
 .user-signed-btn {

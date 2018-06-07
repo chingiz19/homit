@@ -12,10 +12,18 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
         if ($scope.screenMob) {
             $window.location.href = $window.location.origin + "/accounts?action=" + action;
         } else {
+            window.addEventListener('click', closeModalOnClick, false);
             $scope.showModal = true;
             $scope.showLogInModal = logIn;
         }
     };
+
+    function closeModalOnClick(evt){
+        if (!$scope.showModal || (evt.target.className && (evt.target.className.includes("logIn-btn") || evt.target.className.includes("signUp-btn"))) || $(evt.target).parents(".modal-content").length) return;
+        $scope.showModal = false;
+        window.removeEventListener('click', closeModalOnClick, false);
+        $scope.$apply();
+    }
 
     $scope.logout = function () {
         user.logout()

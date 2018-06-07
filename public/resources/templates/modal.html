@@ -4,19 +4,24 @@
         font-family: 'Nunito', sans-serif;
     }
 
-    .modal-header,
-    .modal-fotter {
-        transition: border-bottom-color 0.3s;
+    .modal-header{
+        border-bottom: 1px solid #f7f4f4;
     }
 
     .modal-content {
+        position: relative;
         width: 400px;
         height: 0px;
-        border: 1px solid black;
-        border-radius: 5px;
+        border-radius: 2px;
         background-color: white;
+        border: none;
+        box-shadow: 0 4px 22px rgba(158, 158, 158, 0.5);
         z-index: 100;
-        animation: fadeIn .2s ease-in-out;
+        animation: fadeIn .1s ease-in-out;
+    }
+
+    .modal-fotter{
+        border-top: 1px solid #f7f4f4;
     }
 
     .login-footer {
@@ -27,7 +32,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        background-color: rgba(0, 0, 0, 0.6);
+        background-color: rgba(255,255,255, 0.6);
         filter: blur(1px);
         -webkit-filter: blur(1px);
         -o-filter: blur(1px);
@@ -60,31 +65,34 @@
         padding: 0;
         width: 30px;
         height: 30px;
+        background-color: transparent;
         transition: background-color 0.3s;
         border: none;
     }
 
     .clear-btn:hover {
         border-radius: 3px;
-        border: 1px solid rgba(100, 100, 100, 0.2);
         background-color: rgba(100, 100, 100, 0.1);
         transition: background-color 0.3s;
     }
 
     .log-btn {
-        width: 200px;
-        height: 35px;
-        font-size: 22px;
-        border-radius: 6px;
-        border: 1px solid rgba(42, 81, 145, 1);
-        background-color: rgba(42, 81, 145, 0.8);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 220px;
+        height: 44px;
+        padding-left: 24px;
+        font-size: 14px;
+        border-radius: 22px;
+        background-color: rgba(42, 81, 145, 1);
         transition: background-color 0.3s;
+        border-style: none;
         color: white;
     }
 
-    .log-btn:hover {
-        background-color: rgba(42, 81, 145, 1);
-        transition: background-color 0.3s;
+    .log-btn:hover .CG-done-icon {
+        right: -8px;
     }
 
     .input-width-1 {
@@ -116,12 +124,17 @@
     }
 
     .sign-showSucMessage {
-        position: absolute;
-        bottom: 0;
         height: 134px;
         width: 100%;
         background-color: rgba(245, 245, 245, 1);
         border-radius: 3px;
+    }
+
+    #logInMessage{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
     }
 
     .msg-close-btn {
@@ -145,8 +158,6 @@
     }
 
     .sign-showErrorMessage {
-        position: absolute;
-        bottom: 0;
         display: flex !important;
         flex-direction: column;
         height: 134px !important;
@@ -195,37 +206,16 @@
     .signUp-logIn-btn {
         border: none;
         background-color: transparent;
-        color: rgb(0, 149, 207);
         font-size: 18px;
-        color: rgba(0, 189, 149, 1);
+        color: #00cc99;
     }
 
-    .sucCircle {
-        margin: 30px auto;
-        height: 70px;
-        width: 70px;
-        border-radius: 35px;
-        background-color: rgba(0, 189, 149, 1);
+    .messageIn {
+        animation: grow-sign-msg 0.6s ease, fadein-sign ease 0.4s;
     }
 
-    .sucCircle ng-md-icon {
-        fill: rgba(255, 255, 255, 1);
-        margin: auto;
-        margin-left: 5px;
-        margin-top: 5px;
-    }
-
-    .sucCircle ng-md-icon svg {
-        height: 60px;
-        width: 60px;
-    }
-
-    .foldIn {
-        animation: unfoldIn 0.6s ease-in-out;
-    }
-
-    .foldOut {
-        animation: unfoldOut 0.6s ease-in-out;
+    .messageOut {
+        animation: shrink-sign-msg 0.6s ease, fadeout-sign ease 0.4s;
     }
 
     #invalidLogIn .message-link {
@@ -242,6 +232,11 @@
         font-size: 19px;
     }
 
+    .success-mark-div{
+        width: 100%;
+        height: 100%;
+    }
+
     @keyframes fadeIn {
         0% {
             background: rgba(255, 255, 255, 0.1);
@@ -253,32 +248,9 @@
         }
     }
 
-    @keyframes unfoldIn {
-        0% {
-            transform: scaleY(.005) scaleX(0);
-        }
-        50% {
-            transform: scaleY(.005) scaleX(1);
-        }
-        100% {
-            transform: scaleY(1) scaleX(1);
-        }
-    }
-
-    @keyframes unfoldOut {
-        0% {
-            transform: scaleY(1) scaleX(1);
-        }
-        50% {
-            transform: scaleY(.005) scaleX(1);
-        }
-        100% {
-            transform: scaleY(.005) scaleX(0);
-        }
-    }
 </style>
 
-<div class="font modal-background" ng-show="_show && _showLogIn">
+<div class="sign-modal font modal-background" ng-show="_show && _showLogIn">
     <div class="modal-background-blur"></div>
     <div class="modal-content logIn-modal">
         <!-- Header -->
@@ -309,39 +281,41 @@
                         <div ng-message="required">Required</div>
                     </div>
                 </md-input-container>
-                <button class="log-btn" type="submit">Log in</button>
+                <button class="log-btn" type="submit">LOG IN<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
             </form>
         </section>
         <!-- Footer -->
         <section class="modal-footer back-transition login-footer">
             <div class="new-to-text">New to Homit?</div>
             <button class="signUp-logIn-btn" ng-click="_toggleModal()">Sign Up</button>
-        </section>
-        <!-- Message box -->
-        <section id="logInMessage">
-            <div id="invalidLogIn" class="invalidLogIn">
-                <button class="msg-close-btn" ng-click="tryAgainLogIn()">
-                    <ng-md-icon icon="clear"></ng-md-icon>
-                </button>
-                <div class="message-div">Sorry, You have entered invalid credentials. Please try
-                    <span class="message-link" ng-click="_tryAgainLogIn()">again</span>
+            <section id="logInMessage">
+                <div id="invalidLogIn" class="invalidLogIn">
+                    <button class="msg-close-btn" ng-click="_tryAgainLogIn()">
+                        <ng-md-icon icon="clear"></ng-md-icon>
+                    </button>
+                    <div class="message-div">Sorry, You have entered invalid credentials. Please try
+                        <span class="message-link" ng-click="_tryAgainLogIn()">again</span>
+                    </div>
+                    <div class="or-div">
+                        <span class="or-span">or</span>
+                    </div>
+                    <div class="message-link" ng-click="_forgotPassword(logIn.$valid)">Forgot Password</div>
                 </div>
-                <div class="or-div">
-                    <span class="or-span">or</span>
+                <div id="emailNotification" class="emailNotification">
+                    <button class="msg-close-btn" onClick="window.location.reload()">
+                        <ng-md-icon icon="clear"></ng-md-icon>
+                    </button>
+                    <div class="message-div">{{ logIn_message }}</div>
                 </div>
-                <div class="message-link" ng-click="_forgotPassword(logIn.$valid)">Forgot Password</div>
-            </div>
-            <div id="emailNotification" class="emailNotification">
-                <button class="msg-close-btn" onClick="window.location.reload()">
-                    <ng-md-icon icon="clear"></ng-md-icon>
-                </button>
-                <div class="message-div">{{ logIn_message }}</div>
-            </div>
-            <div id="sucLogIn" class="sucSign">
-                <div class="sucCircle">
-                    <ng-md-icon icon="done"></ng-md-icon>
+                <div id="sucLogIn" class="sucSign">
+                    <div class="box-center success-mark-div">
+                        <svg class="sign-checkmark-svg" viewBox="0 0 80 80">
+                            <circle class="sign-checkmark-circle" cx="40" cy="40" r="39px"/>
+                            <polyline class="sign-checkmark-line" points="16, 43 32, 63 65, 20"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
+            </section>
         </section>
     </div>
 </div>
@@ -400,7 +374,7 @@
                         <div ng-message="required">Required</div>
                     </div>
                 </md-input-container>
-                <button class="log-btn" type="submit">Sign up</button>
+                <button class="log-btn" type="submit">SIGN UP<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
             </form>
         </section>
         <!-- Footer -->
@@ -410,8 +384,11 @@
         <!-- Message box -->
         <section>
             <div id="sucSignUp" class="sucSign">
-                <div class="sucCircle">
-                    <ng-md-icon icon="done"></ng-md-icon>
+                <div class="box-center success-mark-div" style="width: 100%; height: 100%;">
+                    <svg class="sign-checkmark-svg" viewBox="0 0 80 80">
+                        <circle class="sign-checkmark-circle" cx="40" cy="40" r="39px"/>
+                        <polyline class="sign-checkmark-line" points="16, 43 32, 63 65, 20"/>
+                    </svg>
                 </div>
             </div>
             <div id="signUpNotification" class="signUpNotification">
