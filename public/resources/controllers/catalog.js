@@ -66,48 +66,6 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         }
     };
 
-    $scope.addToCart = function (product) {
-        if (product.store_open || $scope.deliveryOption == "Scheduled Delivery") {
-            var p = jQuery.extend(true, {}, product);
-
-            p.volume = p.product_variants.all_volumes[0];
-            p.packaging = p.product_variants[p.product_variants.all_volumes[0]].all_packagings[0];
-            p.price = p.product_variants[p.product_variants.all_volumes[0]][p.product_variants[p.product_variants.all_volumes[0]].all_packagings[0]].price;
-            p.depot_id = p.product_variants[p.product_variants.all_volumes[0]][p.product_variants[p.product_variants.all_volumes[0]].all_packagings[0]].depot_id;
-
-            //TODO: reverse implementation: assign what is required
-            delete p.description;
-            delete p.listing_id;
-            delete p.product_id;
-            delete p.product_variants;
-            delete p.subcategory;
-            delete p.type;
-            delete p.selectedVolume;
-            delete p.selectedPack;
-            delete p.category;
-            delete p.container;
-
-            $rootScope.$broadcast("addToCart", p);
-
-            googleAnalytics.addEvent('add_to_cart', {
-                "event_label": product.brand + " " + product.name,
-                "event_category": googleAnalytics.eventCategories.cart_actions,
-                "value": "catalog_page",
-                "items": [
-                    {
-                        name: product.name,
-                        brand: product.brand,
-                        price: product.price,
-                        category: product.packaging,
-                        variant: product.volume,
-                    }
-                ]
-            });
-        } else {
-            notification.addStoreClosedMessage("Store closed at the moment.");
-        }
-    };
-
     $scope.hrefToStore = function (path) {
         $window.location.href = $window.location.origin + path;
     };

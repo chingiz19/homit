@@ -26,7 +26,7 @@ app.service('helpers', function(){
     }
 
     pub.urlReplaceSpaceWithDash = function(string){
-        return string.toLowerCase().replace(" ", "-");
+        return string.toLowerCase().replace(/ /g, "-");
     }
 
     return pub;

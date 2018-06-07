@@ -1,4 +1,4 @@
-app.controller("productController", function ($scope, $rootScope, $window, sessionStorage, notification, helpers) {
+app.controller("productController", function ($scope, $rootScope, $window, sessionStorage, notification, helpers, googleAnalytics) {
     $scope.init = function () {
         $scope.recommended_products = JSON.parse($("#recommendedProducts").val());
         $scope.product = JSON.parse($("#product").val());

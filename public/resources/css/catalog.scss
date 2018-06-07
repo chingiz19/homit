@@ -52,7 +52,7 @@ button {
 }
 
 .store-info-txt-box {
-    width: 1140px;
+    width: 1180px;
     height: 100%;
     position: relative;
     margin: 0 auto;
@@ -92,8 +92,9 @@ button {
 
 .catalog-content {
     position: relative;
-    width: 1140px;
+    width: 1180px;
     margin: 0 auto;
+    transition: width 0.3s ease;
 }
 
 .cat-section {
@@ -103,8 +104,8 @@ button {
     min-height: 300px;
     background-color: rgb(255, 255, 255);
     border: rgb(211, 211, 211) solid 1px;
-    border-radius: 5px;
-    box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.26);
+    border-radius: 1px;
+    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.22);
 }
 
 .cat-subcat-absolute {
@@ -211,57 +212,31 @@ button {
     left: 285px;
     display: flex;
     flex-wrap: wrap;
-    max-width: 885px;
+    max-width: 895px;
+    padding-bottom: 30px;
 }
 
 .item-box {
     position: relative;
-    width: 281px;
-    margin: 2px 0 2px 4px;
+    width: 217.25px;
+    margin: 2px 0 4px 6.5px;
     padding-top: 45px;
     border: lightgray solid 1px;
-    border-radius: 5px;
+    border-radius: 1px;
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 0px 1px 0px rgba(0, 0, 0, 0.26);
+    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.22);
+    user-select: none;
+    cursor: pointer;
+}
+
+.item-box:hover {
+    box-shadow: 0 0px 6px 2px rgba(3, 189, 142, 0.3);
+    transition: box-shadow 0.4s ease;
 }
 
 .item-box-ul {
     margin: 0;
     padding: 0 20px 0 20px;
-}
-
-.add-to-cart-btn {
-    position: absolute;
-    left: 0;
-    top: 0px;
-    width: 100%;
-    height: 40px;
-    border-width: 2px 0 2px 2px;
-    border-color: rgba(33, 241, 193, 0.1);
-    border-style: solid;
-    background-color: rgba(33, 241, 193, 0.089);
-    color: rgba(0, 94, 92, 0.8);
-    font-weight: 600;
-    border-radius: 4px 4px 0 0;
-    transition: background-color 0.3s;
-}
-
-.add-to-cart-btn:hover {
-    background-color: rgba(50, 168, 141, 0.4);
-    transition: background-color 0.3s;
-}
-
-.add-to-cart-btn:hover.add-to-cart-btn ng-md-icon {
-    fill: rgba(0, 94, 92, 1);
-}
-
-.add-to-cart-btn ng-md-icon {
-    fill: rgba(0, 94, 92, 0.8);
-}
-
-.ng-md-icon svg {
-    width: 28px;
-    height: 28px;
 }
 
 .pac-vol-text {
@@ -273,15 +248,15 @@ button {
 }
 
 .item-pic {
-    width: 225px;
-    height: 225px;
+    width: calc(100% - 20px);
+    height: auto;
     margin: auto;
     padding: 10px 10px 0 10px;
 }
 
 .item-pic img {
-    width: 205px;
-    height: 205px;
+    width: 150px;
+    height: 150px;
 }
 
 .item-pic:focus, .item-brand:focus {
@@ -289,26 +264,25 @@ button {
 }
 
 .item-brand {
-    position: relative;
-    left: -11px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 50px;
-    width: 270px;
+    height: 80px;
+    width: 100%;
 }
 
 .item-brand div {
-    text-align: center;
-    padding: 0;
+    color: #939aaa;
     font-size: 13px;
-    color: rgb(150, 150, 150);
+    text-align: center;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
 .item-brand span {
+    color: #5a5f69;
     font-size: 15px;
-    color: rgb(20, 20, 20);
 }
 
 .item-info-icon {
@@ -320,15 +294,6 @@ button {
 .item-info-icon svg {
     width: 20px;
     height: 20px;
-}
-
-.item-price {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 12px;
 }
 
 /*When Subcategory selected, change style*/
@@ -390,7 +355,17 @@ md-radio-button .md-label {
 }
 
 /* start of window shrinkage affect solution */
-@media (max-width: 1140px) and (min-width: 856px) {
+@media (max-width: 1190px) and (min-width: 980px) {
+    .catalog-content, .store-info-txt-box {
+        width: 960px;
+    }
+
+    .items-section {
+        max-width: 675px;
+    }
+}
+
+@media (max-width: 979px) and (min-width: 856px) {
     .catalog-content, .store-info-txt-box {
         width: 855px;
     }
@@ -745,6 +720,10 @@ md-radio-button .md-label {
         margin-top: 3px;
     }
 
+    .item-box:hover {
+        box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.22);
+    }
+
     .item-box-ul {
         margin-top: 0;
         padding: 0;
@@ -769,6 +748,7 @@ md-radio-button .md-label {
 
     .item-brand div{
         font-size: 11px;
+        padding: 0 5px;
     }
 
     .item-brand span {
@@ -782,22 +762,8 @@ md-radio-button .md-label {
         height: 18px;
     }
 
-    .add-to-cart-btn {
-        height: 30px;
-
-    }
-
-    .add-to-cart-btn svg{
-        width: 20px;
-        height: 20px;
-    }
-
     .item-pic:hover ~ .item-brand .item-info-icon, .item-brand:hover .item-info-icon {
         fill: rgba(29, 202, 255, 0.7) !important;
-    }
-
-    .add-to-cart-btn:hover {
-        background-color: rgba(33, 241, 193, 0.089) !important;
     }
 
     .store-open-hrs {

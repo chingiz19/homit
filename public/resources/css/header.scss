@@ -37,14 +37,15 @@ nav {
 }
 
 .homit-nav-content {
-    max-width: 1140px;
-    width: 1140px;
+    max-width: 1180px;
+    width: 1180px;
     height: 50px;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    transition: width 0.3s ease;
 }
 
 #hdrMyAcc2 ul {
@@ -262,7 +263,13 @@ h3 {
 }
 
 /* start of window shrinkage affect solution */
-@media (max-width: 1140px) and (min-width: 856px) {
+@media (max-width: 1190px) and (min-width: 980px) {
+    .homit-nav-content {
+        width: 960px;
+    }
+}
+
+@media (max-width: 979px) and (min-width: 856px) {
     .homit-nav-content {
         width: 855px;
     }

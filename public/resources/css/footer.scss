@@ -20,6 +20,13 @@ footer {
     width: 100px;
     height: 100px;
     opacity: 0.1;
+    transition: all 0.3s ease;
+}
+
+.footer-div-1 img:hover{
+    opacity: 0.9;
+    transform: scale3d(1.1, 1.1, 1);
+    transition: opacity .3s ease, transform .3s ease;
 }
 
 .footer-div-5 {

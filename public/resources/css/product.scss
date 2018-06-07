@@ -337,11 +337,15 @@ button:focus {
     z-index: 1;
 }
 
-.recomended-item-div {
+.recomended-item{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+}
+
+.recomended-item-div {
+    position: relative;
+    display: inline-flex;
     overflow-x: auto;
+    margin: 0 auto;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -365,6 +369,11 @@ button:focus {
     padding-bottom: 5px;
     width: 100px;
     height: 100px;
+}
+
+.item-price{
+    height: 45px;
+    width: 37px;
 }
 
 footer {
@@ -393,6 +402,10 @@ footer {
 @media (max-width: 992px) {
     h2 {
         margin-top: 50px;
+    }
+
+    .recomended-item-div{
+        justify-content: flex-start;
     }
 }
 
@@ -558,5 +571,6 @@ footer {
 
     .recomended-item-div {
         -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
     }
 }
