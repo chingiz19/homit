@@ -71,7 +71,8 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
             canRemove: "<canRemove",
             cartCtrl: "=cartCtrl",
             storeApi: "<?storeApi",
-            onCartLoad: "<?onCartLoad" // method to be called once cart is loaded 
+            onCartLoad: "<?onCartLoad",// method to be called once cart is loaded 
+            onPriceChange: "<?onPriceChange" // method to be called once cart is updated
         },
         templateUrl: '/resources/templates/cart.html',
         link: function (scope, element, attrs) {
@@ -79,6 +80,10 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 // public variables
                 scope.cartCtrl = publicFunctions;
                 pScope = scope;
+
+                if (!scope.onPriceChange){
+                    scope.onPriceChange = function(){}; //dummy function
+                }
 
                 //controller variables
                 scope.numberOfItemsInCart = 0;
@@ -197,6 +202,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                         }, function errorCallback(response) {
                             localStorage.setUserCart(scope.userCart); // use local storage
                         });
+                    scope.onPriceChange();                    
                 };
 
                 scope.updateUserCart = function(cart, store_type_api_name){

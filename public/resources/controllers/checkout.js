@@ -384,6 +384,10 @@ app.controller("checkoutController",
             }
         }
 
+        $scope.onPriceChange = function(){
+            $scope.updatePrices($scope.cart.getCart());
+        }
+
         $timeout($scope.init, 0);
 
     });
