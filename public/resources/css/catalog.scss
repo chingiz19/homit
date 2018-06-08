@@ -1,5 +1,3 @@
-@import "default/module";
-
 html {
     background-color: rgb(253, 253, 253);
     overflow-y: auto;
@@ -237,6 +235,21 @@ button {
 .item-box-ul {
     margin: 0;
     padding: 0 20px 0 20px;
+}
+
+.item-price{
+    height: 55px; 
+    width: 45px; 
+    font-weight: 600; 
+    color: #fff;
+}
+
+.item-curency{
+    position: absolute; 
+    top: 2px; 
+    right: 2px;
+    text-align: right; 
+    font-size: 9px;
 }
 
 .pac-vol-text {

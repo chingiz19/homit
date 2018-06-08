@@ -138,8 +138,8 @@
                                         <div ng-if="product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] > 1"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] }} x {{ product.product_variants.all_volumes[0] }})</div>
                                         <div ng-if="!(product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] > 1)"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants.all_volumes[0] }})</div>
                                     </li>
-                                    <li class="catalog-text item-price box-center" style="height: 55px; width: 45px; font-weight: 600;">
-                                        <span style="color: #fff; text-align: right; font-size: 9px; position: absolute; top: 2px; right: 2px;">C$</span>
+                                    <li class="catalog-text item-price box-center">
+                                        <span class="item-curency">C$</span>
                                         <span>{{ product.product_variants[product.product_variants.all_volumes[0]][product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0]].price}}</span>
                                     </li>
                                 </ul>
