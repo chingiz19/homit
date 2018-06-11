@@ -562,4 +562,60 @@ pub.getDriversRequest = async function (driverId) {
     return requests;
 }
 
+/**
+ * Get drivers routes with orders for driver id
+ * 
+ * @param {*} driverId 
+ */
+pub.getDriversRoutes = async function (driverId) {
+    // get routes
+    let sqlQuery = `
+        SELECT * FROM drivers_routes
+        WHERE ?
+        ORDER BY position;`;
+
+    let data = { driver_id: driverId };
+
+    let routes = await db.runQuery(sqlQuery, data);
+
+    let result = [];
+    for (let i = 0; i < routes.length; i++) {
+        if (routes[i].store_id) {
+            let tmpStore = await Store.getStoreInfo(routes[i].store_id);
+            tmpStore.is_store = true;
+            result.push(tmpStore);
+        } else {
+            let tmpUserWithOrder = await Orders.getUserWithOrderByOrderId(routes[i].order_id);
+            let tmpUser = tmpUserWithOrder.user;
+            let tmpTransaction = tmpUserWithOrder.transaction;
+            let tmpOrder = tmpUserWithOrder.order;
+
+            let products = await Orders.getOrderItemsById(tmpOrder.id);
+
+            let customer = {
+                id: tmpUser.id_prefix + tmpUser.id,
+                first_name: tmpUser.first_name,
+                last_name: tmpUser.last_name
+            };
+
+            let tmpOrderNode = {
+                is_store: false,
+                cutomer: customer,
+                delivery_address: tmpTransaction.delivery_address,
+                delivery_latitude: tmpTransaction.delivery_latitude,
+                delivery_longitude: tmpTransaction.delivery_longitude,
+                phone_number: tmpTransaction.phone_number,
+                driver_instruction: tmpTransaction.driver_instruction,
+                store_id: tmpOrder.store_id,
+                order_id: tmpOrder.id,
+                products: products
+            };
+
+            result.push(tmpOrderNode);
+        }
+    }
+
+    return result;
+}
+
 module.exports = pub;
