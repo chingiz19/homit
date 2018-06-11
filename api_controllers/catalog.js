@@ -13,7 +13,6 @@ router.use('/', async function (req, res, next) {
         if (storeType) {
             var storeOpen = await Catalog.isStoreOpen(storeType);
             var result = await Catalog.getAllProductsByCategory(storeType, categoryName, storeOpen);
-            // var hours = await Catalog.getStoreHours(storeType);
             var storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
             var storeInfo = {
                 open: storeOpen,
@@ -22,7 +21,6 @@ router.use('/', async function (req, res, next) {
                 display_name: storeTypeInfo.display_name,
                 image: storeTypeInfo.image,
                 image_cover: storeTypeInfo.image_cover
-                // hours: hours
             };
 
             var response = {
@@ -50,6 +48,7 @@ router.use('/getstoreinfo', async function (req, res, next) {
         if (storeType) {
             let storeOpen = await Catalog.isStoreOpen(storeType);
             let hours = await Catalog.getStoreHours(storeType);
+            let hoursScheduled = await Catalog.getStoreHours(storeType, true);
             let storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
             let storeInfo = {
                 open: storeOpen,
@@ -58,6 +57,7 @@ router.use('/getstoreinfo', async function (req, res, next) {
                 display_name: storeTypeInfo.display_name,
                 image: storeTypeInfo.image,
                 hours: hours,
+                hours_scheduled: hoursScheduled,
                 del_fee: storeTypeInfo.del_fee_primary
             };
             store_infos.push(storeInfo);

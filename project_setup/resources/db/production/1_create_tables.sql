@@ -433,6 +433,8 @@ CREATE TABLE stores_hours (
 	day TINYINT NOT NULL,
 	open_time TIME,
 	open_duration INT,
+	open_time_scheduled TIME,
+	open_duration_scheduled INT,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_stores_hours_store_id FOREIGN KEY (store_id) REFERENCES catalog_stores(id) ON DELETE RESTRICT ON UPDATE CASCADE

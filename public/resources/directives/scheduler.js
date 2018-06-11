@@ -2,7 +2,7 @@
  * This directive is used to add scheduled order option
  */
 app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
-    function buildDatesArray(data) {
+    function buildSchedulerDates(data, startDate) {
         let localObject = {};
         let localArray = [];
         let weekObject = purifyObject(data);
@@ -18,7 +18,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
             previousDay += 7;
         }
 
-        let todaysObject = getTodaysObject(date, weekObject[today], weekObject[previousDay]);
+        let todaysObject = getTodaysObject(date, weekObject[today], weekObject[previousDay], startDate);
         if (todaysObject) {
             localArray.push(todaysObject);
         }
@@ -46,7 +46,12 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
         return localObject;
     }
 
-    function getTodaysObject(dateObject, dayObject, prevDayObject) {
+    function getTodaysObject(dateObject, dayObject, prevDayObject, startDate) {
+
+        if (startDate.includes("tomorrow")) {
+            return false;
+        }
+
         let localObject = {};
         let localArray = [];
         let closeTime = 0;
@@ -342,10 +347,10 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                     scope.storeName = store_info.display_name;
                     scope.delFee = formatDelFeeText(store_info.del_fee, "FREE delivery");
                     scope.storeImage = "/resources/images/non-catalog-image/store-logo/" + store_info.image;
-
-                    scope.dates = buildDatesArray(scope.storeInfo.hours);
+                    scope.dates = buildSchedulerDates(scope.storeInfo.hours_scheduled, "start from tomorrow"); // options 'start from tomorrow/today'
                     scope.deliveryOption = "ASAP Delivery";
                     let delivery_hrs = localStorage.getOrderDeliveryHrs();
+
                     if (delivery_hrs && delivery_hrs.hasOwnProperty(scope.store_name)) {
                         scope.deliveryOption = "Scheduled Delivery";
                         scope.dates.selected.date = delivery_hrs[scope.store_name].date_selected;

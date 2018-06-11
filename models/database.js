@@ -91,7 +91,7 @@ pub.runQuery = function (query, data) {
       error_message: error.message
     }
     Logger.log.error('Could not run query', metadata);
-    return error;
+    return false;
   });
 };
 

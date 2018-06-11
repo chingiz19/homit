@@ -37,11 +37,20 @@ pub.getStoreTypeInfo = async function (storeType) {
  * Get daily store hours by store type
  * 
  * @param {*} storeType 
+ * @param {*} isScheduled defaults to false
  */
-pub.getStoreHours = async function (storeType) {
+pub.getStoreHours = async function (storeType, isScheduled = false) {
+    let openTime = `open_time`;
+    let openDuration = `open_duration`;
+
+    if (isScheduled) {
+        openTime = `open_time_scheduled`;
+        openDuration = `open_duration_scheduled`;
+    }
+
     let sqlQuery = `
         SELECT 
-        hours.day AS day, MIN(hours.open_time) AS open_time, MAX(hours.open_time + INTERVAL hours.open_duration MINUTE) AS close_time
+        hours.day AS day, MIN(hours.` + openTime + `) AS open_time, MAX(hours.` + openTime + ` + INTERVAL hours.` + openDuration + ` MINUTE) AS close_time
         FROM
         catalog_stores AS stores
         JOIN catalog_store_types AS store_types ON (stores.store_type = store_types.id)
@@ -140,8 +149,8 @@ pub.isStoreOpenForScheduled = async function (storeType, timestamp) {
         AND 
         (
                 ?
-                AND TIME('`+ sqlTime + `') >= hours.open_time + INTERVAL 60 MINUTE
-                AND TIME('`+ sqlTime + `') <= hours.open_time + INTERVAL hours.open_duration MINUTE
+                AND TIME('`+ sqlTime + `') >= hours.open_time_scheduled + INTERVAL 60 MINUTE
+                AND TIME('`+ sqlTime + `') <= hours.open_time_scheduled + INTERVAL hours.open_duration_scheduled MINUTE
         )
         LIMIT 1;
     `;
