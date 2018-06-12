@@ -637,6 +637,21 @@ body {
     color: rgb(221, 44, 0);
 }
 
+.main-down-arrow-div{
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    outline: none;
+    color: #475073e0;
+    animation: moveUpDown 2.5s linear infinite;
+}
+
+.main-down-arrow-icon{
+    font-size: 3.5em;
+}
+
 /* start of window shrinkage affect solution */
 @media (max-width: 1140px) and (min-width: 856px) {
     .homit-nav-content, .steps-div, .subscribe-section {
@@ -1161,6 +1176,10 @@ body {
         color: white;
         font-size: 8px;
         text-align: center;
+    }
+
+    .main-down-arrow-icon{
+        font-size: 2.5em;
     }
 
     .address-section {
