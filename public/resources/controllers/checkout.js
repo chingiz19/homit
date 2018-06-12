@@ -96,7 +96,7 @@ app.controller("checkoutController",
             }, 500);
 
             $scope.stores = [];
-            $timeout(function(){
+            $timeout(function () {
                 if ($scope.cart.getCart().hasOwnProperty("liquor-station")) {
                     $scope.userInfo.hasLiquor = true;
                 } else {
@@ -272,17 +272,17 @@ app.controller("checkoutController",
                     products: cartService.parseCartToSend($scope.cart.getCart()),
                 }
             }).then(function successCallback(response) {
-              if (response.data.success) {
-                let prices = response.data.prices;
+                if (response.data.success) {
+                    let prices = response.data.prices;
 
-                // Updating display variables
-                $scope.delFee = prices.delivery_fee;
-                $scope.totalAmount = prices.cart_amount;
-                $scope.GST = prices.total_tax;
-                $scope.receipt = prices.total_price;
-              } else {
-                alert("Refresh your page");
-              }
+                    // Updating display variables
+                    $scope.delFee = prices.delivery_fee;
+                    $scope.totalAmount = prices.cart_amount;
+                    $scope.GST = prices.total_tax;
+                    $scope.receipt = prices.total_price;
+                } else {
+                    alert("Refresh your page");
+                }
             }, function errorCallback(error) {
                 alert("Error, check your internet and refresh your page");
             });
@@ -375,18 +375,18 @@ app.controller("checkoutController",
             $scope.useDefaultCard = !$scope.useDefaultCard;
         };
 
-        $scope.onCartLoad = function(){
+        $scope.onCartLoad = function () {
             let storeKeys = Object.keys($scope.cart.getCart());
             for (let i = 0; i < storeKeys.length; i++) {
                 $scope.stores.push({
                     type: storeKeys[i]
                 });
             }
-        }
+        };
 
-        $scope.onPriceChange = function(){
+        $scope.onPriceChange = function () {
             $scope.updatePrices($scope.cart.getCart());
-        }
+        };
 
         $timeout($scope.init, 0);
 
