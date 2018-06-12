@@ -22,37 +22,37 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
         $scope.sidebarOpen = false;
         $scope.infoLoaded = false;
 
-        if(selectedSection){
-            try{
+        if (selectedSection) {
+            try {
                 $scope.section = parseInt(selectedSection);
                 if ($scope.section == 5) loadOrders();
-            } catch(e){
+            } catch (e) {
                 $scope.section = 0; // Default to 0    
             }
         } else {
-            $scope.section = 0;           
+            $scope.section = 0;
         }
 
-        $("input").keydown(function(){
+        $("input").keydown(function () {
             $(this).addClass(modifiedFlag);
             $scope.modified = true;
             $scope.$apply();
         });
 
-        user.user().then(function success(res){
+        user.user().then(function success(res) {
             $scope.infoLoaded = true;
-            if (res.data.success){
+            if (res.data.success) {
                 $scope.fname = res.data.user.first_name;
                 $scope.lname = res.data.user.last_name;
                 $scope.email = res.data.user.user_email;
                 $scope.phone = res.data.user.phone_number;
-                
-                if (!res.data.user.address_unit_number){
+
+                if (!res.data.user.address_unit_number) {
                     res.data.user.address_unit_number = "";
                 }
-                $timeout(function(){
-                    if (res.data.user.address){
-                        $scope.displayAddress = _.trim(_.trimStart((res.data.user.address_unit_number + " " + res.data.user.address)));                    
+                $timeout(function () {
+                    if (res.data.user.address) {
+                        $scope.displayAddress = _.trim(_.trimStart((res.data.user.address_unit_number + " " + res.data.user.address)));
                         $scope.autocomplete.setText($scope.displayAddress);
                     } else {
                         $scope.displayAddress = false;
@@ -64,11 +64,11 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
                 $scope.card = res.data.user.card;
                 $scope.user = res.data.user;
 
-                if ($scope.dob){
+                if ($scope.dob) {
                     $scope.requireDOB = true;
                 }
 
-                if ($scope.phone){
+                if ($scope.phone) {
                     $scope.requirePhone = true;
                 }
             } else {
@@ -83,13 +83,13 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
                 $("[data-phone]").mask("(999) 999-9999");
                 $scope.$apply();
             });
-        }, function error(){
+        }, function error() {
             notification.addErrorMessage("Couldn't retrieve user information. Please try again later");
         });
 
         /* Stripe setup */
         $scope.stripe = Stripe($("#stripeToken").val());
-        var elements = $scope.stripe.elements();    
+        var elements = $scope.stripe.elements();
         $scope.cardElement = elements.create('card', {
             hidePostalCode: false
         });
@@ -113,57 +113,57 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      * Helper method called when selection is made.
      * Method contains selection related logic
      */
-    $scope.selectSection = function(selection){
+    $scope.selectSection = function (selection) {
         var cancelChanges = true;
-        
+
         // prompt user to save progress or it will be lost
-        switch($scope.section){
+        switch ($scope.section) {
             case 1:
-                if (checkInputIfModified(selectors_section1)){
+                if (checkInputIfModified(selectors_section1)) {
                     cancelChanges = confirm(confirmMessage);
-                    if (cancelChanges){
+                    if (cancelChanges) {
                         $scope.resetProfileSection();
                     }
                 }
                 break;
             case 2:
                 //TODO: might change if we use addressAutocomplete instead of input
-                if (checkInputIfModified(selectors_section2)){
+                if (checkInputIfModified(selectors_section2)) {
                     cancelChanges = confirm(confirmMessage);
-                    if (cancelChanges){
+                    if (cancelChanges) {
                         $scope.resetDeliveryAddressSection();
                     }
                 }
                 break;
             case 3:
-                if (checkInputIfModified(selectors_section3)){
+                if (checkInputIfModified(selectors_section3)) {
                     cancelChanges = confirm(confirmMessage);
-                    if (cancelChanges){
+                    if (cancelChanges) {
                         $scope.resetPaymentMethodsSection();
                     }
                 }
                 break;
             case 4:
-                if (checkInputIfModified(selectors_section4)){
+                if (checkInputIfModified(selectors_section4)) {
                     cancelChanges = confirm(confirmMessage);
                     if (cancelChanges) {
                         $scope.resetSecuritySettingsSection();
                     }
                 }
                 break;
-            default: 
+            default:
                 break;
         }
-        
+
         // only proceed if fields are not modified
-        if (cancelChanges){
+        if (cancelChanges) {
             $scope.section = selection;
             $scope.hideSidebarForMobile();
             sessionStorage.setAccountSection(selection);
 
             $scope.modified = false;
 
-            if (!$scope.orders && selection == 4){
+            if (!$scope.orders && selection == 4) {
                 loadOrders();
             }
         }
@@ -172,9 +172,9 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Called to update user profile information
      */
-    $scope.updateProfile = function(valid){
+    $scope.updateProfile = function (valid) {
         // Do nothing if nothing was modified
-        if (!checkInputIfModified(selectors_section1) || !valid){
+        if (!checkInputIfModified(selectors_section1) || !valid) {
             $scope.editEnabled = false;
             resetValues();
             return;
@@ -187,28 +187,28 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
         };
 
         // convert mm-dd-yyyy to yyyy-mm-dd
-        try{
-            if ($scope.dob && $scope.dob != ""){
+        try {
+            if ($scope.dob && $scope.dob != "") {
                 birth_date = $scope.dob.split("-");
                 birth_date = birth_date[2] + '-' + birth_date[0] + '-' + birth_date[1];
                 objToSend.birth_date = birth_date;
             } else {
                 objToSend.birth_date = undefined;
             }
-        } catch(e){
+        } catch (e) {
             // nothing to do, won't send to backend
             objToSend.birth_date = undefined;
         }
         var phone;
-        try{
-            if ($scope.phone && $scope.phone != ""){
-                phone = $scope.phone.replace("(","");
+        try {
+            if ($scope.phone && $scope.phone != "") {
+                phone = $scope.phone.replace("(", "");
                 phone = phone.replace(")", "");
                 phone = phone.replace(" ", "");
                 phone = phone.replace("-", "");
                 objToSend.phone_number = phone;
             }
-        } catch(e){
+        } catch (e) {
             // nothing to do, won't send to backend
             objToSend.phone_number = undefined;
         }
@@ -219,14 +219,14 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Called to update user delivery address
      */
-    $scope.updateDeliveryAddress = function(){
-        if(!$scope.withinCoverage) {
+    $scope.updateDeliveryAddress = function () {
+        if (!$scope.withinCoverage) {
             notification.addErrorMessage("Not within coverage");
             return;
         }
 
         var addr, addr_lng, addr_lat;
-        if (!$scope.address || $scope.address.text == ""){
+        if (!$scope.address || $scope.address.text == "") {
             addr = "remove";
             addr_lng = "remove";
             addr_lat = "remove";
@@ -236,7 +236,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
             addr_lng = $scope.address.lng;
         }
 
-        var addr_unit = sessionStorage.getAddressUnitNumber();                
+        var addr_unit = sessionStorage.getAddressUnitNumber();
         if (addr_unit) {
             addr = _.trim(_.trimStart(addr, addr_unit));
         } else {
@@ -254,14 +254,14 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Called to update user payment method
      */
-    $scope.updatePaymentMethod = function(valid){
-        if(!valid) return;
+    $scope.updatePaymentMethod = function (valid) {
+        if (!valid) return;
 
         $scope.stripe.createToken($scope.cardElement, {
             name: $scope.card_name
-        }).then(function(result){
-            if (result.error || !result.token.id){
-                notification.addErrorMessage("False Card")
+        }).then(function (result) {
+            if (result.error || !result.token.id) {
+                notification.addErrorMessage("False Card");
                 return;
             }
 
@@ -269,15 +269,15 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
         });
     };
 
-    $scope.removePaymentMethod = function(){
+    $scope.removePaymentMethod = function () {
         user.removeCard().then(defaultSuccessCallback, defaultErrorCallback);
     };
 
     /**
      * Called to update user security settings
      */
-    $scope.updateSecuritySettings = function(valid){
-        if(!valid) return;
+    $scope.updateSecuritySettings = function (valid) {
+        if (!valid) return;
         user.updatePassword($scope.security_set.current_pass.$modelValue, $scope.security_set.new_pass.$modelValue)
             .then(defaultSuccessCallback, defaultErrorCallback);
     };
@@ -285,7 +285,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Resets input values for Profile section
      */
-    $scope.resetProfileSection = function(){
+    $scope.resetProfileSection = function () {
         $scope.fname = $scope.user.first_name;
         $scope.lname = $scope.user.last_name;
         $scope.email = $scope.user.user_email;
@@ -298,7 +298,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Resets input values for Delivery Address section
      */
-    $scope.resetDeliveryAddressSection = function(){
+    $scope.resetDeliveryAddressSection = function () {
         $scope.address = "";
         resetInputMofiedFlag(selectors_section2);
         $scope.editEnabled = false;
@@ -307,7 +307,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Resets input values for Payment Methods section
      */
-    $scope.resetPaymentMethodsSection = function(){
+    $scope.resetPaymentMethodsSection = function () {
         $scope.card_name = "";
         $scope.cardElement.clear();
         resetInputMofiedFlag(selectors_section3);
@@ -317,7 +317,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Resets input values for Security Settings section
      */
-    $scope.resetSecuritySettingsSection = function(){
+    $scope.resetSecuritySettingsSection = function () {
         $scope.old_pass = "";
         $scope.new_pass = "";
         $scope.confirm_pass = "";
@@ -328,7 +328,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Close sidebar for mobile
      */
-    $scope.openSidebar = function(){
+    $scope.openSidebar = function () {
         $scope.sidebarOpen = true;
         $scope.showSidebarForMobile();
     };
@@ -337,16 +337,16 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      * Open sidebar for mobile
 
      */
-    $scope.closeSidebar = function(isDesktop){
+    $scope.closeSidebar = function (isDesktop) {
         $scope.sidebarOpen = false;
         $scope.hideSidebarForMobile();
     };
 
-    $scope.hideSidebarForMobile = function(){
+    $scope.hideSidebarForMobile = function () {
         $('.sidebar-div').addClass('hide-mobile');
     };
 
-    $scope.showSidebarForMobile = function(){
+    $scope.showSidebarForMobile = function () {
         $('.sidebar-div').removeClass('hide-mobile');
     };
 
@@ -369,11 +369,11 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
         }
     };
 
-    $scope.validateConfirmPass = function(){
+    $scope.validateConfirmPass = function () {
         var valid;
-        if (!$scope.confirm_pass || $scope.confirm_pass == ""){
+        if (!$scope.confirm_pass || $scope.confirm_pass == "") {
             valid = true;
-        } else if ($scope.confirm_pass != $scope.new_pass){
+        } else if ($scope.confirm_pass != $scope.new_pass) {
             valid = false;
         } else {
             valid = true;
@@ -385,7 +385,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Resets selector modified flag
      */
-    function resetInputMofiedFlag(selector){
+    function resetInputMofiedFlag(selector) {
         $(selector).removeClass(modifiedFlag);
     }
 
@@ -395,21 +395,21 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      * @param {*} selector 
      * @returns boolean
      */
-    function checkInputIfModified(selector){
+    function checkInputIfModified(selector) {
         return $(selector).hasClass(modifiedFlag);
     }
 
     /**
      * Helper method to load orders
      */
-    function loadOrders(){
+    function loadOrders() {
         $scope.orderSectionText = "Loading...";
-        user.orders().then(function success(res){
-            if(res.data.success){
+        user.orders().then(function success(res) {
+            if (res.data.success) {
                 $scope.orders = res.data.orders;
                 $scope.orderSectionText = "No Orders"; //won;t be shown if orders contains something                        
             }
-        }, function(error){
+        }, function (error) {
             $scope.orderSectionText = "Something went wrong while retrieving orders, please refresh the page";
         });
     }
@@ -417,7 +417,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Resets user data
      */
-    function resetValues(){
+    function resetValues() {
         $scope.fname = $scope.user.first_name;
         $scope.lname = $scope.user.last_name;
         $scope.email = $scope.user.user_email;
@@ -430,8 +430,8 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     /**
      * Returns default response handler that notifies of operation success
      */
-    function defaultSuccessCallback(res){
-        if (res.data.success){
+    function defaultSuccessCallback(res) {
+        if (res.data.success) {
             notification.addSuccessMessage("Successfully Updated");
             setTimeout(() => {
                 $window.location.reload();
@@ -439,15 +439,15 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
         } else {
             notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
         }
-    }   
+    }
 
     /**
      * Returns default response handler that notifies of operation error 
      */
-    function defaultErrorCallback(err){
+    function defaultErrorCallback(err) {
         notification.addErrorMessage("Something went wrong, please try again later");
     }
-    
+
     // Initialize at the end of file!
     $scope.init();
 });
