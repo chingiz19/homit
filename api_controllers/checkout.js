@@ -36,12 +36,15 @@ router.post('/placeorder', async function (req, res, next) {
 
     let signedUser = Auth.getSignedUser(req);
     let paramsMissing = false;
+    let userObject = {};
 
     if (signedUser) {
         paramsMissing = !cartProducts || !phone || !address || !address_lat || !address_long || !cardToken || !scheduleDetails;
         couponDetails = Object.assign({ "user_id": signedUser.id, }, HelperUtils.formatUserCoupons(await Coupon.getUserCoupons(signedUser.id, true)));
+        userObject = Object.assign({ isGuest: false }, signedUser);
     } else {
         paramsMissing = !email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts || !cardToken || !scheduleDetails || !couponDetails;
+        userObject = { isGuest: true, "first_name": fname, "last_name": lname, "user_email": email };
     }
 
     if (!paramsMissing) {
@@ -58,7 +61,7 @@ router.post('/placeorder', async function (req, res, next) {
                 MP.chargeCustomer(custId, totalPrice).then(async function (chargeResult) {
                     postCharge(chargeResult, res, birth_year, birth_month, birth_day,
                         address, address_lat, address_long, phone, unitNumber, driverInstruction,
-                        allPrices, storeProducts, scheduleDetails, Object.assign({ isGuest: false }, signedUser));
+                        allPrices, storeProducts, scheduleDetails, userObject);
                 }, async function (error) {
                     chargeFailed(error, res);
                 });
@@ -66,7 +69,7 @@ router.post('/placeorder', async function (req, res, next) {
                 MP.chargeCard(cardToken, totalPrice).then(async function (chargeResult) {
                     postCharge(chargeResult, res, birth_year, birth_month, birth_day,
                         address, address_lat, address_long, phone, unitNumber, driverInstruction,
-                        allPrices, storeProducts, scheduleDetails, { isGuest: true, "first_name": fname, "last_name": lname, "user_email": email });
+                        allPrices, storeProducts, scheduleDetails, userObject);
                 }, async function (error) {
                     chargeFailed(error, res);
                 });
@@ -158,7 +161,7 @@ router.post('/check', async function (req, res) {
     if (user) {
         let savedUser = await User.findUserById(user.id);
         emailIsOk = savedUser.email_verified;
-        userMessages[1]="Please verify your account. Verification email has been sent to your inbox";
+        userMessages[1] = "Please verify your account. Verification email has been sent to your inbox";
     } else {
         emailIsOk = await Email.validateUserEmail(email);
     }
@@ -233,7 +236,7 @@ async function postCharge(chargeResult, res, birth_year, birth_month, birth_day,
         orders: placedOrders
     };
 
-    sendOrderEmail(userObject.user_email, userObject.first_name, userObject.last_name, phone, address, cardDigits, placedOrders.orders, scheduleDetails, allPrices);   
+    sendOrderEmail(userObject.user_email, userObject.first_name, userObject.last_name, phone, address, cardDigits, placedOrders.orders, scheduleDetails, allPrices);
 
     if (userObject.isGuest) {
         Email.subscribeToGuestUsers(userObject.email, userObject.fname, userObject.lname);
@@ -279,9 +282,9 @@ function chargeFailed(error, res) {
 
 async function createOrders(userId, address, address_lat, address_long, driverInstruction, unitNumber,
     phoneNumber, isGuest, chargeId, cardDigits, allPrices, products, scheduleDetails) {
-    
-        let orderTransactionId = await Orders.createTransactionOrder(userId, address, address_lat, address_long, driverInstruction,
-             unitNumber, phoneNumber, isGuest, chargeId, cardDigits, allPrices);
+
+    let orderTransactionId = await Orders.createTransactionOrder(userId, address, address_lat, address_long, driverInstruction,
+        unitNumber, phoneNumber, isGuest, chargeId, cardDigits, allPrices);
 
     let createFunctions = [];
     let userOrders = {};
