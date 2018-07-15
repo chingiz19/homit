@@ -213,7 +213,7 @@ pub.assignCouponToUser = async function (userId, couponCode, trialsLimit) {
     if (userId && couponId && trialsLimit && !userHaveIt) {
         let data = {
             user_id: userId,
-            coupon_id: couponId,
+            coupon_id: couponId.id,
             trials_limit: trialsLimit
         }
 
