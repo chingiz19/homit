@@ -605,14 +605,8 @@ h3 {
         width: calc(100vw - 20px);
     }
 
-    .hub-btn {
+    .hub-btn, .button-sec{
         display: none;
-    }
-
-    .button-sec{
-        width: 16%;
-        display: flex;
-        justify-content: center;
     }
 }
 
