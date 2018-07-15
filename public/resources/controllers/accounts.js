@@ -45,8 +45,6 @@ app.controller("accountsController", function ($scope, $window, $timeout, user, 
 
     $scope.loginMob = function (valid) {
         if (!valid) return;
-        $scope.login_text = "none";
-        $scope.loading_spin = "login-spin";
         user.login($scope.login_email_mob, $scope.login_password_mob)
             .then(function successCallback(response) {
                 if (response.data.success) {

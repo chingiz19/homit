@@ -12,8 +12,6 @@ app.directive("modal", function ($timeout, user, $window, localStorage) {
 
     _scope._login = function (valid) {
         if (!valid) return;
-        pScope.loading_spin = "login-spin";
-        pScope.login_text = "none";
         user.login(pScope.login_email, pScope.login_password)
             .then(function successCallback(response) {
                 if (response.data.success) {
@@ -26,8 +24,6 @@ app.directive("modal", function ($timeout, user, $window, localStorage) {
                 } else {
                     $("#invalidLogIn").removeClass("invalidLogIn").addClass("sign-showErrorMessage messageIn");
                 }
-                pScope.loading_spin = "none";
-                pScope.login_text = "";
             }, function errorCallback(response) {
                 pScope.logIn_message = "Couldn't connect. Please refresh the page and try again.";
                 $("#emailNotification").addClass("sign-showErrorMessage");
@@ -57,8 +53,6 @@ app.directive("modal", function ($timeout, user, $window, localStorage) {
 
     _scope._signup = function (valid) {
         if (!valid) return;
-        pScope.signup_text = "none";
-        pScope.loading_spin = "login-spin";
         hideErrorMessage();
         user.signup({
             email: pScope.signup_email,
@@ -75,8 +69,6 @@ app.directive("modal", function ($timeout, user, $window, localStorage) {
             } else {
                 displayErrorMessage(response.data.ui_message);
             }
-            pScope.loading_spin = "none";
-            pScope.signup_text = "";
         }, function errorCallback(response) {
             displayErrorMessage();
         });
@@ -131,9 +123,6 @@ app.directive("modal", function ($timeout, user, $window, localStorage) {
      */
     function init() {
         pScope.email_check_message = "";
-        pScope.loading_spin = "none";
-        pScope.signup_text = "";
-        pScope.login_text = "";
         /**
          * Clears email suggestion message upon focus
          */

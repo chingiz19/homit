@@ -1,29 +1,4 @@
 <style>
-
-     /* Don't display md-input-container label when input focused */
-    md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {
-        display: none;
-    }
-
-    /* Upon valid input makes input bottom-border green */
-    md-input-container .ng-valid.ng-not-empty, #autocompleteAddressInputBox .ng-valid.ng-not-empty {
-        border-bottom-color: rgb(0, 204, 153) !important;
-        border-bottom-width: 2px !important;
-        padding-bottom: 0px;
-    }
-
-    md-progress-circular svg path { 
-        stroke: rgba(196, 196, 196, 0.726); 
-    }
-
-    .email-check-grow{
-        display: flex;
-    }
-
-    .email-check-grow span{
-        margin-left: 3px;
-    }
-
     .font {
         letter-spacing: 0.01em;
         font-family: 'Nunito', sans-serif;
@@ -107,6 +82,7 @@
         justify-content: center;
         width: 220px;
         height: 44px;
+        padding-left: 24px;
         font-size: 14px;
         border-radius: 22px;
         background-color: rgba(42, 81, 145, 1);
@@ -297,9 +273,9 @@
         <section class="modal-body back-transition">
             <form id="login-modal-form" name="logIn" class="log-form logIn-form" ng-submit="_login(logIn.$valid)">
                 <md-input-container class="input-width-1">
-                    <label></label>
-                    <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, true)">Maybe <span>{{suggestion}}</span>?</div>
-                    <input id="login-input" name="login_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="login_email" placeholder="Email" type="email" required/>
+                    <label class="inptLbl">Email</label>
+                    <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, true)">Did you mean <span>{{suggestion}}</span>?</div>
+                    <input id="login-input" name="login_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="login_email" type="email" required/>
                     <div ng-messages="logIn.login_email.$error">
                         <div ng-message="pattern" class="inptErMsg">Email format only</div>
                         <div ng-message="maxlength">30 characters maximum</div>
@@ -307,17 +283,15 @@
                     </div>
                 </md-input-container>
                 <md-input-container class="input-width-1">
-                    <label></label>
-                    <input name="login_password" ng-pattern="passPattern" ng-model="login_password" maxlength="30" placeholder="Password" type="password" required/>
+                    <label class="inptLbl">Password</label>
+                    <input name="login_password" ng-pattern="passPattern" ng-model="login_password" maxlength="30"
+                        type="password" required/>
                     <div ng-messages="logIn.login_password.$error">
                         <div ng-message="maxlength">30 characters maximum</div>
                         <div ng-message="required">Required</div>
                     </div>
                 </md-input-container>
-                <button class="log-btn" type="submit">
-                    <md-progress-circular ng-class="loading_spin" md-diameter="23"></md-progress-circular>
-                    <span ng-class="login_text">LOG IN</span>
-                </ng-md-icon></button>
+                <button class="log-btn" type="submit">LOG IN<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
             </form>
         </section>
         <!-- Footer -->
@@ -371,9 +345,9 @@
         <section class="modal-body">
             <form name="signUp" class="log-form" ng-submit="_signup(signUp.$valid)">
                 <md-input-container class="input-width-1">
-                    <label></label>
-                    <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, false)">Maybe <span>{{suggestion}}</span>?</div>
-                    <input id="signup-input" name="signup_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="signup_email" placeholder="Email" type="email" required/>
+                    <label class="inptLbl">Email</label>
+                    <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, false)">Did you mean <span>{{suggestion}}</span>?</div>
+                    <input id="signup-input" name="signup_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="signup_email" type="email" required/>
                     <div ng-messages="signUp.signup_email.$error">
                         <div ng-message="pattern">Email format only</div>
                         <div ng-message="maxlength">30 caracters maximum</div>
@@ -382,8 +356,8 @@
                 </md-input-container>
                 <div layout="row" class="input-width-1">
                     <md-input-container class="input-width-2">
-                        <label></label>
-                        <input name="signup_fname" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_fname" placeholder="First Name" type="text" required/>
+                        <label class="inptLbl">First Name</label>
+                        <input name="signup_fname" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_fname" type="text" required/>
                         <div ng-messages="signUp.signup_fname.$error">
                             <div ng-message="pattern">Letters only</div>
                             <div ng-message="maxlength">30 caracters maximum</div>
@@ -391,8 +365,8 @@
                         </div>
                     </md-input-container>
                     <md-input-container class="input-width-2">
-                        <label></label>
-                        <input name="signup_lname" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_lname" placeholder="Last Name" type="text" required/>
+                        <label class="inptLbl">Last Name</label>
+                        <input name="signup_lname" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_lname" type="text" required/>
                         <div ng-messages="signUp.signup_lname.$error">
                             <div ng-message="pattern">Letters only</div>
                             <div ng-message="maxlength">30 caracters maximum</div>
@@ -401,8 +375,9 @@
                     </md-input-container>
                 </div>
                 <md-input-container class="input-width-1">
-                    <label></label>
-                    <input name="signup_password" ng-pattern="passPattern" maxlength="30" minlength="8" ng-model="signup_password" placeholder="Password" type="password" required/>
+                    <label class="inptLbl">Password</label>
+                    <input name="signup_password" ng-pattern="passPattern" maxlength="30" minlength="8"
+                        ng-model="signup_password" type="password" required/>
                     <div ng-messages="logIn.signup_password.$error">
                         <div ng-message="pattern">Invalid characters</div>
                         <div ng-message="maxlength">30 characters maximum</div>
@@ -410,10 +385,7 @@
                         <div ng-message="required">Required</div>
                     </div>
                 </md-input-container>
-                <button class="log-btn" type="submit">
-                    <md-progress-circular ng-class="loading_spin" md-diameter="20"></md-progress-circular>
-                    <span ng-class="signup_text">SIGN UP</span>
-                <ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                <button class="log-btn" type="submit">SIGN UP<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
             </form>
         </section>
         <!-- Footer -->
