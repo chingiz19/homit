@@ -1,6 +1,8 @@
 app.controller("cartController", 
-function ($scope, $sce, $timeout, $mdSidenav, $log, $location) {
-    $scope.store_type_api_name = $location.path().split("/")[2];
+function ($scope, $sce, $timeout, $mdSidenav, $log, $location, localStorage) {
+  
+    $scope.store_type_name = $location.path().split("/")[2];
+    $scope.notificationClearedByUser = localStorage.getHeaderNotificationCleared();
 
     $scope.$on("addToCart", function(event, product){
         $scope.cart.addItem(product);

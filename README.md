@@ -84,6 +84,18 @@
 		# Redis
 		REDIS_USER=
 
+		# Mail Chimp
+		SIGNED_USERS_LIST=
+		GUEST_USERS_LIST=
+		ALL_USERS_LIST=
+		MAILCHIMP_API_KEY=
+
+		# Google Firebase
+		FIREBASE_ANDROID_PROJECT_ID=
+
+		#Neverbounce Email Validator
+		NEVERBOUNCE_SECRET_KEY=
+
 ## Running project
 ### Using gulp
 	We use gulp to automate preprocessing, and pre-run tasks

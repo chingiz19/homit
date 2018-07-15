@@ -1,38 +1,69 @@
 <html ng-app="mainModule">
 
 <head ng-cloak>
+    <meta property="og:url" content="https://homit.ca/main" />
+    <meta property="og:description" content="Ever craved late night munchies, or forgot to stock your bar before party, or simply didn't have time to grab necessities... Let
+            us 'Home It' for you and liberate your precious time. Place order online and watch us appear at your door, shortly after."
+    />
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
+        <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/myaccount.css" rel="stylesheet">
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
 </head>
 
 <body class="flex-row flex-space-between flex-100 container ng-cloak" ng-controller="myaccountController" ng-cloak>
-    
+
     <!-- Sidebar -->
     <aside class="sidebar-div hide-mobile">
         <div class="sidebar-default">
-            <div class="sidebar-button" ng-if="sidebarOpen" ng-click="closeSidebar();"><span><i class="material-icons icon">chevron_left</i></span></div>
-            <div class="sidebar-button hide-mobile" ng-if="!sidebarOpen" ng-click="openSidebar();"><span><i class="material-icons icon">chevron_right</i></span></div>
+            <div class="sidebar-button" ng-click="openCloseSidebar();">
+                <span>
+                    <i style="transition: transform 0.6s ease;" class="material-icons icon" ng-class="{'icon-rot-y': sidebarOpen}">chevron_right</i>
+                </span>
+            </div>
             <div class="vertical-lists">
                 <div class="li" ng-class="{'selected': section == 0}" ng-click="selectSection(0)">
-                    <span><i class="material-icons icon">info</i></span><span class="label" ng-if="sidebarOpen">Overview</span>
+                    <span>
+                        <i class="material-icons icon">info</i>
+                    </span>
+                    <span class="label" ng-if="sidebarOpen">Overview</span>
                 </div>
                 <div class="li" ng-class="{'selected': section == 1}" ng-click="selectSection(1)">
-                    <span><i class="material-icons icon">account_circle</i></span><span class="label" ng-if="sidebarOpen">Profile</span>
+                    <span>
+                        <i class="material-icons icon">account_circle</i>
+                    </span>
+                    <span class="label" ng-if="sidebarOpen">Profile</span>
                 </div>
                 <div class="li" ng-class="{'selected': section == 2}" ng-click="selectSection(2)">
-                    <span><i class="material-icons icon">home</i></span><span class="label" ng-if="sidebarOpen">Delivery Address</span>
-                </div>            
+                    <span>
+                        <i class="material-icons icon">place</i>
+                    </span>
+                    <span class="label" ng-if="sidebarOpen">Delivery Address</span>
+                </div>
                 <div class="li" ng-class="{'selected': section == 3}" ng-click="selectSection(3)">
-                    <span><i class="material-icons icon">payment</i></span><span class="label" ng-if="sidebarOpen">Payment Methods</span>
+                    <span>
+                        <i class="material-icons icon">payment</i>
+                    </span>
+                    <span class="label" ng-if="sidebarOpen">Payment Methods</span>
                 </div>
                 <div class="li" ng-class="{'selected': section == 4}" ng-click="selectSection(4)">
-                    <span><i class="material-icons icon">lock</i></span><span class="label" ng-if="sidebarOpen">Security Settings</span>
+                    <span>
+                        <i class="material-icons icon">lock</i>
+                    </span>
+                    <span class="label" ng-if="sidebarOpen">Security Settings</span>
                 </div>
                 <span class="divider"></span>
                 <div class="li" ng-class="{'selected': section == 5}" ng-click="selectSection(5)">
-                    <span><i class="material-icons icon">shopping_basket</i></span><span class="label" ng-if="sidebarOpen">Orders</span>
+                    <span>
+                        <i class="material-icons icon">shopping_basket</i>
+                    </span>
+                    <span class="label" ng-if="sidebarOpen">Orders</span>
+                </div>
+                <div class="li" ng-class="{'selected': section == 6}" ng-click="selectSection(6)">
+                    <span>
+                        <i class="material-icons icon">loyalty</i>
+                    </span>
+                    <span class="label" ng-if="sidebarOpen">Coupons</span>
                 </div>
             </div>
         </div>
@@ -43,41 +74,39 @@
         <input id="stripeToken" value="<%= stripeToken %>" hidden>
 
         <!-- Overview -->
-        <section ng-show="section == 0">
-            <div class="flex-row flex-100 section-header">
-                <span class="burger-menu" ng-click="openSidebar()"><i class="material-icons">menu</i></span>
-                <h1>Overview</h1>
-            </div>
-            
+        <section ng-show="section == 0" ng-class="{'fadeIn': section == 0}">
             <span class="divider" style="width:100%"></span>
-
-            <div class="flexflex-column flex-100" style="align-self: center; width: 50%;">
-
+            <div class="overview flexflex-column flex-100 content-div">
                 <div ng-if="!infoLoaded">Loading...</div>
-
                 <div ng-show="infoLoaded">
-                    <div class="flex-centered">
-                        <h2>Profile<i class="material-icons edit-icon" ng-click="selectSection(1)">create</i></h2>
+                    <div class="flex-centered margin-btm-25">
+                        <h2>Profile
+                            <i class="material-icons edit-icon" ng-click="selectSection(1)">create</i>
+                        </h2>
                         <p>{{fname + ' ' + lname}}</p>
-                        <p>{{email}}</p>
+                        <div class="email-overview-div">
+                            <p>{{email}}</p>
+                            <button class="resend-email-btn overview-btn" ng-show="(<%= emailVerified %>==false)" ng-click="resendVerificationEmail()">Resend Verification Email</button>
+                        </div>
                         <p data-phone>{{phone}}</p>
                         <p>{{dob}}</p>
                     </div>
-    
-                    <div class="flex-centered">
-                        <h2>Delivery Address<i class="material-icons edit-icon" ng-click="selectSection(2)">create</i></h2>
+                    <div class="flex-centered margin-btm-25">
+                        <h2>Delivery Address
+                            <i class="material-icons edit-icon" ng-click="selectSection(2)">create</i>
+                        </h2>
                         <p ng-if="displayAddress">{{displayAddress}}</p>
                         <p ng-if="!displayAddress">No default address was entered</p>
                     </div>
-    
-                    <div class="flex-centered">
-                        <h2>Payment Methods<i class="material-icons edit-icon" ng-click="selectSection(3)">create</i></h2>
+                    <div class="flex-centered margin-btm-25">
+                        <h2>Payment Methods
+                            <i class="material-icons edit-icon" ng-click="selectSection(3)">create</i>
+                        </h2>
                         <div ng-if="card">
                             <label class="card-type">{{ card.type }}</label>
                             <label class="card-numbers">{{ '**** **** **** ' + card.last4 }}</label>
                             <label class="card-exp">{{'(' + card.exp + ')'}}</label>
-                        </div>            
-                        
+                        </div>
                         <div ng-if="!card">
                             <label>No default payment method</label>
                         </div>
@@ -87,16 +116,10 @@
         </section>
 
         <!-- Profile -->
-        <section ng-show="section == 1">
-            <div class="flex-row flex-100 section-header">
-                <span class="burger-menu" ng-click="openSidebar()"><i class="material-icons">menu</i></span>
-                <h1>Profile</h1>
-            </div>
-            
+        <section ng-show="section == 1" ng-class="{'fadeIn': section == 1}">
             <span class="divider" style="width:100%"></span>
             <div ng-if="!infoLoaded">Loading...</div>
-
-            <div class="flex-column flex-100">
+            <div class="flex-column flex-100 content-div">
                 <span class="flex-centered">
                     <form name="profile" ng-submit="updateProfile(profile.$valid)" class="form-profile">
                         <md-input-container class="md-block container-margin font-20" flex="100">
@@ -115,9 +138,13 @@
                                 <div ng-message="required">Required</div>
                             </div>
                         </md-input-container>
-                        <md-input-container class="md-block container-margin font-20" flex="100">
+                        <md-input-container class="md-block container-margin font-20 email-container" flex="100">
                             <label>Email</label>
-                            <input name="email" ng-pattern="/^.+@.+\..+$/" ng-model="email" type="email" required/>
+                            <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, true)">Did you mean <span>{{suggestion}}</span>?</div>
+                            <div class="flex-row-reverse">
+                                <input id="myaccount-email-input" name="email" ng-pattern="/^.+@.+\..+$/" ng-model="email" type="email" required/>
+                                <button class="resend-email-btn" ng-show="((<%= emailVerified %>==false))" ng-click="resendVerificationEmail()">Resend Verification Email</button>
+                            </div>
                             <div ng-messages="profile.email.$error">
                                 <div ng-message="pattern">Email format only</div>
                                 <div ng-message="required">Required</div>
@@ -125,7 +152,8 @@
                         </md-input-container>
                         <md-input-container class="md-block container-margin font-20" flex="100">
                             <label>Date of Birth MM-DD-YYYY</label>
-                            <input id ="date_of_birth" name="dob" ng-pattern="dobPattern" ng-model="dob" ng-blur="checkDOB()" ng-required="requireDOB"/>
+                            <input id="date_of_birth" name="dob" ng-pattern="dobPattern" ng-model="dob" ng-blur="checkDOB()" ng-required="requireDOB"
+                            />
                             <div ng-messages="profile.dob.$error" ng-messages-multiple>
                                 <div ng-message="pattern">Date format only</div>
                                 <div ng-message="required">Required</div>
@@ -134,28 +162,26 @@
                         </md-input-container>
                         <md-input-container class="md-block container-margin font-20" flex="100">
                             <label>Phone</label>
-                            <input id="phone-number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9() -]+$/" ng-model="phone" ng-required="requirePhone"/>
+                            <input id="phone-number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9() -]+$/" ng-model="phone" ng-required="requirePhone"
+                            />
                             <div ng-messages="checkoutInput.phone.$error">
                                 <div ng-message="pattern">Numbers only</div>
                                 <div ng-message="minlength">Required</div>
                             </div>
                         </md-input-container>
-                        <button class="configButton updateButton" ng-show="modified" flex="100" type="submit">Update</button>
+                        <button class="configButton updateButton" ng-show="modified" flex="100" type="submit">
+                            <md-progress-circular ng-class="loading_spin" md-diameter="16"></md-progress-circular>
+                            {{ update_btn_txt }}
+                        </button>
                     </form>
                 </span>
             </div>
         </section>
-    
+
         <!-- Delivery Address -->
-        <section ng-show="section == 2">
-            <div class="flex-row flex-100 section-header">
-                <span class="burger-menu" ng-click="openSidebar()"><i class="material-icons">menu</i></span>
-                <h1>Delivery Address</h1>                   
-            </div>
-
+        <section ng-show="section == 2" ng-class="{'fadeIn': section == 2}">
             <div ng-if="!infoLoaded">Loading...</div>
-
-            <div class="flex-column flex-100">
+            <div class="flex-column flex-100 content-div">
                 <span class="flex-centered">
                     <md-input-container class="address-input-container md-block container-margin" flex="100">
                         <label style="display: none"></label>
@@ -166,29 +192,27 @@
                         </div>
                         <div ng-if="withinCoverage == false" class="outPlgn_txt">Sorry, we do not deliver to your location at the moment</div>
                     </md-input-container>
-                    <button class="configButton updateButton" ng-show="autocomplete.modified" ng-click="updateDeliveryAddress()">Update</button>
+                    <button class="configButton updateButton" ng-show="autocomplete.modified" ng-click="updateDeliveryAddress()">
+                        <md-progress-circular ng-class="loading_spin" md-diameter="16"></md-progress-circular>
+                        {{ update_btn_txt }}
+                    </button>
                 </span>
             </div>
         </section>
 
         <!-- Payment Methods -->
-        <section ng-show="section == 3">
-            <div class="flex-row flex-100 section-header">
-                <span class="burger-menu" ng-click="openSidebar()"><i class="material-icons">menu</i></span>
-                <h1>Payment Method</h1>                              
-            </div>
-
+        <section ng-show="section == 3" ng-class="{'fadeIn': section == 3}">
             <span class="divider" style="width:100%"></span>
             <div ng-if="!infoLoaded">Loading...</div>
-            
-            <div class="flex-column flex-100">
+            <div class="flex-column flex-100 content-div">
                 <span class="flex-centered">
                     <!-- If edit card -->
                     <form class="form-card" name="payment_method" ng-submit="updatePaymentMethod(payment_method.$valid)" ng-show="editEnabled">
                         <div style="display: flex; flex-direction: row;">
                             <md-input-container class="cad-name md-block container-margin" flex="50">
                                 <label>Full Name</label>
-                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="!editEnabled" ng-model="card_name" type="text" ng-required="" />
+                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="!editEnabled" ng-model="card_name" type="text"
+                                    ng-required="" />
                                 <div ng-messages="profile.fname.$error">
                                     <div ng-message="pattern">Letters only</div>
                                     <div ng-message="required">Required</div>
@@ -199,18 +223,19 @@
                             <!-- <label>Card</label> -->
                             <div id="card"></div>
                         </md-input-container>
-                        <button class="configButton updateButton margin-top-40" type="submit" ng-show="editEnabled">Update</button> 
+                        <button class="configButton updateButton margin-top-40" type="submit" ng-show="editEnabled">
+                            <md-progress-circular ng-class="loading_spin" md-diameter="16"></md-progress-circular>
+                            {{ update_btn_txt }}
+                        </button>
                     </form>
                     <button class="configButton cancelButton" ng-show="editEnabled" ng-click="resetPaymentMethodsSection();">Cancel</button>
-
                     <!-- Only show, no edit -->
                     <div ng-show="!editEnabled">
                         <!-- If no card information exists -->
                         <div ng-show="!card && infoLoaded">
-                                <i class="material-icons plus-icon" ng-click="editEnabled = true;">add</i>
-                                Add payment information
+                            <i class="material-icons plus-icon" ng-click="editEnabled = true;">add</i>
+                            Add payment information
                         </div>
-
                         <!-- If card information exists -->
                         <div ng-show="card">
                             <div ng-show="card">
@@ -226,87 +251,113 @@
         </section>
 
         <!-- Security Settings -->
-        <section ng-show="section == 4">
-            <div class="flex-row flex-100 section-header">
-                <span class="burger-menu" ng-click="openSidebar()"><i class="material-icons">menu</i></span>
-                <h1>Security Settings</h1>                
-            </div>
-
+        <section ng-show="section == 4" ng-class="{'fadeIn': section == 4}">
             <span class="divider" style="width:100%"></span>
             <div ng-if="!infoLoaded">Loading...</div>
-
             <button class="configButton edtitButton" ng-show="!editEnabled" ng-click="editEnabled = true">Edit</button>
-
-            <div class="flex-column flex-100">
-                    <span class="flex-centered">
-                        <!-- <input ng-model="old_pass" placeholder="old pass" ng-disabled="!editEnabled">
-                        <input ng-model="new_pass" placeholder="new pass" ng-disabled="!editEnabled">
-                        <input ng-model="confirm_pass" placeholder="confirm pass" ng-disabled="!editEnabled"> -->
-
-                        <form class="form-password" name="security_set" ng-submit="updateSecuritySettings(security_set.$valid)">
-                            <md-input-container class="md-block container-margin" flex="100">
-                                <label>Old Password</label>
-                                <input id="current_pass" name="current_pass" ng-model="current_pass" ng-disabled="!editEnabled" type="password"/>
-                                <div ng-messages="security_set.current_pass.$error">
-                                    <div ng-message="minlength">Required</div>
-                                </div>
-                            </md-input-container>
-                            <md-input-container class="md-block container-margin" flex="100">
-                                <label>New Password</label>
-                                <input id="new_pass" name="new_pass" ng-pattern="passPattern" ng-disabled="!editEnabled" ng-model="new_pass" ng-required="old_pass" type="password" maxlength="30" minlength="8"/>
-                                <div ng-messages="security_set.new_pass.$error">
-                                    <div ng-message="pattern">Invalid characters</div>
-                                    <div ng-message="maxlength">30 characters maximum</div>
-                                    <div ng-message="minlength">8 characters minimum</div>
-                                    <div ng-message="required">Required</div>
-                                </div>
-                            </md-input-container>
-                            <md-input-container class="md-block container-margin" flex="100">
-                                <label>Confirm Password</label>
-                                <input id="confirm_pass" name="confirm_pass" ng-disabled="!editEnabled" ng-model="confirm_pass" ng-change="validateConfirmPass()"ng-required="old_pass" type="password"/>
-                                <div ng-messages="security_set.confirm_pass.$error">
-                                    <div ng-message="required">Required</div>
-                                    <div ng-message="confirm_pass">Passwords don't match</div>
-                                </div>
-                            </md-input-container>
-                            <button class="configButton updateButton margin-top-40" type="submit" ng-show="editEnabled">Update</button>
-                        </form>
-                        <button class="configButton cancelButton" ng-show="editEnabled" ng-click="resetSecuritySettingsSection();">Cancel</button>
-                    </span>
-                </div>
+            <div class="flex-column flex-100 content-div">
+                <span class="flex-centered">
+                    <form class="form-password" name="security_set" ng-submit="updateSecuritySettings(security_set.$valid)">
+                        <md-input-container class="md-block container-margin" flex="100">
+                            <label>Old Password</label>
+                            <input id="current_pass" name="current_pass" ng-model="current_pass" ng-disabled="!editEnabled" type="password" />
+                            <div ng-messages="security_set.current_pass.$error">
+                                <div ng-message="minlength">Required</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block container-margin" flex="100">
+                            <label>New Password</label>
+                            <input id="new_pass" name="new_pass" ng-pattern="passPattern" ng-disabled="!editEnabled" ng-model="new_pass" ng-required="old_pass"
+                                type="password" maxlength="30" minlength="8" />
+                            <div ng-messages="security_set.new_pass.$error">
+                                <div ng-message="pattern">Invalid characters</div>
+                                <div ng-message="maxlength">30 characters maximum</div>
+                                <div ng-message="minlength">8 characters minimum</div>
+                                <div ng-message="required">Required</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block container-margin" flex="100">
+                            <label>Confirm Password</label>
+                            <input id="confirm_pass" name="confirm_pass" ng-disabled="!editEnabled" ng-model="confirm_pass" ng-change="validateConfirmPass()"
+                                ng-required="old_pass" type="password" />
+                            <div ng-messages="security_set.confirm_pass.$error">
+                                <div ng-message="required">Required</div>
+                                <div ng-message="confirm_pass">Passwords don't match</div>
+                            </div>
+                        </md-input-container>
+                        <button class="configButton updateButton margin-top-40" type="submit" ng-show="editEnabled">
+                            <md-progress-circular ng-class="loading_spin" md-diameter="16"></md-progress-circular>
+                            {{ update_btn_txt }}
+                        </button>
+                    </form>
+                    <button class="configButton cancelButton" ng-show="editEnabled" ng-click="resetSecuritySettingsSection();">Cancel</button>
+                </span>
+            </div>
         </section>
 
         <!-- Orders -->
-        <section ng-show="section == 5">
-            <div class="flex-row flex-100 section-header">
-                <span class="burger-menu" ng-click="openSidebar()"><i class="material-icons">menu</i></span>
-                <h1>Orders</h1>                
-            </div>
+        <section ng-show="section == 5" ng-class="{'fadeIn': section == 5}">
             <span class="divider"></span>
-            <div class="flex-column flex-100">
-                <div ng-show="!orders || orders.length == 0" ng-bind="orderSectionText"></div>
+            <div class="flex-column flex-100 content-div">
                 <div ng-show="orders" ng-repeat="order in orders">
                     <div class="order" ng-click="order.showDetails = !order.showDetails">
                         <span class="header">
-                            <h3 class="flex-center"><span class="view-link">View</span> Order #{{order.id}}</h3>
+                            <h3 class="flex-center">
+                                <span class="view-link">View</span> Order #{{order.id}}</h3>
                             <span class="flex-center">|</span>
                             <h3 class="flex-center" ng-bind="order.date_delivered"></h3>
                         </span>
-                        <p class="p-order"><span>Address:&nbsp</span> {{ order.delivery_address }}</p>
-                        <p class="p-order"><span>Store:&nbsp</span> {{ order.store }}</p>
-                        <p class="p-order"><span>Payment:&nbsp</span> **** **** **** {{ order.card_digits }}</p>
+                        <p class="p-order">
+                            <span>Address:&nbsp</span> {{ order.delivery_address }}</p>
+                        <p class="p-order">
+                            <span>Store:&nbsp</span> {{ order.store }}</p>
+                        <p class="p-order">
+                            <span>Payment:&nbsp</span> **** **** **** {{ order.card_digits }}</p>
                         <div class="order-content">
                             <span class="order-items" ng-show="order.showDetails" ng-repeat="item in order.items">
                                 <div class="item">
                                     <img width="100" height="100" ng-src="{{'/resources/images/products/' + item.category.toLowerCase() + '/' + item.image}}">
                                     <span class="details">
-                                        {{ item.volume }}
-                                        {{ item.brand }}
+                                        {{ item.volume }} {{ item.brand }}
                                     </span>
                                 </div>
                             </span>
                         </div>
                     </div>
+                </div>
+                <div ng-show="!orders || orders.length == 0" class="no-orders box-center">
+                    <ng-md-icon icon="sentiment_neutral" size="130"></ng-md-icon>
+                    <h4>It's quite sad to see the purchase history empty. Let's get rolling!</h4>
+                    <a href="/main" target="_self" class="box-center">
+                        <ng-md-icon icon="arrow_forward" size="17"></ng-md-icon>Store Hub</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coupons (Private only) -->
+        <section ng-show="section == 6" class="coupon-section" ng-class="{'fadeIn': section == 6}">
+            <span class="divider"></span>
+            <div class="flex-100 flex-row-wrap content-div">
+                <div ng-show="coupons" class="coupon-content-div" ng-repeat="coupon in coupons">
+                    <div class="body-div">
+                        <h3>{{ coupon.couponHeader }}</h3>
+                        <div class="coupon-number">
+                            <div class="sign">{{ coupon.sign }}</div>
+                            <div class="amount">{{ coupon.amount }}</div>
+                            <div class="off">OFF</div>
+                        </div>
+                        <p class="coupon-message">{{coupon.couponBody}}</p>
+                        <p class="expiry-date">valid until: {{ coupon.expiryDate }}</p>
+                    </div>
+                    <button class="footer-button" ng-click="updateCoupon(coupon.couponCode, $index)">
+                        <p ng-show="!coupon.applied" class="apply-text">apply</p>
+                        <p ng-show="coupon.applied" class="applied-text">remove</p>
+                        <ng-md-icon icon="content_cut" size="20"></ng-md-icon>
+                    </button>
+                </div>
+                <div ng-show="coupons.length == 0" class="no-coupon box-center" style="flex-direction: column;">
+                    <ng-md-icon icon="loyalty" size="130"></ng-md-icon>
+                    <h4>No assigned coupons at the moment.</h4>
                 </div>
             </div>
         </section>
@@ -319,8 +370,8 @@
         <script src="/resources/services/date.js"></script>
         <script src="/resources/services/mapServices.js"></script>
         <script src="/resources/directives/addressAutocomplete.js"></script>
-        <script src="/resources/controllers/myaccount.js"></script>        
-    <% } %>
+        <script src="/resources/controllers/myaccount.js"></script>
+        <% } %>
 </body>
 
 </html>

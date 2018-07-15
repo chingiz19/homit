@@ -2,9 +2,29 @@ html, body {
     background-color: white;
 }
 
+ul {
+    list-style-type: none;
+}
+
+li {
+    list-style-type: none;
+}
+
 .homit-font{
     letter-spacing: 0.01em;
     font-family: 'Nunito', sans-serif;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+.display-content {
+    display: initial !important;
 }
 
 .box-center {
@@ -41,7 +61,7 @@ html, body {
 .seperation-line{
     display: flex;
     flex-direction: row;
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(0, 0, 0, 0.6);
     font-size: 13px;
     width: 100%;
     margin-bottom: 20px;
@@ -52,7 +72,7 @@ html, body {
     width: 10%;
     height: 1px;
     margin: auto 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(175,175,175,0.34);
 }
 
 .seperation-line:after {
@@ -60,7 +80,7 @@ html, body {
     flex-grow: 3;
     height: 1px;
     margin: auto 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(175,175,175,0.34);
 }
 
 .same-line {
@@ -74,7 +94,45 @@ html, body {
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
 }
 
-.prom-item-ul:hover {
-    box-shadow: 0 0px 6px 2px rgba(3, 189, 142, 0.5);
-    transition: box-shadow 0.4s ease;
+.error-text{
+    color: rgb(221, 44, 0);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+}
+
+.icon-rot-1 {
+    transform: rotate(180deg);
+    transition: transform 0.4s ease-out;
+}
+
+.icon-rot-y {
+    transform: rotateY(180deg);
+    transition: transform 0.6s ease-out;
+}
+
+.icon-rot-2 {
+    transform: rotate(0deg);
+    transition: transform 0.4s ease-out;
+}
+
+//Email syntax check implementation
+.email-check-div{
+    width: 100%;
+    text-align: left;
+    height: 0;
+    color: #8f95a3;
+    transition: height 0.4s ease;
+    overflow: hidden;
+    span{
+        color: #8c4b6c;
+        letter-spacing: 0.3px;
+    }
+}
+
+.email-check-grow{
+    height: 25px;
+}
+
+.email-check-div:focus{
+    outline: 0;
 }

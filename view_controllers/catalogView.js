@@ -27,13 +27,13 @@ const api_categories = {
 }
 
 router.get("/product/:storeName/:productName/:productId", async function (req, res, next) {
-    if (!req.query || Object.keys(req.query) > 0){
-        return res.redirect("/catalog" + req.path);
+    if (!req.query || Object.keys(req.query) > 0) {
+        return res.redirect("/hub" + req.path);
     }
-    
+
     var product = await Catalog.getProductPageItemsByProductId(req.params.storeName, req.params.productId);
     var similarProducts = await Catalog.getSimilarProducts(req.params.productId);
-    var validationUrl = "/product/" + product.store_type_api_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
+    var validationUrl = "/product/" + product.store_type_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
 
     if (!product || validationUrl != req.url) {
         return res.redirect("/notfound");
@@ -43,7 +43,7 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     req.options.ejs.product_brand = product.brand;
     req.options.ejs.product_name = product.name;
 
-    if (product.store_type_api_name == "linas-italian-market") {
+    if (product.store_type_name == "linas-italian-market") {
         req.options.ejs.store_type_display_name = '<li><span class="bold">Sold By: </span><a href="' + "https://linasmarket.com/" + '" target="_blank" itemprop="additionalProperty">' + _.startCase(product.store_type_display_name, '-', ' ') + '</a></li>';
     } else {
         req.options.ejs.store_type_display_name = undefined;
@@ -96,7 +96,7 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     }
 
     req.options.ejs.product_images = JSON.stringify({ "images": product.images });
-    req.options.ejs.see_more_url = "https://homit.ca/catalog/" + product.store_type_api_name + "/" + product.category;
+    req.options.ejs.see_more_url = "/hub/" + product.store_type_name + "/" + product.category;
     if (similarProducts.length < 12) {
         let remainder = 12 - similarProducts.length;
         let tmpRecommended = recommended_products[product.category].slice(0, remainder);
@@ -125,13 +125,10 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     res.render("product.ejs", req.options.ejs);
 });
 
-router.get('/:parent/', function (req, res, next) {
-    try {
-        // res.redirect("/catalog/" + req.params.parent + "/" + api_categories[req.params.parent][0]);
-        res.redirect("/catalog/" + req.params.parent + "/" + api_categories[req.params.parent][default_category[req.params.parent]]);
-    } catch (e) {
-        next()
-    }
+router.get('/:parent/', async function (req, res, next) {
+    req.options.ejs.title = _.startCase(req.params.parent) + " Page | Homit";
+    //TODO: og image
+    res.render("store.ejs", req.options.ejs);
 });
 
 router.get('/:parent/:category', function (req, res, next) {
@@ -146,7 +143,7 @@ router.get('/:parent/:category', function (req, res, next) {
         req.options.ejs.selectedCategory = req.params.category.replace(/-/g, " ");
         res.render("catalog.ejs", req.options.ejs);
     } catch (e) {
-        next()
+        next();
     }
 });
 
@@ -190,7 +187,7 @@ var recommended_products = {
         {
             "brand": "Painted Turtle",
             "name": "Cabernet Sauvignon",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1001,
             "category": "wine",
             "image": "b_3001.jpeg",
@@ -201,7 +198,7 @@ var recommended_products = {
         {
             "brand": "Strongbow",
             "name": "Dark Fruit Cider",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 80,
             "category": "cider-and-cooler",
             "image": "c_1057.jpeg",
@@ -212,7 +209,7 @@ var recommended_products = {
         {
             "brand": "Lina's Market",
             "name": "Fresh Pizza Dough",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7646,
             "category": "pasta-and-baking",
             "image": "wrp_1348.jpeg",
@@ -223,7 +220,7 @@ var recommended_products = {
         {
             "brand": "Dwarf Stars",
             "name": "Pumpkin Seed Butter Cups",
-            "store_type_api_name": "dwarf-stars",
+            "store_type_name": "dwarf-stars",
             "product_id": 7646,
             "category": "chocolate-and-bar",
             "image": "bg_1289.jpeg",
@@ -234,7 +231,7 @@ var recommended_products = {
         {
             "brand": "Aurora",
             "name": "Sardines in Oil",
-            "store_type_api_name": "linas-italian-store",
+            "store_type_name": "linas-italian-store",
             "product_id": 6582,
             "category": "canned-and-jarred",
             "image": "c_11081.jpeg",
@@ -247,7 +244,7 @@ var recommended_products = {
         {
             "brand": "Dwarf Stars",
             "name": "Originals",
-            "store_type_api_name": "dwarf-stars",
+            "store_type_name": "dwarf-stars",
             "product_id": 7586,
             "category": "chocolate-and-bar",
             "image": "bg_1288.jpeg",
@@ -258,7 +255,7 @@ var recommended_products = {
         {
             "brand": "Grissini Bon",
             "name": "Breadsticks with Rosemary",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6837,
             "category": "baked-goods",
             "image": "btc_11269.jpeg",
@@ -269,7 +266,7 @@ var recommended_products = {
         {
             "brand": "Molson",
             "name": "Canadian Cider",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 31,
             "category": "cider-and-cooler",
             "image": "b_1020.jpeg",
@@ -280,7 +277,7 @@ var recommended_products = {
         {
             "brand": "Advil",
             "name": "Liqui Gels",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 6503,
             "category": "everyday-needs",
             "image": "p_11003.jpeg",
@@ -291,7 +288,7 @@ var recommended_products = {
         {
             "brand": "19 Crimes",
             "name": "Shiraz Durif",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1161,
             "category": "wine",
             "image": "b_3161.jpeg",
@@ -299,13 +296,13 @@ var recommended_products = {
             "volume": "750ml",
             "price": 18.09
         }
-        
+
     ],
     "dairy": [
         {
             "brand": "GiGi",
             "name": "Fig Spread",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7249,
             "category": "condiments",
             "image": "jr_11749.jpeg",
@@ -316,7 +313,7 @@ var recommended_products = {
         {
             "brand": "Blasted Church",
             "name": "Unorthodox Chardonnay",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1022,
             "category": "wine",
             "image": "b_3022.jpeg",
@@ -327,7 +324,7 @@ var recommended_products = {
         {
             "brand": "Taylors of Horrogate",
             "name": "Organic Chamomile",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7213,
             "category": "coffee-and-tea",
             "image": "bx_11713.jpeg",
@@ -338,7 +335,7 @@ var recommended_products = {
         {
             "brand": "Duo Penotti",
             "name": "Hazelnut Pasta",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7231,
             "category": "condiments",
             "image": "jr_11731.jpeg",
@@ -349,7 +346,7 @@ var recommended_products = {
         {
             "brand": "Perrier",
             "name": "Carbonated Natural Spring Water",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7164,
             "category": "beverages",
             "image": "b_11664.jpeg",
@@ -362,7 +359,7 @@ var recommended_products = {
         {
             "brand": "Guinness",
             "name": "Draught",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 83,
             "category": "beer",
             "image": "c_1060.jpeg",
@@ -373,7 +370,7 @@ var recommended_products = {
         {
             "brand": "Anna's Country Kitchen",
             "name": "Fontina",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7612,
             "category": "dairy",
             "image": "wrp_1314.jpeg",
@@ -384,7 +381,7 @@ var recommended_products = {
         {
             "brand": "Peller Estates",
             "name": "Sauvignon Blanc",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1017,
             "category": "wine",
             "image": "b_3017.jpeg",
@@ -395,7 +392,7 @@ var recommended_products = {
         {
             "brand": "Augusto Espresso",
             "name": "Organic Dark Roast Ground",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7180,
             "category": "coffee-and-tea",
             "image": "cntr_11680.jpeg",
@@ -406,20 +403,20 @@ var recommended_products = {
         {
             "brand": "Jackson-Triggs",
             "name": "Shiraz",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1037,
             "category": "wine",
             "image": "b_3037.jpeg",
             "packaging": "1",
             "volume": "750ml",
             "price": 12.69
-        }  
+        }
     ],
     "beer": [
         {
             "brand": "Doritos",
             "name": "Cheese",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4528,
             "category": "snacks",
             "image": "p_9028.jpeg",
@@ -430,7 +427,7 @@ var recommended_products = {
         {
             "brand": "D.L Jardine's",
             "name": "Salsa Bobos Medium",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6733,
             "category": "condiments",
             "image": "jr_11360.jpeg",
@@ -441,7 +438,7 @@ var recommended_products = {
         {
             "brand": "Tostitos",
             "name": "Round",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4531,
             "category": "snacks",
             "image": "p_9031.jpeg",
@@ -452,7 +449,7 @@ var recommended_products = {
         {
             "brand": "Jack Link's",
             "name": "Cholula",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4516,
             "category": "snacks",
             "image": "p_9016.jpeg",
@@ -463,7 +460,7 @@ var recommended_products = {
         {
             "brand": "Browne",
             "name": "Corkscrew Bottle Opener",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 6003,
             "category": "party-supply",
             "image": "o_10003.jpeg",
@@ -476,7 +473,7 @@ var recommended_products = {
         {
             "brand": "Jack Link's",
             "name": "Sriracha",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4518,
             "category": "snacks",
             "image": "p_9018.jpeg",
@@ -487,7 +484,7 @@ var recommended_products = {
         {
             "brand": "Shock Top",
             "name": "Belgian White",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 7468,
             "category": "beer",
             "image": "b_1173.jpeg",
@@ -498,7 +495,7 @@ var recommended_products = {
         {
             "brand": "Cheetos",
             "name": "Cheddar Jalapeno",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4505,
             "category": "snacks",
             "image": "p_9005.jpeg",
@@ -509,7 +506,7 @@ var recommended_products = {
         {
             "brand": "Rummo",
             "name": "Linguine",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6508,
             "category": "pasta-and-baking",
             "image": "bx_11008.jpeg",
@@ -520,7 +517,7 @@ var recommended_products = {
         {
             "brand": "Augusto",
             "name": "Truffle Pesto",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6747,
             "category": "condiments",
             "image": "jr_11374.jpeg",
@@ -533,7 +530,7 @@ var recommended_products = {
         {
             "brand": "Loacker",
             "name": "Coconut",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7300,
             "category": "confectionery",
             "image": "bx_11800.jpeg",
@@ -544,7 +541,7 @@ var recommended_products = {
         {
             "brand": "Browne",
             "name": "Corkscrew Wing Bottle Opener",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 6023,
             "category": "party-supply",
             "image": "o_10023.jpeg",
@@ -555,7 +552,7 @@ var recommended_products = {
         {
             "brand": "Sea Change Seafoods",
             "name": "Candied Wild Smoked Salmon",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6613,
             "category": "dry-packaged",
             "image": "cntr_11112.jpeg",
@@ -566,7 +563,7 @@ var recommended_products = {
         {
             "brand": "Mozaik",
             "name": "Classic Wine Glass",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 6013,
             "category": "party-supply",
             "image": "p_10013.jpeg",
@@ -577,7 +574,7 @@ var recommended_products = {
         {
             "brand": "Perugina",
             "name": "Milk Chocolate",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7287,
             "category": "confectionery",
             "image": "br_11787.jpeg",
@@ -590,7 +587,7 @@ var recommended_products = {
         {
             "brand": "Arctic Glacier",
             "name": "Ice",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 5533,
             "category": "beverages",
             "image": "p_9528.jpeg",
@@ -601,7 +598,7 @@ var recommended_products = {
         {
             "brand": "Red Bull",
             "name": "Classic",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 5531,
             "category": "beverages",
             "image": "c_9526.jpeg",
@@ -612,7 +609,7 @@ var recommended_products = {
         {
             "brand": "Lazzaroni",
             "name": "Crackers with Pizza Flavor",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6832,
             "category": "snacks",
             "image": "btc_11264.jpeg",
@@ -623,7 +620,7 @@ var recommended_products = {
         {
             "brand": "Mott's",
             "name": "Clamato The Original",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 5516,
             "category": "beverages",
             "image": "b_9511.jpeg",
@@ -634,7 +631,7 @@ var recommended_products = {
         {
             "brand": "Apothic",
             "name": "Blend Red",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1044,
             "category": "wine",
             "image": "b_3044.jpeg",
@@ -647,7 +644,7 @@ var recommended_products = {
         {
             "brand": "Grand Aroma",
             "name": "Lemon Flavoured Extra Virgin Olive Oil",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 4543,
             "category": "oil-and-vinegar",
             "image": "b_11280.jpeg",
@@ -658,7 +655,7 @@ var recommended_products = {
         {
             "brand": "Maitre Truffout",
             "name": "Fancy Truffles with Coffee",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7283,
             "category": "confectionery",
             "image": "bx_11783.jpeg",
@@ -669,7 +666,7 @@ var recommended_products = {
         {
             "brand": "Guinness",
             "name": "Draught",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 83,
             "category": "beer",
             "image": "c_1060.jpeg",
@@ -680,7 +677,7 @@ var recommended_products = {
         {
             "brand": "Krino's",
             "name": "Cocktail - Gigantic Green Stuffed Olives",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6909,
             "category": "canned-and-jarred",
             "image": "jr_11495.jpeg",
@@ -691,7 +688,7 @@ var recommended_products = {
         {
             "brand": "Touch Bamboo",
             "name": "Paddle Skewer",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 6014,
             "category": "party-supply",
             "image": "p_10014.jpeg",
@@ -704,7 +701,7 @@ var recommended_products = {
         {
             "brand": "Twizzler",
             "name": "Strawberry",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4537,
             "category": "snacks",
             "image": "p_9037.jpeg",
@@ -715,7 +712,7 @@ var recommended_products = {
         {
             "brand": "Natur Puglia",
             "name": "Taralli with Pizza Flavour",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6830,
             "category": "baked-goods",
             "image": "btc_11262.jpeg",
@@ -726,7 +723,7 @@ var recommended_products = {
         {
             "brand": "Stella Artois",
             "name": "Pale Lager",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 54,
             "category": "beer",
             "image": "b_1039.jpeg",
@@ -737,7 +734,7 @@ var recommended_products = {
         {
             "brand": "Cocktail Shaker",
             "name": "30oz",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 6012,
             "category": "party-supply",
             "image": "o_10012.jpeg",
@@ -748,7 +745,7 @@ var recommended_products = {
         {
             "brand": "Hershey's",
             "name": "Cookies & Cream",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4541,
             "category": "snacks",
             "image": "br_9041.jpeg",
@@ -761,7 +758,7 @@ var recommended_products = {
         {
             "brand": "Saltwest Naturas",
             "name": "Sun Dried Tomato Basil",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6668,
             "category": "herbs-and-spices",
             "image": "cntr_11167.jpeg",
@@ -772,7 +769,7 @@ var recommended_products = {
         {
             "brand": "Bevara",
             "name": "Sealing Cleaps",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 6022,
             "category": "party-supply",
             "image": "p_10022.jpeg",
@@ -783,7 +780,7 @@ var recommended_products = {
         {
             "brand": "Mozaik",
             "name": "Cutlery Set",
-            "store_type_api_name": "party-supply",
+            "store_type_name": "party-supply",
             "product_id": 6007,
             "category": "party-supply",
             "image": "p_10007.jpeg",
@@ -794,7 +791,7 @@ var recommended_products = {
         {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4539,
             "category": "snacks",
             "image": "br_9039.jpeg",
@@ -805,7 +802,7 @@ var recommended_products = {
         {
             "brand": "Grissini Bon",
             "name": "Breadsticks with Olive Oil",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6838,
             "category": "baked-goods",
             "image": "bx_11270.jpeg",
@@ -818,7 +815,7 @@ var recommended_products = {
         {
             "brand": "Arctic Glacier",
             "name": "Ice",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 5533,
             "category": "beverages",
             "image": "p_9528.jpeg",
@@ -829,7 +826,7 @@ var recommended_products = {
         {
             "brand": "Absolut",
             "name": "Vodka",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 2500,
             "category": "spirit",
             "image": "b_5000.jpeg",
@@ -840,7 +837,7 @@ var recommended_products = {
         {
             "brand": "Lindt",
             "name": "Hazelnut Chocolate",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4539,
             "category": "snacks",
             "image": "br_9039.jpeg",
@@ -851,7 +848,7 @@ var recommended_products = {
         {
             "brand": "Jagermeister",
             "name": "Herbal Liqueur",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 3500,
             "category": "liqueur",
             "image": "b_7000.jpeg",
@@ -862,7 +859,7 @@ var recommended_products = {
         {
             "brand": "Rockstar",
             "name": "Classic",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 5532,
             "category": "beverages",
             "image": "c_9527.jpeg",
@@ -875,7 +872,7 @@ var recommended_products = {
         {
             "brand": "Preservation",
             "name": "Bloody Mary mix",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7107,
             "category": "beverages",
             "image": "b_11607.jpeg",
@@ -886,7 +883,7 @@ var recommended_products = {
         {
             "brand": "Bud Light",
             "name": "Lager",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 71,
             "category": "beer",
             "image": "b_1052.jpeg",
@@ -897,7 +894,7 @@ var recommended_products = {
         {
             "brand": "Purex",
             "name": "Bathroom Tissue Paper",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 6500,
             "category": "everyday-needs",
             "image": "p_11000.jpeg",
@@ -908,7 +905,7 @@ var recommended_products = {
         {
             "brand": "Perrier",
             "name": "Sparkling Water",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 5534,
             "category": "beverages",
             "image": "b_9529.jpeg",
@@ -919,7 +916,7 @@ var recommended_products = {
         {
             "brand": "Simply",
             "name": "Lemonade Orange",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 5509,
             "category": "beverages",
             "image": "b_9506.jpeg",
@@ -932,7 +929,7 @@ var recommended_products = {
         {
             "brand": "Joe tea",
             "name": "Peach",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7099,
             "category": "beverages",
             "image": "b_11599.jpeg",
@@ -943,7 +940,7 @@ var recommended_products = {
         {
             "brand": "Krave",
             "name": "Chili Lime",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4524,
             "category": "snacks",
             "image": "p_9024.jpeg",
@@ -954,7 +951,7 @@ var recommended_products = {
         {
             "brand": "Heineken",
             "name": "Pale Lager",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 41,
             "category": "beer",
             "image": "b_1028.jpeg",
@@ -965,7 +962,7 @@ var recommended_products = {
         {
             "brand": "Purex",
             "name": "Bathroom Tissue Paper",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 6500,
             "category": "everyday-needs",
             "image": "p_11000.jpeg",
@@ -976,7 +973,7 @@ var recommended_products = {
         {
             "brand": "Rummo",
             "name": "Rigatoni",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6509,
             "category": "pasta-and-baking",
             "image": "bx_11009.jpeg",
@@ -989,7 +986,7 @@ var recommended_products = {
         {
             "brand": "Dalla Terra",
             "name": "Mediterranean Appetizer",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6843,
             "category": "canned-and-jarred",
             "image": "jr_11429.jpeg",
@@ -1000,7 +997,7 @@ var recommended_products = {
         {
             "brand": "San Pellegrino",
             "name": "Sparkling Blood Orange",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7110,
             "category": "beverages",
             "image": "b_11610.jpeg",
@@ -1011,7 +1008,7 @@ var recommended_products = {
         {
             "brand": "Gouda's Glorie",
             "name": "Curry Kruiden Ketchup Original",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6719,
             "category": "condiments",
             "image": "cntr_11218.jpeg",
@@ -1022,7 +1019,7 @@ var recommended_products = {
         {
             "brand": "Mott's Clamato",
             "name": "The Original",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 5516,
             "category": "beverages",
             "image": "b_9511.jpeg",
@@ -1033,7 +1030,7 @@ var recommended_products = {
         {
             "brand": "Miller",
             "name": "Lite",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 27,
             "category": "beer",
             "image": "b_1018.jpeg",
@@ -1046,7 +1043,7 @@ var recommended_products = {
         {
             "brand": "Bellei",
             "name": "Balsamic Vinegar of Modena White Label",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7022,
             "category": "oil-and-vinegar",
             "image": "b_11522.jpeg",
@@ -1057,7 +1054,7 @@ var recommended_products = {
         {
             "brand": "Peller Estates",
             "name": "Chardonnay",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1015,
             "category": "wine",
             "image": "b_3015.jpeg",
@@ -1068,7 +1065,7 @@ var recommended_products = {
         {
             "brand": "Allessia's",
             "name": "Breadsticks with Olive Oil",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6815,
             "category": "baked-goods",
             "image": "bx_11247.jpeg",
@@ -1079,7 +1076,7 @@ var recommended_products = {
         {
             "brand": "Advil",
             "name": "Liqui Gels",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 6503,
             "category": "everyday-needs",
             "image": "p_11003.jpeg",
@@ -1090,7 +1087,7 @@ var recommended_products = {
         {
             "brand": "Acqua Panna",
             "name": "Toscana Spring Water",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7165,
             "category": "beverages",
             "image": "b_11665.jpeg",
@@ -1103,7 +1100,7 @@ var recommended_products = {
         {
             "brand": "Rummo",
             "name": "Lasagne",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6510,
             "category": "pasta-and-baking",
             "image": "bx_11010.jpeg",
@@ -1114,7 +1111,7 @@ var recommended_products = {
         {
             "brand": "Augusto",
             "name": "Paprika Pesto",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6720,
             "category": "condiments",
             "image": "jr_11219.jpeg",
@@ -1125,7 +1122,7 @@ var recommended_products = {
         {
             "brand": "Lavazza",
             "name": "Gran Selezione Dark Roast",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7197,
             "category": "coffee-and-tea",
             "image": "bg_11697.jpeg",
@@ -1136,7 +1133,7 @@ var recommended_products = {
         {
             "brand": "Matua",
             "name": "Pinot Noir Rose",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1144,
             "category": "wine",
             "image": "b_3144.jpeg",
@@ -1147,7 +1144,7 @@ var recommended_products = {
         {
             "brand": "Lindt",
             "name": "White Chocolate",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 4540,
             "category": "snacks",
             "image": "br_9040.jpeg",
@@ -1160,7 +1157,7 @@ var recommended_products = {
         {
             "brand": "Canada Dry",
             "name": "Ginger Ale",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 5506,
             "category": "beverages",
             "image": "b_9503.jpeg",
@@ -1171,7 +1168,7 @@ var recommended_products = {
         {
             "brand": "Steven Smith Teamaker",
             "name": "Mao Feng Shui",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7218,
             "category": "coffee-and-tea",
             "image": "bx_11718.jpeg",
@@ -1182,7 +1179,7 @@ var recommended_products = {
         {
             "brand": "Riso Cariotti",
             "name": "Arborio Superfine",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6542,
             "category": "grains-and-legumes",
             "image": "bx_11041.jpeg",
@@ -1193,7 +1190,7 @@ var recommended_products = {
         {
             "brand": "Baileys",
             "name": "Irish Cream Original",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 3518,
             "category": "liqueur",
             "image": "b_7018.jpeg",
@@ -1204,7 +1201,7 @@ var recommended_products = {
         {
             "brand": "Duo Penotti",
             "name": "Hazelnut Pasta",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7231,
             "category": "condiments",
             "image": "jr_11731.jpeg",
@@ -1217,7 +1214,7 @@ var recommended_products = {
         {
             "brand": "Natur Puglia",
             "name": "Taralli with Pizza Flavour",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6830,
             "category": "baked-goods",
             "image": "btc_11262.jpeg",
@@ -1228,7 +1225,7 @@ var recommended_products = {
         {
             "brand": "Safie's",
             "name": "Pickled Asparagus",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6861,
             "category": "canned-and-jarred",
             "image": "jr_11447.jpeg",
@@ -1239,7 +1236,7 @@ var recommended_products = {
         {
             "brand": "ITALISSIMA",
             "name": "Sparkling Grapefruit Juice",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7118,
             "category": "beverages",
             "image": "b_11618.jpeg",
@@ -1250,7 +1247,7 @@ var recommended_products = {
         {
             "brand": "Knorr",
             "name": "Beef",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6552,
             "category": "herbs-and-spices",
             "image": "cbe_11052.jpeg",
@@ -1261,7 +1258,7 @@ var recommended_products = {
         {
             "brand": "Blasted Church",
             "name": "Merlot",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1021,
             "category": "wine",
             "image": "b_3021.jpeg",
@@ -1274,7 +1271,7 @@ var recommended_products = {
         {
             "brand": "Scotties",
             "name": "Napkins",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 6015,
             "category": "party-supply",
             "image": "p_10015.jpeg",
@@ -1285,7 +1282,7 @@ var recommended_products = {
         {
             "brand": "Painted Turtle",
             "name": "Cabernet Sauvignon",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 1001,
             "category": "wine",
             "image": "b_3001.jpeg",
@@ -1296,7 +1293,7 @@ var recommended_products = {
         {
             "brand": "GIGI",
             "name": "Premium Sweet Antipasto",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6855,
             "category": "canned-and-jarred",
             "image": "jr_11441.jpeg",
@@ -1307,7 +1304,7 @@ var recommended_products = {
         {
             "brand": "Forno Steno",
             "name": "Almond Biscuits",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7310,
             "category": "confectionery",
             "image": "bg_11810.jpeg",
@@ -1318,7 +1315,7 @@ var recommended_products = {
         {
             "brand": "Cape Herb & Spice",
             "name": "Lemon Pepper",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6622,
             "category": "herbs-and-spices",
             "image": "cntr_11121.jpeg",
@@ -1331,7 +1328,7 @@ var recommended_products = {
         {
             "brand": "Divella",
             "name": "Lasagne",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7329,
             "category": "pasta-and-baking",
             "image": "bx_11829.jpeg",
@@ -1342,7 +1339,7 @@ var recommended_products = {
         {
             "brand": "Grand Marnier",
             "name": "Cordon Rouge",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 3515,
             "category": "liqueur",
             "image": "b_7015.jpeg",
@@ -1353,7 +1350,7 @@ var recommended_products = {
         {
             "brand": "Tylenol",
             "name": "Regular",
-            "store_type_api_name": "snack-vendor",
+            "store_type_name": "snack-vendor",
             "product_id": 6501,
             "category": "everyday-needs",
             "image": "p_11001.jpeg",
@@ -1364,7 +1361,7 @@ var recommended_products = {
         {
             "brand": "Golosini",
             "name": "Grilled Artichokes in Oil",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 6913,
             "category": "canned-and-jarred",
             "image": "jr_11499.jpeg",
@@ -1375,7 +1372,7 @@ var recommended_products = {
         {
             "brand": "Xochitl",
             "name": "Sea Salt Chips",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7084,
             "category": "snacks",
             "image": "btc_11584.jpeg",
@@ -1388,7 +1385,7 @@ var recommended_products = {
         {
             "brand": "Balocco",
             "name": "Biscuits with Lemon Flavor",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7305,
             "category": "confectionery",
             "image": "bg_11805.jpeg",
@@ -1399,10 +1396,10 @@ var recommended_products = {
         {
             "brand": "Milka",
             "name": "Cherry Cream",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7364,
             "category": "confectionery",
-            "image": "br_11874.jpeg",
+            "image": "br_11864.jpeg",
             "packaging": "1",
             "volume": "100gm",
             "price": 3.99
@@ -1410,7 +1407,7 @@ var recommended_products = {
         {
             "brand": "Nutella",
             "name": "Chocolate Spread",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7227,
             "category": "condiments",
             "image": "jr_11727.jpeg",
@@ -1421,7 +1418,7 @@ var recommended_products = {
         {
             "brand": "Kahlua",
             "name": "Coffee Liqueur",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 3511,
             "category": "liqueur",
             "image": "b_7011.jpeg",
@@ -1432,7 +1429,7 @@ var recommended_products = {
         {
             "brand": "Loacker",
             "name": "Lemon Quadratini",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7307,
             "category": "confectionery",
             "image": "bg_11807.jpeg",
@@ -1445,7 +1442,7 @@ var recommended_products = {
         {
             "brand": "Cartwright & Butler",
             "name": "English Breakfast",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7216,
             "category": "coffee-and-tea",
             "image": "bx_11716.jpeg",
@@ -1456,7 +1453,7 @@ var recommended_products = {
         {
             "brand": "Good Drink",
             "name": "Mango Tea with Hibiscus and Vanilla",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7155,
             "category": "beverages",
             "image": "b_11655.jpeg",
@@ -1467,10 +1464,10 @@ var recommended_products = {
         {
             "brand": "Lina's",
             "name": "Dark Roast Organic",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7186,
             "category": "coffee-and-tea",
-            "image": "bx_11716.jpeg",
+            "image": "bg_11686.jpeg",
             "packaging": "1",
             "volume": "454gm",
             "price": 16.99
@@ -1478,7 +1475,7 @@ var recommended_products = {
         {
             "brand": "Fluggi",
             "name": "Natural Mineral Water",
-            "store_type_api_name": "linas-italian-market",
+            "store_type_name": "linas-italian-market",
             "product_id": 7169,
             "category": "beverages",
             "image": "b_11669.jpeg",
@@ -1489,7 +1486,7 @@ var recommended_products = {
         {
             "brand": "Browne",
             "name": "Corkscrew Wing Bottle Opener",
-            "store_type_api_name": "liquor-station",
+            "store_type_name": "liquor-station",
             "product_id": 6023,
             "category": "party-supply",
             "image": "o_10023.jpeg",

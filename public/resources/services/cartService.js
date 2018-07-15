@@ -22,22 +22,22 @@ app.service('cartService', function ($http, localStorage, $cookies) {
 
         for (var i = 0; i < remoteCart.length; i++) {
             var product_array = remoteCart[i];
-            var store_type_api_name = product_array[1].store_type_api_name;
+            var store_type_name = product_array[1].store_type_name;
             var depot_id = product_array[0];
-            if (localCart.hasOwnProperty(store_type_api_name) && localCart[store_type_api_name].hasOwnProperty(depot_id)) {
+            if (localCart.hasOwnProperty(store_type_name) && localCart[store_type_name].hasOwnProperty(depot_id)) {
                 // add to quantity, not exceeding 10
-                var tmpQuantity = localCart[store_type_api_name][depot_id].quantity;
+                var tmpQuantity = localCart[store_type_name][depot_id].quantity;
                 tmpQuantity += product_array[1].quantity;
 
                 if (tmpQuantity >= 10) tmpQuantity = 10;
 
-                localCart[store_type_api_name][depot_id].quantity = tmpQuantity;
+                localCart[store_type_name][depot_id].quantity = tmpQuantity;
             } else {
                 // for empty localCart
-                if (!localCart.hasOwnProperty(store_type_api_name)) {
-                    localCart[store_type_api_name] = {};
+                if (!localCart.hasOwnProperty(store_type_name)) {
+                    localCart[store_type_name] = {};
                 }
-                localCart[store_type_api_name][depot_id] = product_array[1];
+                localCart[store_type_name][depot_id] = product_array[1];
             }
         }
         
@@ -54,15 +54,15 @@ app.service('cartService', function ($http, localStorage, $cookies) {
     };
 
     /**
-     * Puts 'store_type_api_name' as first property in cart
-     * @param {*} store_type_api_name 
+     * Puts 'store_type_name' as first property in cart
+     * @param {*} store_type_name 
      * @param {*} cart 
      */
-    function _getViewUserCart(store_type_api_name, lCart) {
+    function _getViewUserCart(store_type_name, lCart) {
         var cart = jQuery.extend(true, {}, lCart);
 
-        var selected = cart[store_type_api_name];
-        delete cart[store_type_api_name];
+        var selected = cart[store_type_name];
+        delete cart[store_type_name];
 
         // Item ordering
         // Implementation expected bubble sort - knowing order (from 0 - n) look expected order 'i' and insert at 'i'
@@ -110,7 +110,7 @@ app.service('cartService', function ($http, localStorage, $cookies) {
 
         var new_cart = Object.entries(cart);
         if (selected) {
-            new_cart.splice(0, 0, [store_type_api_name, orderedItems]);
+            new_cart.splice(0, 0, [store_type_name, orderedItems]);
         }
 
         return new_cart;

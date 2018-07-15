@@ -5,19 +5,72 @@
 <link href="/resources/css/header.css" rel="stylesheet">
 
 <!--googleoff: snippet-->
-<nav class="homit-nav" ng-controller="headerController" ng-cloak>
-    <input id="searchBarBoolean" type="hidden" value="<%= showSearchBar %>">
+<nav class="homit-nav" ng-controller="headerController" ng-cloak ng-init="haveNotificationsToShow = (<%= haveNotificationsToShow %>)">
+    <div ng-show="!notificationClearedByUser && haveNotificationsToShow" class="header-notification">
+        <div class="box-center" ng-click="hrefHdrNotification('<%= notificationHref %>')">
+            <%= notificationBody %>&nbsp;
+                <span>
+                    <%= notificationButtonMessage %>
+                </span>
+        </div>
+        <button class="notification-clr-btn box-center" ng-click="clearNotificationMessage()">
+            <ng-md-icon icon="clear" size="17"></ng-md-icon>
+        </button>
+    </div>
     <div class="homit-nav-content" ng-cloak>
         <section>
             <a class="white-logo" href="/main" target="_self">
-                <img class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM.png" />
+                <img alt="Homit Logo" class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM.png" />
             </a>
             <a class="rgb-logo" href="/about" target="_self">
-                <img class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM_rgb.png" />
+                <img alt="Homit Logo" class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM_rgb.png" />
             </a>
         </section>
         <!-- search bar -->
-        <global-search ng-if="!screenMob" input-id="inputId" class="global-search-header" flex="40"></global-search>
+        <button class="hdr-mob-button" ng-click="showMobBoxFun('menu')">
+            <ng-md-icon ng-if="!(showHdrBox == 'menu')" icon="menu" size="32"></ng-md-icon>
+            <ng-md-icon class="clear-svg" ng-if="showHdrBox == 'menu'" icon="clear" size="32"></ng-md-icon>
+        </button>
+        <button class="hdr-mob-button hdr-mob-search" ng-click="showMobBoxFun('search')">
+            <ng-md-icon ng-if="!(showHdrBox == 'search')" icon="search" size="32"></ng-md-icon>
+            <ng-md-icon class="clear-svg" ng-if="showHdrBox == 'search'" icon="clear" size="32"></ng-md-icon>
+        </button>
+        <div class="hdr-logo-H">
+            <a class="box-center" href="/main" target="_self">
+                <img alt="Homit Logo" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo.jpeg" />
+            </a>
+        </div>
+        <button class="hdr-mob-button">
+        </button>
+        <button ng-show="'<%= userLoggedIn %>' == 'false'" class="hdr-mob-button hdr-mob-sign" ng-click="modal(true, 'login');">
+            <ng-md-icon class="log-in-icon" icon="account_circle" size="33"></ng-md-icon>
+        </button>
+        <section class="hdr-ext-content" class="fadeIn">
+            <div class="mob-search-div" ng-show="showHdrBox == 'search' || (!screenMob && !screenTablet)">
+                <global-search input-id="inputId" class="global-search-header"></global-search>
+                <img alt="background" class="hdr-search-cover-img" src="/resources/images/non-catalog-image/pages/search_background.jpg"
+                />
+            </div>
+            <div class="mob-menu-div" ng-show="showHdrBox == 'menu'">
+                <div class="mob-menu-selection-div">
+                    <button ng-class="mobMenuStoresClass" ng-click="changeMobMenu('1')">Stores</button>
+                    <button ng-class="mobMenuCatClass" ng-click="changeMobMenu('2')">Categories</button>
+                </div>
+                <div class="mob-menu-stores" ng-show="mobMenuType == '1'" ng-cloak>
+                    <a ng-repeat="store in hubStores" ng-style="(storeType == store.name) && {'border-radius': '10px', 'box-shadow': '0 0px 6px 2px rgba(3, 189, 142, 0.5)'}"
+                        href="/hub/{{store.name}}" target="_self">
+                        <img alt="{{store.name}}" ng-src="/resources/images/catalog-stores/logo/{{store.image}}">
+                        <h5>{{ store.display_name }}</h5>
+                    </a>
+                </div>
+                <div class="mob-menu-categories" ng-show="mobMenuType == '2'">
+                    <div class="mob-menu-cat-div" ng-repeat="category in categories" ng-click="hrefToCat(category.category_name)">
+                        <img alt="{{category.name}}" ng-src="/resources/images/catalog-stores/categories/{{category.category_image}}">
+                        <h5>{{ category.category_display_name }}</h5>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- buttons -->
         <section class="button-sec">
             <button class="hub-btn" ng-click="showHubBoxFun()">
@@ -26,70 +79,44 @@
             <div id="hdrHub" ng-if="showHubBox" class="header-hub fadeIn-hdr" ng-style="('<%= userLoggedIn %>' == 'true') && {'right': '28px'} || {'right': '128px'}">
                 <div id="hdrHub1" class="box-extBox"></div>
                 <div id="hdrHub2">
-<!--googleon: snippet-->
+                    <!--googleon: snippet-->
+                    <h3 class="box-center hub-header">Store Hub</h3>
                     <div class="hub-box">
-                        <div id="liquor-store-dashboard" class="store-div" ng-click="hrefTo('/catalog/liquor-station')">
+                        <a class="store-div" ng-repeat="store in hubStores | orderBy: 'display_name'" href="/hub/{{store.name}}" target="_self">
                             <div>
-                                <img src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
+                                <img alt="{{store.name}}}" ng-src="/resources/images/catalog-stores/logo/{{store.image}}">
                             </div>
-                            <h3>
-                                <a href="https://homit.ca/catalog/liquor-station">Liquor Station</a>
-                            </h3>
-                        </div>
-                        <div id="dwarf-stars-dashboard" class="store-div" ng-click="hrefTo('/catalog/dwarf-stars')">
-                            <div>
-                                <img ng-src="/resources/images/non-catalog-image/store-logo/dwarf-stars_icon.png">
-                            </div>
-                            <h3>
-                                <a href="https://homit.ca/catalog/dwarf-stars">Dwarf Stars</a>
-                            </h3>
-                        </div>
-                        <div id="linas-italian-store-dashboard" class="store-div snack-vendor-div " ng-click="hrefTo('/catalog/linas-italian-market')">
-                            <div>
-                                <img ng-src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
-                            </div>
-                            <h3>
-                                <a href="https://homit.ca/catalog/linas-italian-market">Lina's Italian Market</a>
-                            </h3>
-                        </div>
-                        <div id="snack-vendor-dashboard" class="store-div snack-vendor-div" ng-click="hrefTo('/catalog/snack-vendor')">
-                            <div>
-                                <img ng-src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
-                            </div>
-                            <h3>
-                                <a href="https://homit.ca/catalog/snack-vendor">Snack Vendor</a>
-                            </h3>
-                        </div>
+                            <h3>{{store.display_name}}</h3>
+                        </a>
                     </div>
                 </div>
             </div>
-<!--googleoff: snippet-->
+            <!--googleoff: snippet-->
             <% if(!userLoggedIn) { %>
                 <span id="sign-btns" ng-cloak>
-                    <button class="sign-btn logIn-btn rgb-background" ng-click="modal(true, 'login');">
-                        Sign In <ng-md-icon class="log-in-icon" icon="account_circle" size="35"></ng-md-icon>
-                    </button>
-                    <button class="sign-btn signUp-btn" ng-click="modal(false, 'signup');">
-                        Sign Up
-                    </button>
+                    <button class="sign-btn logIn-btn rgb-background" ng-click="modal(true, 'login');">Sign In</button>
+                    <button class="sign-btn signUp-btn" ng-click="modal(false, 'signup');">Sign Up</button>
                 </span>
                 <%} else {%>
-                    <button ng-click="showAccountBoxFun()" class="user-signed-btn">
-                        <ng-md-icon icon="person"></ng-md-icon>
+                    <button class="user-signed-btn fadeIn" ng-class="{'user-btn-notification': !isCouponSeen }" ng-click="showAccountBoxFun()" ng-cloak>
+                        <ng-md-icon icon="account_circle"></ng-md-icon>
                     </button>
                     <div id="hdrMyAcc" ng-if="showAccountBox" class="myAccount-box fadeIn-hdr">
                         <div id="hdrMyAcc1" class="box-extBox"></div>
                         <div id="hdrMyAcc2">
                             <ul>
-                                <li ng-click="hrefTo('/checkout')" class="myAccount-box-li">Checkout</li>
+                                <li ng-click="hrefTo('/myaccount')" class="myAccount-box-li box-li-g1">{{ user_names }}</li>
                                 <li class="myAccount-box-line"></li>
-                                <li ng-click="hrefTo('/myaccount')" class="myAccount-box-li myAccount-box-ln3">My Account</li>
+                                <li ng-click="hrefTo('/myaccount', 6)" class="myAccount-box-li box-li-g2">My Coupons
+                                    <span ng-style="!isCouponSeen && {'background-color': 'transparent'} || {'background-color': '#89c72c'}" class="coupon-num">{{ user_coupons.length }}</span>
+                                </li>
+                                <li ng-click="hrefTo('/checkout')" class="myAccount-box-li box-li-g2">Checkout</li>
                                 <li ng-click="logout()" class="myAccount-box-li">Sign Out</li>
                             </ul>
                         </div>
                     </div>
                     <% } %>
-<!--googleon: snippet-->
+                        <!--googleon: snippet-->
         </section>
         <modal class="header-sign-modal" show="showModal" ng-show="showModal" show-login="showLogInModal"></modal>
     </div>

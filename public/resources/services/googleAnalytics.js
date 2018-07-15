@@ -12,7 +12,12 @@ app.service('googleAnalytics', function(){
         cart_actions: "cart_actions",
         catalog_actions: "catalog_actions",
         checkout_actions: "checkout_actions",
-        address_actions: "address_actions"
+        address_actions: "address_actions",
+        product_actions: "product_actions",
+        main_actions: "main_actions",
+        store_page_actions: "store_page_actions",
+        myaccount_actions: "myaccount_actions",
+        header_actions: "header_actions"
     };
 
      /**

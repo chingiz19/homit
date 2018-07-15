@@ -13,6 +13,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     $scope.routeNodesMarkers = [];
     $scope.logStreamPrevious = "";
     $scope.logStreamNew = "";
+    $scope.mode = $("#mode").val();
 
     /*CM dashboard variables */
     const ENGINE_STATUS_ON = "running";
@@ -474,7 +475,14 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     /* CM dahsboard functions start here */
 
     function initiateSocket() {
-        let socket = io.connect("/csr");
+        let socket;
+
+        if ($scope.mode == "production") {
+            socket = io.connect("/csr");
+        } else {
+            socket = io.connect("http://localhost:3000/csr");
+        }
+
         var received_data;
 
         socket.on('cm_report', function (data) {

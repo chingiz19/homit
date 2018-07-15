@@ -19,7 +19,7 @@ var pub = {};
  * @param {*} allPrices 
  */
 pub.createTransactionOrder = async function (userId, address, address_lat, address_long, driverInstruction, unitNumber, phoneNumber, isGuest, chargeId, cardNumber, allPrices) {
-    var data = {
+    let data = {
         delivery_address: address,
         delivery_latitude: address_lat,
         delivery_longitude: address_long,
@@ -29,8 +29,11 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
         total_amount: allPrices.cart_amount,
         delivery_fee: allPrices.delivery_fee,
         total_tax: allPrices.total_tax,
-        phone_number: phoneNumber
+        phone_number: phoneNumber,
+        original_price: allPrices.original_total_price,
+        coupon_applied: allPrices.general_coupon_id
     };
+    
     if (isGuest) {
         data.guest_id = userId;
     } else {
@@ -45,7 +48,7 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
         data.unit_number = unitNumber;
     }
 
-    var inserted = await db.insertQuery(db.tables.orders_transactions_history, data);
+    let inserted = await db.insertQuery(db.tables.orders_transactions_history, data);
     return inserted.insertId;
 }
 
@@ -55,22 +58,24 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
  * @param {*} orderTransactionId 
  * @param {*} storeType 
  */
-pub.createOrder = async function (orderTransactionId, storeType, prices, dateScheduled) {
-    var storeType = await Catalog.getStoreTypeIdByName(storeType);
-    var data = {
+pub.createOrder = async function (orderTransactionId, receivedStoreType, prices, dateScheduled) {
+    let storeType = await Catalog.getStoreTypeIdByName(receivedStoreType);
+    let data = {
         order_transaction_id: orderTransactionId,
         total_price: prices.total_price,
         total_amount: prices.cart_amount,
         delivery_fee: prices.delivery_fee,
         total_tax: prices.total_tax,
-        store_type: storeType
+        store_type: storeType,
+        original_price: prices.original_total_price,
+        coupon_applied: prices.coupon_id
     };
 
     if (dateScheduled) {
         data.date_scheduled = dateScheduled;
     }
 
-    var inserted = await db.insertQuery(db.tables.orders_history, data);
+    let inserted = await db.insertQuery(db.tables.orders_history, data);
     return inserted.insertId;
 }
 
@@ -252,6 +257,45 @@ pub.getUserWithOrderByOrderId = async function (orderId) {
         }
     }
     return false;
+}
+
+/**
+ * Get user and order ids information by customer id
+ * 
+ * @param {*} orderId 
+ */
+pub.getOrderArrayByCustomerId = async function (customerId, driverId) {
+    let numberId = customerId.split("_")[1];
+    let data = {};
+    let driverData = { "history.driver_id": driverId };
+    let infoTable = `users_customers_guest`;
+    let userType = "transactions.guest_id";
+
+    if (customerId.includes("u")) {
+        userType = "transactions.user_id";
+        infoTable = 'users_customers';
+    }
+
+    data[userType] = numberId;
+
+    let sqlQuery = `
+    SELECT 
+        history.id, info.first_name AS fName, transactions.phone_number AS phone
+    FROM
+        orders_transactions_history AS transactions
+    JOIN
+        orders_history AS history ON (transactions.id = history.order_transaction_id)
+    JOIN 
+	    ` + infoTable + ` AS info ON (info.id =` + userType + `)
+    WHERE
+        date_arrived_customer IS NULL
+    AND 
+        ?
+    AND 
+        ?`;
+
+    let result = await db.runQuery(sqlQuery, [data, driverData]);
+    return result;
 }
 
 /**
@@ -699,7 +743,7 @@ var updateDateStoreReady = function (orderId, sqlDate) {
 }
 
 pub.updateDateAssigned = async function (orderId, storeId, driverId) {
-    var sqlQuery = `
+    let sqlQuery = `
         UPDATE orders_history
         SET 
         driver_id = `+ driverId + `,
@@ -708,12 +752,12 @@ pub.updateDateAssigned = async function (orderId, storeId, driverId) {
         WHERE ?
     `;
 
-    var key = {
+    let key = {
         id: orderId
     };
 
     // Updating orders_history table
-    await db.runQuery(sqlQuery, key);
+    let result = await db.runQuery(sqlQuery, key);
 }
 
 module.exports = pub;

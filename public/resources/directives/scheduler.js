@@ -248,7 +248,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
 
     function formatDelFeeText(rawText, freeDeliveryText) {
         if (rawText != undefined) {
-            return (rawText == 0 ? freeDeliveryText : "C$ " + rawText + " Delivery Fee");
+            return (rawText == 0 ? freeDeliveryText : "C$" + rawText + " Delivery");
         } else {
             throw "Error while fomatting delivery fee text, Scheduler.js directive";
         }
@@ -324,7 +324,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
             $timeout(function () {
                 $http({
                     method: 'POST',
-                    url: "/api/catalog/getstoreinfo",
+                    url: "/api/hub/getstoreinfo",
                     data: {
                         store_type: [scope.storeType]
                     }
@@ -341,12 +341,13 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                 });
 
                 function init(store_info) {
+                    scope.buttonStyle = "";
                     scope.storeOpen = store_info.open;
                     scope.storeInfo = store_info;
                     scope.store_name = store_info.name;
                     scope.storeName = store_info.display_name;
                     scope.delFee = formatDelFeeText(store_info.del_fee, "FREE delivery");
-                    scope.storeImage = "/resources/images/non-catalog-image/store-logo/" + store_info.image;
+                    scope.storeImage = "/resources/images/catalog-stores/logo/" + store_info.image;
                     scope.dates = buildSchedulerDates(scope.storeInfo.hours_scheduled, "start from tomorrow"); // options 'start from tomorrow/today'
                     scope.deliveryOption = "ASAP Delivery";
                     let delivery_hrs = localStorage.getOrderDeliveryHrs();
@@ -358,14 +359,14 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                     } else if (scope.storeInfo.open) {
                         scope.deliveryOption = "ASAP Delivery";
                     } else {
-                        let initialScheduleJson = {};
-                        initialScheduleJson[store_info.name] = {
+                        if(delivery_hrs == null || delivery_hrs == "" || delivery_hrs == undefined) delivery_hrs = {};
+                        delivery_hrs[store_info.name] = {
                             "date_selected": 0,
                             "hrs_selected": 0,
                             "value": scope.dates.date_array[0].hours_array[0].value
                         };
                         scope.deliveryOption = "Scheduled Delivery";
-                        localStorage.setOrderDeliveryHrs(initialScheduleJson);
+                        localStorage.setOrderDeliveryHrs(delivery_hrs);
                         updateOrderDeliveryHrs();
                     }
 
@@ -382,6 +383,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                     let tmp_time = getOpenCloseHours(scope.storeInfo.hours);
                     scope.openTime = tmp_time.open;
                     scope.closeTime = tmp_time.close;
+                    updateBtnColor();
                 }
 
                 function clickedOffOptionsBox(e) {
@@ -416,6 +418,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                         }, 100);
                         window.removeEventListener('click', clickedOffOptionsBox, false);
                     }
+                    updateBtnColor();
                 };
 
                 scope.changeDelOption = function (option) {
@@ -482,6 +485,16 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                             date_hrs.date_array[date_hrs.selected.date].hours_array[date_hrs.selected.time].display_hour
                         );
                         localStorage.setOrderDeliveryHrs(delivery_hrs);
+                    }
+                }
+
+                function updateBtnColor(){
+                    if(!scope.storeOpen && scope.deliveryOption == "ASAP Delivery"){
+                        scope.buttonStyle = {"background-color" : "#ff8d8d"};
+                    } else if(scope.storeOpen && scope.deliveryOption == "ASAP Delivery"){
+                        scope.buttonStyle = {"background-color" : "#a7ffdb"};
+                    } else if(scope.deliveryOption == "Scheduled Delivery"){
+                        scope.buttonStyle = {"background-color" : "rgb(236, 251, 151)"};
                     }
                 }
 

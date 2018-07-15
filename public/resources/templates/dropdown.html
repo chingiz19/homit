@@ -1,0 +1,59 @@
+<style>
+    .dropdown-box{
+        position: relative;
+        width: 100%;
+        font-size: 20px;
+        border: 1px solid black;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .dropdown-option{
+        outline: none;
+        user-select: none;
+        margin: 3px;
+    }
+
+    .dropdown{
+        display: none;
+    }
+
+    .dropdown.active{
+        position: absolute;
+        width: 100%;
+        z-index: 20;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        background-color: white;
+        border: 1px solid black;
+        
+        font-size: 15px;
+    }
+
+    .icon {
+        height: 24px;
+        width: 24px;
+    }
+
+    .icon.active{
+        transform: rotate(180deg);
+        animation: transform 1s ease-out;
+    }
+</style>
+
+<div style="width: 100%;">
+    <span class="dropdown-box" ng-class="_active" ng-click="toggleDropdown();">
+        {{selected}}
+        <svg class="icon" ng-class="_active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+    </span>
+    <ul class="dropdown" ng-class="_active" ng-cloak>
+        <li ng-repeat="key in keys" class="dropdown-option" ng-click="select(key);">{{key}}</li>
+    </ul>
+</div>

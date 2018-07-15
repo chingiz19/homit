@@ -33,7 +33,6 @@ var webServer = express();
 var path = require("path");
 var webpagePath = path.join(__dirname, "/www");
 var bodyParser = require("body-parser");
-var cookies = require("cookies");
 var cookieParser = require("cookie-parser");
 var https = require("https");
 var fs = require('fs');
@@ -48,10 +47,10 @@ var sessionStore = new RedisStore({
 /* Global Session variable to be used by NM */
 var homitSharedSessions = session({
 	store: sessionStore,
-	name: "session_sid", 
+	name: "session_sid",
 	secret: process.env.SESSION_KEY,
 	resave: true,
-	saveUninitialized: false,	
+	saveUninitialized: false,
 	cookie: {
 		secure: false, // Setting to false as reverse proxy is used in production
 		httpOnly: true,
@@ -105,7 +104,7 @@ webServer.use(csurf());
 /* Setting CSRF token, and other cookies/settings per request*/
 webServer.use(function (req, res, next) {
 	res.cookie("csrf-token", req.csrfToken());
-	res.cookie("cart-version", cart_version, {httpOnly: false});
+	res.cookie("cart-version", cart_version, { httpOnly: false });
 	res.setHeader("Keep-Alive", "timeout: 60, max: 1000");
 	return next();
 })
@@ -119,7 +118,6 @@ webServer.all('*', function (req, res, next) {
 webServer.use("/api", require(path.join(__dirname, "/api_controllers/generic_controller")));
 webServer.use("/", require(path.join(__dirname, "/view_controllers/generic_controller")));
 
-
 /*Redirecting to 404 path */
 webServer.use(function (req, res, next) {
 	res.redirect("/notfound");
@@ -127,7 +125,7 @@ webServer.use(function (req, res, next) {
 
 /* Error handling for web page serving portion */
 webServer.use(function (err, req, res, next) {
-	var message = "error path:" + req.path;
+	let message = "error path:" + req.path;
 	message += ", error message:" + err.message;
 	Logger.log.error(message, logMeta);
 

@@ -26,6 +26,7 @@ pub.tables = {
   catalog_items: "catalog_items",
   catalog_depot: "catalog_depot",
   catalog_warehouse: "catalog_warehouse",
+  catalog_coupons: "catalog_coupons",
   drivers: "drivers",
   drivers_shift_history: "drivers_shift_history",
   drivers_status: "drivers_status",
@@ -37,7 +38,8 @@ pub.tables = {
   users_customers_guest: "users_customers_guest",
   users_customers_history: "users_customers_history",
   users_employees: "users_employees",
-  user_cart_items: "user_cart_items",
+  user_cart_items: "user_cart_items", 
+  user_coupons: "user_coupons",
   drivers_request: "drivers_request",
   orders_emails: "orders_emails",
   orders_transactions_history: "orders_transactions_history",
@@ -71,11 +73,11 @@ mysql.createConnection({
   Logger.log.debug('Connection to DB established', logMeta);
 }).catch(function (err) {
   if (err) {
-    var specMetaData = {
+    let metadata = {
       directory: __filename,
       error_message: err.message
     }
-    Logger.log.error('Error connecting to DB', specMetaData);
+    Logger.log.error('Error connecting to DB', metadata);
     return;
   }
 });
@@ -86,7 +88,7 @@ pub.runQuery = function (query, data) {
   return con.query(query, data).then(function (result) {
     return result;
   }).catch(function (error) {
-    var metadata = {
+    let metadata = {
       directory: __filename,
       error_message: error.message
     }
@@ -123,11 +125,15 @@ pub.updateQueryWhereIn = function (table, data) {
   return pub.runQuery('UPDATE ' + table + ' SET ? WHERE ? in ?', data);
 }
 
+pub.updateQueryWhereAnd = function (table, data) {
+  return pub.runQuery('UPDATE ' + table + ' SET ? WHERE ? AND ?', data);
+}
+
 pub.deleteQuery = function (table, data) {
   return pub.runQuery('DELETE FROM ' + table + ' WHERE ?', data);
 }
 
-pub.deleteQuery2 = function (table, data) {
+pub.deleteQueryWithTwoCond = function (table, data) {
   return pub.runQuery('DELETE FROM ' + table + ' WHERE ? AND ?', data);
 }
 

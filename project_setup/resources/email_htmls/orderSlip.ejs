@@ -5,6 +5,7 @@
 	<style>
 		body {
 			width: 595px;
+			margin: 15px;
 			background-color: rgb(254, 254, 254);
 			letter-spacing: 0.01em;
 		}
@@ -181,19 +182,23 @@
 	<table class="customer-details-table">
 		<tr class="customer-details-table-tr">
 			<td class="customer-details-table-td-hdr">Customer:</td>
-			<td id="customer" class="customer-details-table-td-cnt">Elnar Sharifli</td>
+			<td id="customer" class="customer-details-table-td-cnt"><%= customer_name %></td>
 		</tr>
 		<tr class="customer-details-table-tr">
 			<td class="customer-details-table-td-hdr">Address:</td>
-			<td id="customer_address" class="customer-details-table-td-cnt">2439 Chicoutimi Dr NW, Calgary, AB T2L 0W2, Canada</td>
+			<td id="customer_address" class="customer-details-table-td-cnt"><%= customer_address %></td>
 		</tr>
 		<tr class="customer-details-table-tr">
 			<td class="customer-details-table-td-hdr">Phone Number:</td>
-			<td id="customer_phone" class="customer-details-table-td-cnt">4033977020</td>
+			<td id="customer_phone" class="customer-details-table-td-cnt"><%= phone_number %></td>
 		</tr>
+		<%- general_coupon_html %>
 	</table>
 	<div id="order-details-append"></div>
 </body>
+
+<%- html_email %>
+
 <footer id="footer" style="font-size: 10px; position: fixed; bottom: 0; left: 0;">
 	<ul layout="row" style="list-style-type: none; display: -webkit-inline-box; margin: 0; padding-left: 5px;">
 		<li id="store_name" style="list-style-type: none;"></li>

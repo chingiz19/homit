@@ -17,7 +17,7 @@
         position: relative;
         display: flex;
         flex-direction: row;
-        height: 31px;
+        height: 35px;
         width: 100%;
         z-index: 100;
     }
@@ -29,7 +29,7 @@
         width: 40px;
         border: 1px solid rgba(150, 150, 150, 1);
         border-right: none;
-        border-radius: 4px 0 0 4px;
+        border-radius: 3px 0 0 3px;
         background-color: #f5f5f5;
         transition: background-color 0.3s;
     }
@@ -39,7 +39,7 @@
         padding-left: 10px;
         border: 1px solid rgba(150, 150, 150, 1);
         border-left: none;
-        border-radius: 0 4px 4px 0;
+        border-radius: 0 3px 3px 0;
         color: rgba(0, 0, 0, 0.8);
         font-size: 17px;
         text-transform: capitalize;
@@ -213,22 +213,19 @@
 
     /* start of phone styles */
     @media screen and (max-device-width: 776px) {
-        .global-search-header{
-            display: none;
-        }
 
         .search-sec{
             height: 50px;
             display: flex;
         }
 
-        .search-btn{
+        /* .search-btn{
             width: 50px;
             border-bottom: 1px solid rgba(42,81,145,1);
             border-top: none;
             border-left: none;
             border-radius: 0;
-        }
+        } */
 
         .search-btn svg{
             width: 30px;
@@ -239,17 +236,17 @@
             font-size: 19px;
         }
 
-        .search-input{
+        /* .search-input{
             border-bottom: 1px solid rgba(42,81,145,1);
             border-top: none;
             border-right: none;
             border-radius: 0;
             font-size: 19px;
-        }
+        } */
 
         .search-result-box{
             top: 50px;
-            max-height: calc(100vh - 90px);
+            /* max-height: calc(100vh - 90px); */
             -webkit-overflow-scrolling: touch;
         }
 
@@ -277,11 +274,11 @@
         <ng-md-icon ng-if="!searchRequest" icon="search"></ng-md-icon>
         <ng-md-icon ng-if="searchRequest" icon="clear"></ng-md-icon>
     </button>
-    <input id="{{inputId}}" class="search-input" ng-model="searchRequest" placeholder="Search to Homit...">
+    <input id="global-search-input" class="search-input" ng-model="searchRequest" placeholder="Search to Homit...">
     <div ng-if="searchDisplay" class="search-result-box">
         <ul ng-if="resultStoreType.length" id="glbSrchA" class="store-ul">
             <li class="li-content" ng-repeat="node in resultStoreType">
-                <a class="navigate-search" href="/catalog/{{ node.store_type_api_name }}/" target="_self" id="store_type_{{ $index + 1 }}">
+                <a class="navigate-search" href="/hub/{{ node.store_type_name }}/" target="_self" id="store_type_{{ $index + 1 }}">
                     <span class="store-text">
                         <em class="match-em">{{ node.tree_matched }}</em>{{ node.tree_end }}</span>
                 </a>
@@ -292,7 +289,7 @@
         </ul>
         <ul ng-if="resultCategory.length || resultSubcategory.length" class="cat-subcat-ul">
             <li class="li-content" ng-repeat="node in resultCategory">
-                <a class="navigate-search" href="/catalog/{{ node.store_type_api_name }}/{{ node.category }}" target="_self" id="category_{{$index + 1}}">
+                <a class="navigate-search" href="/hub/{{ node.store_type_name }}/{{ node.category }}" target="_self" id="category_{{$index + 1}}">
                     <ul class="cat-subcat-ul-2">
                         <li>{{ node.store_type_display_name }}
                             <span class="greater-char">></span>

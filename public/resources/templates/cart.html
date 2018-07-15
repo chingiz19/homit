@@ -1,10 +1,8 @@
 <style>
 
-    .sidenav-body {
+    .cart-items-content {
         position: relative;
-        top: 85px;
         padding: 0;
-        background-color: rgb(255, 255, 255);
         padding-bottom: 20px;
     }
 
@@ -69,8 +67,6 @@
 
     .product-quantity {
         position: absolute;
-        top: 25px;
-        left: 10px;
         height: 20px;
         min-width: 20px;
         text-align: center;
@@ -87,7 +83,6 @@
         width: 115px;
         height: 115px;
         margin: 0;
-        padding: 0;
         display: flex;
         justify-content: center;
     }
@@ -127,6 +122,26 @@
         align-items: center; 
         flex-direction: column; 
         opacity: 0.6;
+        
+    }
+
+    .cart-empty-a{
+        transition: color 0.4s ease;
+    }
+
+    .cart-empty-a ng-md-icon{
+        fill: #337ab7; 
+        margin-right: 1px;
+        transition: fill 0.4s ease;
+    }
+
+    .cart-empty-a:hover{
+        color: #11283b;
+        text-decoration: none;
+    }
+
+    .cart-empty-a:hover  ng-md-icon{
+        fill: #11283b;
     }
 
     .cart-empty img{
@@ -214,7 +229,7 @@
     }
 </style>
 
-<section class="sidenav-body">
+<section class="cart-items-content">
     <div ng-repeat="store_type in userCartToView track by $index">
         <div class="seperation-line">{{ store_type[0] }}</div>
         <div ng-repeat="product in store_type[1] track by $index">
@@ -247,7 +262,8 @@
     <div ng-if="userCartToView.length == 0">
         <div class="cart-empty">
             <img ng-src="/resources/images/non-catalog-image/pages/cart-icon.png">
-            <span>Your shopping cart is empty, but it doesn't have to be.</span>
+            <span>Your shopping basket is empty, but it doesn't have to be.</span>
+            <a href="/main" target="_self" class="box-center cart-empty-a"><ng-md-icon icon="arrow_forward" size="15"></ng-md-icon>Store Hub</a>
         </div>
     </div>
 </section>

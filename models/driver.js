@@ -26,14 +26,50 @@ pub.findDriverById = function (driverId) {
     });
 };
 
+/* Find driver firebase token from database*/
+pub.findFirebaseTokenById = async function (driverId) {
+    let data = {
+        driver_id: driverId
+    };
+
+    let driverStatus = await db.selectAllWhereLimitOne(db.tables.drivers_status, data);
+
+    if (driverStatus.length > 0) {
+        return driverStatus[0].token;
+    }
+};
+
+/* Destroy driver firebase token at database*/
+pub.destroyFirebaseTokenById = async function (driverId) {
+    let data = {
+        driver_id: driverId
+    };
+
+    let result = await db.deleteQuery(db.tables.drivers_status, data);
+
+    return result;
+};
+
+/* Save driver firebase token to database*/
+pub.saveFirebaseTokenById = async function (driverId, mToken) {
+    if (!mToken) {
+        return false;
+    }
+    let data = { driver_id: driverId };
+    let dataUpdate = { token: mToken };
+    let result = await db.updateQuery(db.tables.drivers_status, [dataUpdate, data]);
+    return result;
+};
+
+
 /* Authenticate driver */
 pub.authenticateDriver = function (email, password) {
-    var data = { user_email: email };
+    let data = { user_email: email };
     return db.selectAllWhereLimitOne(db.tables.drivers, data).then(function (driver) {
         if (driver.length > 0) {
             return Auth.comparePassword(password, driver[0].password).then(function (match) {
                 if (match) {
-                    return User.sanitizeUserObject(driver[0]);
+                    return sanitizeDriverObject(driver[0]);
                 } else {
                     return false;
                 }
@@ -44,23 +80,8 @@ pub.authenticateDriver = function (email, password) {
     });
 };
 
-pub.cancelOrder = function (orderId, driverId) {
-    var driverIdString = "d_" + driverId;
-    var orderIdString = "o_" + orderId;
-
-    var json = {
-        "action": "delete",
-        "details": {
-            "order": {
-                "id": orderIdString
-            }
-        }
-    };
-    NM.sendToDriver(driverId, json);
-}
-
 pub.getActiveDrivers = async function () {
-    var sqlQuery = `
+    let sqlQuery = `
         SELECT
         drivers.id AS driver_id,
         drivers.id_prefix AS driver_id_prefix,
@@ -68,17 +89,15 @@ pub.getActiveDrivers = async function () {
         drivers.first_name,
         drivers.last_name,
         drivers.phone_number,
-        status.socket_id,
         status.latitude,
         status.longitude,
-        status.online,
-        status.connected
+        status.online
         
         FROM drivers, drivers_status AS status
         WHERE drivers.id = status.driver_id
     `;
 
-    var activeDrivers = await db.runQuery(sqlQuery);
+    let activeDrivers = await db.runQuery(sqlQuery);
     return activeDrivers;
 }
 
@@ -87,71 +106,18 @@ pub.getActiveDrivers = async function () {
  * 
  * @param {*} driverId 
  */
-var driverStatusExists = async function (driverId) {
-    var data = {
+pub.getDriverStatus = async function (driverId) {
+    let data = {
         driver_id: driverId
     };
-    var dbResult = await db.selectAllWhereLimitOne(db.tables.drivers_status, data);
-    return dbResult.length > 0;
-}
 
-/**
- * Update driver status table when driver is connected
- * 
- * @param {*} driverId 
- * @param {*} socketId 
- */
-pub.updateDriverStatusConnected = async function (driverId, socketId) {
-    var update = await driverStatusExists(driverId);
-    var data = {
-        driver_id: driverId
-    };
-    if (update) {
-        Logger.log.info("Updating driver status for driver: " + driverId);
-        var dataUpdate = {
-            socket_id: socketId,
-            connected: true
-        };
-        await db.updateQuery(db.tables.drivers_status, [dataUpdate, data]);
+    let result = await db.selectAllWhereLimitOne(db.tables.drivers_status, data);
+
+    if (result.length > 0) {
+        return result[0];
     } else {
-        Logger.log.info("Inserting driver status for driver: " + driverId);
-        data.socket_id = socketId;
-        await db.insertQuery(db.tables.drivers_status, data);
+        return { online: 0 };
     }
-}
-
-/**
- * Update driver status table when driver is disconnected
- * 
- * @param {*} socketId 
- */
-pub.updateDriverStatusDisconnected = async function (socketId) {
-    var key = {
-        socket_id: socketId
-    };
-
-    var driverStatus = await db.selectAllWhereLimitOne(db.tables.drivers_status, key);
-    var driverId = driverStatus[0].driver_id;
-
-    var started = await shiftStarted(driverId);
-    var online = await isOnline(driverId);
-
-    if (!online && !started) {
-        await db.deleteQuery(db.tables.drivers_status, key);
-    } else {
-        var dataUpdate = {
-            connected: false
-        };
-        await db.updateQuery(db.tables.drivers_status, [dataUpdate, key]);
-    }
-}
-
-pub.isConnected = async function (driverId) {
-    var data = {
-        driver_id: driverId
-    };
-    var driverStatus = await db.selectAllWhereLimitOne(db.tables.drivers_status, data);
-    return (driverStatus.length > 0 && driverStatus[0].connected);
 }
 
 /**
@@ -166,8 +132,8 @@ var shiftStarted = async function (driverId) {
         WHERE shift_end IS NULL   
         AND ?
         LIMIT 1`;
-    var data = { driver_id: driverId };
-    var dbResult = await db.runQuery(sqlQuery, data);
+    let data = { driver_id: driverId };
+    let dbResult = await db.runQuery(sqlQuery, data);
     return dbResult.length != 0;
 }
 
@@ -177,13 +143,14 @@ var shiftStarted = async function (driverId) {
  * @param {*} driverId 
  */
 pub.saveOnline = async function (driverId) {
-    var started = await shiftStarted(driverId);
+    let started = await shiftStarted(driverId);
+
     if (!started) {
-        var data = { driver_id: driverId };
+        let data = { driver_id: driverId };
         await db.insertQuery(db.tables.drivers_shift_history, data);
     }
 
-    await setDriverOnlineFlag(driverId, true);
+    return await setDriverOnlineFlag(driverId, true);
 }
 
 /**
@@ -193,8 +160,10 @@ pub.saveOnline = async function (driverId) {
  * @param {*} driverId 
  */
 pub.saveOffline = async function (driverId) {
-    await setDriverOnlineFlag(driverId, false);
-    await endShift(driverId);
+    let result = await setDriverOnlineFlag(driverId, false);
+    await endShift(driverId);                                     //TODO Zaman I think we should get rid off this
+
+    return (result);
 }
 
 /**
@@ -203,16 +172,17 @@ pub.saveOffline = async function (driverId) {
  * @param {*} driverId 
  * @param {*} location 
  */
-pub.updateLocation = async function (driverId, location) {
-    var updateData = {
-        longitude: location.longitude,
-        latitude: location.latitude
+pub.updateLocation = async function (driverId, latitude, longitude) {
+    let updateData = {
+        longitude: longitude,
+        latitude: latitude
     };
-    var key = {
+    let key = {
         driver_id: driverId
     };
 
-    await db.updateQuery(db.tables.drivers_status, [updateData, key]);
+    let result = await db.updateQuery(db.tables.drivers_status, [updateData, key]);
+    return result;
 }
 
 /**
@@ -222,13 +192,42 @@ pub.updateLocation = async function (driverId, location) {
  * @param {*} status 
  */
 var setDriverOnlineFlag = async function (driverId, status) {
-    var data = {
+    let data = {
         online: status
     };
-    var key = {
+    let key = {
         driver_id: driverId
     };
-    await db.updateQuery(db.tables.drivers_status, [data, key]);
+    return await db.updateQuery(db.tables.drivers_status, [data, key]);
+}
+
+/**
+ * Update driver status table when driver signedIn 
+ * 
+ * @param {*} driverId 
+ */
+pub.insertDriverStatusTable = async function (driverId) {
+    let update = await driverStatusExists(driverId);
+    if (!update) {
+        return await db.insertQuery(db.tables.drivers_status, {
+            driver_id: driverId
+        });
+    } else {
+        return update;
+    }
+}
+
+/**
+ * Return true if driver exists in status table
+ * 
+ * @param {*} driverId 
+ */
+var driverStatusExists = async function (driverId) {
+    let data = {
+        driver_id: driverId
+    };
+    let dbResult = await db.selectAllWhereLimitOne(db.tables.drivers_status, data);
+    return dbResult.length > 0;
 }
 
 /**
@@ -238,14 +237,14 @@ var setDriverOnlineFlag = async function (driverId, status) {
  * @param {*} driverId 
  */
 var endShift = async function (driverId) {
-    var routes = await Driver.getRoutes(driverId);
+    let routes = await Driver.getRoutes(driverId);
     if (routes.length == 0) {
-        var sqlQuery = `
+        let sqlQuery = `
             UPDATE drivers_shift_history
             SET shift_end = CURRENT_TIMESTAMP
             WHERE ? AND shift_end IS NULL`
 
-        var key = {
+        let key = {
             driver_id: driverId
         };
 
@@ -260,8 +259,8 @@ var endShift = async function (driverId) {
  * @param {*} driverId 
  */
 var checkToEndShift = async function (driverId) {
-    var started = await shiftStarted(driverId);
-    var online = await isOnline(driverId);
+    let started = await shiftStarted(driverId);
+    let online = await isOnline(driverId);
 
     if (started && !online) {
         await endShift(driverId);
@@ -281,20 +280,18 @@ var isOnline = async function (driverId) {
     return (driverStatus.length > 0 && driverStatus[0].online);
 }
 
-// Orders history
-pub.saveArrivedStore = function (driverId, orderIds) {
-    updateOrdersHistory("date_arrived_store", orderIds);
+pub.saveArrivedStore = function (orderIds) {
+    return updateOrdersHistory("date_arrived_store", orderIds);
 }
 
-pub.savePickUp = function (driverId, orderIds) {
-    updateOrdersHistory("date_picked", orderIds);
+pub.savePickUp = function (orderIds) {
+    return updateOrdersHistory("date_picked", orderIds);
 }
 
-pub.saveDropOff = async function (driverId, dropOff) {
-    var orderIdString = dropOff.order_id;
-    var orderId = orderIdString.split("_")[1];
+pub.saveDropOff = async function (dropOff) {
+    let orderId = dropOff.order_id;
 
-    var updateData = {
+    let updateData = {
         refused: dropOff.refused,
     };
 
@@ -303,34 +300,50 @@ pub.saveDropOff = async function (driverId, dropOff) {
         updateData.receiver_age = dropOff.receiver_age;
     }
 
-    var key = {
+    let key = {
         id: orderId
     };
 
-    await db.updateQuery(db.tables.orders_history, [updateData, key]);
-    updateOrdersHistory("date_delivered", [orderIdString]);
+    let result = await db.updateQuery(db.tables.orders_history, [updateData, key]);
+
+    if (result) {
+        return updateOrdersHistory("date_delivered", [orderId]);
+    } else {
+        return false;
+    }
 }
 
-pub.saveArrivedCustomer = async function (driverId, orderIds) {
-    var orderInfo = await Orders.getUserWithOrderByOrderId(orderIds[0].split("_")[1]);
-    var name = orderInfo.user.first_name;
-    var phone = orderInfo.transaction.phone_number;
+pub.saveArrivedCustomer = async function (customerId, driverId) {
+    let orderInfo = await Orders.getOrderArrayByCustomerId(customerId, driverId);
+    let orderIds = [];
+
+    if(orderInfo.length==0){
+        return false;
+    }
+
+    for (order in orderInfo) {
+        orderIds.push(orderInfo[order].id);
+    }
+
+    let name = orderInfo[0].fName;
+    let phone = orderInfo[0].phone;
 
     SMS.notifyDriverArrival(phone, name);
-    updateOrdersHistory("date_arrived_customer", orderIds);
+
+    return updateOrdersHistory("date_arrived_customer", orderIds);
 }
 
-var updateOrdersHistory = async function (updateColumn, orderIdsString) {
-    var orderIds = [];
-    for (var i = 0; i < orderIdsString.length; i++) {
-        orderIds.push(orderIdsString[i].split("_")[1]);
+var updateOrdersHistory = async function (updateColumn, receivedOrderIds) {
+    let orderIds = [];
+    for (let i = 0; i < receivedOrderIds.length; i++) {
+        orderIds.push(receivedOrderIds[i]);
     }
-    var sqlQuery = `
+    let sqlQuery = `
         UPDATE orders_history
         SET `+ updateColumn + ` = CURRENT_TIMESTAMP
         WHERE id in (` + orderIds + `)`;
 
-    await db.runQuery(sqlQuery);
+    return await db.runQuery(sqlQuery);
 }
 
 // Routes
@@ -382,27 +395,27 @@ var getRoutesMaxPosition = async function (driverId) {
  */
 var shiftRoutes = async function (driverId, nextNodeIdString) {
     if (nextNodeIdString != -1) {
-        var nextNodeType = nextNodeIdString.split("_")[0];
-        var nextNodeId = nextNodeIdString.split("_")[1];
+        let nextNodeType = nextNodeIdString.split("_")[0];
+        let nextNodeId = nextNodeIdString.split("_")[1];
 
-        var selectData = {};
+        let selectData = {};
         if (nextNodeType == "s") {
             selectData.store_id = nextNodeId;
         } else {
             selectData.order_id = nextNodeId;
         }
 
-        var driverData = { driver_id: driverId };
+        let driverData = { driver_id: driverId };
 
-        var sqlQuerySelect = `
+        let sqlQuerySelect = `
             SELECT position
             FROM drivers_routes
             WHERE ? AND ?
             LIMIT 1`;
 
-        var route = await db.runQuery(sqlQuerySelect, [driverData, selectData]);
+        let route = await db.runQuery(sqlQuerySelect, [driverData, selectData]);
 
-        var sqlQuery = `
+        let sqlQuery = `
             UPDATE drivers_routes
             SET position = position + 1
             WHERE ? AND position >= ` + route[0].position;
@@ -411,7 +424,7 @@ var shiftRoutes = async function (driverId, nextNodeIdString) {
         await db.runQuery(sqlQuery, driverData);
         return route[0].position;
     } else {
-        var maxPosition = await getRoutesMaxPosition(driverId);
+        let maxPosition = await getRoutesMaxPosition(driverId);
         return maxPosition + 1;
     }
 }
@@ -426,8 +439,8 @@ var shiftRoutes = async function (driverId, nextNodeIdString) {
  */
 var insertStoreToRoutes = async function (driverId, storeId, nextNodeIdString, storeAdded) {
     if (storeAdded) {
-        var positionToInsert = await shiftRoutes(driverId, nextNodeIdString);
-        var storeData = {
+        let positionToInsert = await shiftRoutes(driverId, nextNodeIdString);
+        let storeData = {
             driver_id: driverId,
             store_id: storeId,
             position: positionToInsert
@@ -435,7 +448,7 @@ var insertStoreToRoutes = async function (driverId, storeId, nextNodeIdString, s
 
         await db.insertQuery(db.tables.drivers_routes, storeData);
     }
-    var maxPosition = await getRoutesMaxPosition(driverId);
+    let maxPosition = await getRoutesMaxPosition(driverId);
     return maxPosition + 1;
 }
 
@@ -446,23 +459,24 @@ var insertStoreToRoutes = async function (driverId, storeId, nextNodeIdString, s
  * @param {*} data 
  */
 var removeRouteNode = async function (driverId, data) {
-    var sqlQuerySelect = `
+    let sqlQuerySelect = `
         SELECT id, position
         FROM drivers_routes
         WHERE driver_id = `+ driverId + ` AND ?
         LIMIT 1`;
 
-    var route = await db.runQuery(sqlQuerySelect, data);
-    var deleteData = { id: route[0].id };
+    let route = await db.runQuery(sqlQuerySelect, data);
+    let deleteData = { id: route[0].id };
+    let result2 = await db.deleteQuery(db.tables.drivers_routes, deleteData);
 
-    await db.deleteQuery(db.tables.drivers_routes, deleteData);
-
-    var sqlQuery = `
+    let sqlQuery = `
         UPDATE drivers_routes
         SET position = position - 1
         WHERE ? AND position >= ` + route[0].position;
-    var driverData = { driver_id: driverId };
-    await db.runQuery(sqlQuery, driverData);
+    let driverData = { driver_id: driverId };
+    let result1 = await db.runQuery(sqlQuery, driverData);
+
+    return (result1 && result2);
 }
 
 /**
@@ -472,10 +486,9 @@ var removeRouteNode = async function (driverId, data) {
  * @param {*} storeId 
  */
 pub.removeStoreRouteNode = async function (driverId, storeId) {
-    var storeIdInt = storeId.split("_")[1];
-    var storeData = { store_id: storeIdInt };
+    let storeData = { store_id: storeId };
 
-    await removeRouteNode(driverId, storeData);
+    return await removeRouteNode(driverId, storeData);
 }
 
 /**
@@ -485,11 +498,12 @@ pub.removeStoreRouteNode = async function (driverId, storeId) {
  * @param {*} orderId 
  */
 pub.removeOrderRouteNode = async function (driverId, orderId) {
-    var orderIdInt = orderId.split("_")[1];
-    var orderData = { order_id: orderIdInt };
+    let orderData = { order_id: orderId };
 
-    await removeRouteNode(driverId, orderData);
+    let result = await removeRouteNode(driverId, orderData);
     await checkToEndShift(driverId);
+
+    return result;
 }
 
 /**
@@ -528,6 +542,15 @@ pub.getRoutes = async function (driverId) {
 
     var routes = await db.runQuery(sqlQuery, [data, data]);
     return routes;
+}
+
+pub.getDriverObject = async function (driverId) {
+    let data = { id: driverId };
+
+    let driver = await db.selectAllWhereLimitOne(db.tables.drivers, data);
+    let driverStatus = await Driver.getDriverStatus(driverId);
+
+    return sanitizeDriverObject(Object.assign({}, driver[0], driverStatus));
 }
 
 // Drivers temp request
@@ -600,7 +623,7 @@ pub.getDriversRoutes = async function (driverId) {
 
             let tmpOrderNode = {
                 is_store: false,
-                cutomer: customer,
+                customer: customer,
                 delivery_address: tmpTransaction.delivery_address,
                 delivery_latitude: tmpTransaction.delivery_latitude,
                 delivery_longitude: tmpTransaction.delivery_longitude,
@@ -608,6 +631,8 @@ pub.getDriversRoutes = async function (driverId) {
                 driver_instruction: tmpTransaction.driver_instruction,
                 store_id: tmpOrder.store_id,
                 order_id: tmpOrder.id,
+                date_arrived_store: tmpOrder.date_arrived_store,
+                date_arrived_customer: tmpOrder.date_arrived_customer,
                 products: products
             };
 
@@ -616,6 +641,16 @@ pub.getDriversRoutes = async function (driverId) {
     }
 
     return result;
+}
+
+var sanitizeDriverObject = function(driver){    
+    let obj = Object.assign({}, driver);
+
+    delete obj.id_prefix;
+    delete obj.password;
+    delete obj.sin_number;
+
+    return obj;
 }
 
 module.exports = pub;

@@ -1,13 +1,15 @@
 <html ng-app="mainModule">
 
 <head>
+    <meta property="og:url" content="https://homit.ca/terms-of-use" />
+    <meta name="description" content="Homit - Terms of Use. The following Terms of Use apply when you view or use the Service at www.homit.ca" />
+    <meta property="og:description" content="Homit - Terms of Use. The following Terms of Use apply when you view or use the Service at www.homit.ca"/>
     <%- include('partial/imports')%>
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/terms_of_use.css" rel="stylesheet">
-            <meta name="description" content="Homit - Terms of Use. The following Terms of Use apply when you view or use the Service at www.homit.ca" />
 </head>
 
-<body ng-cloak>
+<body class="fadeIn" ng-cloak>
     <div class="container">
         <div class="col-md-8 col-md-offset-2">
             <section>
@@ -171,6 +173,9 @@
             </section>
         </div>
     </div>
+    <% if (!production) { %>
+        <script src="/resources/services/localStorage.js"></script>
+    <% } %>
 </body>
 
 <footer>

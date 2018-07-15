@@ -4,17 +4,17 @@
  */
 
 var jwt = require('jsonwebtoken');
-const secretKey = "secretToken";
+const secretKey = "dfiuhdfgkdfhj";
 const defaultExpire = "10h";
 var pub = {};
 
 /* Helper functions below */
 pub.createToken = function (data, expiresIn) {
-    var expires = defaultExpire;
+    let expires = defaultExpire;
     if (expiresIn) {
         expires = expiresIn;
     }
-    var token = jwt.sign(data, secretKey, { expiresIn: expires });
+    let token = jwt.sign(data, secretKey, { expiresIn: expires });
     return token;
 };
 
@@ -37,8 +37,7 @@ pub.validateResetPasswordToken = function (token, secret) {
  */
 function _validateToken(token, secret) {
     try {
-        var decoded = jwt.verify(token, secret);
-        return decoded;
+        return jwt.verify(token, secret);
     } catch (err) {
         if (err == jwt.TokenExpiredError) {
             return false;

@@ -1,4 +1,4 @@
-app.service('user', function ($cookies, $http) {
+app.service('user', function ($cookies, $http, localStorage) {
 
     var publicFunctions = {};
 
@@ -9,6 +9,7 @@ app.service('user', function ($cookies, $http) {
             data: {
                 email: email,
                 password: pass,
+                coupon_details: getGuestUserCoupons()
             }
         });
     };
@@ -89,5 +90,30 @@ app.service('user', function ($cookies, $http) {
         });
     };
 
+    publicFunctions.resendVerificationEmail = function(){
+        return $http({
+            method: "POST",
+            url: 'api/account/reverify'
+        });
+    };
+
+    publicFunctions.updateUserCoupons = function(coupons){
+        return $http({
+            method: "POST",
+            url: '/api/account/updateStoreCoupon',
+            data: {
+                coupon_details: coupons,
+            }
+        });
+    };
+
+    function getGuestUserCoupons(){
+        let tmpCoupons = localStorage.getUserCoupons();
+        let coupons = {};
+        for(let key in tmpCoupons){
+            coupons[tmpCoupons[key]] = true;
+        }
+        return coupons;
+    }
     return publicFunctions;
 });

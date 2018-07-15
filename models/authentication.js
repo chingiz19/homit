@@ -6,56 +6,110 @@ var bcrypt = require('bcrypt');
 var pub = {};
 const saltRounds = 10;
 
-/* Building metadata for log */
-var logMeta = {
-    directory: __filename
+var RolesJar = {
+    CUSTOMER: "customer",
+    CSR: "csr",
+    STORE: "store",
+    DRIVER: "driver"
 }
 
-var UserRoles = {
-    customer: "customer",
-    csr: "csr",
-    store: "store"
+/**
+ * Signing user cookie
+ * @param {*} req request object from HTTP calls
+ * @param {*} user object with additional data to store in session
+ * @param {*} role assigned role to session 
+ */
+pub.signSession = function (req, user, role) {
+    return signSession(req, user, role);
 }
 
-/* Signing customer cookie*/
-pub.signCustomerSession = function (req, user) {
-    return signSession(req, user, UserRoles.customer);
-}
+pub.invalidate = async function (req) {
+    let result = {};
 
-/* Signing CSR cookie*/
-pub.signCSRSession = function (req, csr) {
-    return signSession(req, csr, UserRoles.csr);
-}
+    if (req.session.role == RolesJar.DRIVER) {
+        let user = Auth.getSignedUser(req);
+        result = await Driver.destroyFirebaseTokenById(user.id);
+    }
 
-/* Signing Stores cookie*/
-pub.signStoreSession = function (req, storeId) {
-    req.session.signedIn = true;
-    req.session.role = UserRoles.store;
-    req.session.store_id = storeId;
-    return true;
-}
-
-pub.invalidate = function (req) {
     if (req.session) {
         req.session.destroy();
     }
+
+    return result;
 };
 
-pub.validate = function (options) {
+/**
+ * Returns user object that was assigned during signature
+ * @param {HTTP req} req request object for http call
+ */
+pub.getSignedUser = function (req) {
+    if (req.session && req.session.user) {
+        return Object.assign({}, req.session.user);
+    }
+    return false;
+}
+
+/**
+ * Validation function for HTTP calls
+ * Will redirect only CSR related calls if unauthorized to /notfound
+ * @param {* String} role role to verify from RolesJar 
+ * @param {* Object} options redirect options, for customer cases when redirects to main page
+ */
+pub.validate = function (role, options) {
     return function (req, res, next) {
-        if (checkAuth(req)) {
-            Logger.log.verbose("Authenticated", logMeta);
+        if (checkAuth(req, role)) {
             return next();
         }
         if (options && options.redirect) {
-            Logger.log.verbose("Redirected", logMeta);
-            res.redirect("/");
+           return res.redirect("/");
+        } else if (role && role == RolesJar.CSR) {
+            return res.redirect("/notfound");
         } else {
-            Logger.log.verbose("Not Authorized", logMeta);
-            res.status(400).send("Not Authorized");
+           return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.NOT_AUTHORIZED);
         }
     }
 };
+
+/**
+ * Validation function for Driver App calls
+ * @param {* Object} id driver id
+ */
+pub.validateDriver = function () {
+    return async function (req, res, next) {
+        let user = await Auth.getSignedUser(req);
+
+        if (user && user.id == req.body.driver_id) {
+            return next();
+        } else {
+            ErrorMessages.sendBadRequest(res, ErrorMessages.UIMessageJar.NOT_AUTHORIZED);
+        }
+    }
+};
+
+/**
+ * Authenticated static file serving for driver app 
+ */
+pub.driverPhotoAuth = function () {
+    return async function (req, res, next) {
+        let user = await Auth.getSignedUser(req);
+
+        if (user && req.session.role == RolesJar.DRIVER) {
+            req.url = getDriverPhotoPath(user.user_email, req.url);
+            next();
+        } else {
+            res.redirect("/notfound")
+        }
+    }
+};
+
+/**
+ * Validation functions for Socket connections
+ * @param {*} socket object received when connection initially established
+ * @param {*} role role to compare against
+ */
+pub.validateWebSocket = function (socket, role) {
+    return socket.handshake && socket.handshake.session && socket.handshake.session.signedIn && socket.handshake.session.role == role;
+}
 
 /* Converts plain password into hashed password */
 pub.hashPassword = function (plainPassword) {
@@ -71,42 +125,21 @@ pub.comparePassword = function (plainPassword, hashPassword) {
     });
 }
 
-pub.validateCsr = function (options) {
-    return function (req, res, next) {
-        if (checkAuthCsr(req)) {
-            return next();
-        }
-        if (options && options.redirect) {
-            res.redirect("/");
-        } else {
-            res.redirect("/notfound");
-        }
-    }
-};
-
-/* HTTP calls */
-pub.validateStore = function (req) {
-    return req.session && req.session.signedIn && req.session.role == UserRoles.store;
+/**
+ * Helper function to authenticate
+ * @param {*} req request object from HTTP calls
+ * @param {*} role role to compare against 
+ */
+function checkAuth(req, role) {
+    return req.session && req.session.signedIn && req.session.role == role;
 }
 
-/* Socket IO */
-pub.validateStoreWebSocket = function (scoket) {
-    return scoket.handshake && scoket.handshake.session && scoket.handshake.session.signedIn && scoket.handshake.session.role == UserRoles.store;
-}
-
-/* Socket IO */
-pub.validateCSRWebSocket = function (scoket) {
-    return scoket.handshake && scoket.handshake.session && scoket.handshake.session.signedIn && scoket.handshake.session.role == UserRoles.csr;
-}
-
-function checkAuth(req) {
-    return req.session && req.session.signedIn;
-}
-
-function checkAuthCsr(req) {
-    return req.session && req.session.signedIn && req.session.role == UserRoles.csr;
-}
-
+/**
+ * Helper function to sign user's session
+ * @param {*} req request object from HTTP calls
+ * @param {*} user user object to store additional data
+ * @param {*} role assigned role
+ */
 function signSession(req, user, role) {
     req.session.user = user;
     req.session.signedIn = true;
@@ -114,11 +147,22 @@ function signSession(req, user, role) {
     return true;
 }
 
-pub.getSignedUser = function (req) {
-    if (req.session && req.session.user) {
-        return Object.assign({}, req.session.user);
-    }
-    return false;
+/**
+ * Helper function to build photo path
+ * @param {* Object} username username (e.g. cbakhish)
+ */
+function getDriverPhotoPath(input, url) {
+    let username = input.split("@")[0];
+    let array = url.split("/");
+    let finalUrl = "/";
+
+    finalUrl += username;
+    finalUrl += "/";
+    finalUrl += array[1];
+
+    return finalUrl;
 }
+
+pub.RolesJar = RolesJar;
 
 module.exports = pub;

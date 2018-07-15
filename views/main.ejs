@@ -1,21 +1,23 @@
-<html ng-app="mainModule">
+<html ng-app="mainModule" lang="en">
 
 <head ng-cloak>
+    <meta property="og:url" content="https://homit.ca/main" />
+    <meta name="description" content="Homit is your very local and personal shopper in Calgary. Get your Italian grocery (Lina's Italian Market) delivered right to your door. 
+    Snack, grocery and liquor delivery service in Calgary. We also deliver snacks for 24/7. Place your order online and watch us appear 
+    at your doorstep shortly after." />
+    <meta property="og:description" content="Homit is your very local and personal shopper in Calgary. Get your Italian grocery (Lina's Italian Market) delivered right to your door. 
+    Snack, grocery and liquor delivery service in Calgary. We also deliver snacks for 24/7. Place your order online and watch us appear 
+    at your doorstep shortly after."/>
     <%- include('partial/imports')%>
-        <%- include('partial/header', {title: title}); %>
-            <link href="/resources/css/main.css" rel="stylesheet">
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
-            <meta name="description" content="Homit is your very local and personal shopper in Calgary. Get your Italian grocery (Lina's Italian Market) delivered right to your door. 
-            Snack, grocery and liquor delivery service in Calgary. We also deliver snacks for 24/7. Place your order online and watch us appear 
-            at your doorstep shortly after." />
+    <%- include('partial/header', {title: title}); %>
+    <link href="/resources/css/main.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
 </head>
-<img class="none" src="/resources/images/non-catalog-image/cover-image/calgary.jpg">
-<img class="none" src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
-<img class="none" src="/resources/images/non-catalog-image/store-logo/dwarf-stars_icon.png">
-<img class="none" src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
-<img class="none" src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
-<img class="none" src="/resources/images/non-catalog-image/pages/main_promotion_1.jpeg">
-<img class="none" src="/resources/images/non-catalog-image/pages/main_promotion_2.jpeg">
+<img class="none" alt="calgary" ng-src="/resources/images/non-catalog-image/cover-image/calgary.jpg">
+<img class="none" alt="cover" ng-src="/resources/images/non-catalog-image/cover-image/hub-main_cover.png">
+<img class="none" alt="promotion1" ng-src="/resources/images/non-catalog-image/pages/main_promotion_1.jpeg">
+<img class="none" alt="promotion2" ng-src="/resources/images/non-catalog-image/pages/main_promotion_2.jpeg">
+<img class="none" alt="store image" ng-repeat="store in hubStores" ng-src="/resources/images/non-catalog-image/store-logo/{{store.image}}">
 <body ng-cloak>
     <div ng-controller="mainController" class="main-controller">
         <section id="address" class="full-screen address-section box-center">
@@ -23,32 +25,16 @@
                 <div class="store-div-main fadeIn">
                     <ul class="store-list-ul" ng-cloak>
                         <li class="store-li-footer">Stores We Deliver</li>
-                        <li class="store-li LIM-move move-x" ng-click="hrefTo('/catalog/liquor-station')">
+                        <li id="store_{{$index}}" class="store-li move-x fadeInStore" ng-repeat="store in hubStores | orderBy: 'display_name' ">
                             <div class="img-object">
-                                <img src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
-                                <span class="main-trans-prop">Liquor Station</span>
-                            </div>
-                        </li>
-                        <li class="store-li LS-move move-x" ng-click="hrefTo('/catalog/dwarf-stars')">
-                            <div class="img-object" style="position: relative;">
-                                <img src="/resources/images/non-catalog-image/store-logo/dwarf-stars_icon.png">
-                                <span class="main-trans-prop">Dwarf Stars</span>
-                                <ul class="store-li-free-delivery">
+                                <a href="/hub/{{store.name}}" target="_self">
+                                    <img alt="{{store.name}}" ng-src="/resources/images/catalog-stores/logo/{{store.image}}">
+                                </a>
+                                <span class="main-trans-prop">{{store.display_name}}</span>
+                                <ul class="store-li-free-delivery" ng-show="store.del_fee_primary == 0">
                                     <li class="free-txt">FREE</li>
                                     <li class="delivery-txt">Delivery</li>
                                 </ul>
-                            </div>
-                        </li>
-                        <li class="store-li LIM-move move-x" ng-click="hrefTo('/catalog/linas-italian-market')">
-                            <div class="img-object">
-                                <img src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
-                                <span class="main-trans-prop">Lina's Italian Market</span>
-                            </div>
-                        </li>
-                        <li class="store-li LS-move move-x" ng-click="hrefTo('/catalog/snack-vendor')">
-                            <div class="img-object">
-                                <img src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
-                                <span class="main-trans-prop">Snack Vendor</span>
                             </div>
                         </li>
                     </ul>
@@ -67,43 +53,74 @@
                     </div>
                 </div>
             </div>
-            <div class="main-down-arrow-div" ng-click="scrollTo('promotionSec')">
+            <div class="main-down-arrow-div" ng-click="scrollTo('infoSec')">
                 <i class="material-icons main-down-arrow-icon">expand_more</i>
             </div>
         </section>
+        <section id="infoSec" class="info-sec-background">
+            <!-- Delivery fee section -->
+            <span class="left-info-box">
+                <span class="header">
+                    <h2>Delivery Price</h2>
+                </span>
+                <span class="center-align">
+                    <div class="lead-sec">
+                        <span class="leader">C$4.99</span>
+                        <span class="follower">per store</span>
+                    </div>
+                </span>
+                <span class="df-condition">
+                    <ul>
+                        <li><ng-md-icon icon="done" size="20"></ng-md-icon>Location independent</li>
+                        <li><ng-md-icon icon="done" size="20"></ng-md-icon>No Order size limits</li>
+                    </ul>
+                </span>
+            </span>
+            <!-- Other section -->
+            <span class="right-info-box">
+                <span class="header">
+                    <h2>Service</h2>
+                </span>
+                <span class="center-align">
+                    <div class="lead-sec">
+                        <span class="leader">1 Hour delivery</span>
+                    </div> 
+                </span>
+                <span class="center-align-secondary">
+                    <span class="check-row">
+                        <!-- checkmark -->
+                        <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"></img>
+                        <p>No need to Sign Up</p>
+                    </span>
+                    <span class="check-row">
+                        <!-- checkmark -->
+                        <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"></img>
+                        <p>On Demand Delivery</p>
+                    </span>
+                    <span class="check-row">
+                        <!-- checkmark -->
+                        <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"></img>
+                        <p>Covering most of Calgary</p>
+                    </span>  
+                </span>
+            </span>
+        </section>
         <section id="promotionSec" class="promotion-sec">
-            <div class="steps-div">
-                <div class="fadeIn">
-                    <h2>Shop at Store Catalog</h2>
-                    <p><span class="span-text-step">Shopping for local stores was never this easy.</span> Browse conveniently designed product catalogs through variety of stores with over 1,700 popular items.</p>
-                </div>
-                <div class="fadeIn">
-                    <h2>Keep Doing What You Love</h2>
-                    <p>Every single piece of us will start working towards getting your products delivered to you in a timely manner the very same
-                        moment you place order online.</p>
-                </div>
-                <div class="fadeIn">
-                    <h2>Expirience Homit Magic</h2>
-                    <p>24/7 and location independent delivery fee in Calgary area, because customer satisfaction is our driving force. <span class="span-text-step">Let us be your local and personal shopper.</span></p>
-                </div>
-            </div>
             <div class="promotion-1-2-sec">
-                <div class="promotion-img-1">
-                </div>
+                <div class="promotion-img-1"></div>
                 <div class="fadeIn promotion-1-div">
                     <h2>Fresh pizza toppings and dough</h2>
                     <p>Making homemade pizza from prepared in Italian style dough was never so quick and easy. Pile on your favorite toppings and get ready to chow down.</p>
-                    <button ng-click="hrefTo('/catalog/linas-italian-market/pasta-and-baking')" class="CG-cur-button box-center">SHOP NOW<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                    <button ng-click="hrefTo('/hub/linas-italian-market/pasta-and-baking')" class="CG-cur-button box-center">SHOP NOW<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
                 </div>
             </div>
             <div class="promotion-1-2-sec prm-sec-2-mob">
                 <div class="fadeIn promotion-2-div">
                     <h2>Vegan chocolates and crunchy snacks</h2>
                     <p>Ever craved nut-free, dairy-free and vegan chocolates? Or late night munchies? Or forgot to stock your bar? Shop now - receive in 45-MINUTES.</p>
-                    <button ng-click="hrefTo('/catalog/dwarf-stars/chocolate-and-bar')" class="CG-cur-button box-center">SHOP NOW<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                    <button ng-click="hrefTo('/hub/dwarf-stars/chocolate-and-bar')" class="CG-cur-button box-center">SHOP NOW<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
                 </div>
-                <div class="promotion-img-2">
-                </div>
+                <div class="promotion-img-2"></div>
             </div>
         </section>
 <!--googleoff: snippet-->
@@ -113,31 +130,34 @@
             </div>
             <div class="tranding-body">
                 <div>
-                    <ul ng-click="hrefPrdPage(item)" ng-repeat="item in trandingProducts[trandingSelected]" class="prom-item-ul turn-back">
-                        <li class="box-center">
-                            <img ng-src="/resources/images/products/{{ item.category }}/{{ item.image }}">
-                        </li>
-                        <li class="box-center prom-item-brand" ng-if="item.packaging > 1"><span>{{ item.brand + " " + item.name }}<span class="prom-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span></span></li>
-                        <li class="box-center prom-item-brand" ng-if="!(item.packaging > 1)"><span>{{ item.brand + " " + item.name }}<span class="prom-item-size"> {{ "(" + item.volume + ")"}}</span></span></li>
-                        <li class="item-price">{{ item.price }}</li>
-                    </ul>
+                    <a ng-repeat="item in mainSpecials[specialSelected].products" ng-click="productClick(item)" ng-href="{{item.product_url}}" target="_self">
+                        <ul class="prom-item-ul" data-aos="zoom-out">
+                            <li class="box-center">
+                                <img alt="{{item.name + ' ' + item.brand}}" ng-src="/resources/images/products/{{ item.category }}/{{ item.product_image }}">
+                            </li>
+                            <li class="prom-item-brand">{{ item.brand }}</li>
+                            <li class="prom-item-name" ng-if="item.packaging > 1"><span>{{ item.name }}<span class="prom-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span></span></li>
+                            <li class="prom-item-name" ng-if="!(item.packaging > 1)"><span>{{ item.name }}<span class="prom-item-size"> {{ "(" + item.volume + ")"}}</span></span></li>
+                            <li class="item-price">{{ item.price }}
+                                <span>C$</span>
+                            </li>
+                        </ul>
+                    </a>
                 </div>
             </div>
             <div class="box-center tranding-ftr">
                 <div>
-                    <button id="homit_mix" ng-click="changeTranPrd('homit_mix')" class="CG-cur-button box-center pad-zero tranding-type-btn tranding-btn-mob">HOMIT MIX</button>
-                    <button id="popular" ng-click="changeTranPrd('popular')" class="CG-cur-button pad-zero box-center tranding-btn-mob">POPULAR</button>
-                    <button id="new_on_homit" ng-click="changeTranPrd('new_on_homit')" class="CG-cur-button pad-zero box-center tranding-type-btn tranding-btn-mob">NEW ON HOMIT</button>
+                    <button ng-repeat="(key, type) in  mainSpecials" ng-class="{'tranding-type-btn': !(key == specialSelected) }" ng-click="changeTranPrd(key)" class="CG-cur-button box-center pad-zero tranding-btn-mob">{{type.display_name}}</button>
                 </div>
             </div>
         </section>
         <section class="subscribe-section">
             <div class="subscribe-div">
-                <div style="display: flex; flex-direction: row;">
-                    <input type="text" id="subscribe-input" ng-class="subscribeClassInput" class="homit-font" placeholder="your.email@example.com" name="email" ng-focus = "subscribeOnFocus()" ng-pattern="/^.+@.+\..+$/" type="email" ng-model="subscribeEmail" required>
+                <div>
+                    <input type="text" aria-label="Subscribe input" id="subscribe-input" ng-class="subscribeClassInput" class="homit-font" placeholder="your.email@example.com" name="email" ng-focus = "subscribeOnFocus()" ng-pattern="/^.+@.+\..+$/" type="email" ng-model="subscribeEmail" required>
                     <button ng-click="subscribe()" ng-class="subscribeClassBtn" class="box-center homit-font">{{subscribeButtonText}}<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
                 </div>
-                <span class="subscribe-error-message">{{subscribeErrorMessage}}</span>
+                <span class="subscribe-error-message error-txt-color">{{subscribeErrorMessage}}</span>
             </div>
         </section>
 <!--googleon: snippet-->

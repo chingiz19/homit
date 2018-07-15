@@ -2,16 +2,42 @@
  * @copyright Homit 2018
  */
 
-var router = require("express").Router();
-var _ = require("lodash");
+let router = require("express").Router();
+let _ = require("lodash");
 
 /* Building metadata for log */
-var metaData = {
+let metaData = {
     directory: __filename
 }
 
-router.post('/update', Auth.validate(), async function (req, res, next) {
-    var signedUser = Auth.getSignedUser(req);
+/**
+ * Used to apply and unapply user_coupons
+ * Returns false if not signed in. This is used by FE to modify user coupons
+ */
+router.post('/updateStoreCoupon', async function (req, res) {
+    let coupons = req.body.coupon_details;
+    if (coupons) {
+        let signedUser = Auth.getSignedUser(req);
+        if (signedUser && signedUser.id) {
+            let result = await Coupon.updateUserCoupons(coupons, signedUser.id, false);
+            if (result.success) {
+                return res.status(200).send({
+                    success: true,
+                    ui_message: result.ui_message
+                });
+            } else {
+                return ErrorMessages.sendErrorResponse(res, result.ui_message);
+            }
+        } else {
+            return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.USER_NOT_SIGNED);
+        }
+    }
+    return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
+});
+
+router.post('/update', Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, res, next) {
+    let signedUser = Auth.getSignedUser(req);
+    let emailChange = false;
 
     /* Checks and validations */
 
@@ -19,10 +45,10 @@ router.post('/update', Auth.validate(), async function (req, res, next) {
         Logger.log.error("Undefined user id for signed user! Invalidated session", metaData);
         Auth.invalidate(req);
         // TODO: need a way to let F.E know that a page refresh is required after showing error message
-        return errorMessages.sendErrorResponse(res);
+        return ErrorMessages.sendErrorResponse(res);
     }
 
-    var allValidParams = {
+    let allValidParams = {
         "user_email": {
             validateWith: Validator.isEmail
         },
@@ -54,32 +80,44 @@ router.post('/update', Auth.validate(), async function (req, res, next) {
     };
     req.body.user = HelperUtils.validateParams(req.body.user, allValidParams);
     if (!req.body.user) {
-        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+        return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
+    }
+
+    //Needs to go through couple security changes, if user wants to change their email 
+    if (req.body.user.user_email && req.body.user.user_email != req.session.user.user_email) {
+        emailChange = true;
+        if (!await User.isEmailAvailable(req.body.user.user_email)) {
+            return ErrorMessages.sendErrorResponse(res, "Couldn't update please use different email");
+        } else if (!(await Email.validateUserEmail(req.body.user.user_email))) {
+            return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.INVALID_EMAIL_ADRESS);
+        }
     }
 
     /* Update user info */
-
-    var key = {
+    let key = {
         id: signedUser.id
     };
 
     if (!(await User.updateUser(req.body.user, key))) {
-        return errorMessages.sendErrorResponse(res);
+        return ErrorMessages.sendErrorResponse(res);
     }
 
-    var newUser = await User.findUserById(signedUser.id);
+    let newUser = await User.findUserById(signedUser.id);
     if (!newUser) {
-        return errorMessages.sendErrorResponse(res);
+        return ErrorMessages.sendErrorResponse(res);
+    } else if (emailChange) {
+        //user changed to new email, so request new email verification 
+        await User.sendVerificationEmail(newUser);
     }
 
-    Auth.signCustomerSession(req, newUser);
+    Auth.signSession(req, newUser, Auth.RolesJar.CUSTOMER);
     res.status(200).send({
         success: true,
         ui_message: "Successfully updated"
     });
 });
 
-router.post('/resetpassword', Auth.validate(), function (req, res, next) {
+router.post('/resetpassword', Auth.validate(Auth.RolesJar.CUSTOMER), function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (signedUser != false) {
         var id = signedUser.id;
@@ -87,7 +125,7 @@ router.post('/resetpassword', Auth.validate(), function (req, res, next) {
         var newPassword = req.body.new_password;
 
         if (!currentPassword || !newPassword) {
-            return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+            return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
         } else {
             User.updatePassword(id, currentPassword, newPassword).then(function (updatedUser) {
                 if (updatedUser) {
@@ -96,12 +134,12 @@ router.post('/resetpassword', Auth.validate(), function (req, res, next) {
                     };
                     res.send(response);
                 } else {
-                    errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.INVALID_CREDENTIALS)
+                    ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.INVALID_CREDENTIALS)
                 }
             });
         }
     } else {
-        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        ErrorMessages.sendBadRequest(res, ErrorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
@@ -115,14 +153,14 @@ router.post('/viewordertransactions', async function (req, res, next) {
             transactions: data
         });
     } else {
-        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        ErrorMessages.sendBadRequest(res, ErrorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
-router.post("/viewallorders", Auth.validate(), async function (req, res, next) {
+router.post("/viewallorders", Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (!signedUser) {
-        return errorMessages.sendErrorResponse(res);
+        return ErrorMessages.sendErrorResponse(res);
     }
     var orders = [];
     var transactions = await Orders.getOrderTransactionsByUserId(signedUser.id);
@@ -158,7 +196,7 @@ router.post("/viewallorders", Auth.validate(), async function (req, res, next) {
     });
 });
 
-router.post('/vieworders', Auth.validate(), async function (req, res, next) {
+router.post('/vieworders', Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (signedUser) {
         var userId = signedUser.id;
@@ -177,10 +215,10 @@ router.post('/vieworders', Auth.validate(), async function (req, res, next) {
             }
 
         } else {
-            errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+            ErrorMessages.sendBadRequest(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
         }
     } else {
-        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        ErrorMessages.sendBadRequest(res, ErrorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
@@ -202,24 +240,26 @@ router.post('/getorder', async function (req, res, next) {
                 });
             }
         } else {
-            errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+            ErrorMessages.sendBadRequest(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
         }
     } else {
-        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        ErrorMessages.sendBadRequest(res, ErrorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
-router.get('/user', Auth.validate(), async function (req, res, next) {
-    var signedUser = Auth.getSignedUser(req);
+router.get('/user', Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, res, next) {
+    let signedUser = Auth.getSignedUser(req);
     if (!signedUser) {
-        return errorMessages.sendErrorResponse(res);
+        return ErrorMessages.sendErrorResponse(res);
     }
 
-    delete signedUser.id;
-    delete signedUser.id_prefix;
-    delete signedUser.password; // enforcing safety
+    let coupons = await Coupon.getUserCoupons(signedUser.id);
 
-    var card = await MP.getCustomerPaymentMethod(signedUser.stripe_customer_id);
+    if (coupons) {
+        signedUser.coupons = coupons;
+    }
+
+    let card = await MP.getCustomerPaymentMethod(signedUser.stripe_customer_id);
     delete signedUser.stripe_customer_id;
     if (card) {
         signedUser.card = card;
@@ -230,20 +270,25 @@ router.get('/user', Auth.validate(), async function (req, res, next) {
         signedUser.dob = date[1] + '-' + date[2] + '-' + date[0];
         delete signedUser.birth_date;
     }
+
+    delete signedUser.id;
+    delete signedUser.id_prefix;
+    delete signedUser.password; // enforcing safety
+
     res.send({
         success: true,
         user: signedUser
     });
 });
 
-router.post('/paymentmethod/update', Auth.validate(), async function (req, res, next) {
+router.post('/paymentmethod/update', Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (!signedUser) {
-        return errorMessages.sendErrorResponse(res);
+        return ErrorMessages.sendErrorResponse(res);
     }
 
     if (!req.body.token) {
-        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+        return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     }
 
     // add token to the user
@@ -254,14 +299,14 @@ router.post('/paymentmethod/update', Auth.validate(), async function (req, res, 
             });
         }
     } catch (err) {
-        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.PASSWORD_FAILED_UPDATE);
+        ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.PASSWORD_FAILED_UPDATE);
     }
 });
 
-router.post('/paymentmethod/remove', Auth.validate(), async function (req, res, next) {
+router.post('/paymentmethod/remove', Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, res, next) {
     var signedUser = Auth.getSignedUser(req);
     if (!signedUser) {
-        return errorMessages.sendErrorResponse(res);
+        return ErrorMessages.sendErrorResponse(res);
     }
 
     // add token to the user
@@ -272,10 +317,28 @@ router.post('/paymentmethod/remove', Auth.validate(), async function (req, res, 
                 success: true
             });
         } else {
-            errorMessages.sendErrorResponse(res)
+            ErrorMessages.sendErrorResponse(res)
         }
     } catch (err) {
-        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.PASSWORD_FAILED_UPDATE);
+        ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.PASSWORD_FAILED_UPDATE);
+    }
+});
+
+router.post('/reverify', Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, res) {
+    let signedUser = Auth.getSignedUser(req);
+    if (!(signedUser && signedUser.user_email)) {
+        return ErrorMessages.sendErrorResponse(res);
+    }
+
+    let result = await User.sendVerificationEmail(signedUser);
+
+    if (result) {
+        res.send({
+            success: true,
+            ui_message: "Successfully sent verification email!"
+        });
+    } else {
+        ErrorMessages.sendErrorResponse(res);
     }
 });
 

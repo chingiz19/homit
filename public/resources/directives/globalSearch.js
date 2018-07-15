@@ -1,7 +1,7 @@
 /**
  * This directive is used to add global search input
  */
-app.directive("globalSearch", function (localStorage, $interval, $timeout, $http, googleAnalytics, sessionStorage, $window) {
+app.directive("globalSearch", function (localStorage, $interval, $timeout, $http, googleAnalytics, sessionStorage, $window, helpers) {
 
     /**
      * Search request matched in "Store name, Category or Subcategory" string - prepared for display
@@ -170,7 +170,6 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
     return {
         restrict: "E", // restrict to element
         scope: {
-            inputId: "<inputId",
         },
         templateUrl: '/resources/templates/globalSearch.html',
         link: function (scope, element, attrs) {
@@ -178,7 +177,7 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
             scope.searchListNode = 0;
 
             function addEvLisToSearch() {
-                document.getElementById(scope.inputId).addEventListener('keyup', globalSearch, false);
+                document.getElementById("global-search-input").addEventListener('keyup', globalSearch, false);
                 window.addEventListener('click', closeSearchOnClick, false);
             }
             
@@ -190,7 +189,7 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
                 if (scope.searchRequest && scope.searchRequest.length >= 3 && evt.keyCode != 40 && evt.keyCode != 38 && evt.keyCode != 13 && evt.keyCode != 27) {
                     $http({
                         method: 'POST',
-                        url: "/api/catalog/search",
+                        url: "/api/hub/search",
                         data: {
                             search: scope.searchRequest.toLowerCase()
                         }
@@ -272,21 +271,16 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
             
             scope.goToSubcat = function (node) {
                 sessionStorage.setSearchSubcategory(node.subcategory);
-                $window.location.href = $window.location.origin + "/catalog/" + node.store_type_api_name + "/" + node.category;
+                $window.location.href = $window.location.origin + "/hub/" + node.store_type_name + "/" + node.category;
             };
 
             scope.hrefToPrdPage = function (product) {
-                var path;
-                path = "/catalog/product/" + product.store_type_api_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
-        
                 googleAnalytics.addEvent('product_clicked', {
-                    "event_label": product.brand + " " + product.name,
+                    "event_label": product.brand + " " + product.name + "; Catalog",
                     "event_category": googleAnalytics.eventCategories.catalog_actions
                 });
-        
-                $window.location.href = $window.location.origin + path;
+                $window.location.href = $window.location.origin + helpers.buildProductPagePath(product);
             };
-
         }
     };
 });

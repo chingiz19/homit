@@ -17,7 +17,7 @@ router.post('/findusersbyphone', async function (req, res, next) {
         };
         res.send(response);
     } else {
-        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+        return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     }
 });
 
@@ -33,11 +33,11 @@ router.post('/findusersbyemail', async function (req, res, next) {
         };
         res.send(response);
     } else {
-        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+        return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     }
 });
 
-router.post('/finduserbyorderid', Auth.validateCsr(), async function (req, res, next) {
+router.post('/finduserbyorderid', Auth.validate(Auth.RolesJar.CSR), async function (req, res, next) {
     var orderId = req.body.order_id;
     if (orderId) {
         var result = await Orders.getUserWithOrderByOrderId(orderId);
@@ -52,16 +52,16 @@ router.post('/finduserbyorderid', Auth.validateCsr(), async function (req, res, 
             });
         }
     } else {
-        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+        return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     }
 });
 
-router.post('/viewordertransactions', Auth.validateCsr(), async function (req, res, next) {
+router.post('/viewordertransactions', Auth.validate(Auth.RolesJar.CSR), async function (req, res, next) {
     var userId = req.body.user_id;
     var guestId = req.body.guest_id;
 
     if (!userId && !guestId) {
-        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+        return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     } else {
         var data;
         if (!userId) {
@@ -77,10 +77,10 @@ router.post('/viewordertransactions', Auth.validateCsr(), async function (req, r
     }
 });
 
-router.post('/vieworders', Auth.validateCsr(), async function (req, res, next) {
+router.post('/vieworders', Auth.validate(Auth.RolesJar.CSR), async function (req, res, next) {
     var orderTransactionId = req.body.transaction_id;
     if (!orderTransactionId) {
-        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+        return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     } else {
         var data = await Orders.getOrdersByTransactionId(orderTransactionId);
         res.json({
@@ -90,10 +90,10 @@ router.post('/vieworders', Auth.validateCsr(), async function (req, res, next) {
     }
 });
 
-router.post('/getorder', Auth.validateCsr(), async function (req, res, next) {
+router.post('/getorder', Auth.validate(Auth.RolesJar.CSR), async function (req, res, next) {
     var orderId = req.body.order_id;
     if (!orderId) {
-        return errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.MISSING_PARAMS);
+        return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     } else {
         var data = await Orders.getOrderItemsById(orderId);
         res.json({
@@ -103,7 +103,7 @@ router.post('/getorder', Auth.validateCsr(), async function (req, res, next) {
     }
 });
 
-router.get('/pendingorders', Auth.validateCsr(), async function (req, res, next) {
+router.get('/pendingorders', Auth.validate(Auth.RolesJar.CSR), async function (req, res, next) {
     var pendingOrders = await Orders.getPendingOrders();
     res.json({
         success: true,
@@ -111,7 +111,7 @@ router.get('/pendingorders', Auth.validateCsr(), async function (req, res, next)
     });
 });
 
-router.get('/activedrivers', Auth.validateCsr(), function (req, res, next) {
+router.get('/activedrivers', Auth.validate(Auth.RolesJar.CSR), function (req, res, next) {
     Driver.getActiveDrivers().then(function (activeDrivers) {
         res.json({
             success: true,
@@ -120,7 +120,7 @@ router.get('/activedrivers', Auth.validateCsr(), function (req, res, next) {
     });
 });
 
-router.post('/getdriverroutes', Auth.validateCsr(), function (req, res, next) {
+router.post('/getdriverroutes', Auth.validate(Auth.RolesJar.CSR), function (req, res, next) {
     var driverId = req.body.driver_id;
     Driver.getRoutes(driverId).then(function (routes) {
         res.json({
@@ -131,7 +131,7 @@ router.post('/getdriverroutes', Auth.validateCsr(), function (req, res, next) {
 });
 
 /* View logs from CSR's browser */
-router.post('/streamlog', Auth.validateCsr(), function (req, res, next) {
+router.post('/streamlog', Auth.validate(Auth.RolesJar.CSR), function (req, res, next) {
     Logger.streamServerLogs(res);
 });
 

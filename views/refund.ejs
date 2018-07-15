@@ -1,13 +1,16 @@
 <html ng-app="mainModule">
 
 <head>
+    <meta property="og:url" content="https://homit.ca/refund" />
+    <meta name="description" content="Homit - Return and Refund Policy. Thank you for shopping via Homit. If you are not entirely satisfied with your purchase, our customer service here to help you." />
+    <meta property="og:description" content="Homit - Return and Refund Policy. Thank you for shopping via Homit. If you are not entirely satisfied with your purchase, our customer service here to help you." />
     <%- include('partial/imports')%>
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/refund.css" rel="stylesheet">
-            <meta name="description" content="Homit - Return and Refund Policy. Thank you for shopping via Homit. If you are not entirely satisfied with your purchase, our customer service here to help you." />
+            
 </head>
 
-<body ng-cloak>
+<body class="fadeIn" ng-cloak>
     <div class="container">
         <div class="col-md-8 col-md-offset-2">
             <section>
@@ -39,7 +42,7 @@
                     <li>order number;</li>
                 </ul>
                 <article class="m-b_10">
-                    You can call us at <a href="tel:+1-403-800-3460">+1(403) 800-3460</a> and our customer services will be glad to help you with your inquiry.
+                    You can email us at <a class="email" href="mailto:info@homit.ca" itemprop="email">info@homit.ca</a> and our customer services will be glad to help you with your inquiry.
                 </article>
                 <article class="m-b_10">
                     Consecutively, Homit team member will pick up an undesired item(s) and return to the respective store. Please, note that
@@ -53,7 +56,7 @@
                 <h4 class="paragraph-header">Contact Us</h4>
                 <article>
                     Do not hesitate a moment to
-                    <a href="https://homit.ca/contactus">Contact Us</a> if you have any concerns and/or questions on how to return your item(s). We are happy
+                    <a href="https://homit.ca/contact">Contact Us</a> if you have any concerns and/or questions on how to return your item(s). We are happy
                     to assist you.
                 </article>
                 <article class="effective-date">
@@ -62,6 +65,9 @@
             </section>
         </div>
     </div>
+    <% if (!production) { %>
+        <script src="/resources/services/localStorage.js"></script>
+    <% } %>
 </body>
 
 <footer>

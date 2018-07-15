@@ -130,7 +130,7 @@
         border-radius: 3px;
     }
 
-    #logInMessage{
+    #logInMessage, #signUpMessage{
         position: absolute;
         bottom: 0;
         left: 0;
@@ -237,6 +237,15 @@
         height: 100%;
     }
 
+    .sign-checkmark-svg{
+        width: 80px;
+        height: 80px;
+    }
+
+    .sign-checkmark-line{
+        stroke-width: 4; 
+    }
+
     @keyframes fadeIn {
         0% {
             background: rgba(255, 255, 255, 0.1);
@@ -262,10 +271,11 @@
         </section>
         <!-- Body -->
         <section class="modal-body back-transition">
-            <form name="logIn" class="log-form logIn-form" ng-submit="_login(logIn.$valid)">
+            <form id="login-modal-form" name="logIn" class="log-form logIn-form" ng-submit="_login(logIn.$valid)">
                 <md-input-container class="input-width-1">
                     <label class="inptLbl">Email</label>
-                    <input name="login_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="login_email" type="email" required/>
+                    <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, true)">Did you mean <span>{{suggestion}}</span>?</div>
+                    <input id="login-input" name="login_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="login_email" type="email" required/>
                     <div ng-messages="logIn.login_email.$error">
                         <div ng-message="pattern" class="inptErMsg">Email format only</div>
                         <div ng-message="maxlength">30 characters maximum</div>
@@ -336,7 +346,8 @@
             <form name="signUp" class="log-form" ng-submit="_signup(signUp.$valid)">
                 <md-input-container class="input-width-1">
                     <label class="inptLbl">Email</label>
-                    <input name="signup_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="signup_email" type="email" required/>
+                    <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, false)">Did you mean <span>{{suggestion}}</span>?</div>
+                    <input id="signup-input" name="signup_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="signup_email" type="email" required/>
                     <div ng-messages="signUp.signup_email.$error">
                         <div ng-message="pattern">Email format only</div>
                         <div ng-message="maxlength">30 caracters maximum</div>
@@ -382,7 +393,7 @@
             <button class="signUp-logIn-btn" ng-click="_toggleModal()">Log In</button>
         </section>
         <!-- Message box -->
-        <section>
+        <section id="signUpMessage">
             <div id="sucSignUp" class="sucSign">
                 <div class="box-center success-mark-div" style="width: 100%; height: 100%;">
                     <svg class="sign-checkmark-svg" viewBox="0 0 80 80">

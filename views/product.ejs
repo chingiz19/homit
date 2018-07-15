@@ -1,16 +1,34 @@
 <html ng-app="mainModule">
 
 <head>
+    <!-- <meta property="og:url" content="https://homit.ca/terms-of-use" /> -->
+    <meta name="description" content="<%= meta_description %>" />
+    <meta property="og:description" content="<%= meta_description %>" />
     <%- include('partial/imports')%>
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/product.css" rel="stylesheet">
-            <meta name="description" content="<%= meta_description %>" />
+            
 </head>
 
 <body ng-cloak>
-
     <%- include('partial/checkout_menu')%>
         <div class="controller" ng-controller="productController" layout="column">
+            <div id="loading">
+                <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
             <div class="product-content" itemscope itemtype="http://schema.org/Product">
                 <input id="recommendedProducts" class="none" value="<%= recommended_products %>">
                 <input id="product" class="none" value="<%= product %>">
@@ -27,11 +45,11 @@
                         <!--googleoff: snippet-->
                         <div class="col-md-6 product-img box-center" layout="column">
                             <section class="web-location-sec">
-                                <a class="web-location-a" href="/main" target="_self">hub</a>
+                                <a class="web-location-a" href="/main" target="_self">Store Hub</a>
                                 <span class="loc-errow"> > </span>
-                                <a class="web-location-a" ng-click="hrefToStore(product.store_type_api_name)" href="" target="_self">{{ product.store_type_display_name }}</a>
+                                <a class="web-location-a" href="/hub/{{ product.store_type_name }}" target="_self">{{ product.store_type_display_name }}</a>
                                 <span class="loc-errow"> > </span>
-                                <a class="web-location-a loc-category" href="/catalog/{{ product.store_type_api_name }}/{{ product.category }}" target="_self">{{ product.category }}</a>
+                                <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" target="_self">{{ product.category }}</a>
                                 <span class="loc-errow"> > </span>
                                 <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                             </section>
@@ -57,11 +75,11 @@
                                 </span> - Deliver Now</h2>
                             <section class="web-location-sec-mob">
                                 <div>
-                                    <a class="web-location-a" href="/main" target="_self">hub</a>
+                                    <a class="web-location-a" href="/main" target="_self">Store Hub</a>
                                     <span class="loc-errow"> > </span>
-                                    <a class="web-location-a" ng-click="hrefToStore(product.store_type_api_name)" href="" target="_self">{{ product.store_type_display_name }}</a>
+                                    <a class="web-location-a" ng-click="hrefToStore(product.store_type_name)" href="" target="_self">{{ product.store_type_display_name }}</a>
                                     <span class="loc-errow"> > </span>
-                                    <a class="web-location-a loc-category" href="/catalog/{{ product.store_type_api_name }}/{{ product.category }}" target="_self">{{ product.category }}</a>
+                                    <a class="web-location-a loc-category" href="hrefToCat(product)" target="_self">{{ product.category }}</a>
                                     <span class="loc-errow"> > </span>
                                     <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                                 </div>
@@ -136,7 +154,7 @@
                                                         <%- producer %>
                                                             <%- alcohol_content %>
                                                                 <li>
-                                                                    <a href="<%= see_more_url %>" target="_self" itemprop="isSimilarTo">See More Products</a>
+                                                                    <a href="<%= see_more_url %>" target="_self" itemprop="isSimilarTo">See More Similar Products</a>
                                                                 </li>
                                         </ul>
                                     </div>
@@ -153,16 +171,19 @@
                             </section>
                             <section class="recomended-item fadeIn">
                                 <div class="recomended-item-div">
-                                    <div ng-repeat="item in recommended_products">
-                                        <ul ng-click="hrefPrdPage(item)" class="prom-item-ul">
+                                    <a ng-repeat="item in recommended_products" href="{{item.product_url}}" target="_self">
+                                        <ul class="recomended-item-ul">
                                             <li class="also-image-li box-center">
                                                 <img ng-src="/resources/images/products/{{ item.category }}/{{ item.image }}">
                                             </li>
-                                            <li class="box-center prom-item-brand" ng-if="item.packaging > 1"><span>{{ item.brand + " " + item.name }}<span class="prom-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span></span></li>
-                                            <li class="box-center prom-item-brand" ng-if="!(item.packaging > 1)"><span>{{ item.brand + " " + item.name }}<span class="prom-item-size"> {{ "(" + item.volume + ")"}}</span></span></li>
-                                            <li class="item-price">{{ item.price }}</li>
+                                            <li class="recomended-item-brand">{{ item.brand }}</li>
+                                            <li class="recomended-item-name" ng-if="item.packaging > 1"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span></span></li>
+                                            <li class="recomended-item-name" ng-if="!(item.packaging > 1)"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.volume + ")"}}</span></span></li>
+                                            <li class="item-price">{{ item.price }}
+                                                <span>C$</span>
+                                            </li>
                                         </ul>
-                                    </div>
+                                    </a>
                                 </div>
                             </section>
                             <!--googleoff: snippet-->

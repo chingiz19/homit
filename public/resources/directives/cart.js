@@ -5,13 +5,13 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
 
     publicFunctions.addItem = function(product){
         var tmpQuantity = 1;
-        var store_type_api_name = {};
-        if (pScope.userCart.hasOwnProperty(product.store_type_api_name)) {
-            store_type_api_name = pScope.userCart[product.store_type_api_name];
+        var store_type_name = {};
+        if (pScope.userCart.hasOwnProperty(product.store_type_name)) {
+            store_type_name = pScope.userCart[product.store_type_name];
         }
 
-        if (store_type_api_name.hasOwnProperty(product.depot_id)){
-            tmpQuantity = store_type_api_name[product.depot_id].quantity;
+        if (store_type_name.hasOwnProperty(product.depot_id)){
+            tmpQuantity = store_type_name[product.depot_id].quantity;
             tmpQuantity++;
 
             if (tmpQuantity > 10) {
@@ -22,22 +22,22 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 pScope.numberOfItemsInCart ++;
                 notification.addCartItem(product);
             }
-            store_type_api_name[product.depot_id].quantity = tmpQuantity;
+            store_type_name[product.depot_id].quantity = tmpQuantity;
             pScope.totalAmount = pScope.totalAmount + product.price;
             pScope.totalAmount = Math.round(pScope.totalAmount * 100) / 100;
         } else {
-            pScope.increaseCartItemIndexes(product.store_type_api_name);
+            pScope.increaseCartItemIndexes(product.store_type_name);
             product.orderIndex = 0;
-            store_type_api_name[product.depot_id] = product;
-            store_type_api_name[product.depot_id].quantity = tmpQuantity;
+            store_type_name[product.depot_id] = product;
+            store_type_name[product.depot_id].quantity = tmpQuantity;
             pScope.numberOfItemsInCart++;
             pScope.totalAmount = pScope.totalAmount + product.price;
             pScope.totalAmount = Math.round(pScope.totalAmount * 100) / 100;   
             notification.addCartItem(product);         
         }
-        pScope.userCart[product.store_type_api_name] = store_type_api_name;
-        pScope.updateUserCart(pScope.userCart, product.store_type_api_name);
-        pScope.prepareItemForDB(product.depot_id,  pScope.userCart[product.store_type_api_name][product.depot_id].quantity);
+        pScope.userCart[product.store_type_name] = store_type_name;
+        pScope.updateUserCart(pScope.userCart, product.store_type_name);
+        pScope.prepareItemForDB(product.depot_id,  pScope.userCart[product.store_type_name][product.depot_id].quantity);
     };
 
     publicFunctions.clear = function(){
@@ -70,7 +70,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
         scope: {
             canRemove: "<canRemove",
             cartCtrl: "=cartCtrl",
-            storeApi: "<?storeApi",
+            storeTypeNameName: "<?storeTypeNameName",
             onCartLoad: "<?onCartLoad",// method to be called once cart is loaded 
             onPriceChange: "<?onPriceChange" // method to be called once cart is updated
         },
@@ -93,21 +93,21 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 cartService.getCart()
                     .then(function successCallback(response) {
                         if (response.data.success === true) {                                
-                            scope.updateUserCart(cartService.mergeCarts(scope.userCart, response.data.cart), scope.storeApi);
+                            scope.updateUserCart(cartService.mergeCarts(scope.userCart, response.data.cart), scope.storeTypeName);
                         } else {
-                            scope.updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {}), scope.storeApi); //REQUIRED to convert to new convention with store_type_api_name
+                            scope.updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {}), scope.storeTypeName); //REQUIRED to convert to new convention with store_type_name
                         }
                         localStorage.setUserCart({});    
                         if (scope.onCartLoad){
                             scope.onCartLoad();
                         }
         
-                        for(var store_type_api_name in scope.userCart){
-                            for (var a in scope.userCart[store_type_api_name]){
-                                scope.totalAmount = scope.totalAmount + (scope.userCart[store_type_api_name][a].quantity * scope.userCart[store_type_api_name][a].price);
-                                scope.numberOfItemsInCart = scope.numberOfItemsInCart + scope.userCart[store_type_api_name][a].quantity;
+                        for(var store_type_name in scope.userCart){
+                            for (var a in scope.userCart[store_type_name]){
+                                scope.totalAmount = scope.totalAmount + (scope.userCart[store_type_name][a].quantity * scope.userCart[store_type_name][a].price);
+                                scope.numberOfItemsInCart = scope.numberOfItemsInCart + scope.userCart[store_type_name][a].quantity;
                                 scope.totalAmount = Math.round(scope.totalAmount * 100) / 100;
-                                scope.prepareItemForDB(a, scope.userCart[store_type_api_name][a].quantity);
+                                scope.prepareItemForDB(a, scope.userCart[store_type_name][a].quantity);
                             }
                         }
                     }, function errorCallback(response) {
@@ -119,12 +119,12 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 /* Helper functions */
 
                 scope.plusItem = function(product){
-                    if (scope.userCart.hasOwnProperty(product.store_type_api_name) && scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
-                        var currentQuantity = scope.userCart[product.store_type_api_name][product.depot_id].quantity;
+                    if (scope.userCart.hasOwnProperty(product.store_type_name) && scope.userCart[product.store_type_name].hasOwnProperty(product.depot_id)) {
+                        var currentQuantity = scope.userCart[product.store_type_name][product.depot_id].quantity;
                         if (currentQuantity < 10) {              
                             currentQuantity++;
                             
-                            scope.userCart[product.store_type_api_name][product.depot_id].quantity = currentQuantity;
+                            scope.userCart[product.store_type_name][product.depot_id].quantity = currentQuantity;
                             scope.numberOfItemsInCart++;
                             scope.totalAmount = scope.totalAmount + product.price;
                             scope.totalAmount = Math.round(scope.totalAmount * 100) / 100;
@@ -141,12 +141,12 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 };
 
                 scope.minusItem = function(product){
-                    if (scope.userCart.hasOwnProperty(product.store_type_api_name) && scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
-                        var currentQuantity = scope.userCart[product.store_type_api_name][product.depot_id].quantity;
+                    if (scope.userCart.hasOwnProperty(product.store_type_name) && scope.userCart[product.store_type_name].hasOwnProperty(product.depot_id)) {
+                        var currentQuantity = scope.userCart[product.store_type_name][product.depot_id].quantity;
                         if (currentQuantity > 1) {              
                             currentQuantity--;
                             
-                            scope.userCart[product.store_type_api_name][product.depot_id].quantity = currentQuantity;
+                            scope.userCart[product.store_type_name][product.depot_id].quantity = currentQuantity;
                             scope.numberOfItemsInCart--;
                             scope.totalAmount = scope.totalAmount - product.price;
                             scope.totalAmount = Math.round(scope.totalAmount * 100) / 100;
@@ -163,15 +163,15 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 };
 
                 scope.removeItem = function(product){
-                    if (scope.userCart.hasOwnProperty(product.store_type_api_name) && scope.userCart[product.store_type_api_name].hasOwnProperty(product.depot_id)) {
+                    if (scope.userCart.hasOwnProperty(product.store_type_name) && scope.userCart[product.store_type_name].hasOwnProperty(product.depot_id)) {
                         // delete item and reorder indexes of other items
-                        var index = scope.userCart[product.store_type_api_name][product.depot_id].orderIndex;
-                        var super_c = product.store_type_api_name;
-                        delete scope.userCart[product.store_type_api_name][product.depot_id];
+                        var index = scope.userCart[product.store_type_name][product.depot_id].orderIndex;
+                        var super_c = product.store_type_name;
+                        delete scope.userCart[product.store_type_name][product.depot_id];
                         scope.decreaseCartItemIndexes(super_c, index);
-                        // if store_type_api_name doesn't contain objects, then remove from list
-                        if (Object.entries(scope.userCart[product.store_type_api_name]).length == 0){
-                            delete scope.userCart[product.store_type_api_name];
+                        // if store_type_name doesn't contain objects, then remove from list
+                        if (Object.entries(scope.userCart[product.store_type_name]).length == 0){
+                            delete scope.userCart[product.store_type_name];
                         }
                         scope.updateUserCart(scope.userCart);
                         scope.numberOfItemsInCart = scope.numberOfItemsInCart - product.quantity;
@@ -205,9 +205,9 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                     scope.onPriceChange();                    
                 };
 
-                scope.updateUserCart = function(cart, store_type_api_name){
+                scope.updateUserCart = function(cart, store_type_name){
                     scope.userCart = cart;
-                    scope.userCartToView = cartService.getViewUserCart(store_type_api_name, scope.userCart);
+                    scope.userCartToView = cartService.getViewUserCart(store_type_name, scope.userCart);
                 };
 
 
@@ -215,22 +215,22 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                  * Logic for increase/decrease order indexes of Cart items
                  * @param {*} increase
                  */
-                function updateCartItemIndexes(increase, store_type_api_name, deletedItemIndex){
-                    if (!scope.userCart[store_type_api_name]){
+                function updateCartItemIndexes(increase, store_type_name, deletedItemIndex){
+                    if (!scope.userCart[store_type_name]){
                         return;
                     }
 
-                    var depot_ids = Object.keys(scope.userCart[store_type_api_name]);
+                    var depot_ids = Object.keys(scope.userCart[store_type_name]);
                     for (var i = 0; i < depot_ids.length; i++){
                         var depot_id = depot_ids[i];
-                        var currentIndex = scope.userCart[store_type_api_name][depot_id].orderIndex;
+                        var currentIndex = scope.userCart[store_type_name][depot_id].orderIndex;
                         if (increase){
                             // increase
-                            scope.userCart[store_type_api_name][depot_id].orderIndex = currentIndex + 1;
+                            scope.userCart[store_type_name][depot_id].orderIndex = currentIndex + 1;
                         } else {
                             // decrease
                             if (currentIndex > deletedItemIndex){
-                                scope.userCart[store_type_api_name][depot_id].orderIndex = currentIndex - 1;
+                                scope.userCart[store_type_name][depot_id].orderIndex = currentIndex - 1;
                             }
                         }
                     }
@@ -239,15 +239,15 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 /**
                  * Helper method to increase order indexes of Cart items
                  */
-                scope.increaseCartItemIndexes = function (store_type_api_name){
-                    updateCartItemIndexes(true, store_type_api_name);
+                scope.increaseCartItemIndexes = function (store_type_name){
+                    updateCartItemIndexes(true, store_type_name);
                 };
 
                 /**
                  * Helper method to decrease order indexes of Cart items
                  */
-                scope.decreaseCartItemIndexes = function (store_type_api_name, deletedItemIndex){
-                    updateCartItemIndexes(false, store_type_api_name, deletedItemIndex);
+                scope.decreaseCartItemIndexes = function (store_type_name, deletedItemIndex){
+                    updateCartItemIndexes(false, store_type_name, deletedItemIndex);
                 };
 
             }, 100);

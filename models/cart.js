@@ -8,7 +8,7 @@ var pub = {};
  * Get user's cart based on userId
  */
 pub.getUserCart = async function (userId) {
-    var sqlQuery = `
+    let sqlQuery = `
         SELECT
         usercart.quantity AS quantity,
         depot.id AS depot_id,
@@ -21,7 +21,6 @@ pub.getUserCart = async function (userId) {
         packaging.name AS packaging,
         volume.name AS volume,
         store_type.name AS store_type,
-        store_type.api_name AS store_type_api_name,
         true AS store_open
 
         FROM
@@ -45,11 +44,15 @@ pub.getUserCart = async function (userId) {
         AND ?
 
     
-        ORDER BY depot_id`;
+        ORDER BY depot_id;`;
 
-    var data = { "usercart.user_id": userId };
-    var dbResult = await db.runQuery(sqlQuery, [data, data]);
-    return getFormattedProducts(dbResult);
+    let data = { "usercart.user_id": userId };
+    let dbResult = await db.runQuery(sqlQuery, [data, data]);
+    if (dbResult == false) {
+        return false;
+    } else {
+        return getFormattedProducts(dbResult);
+    }
 }
 
 /**
@@ -57,33 +60,45 @@ pub.getUserCart = async function (userId) {
  */
 pub.modifyProductInCart = async function (userId, depotId, quantity) {
     if (quantity == 0) {
-        var data1 = {
+        let data1 = {
             user_id: userId
         };
-        var data2 = {
+        let data2 = {
             depot_id: depotId
         };
-        await db.deleteQuery2(db.tables.user_cart_items, [data1, data2]);
-        return true;
+        let result = await db.deleteQueryWithTwoCond(db.tables.user_cart_items, [data1, data2]);
+        if (result == false) {
+            return false;
+        } else {
+            return true;            
+        }
     } else {
-        var cartItem = await getCartProduct(userId, depotId);
+        let cartItem = await getCartProduct(userId, depotId);
         if (cartItem.id) {
-            var data = {
+            let data = {
                 quantity: quantity
             };
-            var key = {
+            let key = {
                 id: cartItem.id
             };
-            var updated = await db.updateQuery(db.tables.user_cart_items, [data, key]);
-            return updated.id;
+            let updated = await db.updateQuery(db.tables.user_cart_items, [data, key]);
+            if (updated == false) {
+                return false;
+            } else {
+                return true;
+            }
         } else {
-            var data = {
+            let data = {
                 user_id: userId,
                 depot_id: depotId,
                 quantity: quantity
             };
-            var inserted = await db.insertQuery(db.tables.user_cart_items, data);
-            return inserted.id;
+            let inserted = await db.insertQuery(db.tables.user_cart_items, data);
+            if (inserted == false) {
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 }
@@ -92,23 +107,28 @@ pub.modifyProductInCart = async function (userId, depotId, quantity) {
  * Clear cart in database
  */
 pub.clearCart = async function (userId) {
-    var data = {
+    let data = {
         user_id: userId
     };
-    await db.deleteQuery(db.tables.user_cart_items, data);
+    let result = await db.deleteQuery(db.tables.user_cart_items, data);
+    if (result == false) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 /**
  * Return quantity based on the user id, depot id provided
  */
 var getCartProduct = async function (userId, depotId) {
-    var data1 = {
+    let data1 = {
         user_id: userId
     };
-    var data2 = {
+    let data2 = {
         depot_id: depotId
     };
-    var dbResult = await db.selectAllWhere2(db.tables.user_cart_items, [data1, data2]);
+    let dbResult = await db.selectAllWhere2(db.tables.user_cart_items, [data1, data2]);
     if (dbResult.length > 0) {
         return dbResult[0];
     } else {
@@ -122,11 +142,11 @@ var getCartProduct = async function (userId, depotId) {
  * @param {*} products 
  */
 var getFormattedProducts = function (products) {
-    var tmpResult = {};
-    for (var i = 0; i < products.length; i++) {
-        var product = products[i];
+    let tmpResult = {};
+    for (let i = 0; i < products.length; i++) {
+        let product = products[i];
 
-        var imageLocation = "/resources/images/products/" + product.category.toLowerCase() + "/";
+        let imageLocation = "/resources/images/products/" + product.category.toLowerCase() + "/";
         // Adding to tmpResult
         tmpResult[product.depot_id] = {
             depot_id: product.depot_id,
@@ -134,7 +154,7 @@ var getFormattedProducts = function (products) {
             volume: product.volume,
             price: product.price,
             tax: product.tax,
-            store_type_api_name: product.store_type_api_name,
+            store_type_name: product.store_type,
             brand: products[i].brand,
             name: products[i].name,
             image: imageLocation + products[i].image,

@@ -1,4 +1,4 @@
-app.controller("myaccountController", function ($scope, $window, $timeout, sessionStorage, user, notification, googleAnalytics, mapServices) {
+app.controller("myaccountController", function ($scope, $window, $timeout, localStorage, sessionStorage, user, notification, googleAnalytics, mapServices, helpers) {
 
     var confirmMessage = "Changes will be lost. Would you like to proceed?";
 
@@ -14,8 +14,11 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      * Contains logic for getting started with this controller
      */
     $scope.init = function () {
+        $scope.loading_spin = "none";
+        $scope.update_btn_txt = "Update";
         $scope.dobPattern = /^((0[13578]|1[02])[-.](29|30|31)[-.](18|19|20)[0-9]{2})|((01|0[3-9]|1[1-2])[-.](29|30)[-.](18|19|20)[0-9]{2})|((0[1-9]|1[0-2])[-.](0[1-9]|1[0-9]|2[0-8])[-.](18|19|20)[0-9]{2})|((02)[\/.]29[-.](((18|19|20)(04|08|[2468][048]|[13579][26]))|2000))$/;
         $scope.passPattern = '^(?:([^\ ]))*$';
+        $scope.email_check_message = "";
 
         $scope.modified = false;
         let selectedSection = sessionStorage.getAccountSection();
@@ -46,6 +49,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
                 $scope.lname = res.data.user.last_name;
                 $scope.email = res.data.user.user_email;
                 $scope.phone = res.data.user.phone_number;
+                $scope.coupons = helpers.formatCoupons(res.data.user.coupons);
 
                 if (!res.data.user.address_unit_number) {
                     res.data.user.address_unit_number = "";
@@ -94,6 +98,25 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
             hidePostalCode: false
         });
         $scope.cardElement.mount("#card");
+
+
+        /* Clears email suggestion message upon focus  */
+        $('#myaccount-email-input').on('focusin', function () {
+            $scope.email_check_message = "";
+        });
+
+        /* Email syntax check implementation */
+        $('#myaccount-email-input').on('blur', function () {
+            $(this).mailcheck({
+                suggested: function (element, suggestion) {
+                    $scope.email_check_message = "email-check-grow";
+                    $scope.suggestion = suggestion.full;
+                },
+                empty: function (element) {
+                    $scope.email_check_message = "";
+                }
+            });
+        });
 
         $timeout(function () {
             mapServices.createCoveragePolygon().then(function (polygon) {
@@ -158,7 +181,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
         // only proceed if fields are not modified
         if (cancelChanges) {
             $scope.section = selection;
-            $scope.hideSidebarForMobile();
+            // $scope.hideSidebarForMobile();
             sessionStorage.setAccountSection(selection);
 
             $scope.modified = false;
@@ -166,6 +189,11 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
             if (!$scope.orders && selection == 4) {
                 loadOrders();
             }
+
+            googleAnalytics.addEvent('section_selected', {
+                "event_label": selection,
+                "event_category": googleAnalytics.eventCategories.myaccount_actions
+            });
         }
     };
 
@@ -179,7 +207,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
             resetValues();
             return;
         }
-
+        showLoadSpinner();
         var objToSend = {
             first_name: $scope.fname,
             last_name: $scope.lname,
@@ -214,6 +242,10 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
         }
 
         user.update(objToSend).then(defaultSuccessCallback, defaultErrorCallback);
+        googleAnalytics.addEvent('update_account', {
+            "event_label": "Account",
+            "event_category": googleAnalytics.eventCategories.myaccount_actions
+        });
     };
 
     /**
@@ -224,7 +256,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
             notification.addErrorMessage("Not within coverage");
             return;
         }
-
+        showLoadSpinner();
         var addr, addr_lng, addr_lat;
         if (!$scope.address || $scope.address.text == "") {
             addr = "remove";
@@ -249,6 +281,10 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
             address_longitude: addr_lng,
             address_latitude: addr_lat
         }).then(defaultSuccessCallback, defaultErrorCallback);
+        googleAnalytics.addEvent('update_delivery_address', {
+            "event_label": "Delivery address",
+            "event_category": googleAnalytics.eventCategories.myaccount_actions
+        });
     };
 
     /**
@@ -256,7 +292,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      */
     $scope.updatePaymentMethod = function (valid) {
         if (!valid) return;
-
+        showLoadSpinner();
         $scope.stripe.createToken($scope.cardElement, {
             name: $scope.card_name
         }).then(function (result) {
@@ -266,6 +302,10 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
             }
 
             user.updateCardInfo(result.token.id).then(defaultSuccessCallback, defaultErrorCallback);
+            googleAnalytics.addEvent('update_payment_method', {
+                "event_label": "Payment method",
+                "event_category": googleAnalytics.eventCategories.myaccount_actions
+            });
         });
     };
 
@@ -278,8 +318,13 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      */
     $scope.updateSecuritySettings = function (valid) {
         if (!valid) return;
+        showLoadSpinner();
         user.updatePassword($scope.security_set.current_pass.$modelValue, $scope.security_set.new_pass.$modelValue)
             .then(defaultSuccessCallback, defaultErrorCallback);
+        googleAnalytics.addEvent('update_security_settings', {
+            "event_label": "Security settings",
+            "event_category": googleAnalytics.eventCategories.myaccount_actions
+        });
     };
 
     /**
@@ -326,28 +371,15 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
     };
 
     /**
-     * Close sidebar for mobile
+     * Close and Open sidebar
      */
-    $scope.openSidebar = function () {
-        $scope.sidebarOpen = true;
-        $scope.showSidebarForMobile();
-    };
-
-    /**
-     * Open sidebar for mobile
-
-     */
-    $scope.closeSidebar = function (isDesktop) {
-        $scope.sidebarOpen = false;
-        $scope.hideSidebarForMobile();
-    };
-
-    $scope.hideSidebarForMobile = function () {
-        $('.sidebar-div').addClass('hide-mobile');
-    };
-
-    $scope.showSidebarForMobile = function () {
-        $('.sidebar-div').removeClass('hide-mobile');
+    $scope.openCloseSidebar = function () {
+        if (!$scope.sidebarOpen) {
+            $('.sidebar-div').addClass('sidebar-div-grow');
+        } else {
+            $('.sidebar-div').removeClass('sidebar-div-grow');
+        }
+        $scope.sidebarOpen = !$scope.sidebarOpen;
     };
 
     $scope.gotAddressResults = function () {
@@ -364,7 +396,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
             $scope.withinCoverage = false;
             googleAnalytics.addEvent('out_of_coverage', {
                 "event_label": place.formatted_address,
-                "event_category": googleAnalytics.eventCategories.address_actions
+                "event_category": googleAnalytics.eventCategories.myaccount_actions
             });
         }
     };
@@ -381,6 +413,27 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
 
         $scope.security_set.confirm_pass.$setValidity("confirm_pass", valid);
     };
+
+    $scope.resendVerificationEmail = function () {
+        user.resendVerificationEmail().then(defaultSuccessCallback, defaultErrorCallback);
+    };
+
+    /**
+     * Updates input email to suggested value
+     * @param {string} email 
+     */
+    $scope.subEmailToSuggested = function (email) {
+        $scope.email_check_message = "";
+        $scope.email = email;
+    };
+
+    /**
+     * Show loading spinner in "Update" button
+     */
+    function showLoadSpinner() {
+        $scope.loading_spin = "update-spin-ma";
+        $scope.update_btn_txt = "Updating..";
+    }
 
     /**
      * Resets selector modified flag
@@ -407,7 +460,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
         user.orders().then(function success(res) {
             if (res.data.success) {
                 $scope.orders = res.data.orders;
-                $scope.orderSectionText = "No Orders"; //won;t be shown if orders contains something                        
+                $scope.orderSectionText = "No Orders"; //won't be shown if orders contains something                        
             }
         }, function (error) {
             $scope.orderSectionText = "Something went wrong while retrieving orders, please refresh the page";
@@ -432,13 +485,16 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      */
     function defaultSuccessCallback(res) {
         if (res.data.success) {
-            notification.addSuccessMessage("Successfully Updated");
+            notification.addSuccessMessage(res.data.ui_message || "Successfully Updated");     //Jey let me know what you think about this implementation
             setTimeout(() => {
                 $window.location.reload();
             }, 1000);
+            localStorage.setHeaderNotificationCleared(false);
         } else {
             notification.addErrorMessage(res.data.ui_message || "Operation wasn't successful");
         }
+        $scope.loading_spin = "none";
+        $scope.update_btn_txt = "Updated";
     }
 
     /**
@@ -446,7 +502,31 @@ app.controller("myaccountController", function ($scope, $window, $timeout, sessi
      */
     function defaultErrorCallback(err) {
         notification.addErrorMessage("Something went wrong, please try again later");
+        $scope.loading_spin = "none";
+        $scope.update_btn_txt = "Ups..";
     }
+
+    /**
+     * Sets user redeemed coupon
+     * @param {string} coupon 
+     */
+    $scope.updateCoupon = function (code, index) {
+        let requestObject = {};
+        requestObject[code] = !$scope.coupons[index].applied;
+        user.updateUserCoupons(requestObject).then(function (response) {
+            if (response.data.success) {
+                notification.addSuccessMessage(response.data.ui_message);
+                $timeout(function () {
+                    $scope.coupons[index].applied = !$scope.coupons[index].applied;
+                }, 0);
+            } else {
+                notification.addErrorMessage("Sorry, couldn't apply coupon");
+            }
+
+        }, function (error) {
+            notification.addErrorMessage("Sorry, couldn't apply coupon");
+        });
+    };
 
     // Initialize at the end of file!
     $scope.init();

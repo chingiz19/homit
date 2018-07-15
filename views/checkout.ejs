@@ -11,88 +11,124 @@
 <body class="fadeIn" ng-cloak>
     <div ng-controller="checkoutController">
         <section class="checkout-content">
-            <div class="checkout-content-col-left">
-                <div class="col-left-header">
-                    <button class="show-sn-btn" aria-label="toggleRight" ng-click="toggleRight()" hide-gt-md>
-                        <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
-                    </button>
-                </div>
-                <div class="delivery-time-message box-center"><span>Order Information</span></div>
+            <button class="co-view-cart-btn box-center" ng-click="showUserCart()">
+                <ng-md-icon ng-class="co_cart_show_icon" icon="arrow_drop_down"></ng-md-icon>View Basket
+            </button>
+            <section class="co-cart-sec">
+                <cart can-remove="false" cart-ctrl="cart" on-cart-load="onCartLoad" on-price-change="onPriceChange"></cart>
+            </section>
+            <section class="co-userinfo-sec">
+                <div class="seperation-line">&nbsp;Order Totals&nbsp;</div>
+                <section class="order-summery-sec">
+                    <table class="co-subtotals-table">
+                        <tr>
+                            <td>Basket Total:</td>
+                            <td class="co-totals-num">C${{totalAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Fee:</td>
+                            <td ng-if="!(delFee == 0 && receipt != 0)" class="co-totals-num">C${{delFee}}</td>
+                            <td ng-if="delFee == 0 && receipt != 0" class="co-totals-num">FREE</td>
+                        </tr>
+                        <tr>
+                            <td >GST:</td>
+                            <td class="co-totals-num">C${{GST}}</td>
+                        </tr>
+                    </table>
+
+                    <table class="order-coupons">
+                        <tr  class="coupons-tr" ng-repeat="coupon in userAppliedCoupons">
+                            <td class="coupon-name-td">{{ coupon.message }}:</td>
+                            <td class="co-totals-num">-C${{ coupon.off }}</td>
+                        </tr>
+                    </table>
+
+                    <div class="totals-seperation-line"></div>
+                    <table class="co-total-table">
+                        <tr>
+                            <td>Total:</td>
+                            <td class="co-totals-num">C${{receipt}}</td>
+                        </tr>
+                    </table>
+                </section>
+                <div class="seperation-line">&nbsp;Customer Info&nbsp;</div>
                 <input id="stripeToken" value="<%= stripeToken %>" hidden>
                 <form name="checkoutInput" ng-submit="submitCheckout(checkoutInput.$valid)">
-                    <div class="box-center" ng-show="userInfo.hasLiquor">
-                        <md-input-container class="md-block no-mar-bottom dob-input" flex="45">
-                            <label class="input-label">Date of Birth MM-DD-YYYY</label>
-                            <input id ="date_of_birth" name="dob" ng-pattern="/^((0[13578]|1[02])[-.](29|30|31)[-.](18|19|20)[0-9]{2})|((01|0[3-9]|1[1-2])[-.](29|30)[-.](18|19|20)[0-9]{2})|((0[1-9]|1[0-2])[-.](0[1-9]|1[0-9]|2[0-8])[-.](18|19|20)[0-9]{2})|((02)[\/.]29[-.](((18|19|20)(04|08|[2468][048]|[13579][26]))|2000))$/" ng-model="userInfo.dateOfBirth" ng-blur="checkDOB(userInfo.dateOfBirth)" ng-required="userInfo.hasLiquor" />
+                    <div class="customer-info-p1 ci-p1-user" ng-if="userSignedIn && userInfo.dateOfBirth && userInfo.phone_number && userInfo.user_email" ng-click="hrefTo('/myaccount')">
+                        <ng-md-icon icon="mode_edit" class="ci-p1-user-edit" size="20"></ng-md-icon>
+                        <div class="ci-p1-name-lname">{{ userInfo.first_name + " " + userInfo.last_name }}</div>
+                        <div class="ci-p1-all">Date of Birth: <span>{{ userInfo.dateOfBirth }}</span></div>
+                        <div class="ci-p1-all">Phone: <span>{{ userInfo.phone_number }}</span></div>
+                        <div class="ci-p1-all">Email: <span>{{ userInfo.user_email }}</span></div>
+                    </div>
+                    <div class="customer-info-p1" ng-if="!(userSignedIn && userInfo.dateOfBirth && userInfo.phone_number && userInfo.user_email)">
+                        <md-input-container class="md-block no-mar-bottom dob-input" ng-show="userInfo.hasLiquor">
+                            <label></label>
+                            <input id ="date_of_birth" name="dob" ng-pattern="/^((0[13578]|1[02])[-.](29|30|31)[-.](18|19|20)[0-9]{2})|((01|0[3-9]|1[1-2])[-.](29|30)[-.](18|19|20)[0-9]{2})|((0[1-9]|1[0-2])[-.](0[1-9]|1[0-9]|2[0-8])[-.](18|19|20)[0-9]{2})|((02)[\/.]29[-.](((18|19|20)(04|08|[2468][048]|[13579][26]))|2000))$/" ng-model="userInfo.dateOfBirth" ng-blur="checkDOB(userInfo.dateOfBirth)" ng-required="userInfo.hasLiquor" placeholder="Date of Birth MM-DD-YYYY"/>
                             <div ng-messages="checkoutInput.dob.$error">
-                                <div ng-message="pattern" class="error-message-txt">Date format only</div>
-                                <div ng-message="required" class="error-message-txt">Required</div>
+                                <div ng-message="pattern" class="error-message-txt error-text">Date format only</div>
+                                <div ng-message="required" class="error-message-txt error-text">Required</div>
                             </div>
-                            <div ng-if="userInfo.dob_not_valid" class="error-message-txt">Not legal age</div>
+                            <div ng-if="userInfo.dob_not_valid" class="error-message-txt error-text">Not legal age</div>
                         </md-input-container>
-                    </div>
-                    <div style="display: flex; flex-direction: row; justify-content: center; margin: 0;">
-                        <md-input-container class="md-block no-mar-bottom" flex="40">
-                            <label class="input-label">First Name</label>
-                            <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.first_name" type="text" required />
-                            <div ng-messages="checkoutInput.fname.$error">
-                                <div ng-message="pattern" class="error-message-txt">Letters only</div>
-                                <div ng-message="required" class="error-message-txt">Required</div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container class="md-block no-mar-bottom" flex="40">
-                            <label class="input-label">Last Name</label>
-                            <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.last_name" type="text" required/>
-                            <div ng-messages="checkoutInput.lname.$error">
-                                <div ng-message="pattern" class="error-message-txt">Letters only</div>
-                                <div ng-message="required" class="error-message-txt">Required</div>
-                            </div>
-                        </md-input-container>
-                    </div>
-                    <div class="input-center">
-                        <md-input-container class="md-block no-mar-bottom" flex="80">
-                            <label class="input-label">Email</label>
-                            <input name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn" ng-model="userInfo.user_email" type="email" required/>
+                        <div class="name-lname-input ui-input">
+                            <md-input-container class="md-block no-mar-bottom">
+                                <label></label>
+                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.first_name" placeholder="First Name" type="text" autocorrect="off" required />
+                                <div ng-messages="checkoutInput.fname.$error">
+                                    <div ng-message="pattern" class="error-message-txt error-text">Letters only</div>
+                                    <div ng-message="required" class="error-message-txt error-text">Required</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block no-mar-bottom">
+                                <label></label>
+                                <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.last_name" placeholder="Last Name" type="text" autocorrect="off" required/>
+                                <div ng-messages="checkoutInput.lname.$error">
+                                    <div ng-message="pattern" class="error-message-txt error-text">Letters only</div>
+                                    <div ng-message="required" class="error-message-txt error-text">Required</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <md-input-container class="md-block no-mar-bottom ui-input">
+                            <label></label>
+                            <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion)">Did you mean <span>{{suggestion}}</span>?</div>
+                            <input id="email-input-co" name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn" ng-model="userInfo.user_email" placeholder="Email" type="email" required/>
                             <div ng-messages="checkoutInput.email.$error">
-                                <div ng-message="pattern" class="error-message-txt">Email format only</div>
-                                <div ng-message="required" class="error-message-txt">Required</div>
+                                <div ng-message="pattern" class="error-message-txt error-text">Email format only</div>
+                                <div ng-message="required" class="error-message-txt error-text">Required</div>
                             </div>
                         </md-input-container>
-                    </div>
-                    <div class="input-center">
-                        <md-input-container class="md-block no-mar-bottom" flex="80">
-                            <label for="idCell" class="input-label">Phone</label>
-                            <input id="gP_number" name="phone" minlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" required/>
+                        <md-input-container class="md-block no-mar-bottom ui-input">
+                            <label></label>
+                            <input id="gP_number" name="phone" minlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" placeholder="Phone" required/>
                             <div ng-messages="checkoutInput.phone.$error">
-                                <div ng-message="pattern" class="error-message-txt">Numbers only</div>
-                                <div ng-message="minlength" class="error-message-txt">Phone format only</div>
-                                <div ng-message="required" class="error-message-txt">Required</div>
+                                <div ng-message="pattern" class="error-message-txt error-text">Numbers only</div>
+                                <div ng-message="minlength" class="error-message-txt error-text">Phone format only</div>
+                                <div ng-message="required" class="error-message-txt error-text">Required</div>
                             </div>
                         </md-input-container>
                     </div>
-                    <div id="address" class="input-center">
-                        <md-input-container class="md-block no-mar-bottom" flex="80">
+                    <div class="customer-info-p2">
+                        <md-input-container id="address" class="md-block no-mar-bottom ui-input">
                             <label></label>
                             <address-autocomplete style="width: 300px;" input-class="address-input-checkout" icon-class="address-clear-icon" button-class="address-clear-btn" autocomplete="autocomplete"
                                 on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
                             <div ng-messages="checkoutInput.address.$error">
-                                <div ng-message="required" class="error-message-txt">Required</div>
+                                <div ng-message="required" class="error-message-txt error-text">Required</div>
                             </div>
-                            <div ng-if="userInfo.withinCoverage == false" class="error-message-txt">Sorry, we do not deliver to your location at the moment</div>
+                            <div ng-if="userInfo.withinCoverage == false" class="error-message-txt error-text">Sorry, we do not deliver to your location at the moment</div>
                         </md-input-container>
-                    </div>
-                    <div id="driver-instruction" style="margin-bottom: 30px;" class="gu_address flex-end">
-                        <md-input-container class="md-block no-mar-bottom" flex="50">
+                        <md-input-container class="md-block no-mar-bottom ui-input">
                             <label></label>
                             <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction" placeholder="Driver Instruction" type="text" />
                             <div ng-messages="checkoutInput.drInstruction.$error">
-                                <div ng-message="pattern" class="error-message-txt">Number and letter only</div>
-                                <div ng-message="maxlength" class="error-message-txt">Maximum 60 characters</div>
+                                <div ng-message="pattern" class="error-message-txt error-text">Number and letter only</div>
+                                <div ng-message="maxlength" class="error-message-txt error-text">Maximum 60 characters</div>
                             </div>
                         </md-input-container>
                     </div>
-                    <div ng-show="stores.length != 0" class="seperation-line">&nbsp;DELIVERY OPTIONS&nbsp;</div>
-                    <div id="del-opt-background"></div>
+                    <div ng-show="stores.length != 0" class="seperation-line">&nbsp;Delivery Options&nbsp;</div>
+                    <div id="del-opt-background" class="del-opt-background"></div>
                     <section class="del-options-sec">
                         <div ng-repeat="store in stores track by $index" class="del-options-div">
                             <div ng-show="store.img" class="del-options-div-2">
@@ -108,60 +144,27 @@
                             </div>
                         </div>
                     </section>
-                    <div class="HomeItBtn">
-                        <md-checkbox style="margin-left: 10%;" ng-if="userSignedIn && userInfo.card" ng-checked="useDefaultCard" ng-click="cardCheckbox();">
-                            <span>Charge {{ userInfo.card.type }} Card ending with {{ userInfo.card.last4 }}</span>
-                        </md-checkbox>
-                        <button type="submit" name="buttonProcess" class="btn" layout="row">Pay C${{ receipt }}</button>
+                    <div class="customer-info-p3" style="align-items: flex-start;" ng-show="userSignedIn && userInfo.card">
+                        <div class="seperation-line">&nbsp;Payment Options&nbsp;</div>
+                        <div style="display: flex; flex-direction: column;">
+                            <label class="hmt-radio-container">{{ userInfo.card.type + " " + "**** **** **** " + userInfo.card.last4 + " (" + userInfo.card.exp + ")"}}
+                                <input type="radio" ng-model="useDefaultCard" ng-value="true" ng-checked="useDefaultCard == true"/>
+                                <div class="control_indicator"></div>
+                            </label>
+                            <label class="hmt-radio-container">Different card
+                                <input type="radio" ng-model="useDefaultCard" ng-value="false" ng-checked="useDefaultCard == false" />
+                                <div class="control_indicator"></div>
+                            </label>
+                        </div>
                     </div>
+                    <button class="CG-cur-button box-center" name="buttonProcess" type="submit">
+                        <md-progress-circular ng-class="loading_spin" md-diameter="20"></md-progress-circular>
+                        {{ payment_btn_txt }}
+                    </button>
                 </form>
-            </div>
-            <md-sidenav class="md-sidenav-right checkout-side-nav" style="margin-top: 50px;" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
-                <md-content>
-                    <section class="side-nav-header">
-                        <div class="sn-header-top box-center">
-                            <button class="sn-cls-btn" ng-click="close()" hide-gt-md>
-                                <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
-                            </button>
-                            <span class="sn-header-top-txt box-center">Order Summary</span>
-                        </div>
-                        <div class="sn-header-body">
-                            <div class="box-center">
-                                <ul class="sn-header-body-ul sn-header-body-left">
-                                    <li>Cart:</li>
-                                    <li>Delivery Fee:</li>
-                                    <li>GST:</li>
-                                </ul>
-                            </div>
-                            <div style="display: flex; align-items: center; justify-content: center;">
-                                <ul class="sn-header-body-ul sn-header-body-right">
-                                    <li>C${{totalAmount}}</li>
-                                    <li>
-                                        <span ng-if="delFee != 0">C${{delFee}}</span>
-                                        <span ng-if="delFee == 0">FREE</span>
-                                    </li>
-                                    <li>C${{GST}}</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="total-div">
-                            <div class="total-div-ln">
-                                <ul class="total-ul total-ul-left">
-                                    <li>Total:</li>
-                                </ul>
-                            </div>
-                            <div class="total-div-ln">
-                                <ul class="total-ul total-ul-right">
-                                    <li>C${{receipt}}</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                    <cart can-remove="false" cart-ctrl="cart" on-cart-load="onCartLoad" on-price-change="onPriceChange"></cart>
-                </md-content>
-            </md-sidenav>
+            </section>
         </section>
-        <!-- Payment Modal -->
+    <!-- Payment Modal -->
         <div id="checkoutModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
@@ -175,17 +178,18 @@
                                     <md-progress-circular md-colors="{color: 'primary'}" md-diameter="76" ng-disabled="paymentResult != 'inProcess' "></md-progress-circular>
                                 </div>
                             </div>
-                            <div id="paymentResult" ng-if="paymentResult == '1' || paymentResult == '02' || paymentResult == '03' || paymentResult == '0' || paymentResult == '01' || paymentResult == '10' || paymentResult == '11' ">
+                            <div id="paymentResult" ng-if="!(paymentResult == 'inProcess')">
                                 <div class="flex-center-row modal-content-sign">
                                     <button class="modal-cls-btn" ng-click="clearPage()">
                                         <ng-md-icon icon="close"></ng-md-icon>
                                     </button>
-                                    <button ng-click="clearPage()" class="modal-sign-btn">
-                                        <ng-md-icon class="flex-center-row modal-sign-btn-icon icon-size-80" ng-if="paymentResult == '1' " icon="done"></ng-md-icon>
-                                        <ng-md-icon class="flex-center-row modal-sign-btn-icon icon-size-70" ng-if="paymentResult == '11' " icon="warning"></ng-md-icon>
-                                    </button>
-                                    <ng-md-icon class="result-icon result-0-10 icon-size-85" ng-if="paymentResult == '10' || paymentResult == '0'" icon="warning"></ng-md-icon>
-                                    <ng-md-icon class="result-icon result-01-02 icon-size-85" ng-if="paymentResult == '01' || paymentResult == '02' " icon="sentiment_dissatisfied"></ng-md-icon>
+                                    <div class="success-btn" ng-if="paymentResult == '1'" ng-click="clearPage()">
+                                        <svg class="sign-checkmark-svg" viewBox="0 0 80 80">
+                                            <circle class="sign-checkmark-circle" cx="40" cy="40" r="39px"/>
+                                            <polyline class="sign-checkmark-line" points="16, 43 32, 63 65, 20"/>
+                                        </svg>
+                                    </div>
+                                    <ng-md-icon class="result-icon result-10" ng-if="paymentResult == '10'" icon="warning" size="85"></ng-md-icon>
                                 </div>
                                 <div class="flex-column result-msg-ln1">
                                     <span class="modal-txt result-msg-ln1-name">{{ paymentMessage_1  + " " + userInfo.first_name }}</span>
@@ -202,6 +206,8 @@
                 </div>
             </div>
         </div>
+
+
         <% if (!production) { %>            
             <script src="/resources/services/localStorage.js"></script>
             <script src="/resources/services/cartService.js"></script>
@@ -216,5 +222,9 @@
     </div>
 </body>
 <!--googleon: snippet-->
+
+<footer>
+    <%- include('partial/footer')%>
+</footer>
 
 </html>

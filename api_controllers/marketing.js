@@ -11,10 +11,10 @@ router.post('/subscribe', async function (req, res, next) {
                 ui_message: "Successfully Subscribed!"
             });
         } else {
-            errorMessages.sendEmailSubscribeError(res);
+            ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.EMAIL_ERROR);
         }
     } else {
-        errorMessages.sendMissingParams(res);
+        ErrorMessages.sendMissingParams(res);
     }
 });
 

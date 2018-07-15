@@ -175,9 +175,9 @@ gulp.task('css', function(){
             ]
         }).on('erorr', sass.logError))
         // .pipe(production(concatCss('resources/css/all.min.css'))) TODO
-        .pipe(production(cssnano({
-            "zindex": false
-        })))
+        // .pipe(production(cssnano({
+        //     "zindex": false
+        // })))
         .pipe(plumber.stop())
         .pipe(gulp.dest("www/"))
         .pipe(development(browserSync.reload({stream: true})))

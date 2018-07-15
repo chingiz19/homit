@@ -34,7 +34,7 @@ pub.getStoreInfo = async function (storeId) {
         store.address AS store_address, store.address_latitude AS store_address_latitude,
         store.address_longitude AS store_address_longitude, store.phone_number AS store_phone_number,
         store_type.name AS store_type_name, store_type.display_name AS store_type_display_name,
-        store_type.image AS store_type_image, store_type.api_name AS store_type_api_name
+        store_type.image AS store_type_image
 
         FROM
         catalog_stores AS store JOIN catalog_store_types AS store_type ON (store.store_type = store_type.id)
@@ -62,7 +62,7 @@ pub.newOrder = function (storeId) {
  * @param {*} storeId Received from Chikimiki
  */
 pub.driverAction = function (storeId) {
-    var json = {
+    let json = {
         "take_action": true,
         "details": "driver_action"
     }

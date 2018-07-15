@@ -77,7 +77,27 @@ pub.timestampToSqlTime = function (timestamp) {
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
 
-    return ((hours < 2) ? (hours + 10) : hours) + ":" + ((minutes == 0) ? "00" : minutes) + ":" + ((seconds == 0) ? "00" : seconds);
+    return ((hours < 2) ? (hours + 17) : hours) + ":" + ((minutes == 0) ? "00" : minutes) + ":" + ((seconds == 0) ? "00" : seconds);
+}
+
+pub.formatUserCoupons = function (coupons) {
+    let localObject = {};
+
+    if (coupons) {
+        for (let coupon in coupons) {
+            let couponObject = coupons[coupon];
+            localObject[filterStoreTypeForCupon(couponObject.storeType)] = couponObject.couponCode;
+        }
+    }
+
+    return localObject;
+}
+
+function filterStoreTypeForCupon(storeType) {
+    if (storeType == null) {
+        return Coupon.GENERAL_COUPON_TYPE;
+    }
+    return storeType;
 }
 
 module.exports = pub;

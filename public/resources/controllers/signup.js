@@ -1,4 +1,4 @@
-app.controller("LoginController", function ($scope, $http, $sce, $route, $rootScope, $mdToast, notification, $window) {
+app.controller("LoginController", function ($scope, $http, $sce, $route, $rootScope, $mdToast, notification, $window, localStorage) {
     $rootScope.isSigned = false; 
     
     var _nextState = "next",
@@ -133,6 +133,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 $rootScope.$broadcast("checkUserLogin");
                 login.reset();
                 login.hideModal();
+                localStorage.clearUserPushNotifications();
                 $window.location.reload();
             } else {
                 login.showToast(response.data.error.ui_message, login.passwordErrorAction);
@@ -171,6 +172,7 @@ app.controller("LoginController", function ($scope, $http, $sce, $route, $rootSc
                 $rootScope.$broadcast("checkUserLogin");
                 login.reset();
                 login.hideModal();
+                localStorage.clearUserPushNotifications();
                 notification.addSuccessMessage("Signup completed");
             } else {
                 login.showToast(response.data.error.ui_message);

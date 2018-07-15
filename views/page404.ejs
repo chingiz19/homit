@@ -9,12 +9,13 @@
 <body class="ng-cloak">
     <div ng-controller="page404Controller">
         <div class="image-404">
-            <!-- <img ng-src="{{'/resources/images/non-catalog-image/pages/404.jpg'}}" width="730px" height="330px" /> -->
             <img ng-src="{{'/resources/images/non-catalog-image/pages/404.png'}}" width="auto" height="auto" />
         </div>
     </div>
     <% if (!production) { %>
         <script src="/resources/controllers/page404.js"></script>
+        <script src="/resources/services/localStorage.js"></script>
+
         <% } %>
 </body>
 

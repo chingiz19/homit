@@ -29,6 +29,24 @@ pub.findUser = function (email) {
 };
 
 /**
+ * Changes flag on email_verified to 'true'
+ * @param {*} userId user ID
+ */
+pub.verifyUserAccount = async function (userId, receivedEmail) {
+    let user = await User.findUser(receivedEmail);
+
+    if (user) {
+        let whereData = { id: userId };
+        let setData = { email_verified: true };
+
+        let result = await db.updateQuery(db.tables.users_customers, [setData, whereData]);
+        return (result && true);
+    }
+
+    return false;
+};
+
+/**
  * Find user based on id
  */
 pub.findUserById = async function (id) {
@@ -127,34 +145,6 @@ pub.updateGuestUser = function (userData, key) {
     });
 };
 
-function ifNewInfo(newData, user) {
-    for (let key in newData) {
-        if (user[key] == null) {
-            return true;
-        }
-        if (key == "birth_date") {
-            var newDate = new Date(newData[key] + " 00:00:00");
-            if (newDate.getTime() != user[key].getTime()) {
-                return true;
-            }
-        } else {
-            if (newData[key] != user[key]) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-function isHistoryNull(user) {
-    for (let key in user) {
-        if (user[key] != null) {
-            return false;
-        }
-    }
-    return true;
-}
-
 /**
  * Update user data from checkout.
  * Updates user's birth_date and saves previous birth_date in history.
@@ -166,7 +156,7 @@ function isHistoryNull(user) {
 pub.updateCheckoutUser = async function (newData, key) {
     // if user has birth date update it and save in history
     if (newData.birth_date) {
-        var newData2 = {
+        let newData2 = {
             birth_date: newData.birth_date
         };
         await pub.updateUser(newData2, key);
@@ -175,7 +165,7 @@ pub.updateCheckoutUser = async function (newData, key) {
     // update the fields which are null in user table
     delete newData.birth_date;
 
-    var users = await db.selectColumnsWhereLimitOne(Object.keys(newData), db.tables.users_customers, key);
+    let users = await db.selectColumnsWhereLimitOne(Object.keys(newData), db.tables.users_customers, key);
     if (users.length > 0) {
         var user = users[0];
         var updateData = {};
@@ -199,14 +189,14 @@ pub.updateCheckoutUser = async function (newData, key) {
  * @param {*} key 
  */
 pub.updateUser = async function (newData, key) {
-    var users = await db.selectColumnsWhereLimitOne(Object.keys(newData), db.tables.users_customers, key);
+    let users = await db.selectColumnsWhereLimitOne(Object.keys(newData), db.tables.users_customers, key);
     if (users.length > 0) {
-        var user = users[0];
+        let user = users[0];
         if (ifNewInfo(newData, user)) {
-            var data = [newData, key];
+            let data = [newData, key];
             await db.updateQuery(db.tables.users_customers, data);
             if (!isHistoryNull(user)) {
-                var historyData = {
+                let historyData = {
                     user_id: key.id
                 };
                 // No need to update address_latitude and address_longitude in history
@@ -254,22 +244,6 @@ pub.findUsersByEmailWithHistory = async function (email) {
     var data = { user_email: email };
     var result = await findUsersWithHistory(data);
     return result;
-}
-
-var findUsersWithHistory = async function (data) {
-    var sqlQuery = `SELECT users_customers.id AS id, users_customers.id_prefix AS id_prefix,
-        users_customers.user_email AS user_email, users_customers.first_name AS first_name,
-        users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
-        users_customers.birth_date AS birth_date, users_customers.address AS address, false AS is_guest
-        
-        FROM users_customers
-        WHERE ? OR id IN (
-            SELECT DISTINCT user_id FROM users_customers_history
-            WHERE ?
-        ) `;
-
-    var dbResult = await db.runQuery(sqlQuery, [data, data]);
-    return dbResult;
 }
 
 pub.updatePassword = function (userId, oldPassword, newPassword) {
@@ -332,6 +306,77 @@ pub.resetPassword = async function (email, newPassword) {
 
 pub.makeStripeCustomer = async function (userEmail) {
     return await MP.createCustomer(userEmail);
+}
+
+/**
+ * Checks if given email is not used by another user
+ * Used in account/update call to verify email is available before user can change to it
+ * @param {*String} email 
+ */
+pub.isEmailAvailable = async function (email) {
+    let result = await db.selectAllWhere(db.tables.users_customers, { user_email: email });
+    return (result.length == 0);
+}
+
+pub.sendVerificationEmail = async function (signedUser) {
+    let link = machineHostname + "/verify/" + JWTToken.createToken({
+        verify_email: true,
+        email: signedUser.user_email,
+        first_name: signedUser.first_name,
+        id: signedUser.id
+    }, '1d');
+
+    return Email.sendAccountVerificationEmail(signedUser.first_name, signedUser.user_email, link).then(function (result) {
+        return result;
+    });
+}
+
+var findUsersWithHistory = async function (data) {
+    var sqlQuery = `SELECT users_customers.id AS id, users_customers.id_prefix AS id_prefix,
+        users_customers.user_email AS user_email, users_customers.first_name AS first_name,
+        users_customers.last_name AS last_name, users_customers.phone_number AS phone_number,
+        users_customers.birth_date AS birth_date, users_customers.address AS address, false AS is_guest
+        
+        FROM users_customers
+        WHERE ? OR id IN (
+            SELECT DISTINCT user_id FROM users_customers_history
+            WHERE ?
+        ) `;
+
+    var dbResult = await db.runQuery(sqlQuery, [data, data]);
+    return dbResult;
+}
+
+function ifNewInfo(newData, user) {
+    for (let key in newData) {
+        if (user[key] == null) {
+            return true;
+        }
+
+        if (key == "birth_date") {
+            let newDate = new Date(newData[key] + " 00:00:00");
+            if (newDate.getTime() != user[key].getTime()) {
+                return true;
+            }
+        } else {
+            if (newData[key] != user[key]) {
+                if (key == "user_email") {
+                    newData.email_verified = false;
+                }
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function isHistoryNull(user) {
+    for (let key in user) {
+        if (user[key] != null) {
+            return false;
+        }
+    }
+    return true;
 }
 
 module.exports = pub;

@@ -3,7 +3,7 @@ md-toolbar {
 }
 
 body {
-    padding-top: 50px;
+    padding-top: 55px;
     font-family: 'Nunito', sans-serif;
     color: rgba(70, 70, 70, 1);
     letter-spacing: 0.025em;
@@ -64,6 +64,47 @@ footer {
     white-space: nowrap;
 }
 
+//User Cart - Product Page
+.checkout-menu-btn-div {
+    position: fixed;
+    right: 0;
+    top: 425px;
+    margin: 10px 0 10px 10px;
+    z-index: 1;
+}
+
+.checkout-menu-btn {
+    top: 5px;
+    height: 60px;
+    width: 70px;
+    background-color: #00cc99;
+    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.35);
+    border-radius: 30px 0 0 30px;
+    transition: all 0.3s ease;
+}
+
+.checkout-menu-btn ng-md-icon {
+    fill: #f9f9f9;
+}
+
+.checkout-menu-btn ng-md-icon svg {
+    width: 35px;
+    height: 35px;
+    margin-right: 8px;
+    transform: rotateY(180deg);
+}
+
+.items-num {
+    bottom: 45px;
+    left: 2px;
+    background-color: orangered;
+    color: ghostwhite;
+    font-size: 14px;
+    font-weight: 700;
+    border: solid 2px rgb(255, 255, 255);
+    border-radius: 3px;
+}
+
 .section-box {
     margin-top: 10px;
 }
@@ -93,6 +134,7 @@ footer {
 }
 
 .web-location-a:hover {
+    text-decoration: none;
     color: rgba(0, 0, 0, 1);
     background-color: rgb(124, 179, 204);
     transition: background-color 0.3s ease;
@@ -269,7 +311,7 @@ button:focus {
     margin: 10px auto 10px auto;
     font-size: 17px;
     text-transform: uppercase;
-    background-color: rgba(70, 70, 70, 0.9);
+    background-color: rgba(20, 20, 20, 1);
     color: rgba(255, 255, 255, 1);
     border-radius: 5px;
     border-style: none;
@@ -277,7 +319,8 @@ button:focus {
 }
 
 .add-to-cart:hover {
-    background-color: rgba(20, 20, 20, 1);
+    background-color: rgba(20, 20, 20, 0.9);
+    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.22);
     transition: all 0.3s ease;
 }
 
@@ -345,22 +388,42 @@ button:focus {
     overflow-x: auto;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
+    a{
+        color: initial;
+    }
+    a, a:hover, a:active, a:visited, a:focus {
+        text-decoration: none;
+    }
 }
 
-.prom-item-ul {
+.recomended-item-ul {
     position: relative;
-    width: 175px;
-    height: 195px;
+    width: 165px;
+    height: 205px;
     padding: 10px;
     background-color: #fff;
-    width: 175px;
     margin: 5px;
-    box-shadow: 0 0px 5px 2px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.4s ease;
+    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+    transition: all 0.4s ease;
+    .recomended-item-brand{
+        margin-top: 3px;
+        font-size: 11px; 
+        color: #81848c;
+        letter-spacing: 0.2px;
+    }
+    .recomended-item-name {
+        height: 60px !important;
+        text-align: left; 
+        font-size: 14px;
+        color: #3e4248;
+    }
 }
 
-.prom-item-brand {
-    height: 75px !important;
+.recomended-item-ul:hover{
+    opacity: 0.7;
+    box-shadow: 0 0px 4px 2px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s ease;
 }
 
 .also-image-li img {
@@ -372,6 +435,14 @@ button:focus {
 .item-price{
     height: 45px;
     width: 37px;
+    font-size: 12px;
+    padding-top: 17px;
+    span{
+        position: relative; 
+        top: -35px; 
+        right: -10;
+        font-size: 10px; 
+    }
 }
 
 footer {
@@ -511,8 +582,8 @@ footer {
         padding-right: 0;
     }
 
-    .checkout-menu-btn-div {
-        right: 0 !important;
+    .checkout-menu-btn-div{
+        width: 15%;
     }
 
     .recomended-item {

@@ -1,132 +1,347 @@
-md-toolbar {
-    background-color: rgba(42, 81, 145, 0.95) !important;
+.global-search-header, .hub-btn {
+    display: none;
+}
+
+.homit-nav {
+    position: relative !important;
+    background-color: transparent;
+}
+
+.signUp-btn, .logIn-btn {
+    border: none;
+}
+
+.user-signed-btn{
+    background-color: transparent;
+}
+
+html, body {
+    background-color: rgb(254, 254, 254);
 }
 
 body {
     position: relative;
-    top: 50px;
     font-family: 'Nunito', sans-serif;
-    color: rgba(70, 70, 70, 1);
     letter-spacing: 0.025em;
-}
-
-ul {
-    list-style-type: none;
-}
-
-li {
-    list-style-type: none;
-}
-
-.none {
-    display: none;
-}
-
-.top-header {
-    font-weight: 500;
-    font-size: 45px;
-    margin-top: 35px;
-    margin-bottom: 30px;
-}
-
-.top-header-about {
-    margin-bottom: 15px;
-    width: 100%;
-    display: inline-block;
-    text-align: center;
-}
-
-.about-top-subhead {
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-    font-size: 20px;
-    margin-top: 25px;
-    text-align: center;
-}
-
-.about-top-subhead p {
-    width: 70%;
-}
-
-.page {
-    background-color: rgba(250, 250, 250, 1);
-    padding-bottom: 60px;
-}
-
-.center {
-    margin-top: 30px;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-.center img {
-    border-radius: 10px;
-    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.35);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
 footer {
-    width: 100%;
+    position: relative;
+    top: 450px;
 }
 
-.card-section {
-    margin-top: 40px;
-}
+.about-cover-div {
+    position: relative;
+    top: -55px;
+    left: 0;
 
-.cards-div {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.cards-div img {
-    width: 220px;
-    height: 220px;
-    margin: 5px;
-    border-radius: 5px;
-    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.35);
-}
-
-@media (max-width: 570px) {
-    .homit-nav-content {
-        width: 380px;
-    }
-
-    .top-header {
-        font-size: 35px;
-    }
-
-    .about-top-subhead p {
-        font-size: 18px;
+    .about-cover {
+        position: absolute;
+        background-size: cover;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 400px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        animation: fade-in 0.5s ease;
+        background-image: url("/resources/images/non-catalog-image/pages/about-page.jpg");
+        box-shadow: 0 0px 3px 1px rgba(42, 81, 145, 0.16);
+        z-index: 10;
     }
 }
 
-@media (max-height: 630px) {
-    footer {
-        position: relative;
-    }
-}
+.content-section {
+    position: relative;
+    top: 350px;
+    width: 1180px;
+    margin: 0 auto 50px auto;
+    transition: width 0.4s ease;
 
-@media (max-width: 640px) {
-    .content {
-        padding-right: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .about-top-subhead p {
+    h1 {
         width: 100%;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        display: inline-block;
+        text-align: center;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .who-p {
+        margin: 0 auto;
+        width: 60%;
+        text-align: center;
+        font-size: 17px;
+    }
+
+    .who-seperation-line {
+        width: 30%;
+        height: 2px;
+        margin: 30px auto;
+        background-color: rgba(217, 219, 224, 0.5);
+    }
+
+    .steps-div {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+
+        .description-div {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            h2 {
+                width: 60%;
+                font-size: 24px;
+                transition: width 0.4s ease;
+            }
+
+            .step-p {
+                width: 70%;
+                padding-left: 10%;
+                font-size: 17px;
+                color: #8f95a3;
+                letter-spacing: 0.2px;
+                transition: width 0.4s ease;
+            }
+
+            .step-1-3-p {
+                padding-left: 5%;
+            }
+
+            .step-2-p {
+                padding-left: 5%;
+            }
+        }
+
+        .img-div {
+            width: 50%;
+
+            img {
+                width: 200px;
+                height: 200px;
+                box-shadow: 0 15px 35px rgba(100, 100, 100, 0.36), 0 3px 10px rgba(100, 100, 100, 0.33);
+                border-radius: 100px;
+            }
+        }
+    }
+
+    .step-2-div {
+        margin: 40px 0;
+    }
+
+    .where-p {
+        width: 50%;
+        text-align: center;
+        font-size: 20px;
+        margin: 0 auto;
+    }
+}
+
+/* start of window shrinkage affect solution */
+@media (max-width: 1190px) and (min-width: 980px) {
+    .content-section {
+        width: 960px;
+    }
+
+    .description-div h2 {
+        width: 70%;
+    }
+
+    .description-div .step-p {
+        width: 80%;
+    }
+}
+
+@media (max-width: 979px) and (min-width: 856px) {
+    .content-section {
+        width: 855px;
+    }
+
+    .description-div h2 {
+        width: 100%;
+    }
+
+    .description-div .step-p {
+        width: 100%;
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 855px) and (min-width: 571px) {
+    .content-section {
+        width: 570px;
+    }
+    .content-section {
+        h1 {
+            font-size: 30px;
+        }
+        .who-p {
+            font-size: 16px;
+        }
+        .steps-div {
+            .description-div {
+                h2 {
+                    font-size: 22px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 855px) and (min-width: 400px) {
+
+    .description-div h2 {
+        width: 100%;
+    }
+
+    .description-div .step-p {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .content-section {
+
+        .who-p {
+            width: 80%;
+        }
+
+        .steps-div {
+            flex-direction: column;
+
+            .description-div {
+                width: 80%;
+                margin: 0 auto;
+
+                .step-p {
+                    width: 100%;
+                }
+
+                h2 {
+                    width: 80%;
+                    text-align: center;
+                }
+            }
+
+            .img-div {
+                width: 80%;
+                margin: 15px auto;
+            }
+        }
+
+        .step-2-div {
+            flex-direction: column-reverse;
+        }
+
+        .where-p {
+            width: 80%;
+        }
+    }
+}
+
+@media (max-width: 570px) and (min-width: 400px) {
+
+    .content-section {
+        width: 285px;
+    }
+    .content-section {
+        h1 {
+            font-size: 25px;
+        }
+        .who-p {
+            font-size: 14px;
+        }
+        .steps-div {
+            .description-div {
+                h2 {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
     }
 }
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
-    .top-header {
-        font-size: 28px;
+
+    .hdr-mob-button, .hdr-logo-H{
+        display: none;
     }
 
-    .homit-nav-content {
-        width: 100vw;
+    .white-logo{
+        display: inherit !important;
+    }
+
+    .description-div h2 {
+        width: 100%;
+    }
+
+    .description-div .step-p {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .content-section {
+        width: calc(100vw - 30px);
+        h1 {
+            font-size: 28px;
+        }
+        .who-p {
+            width: 90%;
+            font-size: 16px;
+        }
+
+        .steps-div {
+            flex-direction: column;
+
+            .description-div {
+                width: 90%;
+                margin: 0 auto;
+
+                .step-p {
+                    width: 100%;
+                    text-align: center;
+                }
+
+                h2 {
+                    width: 90%;
+                    font-size: 20px;
+                    text-align: center;
+                }
+            }
+
+            .img-div {
+                width: 90%;
+                margin: 15px auto;
+            }
+            .img-div img{
+                width: 150px;
+                height: 150px;
+                border-radius: 75px;
+            }
+        }
+
+        .step-2-div {
+            flex-direction: column-reverse;
+        }
+
+        .where-p {
+            width: 90%;
+        }
     }
 }

@@ -23,6 +23,30 @@ app.service('localStorage', ["$window", function($window){
         return pub.get("homit_userCart");
     };
 
+    pub.setUserCoupons = function(value){
+        return pub.set("homit_userCoupons", value);
+    };
+
+    pub.getUserCoupons = function(){
+        return (pub.get("homit_userCoupons") || {});
+    };
+
+    pub.setHeaderNotificationCleared = function(value){
+        return pub.set("homit_HeaderNotificationCleared", value);
+    };
+
+    pub.getHeaderNotificationCleared = function(){
+        return (pub.get("homit_HeaderNotificationCleared") || false );
+    };
+
+    pub.setNumberOfCouponsSeen = function(value){
+        return pub.set("homit_couponNumberSeen", value);
+    };
+
+    pub.getNumberOfCouponsSeen = function(){
+        return (pub.get("homit_couponNumberSeen") || 0 );
+    };
+
     pub.setCartVersion = function(value){
         return pub.set("cart_version", value);
     };
@@ -40,7 +64,11 @@ app.service('localStorage', ["$window", function($window){
     };
 
     pub.clearAfterCheckout = function(){
-        return pub.setOrderDeliveryHrs({}) && pub.setUserCart({});
+        return pub.setOrderDeliveryHrs({}) && pub.setUserCart({}) && pub.setUserCoupons({}) && pub.setNumberOfCouponsSeen(0);
+    };
+
+    pub.clearUserPushNotifications = function(){
+        return pub.setNumberOfCouponsSeen(0) && pub.setHeaderNotificationCleared(false);
     };
 
     return pub;

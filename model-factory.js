@@ -25,12 +25,13 @@ class modelFactory {
         global.MP =             require("./models/money-processing");
         global.CSR =            require("./models/csr");
         global.Email =          require("./models/email");
-        global.errorMessages =  require("./models/error_messages");
+        global.ErrorMessages =  require("./models/error_messages");
         global.NM =             require("./models/network_manager");
         global.Store =          require("./models/store");
         global.HelperUtils =    require("./models/helper_utils");
         global.Validator =      require("./models/validator");
         global.Scheduler =      require("./models/scheduler");
+        global.Coupon =         require("./models/coupon");
 
         if (process.env.n_mode == "production"){
             global.machineHostname = "https://www.homit.ca";

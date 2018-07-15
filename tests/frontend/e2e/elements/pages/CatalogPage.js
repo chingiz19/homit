@@ -1,14 +1,14 @@
 var Page = require("../Page");
 
 /* private variables */
-var liquorStationUrl = "/catalog/liquor-station/beer";
-var snackVendorUrl = "/catalog/snack-vendor/beverage";
-var linasStoreUrl = "/catalog/linas-italian-store/condiments";
+var liquorStationUrl = "/hub/liquor-station/beer";
+var snackVendorUrl = "/hub/snack-vendor/beverage";
+var linasStoreUrl = "/hub/linas-italian-store/condiments";
 
 
 class CatalogPage extends Page {
     constructor(){
-        super('/catalog', "Homit");
+        super('/hub', "Homit");
     }
 
     liquorStationUrl(){

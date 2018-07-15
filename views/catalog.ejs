@@ -6,156 +6,174 @@
             <link href="/resources/css/catalog.css" rel="stylesheet">
 </head>
 <!--googleoff: snippet-->
-<body style="top: 51px;">
-    <%- include('partial/checkout_menu')%>
-        <div ng-controller="catalogController" id="ctnCont">
-            <div id="loading">
-                <div class="lds-spinner">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+
+<body>
+    <div ng-controller="catalogController" id="ctnCont">
+        <section id="catalog-store-sec" class="catalog-store-info" ng-cloak>
+            <img class="none" ng-src="/resources/images/catalog-stores/covers/{{display_storeInfo.image_cover}}">
+            <div class="catalog-store-cover"></div>
+            <div class="catalog-store-cover-div"></div>
+            <div id="del-opt-background" class="del-opt-background"></div>
+            <div class="store-info-txt-box" ng-show="deliveryOption">
+                <div class="store-name-txt">
+                    <a href="/hub/{{display_storeInfo.name}}" target="_self">{{ display_storeInfo.display_name }}</a>
+                </div>
+                <scheduler store-type="storeType" delivery-option="deliveryOption" delivery-date="deliveryDate" open-time="open_time" close-time="close_time"
+                    del-fee="del_fee"></scheduler>
+                <div class="del-opt-info" ng-cloak>
+                    <div ng-show="display_storeInfo.store_open == false && deliveryOption == 'ASAP Delivery'" class="store-oval store-open-hrs">Store Closed. Opens at {{ open_time }}</div>
+                    <div ng-show="display_storeInfo.store_open == true && deliveryOption == 'ASAP Delivery'" class="store-hrs-txt">Open for Delivery {{ close_time }}</div>
+                    <div ng-show="deliveryOption == 'Scheduled Delivery'" class="store-hrs-txt">Delivery Time: {{ deliveryDate.month + " " + deliveryDate.day + ", From " + deliveryDate.time}}</div>
+                    <ng-md-icon icon="fiber_manual_record"></ng-md-icon>
+                    <div class="store-DF">{{del_fee}}</div>
                 </div>
             </div>
-            <section class="catalog-store-info" ng-cloak>
-                <div>
-                    <div class="catalog-store-cover fadeIn"></div>
-                </div>
-                <div id="del-opt-background" class="del-opt-background"></div>
-                <div class="store-info-txt-box" ng-show="deliveryOption">
-                    <div class="store-name-txt">{{ display_storeInfo.display_name }}</div>
-                    <scheduler store-type="storeType" delivery-option="deliveryOption" delivery-date="deliveryDate" open-time="open_time" close-time="close_time" del-fee="del_fee"></scheduler>
-                    <div class="del-opt-info" ng-cloak>
-                        <div ng-show="display_storeInfo.open == false && deliveryOption == 'ASAP Delivery'" class="store-oval store-open-hrs">Store Closed. Opens at {{ open_time }}</div>
-                        <div ng-show="display_storeInfo.open == true && deliveryOption == 'ASAP Delivery'" class="store-hrs-txt">Open {{ close_time }}</div>
-                        <div ng-show="deliveryOption == 'Scheduled Delivery'" class="store-hrs-txt">{{ deliveryDate.month + " " + deliveryDate.day + ", " + deliveryDate.time}}</div>
-                        <ng-md-icon icon="fiber_manual_record"></ng-md-icon>
-                        <div class="store-oval store-DF">{{del_fee}}</div>
-                    </div>
-                </div>
-            </section>
-            <div class="catalog-content" ng-cloak>
-                <div class="mobile-hub">
-                    <button ng-click="mobHub()" class="fadeIn mob-hub-btn">
-                        <ng-md-icon ng-class="mob_hub_icon_c" icon="arrow_drop_down"></ng-md-icon>hub
-                    </button>
-                    <section class="mobile-hub-section" ng-class="mob_hub_grow_c">
-                        <global-search input-id="inputId" ng-show="showMobHub" class="global-search-catalog fadeIn-h-search"></global-search>
-                        <div ng-show="showMobHub" class="m-hub-header fadeIn-h-hdr">
-                            <div ng-click="selectHubSec(1)" class="p-1">
-                                <div class="mh-header-txt mhh-highlight">Store List</div>
-                                <div class="mh-header-line header-line-grow"></div>
-                            </div>
-                            <div ng-click="selectHubSec(2)" class="p-2">
-                                <div class="mh-header-txt">Store Aisle</div>
-                                <div class="mh-header-line"></div>
-                            </div>
-                            <div ng-click="selectHubSec(3)" class="p-3">
-                                <div class="mh-header-txt store-shelf">Shelf</div>
-                                <div class="mh-header-line"></div>
-                            </div>
-                        </div>
-                        <div ng-show="showMobHub" class="mh-store-box fadeIn-h-body">
-                            <div ng-show="hubSecSelected == 1" class="mh-body mh-store">
-                                <div class="mh-store-div" ng-class="('<%= loadedStore %>' == 'Liquor Station') ? 'mh-store-selected' : ''" ng-click="hrefToStore('/catalog/liquor-station')">
-                                    <img src="/resources/images/non-catalog-image/store-logo/liquor-station_icon.png">
-                                    <span>Liquor Station</span>
-                                </div>
-                                <div class="mh-store-div" ng-class="('<%= loadedStore %>' == 'Dwarf Stars') ? 'mh-store-selected' : ''" ng-click="hrefToStore('/catalog/dwarf-stars')">
-                                    <img src="/resources/images/non-catalog-image/store-logo/dwarf-stars_icon.png">
-                                    <span>Dwarfs Stars</span>
-                                </div>
-                                <div class="mh-store-div" ng-class="('<%= loadedStore %>' == 'Linas Italian Market') ? 'mh-store-selected' : ''" ng-click="hrefToStore('/catalog/linas-italian-market')">
-                                    <img src="/resources/images/non-catalog-image/store-logo/linas-italian-store_icon.png">
-                                    <span>Lina's Italian Market</span>
-                                </div>
-                                <div class="mh-store-div" ng-class="('<%= loadedStore %>' == 'Snack Vendor') ? 'mh-store-selected' : ''" ng-click="hrefToStore('/catalog/snack-vendor')">
-                                    <img src="/resources/images/non-catalog-image/store-logo/snack-vendor_icon.png">
-                                    <span>Snack Vendor</span>
-                                </div>
-                            </div>
-                            <div ng-show="hubSecSelected == 2" class="mh-body">
-                                <div class="mh-cat-div" ng-repeat="category in <%= categories %> track by $index" ng-click="hrefToCat(category)" ng-class="('<%= selectedCategory %>' == category) ? 'mh-cat-selected' : ''">
-                                    {{ category }}
-                                </div>
-                            </div>
-                            <div ng-show="hubSecSelected == 3" class="mh-body">
-                                <md-radio-group id="1_rBtn" ng-model="SubcategoryName">
-                                    <md-radio-button class="cat-body-cat" ng-repeat="variant in subcategories | orderBy" id="radio_{{ $index }}" ng-value="variant" ng-click="checkSubcategories(variant)">
-                                        <span class="variant-txt">{{ variant }}</span>
-                                    </md-radio-button>
-                                </md-radio-group>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <section id="cat-subcat-sec" class="cat-subcat-absolute cat-section">
-                    <div ng-click="showHideCategory()" class="cat-subcat-header">
-                        <div class="flex-column">
-                            <div ng-class="header_aisle_wc">Store Aisle</div>
-                            <div ng-class="aisle_line_wc" class="header-line"></div>
-                        </div>
-                        <div class="sep-line-hdr-cs">|</div>
-                        <div class="flex-column">
-                            <div ng-class="header_cat_wc" class="store-shelf">Shelf</div>
-                            <div ng-class="cat_line_wc" class="header-line"></div>
+        </section>
+        <section class="catalog-sub-hdr" ng-cloak>
+            <div class="category-extension-div" ng-cloak>
+                <div class="cat-ext-box">
+                    <div class="cat-ext-content" ng-show="showCatBox">
+                        <h2>Store Categories</h2>
+                        <div class="box-a-div">
+                            <a class="cat-ext-a" ng-repeat="category in categories" href="{{category.category_url}}" target="_self">
+                                <img ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}">
+                                <div class="cat-ext-li">{{category.category_display_name}}</div>
+                            </a>
                         </div>
                     </div>
-                    <div id="subcategory_box" class="cat-subcat-body">
-                        <md-radio-group ng-model="SubcategoryName">
-                            <md-radio-button class="cat-body-cat" id="radio_{{$index}}" ng-repeat="variant in subcategories | orderBy" ng-value="variant" ng-click="checkSubcategories(variant)">
-                                <span>{{ variant }}</span>
-                            </md-radio-button>
+                </div>
+            </div>
+            <div class="category-hdr-div" ng-cloak>
+                <div class="category-div align-center" ng-click="extendCatBox()">
+                    <span>{{userSelectedCategory}}</span>
+                    <ng-md-icon ng-class="catBoxArrowClass" icon="expand_more" size="20"></ng-md-icon>
+                </div>
+                <div class="cat-hdr-sep-line"></div>
+                <div class="filter-div align-center" ng-click="extendFilterBox()">
+                    <span>Filter</span>
+                    <ng-md-icon ng-class="filterBoxArrowClass" icon="expand_more" size="20"></ng-md-icon>
+                </div>
+                <div class="cat-filter-extension" ng-show="showFilterBox" ng-class="filterBoxClass">
+                    <div class="filter-ext-hdr"></div>
+                    <div class="filter-ext-body">
+                        <div layout="row" layout-wrap flex class="subcat-cb-div">
+                            <button class="filter-clr-btn" ng-click="deselectAllSubcats()" ng-show="selectedSubcats.length">
+                                clear
+                            </button>
+                            <div class="subcat-checkboxes" flex="100" ng-repeat="subcategory in subcategories" ng-click="selectSubcat(subcategory, selectedSubcats)">
+                                <md-checkbox ng-checked="subcatSelected(subcategory, selectedSubcats)">
+                                    {{ subcategory }}
+                                </md-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cat-hdr-sep-line"></div>
+                <div class="sort-div align-center" ng-click="extendSortBox()">
+                    <span>Sort</span>
+                    <ng-md-icon ng-class="sortBoxArrowClass" icon="expand_more" size="20"></ng-md-icon>
+                </div>
+                <div class="cat-sort-extension" ng-show="showSortBox" ng-class="sortBoxClass">
+                    <div class="sort-ext-hdr"></div>
+                    <div class="sort-ext-body">
+                        <md-radio-group ng-model="sortBy">
+                            <div class="radio-btn-div" ng-repeat="(key, value) in sorting_options">
+                                <md-radio-button ng-value="value">
+                                    {{key}}
+                                </md-radio-button>
+                            </div>
                         </md-radio-group>
                     </div>
-                    <div id="category_box" class="cat-subcat-body category-box">
-                        <ul class="cat-list same-line" layout="column">
-                            <li ng-repeat='category in <%= categories %> track by $index' ng-click="hrefToCat(category)" style="outline: none;">
-                                <div class="category-list" ng-style="( '<%= selectedCategory %>' == category ) && {'background-color': '#00cc99'}">
-                                    <span ng-style="( '<%= selectedCategory %>' == category ) && {'font-weight':'700', 'color': 'rgba(255,255,255,1)','font-size':'22px'}">{{ category }}</span>
-                                </div>
-                            </li>
-                        </ul>
+                </div>
+                <div class="sort-sl cat-hdr-sep-line"></div>
+                <div class="catalog-cart-div">
+                    <div class="cart-div-content">
+                        <%- include('partial/checkout_menu')%>
+                            <div id="cart-seperation-line" class="cart-seperation-line"></div>
+                            <div class="cart-items-txt">items</div>
                     </div>
-                </section>
-                <section id="items-section" class="items-section" ng-class="cat_content_mob_c">
-                    <div ng-repeat="product in products">
-                        <div ng-if="isInSelectedSubcategories(product.subcategory)">
+                </div>
+            </div>
+        </section>
+        <div class="catalog-content" ng-cloak>
+            <section id="items-section" class="items-section" ng-class="cat_content_mob_c">
+                <div ng-repeat="(key, value) in filterProductsBySubcat(selectedSubcats)">
+                    <div class="subcat-sep-line box-center">
+                        <div></div>
+                        <span>{{key}}</span>
+                    </div>
+                    <div class="item-subcat-sec">
+                        <a ng-repeat="product in value.products | orderBy:sortBy['sorting_key']:sortBy['descending']" href="{{product.product_url}}" target="_self">
                             <div class="item-box" id="{{ product.product_id }}">
                                 <ul class="item-box-ul fadeIn">
-                                    <li class="item-pic" ng-click="hrefPrdPage(product)">
+                                    <li class="item-pic">
                                         <img ng-src="{{ product.image }}">
                                     </li>
-                                    <li class="catalog-text item-brand" ng-click="hrefPrdPage(product)">
-                                        <div ng-if="product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] > 1"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] }} x {{ product.product_variants.all_volumes[0] }})</div>
-                                        <div ng-if="!(product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0] > 1)"><span>{{ product.brand }} {{ product.name }}</span> ({{ product.product_variants.all_volumes[0] }})</div>
+                                    <li class="catalog-text item-brand">
+                                        <div ng-if="product.packaging > 1">
+                                            <span class="catalog-item-brand">{{ product.brand }}</span>
+                                            <br>
+                                            <span class="catalog-item-name">{{ product.name }}</span> ({{ product.packaging }} x {{ product.volume }})
+                                        </div>
+                                        <div ng-if="!(product.packaging > 1)">
+                                            <span class="catalog-item-brand">{{ product.brand }}</span>
+                                            <br>
+                                            <span class="catalog-item-name">{{ product.name }}</span> ({{ product.volume }})
+                                        </div>
                                     </li>
                                     <li class="catalog-text item-price box-center">
                                         <span class="item-curency">C$</span>
-                                        <span>{{ product.product_variants[product.product_variants.all_volumes[0]][product.product_variants[product.product_variants.all_volumes[0]].all_packagings[0]].price}}</span>
+                                        <span>{{ product.price}}</span>
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </a>
                     </div>
-                </section>
+                    <br>
+                </div>
+            </section>
+        </div>
+        <!-- Mobile filter-sort section -->
+        <div class="mob-fs-background" ng-show="mobFilterContent || mobSortContent"></div>
+        <section class="mob-filter-sort" ng-class="mobFilterSortClass" ng-show="screenMob || screenTablet" ng-cloak>
+            <div class="mob-fs-hdr">
+                <div ng-click="showFilterOptions('filter')" class="box-center fs-name">
+                    <ng-md-icon ng-class="mobFilterArrow" class="filter-icon" icon="keyboard_arrow_down" size="23"></ng-md-icon>Filter</div>
+                <div class="mob-fs-seperation-line"></div>
+                <div ng-click="showFilterOptions('sort')" class="box-center fs-name">
+                    <ng-md-icon ng-class="mobSortArrow" class="sort-icon" icon="keyboard_arrow_down" size="23"></ng-md-icon>Sort</div>
             </div>
-        </div>
-        </div>
-        <% if (!production) { %>
-            <script src="/resources/services/localStorage.js"></script>
-            <script src="/resources/services/cartService.js"></script>
-            <script src="/resources/directives/scheduler.js"></script>
-            <script src="/resources/controllers/catalog.js"></script>
-            <% } %>
+            <div ng-show="mobFilterContent" class="mob-filter-div">
+                <div layout="row" layout-wrap flex class="subcat-cb-div">
+                    <button class="filter-clr-btn" ng-click="deselectAllSubcats()" ng-show="selectedSubcats.length">
+                        <ng-md-icon icon="clear" size="16"></ng-md-icon>
+                    </button>
+                    <div class="subcat-checkboxes" flex="100" ng-repeat="subcategory in subcategories" ng-click="selectSubcat(subcategory, selectedSubcats)">
+                        <md-checkbox ng-checked="subcatSelected(subcategory, selectedSubcats)">
+                            {{ subcategory }}
+                        </md-checkbox>
+                    </div>
+                </div>
+            </div>
+            <div class="mob-sort-div" ng-show="mobSortContent">
+                <md-radio-group ng-model="sortBy">
+                    <div class="radio-btn-div" ng-repeat="(key, value) in sorting_options">
+                        <md-radio-button ng-value="value">
+                            {{key}}
+                        </md-radio-button>
+                    </div>
+                </md-radio-group>
+            </div>
+        </section>
+    </div>
+    </div>
+    <% if (!production) { %>
+        <script src="/resources/services/localStorage.js"></script>
+        <script src="/resources/services/cartService.js"></script>
+        <script src="/resources/directives/scheduler.js"></script>
+        <script src="/resources/directives/dropdown.js"></script>
+        <script src="/resources/controllers/catalog.js"></script>
+        <% } %>
 </body>
 <!--googleon: snippet-->
 

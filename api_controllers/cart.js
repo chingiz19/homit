@@ -4,60 +4,65 @@
 var router = require("express").Router();
 
 /* Get user's cart */
-router.get('/usercart', async function (req, res, next) {
-    var signedUser = Auth.getSignedUser(req);
+router.get('/usercart', Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, res, next) {
+    let signedUser = Auth.getSignedUser(req);
 
     if (signedUser) {
-        var userId = signedUser.id;
-        var cart = await Cart.getUserCart(userId);
-        var response = {
-            success: true,
-            cart: cart
+        let userId = signedUser.id;
+        let cart = await Cart.getUserCart(userId);
+
+        if (cart == false) {
+            ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.CART_ERROR);
+        } else {
+            let response = {
+                success: true,
+                cart: cart
+            };
+            res.send(response);
         }
-        res.send(response);
     } else {
-        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
 /* Modify item in user's cart */
 router.post('/modifyitem', async function (req, res, next) {
-    var depotId = req.body.depot_id;
-    var quantity = req.body.quantity;
-    var signedUser = Auth.getSignedUser(req);
+    let depotId = req.body.depot_id;
+    let quantity = req.body.quantity;
+    let signedUser = Auth.getSignedUser(req);
 
     if (signedUser) {
-        var userId = signedUser.id;
-        var result = await Cart.modifyProductInCart(userId, depotId, quantity);
-        var isSuccess = false;
+        let userId = signedUser.id;
+        let result = await Cart.modifyProductInCart(userId, depotId, quantity);
+        let isSuccess = false;
         if (result) {
             isSuccess = true;
         }
-        var response = {
+        let response = {
             success: isSuccess
         };
         res.send(response);
     } else {
-        errorMessages.sendBadRequest(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        ErrorMessages.sendBadRequest(res, ErrorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 
 /* Clears user's cart */
 router.post('/clear', async function (req, res, next) {
-    var signedUser = Auth.getSignedUser(req);
+    let signedUser = Auth.getSignedUser(req);
     if (signedUser) {
-        var userId = signedUser.id;
-        var result = await Cart.clearCart(userId);
-        var isSuccess = false;
+        let userId = signedUser.id;
+        let result = await Cart.clearCart(userId);
+        let isSuccess = false;
         if (result) {
             isSuccess = true;
         }
-        var response = {
+        let response = {
             success: isSuccess
         };
         res.send(response);
     } else {
-        errorMessages.sendErrorResponse(res, errorMessages.UIMessageJar.USER_NOT_SIGNED);
+        ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 });
 

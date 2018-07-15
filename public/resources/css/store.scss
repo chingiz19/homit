@@ -1,0 +1,365 @@
+@import "default/module";
+
+html, body {
+    background-color: rgb(249, 249, 249);
+}
+
+body {
+    letter-spacing: 0.01em;
+    font-family: 'Nunito', sans-serif;
+}
+
+.store-page-content {
+    width: 1180px;
+    margin: 85px auto 150px auto;
+}
+
+.banners-sec {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    transition: height 0.4s ease;
+}
+
+.banners-dots {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    z-index: 1;
+}
+
+.banners-dots li {
+    margin: 0 5px;
+}
+
+.banners-dots li:focus {
+    outline: 0;
+}
+
+.banners-dots div {
+    height: 12px;
+    width: 12px;
+    border-width: 0;
+    border-radius: 6px;
+    box-shadow: 0 0px 4px 2px rgba(255, 255, 255, 0.25);
+}
+
+.banners-dots div:hover {
+    background-color: rgb(255,255,255);
+    transition: background-color 0.3s ease;
+}
+
+.sp-banners-images {
+    position: relative;
+    width: calc(5 * 100%);
+    height: 100%;
+    left: -100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.banner {
+    width: 1180px;
+    height: 100%;
+    display: -webkit-inline-flex;
+}
+
+.banner img {
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.banner div {
+    width: calc(100% - 590px);
+}
+
+.store-coupons-sec{
+    width: 100%; 
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    justify-content: center;
+    .coupon-div{
+        width: 220px; 
+        height: 212px; 
+        margin: 8px; 
+        display: flex; 
+        flex-direction: column; 
+        color: #000000; 
+        box-shadow: 0 0px 4px 1px rgba(0, 0, 0, 0.2); 
+        background-color: #fff; 
+        box-shadow: 0 0px 4px 1px rgba(0, 0, 0, 0.2); 
+        border-radius: 2px;
+        .cpn-amount-ul{
+            height: 60px; 
+            display: flex; 
+            flex-direction: row; 
+            justify-content: center; 
+            margin: 0; 
+            padding: 0;
+            color: #0e436c; 
+            .left-li{
+                display: flex; 
+                align-items: flex-end;
+                font-size: 18px; 
+            }
+            .middle-li{
+                margin: 0 5px;
+                font-size: 50px; 
+                font-weight: 600;
+            }
+            .right-li{
+                display: flex; 
+                flex-direction: column; 
+                align-items: center; 
+                justify-content: flex-end;
+                .sign{
+                    font-size: 18px;
+                }
+                .off{
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+        }
+        .cpn-header-txt{
+            width: 210px;
+            padding: 3px 0;
+            margin: 3px 5px;
+            background-color: #df5939;
+            font-size: 20;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase; 
+            text-align: center;
+            border-radius: 4px;
+        }
+        .cpn-body-txt{
+            width: 200px; 
+            font-size: 12px; 
+            color: #8f95a3; 
+            margin: 3px 10px;
+        }
+        .cpn-expiry-txt{
+            width: 200px; 
+            margin: 0px 10px 5px 10px; 
+            font-size: 12px; 
+            color: #8f95a3; 
+            text-align: center;
+        }
+        .cpn-apply-btn{
+            position: relative; 
+            width: 100%; 
+            height: 50px; 
+            background-color: #0e436c;
+            color: #0e436c; 
+            font-family: 'Nunito', sans-serif;
+            border: none;
+            border-top: 2px dashed #fff; 
+            border-radius: 0 0 2px 2px;
+            .apply-p{
+                margin: 0; 
+                font-weight: 600; 
+                color: #fff; 
+                font-size: 19px; 
+                letter-spacing: 0.3px; 
+                text-transform: uppercase;
+            }
+            .remove-p{
+                margin: 0;
+                color: #fff;
+                font-size: 14px;
+                font-weight: 300;
+                text-transform: uppercase;
+            }
+            ng-md-icon{
+                position: absolute; 
+                top: -11px; 
+                left: 0; 
+                fill: #6AB5B1;
+            }
+        }
+    }
+}
+
+.store-name-sp, .category-hdr, .coupon-hdr{
+    width: 100%;
+    text-align: center;
+    color: rgb(38, 42, 51);
+    font-weight: 300;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.category-hdr, .coupon-hdr{
+    margin: 50px 0 10px 0;
+}
+
+.store-name-sp{
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.category-div{
+    width: 940px; 
+    margin: 0 auto; 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-around; 
+    flex-wrap: wrap;
+    a, a:hover, a:active, a:visited, a:focus {
+        text-decoration: none;
+    }
+}
+
+.category-img{
+    width: 200px; 
+    height: 270px;
+    transition: height 0.4s ease;
+}
+
+.category-name{
+    padding: 7px;
+    font-size: 17px; 
+    color: #68686b; 
+    -webkit-font-smoothing: antialiased; 
+}
+
+.category-div ul{
+    margin: 10px 0; 
+    padding: 0; 
+    border-radius: 1px;
+    background-color: #fff; 
+    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s ease !important;
+}
+
+.category-div ul:hover{
+    opacity: 0.7 !important;
+    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.35);
+    transition: all 0.4s ease;
+}
+
+/* start of window shrinkage affect solution */
+@media (max-width: 1190px) and (min-width: 980px) {
+    .store-page-content {
+        width: 960px;
+    }
+    .banners-sec{
+        height: 356px;
+    }
+}
+
+@media (max-width: 979px) and (min-width: 856px) {
+    .store-page-content, .category-div {
+        width: 855px;
+    }
+    .banners-sec{
+        height: 317px;
+    }
+}
+
+@media (max-width: 855px) and (min-width: 400px) {
+    .store-page-content, .category-div {
+        width: 570px;
+    }
+    .banners-sec{
+        height: 211px;
+    }
+    .category-img{
+        width: 170px;
+        height: 230px;
+    }
+}
+
+/* start of non-mobile/tablet styles */
+@media screen and (min-device-width: 769px) {
+    //User Cart - Product Page
+    .checkout-menu-btn-div {
+        position: fixed;
+        right: 0;
+        top: 425px;
+        margin: 10px 0 10px 10px;
+        z-index: 1;
+        .checkout-menu-btn {
+            top: 5px;
+            height: 60px;
+            width: 70px;
+            background-color: #00cc99;
+            box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.35);
+            border-radius: 30px 0 0 30px;
+            transition: all 0.3s ease;
+        }
+        .checkout-menu-btn ng-md-icon {
+            fill: #f9f9f9;
+        }
+        .checkout-menu-btn ng-md-icon svg {
+            width: 35px;
+            height: 35px;
+            margin-right: 8px;
+            transform: rotateY(180deg);
+        }
+        .items-num {
+            bottom: 45px;
+            left: 2px;
+            background-color: orangered;
+            color: ghostwhite;
+            font-size: 14px;
+            font-weight: 700;
+            border: solid 2px rgb(255, 255, 255);
+            border-radius: 3px;
+        }
+    }
+}
+
+/* start of mobile/tablet styles */
+@media screen and (max-device-width: 768px) {
+    .checkout-menu-btn-div{
+        width: 15%;
+    }
+}
+
+/* start of phone styles */
+@media screen and (max-device-width: 479px) {
+    .store-page-content {
+        width: 100vw;
+        margin: 70px auto 125px auto;
+    }
+
+    .banners-sec {
+        height: calc(100vw * 400/1180);
+    }
+
+    .banner {
+        width: 100vw;
+        height: 100%;
+    }
+
+    .banner img {
+        border-radius: 0;
+    }
+
+    .category-div{
+        width: calc(100vw - 20px);
+        margin: 0 auto;
+        .category-img{
+            width: 155px; 
+            height: 209px;
+        }
+        .category-name{
+            padding: 4px;
+            font-size: 16px;
+        }
+    }
+
+    .store-name-sp{
+        margin-bottom: 10px;
+    }
+
+    .category-hdr, .coupon-hdr{
+        margin-top: 30px;
+    }
+
+}

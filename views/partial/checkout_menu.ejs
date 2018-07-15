@@ -1,9 +1,9 @@
 <link href="/resources/css/checkout_menu.css" rel="stylesheet">
 <!--googleoff: snippet-->
-<div ng-controller="cartController" ng-cloak>
+<div ng-controller="cartController" ng-cloak ng-init="haveNotificationsToShow = (<%= haveNotificationsToShow %>)">
     <div class="checkout-menu-btn-div cart-btn-catalog">
-        <button id="cart" class="checkout-menu-btn" ng-click="toggleRight()" ng-hide="isOpenRight()">
-            <ng-md-icon icon="shopping_cart"></ng-md-icon>
+        <button id="cart-button" class="checkout-menu-btn" ng-click="toggleRight()" ng-hide="isOpenRight()" ng-style="(!notificationClearedByUser && haveNotificationsToShow) && {'top': '25px'} || {'top': '0px'}">
+            <ng-md-icon icon="shopping_basket"></ng-md-icon>
             <div class="items-num box-center">{{cart.numberOfItems()}}</div>
         </button>
     </div>
@@ -15,7 +15,7 @@
                         <ng-md-icon  icon="keyboard_arrow_right"></ng-md-icon>
                     </button>
                     <ul class="total-ul">
-                        <li>Cart Total:</li>
+                        <li>Basket Total:</li>
                         <li>&nbsp &nbspC${{ cart.totalCartPrice() }}</li>
                     </ul>
                 </div>
@@ -23,7 +23,7 @@
                     <button onclick="location.href='/checkout'" class="to-checkout-btn">Proceed to Checkout</button>
                 </div>
             </section>
-            <cart can-remove="true" cart-ctrl="cart" store-api="store_type_api_name"></cart>
+            <cart can-remove="true" cart-ctrl="cart" store-type-name="store_type_name"></cart>
         </md-content>
     </md-sidenav>
 </div>

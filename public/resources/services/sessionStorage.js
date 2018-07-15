@@ -76,14 +76,6 @@ app.service('sessionStorage', ["$window", function($window){
         return _get("coverage-map");
     };
 
-    var _setCategoryClicked = function(value){
-        return _set("category-clicked", value);
-    };
-
-    var _getCategoryClicked = function(value){
-        return _get("category-clicked");
-    };
-
     var _setAddressUnitNumber = function(value){
         return _set("address-unit-number", value);
     };
@@ -105,6 +97,14 @@ app.service('sessionStorage', ["$window", function($window){
         _setCheckoutUserInfo("");
     };
 
+    var _setUserSelectedSubcategory = function(value){
+        return _set("user-selected-subcategory", value);
+    };
+
+    var _getUserSelectedSubcategory = function(){
+        return _get("user-selected-subcategory");
+    };
+
     return {
         get: _get,
         set: _set,
@@ -120,12 +120,12 @@ app.service('sessionStorage', ["$window", function($window){
         getAddressLng: _getAddressLng,
         setCoverageMap: _setCoverageMap,
         getCoverageMap: _getCoverageMap,
-        setCategoryClicked: _setCategoryClicked,
-        getCategoryClicked: _getCategoryClicked,
         setAddressUnitNumber: _setAddressUnitNumber,
         getAddressUnitNumber: _getAddressUnitNumber,
         setAccountSection: _setAccountSection,
         getAccountSection: _getAccountSection,
+        setUserSelectedSubcategory: _setUserSelectedSubcategory,
+        getUserSelectedSubcategory: _getUserSelectedSubcategory,
         clearAfterCheckout: _clearAfterCheckout
     };
 }]);

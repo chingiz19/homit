@@ -2,6 +2,7 @@
         #autocompleteAddressInputBox{
             text-transform: capitalize;
         }
+
         /* Google Search autocomplete non-mobile */
         .predictions-container{
             position: absolute;
@@ -11,7 +12,6 @@
             border: 1px solid #ccc;
             border-top-width: 0px;
             max-height: 250px; 
-            /* width: 716px; */
         }
         .predictions-item {
             display: flex; align-items: center;
@@ -104,19 +104,14 @@
     
     
     <div id="placesServiceNode" style="display: none;"></div>
-    
-    <!-- <ng-md-icon class="place-icon" style="fill: rgba(0,0,0,0.6);" icon="place" size="37"></ng-md-icon> -->
-    <input id="autocompleteAddressInputBox" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-focus="_inptFocused()" ng-blur="_inptBlured()" ng-disabled="inputDisabled" placeholder="Enter your address" type="text" class="{{inputClass}}" autocomplete="off" autocorrect="off" spellcheck="false" required>
+    <input id="autocompleteAddressInputBox" aria-label="Address input" name="address" ng-model="_searchedAddress" ng-change="_addressTyped()" ng-focus="_inptFocused()" ng-blur="_inptBlured()" ng-disabled="inputDisabled" placeholder="Enter your address" type="text" class="{{inputClass}}" autocomplete="off" autocorrect="off" spellcheck="false" required>
     <md-button id="address-clear-btn" aria-label="address" ng-if="_searchedAddress" class="{{buttonClass}}" ng-click="clearText(); _predictions.length = 0; _inptBlured();" ng-hide="inputDisabled">
         <ng-md-icon icon="clear" class="{{iconClass}}"></ng-md-icon>
     </md-button>
-    
     <!-- Google Address prediction dropdown -->
-    <!-- Start --> 
     <ul class="predictions-container" ng-if="_predictions.length != 0" ng-cloak>
         <li ng-repeat="address in _predictions" id="prediction_{{$index + 1}}" class="predictions-item" ng-click="_addressSelected(address); document.getElementById('autocompleteAddressInputBox').blur();">
             <div><b>{{_matched_part}}</b>{{address.description}}</div>
         </li>
         <li class="powered-by-google"><img ng-src="{{'/resources/images/non-catalog-image/powered_by_google.png'}}" /></li>
     </ul>
-    <!-- End -->

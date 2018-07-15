@@ -17,11 +17,12 @@
         </section>
         <!-- Body -->
         <section class="sign-body">
-            <form name="logIn_mob" class="sign-form" ng-submit="loginMob(logIn_mob.$valid)">
+            <form name="logIn_mob" id="logIn_mob" class="sign-form" ng-submit="loginMob(logIn_mob.$valid)">
                 <div class="sign-form-inner-box inner-box-logIn">
                     <md-input-container class="input-width-1 email-margin">
-                        <label>Email</label>
-                        <input name="login_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="login_email_mob" type="email" required/>
+                        <label></label>
+                        <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, true)">Did you mean <span>{{suggestion}}</span>?</div>
+                        <input id="mob-login-email" name="login_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="login_email_mob" placeholder="Email" type="email" required/>
                         <div ng-messages="logIn_mob.login_email.$error">
                             <div ng-message="pattern">Email format only</div>
                             <div ng-message="maxlength">30 caracters maximum</div>
@@ -29,15 +30,46 @@
                         </div>
                     </md-input-container>
                     <md-input-container class="input-width-1">
-                        <label>Password</label>
-                        <input name="login_password" ng-pattern="passPattern" maxlength="30" ng-model="login_password_mob"
-                            type="password" required/>
+                        <label></label>
+                        <input name="login_password" ng-pattern="passPattern" maxlength="30" ng-model="login_password_mob" placeholder="Password" type="password" required/>
                         <div ng-messages="logIn.login_password.$error">
                             <div ng-message="maxlength">30 characters maximum</div>
                             <div ng-message="required">Required</div>
                         </div>
                     </md-input-container>
-                    <button class="sign-btn-mob" type="submit">LOG IN</button>
+                    <button id="mob-login-btn" class="sign-btn-mob" type="submit">
+                        <md-progress-circular ng-class="loading_spin" md-diameter="20"></md-progress-circular>
+                        <!-- Successful Sign In -->
+                        <div ng-class="login_success" class="box-center">
+                            <svg class="sign-checkmark-svg" viewBox="0 0 40 40">
+                                <circle class="sign-checkmark-circle" cx="20" cy="20" r="20px"/>
+                                <polyline class="sign-checkmark-line" points="9, 21 16, 30 32, 12"/>
+                            </svg>
+                        </div>
+                        <span ng-class="login_text">LOG IN</span>
+                        <div ng-class="login_message">
+                            <!-- Wrong Creditentials -->
+                            <div ng-show="message_type == 1" class="full-box">
+                                <div class="msg-close-btn" ng-click="tryAgainLogIn()">
+                                    <ng-md-icon icon="clear"></ng-md-icon>
+                                </div>
+                                <div class="error-message-text margin-auto">Sorry, You have entered invalid credentials. Please try
+                                    <span class="error-message-link" ng-click="tryAgainLogIn()">again</span>
+                                </div>
+                                <div class="or-div">
+                                    <span class="or-span">or</span>
+                                </div>
+                                <div class="error-message-link margin-auto" ng-click="forgotPasswordMob(logIn_mob.$valid)">Forgot Password</div>
+                            </div>
+                            <!-- Firgot Password -->
+                            <div ng-show="message_type == 2" class="full-box">
+                                <div class="msg-close-btn" onClick="window.location.reload()">
+                                    <ng-md-icon icon="clear"></ng-md-icon>
+                                </div>
+                                <div class="message-div-txt">{{ sign_message_mob }}</div>
+                            </div>
+                        </div>
+                    </button>
                 </div>
             </form>
         </section>
@@ -45,35 +77,6 @@
         <section class="logIn-footer">
             <div class="new-to-text-mob">New to Homit?</div>
             <button class="sign-footer-btn" ng-click="toggleSign()">Sign Up</button>
-        </section>
-        <!-- Message box -->
-        <section id="logInMessage-mob">
-            <div id="invalidLogIn-mob" class="invalidLogIn-mob">
-                <button class="msg-close-btn" ng-click="tryAgainLogIn()">
-                    <ng-md-icon icon="clear"></ng-md-icon>
-                </button>
-                <div class="error-message-text margin-auto">Sorry, You have entered invalid credentials. Please try
-                    <span class="error-message-link" ng-click="tryAgainLogIn()">again</span>
-                </div>
-                <div class="or-div">
-                    <span class="or-span">or</span>
-                </div>
-                <div class="error-message-link margin-auto" ng-click="forgotPasswordMob(logIn_mob.$valid)">Forgot Password</div>
-            </div>
-            <div id="emailNotification-mob" class="emailNotification-mob">
-                <button class="msg-close-btn" onClick="window.location.reload()">
-                    <ng-md-icon icon="clear"></ng-md-icon>
-                </button>
-                <div>{{ sign_message_mob }}</div>
-            </div>
-            <div id="sucLogIn-mob" class="sucSign-mob">
-                <div class="box-center success-mark-div">
-                    <svg class="sign-checkmark-svg" viewBox="0 0 80 80">
-                        <circle class="sign-checkmark-circle" cx="40" cy="40" r="39px"/>
-                        <polyline class="sign-checkmark-line" points="16, 43 32, 63 65, 20"/>
-                    </svg>
-                </div>
-            </div>
         </section>
     </div>
 
@@ -88,8 +91,9 @@
             <form name="signUp_mob" class="sign-form" ng-submit="signupMob(signUp_mob.$valid)">
                 <div class="sign-form-inner-box inner-box-signUp">
                     <md-input-container class="input-width-1">
-                        <label class="inptLbl">Email</label>
-                        <input name="signup_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="signup_email_mob" type="email" required/>
+                        <label></label>
+                        <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, false)">Did you mean <span>{{suggestion}}</span>?</div>
+                        <input id="mob-signup-email" name="signup_email" ng-pattern="/^.+@.+\..+$/" maxlength="30" ng-model="signup_email_mob" placeholder="Email" type="email" required/>
                         <div ng-messages="signUp_mob.signup_email.$error">
                             <div ng-message="pattern">Email format only</div>
                             <div ng-message="maxlength">30 characters maximum</div>
@@ -98,8 +102,8 @@
                     </md-input-container>
                     <div layout="row" class="input-width-1">
                         <md-input-container class="input-width-2">
-                            <label class="inptLbl">First Name</label>
-                            <input name="signup_fname" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_fname_mob" type="text" required/>
+                            <label></label>
+                            <input name="signup_fname" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_fname_mob" placeholder="First Name" type="text" required/>
                             <div ng-messages="signUp_mob.signup_fname.$error">
                                 <div ng-message="pattern">Letters only</div>
                                 <div ng-message="maxlength">30 caracters maximum</div>
@@ -107,8 +111,8 @@
                             </div>
                         </md-input-container>
                         <md-input-container class="input-width-2">
-                            <label class="inptLbl">Last Name</label>
-                            <input name="signUp_mob" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_lname_mob" type="text" required/>
+                            <label></label>
+                            <input name="signUp_mob" ng-pattern="/^[a-zA-Z]*$/" maxlength="30" ng-model="signup_lname_mob" placeholder="Last Name" type="text" required/>
                             <div ng-messages="signUp.signup_lname.$error">
                                 <div ng-message="pattern">Letters only</div>
                                 <div ng-message="maxlength">30 caracters maximum</div>
@@ -117,9 +121,8 @@
                         </md-input-container>
                     </div>
                     <md-input-container class="input-width-1">
-                        <label class="inptLbl">Password</label>
-                        <input name="signup_password" ng-pattern="passPattern" maxlength="30" minlength="8"
-                            ng-model="signup_password_mob" type="password" required/>
+                        <label></label>
+                        <input name="signup_password" ng-pattern="passPattern" maxlength="30" minlength="8" ng-model="signup_password_mob" placeholder="Password" type="password" required/>
                         <div ng-messages="signUp_mob.signup_password.$error">
                             <div ng-message="pattern">Invalid characters</div>
                             <div ng-message="maxlength">30 characters maximum</div>
@@ -127,7 +130,26 @@
                             <div ng-message="required">Required</div>
                         </div>
                     </md-input-container>
-                    <button class="sign-btn-mob" type="submit">SIGN UP</button>
+                    <button id="mob-sign-up-btn" class="sign-btn-mob" type="submit">
+                        <md-progress-circular ng-class="loading_spin" md-diameter="20"></md-progress-circular>
+                        <!-- Successful Sign Up -->
+                        <div ng-class="signup_success" class="box-center">
+                            <svg class="sign-checkmark-svg" viewBox="0 0 40 40">
+                                <circle class="sign-checkmark-circle" cx="20" cy="20" r="20px"/>
+                                <polyline class="sign-checkmark-line" points="9, 21 16, 30 32, 12"/>
+                            </svg>
+                        </div>
+                        <span ng-class="signup_text">SIGN UP</span>
+                        <div ng-class="signup_message">
+                            <!-- Sign Up message -->
+                            <div class="full-box">
+                                <div class="msg-close-btn" onClick="window.location.reload()">
+                                    <ng-md-icon icon="clear"></ng-md-icon>
+                                </div>
+                                <div class="message-div-txt">{{ sign_message_mob }}</div>
+                            </div>
+                        </div>
+                    </button>
                 </div>
             </form>
         </section>
@@ -135,26 +157,11 @@
         <section class="signUp-footer">
             <button class="sign-footer-btn" ng-click="toggleSign()">Sign In</button>
         </section>
-
-        <!-- Message box -->
-        <section>
-            <div id="sucSignUp-mob" class="sucSign-mob">
-                <div class="box-center success-mark-div">
-                    <svg class="sign-checkmark-svg" viewBox="0 0 80 80">
-                        <circle class="sign-checkmark-circle" cx="40" cy="40" r="39px"/>
-                        <polyline class="sign-checkmark-line" points="16, 43 32, 63 65, 20"/>
-                    </svg>
-                </div>
-            </div>
-            <div id="signUpNotification-mob" class="signUpNotification-mob">
-                <button class="msg-close-btn" onClick="window.location.reload()">
-                    <ng-md-icon icon="clear"></ng-md-icon>
-                </button>
-                <div>{{ sign_message_mob }}</div>
-            </div>
-        </section>
     </div>
 
+    <% if (!production) { %>
+        <script src="/resources/services/localStorage.js"></script>
+    <% } %>
     <script src="/resources/controllers/accounts.js"></script>
 </body>
 

@@ -1,11 +1,70 @@
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
+
+    //Don't display md-input-container label when input focused
+    md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {
+        display: none;
+    }
+
+    //Upon valid input makes input bottom-border green
+    md-input-container .ng-valid.ng-not-empty, #autocompleteAddressInputBox .ng-valid.ng-not-empty {
+        border-bottom-color: rgb(0, 204, 153) !important;
+        border-bottom-width: 2px !important;
+        padding-bottom: 0px;
+    }
+
+    md-progress-circular svg path { 
+        stroke: rgba(196, 196, 196, 0.726); 
+    }
+
+    .sign-checkmark-svg{
+        width: 40px;
+        height: 40px;
+    }
+
+    .sign-checkmark-line{
+        stroke-width: 2; 
+    }
+
+    .login-spin{
+        position: relative; 
+    }
+
+    body{
+        letter-spacing: 0.01em;
+        font-family: 'Nunito', sans-serif;
+    }
+
     .margin-auto {
         margin: auto;
     }
 
-    .search-btn-mob {
+    .full-box{
+        width: 100%;
+        height: 100%;
+    }
+
+    .message-div-txt{
+        color: black;
+        font-size: 20px;
+        margin-top: 35px;
+    }
+
+    .search-btn-mob, .hdr-mob-search, .hdr-mob-sign {
         display: none;
+    }
+
+    #mob-login-btn, #mob-sign-up-btn{
+        position: relative; 
+        display: flex; 
+        flex-direction: row; 
+        justify-content: center; 
+        align-items: center;
+    }
+
+    .hdr-logo-H{
+        margin-left: 16%;
+        margin-right: 16%;
     }
 
     input {
@@ -78,6 +137,7 @@
     }
 
     .email-margin {
+        margin-top: 0px;
         margin-bottom: 20px;
     }
 
@@ -107,13 +167,14 @@
         font-size: 15px;
     }
 
-    .success-mark-div{
-        width: 100%;
-        height: 100%;
+    .success-mark-show{
+        position: absolute;
+        left: 40px;
     }
 
     .error-message-text {
-        font-size: 16px;
+        font-size: 19px;
+        margin-top: 15px;
         color: rgba(0, 0, 0, 0.95);
     }
 
@@ -125,13 +186,14 @@
     }
 
     .error-message-link {
-        color: rgb(0, 149, 207);
-        font-size: 17px;
+        color: #0095cf;
+        font-size: 19px;
     }
 
     .or-div {
         width: 100%;
         height: 20px;
+        margin: 10px 0;
     }
 
     .msg-close-btn {
@@ -159,15 +221,6 @@
         height: 0px;
     }
 
-    .sucSign-mob {
-        display: none;
-        height: 0px;
-    }
-
-    .invalidLogIn-mob {
-        display: none;
-        height: 0px;
-    }
 
     .signUpNotification-mob {
         display: none;
@@ -185,17 +238,18 @@
 
     .sign-showErrorMessage-mob {
         position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
+        left: calc(-1 * (90vw - 100%)/2);
+        top: -8vh;
+        width: 90vw;
+        height: 160px;
         display: flex;
         flex-direction: column;
-        height: 20vh;
-        width: 100%;
         padding: 5px 10px;
         background-color: rgba(240, 240, 240, 1);
         border-radius: 3px;
         text-align: center;
+        box-shadow: 0 0px 4px 2px rgba(0, 0, 0, 0.1);
+        animation: fadein 0.6s ease, scale9_to_10 0.9s ease-in-out;
         z-index: 100;
     }
 
@@ -208,7 +262,7 @@
     .or-div::after {
         content: "";
         display: inline-block;
-        width: 150px;
+        width: 140px;
         padding-bottom: 4px;
         border-top: 1px solid rgba(220, 220, 220, 1);
     }
@@ -218,11 +272,4 @@
         box-sizing: border-box;
     }
 
-    .messageIn-mob {
-        animation: move-in-sign-msg 0.6s ease;
-    }
-
-    .messageOut-mob {
-        animation: move-out-sign-msg 0.6s ease;
-    }
 }

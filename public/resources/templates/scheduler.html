@@ -3,17 +3,6 @@
         fill: rgba(39, 9, 9, 0.9);
     }
 
-    .hmt-radio-container {
-        font-size: 16px;
-        font-weight: 400;
-        position: relative;
-        margin-top: 13px;
-        display: block;
-        margin-bottom: 0px;
-        padding-left: 40px;
-        cursor: pointer;
-    }
-
     .hmt-radio-container-time {
         font-size: 15px;
         padding-bottom: 5px;
@@ -21,63 +10,10 @@
         padding-top: 5px;
     }
 
-    .hmt-radio-container input {
-        position: absolute;
-        z-index: -1;
-        opacity: 0;
-    }
-
-    .control_indicator {
-        position: absolute;
-        top: 2px;
-        left: 15px;
-        width: 17px;
-        height: 17px;
-        border-radius: 50%;
-        border: 1px solid #d9d9d9;
-        transition: all 0.2s ease-in-out;
-    }
-
     .control_indicator_time {
         top: 7px;
         width: 15px;
         height: 15px;
-    }
-
-    /* Checked state */
-
-    .hmt-radio-container input:checked~.control_indicator {
-        box-shadow: 0 0 0 10px rgba(42, 81, 145, 1) inset;
-        border: none;
-    }
-
-    /* Check mark */
-
-    .control_indicator:after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: scale(0.2);
-        transform: scale(0.2);
-        -webkit-transition: all 0.2s ease-in-out 0.1s;
-        transition: all 0.2s ease-in-out 0.1s;
-        opacity: 0;
-        width: 4px;
-        height: 4px;
-        margin-left: -1.5px;
-        margin-top: -1.5px;
-        background-color: #fff;
-        border-radius: 50%;
-    }
-
-    /* Show check mark */
-
-    .hmt-radio-container input:checked~.control_indicator:after {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        opacity: 1;
     }
 
     .del-opt-background {
@@ -105,10 +41,10 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        border: 1px solid rgb(251, 251, 251);
+        border: 1px solid #fff;
         padding: 0px;
         border-radius: 4px;
-        background-color: rgb(253, 253, 253);
+        background-color: #fff;
         z-index: 4;
     }
 
@@ -348,9 +284,9 @@
 
 
 <section id="{{storeType}}" class="del-options-sec">
-    <button type="button" class="del-opt-btn" ng-click="deliveryOptions()">
+    <button type="button" class="del-opt-btn" ng-click="deliveryOptions()" ng-style="buttonStyle">
         <ng-md-icon class="del-opt-icon" icon="arrow_drop_down"></ng-md-icon>
-        <span>{{ deliveryOption }}</span>
+        <span>{{ deliveryOption}}</span>
     </button>
     <div ng-if="_deliveryError">
         Sorry, scheduled delivery is not available at this point
