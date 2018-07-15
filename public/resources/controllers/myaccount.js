@@ -520,7 +520,7 @@ app.controller("myaccountController", function ($scope, $window, $timeout, local
                     $scope.coupons[index].applied = !$scope.coupons[index].applied;
                 }, 0);
             } else {
-                notification.addErrorMessage("Sorry, couldn't apply coupon");
+                notification.addErrorMessage(response.data.ui_message || "Sorry, couldn't apply coupon");
             }
 
         }, function (error) {

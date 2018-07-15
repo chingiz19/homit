@@ -353,9 +353,9 @@ async function canApplyCoupon(couponCode, userId) {
     FROM
         catalog_coupons AS coupons
     LEFT JOIN
-        user_coupons AS users ON (coupons.id = users.coupon_id)
+        user_coupons AS users ON (coupons.id = users.coupon_id) AND users.user_id=` + userId + `
     WHERE
-        (users.user_id =`+ userId + ` AND users.applied)
+        (users.user_id=`+ userId + ` AND users.applied)
     OR 
         ?
     GROUP BY 
