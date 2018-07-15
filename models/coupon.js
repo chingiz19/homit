@@ -190,7 +190,7 @@ pub.decrementUserCoupon = async function (couponId, userId) {
 pub.invalidatePrivateGuestCoupon = async function (couponId) {
     // move expire date to now
     let sqlQuery = `
-        UPDATE TABLE catalog_coupons
+        UPDATE catalog_coupons
         SET date_expiry = CURRENT_TIMESTAMP
         WHERE ?;
     `;
