@@ -412,16 +412,6 @@ CREATE TABLE drivers_routes (
 	PRIMARY KEY(id)
 ) ENGINE = Memory;
 
-
-CREATE TABLE drivers_request (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	driver_id INT UNSIGNED NOT NULL,
-	order_info JSON NOT NULL,
-
-	PRIMARY KEY(id)
-) ENGINE = InnoDB;
-
-
 CREATE TABLE orders_emails (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	transaction_id INT UNSIGNED NOT NULL,

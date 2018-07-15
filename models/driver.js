@@ -553,38 +553,6 @@ pub.getDriverObject = async function (driverId) {
     return sanitizeDriverObject(Object.assign({}, driver[0], driverStatus));
 }
 
-// Drivers temp request
-
-/**
- * Add to drivers request temp holder
- * 
- * @param {*} driverId 
- * @param {*} json 
- */
-pub.addToDriversRequest = async function (driverId, json) {
-    var data = {
-        driver_id: driverId,
-        order_info: JSON.stringify(json)
-    };
-
-    await db.insertQuery(db.tables.drivers_request, data);
-}
-
-/**
- * Get drivers request temp holder
- * 
- * @param {*} driverId 
- */
-pub.getDriversRequest = async function (driverId) {
-    var data = {
-        driver_id: driverId
-    };
-
-    var requests = await db.selectAllWhere(db.tables.drivers_request, data);
-    await db.deleteQuery(db.tables.drivers_request, data);
-    return requests;
-}
-
 /**
  * Get drivers routes with orders for driver id
  * 
