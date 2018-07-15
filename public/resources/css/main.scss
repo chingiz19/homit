@@ -1335,7 +1335,30 @@ body {
 @media screen and (min-device-width: 768px) {}
 
 /* start of medium tablet styles */
-@media screen and (max-device-width: 767px) and (min-device-width: 480px) {}
+@media screen and (max-device-width: 768px) and (min-device-width: 480px) {
+    .promotion-1-2-sec{
+        margin-top: 10px;
+        height: 435px;
+    }
+
+    .promotion-1-div, .promotion-2-div{
+        padding: 0 2.5%;
+    }
+
+    .trending-prd-sec{
+        padding-top: 0px;
+    }
+
+    .button-sec{
+        display: initial;
+        #sign-btns{
+            display: initial;
+            .signUp-btn{
+                display: none;
+            }
+        }
+    }
+}
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) and (min-device-width: 360px) {

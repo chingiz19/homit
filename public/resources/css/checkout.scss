@@ -409,7 +409,6 @@ md-input-container {
     height: 30px;
 }
 
-
 // Checkout Notification Modal
 #checkoutModal .modal-dialog {
     top: 20%;
@@ -522,6 +521,19 @@ md-input-container {
 @media (max-width: 884px) and (min-width: 571px) {
     .co-cart-sec , .co-view-cart-btn{
         width: 492px;
+    }
+}
+
+
+/* start of medium tablet styles */
+@media screen and (min-device-width: 480px) and (max-device-width: 776px) {
+    // Checkout Notification Modal
+    #checkoutModal .modal-dialog {
+        top: 30%;
+    }
+
+    #checkoutModal .modal-content {
+        left: calc((100vw - 400px)/2) !important;
     }
 }
 

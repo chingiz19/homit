@@ -91,7 +91,7 @@
                         </div>
                         <md-input-container class="md-block no-mar-bottom ui-input">
                             <label></label>
-                            <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion)">Did you mean <span>{{suggestion}}</span>?</div>
+                            <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion)">Maybe <span>{{suggestion}}</span>?</div>
                             <input id="email-input-co" name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn" ng-model="userInfo.user_email" placeholder="Email" type="email" required/>
                             <div ng-messages="checkoutInput.email.$error">
                                 <div ng-message="pattern" class="error-message-txt error-text">Email format only</div>

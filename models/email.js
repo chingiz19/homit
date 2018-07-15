@@ -381,7 +381,7 @@ function getOrderSlipHtml(OI, priceObject) {
     if (priceObject.couponsUsed.length != 0 && priceObject.couponsUsed[0].privacy_type) {
         general_coupon_html = `<tr class='customer-details-table-tr'>
         <td class='customer-details-table-td-hdr'>General coupons:</td>
-        <td id='customer_phone' class='customer-details-table-td-cnt'>` + filterInputField(OI.customer.generalCouponInvoiceMessage, "No Coupons found") + `</td></tr>`;
+        <td id='customer_phone' class='customer-details-table-td-cnt'>` + filterInputField(OI.customer.generalCouponInvoiceMessage, "No coupons used") + `</td></tr>`;
     }
 
     for (sub_order in orders) {
@@ -398,7 +398,7 @@ function getOrderSlipHtml(OI, priceObject) {
             "</tr>" +
             "<tr class='orders-details-table-tr'>" +
             "<td class='orders-details-table-td-hdr'>Store coupons:</td>" +
-            "<td class='orders-details-table-td-input'>" + filterInputField(orders[sub_order].couponInvoiceMessage, "No Coupons found") + "</td>" +                    //TODO Elnar please touch this up **** 
+            "<td class='orders-details-table-td-input'>" + filterInputField(orders[sub_order].couponInvoiceMessage, "No coupons used") + "</td>" +               
             "</tr>" +
             "</table>"
             ;
