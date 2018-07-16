@@ -850,7 +850,7 @@ button {
         flex-direction: column;
         align-items: flex-start !important;
         flex-wrap: nowrap;
-        height: 57px !important;
+        height: 63px !important;
 
         .store-hrs-txt {
             font-size: 15px;
@@ -947,9 +947,10 @@ button {
     }
 
     .store-open-hrs {
+        width: 260px;
+        margin-bottom: 5px;
         font-size: 16px;
         font-weight: 400;
-        width: 260px;
     }
 }
 

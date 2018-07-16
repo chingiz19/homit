@@ -8,6 +8,11 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
+/* Upon valid input makes input bottom-border green */
+md-input-container .ng-valid.ng-not-empty, #autocompleteAddressInputBox .ng-valid.ng-not-empty {
+    border-bottom-color: rgba(0,0,0,0.1) !important;
+}
+
 md-progress-circular svg path { 
     stroke: rgba(226, 226, 226, 0.75); 
 }

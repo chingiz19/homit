@@ -124,11 +124,13 @@ app.controller("storePageController", function ($scope, $location, $http, $windo
      * @param {string} product 
      */
     $scope.hrefPrdPage = function (product) {
+        let tmpPrdouct = product;
+        tmpPrdouct["store_type_name"] = $scope.storePage.store_info.name;
         googleAnalytics.addEvent('product_clicked', {
-            "event_label": product.brand + " " + product.name,
+            "event_label": tmpPrdouct.brand + " " + tmpPrdouct.name,
             "event_category": googleAnalytics.eventCategories.store_page_actions
         });
-        $window.location.href = $window.location.origin + helpers.buildProductPagePath(product);
+        $window.location.href = $window.location.origin + helpers.buildProductPagePath(tmpPrdouct);
     };
 
     /**
