@@ -19,34 +19,6 @@
     border-color: rgba(42, 81, 145, 1);
 }
 
-.mob-hub-btn {
-    position: fixed;
-    top: 0;
-    left: calc(( 100vw - 60px) / 2);
-    height: 50px;
-    padding: 0;
-    width: 70px;
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-weight: 600;
-    font-family: 'Dosis', sans-serif;
-    font-size: 25px;
-    user-select: none;
-    z-index: 8;
-}
-
-.mob-hub-btn ng-md-icon {
-    fill: #fff;
-}
-
-.mob-hub-btn svg {
-    width: 30px;
-    height: 30px;
-}
-
 //Caribbean Green curvy button
 .CG-cur-button {
     overflow-x: hidden;
@@ -79,13 +51,6 @@
     top: -2px;
     fill: #fff;
     transition: right 0.3s ease;
-}
-
-.sign-btn {
-    min-height: 32px;
-    min-width: 75px;
-    font-size: 16px;
-    border-radius: 15px;
 }
 
 //Homit - Radio button

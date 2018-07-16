@@ -179,17 +179,17 @@ app.controller("storePageController", function ($scope, $location, $http, $windo
 
     $window.onload = function () {
         AOS.init();
-        setInterval(function () {
-            let windowWidthCurrent = $window.innerWidth;
-            if ($scope.windowWidth != windowWidthCurrent) {
-                $scope.windowWidth = windowWidthCurrent;
-                return;
-            }
-            $timeout(function () {
-                $scope.nextBanner();
-            }, 0);
-            $scope.windowWidth = windowWidthCurrent;
-        }, 5000);
+        // setInterval(function () {
+        //     let windowWidthCurrent = $window.innerWidth;
+        //     if ($scope.windowWidth != windowWidthCurrent) {
+        //         $scope.windowWidth = windowWidthCurrent;
+        //         return;
+        //     }
+        //     $timeout(function () {
+        //         $scope.nextBanner();
+        //     }, 0);
+        //     $scope.windowWidth = windowWidthCurrent;
+        // }, 5000);
     };
 
     $scope.init();

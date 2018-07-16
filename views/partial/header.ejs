@@ -18,7 +18,7 @@
         </button>
     </div>
     <div class="homit-nav-content" ng-cloak>
-        <section>
+        <section style="margin-bottom: 6px;">
             <a class="white-logo" href="/main" target="_self">
                 <img alt="Homit Logo" class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM.png" />
             </a>
@@ -74,13 +74,13 @@
         <!-- buttons -->
         <section class="button-sec">
             <button class="hub-btn" ng-click="showHubBoxFun()">
-                hub
+                Store-Hub
             </button>
-            <div id="hdrHub" ng-if="showHubBox" class="header-hub fadeIn-hdr" ng-style="('<%= userLoggedIn %>' == 'true') && {'right': '28px'} || {'right': '128px'}">
+            <div id="hdrHub" ng-if="showHubBox" class="header-hub fadeIn-hdr" ng-style="('<%= userLoggedIn %>' == 'true') && {'right': '28px'} || {'right': '118px'}">
                 <div id="hdrHub1" class="box-extBox"></div>
                 <div id="hdrHub2">
                     <!--googleon: snippet-->
-                    <h3 class="box-center hub-header">Store Hub</h3>
+                    <h3 class="box-center hub-header">Stores We Deliver</h3>
                     <div class="hub-box">
                         <a class="store-div" ng-repeat="store in hubStores | orderBy: 'display_name'" href="/hub/{{store.name}}" target="_self">
                             <div>
@@ -93,10 +93,12 @@
             </div>
             <!--googleoff: snippet-->
             <% if(!userLoggedIn) { %>
+                
                 <span id="sign-btns" ng-cloak>
-                    <button class="sign-btn logIn-btn rgb-background" ng-click="modal(true, 'login');">Sign In</button>
-                    <button class="sign-btn signUp-btn" ng-click="modal(false, 'signup');">Sign Up</button>
+                    <button style="box-sizing: border-box; background-color: transparent; border: none; color: rgb(42,81,145); height: 32px; padding: 8px; line-height: 16px; font-size: 15px; letter-spacing: 0.1px;" ng-click="modal(true, 'login');" ng-click="modal(false, 'signup');">Register</button>
+                    <button style="box-sizing: border-box; background-color: transparent; border: 1px solid rgb(42,81,145); border-radius: 3px; color: rgb(42,81,145); height: 32px; padding: 8px; line-height: 16px; font-size: 15px; letter-spacing: 0.1px;" ng-click="modal(true, 'login');">Sign in</button>
                 </span>
+
                 <%} else {%>
                     <button class="user-signed-btn fadeIn" ng-class="{'user-btn-notification': !isCouponSeen }" ng-click="showAccountBoxFun()" ng-cloak>
                         <ng-md-icon icon="account_circle"></ng-md-icon>
