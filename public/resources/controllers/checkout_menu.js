@@ -1,6 +1,8 @@
 app.controller("cartController", 
 function ($scope, $sce, $timeout, $mdSidenav, $log, $location, localStorage) {
   
+    $scope.screenMob = global_screenIsMob;
+    $scope.screenTablet = global_screenIsTablet;
     $scope.store_type_name = $location.path().split("/")[2];
     $scope.notificationClearedByUser = localStorage.getHeaderNotificationCleared();
 

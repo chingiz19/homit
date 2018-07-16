@@ -26,13 +26,13 @@
                 </ul>
                 <div class="sp-banners-images fadeIn">
                     <img class="none" ng-repeat="none_banner in storePage.banners" ng-src="/resources/images/catalog-stores/banners/{{none_banner.image}}">
-                    <div class="banner box-center" ng-click="hrefBanner(storePage.banners[2].product_id, storePage.banners[2].subcategory_name, storePage.banners[2].category_name)">
+                    <div class="banner box-center" ng-click="hrefBanner(storePage.banners[2].product, storePage.banners[2].subcategory_name, storePage.banners[2].category_name)">
                         <img ng-src="/resources/images/catalog-stores/banners/{{storePage.banners[2].image}}">
                     </div>
-                    <div class="banner box-center" ng-repeat="banner in storePage.banners" ng-click="hrefBanner(banner.product_id, banner.subcategory_name, banner.category_name)">
+                    <div class="banner box-center" ng-repeat="banner in storePage.banners" ng-click="hrefBanner(banner.product, banner.subcategory_name, banner.category_name)">
                         <img ng-src="/resources/images/catalog-stores/banners/{{banner.image}}">
                     </div>
-                    <div class="banner box-center" ng-click="hrefBanner(storePage.banners[0].product_id, storePage.banners[0].subcategory_name, storePage.banners[0].category_name)">
+                    <div class="banner box-center" ng-click="hrefBanner(storePage.banners[0].product, storePage.banners[0].subcategory_name, storePage.banners[0].category_name)">
                         <img ng-src="/resources/images/catalog-stores/banners/{{storePage.banners[0].image}}">
                     </div>
                 </div>

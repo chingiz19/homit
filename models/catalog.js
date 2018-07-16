@@ -94,7 +94,7 @@ var getFormattedBanners = async function (banners) {
                 banners[i].product = undefined;
             } else {
                 banners[i].product = {
-                    id: tmpProductId,
+                    product_id: tmpProductId,
                     brand: tmpProduct.brand,
                     name: tmpProduct.name
                 };
@@ -117,7 +117,7 @@ var getProductInfoById = async function (productId) {
     let tmpResult = await db.runQuery(sqlQuery, data);
 
     if (tmpResult.length > 0) {
-        tmpResult[0];
+        return tmpResult[0];
     } else {
         return false;
     }
