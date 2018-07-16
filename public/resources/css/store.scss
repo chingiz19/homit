@@ -185,7 +185,7 @@ body {
     }
 }
 
-.store-name-sp, .category-hdr, .coupon-hdr{
+.category-hdr, .coupon-hdr{
     width: 100%;
     text-align: center;
     color: rgb(38, 42, 51);
@@ -195,11 +195,6 @@ body {
 
 .category-hdr, .coupon-hdr{
     margin: 50px 0 10px 0;
-}
-
-.store-name-sp{
-    margin-top: 0;
-    margin-bottom: 20px;
 }
 
 .category-div{
@@ -352,10 +347,6 @@ body {
             padding: 4px;
             font-size: 16px;
         }
-    }
-
-    .store-name-sp{
-        margin-bottom: 10px;
     }
 
     .category-hdr, .coupon-hdr{

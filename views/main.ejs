@@ -17,9 +17,9 @@
 <img class="none" alt="cover" ng-src="/resources/images/non-catalog-image/cover-image/hub-main_cover.png">
 <img class="none" alt="promotion1" ng-src="/resources/images/non-catalog-image/pages/main_promotion_1.jpeg">
 <img class="none" alt="promotion2" ng-src="/resources/images/non-catalog-image/pages/main_promotion_2.jpeg">
-<img class="none" alt="store image" ng-repeat="store in hubStores" ng-src="/resources/images/non-catalog-image/store-logo/{{store.image}}">
 <body ng-cloak>
     <div ng-controller="mainController" class="main-controller">
+    <img class="none" alt="store image" ng-repeat="store in hubStores" ng-src="/resources/images/non-catalog-image/store-logo/{{store.image}}">
         <section id="address" class="full-screen address-section box-center">
             <div class="address-div">
                 <div class="store-div-main fadeIn">
@@ -71,8 +71,8 @@
                 </span>
                 <span class="df-condition">
                     <ul>
-                        <li><ng-md-icon icon="done" size="20"></ng-md-icon>Location independent</li>
-                        <li><ng-md-icon icon="done" size="20"></ng-md-icon>No Order size limits</li>
+                        <li><ng-md-icon icon="done"></ng-md-icon>Location independent</li>
+                        <li><ng-md-icon icon="done"></ng-md-icon>No order size limits</li>
                     </ul>
                 </span>
             </span>

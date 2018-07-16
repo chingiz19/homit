@@ -511,6 +511,9 @@ body {
     position: relative;
     height: calc(100% / 3 - 10px);
     width: calc(100% / 6 - 10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 10px;
     background-color: #fff;
     width: 175px;
@@ -543,8 +546,8 @@ body {
 }
 
 .prom-item-ul li img {
-    height: calc(100% - 60px);
-    width: auto;
+    height: auto;
+    width: calc(100% - 50px);
     padding: 5px 0;
 }
 
@@ -721,20 +724,24 @@ body {
     }
 
     .df-condition{
-        width: 60%;
+        width: 320px;
         display: flex; 
         flex-direction: column; 
         justify-content: center;
         ul{
-            padding-left: 35px;
             li{
                 display: flex; 
                 flex-direction: row; 
                 align-items: center; 
                 color: #cb9c72;
+                font-size: 20px;
                 ng-md-icon{
                     margin-right: 2px;
                     fill: #5ece99;
+                    svg{
+                        width: 35px;
+                        height: 35px;
+                    }
                 }
             }
         }
@@ -1528,6 +1535,57 @@ body {
 
     .promotion-1-2-sec{
         margin-top: 10px;
+    }
+
+    .info-sec-background{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60vh;
+        min-height: 400px;
+        color: #cb9c72;
+        background-color: #5ece99;
+    
+        @media (max-width: 1100px) {
+            flex-direction: column;
+        }
+
+        .left-info-box{
+            .header h2{
+                font-size: 20px;
+            }
+        }
+
+        .check-row{
+            .check-mark-icon{
+                height: 22px;
+                width: 22px;
+                margin: 0 3px 3px 0;
+            }
+            p{
+                font-size: 17px;
+            }
+        }
+
+        .right-info-box{
+            .center-align-secondary{
+                margin: 10px 0 0 60px;
+            }
+        }
+    
+        .df-condition{
+            ul{
+                li{
+                    font-size: 17px;
+                    ng-md-icon{
+                        svg{
+                            width: 22px;
+                            height: 22px;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     .address-section {
