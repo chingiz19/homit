@@ -40,7 +40,6 @@ pub.tables = {
   users_employees: "users_employees",
   user_cart_items: "user_cart_items", 
   user_coupons: "user_coupons",
-  drivers_request: "drivers_request",
   orders_emails: "orders_emails",
   orders_transactions_history: "orders_transactions_history",
   stores_hours: "stores_hours",
