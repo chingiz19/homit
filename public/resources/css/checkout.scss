@@ -133,7 +133,7 @@ md-input-container {
     width: 1180px;
     display: flex;
     flex-direction: row;
-    margin: 55px auto;
+    margin: 70px auto;
 }
 
 .success-btn:focus{
@@ -537,15 +537,17 @@ md-input-container {
     }
 }
 
+@media (max-width: 884px) and (min-width: 400px){
+    .co-view-cart-btn{
+        margin-top: 77px;
+    }
+}
+
 @media (max-width: 884px) and (min-width: 400px) , screen and (max-device-width: 479px){
     .checkout-content {
         width: calc(100vw - 30px);
         margin: 0 auto 30px auto;
         flex-direction: column;
-    }
-
-    .co-view-cart-btn{
-        margin-top: 57px;
     }
 
     .co-cart-sec {

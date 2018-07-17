@@ -492,7 +492,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                     if(!scope.storeOpen && scope.deliveryOption == "ASAP Delivery"){
                         scope.buttonStyle = {"background-color" : "#ff8d8d"};
                     } else if(scope.storeOpen && scope.deliveryOption == "ASAP Delivery"){
-                        scope.buttonStyle = {"background-color" : "#a7ffdb"};
+                        scope.buttonStyle = {"background-color" : "#d8ff9d"};
                     } else if(scope.deliveryOption == "Scheduled Delivery"){
                         scope.buttonStyle = {"background-color" : "rgb(236, 251, 151)"};
                     }
