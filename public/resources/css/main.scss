@@ -27,6 +27,7 @@ body {
 
 .homit-nav{
     display: flex;
+    flex-direction: column;
     border-bottom: none;
     .homit-nav-content{
         justify-content: space-between;
