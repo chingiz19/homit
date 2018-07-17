@@ -11,7 +11,7 @@
     <%- include('partial/checkout_menu')%>
     <div ng-controller="storePageController">
         <section class="store-page-content">
-            <h2 class="store-name-sp">{{ storePage.store_info.display_name }}</h2>
+            <h2 class="store-name-sp"></h2>
             <section class="banners-sec">
                 <ul class="banners-dots">
                     <li class="banner-dot-1" ng-click="selectBanner(1)">
@@ -59,7 +59,7 @@
                 </div>
             </section>
             <section ng-show="storePage.categories.length != 0" class="category-sec">
-                <h2 class="category-hdr">Store Categories</h2>
+                <h2 class="category-hdr">{{ storePage.store_info.display_name }} - Store Categories</h2>
                 <div class="category-div">
                     <a ng-repeat="category in categories" href="{{category.category_url}}" target="_self">
                         <ul data-aos="zoom-in">

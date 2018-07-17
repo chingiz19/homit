@@ -230,7 +230,6 @@ label {
 .sidebar-div {
     position: fixed;
     left: 0;
-    top: 55px;
     color: white;
     width: 60px;
     height: 100%;
@@ -314,7 +313,6 @@ main {
     display: flex;
     flex-direction: column;
     flex: 1 1 100%;
-    margin: 55px 0 0 0;
     justify-content: flex-start;
 
     .overview{
@@ -626,6 +624,28 @@ main {
                 text-transform: uppercase;
             }
         }
+    }
+}
+
+/* start of mobile styles */
+@media screen and (min-device-width: 769px) {
+    .sidebar-div{
+        top: 70px
+    }
+
+    main{
+        margin: 70px 0 0 0;
+    }
+}
+
+/* start of mobile styles */
+@media screen and (max-device-width: 768px) {
+    .sidebar-div{
+        top: 55px
+    }
+
+    main{
+        margin: 55px 0 0 0;
     }
 }
 

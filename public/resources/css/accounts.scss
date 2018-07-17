@@ -1,5 +1,10 @@
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
+  
+
+    .logo-sec{
+        display: none;
+    }
 
     //Don't display md-input-container label when input focused
     md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {

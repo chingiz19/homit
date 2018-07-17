@@ -1,3 +1,7 @@
+.main-controller {
+    background-color: rgb(249, 249, 249);
+}
+
 body {
     background-color: transparent;
     letter-spacing: 0.01em;
@@ -6,10 +10,6 @@ body {
     user-select: none;
     -webkit-overflow-scrolling: touch;
     -webkit-font-smoothing: antialiased;
-}
-
-.hdr-mob-button, .hdr-logo-H{
-    display: none;
 }
 
 .myAccount-box{
@@ -21,12 +21,36 @@ body {
     animation: fadein 1.2s ease, scale9_to_10 0.7s ease-in-out;
 }
 
-.main-controller {
-    background-color: rgb(249, 249, 249);
-}
-
 .user-signed-btn ng-md-icon {
     fill: rgb(42, 81, 145);
+}
+
+.homit-nav{
+    display: flex;
+    border-bottom: none;
+    .homit-nav-content{
+        justify-content: space-between;
+        background-color: transparent !important;
+    }
+    .hdr-mob-button{
+        display: none;
+    }
+    .sign-btn {
+        box-sizing: border-box;
+        background-color: transparent;
+        height: 38px;
+        padding: 8px 10px;
+        line-height: 20px;
+        font-size: 17px;
+        letter-spacing: 0.2px;
+        transition: all 0.3s ease;
+    }
+
+    .logIn-btn {
+        border: 1px solid rgb(42, 81, 145);
+        border-radius: 20px;
+        color: rgb(42, 81, 145);
+    }
 }
 
 .address-input-span input::-webkit-input-placeholder {
@@ -184,36 +208,6 @@ body {
 
 .homit-nav {
     position: absolute;
-}
-
-.logIn-btn {
-    border-color: rgba(42, 81, 145, 0.5);
-    color: rgb(42, 81, 145);
-    background-color: transparent;
-}
-
-.logIn-btn:hover {
-    background-color: rgba(42, 81, 145, 0.03);
-    transition: all 0.3s ease;
-}
-
-.signUp-btn {
-    color: #fff;
-    background-color: rgb(42, 81, 145);
-    transition: all 0.3s ease;
-}
-
-.signUp-btn:hover {
-    background-color: rgba(42, 81, 145, 0.95);
-    transition: all 0.3s ease;
-}
-
-.white-logo {
-    display: none;
-}
-
-.rgb-logo {
-    display: initial;
 }
 
 .logo-img {
@@ -511,6 +505,9 @@ body {
     position: relative;
     height: calc(100% / 3 - 10px);
     width: calc(100% / 6 - 10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 10px;
     background-color: #fff;
     width: 175px;
@@ -543,8 +540,8 @@ body {
 }
 
 .prom-item-ul li img {
-    height: calc(100% - 60px);
-    width: auto;
+    height: auto;
+    width: calc(100% - 50px);
     padding: 5px 0;
 }
 
@@ -721,20 +718,24 @@ body {
     }
 
     .df-condition{
-        width: 60%;
+        width: 320px;
         display: flex; 
         flex-direction: column; 
         justify-content: center;
         ul{
-            padding-left: 35px;
             li{
                 display: flex; 
                 flex-direction: row; 
                 align-items: center; 
                 color: #cb9c72;
+                font-size: 20px;
                 ng-md-icon{
                     margin-right: 2px;
                     fill: #5ece99;
+                    svg{
+                        width: 35px;
+                        height: 35px;
+                    }
                 }
             }
         }
@@ -1332,10 +1333,23 @@ body {
 }
 
 /* start of non-mobile/tablet styles */
-@media screen and (min-device-width: 768px) {}
+@media screen and (min-device-width: 768px) {
+}
 
 /* start of medium tablet styles */
 @media screen and (max-device-width: 768px) and (min-device-width: 480px) {
+
+    .homit-nav-content {
+        .logo-sec{
+            display: initial !important;
+            margin-bottom: 0px;
+            .logo-img {
+                width: 108px;
+                height: 33px;
+            }
+        }
+    }
+
     .promotion-1-2-sec{
         margin-top: 10px;
         height: 435px;
@@ -1358,6 +1372,33 @@ body {
             }
         }
     }
+
+    .hdr-logo-H{
+        display: none;
+    }
+
+    .homit-nav-content {
+        .logo-sec{
+            margin-bottom: 0px;
+            .logo-img {
+                width: 108px;
+                height: 33px;
+            }
+        }
+    }
+
+    #sign-btns{
+        width: 175px;
+    }
+
+    .logIn-btn{
+        text-align: center;
+    }
+
+    .signUp-btn{
+        display: initial !important;
+    }
+
 }
 
 /* start of phone styles */
@@ -1428,6 +1469,17 @@ body {
 }
 
 @media screen and (max-device-width: 479px) {
+
+    .homit-nav-content {
+        .logo-sec{
+            display: initial !important;
+            margin-bottom: 0px;
+            .logo-img {
+                width: 108px;
+                height: 33px;
+            }
+        }
+    }
 
     .store-li:hover span {
         opacity: initial;
@@ -1528,6 +1580,83 @@ body {
 
     .promotion-1-2-sec{
         margin-top: 10px;
+    }
+
+    .info-sec-background{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60vh;
+        min-height: 400px;
+        color: #cb9c72;
+        background-color: #5ece99;
+    
+        @media (max-width: 1100px) {
+            flex-direction: column;
+        }
+
+        .left-info-box{
+            .header h2{
+                font-size: 20px;
+            }
+        }
+
+        .check-row{
+            .check-mark-icon{
+                height: 22px;
+                width: 22px;
+                margin: 0 3px 3px 0;
+            }
+            p{
+                font-size: 17px;
+            }
+        }
+
+        .right-info-box{
+            .center-align-secondary{
+                margin: 10px 0 0 60px;
+            }
+        }
+    
+        .df-condition{
+            ul{
+                li{
+                    font-size: 17px;
+                    ng-md-icon{
+                        svg{
+                            width: 22px;
+                            height: 22px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .homit-nav-content {
+        .logo-sec{
+            margin-bottom: 0px;
+            .logo-img {
+                width: 108px;
+                height: 33px;
+            }
+        }
+    }
+
+    .hdr-logo-H{
+        display: none;
+    }
+
+    #sign-btns{
+        width: 161px;
+    }
+
+    .logIn-btn{
+        text-align: center;
+    }
+    
+    .signUp-btn{
+        display: initial !important;
     }
 
     .address-section {

@@ -17,16 +17,14 @@
             <ng-md-icon icon="clear" size="17"></ng-md-icon>
         </button>
     </div>
+<!--googleon: snippet-->
     <div class="homit-nav-content" ng-cloak>
-        <section>
-            <a class="white-logo" href="/main" target="_self">
-                <img alt="Homit Logo" class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM.png" />
-            </a>
-            <a class="rgb-logo" href="/about" target="_self">
+        <section class="logo-sec">
+            <a class="rgb-logo" href="/main" target="_self">
                 <img alt="Homit Logo" class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM_rgb.png" />
             </a>
         </section>
-        <!-- search bar -->
+<!--googleoff: snippet-->
         <button class="hdr-mob-button" ng-click="showMobBoxFun('menu')">
             <ng-md-icon ng-if="!(showHdrBox == 'menu')" icon="menu" size="32"></ng-md-icon>
             <ng-md-icon class="clear-svg" ng-if="showHdrBox == 'menu'" icon="clear" size="32"></ng-md-icon>
@@ -71,16 +69,16 @@
                 </div>
             </div>
         </section>
-        <!-- buttons -->
+<!--googleon: snippet-->
         <section class="button-sec">
             <button class="hub-btn" ng-click="showHubBoxFun()">
-                hub
+                Store-Hub
             </button>
-            <div id="hdrHub" ng-if="showHubBox" class="header-hub fadeIn-hdr" ng-style="('<%= userLoggedIn %>' == 'true') && {'right': '28px'} || {'right': '128px'}">
+<!--googleoff: snippet-->
+            <div id="hdrHub" ng-if="showHubBox" class="header-hub fadeIn-hdr" ng-style="('<%= userLoggedIn %>' == 'true') && {'right': '28px'} || {'right': '118px'}">
                 <div id="hdrHub1" class="box-extBox"></div>
                 <div id="hdrHub2">
-                    <!--googleon: snippet-->
-                    <h3 class="box-center hub-header">Store Hub</h3>
+                    <h3 class="box-center hub-header">Stores We Deliver</h3>
                     <div class="hub-box">
                         <a class="store-div" ng-repeat="store in hubStores | orderBy: 'display_name'" href="/hub/{{store.name}}" target="_self">
                             <div>
@@ -91,14 +89,16 @@
                     </div>
                 </div>
             </div>
-            <!--googleoff: snippet-->
+<!--googleon: snippet-->
             <% if(!userLoggedIn) { %>
                 <span id="sign-btns" ng-cloak>
-                    <button class="sign-btn logIn-btn rgb-background" ng-click="modal(true, 'login');">Sign In</button>
-                    <button class="sign-btn signUp-btn" ng-click="modal(false, 'signup');">Sign Up</button>
+                    <button class="signUp-btn sign-btn" ng-click="modal(false, 'signup');" ng-click="modal(false, 'signup');">Sign up</button>
+                    <button class="logIn-btn sign-btn" ng-click="modal(true, 'login');">Sign in</button>
                 </span>
                 <%} else {%>
-                    <button class="user-signed-btn fadeIn" ng-class="{'user-btn-notification': !isCouponSeen }" ng-click="showAccountBoxFun()" ng-cloak>
+<!--googleoff: snippet-->                    
+                    <button class="user-signed-btn fadeIn" ng-class="{'user-btn-notification': !isCouponSeen }" ng-click="showAccountBoxFun()"
+                        ng-cloak>
                         <ng-md-icon icon="account_circle"></ng-md-icon>
                     </button>
                     <div id="hdrMyAcc" ng-if="showAccountBox" class="myAccount-box fadeIn-hdr">
@@ -116,9 +116,9 @@
                         </div>
                     </div>
                     <% } %>
-                        <!--googleon: snippet-->
         </section>
         <modal class="header-sign-modal" show="showModal" ng-show="showModal" show-login="showLogInModal"></modal>
+<!--googleon: snippet-->
     </div>
 </nav>
 

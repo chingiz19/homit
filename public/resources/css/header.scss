@@ -20,14 +20,11 @@ nav {
     font-family: 'Nunito', sans-serif;
 }
 
-.rgb-logo {
-    display: none;
-}
-
-.user-btn-notification{
+.user-btn-notification {
     padding-left: 5px;
     padding-right: 5px;
-    svg{
+
+    svg {
         width: 38px !important;
         height: 38px !important;
         border-radius: 19px;
@@ -39,113 +36,123 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(42, 81, 145, 1);
+    background-color: rgb(254, 254, 254);
     width: 100%;
-    max-height: 80px;
+    max-height: 95px;
+    border-bottom: 1px solid #E1E3DF;
     transition: height 0.4s ease;
     z-index: 11;
-    .header-notification{
-        display: flex; 
-        flex-direction: row; 
-        width: 100vw; 
-        height: 25px; 
+
+    .header-notification {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 25px;
         background-color: #6AB5B1;
-        div{
-            min-width: 150px; 
-            height: 17px; 
-            border: none; 
-            margin: 4px auto 0 auto; 
-            background-color: transparent; 
-            color: rgb(194, 83, 83); 
-            border-radius: 3px; 
-            font-size: 12px; 
+
+        div {
+            min-width: 150px;
+            height: 17px;
+            border: none;
+            margin: 4px auto 0 auto;
+            background-color: transparent;
+            color: rgb(194, 83, 83);
+            border-radius: 3px;
+            font-size: 12px;
             letter-spacing: 0.5px;
             transition: color 0.4s ease;
-            span{
+
+            span {
                 font-weight: 600;
                 text-decoration: underline rgb(194, 83, 83);
             }
         }
+
         div:focus {
             outline: 0;
         }
-        .notification-clr-btn{
+
+        .notification-clr-btn {
             height: 100%;
-            background-color: transparent; 
-            border: none; 
-            ng-md-icon{
+            background-color: transparent;
+            border: none;
+
+            ng-md-icon {
                 fill: rgb(194, 83, 83);
             }
         }
     }
+
+    .sign-btn {
+        box-sizing: border-box;
+        background-color: transparent;
+        height: 32px;
+        padding: 7px;
+        line-height: 16px;
+        font-size: 15px;
+        letter-spacing: 0.1px;
+        transition: all 0.3s ease;
+    }
+
+    .sign-btn:hover, .hub-btn:hover{
+        text-shadow: 0 3px 1px rgba(122, 122, 207, 0.1);
+        color: #337ab7;
+    }
+
+    .signUp-btn {
+        border: none;
+        color: rgb(42, 81, 145);
+    }
+
+    .logIn-btn {
+        border: 1px solid rgb(42, 81, 145);
+        border-radius: 15px;
+        color: rgb(42, 81, 145);
+    }
 }
 
 .homit-nav-content {
-    max-width: 1180px;
     width: 1180px;
-    height: 55px;
+    height: 70px;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
     transition: width 0.3s ease;
+
+    .logo-sec{
+        margin-bottom: 6px;
+        .logo-img {
+            width: 131px;
+            height: 40px;
+        }
+    }
 }
 
-.logo-img {
-    width: 108px;
-    height: 33px;
-}
-
-.hub-header{
+.hub-header {
     height: 58px;
-    font-size: 22px; 
+    font-size: 22px;
     color: #525f7f;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .button-sec {
     position: relative;
     display: flex;
     align-items: center;
-    max-width: 235px;
+    max-width: 245px;
 }
 
 .hub-btn {
-    height: 37px;
-    margin-right: 20px;
-    margin-bottom: 4px;
-    padding-bottom: 4px;
+    height: 32px;
+    margin-right: 10px;
+    padding: 0;
+    letter-spacing: 0.1px;
     border: none;
-    font-family: 'Dosis', sans-serif;
-    font-size: 26px;
-    font-weight: 600;
+    font-size: 15px;
     background-color: transparent;
-    color: white;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s;
-}
-
-.logIn-btn {
-    border: 1px solid white;
-    color: white;
-    transition: background-color 0.3s;
-}
-
-.signUp-btn {
-    border-style: solid;
-    border-width: 1px;
     color: rgb(42, 81, 145);
-}
-
-.logIn-btn:hover {
-    background-color: rgb(46, 88, 155);
-    transition: background-color 0.3s;
-}
-
-.signUp-btn:hover {
-    background-color: rgba(250, 250, 250, 1);
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
 }
 
 .user-signed-btn {
@@ -154,7 +161,7 @@ nav {
 }
 
 .user-signed-btn ng-md-icon {
-    fill: rgba(255, 255, 255, 1);
+    fill: rgb(42, 81, 145);
 }
 
 .user-signed-btn ng-md-icon svg {
@@ -183,36 +190,40 @@ nav {
     border: 1px rgba(220, 220, 220, 0.99) solid;
     border-radius: 4px;
     background-color: #fdfdfd;
-    box-shadow: 0 0 0 1px rgba(136,152,170,.1), 0 15px 35px 0 rgba(49,49,93,.1), 0 5px 15px 0 rgba(0,0,0,.08);
+    box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.1), 0 15px 35px 0 rgba(49, 49, 93, 0.1), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
     z-index: 100;
-    .box-extBox{
+
+    .box-extBox {
         left: 76%;
     }
-    .box-li-g1{
-        font-weight: 600; 
-        letter-spacing: 0.7px; 
-        font-size: 19px; 
+
+    .box-li-g1 {
+        font-weight: 600;
+        letter-spacing: 0.7px;
+        font-size: 19px;
         margin-bottom: 5px;
     }
-    .box-li-g2{
+
+    .box-li-g2 {
         margin-bottom: 3px;
     }
-    .coupon-num{
-        position: relative; 
-        top: -1px; 
-        width: 22px; 
-        height: 22px; 
+
+    .coupon-num {
+        position: relative;
+        top: -1px;
+        width: 22px;
+        height: 22px;
         margin-left: 75px;
-        padding: 4px 8px; 
-        border-radius: 20px; 
-        font-size: 12px;  
-        font-weight: 600; 
-        letter-spacing: 01px; 
-        color: #fff; 
+        padding: 4px 8px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 01px;
+        color: #fff;
     }
 }
 
-.coupon-num-seen{
+.coupon-num-seen {
     animation: couponSeenNotification 3.3s linear;
 }
 
@@ -222,7 +233,7 @@ nav {
     width: 14px;
     height: 14px;
     border: 1px rgba(220, 220, 220, 0.99) solid;
-    border-right-color:#fdfdfd;
+    border-right-color: #fdfdfd;
     border-bottom-color: #fdfdfd;
     background-color: #fdfdfd;
     transform: rotate(45deg);
@@ -262,15 +273,16 @@ nav {
 
 .header-hub {
     position: absolute;
-    top: 60px;
+    top: 55px;
     height: 400px;
     width: 270px;
     border: 1px rgba(220, 220, 220, 0.99) solid;
     border-radius: 4px;
     background-color: rgb(253, 253, 253);
-    box-shadow: 0 0 0 1px rgba(136,152,170,.1), 0 15px 35px 0 rgba(49,49,93,.1), 0 5px 15px 0 rgba(0,0,0,.08);
+    box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.1), 0 15px 35px 0 rgba(49, 49, 93, 0.1), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
     z-index: 100;
-    .box-extBox{
+
+    .box-extBox {
         left: 73%;
     }
 }
@@ -372,14 +384,29 @@ h3 {
     }
 
     .hdr-ext-content {
-        width: 40%;
+        width: 35%;
+    }
+
+    .hdr-ext-content {
+        margin-right: auto;
+        margin-left: 15px;
     }
 }
 
 /* start of tablet and mobile devices */
 @media screen and (max-device-width: 776px) {
-    .white-logo {
-        display: none;
+
+    .homit-nav{
+        border-bottom: none;
+        background-color: rgb(42, 81, 145);
+    }
+
+    .homit-nav-content {
+        max-height: 80px;
+        height: 55px;
+        .logo-sec{
+            display: none;
+        }
     }
 
     .hdr-mob-button ng-md-icon {
@@ -536,7 +563,7 @@ h3 {
             text-decoration: none;
 
             img {
-                margin-top: 5px; 
+                margin-top: 5px;
                 width: 100px;
                 height: 100px;
             }
@@ -560,14 +587,15 @@ h3 {
                 padding: 0;
                 box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.15);
                 border-radius: 2px;
-                h5{
+
+                h5 {
                     padding-left: 4px;
                     padding-top: 4px;
                 }
             }
 
             .mob-menu-cat-div img {
-                width: 140px; 
+                width: 140px;
                 height: 189px;
             }
 
@@ -587,7 +615,7 @@ h3 {
         color: #fff;
     }
 
-    .width-100{
+    .width-100 {
         width: 100% !important;
     }
 
@@ -605,20 +633,20 @@ h3 {
         width: calc(100vw - 20px);
     }
 
-    .hub-btn, .button-sec{
+    .hub-btn, .button-sec {
         display: none;
     }
 }
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
-    .sign-checkmark-svg{
+    .sign-checkmark-svg {
         width: 80px;
         height: 80px;
     }
 
-    .sign-checkmark-line{
-        stroke-width: 4; 
+    .sign-checkmark-line {
+        stroke-width: 4;
     }
 }
 

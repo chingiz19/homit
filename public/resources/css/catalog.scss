@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    top: 51px;
+    top: 71px;
     background-color: rgb(252, 252, 252);
     letter-spacing: 0.01em;
     font-family: 'Nunito', sans-serif;
@@ -31,7 +31,6 @@ button {
     position: relative;
     height: 300px;
     width: 100%;
-    margin-top: 4px;
     user-select: none;
 }
 
@@ -166,7 +165,7 @@ button {
 
 .catalog-sub-hdr-fixed {
     position: fixed;
-    top: 55px;
+    top: 70px;
     z-index: 10;
 }
 
@@ -697,6 +696,11 @@ button {
 
 /* start of mobile/tablet styles */
 @media screen and (max-device-width: 768px) {
+
+    body {
+        top: 55px;
+    }
+
     .items-section {
         max-width: 570px;
         left: 0;

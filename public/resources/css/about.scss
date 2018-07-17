@@ -2,13 +2,27 @@
     display: none;
 }
 
-.homit-nav {
+.homit-nav{
     position: relative !important;
     background-color: transparent;
-}
+    border-bottom: none;
 
-.signUp-btn, .logIn-btn {
-    border: none;
+    .sign-btn {
+        box-sizing: border-box;
+        background-color: transparent;
+        height: 38px;
+        padding: 8px 10px;
+        line-height: 20px;
+        font-size: 17px;
+        letter-spacing: 0.2px;
+        transition: all 0.3s ease;
+    }
+
+    .logIn-btn {
+        border: 1px solid rgb(42, 81, 145);
+        border-radius: 20px;
+        color: rgb(42, 81, 145);
+    }
 }
 
 .user-signed-btn{
@@ -34,7 +48,7 @@ footer {
 
 .about-cover-div {
     position: relative;
-    top: -55px;
+    top: -70px;
     left: 0;
 
     .about-cover {
@@ -276,16 +290,46 @@ footer {
     }
 }
 
-/* start of phone styles */
-@media screen and (max-device-width: 479px) {
+@media screen and (max-device-width: 768px){
+    .homit-nav-content {
+        .logo-sec{
+            display: initial !important;
+            margin-bottom: 0px;
+            .logo-img {
+                width: 108px;
+                height: 33px;
+            }
+        }
+    }
+
+    .button-sec{
+        display: initial !important;
+    }
+
+    .homit-nav-content{
+        justify-content: space-between;
+        background-color: transparent;
+    }
+
+    #sign-btns{
+        width: 165px;
+    }
+
+    .logIn-btn{
+        text-align: center;
+    }
+
+    #sign-btns, .signUp-btn{
+        display: initial !important;
+    }
 
     .hdr-mob-button, .hdr-logo-H{
         display: none;
     }
+}
 
-    .white-logo{
-        display: inherit !important;
-    }
+/* start of phone styles */
+@media screen and (max-device-width: 479px) {
 
     .description-div h2 {
         width: 100%;

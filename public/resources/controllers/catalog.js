@@ -332,7 +332,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
             $(".catalog-content").removeClass("sub-hdr-catalog-cnt");
         }
         $timeout(function () {
-            if($scope.screenMob){
+            if($scope.screenMob || $scope.screenTablet){
                 if($(".mob-filter-sort").hasClass("mob-grow-filter-bar")) $scope.showFilterOptions();
                 if ($scope.scroll_top_prev > $scope.scroll_top_current || $scope.scroll_top_current <= 10) {
                     $(".mob-filter-sort").removeClass("mob-hide-filter-bar");
