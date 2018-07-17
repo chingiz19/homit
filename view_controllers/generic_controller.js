@@ -73,7 +73,7 @@ router.get("/checkout", function (req, res, next) {
 });
 
 router.get("/accounts", function (req, res, next) {
-	req.options.ejs["title"] = "Homit - Log in | Sign up";
+	req.options.ejs["title"] = "Homit - Sign in | Sign up";
 	res.render("accounts.ejs", req.options.ejs);
 });
 

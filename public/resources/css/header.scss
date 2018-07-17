@@ -95,7 +95,7 @@ nav {
     }
 
     .sign-btn:hover, .hub-btn:hover{
-        text-shadow: 0 3px 1px rgba(47, 47, 88, 0.1);
+        text-shadow: 0 3px 1px rgba(122, 122, 207, 0.1);
         color: #337ab7;
     }
 
@@ -106,7 +106,7 @@ nav {
 
     .logIn-btn {
         border: 1px solid rgb(42, 81, 145);
-        border-radius: 3px;
+        border-radius: 15px;
         color: rgb(42, 81, 145);
     }
 }
@@ -161,7 +161,7 @@ nav {
 }
 
 .user-signed-btn ng-md-icon {
-    fill: rgba(255, 255, 255, 1);
+    fill: rgb(42, 81, 145);
 }
 
 .user-signed-btn ng-md-icon svg {
@@ -395,6 +395,19 @@ h3 {
 
 /* start of tablet and mobile devices */
 @media screen and (max-device-width: 776px) {
+
+    .homit-nav{
+        border-bottom: none;
+        background-color: rgb(42, 81, 145);
+    }
+
+    .homit-nav-content {
+        max-height: 80px;
+        height: 55px;
+        .logo-sec{
+            display: none;
+        }
+    }
 
     .hdr-mob-button ng-md-icon {
         fill: #fff;

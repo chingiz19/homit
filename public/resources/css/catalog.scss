@@ -696,6 +696,11 @@ button {
 
 /* start of mobile/tablet styles */
 @media screen and (max-device-width: 768px) {
+
+    body {
+        top: 55px;
+    }
+
     .items-section {
         max-width: 570px;
         left: 0;
