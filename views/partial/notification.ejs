@@ -1,6 +1,7 @@
 <link href="/resources/css/notification.css" rel="stylesheet">
 
 <div ng-controller="notificationController" ng-cloak class="notification-body">
+<!--googleoff: snippet-->
     <section class="notification-sec">
         <div ng-repeat="item in notifications track by item.id">
             <!-- ADD-TO-CART -->
@@ -73,6 +74,7 @@
             </div>
         </div>
     </section>
+<!--googleon: snippet-->
 </div>
 
 <% if (!production) { %>

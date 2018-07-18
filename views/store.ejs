@@ -8,6 +8,7 @@
     <link href="/resources/css/store.css" rel="stylesheet">
 </head>
 <body ng-cloak>
+<!--googleoff: snippet-->
     <%- include('partial/checkout_menu')%>
     <div ng-controller="storePageController">
         <section class="store-page-content">
@@ -71,6 +72,7 @@
             </section>
         </section>
     </div>
+<!--googleon: snippet-->
     <% if (!production) { %>
         <script src="/resources/services/localStorage.js"></script>
         <script src="/resources/services/cartService.js"></script>

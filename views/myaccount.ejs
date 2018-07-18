@@ -10,9 +10,8 @@
             <link href="/resources/css/myaccount.css" rel="stylesheet">
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
 </head>
-
+<!--googleoff: snippet-->
 <body class="flex-row flex-space-between flex-100 container ng-cloak" ng-controller="myaccountController" ng-cloak>
-
     <!-- Sidebar -->
     <aside class="sidebar-div hide-mobile">
         <div class="sidebar-default">
@@ -68,11 +67,9 @@
             </div>
         </div>
     </aside>
-
     <!-- Main Content -->
     <main>
         <input id="stripeToken" value="<%= stripeToken %>" hidden>
-
         <!-- Overview -->
         <section ng-show="section == 0" ng-class="{'fadeIn': section == 0}">
             <span class="divider" style="width:100%"></span>
@@ -114,7 +111,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Profile -->
         <section ng-show="section == 1" ng-class="{'fadeIn': section == 1}">
             <span class="divider" style="width:100%"></span>
@@ -177,7 +173,6 @@
                 </span>
             </div>
         </section>
-
         <!-- Delivery Address -->
         <section ng-show="section == 2" ng-class="{'fadeIn': section == 2}">
             <div ng-if="!infoLoaded">Loading...</div>
@@ -199,7 +194,6 @@
                 </span>
             </div>
         </section>
-
         <!-- Payment Methods -->
         <section ng-show="section == 3" ng-class="{'fadeIn': section == 3}">
             <span class="divider" style="width:100%"></span>
@@ -249,7 +243,6 @@
                 </span>
             </div>
         </section>
-
         <!-- Security Settings -->
         <section ng-show="section == 4" ng-class="{'fadeIn': section == 4}">
             <span class="divider" style="width:100%"></span>
@@ -294,7 +287,6 @@
                 </span>
             </div>
         </section>
-
         <!-- Orders -->
         <section ng-show="section == 5" ng-class="{'fadeIn': section == 5}">
             <span class="divider"></span>
@@ -333,7 +325,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Coupons (Private only) -->
         <section ng-show="section == 6" class="coupon-section" ng-class="{'fadeIn': section == 6}">
             <span class="divider"></span>
@@ -362,8 +353,7 @@
             </div>
         </section>
     </main>
-
-
+<!--googleon: snippet-->
     <% if (!production) { %>
         <script src="/resources/services/sessionStorage.js"></script>
         <script src="/resources/services/localStorage.js"></script>

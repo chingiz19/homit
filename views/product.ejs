@@ -1,7 +1,6 @@
 <html ng-app="mainModule">
 
 <head>
-    <!-- <meta property="og:url" content="https://homit.ca/terms-of-use" /> -->
     <meta name="description" content="<%= meta_description %>" />
     <meta property="og:description" content="<%= meta_description %>" />
     <%- include('partial/imports')%>
@@ -11,6 +10,7 @@
 </head>
 
 <body ng-cloak>
+<!--googleoff: snippet-->
     <%- include('partial/checkout_menu')%>
         <div class="controller" ng-controller="productController" layout="column">
             <div id="loading">
@@ -29,6 +29,7 @@
                     <div></div>
                 </div>
             </div>
+<!--googleon: snippet-->
             <div class="product-content" itemscope itemtype="http://schema.org/Product">
                 <input id="recommendedProducts" class="none" value="<%= recommended_products %>">
                 <input id="product" class="none" value="<%= product %>">
@@ -42,7 +43,7 @@
                     </span> - Deliver Now</h2>
                 <div layout="column">
                     <section>
-                        <!--googleoff: snippet-->
+<!--googleoff: snippet-->
                         <div class="col-md-6 product-img box-center" layout="column">
                             <section class="web-location-sec">
                                 <a class="web-location-a" href="/main" target="_self">Store Hub</a>
@@ -64,7 +65,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--googleon: snippet-->
+<!--googleon: snippet-->
                         <div class="col-md-6 product-property fadeIn">
                             <h2 class="product-name-h2-web">
                                 <span>
@@ -87,7 +88,7 @@
                             <%- product_image %>
                                 <%- ingredients %>
                                     <section layout="column" class="section-box">
-                                        <!--googleoff: snippet-->
+<!--googleoff: snippet-->
                                         <div class="size-section">
                                             <div class="size-buttons" layout="row">
                                                 <button class="size-button-left" ng-click="volumeLeft(product)">
@@ -143,7 +144,7 @@
                                                 <span class="bold">Product:</span> {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack] }} x {{ product.product_variants.all_volumes[product.product_variants.selectedVolume] }}
                                                 <span class="product-details-container">{{ product.product_variants.container }}</span>
                                             </li>
-                                            <!--googleon: snippet-->
+<!--googleon: snippet-->
                                             <%- store_type_display_name %>
                                                 <li class="none">
                                                     <span class="bold">Location:</span>
@@ -164,7 +165,7 @@
                 <%- preview %>
                     <%- serving_suggestions %>
                         <div class="recomended-products">
-                            <!--googleoff: snippet-->
+<!--googleoff: snippet-->
                             <section layout="row" class="recomended-products-header">
                                 <div class="recomended-products-header-line"></div>
                                 <div class="rec-prod-hdr-text text-affect-3D">People also Homit</div>
@@ -186,7 +187,7 @@
                                     </a>
                                 </div>
                             </section>
-                            <!--googleoff: snippet-->
+<!--googleon: snippet-->
                         </div>
             </div>
 
