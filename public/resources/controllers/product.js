@@ -52,16 +52,10 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
         $scope.selectedImage = image;
     };
 
-    $scope.volumeLeft = function (product) {
-        let i = product.product_variants.selectedVolume;
-        i = i - 1;
-        if (i < 0) {
-            $scope.product.product_variants.selectedVolume = i + 1;
-        } else {
-            $scope.product.product_variants.selectedVolume = i;
-        }
-    };
-
+    /**
+     * Switches product volume to right if available
+     * @param {object} product 
+     */
     $scope.volumeRight = function (product) {
         let i = product.product_variants.selectedVolume;
         i = i + 1;
@@ -72,6 +66,24 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
         }
     };
 
+    /**
+     * Switches product volume to left if available
+     * @param {object} product 
+     */
+    $scope.volumeLeft = function (product) {
+        let i = product.product_variants.selectedVolume;
+        i = i - 1;
+        if (i < 0) {
+            $scope.product.product_variants.selectedVolume = i + 1;
+        } else {
+            $scope.product.product_variants.selectedVolume = i;
+        }
+    };
+
+    /**
+     * Switches product packaging to right if available
+     * @param {object} product 
+     */
     $scope.packRight = function (product) {
         let i = product.product_variants.selectedPack;
         let volume = product.product_variants.all_volumes[product.product_variants.selectedVolume];
@@ -83,6 +95,10 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
         }
     };
 
+    /**
+     * Switches product packaging to left if available
+     * @param {object} product 
+     */
     $scope.packLeft = function (product) {
         let i = product.product_variants.selectedPack;
         i = i - 1;
@@ -92,29 +108,6 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
             $scope.product.product_variants.selectedPack = i;
         }
     };
-
-    $scope.hrefTo = function (path) {
-        $window.location.href = $window.location.origin + path;
-    };
-
-    $scope.hrefToStore = function(path){
-        googleAnalytics.addEvent('store_nav_clicked', {
-            "event_label": path,
-            "event_category": googleAnalytics.eventCategories.product_actions
-        });
-
-        $window.location.href = $window.location.origin + "/hub/" + path;
-    };
-
-    $scope.hrefToCat = function(product){
-        let path = product.store_type_name + "/" + product.category;
-        googleAnalytics.addEvent('cat_nav_clicked', {
-            "event_label": path,
-            "event_category": googleAnalytics.eventCategories.product_actions
-        });
-
-        $window.location.href = $window.location.origin + "/hub/" + path;
-    }
 
     $scope.hrefToSubcat = function(product){
         googleAnalytics.addEvent('subcat_nav_clicked', {
@@ -126,12 +119,47 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
         $window.location.href = $window.location.origin + "/hub/" + product.store_type_name + "/" + helpers.urlReplaceSpaceWithDash(product.category);
     };
 
-    $scope.hrefPrdPage = function (product) {
+    /**
+     * * Fires Google Analytics event when store hub in "Product Nav" clicked
+     */
+    $scope.navHubClicked = function(){
+        googleAnalytics.addEvent('store_nav_clicked', {
+            "event_label": "Store Hub",
+            "event_category": googleAnalytics.eventCategories.product_actions
+        });
+    };
+
+    /**
+     * Fires Google Analytics event when store in "Product Nav" clicked
+     * @param {string} store 
+     */
+    $scope.navStoreClicked = function(store){
+        googleAnalytics.addEvent('store_nav_clicked', {
+            "event_label": store,
+            "event_category": googleAnalytics.eventCategories.product_actions
+        });
+    };
+
+    /**
+     * Fires Google Analytics event when category in "Product Nav" clicked
+     * @param {string} category 
+     */
+    $scope.navCatClicked = function(category){
+        googleAnalytics.addEvent('cat_nav_clicked', {
+            "event_label": category,
+            "event_category": googleAnalytics.eventCategories.product_actions
+        });
+    };
+
+    /**
+     * Fires Google Analytics event when product in "People also Homit" section clicked
+     * @param {object} product 
+     */
+    $scope.peopleHomitPrdClicked = function (product) {
         googleAnalytics.addEvent('product_clicked', {
             "event_label": product.brand + " " + product.name + "; People also Homit",
             "event_category": googleAnalytics.eventCategories.product_actions
         });
-        $window.location.href = $window.location.origin + helpers.buildProductPagePath(product);
     };
 
     $window.onload = function () {

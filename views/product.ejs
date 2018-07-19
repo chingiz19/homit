@@ -46,11 +46,11 @@
 <!--googleoff: snippet-->
                         <div class="col-md-6 product-img box-center" layout="column">
                             <section class="web-location-sec">
-                                <a class="web-location-a" href="/main" target="_self">Store Hub</a>
+                                <a class="web-location-a" href="/main" ng-cklick="navHubClicked()" target="_self">Store Hub</a>
                                 <span class="loc-errow"> > </span>
-                                <a class="web-location-a" href="/hub/{{ product.store_type_name }}" target="_self">{{ product.store_type_display_name }}</a>
+                                <a class="web-location-a" href="/hub/{{ product.store_type_name }}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
                                 <span class="loc-errow"> > </span>
-                                <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" target="_self">{{ product.category }}</a>
+                                <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" ng-click="navCatClicked(product.category)" target="_self">{{ product.category }}</a>
                                 <span class="loc-errow"> > </span>
                                 <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                             </section>
@@ -74,21 +74,23 @@
                                 <span>
                                     <%= product_name %>
                                 </span> - Deliver Now</h2>
+<!--googleoff: snippet-->
                             <section class="web-location-sec-mob">
                                 <div>
-                                    <a class="web-location-a" href="/main" target="_self">Store Hub</a>
+                                    <a class="web-location-a" href="/main" ng-cklick="navHubClicked()" target="_self">Store Hub</a>
                                     <span class="loc-errow"> > </span>
-                                    <a class="web-location-a" ng-click="hrefToStore(product.store_type_name)" href="" target="_self">{{ product.store_type_display_name }}</a>
+                                    <a class="web-location-a" href="/hub/{{product.store_type_name}}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
                                     <span class="loc-errow"> > </span>
-                                    <a class="web-location-a loc-category" href="hrefToCat(product)" target="_self">{{ product.category }}</a>
+                                    <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" ng-click="navCatClicked(product.category)" target="_self">{{ product.category }}</a>
                                     <span class="loc-errow"> > </span>
                                     <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                                 </div>
                             </section>
+<!--googleon: snippet-->
                             <%- product_image %>
                                 <%- ingredients %>
+<!--googleon: snippet-->
                                     <section layout="column" class="section-box">
-<!--googleoff: snippet-->
                                         <div class="size-section">
                                             <div class="size-buttons" layout="row">
                                                 <button class="size-button-left" ng-click="volumeLeft(product)">
@@ -172,7 +174,7 @@
                             </section>
                             <section class="recomended-item fadeIn">
                                 <div class="recomended-item-div">
-                                    <a ng-repeat="item in recommended_products" href="{{item.product_url}}" target="_self">
+                                    <a ng-repeat="item in recommended_products" href="{{item.product_url}}" ng-cklick="peopleHomitPrdClicked(item)" target="_self">
                                         <ul class="recomended-item-ul">
                                             <li class="also-image-li box-center">
                                                 <img ng-src="/resources/images/products/{{ item.category }}/{{ item.image }}">

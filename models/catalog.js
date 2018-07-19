@@ -880,7 +880,7 @@ pub.calculatePrice = async function (products, couponDetails) {
                 couponsUsed.push(tmpCoupon);
             }
         }
-        
+
         let tmpTotalPrice = tmpTax + tmpAmount + tmpDelivery - tmpCouponOff;
 
         if (tmpTotalPrice < 0) {
@@ -1115,6 +1115,10 @@ pub.getProductPageItemsByProductId = async function (storeType, productId) {
     let products = await getItemsByProductId(storeType, productId);
     let descriptions = await getDescriptionsByProductId(productId);
     let images = await getImagesByProductId(productId);
+
+    if (products.length == 0) {
+        return false;
+    }
     return convertToProductPageItem(products, descriptions, images, isStoreOpen);
 }
 
