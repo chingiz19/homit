@@ -348,7 +348,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                     scope.storeName = store_info.display_name;
                     scope.delFee = formatDelFeeText(store_info.del_fee, "FREE delivery");
                     scope.storeImage = "/resources/images/catalog-stores/logo/" + store_info.image;
-                    scope.dates = buildSchedulerDates(scope.storeInfo.hours_scheduled, "start from tomorrow"); // options 'start from tomorrow/today'
+                    scope.dates = buildSchedulerDates(scope.storeInfo.hours_scheduled, "start from today"); // options 'start from tomorrow/today'
                     scope.deliveryOption = "ASAP Delivery";
                     let delivery_hrs = localStorage.getOrderDeliveryHrs();
 

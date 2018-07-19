@@ -29,11 +29,13 @@ const api_categories = {
 router.get("/product/:storeName/:productName/:productId", async function (req, res, next) {
     if (!req.query || Object.keys(req.query) > 0) {
         return res.redirect("/hub" + req.path);
+    }else if (isNaN(req.params.productId)){
+        return res.redirect("/notfound");
     }
 
-    var product = await Catalog.getProductPageItemsByProductId(req.params.storeName, req.params.productId);
-    var similarProducts = await Catalog.getSimilarProducts(req.params.productId);
-    var validationUrl = "/product/" + product.store_type_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
+    let product = await Catalog.getProductPageItemsByProductId(req.params.storeName, req.params.productId);
+    let similarProducts = await Catalog.getSimilarProducts(req.params.productId);
+    let validationUrl = "/product/" + product.store_type_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
 
     if (!product || validationUrl != req.url) {
         return res.redirect("/notfound");
@@ -121,8 +123,8 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
 
     req.options.ejs.product = JSON.stringify(product);
 
-
     res.render("product.ejs", req.options.ejs);
+    next();
 });
 
 router.get('/:parent/', async function (req, res, next) {

@@ -186,7 +186,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
             "event_label": item.name + " " + item.brand,
             "event_category": googleAnalytics.eventCategories.main_actions
         });
-    }
+    };
 
     $window.onload = function () {
         setTimeout(() => {

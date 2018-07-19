@@ -139,7 +139,7 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
             "event_label": category,
             "event_category": googleAnalytics.eventCategories.product_actions
         });
-    }
+    };
 
     /**
      * Fires Google Analytics event when product in "People also Homit" section clicked

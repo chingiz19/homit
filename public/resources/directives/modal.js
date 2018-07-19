@@ -155,7 +155,7 @@ app.directive("modal", function ($timeout, user, $window, localStorage) {
                 }
             });
         });
-    };
+    }
 
     /**
      * Helper function to display error messages to user
