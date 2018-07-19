@@ -48,9 +48,9 @@
                             <section class="web-location-sec">
                                 <a class="web-location-a" href="/main" target="_self">Store Hub</a>
                                 <span class="loc-errow"> > </span>
-                                <a class="web-location-a" href="/hub/{{ product.store_type_name }}" target="_self">{{ product.store_type_display_name }}</a>
+                                <a class="web-location-a" href="/hub/{{ product.store_type_name }}" ng-cklick="mapStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
                                 <span class="loc-errow"> > </span>
-                                <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" target="_self">{{ product.category }}</a>
+                                <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" ng-click="mapCatClicked(product.category)" target="_self">{{ product.category }}</a>
                                 <span class="loc-errow"> > </span>
                                 <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                             </section>
@@ -174,7 +174,7 @@
                             </section>
                             <section class="recomended-item fadeIn">
                                 <div class="recomended-item-div">
-                                    <a ng-repeat="item in recommended_products" href="{{item.product_url}}" target="_self">
+                                    <a ng-repeat="item in recommended_products" href="{{item.product_url}}" ng-cklick="peopleHomitPrdClicked(item)" target="_self">
                                         <ul class="recomended-item-ul">
                                             <li class="also-image-li box-center">
                                                 <img ng-src="/resources/images/products/{{ item.category }}/{{ item.image }}">
