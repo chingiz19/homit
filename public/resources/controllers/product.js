@@ -120,10 +120,20 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     };
 
     /**
-     * Fires Google Analytics event when store in "Product Map" clicked
+     * * Fires Google Analytics event when store hub in "Product Nav" clicked
+     */
+    $scope.navHubClicked = function(){
+        googleAnalytics.addEvent('store_nav_clicked', {
+            "event_label": "Store Hub",
+            "event_category": googleAnalytics.eventCategories.product_actions
+        });
+    };
+
+    /**
+     * Fires Google Analytics event when store in "Product Nav" clicked
      * @param {string} store 
      */
-    $scope.mapStoreClicked = function(store){
+    $scope.navStoreClicked = function(store){
         googleAnalytics.addEvent('store_nav_clicked', {
             "event_label": store,
             "event_category": googleAnalytics.eventCategories.product_actions
@@ -131,10 +141,10 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     };
 
     /**
-     * Fires Google Analytics event when category in "Product Map" clicked
+     * Fires Google Analytics event when category in "Product Nav" clicked
      * @param {string} category 
      */
-    $scope.mapCatClicked = function(category){
+    $scope.navCatClicked = function(category){
         googleAnalytics.addEvent('cat_nav_clicked', {
             "event_label": category,
             "event_category": googleAnalytics.eventCategories.product_actions
