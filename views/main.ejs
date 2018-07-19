@@ -2,25 +2,24 @@
 
 <head ng-cloak>
     <meta property="og:url" content="https://homit.ca/main" />
-    <meta name="description" content="From local stores to your doors. Homit is your very local and personal shopper in Calgary. Get your Italian grocery (Lina's Italian Market) delivered right to your door. 
-    Snack, grocery and liquor delivery service in Calgary. Place your order online and watch us appear 
-    at your doorstep shortly after." />
-    <meta property="og:description" content="Homit is your very local and personal shopper in Calgary. Get your Italian grocery (Lina's Italian Market) delivered right to your door. 
-    Snack, grocery and liquor delivery service in Calgary. We also deliver snacks for 24/7. Place your order online and watch us appear 
-    at your doorstep shortly after."/>
+    <meta name="description" content="From local stores to your doors, Calgary. Order Italian grocery online (Lina's Italian Market). Grocery, vegan chocolate, snacks and liquor delivery service in Calgary. Shop online and recieve under 45 minutes."
+    />
+    <meta property="og:description" content="From local stores to your doors, Calgary. Order Italian grocery online (Lina's Italian Market). Grocery, vegan chocolate, snacks and liquor delivery service in Calgary. Shop online and recieve under 45 minutes."
+    />
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
-    <link href="/resources/css/main.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/main.css" rel="stylesheet">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
 </head>
 <img class="none" alt="calgary" ng-src="/resources/images/non-catalog-image/cover-image/calgary.jpg">
 <img class="none" alt="cover" ng-src="/resources/images/non-catalog-image/cover-image/hub-main_cover.png">
 <img class="none" alt="promotion1" ng-src="/resources/images/non-catalog-image/pages/main_promotion_1.jpeg">
 <img class="none" alt="promotion2" ng-src="/resources/images/non-catalog-image/pages/main_promotion_2.jpeg">
+
 <body ng-cloak>
-<!--googleoff: snippet-->
+    <!--googleoff: snippet-->
     <div ng-controller="mainController" class="main-controller">
-    <img class="none" alt="store image" ng-repeat="store in hubStores" ng-src="/resources/images/non-catalog-image/store-logo/{{store.image}}">
+        <img class="none" alt="store image" ng-repeat="store in hubStores" ng-src="/resources/images/non-catalog-image/store-logo/{{store.image}}">
         <section id="address" class="full-screen address-section box-center">
             <div class="address-div">
                 <div class="store-div-main fadeIn">
@@ -49,18 +48,18 @@
                         </span>
                     </span>
                     <h1 class="location-msg location-msg-txt">{{ addressMessage }}</h1>
-<!--googleon: snippet-->
+                    <!--googleon: snippet-->
                     <div class="ul-zero">
                         <h1 class="landing-message fadeIn">From Local Stores to Your Doors</h1>
                     </div>
-<!--googleoff: snippet-->                    
+                    <!--googleoff: snippet-->
                 </div>
             </div>
             <div class="main-down-arrow-div" ng-click="scrollTo('infoSec')">
                 <i class="material-icons main-down-arrow-icon">expand_more</i>
             </div>
         </section>
-<!--googleon: snippet-->
+        <!--googleon: snippet-->
         <section id="infoSec" class="info-sec-background">
             <!-- Delivery fee section -->
             <span class="left-info-box">
@@ -75,8 +74,10 @@
                 </span>
                 <span class="df-condition">
                     <ul>
-                        <li><ng-md-icon icon="done"></ng-md-icon>Location independent</li>
-                        <li><ng-md-icon icon="done"></ng-md-icon>No order size limits</li>
+                        <li>
+                            <ng-md-icon icon="done"></ng-md-icon>Location independent</li>
+                        <li>
+                            <ng-md-icon icon="done"></ng-md-icon>No order size limits</li>
                     </ul>
                 </span>
             </span>
@@ -88,7 +89,7 @@
                 <span class="center-align">
                     <div class="lead-sec">
                         <span class="leader">1 Hour delivery</span>
-                    </div> 
+                    </div>
                 </span>
                 <span class="center-align-secondary">
                     <span class="check-row">
@@ -105,7 +106,7 @@
                         <!-- checkmark -->
                         <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"></img>
                         <p>Covering most of Calgary</p>
-                    </span>  
+                    </span>
                 </span>
             </span>
         </section>
@@ -114,34 +115,49 @@
                 <div class="promotion-img-1"></div>
                 <div class="fadeIn promotion-1-div">
                     <h2>Fresh pizza toppings and dough</h2>
-                    <p>Making homemade pizza from prepared in Italian style dough was never so quick and easy. Pile on your favorite toppings and get ready to chow down.</p>
-                    <button ng-click="hrefTo('/hub/linas-italian-market/pasta-and-baking')" class="CG-cur-button box-center">SHOP NOW<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                    <p>Making homemade pizza from prepared in Italian style dough was never so quick and easy. Pile on your
+                        favorite toppings and get ready to chow down.</p>
+                    <button ng-click="hrefTo('/hub/linas-italian-market/pasta-and-baking')" class="CG-cur-button box-center">SHOP NOW
+                        <ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon>
+                    </button>
                 </div>
             </div>
             <div class="promotion-1-2-sec prm-sec-2-mob">
                 <div class="fadeIn promotion-2-div">
                     <h2>Vegan chocolates and crunchy snacks</h2>
-                    <p>Ever craved nut-free, dairy-free and vegan chocolates? Or late night munchies? Or forgot to stock your bar? Shop now - receive in 45-MINUTES.</p>
-                    <button ng-click="hrefTo('/hub/dwarf-stars/chocolate-and-bar')" class="CG-cur-button box-center">SHOP NOW<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                    <p>Ever craved nut-free, dairy-free and vegan chocolates? Or late night munchies? Or forgot to stock your
+                        bar? Shop now - receive in 45-MINUTES.</p>
+                    <button ng-click="hrefTo('/hub/dwarf-stars/chocolate-and-bar')" class="CG-cur-button box-center">SHOP NOW
+                        <ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon>
+                    </button>
                 </div>
                 <div class="promotion-img-2"></div>
             </div>
         </section>
-<!--googleoff: snippet-->
+        <!--googleoff: snippet-->
         <section class="trending-prd-sec">
             <div class="tranding-hdr">
                 <span class="text-affect-3D">Trending Products</span>
             </div>
             <div class="tranding-body">
                 <div>
-                    <a ng-repeat="item in mainSpecials[specialSelected].products" ng-click="productClick(item)" ng-href="{{item.product_url}}" target="_self">
+                    <a ng-repeat="item in mainSpecials[specialSelected].products" ng-click="productClick(item)" ng-href="{{item.product_url}}"
+                        target="_self">
                         <ul class="prom-item-ul" data-aos="zoom-out">
                             <li class="box-center">
                                 <img alt="{{item.name + ' ' + item.brand}}" ng-src="/resources/images/products/{{ item.category }}/{{ item.product_image }}">
                             </li>
                             <li class="prom-item-brand">{{ item.brand }}</li>
-                            <li class="prom-item-name" ng-if="item.packaging > 1"><span>{{ item.name }}<span class="prom-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span></span></li>
-                            <li class="prom-item-name" ng-if="!(item.packaging > 1)"><span>{{ item.name }}<span class="prom-item-size"> {{ "(" + item.volume + ")"}}</span></span></li>
+                            <li class="prom-item-name" ng-if="item.packaging > 1">
+                                <span>{{ item.name }}
+                                    <span class="prom-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span>
+                                </span>
+                            </li>
+                            <li class="prom-item-name" ng-if="!(item.packaging > 1)">
+                                <span>{{ item.name }}
+                                    <span class="prom-item-size"> {{ "(" + item.volume + ")"}}</span>
+                                </span>
+                            </li>
                             <li class="item-price">{{ item.price }}
                                 <span>C$</span>
                             </li>
@@ -151,20 +167,25 @@
             </div>
             <div class="box-center tranding-ftr">
                 <div>
-                    <button ng-repeat="(key, type) in  mainSpecials" ng-class="{'tranding-type-btn': !(key == specialSelected) }" ng-click="changeTranPrd(key)" class="CG-cur-button box-center pad-zero tranding-btn-mob">{{type.display_name}}</button>
+                    <button ng-repeat="(key, type) in  mainSpecials" ng-class="{'tranding-type-btn': !(key == specialSelected) }" ng-click="changeTranPrd(key)"
+                        class="CG-cur-button box-center pad-zero tranding-btn-mob">{{type.display_name}}</button>
                 </div>
             </div>
         </section>
         <section class="subscribe-section">
             <div class="subscribe-div">
                 <div>
-                    <input type="text" aria-label="Subscribe input" id="subscribe-input" ng-class="subscribeClassInput" class="homit-font" placeholder="your.email@example.com" name="email" ng-focus = "subscribeOnFocus()" ng-pattern="/^.+@.+\..+$/" type="email" ng-model="subscribeEmail" required>
-                    <button ng-click="subscribe()" ng-class="subscribeClassBtn" class="box-center homit-font">{{subscribeButtonText}}<ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                    <input type="text" aria-label="Subscribe input" id="subscribe-input" ng-class="subscribeClassInput" class="homit-font" placeholder="your.email@example.com"
+                        name="email" ng-focus="subscribeOnFocus()" ng-pattern="/^.+@.+\..+$/" type="email" ng-model="subscribeEmail"
+                        required>
+                    <button ng-click="subscribe()" ng-class="subscribeClassBtn" class="box-center homit-font">{{subscribeButtonText}}
+                        <ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon>
+                    </button>
                 </div>
                 <span class="subscribe-error-message error-txt-color">{{subscribeErrorMessage}}</span>
             </div>
         </section>
-<!--googleon: snippet-->
+        <!--googleon: snippet-->
     </div>
     <% if (!production) { %>
         <script src="/resources/services/localStorage.js"></script>
