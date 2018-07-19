@@ -124,7 +124,6 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     req.options.ejs.product = JSON.stringify(product);
 
     res.render("product.ejs", req.options.ejs);
-    next();
 });
 
 router.get('/:parent/', async function (req, res, next) {
