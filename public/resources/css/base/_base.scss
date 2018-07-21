@@ -115,6 +115,12 @@ li {
     transition: transform 0.4s ease-out;
 }
 
+.hover-raise:hover{
+    opacity: 0.9;
+    -webkit-box-shadow: 0 7px 14px rgba(50,50,93,.1),0 3px 6px rgba(0,0,0,.08) !important;
+    box-shadow: 0 7px 14px rgba(50,50,93,.1),0 3px 6px rgba(0,0,0,.08) !important;
+}
+
 //Email syntax check implementation
 .email-check-div{
     width: 100%;

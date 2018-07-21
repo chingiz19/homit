@@ -222,19 +222,24 @@ body {
     -webkit-font-smoothing: antialiased; 
 }
 
-.category-div ul{
-    margin: 10px 0; 
-    padding: 0; 
-    border-radius: 1px;
-    background-color: #fff; 
-    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.15);
-    transition: all 0.4s ease !important;
-}
-
-.category-div ul:hover{
-    opacity: 0.7 !important;
-    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.35);
-    transition: all 0.4s ease;
+.category-div{
+    a{
+        margin: 10px 0; 
+        padding: 0;
+        border: lightgray solid 1px;
+        border-radius: 2px;
+        background-color: #fff; 
+        box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.15);
+        transition: all 0.2s ease !important;
+    }
+    a:hover{
+        -webkit-transform: translateY(-2px);
+        transform: translateY(-2px);
+    }
+    ul{
+        margin: 0;
+        padding: 0;
+    }
 }
 
 /* start of window shrinkage affect solution */

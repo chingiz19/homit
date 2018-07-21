@@ -19,7 +19,6 @@
 <body ng-cloak>
     <!--googleoff: snippet-->
     <div ng-controller="mainController" class="main-controller">
-        <img class="none" alt="store image" ng-repeat="store in hubStores" ng-src="/resources/images/non-catalog-image/store-logo/{{store.image}}">
         <section id="address" class="full-screen address-section box-center">
             <div class="address-div">
                 <div class="store-div-main fadeIn">
@@ -55,57 +54,52 @@
                     <!--googleoff: snippet-->
                 </div>
             </div>
-            <div class="main-down-arrow-div" ng-click="scrollTo('infoSec')">
-                <i class="material-icons main-down-arrow-icon">expand_more</i>
+            <div class="main-down-arrow-div" ng-click="scrollTo('infoSec')" style="width: 50px; height: 70px;">
+                <svg class="svg-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 70">
+                    <path class="arrow-path-1" d="m 15.6 15.6 l 18 0 c 3.3 0 4 1 3 3 l -9.5 15 c -0.7 1.2 -2.5 2.4 -4.2 0 l -9.5 -15 c -0.9 -1.6 -0.8 -3.4 3 -3" fill="#475073e0" stroke="#475073e0" stroke-width="1" />
+                </svg>
+                
+                <svg class="svg-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 70">
+                    <path class="arrow-path-2" d="m 15.6 15.6 l 18 0 c 3.3 0 4 1 3 3 l -9.5 15 c -0.7 1.2 -2.5 2.4 -4.2 0 l -9.5 -15 c -0.9 -1.6 -0.8 -3.4 3 -3" fill="#475073e0" stroke="#475073e0" stroke-width="1" />
+                </svg>
+
             </div>
         </section>
-        <!--googleon: snippet-->
         <section id="infoSec" class="info-sec-background">
-            <!-- Delivery fee section -->
+            <span class="left-rec-1"></span>
+            <span class="left-rec-2"></span>
+            <span class="left-rec-3"></span>
+            <span class="left-rec-4"></span>
+            <span class="oval-1"></span>
+            <span class="oval-2"></span>
             <span class="left-info-box">
-                <span class="header">
-                    <h2>Delivery Price</h2>
-                </span>
-                <span class="center-align">
-                    <div class="lead-sec">
-                        <span class="leader">C$4.99</span>
-                        <span class="follower">per store</span>
-                    </div>
-                </span>
-                <span class="df-condition">
-                    <ul>
-                        <li>
-                            <ng-md-icon icon="done"></ng-md-icon>Location independent</li>
-                        <li>
-                            <ng-md-icon icon="done"></ng-md-icon>No order size limits</li>
-                    </ul>
-                </span>
+                <iframe src="https://www.youtube.com/embed/BWOZDKD2DIY?&theme=light&color=white&keyboard=1&autohide=1&cc_load_policy=1&modestbranding=1&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </span>
-            <!-- Other section -->
+<!--googleon: snippet-->
             <span class="right-info-box">
                 <span class="header">
-                    <h2>Service</h2>
+                    <h2>Homit</h2>
                 </span>
                 <span class="center-align">
                     <div class="lead-sec">
-                        <span class="leader">1 Hour delivery</span>
+                        <span class="leader">Local stores on one platform</span>
                     </div>
                 </span>
                 <span class="center-align-secondary">
                     <span class="check-row">
                         <!-- checkmark -->
-                        <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"></img>
-                        <p>No need to Sign Up</p>
+                        <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"/>
+                        <p>+1,750 online products</p>
                     </span>
                     <span class="check-row">
                         <!-- checkmark -->
-                        <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"></img>
-                        <p>On Demand Delivery</p>
+                        <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"/>
+                        <p>On-demand delivery</p>
                     </span>
                     <span class="check-row">
                         <!-- checkmark -->
-                        <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"></img>
-                        <p>Covering most of Calgary</p>
+                        <img class="check-mark-icon" alt="check mark" ng-src="/resources/images/non-catalog-image/icons/check-mark-white.png"/>
+                        <p>C$4.99 delivery fee</p>
                     </span>
                 </span>
             </span>
@@ -117,9 +111,7 @@
                     <h2>Fresh pizza toppings and dough</h2>
                     <p>Making homemade pizza from prepared in Italian style dough was never so quick and easy. Pile on your
                         favorite toppings and get ready to chow down.</p>
-                    <button ng-click="hrefTo('/hub/linas-italian-market/pasta-and-baking')" class="CG-cur-button box-center">SHOP NOW
-                        <ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon>
-                    </button>
+                    <button ng-click="hrefTo('/hub/linas-italian-market/pasta-and-baking')" class="CG-cur-button box-center hover-raise">SHOP NOW</button>
                 </div>
             </div>
             <div class="promotion-1-2-sec prm-sec-2-mob">
@@ -127,9 +119,7 @@
                     <h2>Vegan chocolates and crunchy snacks</h2>
                     <p>Ever craved nut-free, dairy-free and vegan chocolates? Or late night munchies? Or forgot to stock your
                         bar? Shop now - receive in 45-MINUTES.</p>
-                    <button ng-click="hrefTo('/hub/dwarf-stars/chocolate-and-bar')" class="CG-cur-button box-center">SHOP NOW
-                        <ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon>
-                    </button>
+                    <button ng-click="hrefTo('/hub/dwarf-stars/chocolate-and-bar')" class="CG-cur-button box-center hover-raise">SHOP NOW</button>
                 </div>
                 <div class="promotion-img-2"></div>
             </div>
@@ -142,7 +132,7 @@
             <div class="tranding-body">
                 <div>
                     <a ng-repeat="item in mainSpecials[specialSelected].products" ng-click="productClick(item)" ng-href="{{item.product_url}}"
-                        target="_self">
+                        target="_blanc">
                         <ul class="prom-item-ul" data-aos="zoom-out">
                             <li class="box-center">
                                 <img alt="{{item.name + ' ' + item.brand}}" ng-src="/resources/images/products/{{ item.category }}/{{ item.product_image }}">
