@@ -18,7 +18,7 @@ pub.getCategoriesByStoreType = async function (storeType) {
     let sqlQuery = `
         SELECT DISTINCT
         category.display_name AS category_display_name, category.name AS category_name,
-        category.image AS category_image
+        category.image AS category_image, category_covers.cover_image AS category_cover
         FROM
         catalog_store_types AS store_types
         JOIN catalog_depot AS depot ON (store_types.id = depot.store_type_id)
@@ -28,6 +28,8 @@ pub.getCategoriesByStoreType = async function (storeType) {
         JOIN catalog_types AS type ON (listing.type_id = type.id)
         JOIN catalog_subcategories AS subcat ON (type.subcategory_id = subcat.id)
         JOIN catalog_categories AS category ON (subcat.category_id = category.id)
+        LEFT JOIN catalog_store_types_category_covers AS category_covers ON 
+        (category_covers.category_id = category.id AND category_covers.store_type_id = store_types.id)
         WHERE ?
         ORDER BY category_display_name;
     `;

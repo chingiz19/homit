@@ -539,3 +539,16 @@ CREATE TABLE user_coupons (
 	CONSTRAINT fk_user_coupons_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_user_coupons_coupon_id FOREIGN KEY (coupon_id) REFERENCES catalog_coupons(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
+
+
+CREATE TABLE catalog_store_types_category_covers ( 
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT, 
+	store_type_id INT UNSIGNED NOT NULL,
+	category_id INT UNSIGNED NOT NULL,
+	cover_image VARCHAR(225) NOT NULL,
+
+	PRIMARY KEY (id),
+	UNIQUE (store_type_id, category_id),
+	CONSTRAINT fk_catalog_store_types_category_covers_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_catalog_store_types_category_covers_category_id FOREIGN KEY (category_id) REFERENCES catalog_categories(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB;
