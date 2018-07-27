@@ -160,6 +160,10 @@ router.use(require("./adminAuth_controller.js"));
 
 function routeToNewHub(req, res, next) {
 	let urlArray = req.url.split("/");
+	if (urlArray[3] == 'chocolate-and-bar') {
+		let newUrl = "/hub/local-market/" + urlArray[2];
+		return res.redirect(newUrl);
+	}
 	if (urlArray[1] == "catalog") {
 		let newUrl = "/hub/";
 		if (urlArray.length == 4) {

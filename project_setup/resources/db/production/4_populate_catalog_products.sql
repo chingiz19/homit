@@ -1,6 +1,6 @@
 use homit;
 
-/* Insert Catalog - Product List */
+-- Catalog - Listing
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1001, "Kronenbourg", "Pale Lager", 1);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1002, "Kronenbourg", "Blanc", 2);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1003, "Carlsberg", "Pale Lager", 1);
@@ -1661,8 +1661,15 @@ INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1345, "Fiasco",
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1346, "Fiasco", "Caramel Sea Salt", 908);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1347, "Fiasco", "Blueberry Basil", 909);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1348, "Lina's Market", "Fresh Pizza Dough", 874);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1349, "Dwarf Stars", "Originals", 910);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1350, "Dwarf Stars", "Pumpkin Seed Butter Cups", 911);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1351, "Dwarf Stars", "PumpKING Protein Balls", 912);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1352, "Borderland Food", "Free Range Chicken Broth", 913);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1353, "Borderland Food", "Grass-Fed Bison Bone Broth", 914);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1354, "Borderland Food", "Grass-Fed Beef Bone Broth", 915);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1355, "Borderland Food", "Free Range Chicken Smoothie Base Bone Broth", 916);
 
-/* Insert Catalog - Product Descriptions */
+-- Catalog - Listing Description
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1001, 2, "Pale Lager");
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1001, 3, "Carlsberg");
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1001, 4, "France");
@@ -6783,8 +6790,33 @@ INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, descri
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES (1347, 7, "ht_ulht_liFor an authentic experience, fiasco is the best enjoyed when served at -11C. Although you may not be able to resist. Remove your favorite pint from freezer and allow it to temper for 3 to 5 minutes… You will thank us later d_ht_lid_ht_ul");
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES (1348, 4, "Canada");
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES (1348, 7, "ht_bPizza on a stickd_ht_bDirections:ht_ulht_liPreheat oven to 400°. In a large nonstick skillet, cook sausage over medium heat until no longer pink; drain. When cool enough to handle, cut sausage into 20 pieces. On 10 metal or wooden skewers, alternately thread sausage, vegetables and pepperoni d_ht_liht_liUnroll pizza dough onto a lightly floured surface; cut widthwise into 1-in.-wide strips. Starting at the pointed end of a prepared skewer, pierce skewer through one end of dough strip. Spiral-wrap dough strip around skewer, allowing vegetables and meats to peek through. Wrap the remaining end of dough strip around skewer above the first ingredient. Repeat with remaining dough strips and prepared skewers d_ht_liht_liArrange kabobs on a baking sheet coated with cooking spray. Bake 10-12 minutes or until vegetables are tender and pizza crust is golden. Immediately sprinkle with cheese. Serve with pizza sauce. Yield: 5 servings d_ht_lid_ht_ulIngredients: ht_ulht_li8 ounces Italian turkey sausage linksd_ht_liht_li2 cups whole fresh mushroomsd_ht_liht_li2 cups cherry tomatoesd_ht_liht_li1 medium onion cut into 1-inch piecesd_ht_liht_li1 large green pepper cut into 1-inch piecesd_ht_liht_li30 slices turkey pepperoni (2 ounces) d_ht_liht_li1 tube (13.8 ounces) refrigerated pizza crustd_ht_liht_li1-1/2 cups shredded part-skim mozzarella cheesed_ht_liht_li1-1/4 cups pizza sauce warmedd_ht_lid_ht_ul");
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1349, 6, "ht_ulht_liOrganic pumpkin seed butter, dry roasted chickpeas, vegan dark chocolate, icing sugar, cocoa butter, himalayan sea salt. butter extract, vanilla extractd_ht_liht_liht_bCONTAINS:d_ht_b Corn starchd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1349, 1, "ht_ulht_liDry roasted chickpeas covered in a rich pumpkin seed butter filling, white & dark vegan chocolate (Available in a plain finish or lustre dusted)d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1349, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1350, 6, "ht_ulht_liCocoa butter, dry roasted organic pumpkin seeds, icing sugar, dark chocolate, vanilla extract, himalayan sea saltd_ht_liht_liht_bCONTAINS:d_ht_b Corn starchd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1350, 1, "ht_ulht_liPumpkin seed butter filling covered in a vegan dark chocolate.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1350, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1351, 6, "ht_ulht_liOrganic pumpkin seed butter, organic pumpkin seed protein powder, gluten free rolled oats, organic maple syrup, shredded coconut, cocoa butter, organic whole brown flaxseeds, himalayan sea saltd_ht_liht_liht_bMAY CONTAIN:d_ht_b Corn starchd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1351, 1, "ht_ulht_liPumpkin seed protein powder energy balls that pack 10 grams of clean protein per ball.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1351, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1352, 6, "ht_ulht_liFree-range chicken bones (backs, necks, feet + wings), organic carrots, organic celery, organic onions, apple cider vinegar, pink himalayan sea salt, organic peppercorns, organic parsley, organic rosemary, organic bay leavesd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1352, 1, "ht_ulht_liFor individuals looking to incorporate bone broth into their daily diet, our broths are made with the highest quality ingredients and slow-cooked for over 24 hours to ensure maximum nutrient extraction and flavour.d_ht_liht_liPerfect for sipping or adding to your favourite recipes.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1352, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1352, 7, "ht_ulht_liDrink on it's own, or use as a substitute for stock in your recipes.d_ht_liht_li Bone broth is a healthy alternative to shelf-bought soup stock and is also a superfood rich with minerals and collagen to improve your gut health, joint health, and much, much  more.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1353, 6, "ht_ulht_liGrass-fed bison bones (knuckles, marrow, shins + meaty bones), organic carrots, organic celery, organic onions, organic apple cider vinegar, pink himalayan sea salt, organic peppercorns, organic parsley, organic rosemary, organic bay leaves.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1353, 1, "ht_ulht_liFor individuals looking to incorporate bone broth into their daily diet, our broths are made with the highest quality ingredients and slow-cooked for over 24 hours to ensure maximum nutrient extraction and flavour.d_ht_liht_liPerfect for sipping or adding to your favourite recipes.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1353, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1353, 7, "ht_ulht_liDrink on it's own, or use as a substitute for stock in your recipes.d_ht_liht_liBone broth is a healthy alternative to shelf-bought soup stock and is also a superfood rich with minerals and collagen to improve your gut health, joint health, and much, much  more.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1354, 6, "ht_ulht_liGrass-fed beef bones (knuckles, marrow, shins + meaty bones), organic carrots, organic celery, organic onions, organic apple cider vinegar, pink himalayan sea salt, organic peppercorns, organic parsley, organic rosemary, organic bay leavesd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1354, 1, "ht_ulht_liFor individuals looking to incorporate bone broth into their daily diet, our broths are made with the highest quality ingredients and slow-cooked for over 24 hours to ensure maximum nutrient extraction and flavour.d_ht_liht_liPerfect for sipping or adding to your favourite recipes.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1354, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1354, 7, "ht_ulht_liDrink on it's own, or use as a substitute for stock in your recipes.d_ht_liht_liBone broth is a healthy alternative to shelf-bought soup stock and is also a superfood rich with minerals and collagen to improve your gut health, joint health, and much, much  more.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1355, 6, "ht_ulht_liFree-range chicken bones (backs, necks, feet + wings), organic coconut water, organic apple cider vinegar.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1355, 1, "ht_ulht_liFor individuals looking to incorporate bone broth into their daily diet, our broths are made with the highest quality ingredients and slow-cooked for over 24 hours to ensure maximum nutrient extraction and flavour.d_ht_liht_liPerfect for sipping or adding to your favourite recipes.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1355, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1355, 7, "ht_ulht_liPerfect for sneaking into kid's smoothie's, or perfect for adding a boost to your daily smoothie!d_ht_liht_liGet all of the health benefits of bone broth on those hot summer days.d_ht_liht_liAdd 1/4 cup to your usual smoothie recipe for added collagen and protein!d_ht_lid_ht_ul" );
 
-/* Insert Catalog - Products */
+-- Catalog - Product
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (1, 1001, "b_1001.jpeg", 2);
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (2, 1002, "b_1002.jpeg", 2);
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (3, 1003, "b_1003.jpeg", 2);
@@ -8491,8 +8523,15 @@ INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7643,
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7644, 1346, "jr_1346.jpeg", 6);
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7645, 1347, "jr_1347.jpeg", 6);
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7646, 1348, "wrp_1348.jpeg", 18);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7647, 1349, "sup_1349.jpeg", 19);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7648, 1350, "bg_1350.jpeg", 13);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7649, 1351, "bg_1351.jpeg", 13);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7650, 1352, "sup_1352.jpeg", 19);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7651, 1353, "sup_1353.jpeg", 19);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7652, 1354, "sup_1354.jpeg", 19);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7653, 1355, "sup_1355.jpeg", 19);
 
-/*Insert Catalog - Item Images*/
+-- Catalog - Product Images
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7283, 1, "ntr_bx_11783.png");
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7284, 1, "ntr_bx_11784.png");
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7285, 1, "ntr_bg_11785.png");
@@ -9235,8 +9274,15 @@ INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7619,
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7620, 1, "ntr_wrp_1322.jpeg");
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7621, 1, "ntr_wrp_1323.jpeg");
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7622, 1, "ntr_wrp_1324.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7647, 1, "ntr_sup_1349.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7648, 1, "ntr_bg_1350.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7649, 1, "ntr_bg_1351.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7650, 1, "ntr_sup_1352.png");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7651, 1, "ntr_sup_1353.png");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7652, 1, "ntr_sup_1354.png");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7653, 1, "ntr_sup_1355.png");
 
-/*Insert Catalog - Item*/
+-- Catalog - Item
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (1, 1, 1, 1);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (2, 1, 2, 1);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (3, 2, 1, 1);
@@ -11171,4 +11217,11 @@ INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11753, 7644, 9, 212);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11754, 7645, 9, 212);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11755, 7646, 9, 213);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11756, 7647, 9, 16);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11757, 7648, 9, 178);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11758, 7649, 9, 101);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11759, 7650, 9, 157);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11760, 7651, 9, 157);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11761, 7652, 9, 157);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11762, 7653, 9, 157);
 

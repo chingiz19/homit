@@ -1,6 +1,6 @@
 use homit;
 
-/* Insert Catalog - Description Name */
+-- Insert Catalog - Description Name
 INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(1, "preview", "Preview");
 INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(2, "type", "Type");
 INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(3, "producer", "Producer");
@@ -9,7 +9,7 @@ INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(5, "alcoh
 INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(6, "ingredients", "Ingredients");
 INSERT INTO `catalog_description_names`(id, name, display_name) VALUES(7, "serving_suggestions", "Serving Suggestions");
 
-/* Insert Catalog - Category */
+-- Insert Catalog - Category
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(1, "beer", "Beer", "beer.jpg");
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(2, "wine", "Wine", "wine.jpg");
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(3, "spirit", "Spirit", "spirit.jpg");
@@ -33,8 +33,10 @@ INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(20, "cho
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(21, "dairy", "Dairy", "dairy.jpg");
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(22, "deli-and-meat", "Deli and Meat", "deli-and-meat.jpg");
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(23, "frozen-food", "Frozen Food", "frozen-food.jpg");
+INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(24, "dwarf-stars", "Dwarf Stars", "dwarf-stars.jpeg");
+INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(25, "borderland-food-co", "Borderland Food Co.", "borderland-food-co.jpeg");
 
-/* Insert Catalog - Subcategory*/
+-- Insert Catalog - Subcategory
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(1, "Lager", "1");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(2, "Witbier", "1");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(3, "Pilsner", "1");
@@ -186,8 +188,12 @@ INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(148, "Smoked 
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(149, "Eggs", "22");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(150, "Ravioli", "23");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(151, "Ice Cream", "5");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(152, "Chocolates", "24");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(153, "Nutrition & Protein Bars", "24");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(154, "Bone Broth for People", "25");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(155, "Bone Broth for Pets", "25");
 
-/* Insert Catalog Type */
+-- Insert Catalog Type
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(1, "Pale Lager", "1");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(2, "Wheat Ale", "2");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(3, "Pale Lager", "3");
@@ -1097,13 +1103,20 @@ INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(906, "Dairy-Free S
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(907, "Dairy-Free Frozen Hot Chocolate", "151");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(908, "Dairy-Free Caramel Sea Salt", "151");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(909, "Dairy-Free Blueberry Basil", "151");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(910, "Nut-free, gluten-free and vegan chocolate", "152");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(911, "Nut-free, gluten-free and vegan chocolate cups", "152");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(912, "Nut-free, gluten-free and vegan protein bar", "153");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(913, "Chicken broth for people", "154");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(914, "Bison bone broth for people", "154");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(915, "Beef bone broth for people", "154");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(916, "Chicken smoothie bath broth for people", "154");
 
-/*Catalog - Image Names*/
+-- Catalog - Image Names
 INSERT INTO `catalog_image_names`(id, name) VALUES(1, "nutritions");
 INSERT INTO `catalog_image_names`(id, name) VALUES(2, "product_front");
 INSERT INTO `catalog_image_names`(id, name) VALUES(3, "pack_front");
 
-/* Insert Catalog Packaging - Container */
+-- Catalog Packaging - Containers
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(1, "can");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(2, "bottle");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(3, "object");
@@ -1122,8 +1135,9 @@ INSERT INTO `catalog_packaging_containers`(id, name) VALUES(15, "jug");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(16, "case");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(17, "tetra pak");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(18, "wrapped");
+INSERT INTO `catalog_packaging_containers`(id, name) VALUES(19, "stand up pouch");
 
-/* Insert Catalog Packaging - Packaging */
+-- Insert Catalog Packaging - Packaging
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(1, "6");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(2, "12");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(3, "24");
@@ -1146,7 +1160,7 @@ INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(19, "24ct");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(20, "30ct");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(21, "36");
 
-/* Insert Catalog Packaging - Volume */
+-- Insert Catalog Packaging - Volume
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(1, "330ml");
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(2, "341ml");
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(3, "355ml");

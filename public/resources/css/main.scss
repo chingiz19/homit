@@ -692,7 +692,7 @@ body {
     transition: all 0.8s ease;
 }
 
-.subscribe-button:hover {
+.subscribe-button:hover .CG-done-icon{
     right: -5px;
 }
 
@@ -1012,6 +1012,7 @@ body {
                 width: 127%;
                 height: 113%;
                 top: -5%;
+                background: linear-gradient(to top, rgba(227, 255, 182, 0.98), #4a749d);
             }
         }
 
@@ -1161,6 +1162,7 @@ body {
         height: 470px;
         display: flex;
         flex-direction: column;
+        margin: 10px 0;
     }
 
     .prm-sec-2-mob {
@@ -1455,6 +1457,15 @@ body {
 
 /* start of medium tablet styles */
 @media screen and (max-device-width: 768px) and (min-device-width: 480px) {
+
+    .CG-done-icon{
+        display: none;
+    }
+
+    .subscribe-button:hover {
+        padding-left: 0px;
+    }
+
     .homit-nav-content {
         .logo-sec {
             display: initial !important;
@@ -1565,7 +1576,7 @@ body {
         left: 50%;
         padding: 4px;
         font-size: 11px;
-        transform: translate(-50%, -55px);
+        transform: translate(-50%, -50px);
         opacity: 1;
         user-select: none;
     }
@@ -1592,6 +1603,15 @@ body {
 }
 
 @media screen and (max-device-width: 479px) {
+
+    .CG-done-icon{
+        display: none;
+    }
+
+    .subscribe-button:hover {
+        padding-left: 0px;
+    }
+
     .homit-nav-content {
         .logo-sec {
             display: initial !important;
@@ -1606,8 +1626,8 @@ body {
 
     .store-li:hover span {
         opacity: initial;
-        -webkit-transform: translate(-50%, -55px);
-        transform: translate(-50%, -55px);
+        -webkit-transform: translate(-50%, -50px);
+        transform: translate(-50%, -50px);
     }
 
     .log-in-icon {
@@ -1797,7 +1817,7 @@ body {
 
     .store-li:hover span {
         opacity: initial;
-        -webkit-transform: translate(-50%, -55px);
+        -webkit-transform: translate(-50%, -50px);
         transform: translate(-50%, -15px);
     }
 
@@ -1805,7 +1825,7 @@ body {
         bottom: -30px;
         padding: 3px;
         font-size: 10px;
-        transform: translate(-50%, -55px);
+        transform: translate(-50%, -50px);
         opacity: 1;
         user-select: none;
     }

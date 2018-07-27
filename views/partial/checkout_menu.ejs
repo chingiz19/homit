@@ -4,7 +4,7 @@
     <div class="checkout-menu-btn-div cart-btn-catalog">
         <button id="cart-button" class="checkout-menu-btn" ng-click="toggleRight()" ng-hide="isOpenRight()" ng-style="(!notificationClearedByUser && haveNotificationsToShow && (screenMob || screenTablet)) && {'top': '25px'} || {'top': '0px'}">
             <ng-md-icon icon="shopping_basket"></ng-md-icon>
-            <div class="items-num box-center">{{cart.numberOfItems()}}</div>
+            <div ng-show="cart.numberOfItems() || !screenMob" class="items-num box-center" ng-class="{'items-num-mob': (screenMob || screenTablet) }">{{cart.numberOfItems()}}</div>
         </button>
     </div>
     <md-sidenav class="md-sidenav-right md-whiteframe-4dp checkout-sn" md-component-id="right"> 

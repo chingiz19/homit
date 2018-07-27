@@ -12,26 +12,27 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
 
     $scope.init=function(){
 
+        $scope.categoryCoverImage = "";
+        $scope.catBoxArrowClass = "";
+        $scope.deliveryTime = "";
+        $scope.filterBoxClass = "";
+        $scope.filterBoxArrowClass = "";
+        $scope.mobFilterContent = false;
+        $scope.mobSortContent = false;
+        $scope.mobFilterArrow = "";
+        $scope.mobSortArrow = "";
         $scope.subcategories = [];
         $scope.selectedSubcats = [];
         $scope.storeinfo = {};
         $scope.scroll_top_current= 0;
         $scope.scroll_top_prev= 0;
         $scope.showCategories = false;
-        $scope.deliveryTime = "";
         $scope.selectedCategory = undefined;
         $scope.showCatBox = false;
         $scope.showFilterBox = false;
         $scope.showSortBox = false;
-        $scope.mobFilterContent = false;
-        $scope.mobSortContent = false;
-        $scope.mobFilterArrow = "";
-        $scope.mobSortArrow = "";
         $scope.sortBoxArrowClass = "";
         $scope.sortBoxClass = "";
-        $scope.filterBoxClass = "";
-        $scope.catBoxArrowClass = "";
-        $scope.filterBoxArrowClass = "";
 
         // Sorting
         $scope.sorting_options = {
@@ -82,13 +83,15 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                     for(let i=0;i < $scope.categories.length; i++){
                         if($scope.categories[i].category_name == category_name){
                             $scope.userSelectedCategory = $scope.categories[i].category_display_name;
+                            $scope.categoryCoverImage = $scope.categories[i].category_cover;
+                            break;
                         }
                     }
                 } catch(e){
                     // oops
                 }
                 $timeout(function () {
-                    $(".catalog-store-cover").css({"background-image": "url('/resources/images/catalog-stores/covers/" + $scope.display_storeInfo.image_cover, "opacity": "1"});
+                    $(".catalog-store-cover").css({"background-image": "url('/resources/images/catalog-stores/categories/covers/" + $scope.categoryCoverImage, "opacity": "1"});
                 }, 500);
             }
         }, function errorCallback(response) {

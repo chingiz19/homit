@@ -13,14 +13,14 @@ var homit_tags = {
 }
 
 const categories = {
-    "dwarf-stars": ['chocolate and bar'],
+    "local-market": ['dwarf stars', 'borderland food co'],
     "liquor-station": ['beer', 'cider and cooler', 'liqueur', 'party supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday needs', 'snacks'],
     "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'confectionery', 'dairy', 'deli and meat', 'dry packaged', 'frozen food', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
 }
 
 const api_categories = {
-    "dwarf-stars": ['chocolate-and-bar'],
+    "local-market": ['dwarf-stars', 'borderland-food-co'],
     "liquor-station": ['beer', 'cider-and-cooler', 'liqueur', 'party-supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday-needs', 'snacks'],
     "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'confectionery', 'dairy', 'deli-and-meat', 'dry-packaged', 'frozen-food', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
@@ -354,63 +354,6 @@ var recommended_products = {
             "packaging": "1",
             "volume": "1L",
             "price": 1.29
-        }
-    ],
-    "chocolate-and-bar": [
-        {
-            "brand": "Guinness",
-            "name": "Draught",
-            "store_type_name": "liquor-station",
-            "product_id": 83,
-            "category": "beer",
-            "image": "c_1060.jpeg",
-            "packaging": "4",
-            "volume": "440ml",
-            "price": 13.39
-        },
-        {
-            "brand": "Anna's Country Kitchen",
-            "name": "Fontina",
-            "store_type_name": "linas-italian-market",
-            "product_id": 7612,
-            "category": "dairy",
-            "image": "wrp_1314.jpeg",
-            "packaging": "1",
-            "volume": "227g",
-            "price": 11.99
-        },
-        {
-            "brand": "Peller Estates",
-            "name": "Sauvignon Blanc",
-            "store_type_name": "liquor-station",
-            "product_id": 1017,
-            "category": "wine",
-            "image": "b_3017.jpeg",
-            "packaging": "1",
-            "volume": "750ml",
-            "price": 12.69
-        },
-        {
-            "brand": "Augusto Espresso",
-            "name": "Organic Dark Roast Ground",
-            "store_type_name": "linas-italian-market",
-            "product_id": 7180,
-            "category": "coffee-and-tea",
-            "image": "cntr_11680.jpeg",
-            "packaging": "1",
-            "volume": "225g",
-            "price": 15.99
-        },
-        {
-            "brand": "Jackson-Triggs",
-            "name": "Shiraz",
-            "store_type_name": "liquor-station",
-            "product_id": 1037,
-            "category": "wine",
-            "image": "b_3037.jpeg",
-            "packaging": "1",
-            "volume": "750ml",
-            "price": 12.69
         }
     ],
     "beer": [
@@ -1496,6 +1439,123 @@ var recommended_products = {
             "price": 3.99
         }
     ],
+    "dwarf-stars": [
+        {
+            "brand": "Guinness",
+            "name": "Draught",
+            "store_type_name": "liquor-station",
+            "product_id": 83,
+            "category": "beer",
+            "image": "c_1060.jpeg",
+            "packaging": "4",
+            "volume": "440ml",
+            "price": 13.39
+        },
+        {
+            "brand": "Anna's Country Kitchen",
+            "name": "Fontina",
+            "store_type_name": "linas-italian-market",
+            "product_id": 7612,
+            "category": "dairy",
+            "image": "wrp_1314.jpeg",
+            "packaging": "1",
+            "volume": "227g",
+            "price": 11.99
+        },
+        {
+            "brand": "Peller Estates",
+            "name": "Sauvignon Blanc",
+            "store_type_name": "liquor-station",
+            "product_id": 1017,
+            "category": "wine",
+            "image": "b_3017.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 12.69
+        },
+        {
+            "brand": "Augusto Espresso",
+            "name": "Organic Dark Roast Ground",
+            "store_type_name": "linas-italian-market",
+            "product_id": 7180,
+            "category": "coffee-and-tea",
+            "image": "cntr_11680.jpeg",
+            "packaging": "1",
+            "volume": "225g",
+            "price": 15.99
+        },
+        {
+            "brand": "Jackson-Triggs",
+            "name": "Shiraz",
+            "store_type_name": "liquor-station",
+            "product_id": 1037,
+            "category": "wine",
+            "image": "b_3037.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 12.69
+        }
+    ],
+
+
+    "borderland-food-co": [
+        {
+            "brand": "Beatrice",
+            "name": "2% Skimmed (Lactose free)",
+            "store_type_name": "linas-italian-market",
+            "product_id": 7627,
+            "category": "dairy",
+            "image": "jg_1329.jpeg",
+            "packaging": "1",
+            "volume": "4L",
+            "price": 6.99
+        },
+        {
+            "brand": "Cupcake",
+            "name": "Malbec",
+            "store_type_name": "liquor-station",
+            "product_id": 1071,
+            "category": "wine",
+            "image": "b_3071.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 15.99
+        },
+        {
+            "brand": "Jack Link's",
+            "name": "Pork",
+            "store_type_name": "snack-vendor",
+            "product_id": 4517,
+            "category": "snacks",
+            "image": "p_9017.jpeg",
+            "packaging": "1",
+            "volume": "80g",
+            "price": 6.99
+        },
+        {
+            "brand": "National",
+            "name": "Free Run Eggs",
+            "store_type_name": "linas-italian-market",
+            "product_id": 7628,
+            "category": "deli-and-meat",
+            "image": "cs_1330.jpeg",
+            "packaging": "1",
+            "volume": "12ea",
+            "price": 5.99
+        },
+        {
+            "brand": "Disaronno",
+            "name": "Originale Amaretto",
+            "store_type_name": "liquor-station",
+            "product_id": 7476,
+            "category": "liqueur",
+            "image": "b_1181.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 30.59
+        }
+    ],
+
 }
 
 module.exports = router;
