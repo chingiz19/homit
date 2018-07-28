@@ -74,9 +74,9 @@ INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, descri
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1355, 7, "ht_ulht_liPerfect for sneaking into kid's smoothie's, or perfect for adding a boost to your daily smoothie!d_ht_liht_liGet all of the health benefits of bone broth on those hot summer days.d_ht_liht_liAdd 1/4 cup to your usual smoothie recipe for added collagen and protein!d_ht_lid_ht_ul" );
 
 -- Insert Catalog - Types Banners
-INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(7, "local-market_banner-1.jpg", 24, null, null);
-INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(7, "general_banner.jpg", 25, null, null);
-INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(7, "local-market_banner-3.jpg", 25, null, null);
+INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "local-market_banner-1.jpg", 24, null, null);
+INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "general_banner.jpg", 25, null, null);
+INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "local-market_banner-3.jpg", 25, null, null);
 
 -- Catalog - Product
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7647, 1349, "sup_1349.jpeg", 19);

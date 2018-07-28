@@ -34,6 +34,10 @@ INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (35007
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350078, 902, 337, 1000);
 
 -- Insert Catalog - Types Banners
-INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(7, "local-market_banner-1.jpg", 24, null, null);
-INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(7, "general_banner.jpg", 25, null, null);
-INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(7, "local-market_banner-3.jpg", 25, null, null);
+INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "local-market_banner-1.jpg", 24, null, null);
+INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "general_banner.jpg", 25, null, null);
+INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "local-market_banner-3.jpg", 25, null, null);
+
+-- Catalog Store Types - Category Covers
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (25, 8, 24, "8_dwarf-stars.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (26, 8, 25, "8_borderland-food-co.jpg");

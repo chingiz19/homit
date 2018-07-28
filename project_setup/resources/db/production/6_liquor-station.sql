@@ -6639,7 +6639,15 @@ INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (40821
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (40822, 822, 107, 1000);
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (40823, 823, 107, 1000);
 
-/*Insert Catalog - Types Banner*/
+-- Insert Catalog - Types Banner
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(1, "liquor-station_banner-1.jpg", 19, null, null);
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(1, "general_banner.jpg", 1, 137, null);
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(1, "liquor-station_banner-3.jpg", 2, 9, null);
+
+-- Catalog Store Types - Category Covers
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (1, 1, 1, "1_beer.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (2, 1, 2, "1_wine.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (3, 1, 3, "1_spirit.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (4, 1, 4, "1_liqueur.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (5, 1, 7, "1_party-supply.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (6, 1, 19, "1_cider-and-cooler.jpg");

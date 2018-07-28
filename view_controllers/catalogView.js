@@ -13,14 +13,14 @@ var homit_tags = {
 }
 
 const categories = {
-    "local-market": ['dwarf stars', 'borderland food co'],
+    "local-market": ['dwarf stars', 'borderland food co', 'pure foods fresh'],
     "liquor-station": ['beer', 'cider and cooler', 'liqueur', 'party supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday needs', 'snacks'],
     "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'confectionery', 'dairy', 'deli and meat', 'dry packaged', 'frozen food', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
 }
 
 const api_categories = {
-    "local-market": ['dwarf-stars', 'borderland-food-co'],
+    "local-market": ['dwarf-stars', 'borderland-food-co', 'pure-foods-fresh'],
     "liquor-station": ['beer', 'cider-and-cooler', 'liqueur', 'party-supply', 'spirit', 'wine'],
     "snack-vendor": ['beverages', 'everyday-needs', 'snacks'],
     "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'confectionery', 'dairy', 'deli-and-meat', 'dry-packaged', 'frozen-food', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
@@ -1496,8 +1496,6 @@ var recommended_products = {
             "price": 12.69
         }
     ],
-
-
     "borderland-food-co": [
         {
             "brand": "Beatrice",
@@ -1555,6 +1553,63 @@ var recommended_products = {
             "price": 30.59
         }
     ],
+    "pure-foods-fresh": [
+        {
+            "brand": "El Mercado",
+            "name": "Addictive Homemade Style",
+            "store_type_name": "linas-italian-market",
+            "product_id": 7087,
+            "category": "snacks",
+            "image": "btc_11587.jpeg",
+            "packaging": "1",
+            "volume": "400g",
+            "price": 6.49
+        },
+        {
+            "brand": "Coors",
+            "name": "Banquet",
+            "store_type_name": "liquor-station",
+            "product_id": 20,
+            "category": "beer",
+            "image": "c_1013.jpeg",
+            "packaging": "6",
+            "volume": "355ml",
+            "price": 15.93
+        },
+        {
+            "brand": "Tostitos",
+            "name": "Round",
+            "store_type_name": "snack-vendor",
+            "product_id": 4531,
+            "category": "snacks",
+            "image": "p_9031.jpeg",
+            "packaging": "1",
+            "volume": "regular",
+            "price": 4.49
+        },
+        {
+            "brand": "Pringles",
+            "name": "Original",
+            "store_type_name": "snack-vendor",
+            "product_id": 4500,
+            "category": "snacks",
+            "image": "p_9000.jpeg",
+            "packaging": "1",
+            "volume": "regular",
+            "price": 3.69
+        },
+        {
+            "brand": "Zdravo",
+            "name": "100% Tomato",
+            "store_type_name": "linas-italian-market",
+            "product_id": 7106,
+            "category": "beverages",
+            "image": "b_11606.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 5.99
+        }
+    ]
 
 }
 

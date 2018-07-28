@@ -1925,7 +1925,24 @@ INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (35006
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350070, 894, 335, 350070);
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350071, 895, 335, 350071);
 
-/*Insert Catalog - Types Banner*/
+-- Insert Catalog - Types Banner
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(6, "linas-italian-market_banner-1.jpg", 9, 144, null);
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(6, "general_banner.jpg", 18, null, null);
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(6, "linas-italian-market_banner-3.jpg", 9, 144, null);
+
+-- Catalog Store Types - Category Covers
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (10, 6, 5, "6_snacks.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (11, 6, 6, "6_beverages.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (12, 6, 9, "6_pasta-and-baking.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (13, 6, 10, "6_canned-and-jarred.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (14, 6, 11, "6_grains-and-legumes.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (15, 6, 12, "6_herbs-and-spices.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (16, 6, 13, "6_dry-packaged.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (17, 6, 14, "6_condiments.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (18, 6, 15, "6_baked-goods.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (19, 6, 16, "6_oil-and-vinegar.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (20, 6, 17, "6_coffee-and-tea.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (21, 6, 22, "6_dairy.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (22, 6, 18, "6_confectionery.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (23, 6, 21, "6_deli-and-meat.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (24, 6, 23, "6_frozen-food.jpg");
