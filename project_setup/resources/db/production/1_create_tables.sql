@@ -21,6 +21,21 @@ CREATE TABLE catalog_store_types (
 	UNIQUE(display_name)
 ) ENGINE = InnoDB;
 
+CREATE TABLE catalog_coupons (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	total_percentage_off DECIMAL(6,2),
+	total_price_off DECIMAL(6,2),
+	if_total_more DECIMAL(6,2),
+	store_type_id INT UNSIGNED,
+	code VARCHAR(225) NOT NULL,
+	message_invoice VARCHAR(225) NOT NULL,
+	message VARCHAR(225) NOT NULL,
+	privacy_type INT NOT NULL,
+	date_expiry TIMESTAMP NOT NULL,
+
+	PRIMARY KEY (id),
+	CONSTRAINT fk_catalog_coupons_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB;
 
 CREATE TABLE catalog_stores (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -509,24 +524,6 @@ CREATE TABLE catalog_hub_special_products (
 	CONSTRAINT fk_catalog_hub_special_products_product_id FOREIGN KEY (product_id) REFERENCES catalog_products(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_catalog_hub_special_products_special_type_id FOREIGN KEY (special_type_id) REFERENCES catalog_hub_special_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
-
-
-CREATE TABLE catalog_coupons (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	total_percentage_off DECIMAL(6,2),
-	total_price_off DECIMAL(6,2),
-	if_total_more DECIMAL(6,2),
-	store_type_id INT UNSIGNED,
-	code VARCHAR(225) NOT NULL,
-	message_invoice VARCHAR(225) NOT NULL,
-	message VARCHAR(225) NOT NULL,
-	privacy_type INT NOT NULL,
-	date_expiry TIMESTAMP NOT NULL,
-
-	PRIMARY KEY (id),
-	CONSTRAINT fk_catalog_coupons_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB;
-
 
 CREATE TABLE user_coupons (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
