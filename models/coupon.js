@@ -306,17 +306,17 @@ pub.getStoreCoupons = async function (storeType) {
 /**
  * Returns true if user already has coupon with given ID
  * otherwise false
- * @param {*} couponId 
+ * @param {*} coupon
  */
-async function doesUserHaveCoupon(couponId) {
-    if (couponId) {
+async function doesUserHaveCoupon(coupon) {
+    if (coupon) {
         let data = {
-            "coupon_id": couponId
+            "coupon_id": coupon.id
         }
 
         let result = await db.selectAllWhere(db.tables.user_coupons, data);
 
-        return (result.length > 0)
+        return (result.length > 0);
     }
     return true;
 }
