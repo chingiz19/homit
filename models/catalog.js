@@ -2,13 +2,12 @@
  * @copyright Homit 2018
  */
 
-var pub = {};
+let pub = {};
 
 /**
-* Returns list of categories by store type api name
-* 
-* @param {*} storeType name for store type
-*/
+ * Returns list of categories by store type api name
+ * @param {*} storeType name for store type
+ */
 pub.getCategoriesByStoreType = async function (storeType) {
     if (!storeType) {
         Logger.log.error("Undefined Store type for getCategoriesByStoreType function");
@@ -17,7 +16,7 @@ pub.getCategoriesByStoreType = async function (storeType) {
 
     let sqlQuery = `
         SELECT DISTINCT
-        category.display_name AS category_display_name, category.name AS category_name,
+        category.display_name AS category_display_name ,category.name AS category_name,
         category.image AS category_image, category_covers.cover_image AS category_cover
         FROM
         catalog_store_types AS store_types
@@ -1289,12 +1288,55 @@ pub.getSimilarProducts = async function (productId) {
 }
 
 /**
+ * Returns true if storeType exists and category 
+ * belongs to given store type
+ * @param {*} storeType store type name (e.g. liquor-station)
+ * @param {*} category  category from that store (e.g. beer)
+ */
+pub.verifyStoreCategory = async function (storeType, category) {
+    if (!(storeType && category)) {
+        Logger.log.error("Undefined Store type for getCategoriesByStoreType function");
+        return false;
+    }
+
+    let sqlQuery = `
+        SELECT DISTINCT
+        category.display_name   
+        FROM
+        catalog_store_types AS store_types
+        JOIN catalog_depot AS depot ON (store_types.id = depot.store_type_id)
+        JOIN catalog_items AS item ON (depot.item_id = item.id)
+        JOIN catalog_products AS product ON (item.product_id = product.id)
+        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
+        JOIN catalog_types AS type ON (listing.type_id = type.id)
+        JOIN catalog_subcategories AS subcat ON (type.subcategory_id = subcat.id)
+        JOIN catalog_categories AS category ON (subcat.category_id = category.id)
+        WHERE 
+            ?
+        AND
+            ? ;
+    `;
+
+    let result = await db.runQuery(sqlQuery, [{ "store_types.name": storeType }, { "category.name": category }]);
+
+    return (result && result.length == 1);
+}
+
+/**
+ * Get all store types
+ */
+pub.getAllStoreTypes = async function () {
+    let data = { "available": true };
+    return db.selectAllWhere(db.tables.catalog_store_types, data);
+}
+
+/**
  * Get similar products bought at the same transaction
  * 
  * @param {*} productId 
  * @param {*} limit 
  */
-var getSimilarProductsBySameTransaction = async function (productId, limit) {
+async function getSimilarProductsBySameTransaction(productId, limit) {
     if (limit > 0) {
         let sqlQuery = `
             SELECT 
@@ -1341,7 +1383,7 @@ var getSimilarProductsBySameTransaction = async function (productId, limit) {
  * @param {*} productId 
  * @param {*} limit 
  */
-var getSimilarProductsBySameCustomer = async function (productId, limit) {
+async function getSimilarProductsBySameCustomer(productId, limit) {
     if (limit > 0) {
         let sqlQuery = `
             SELECT              
@@ -1429,7 +1471,7 @@ var getSimilarProductsBySameCustomer = async function (productId, limit) {
  * @param {*} storeType
  * @param {*} productId 
  */
-var getItemByProductId = async function (storeType, productId) {
+async function getItemByProductId(storeType, productId) {
     let sqlQuery = `
         SELECT
         product.id AS product_id,
@@ -1467,14 +1509,6 @@ var getItemByProductId = async function (storeType, productId) {
     let data2 = { "product.id": productId };
     let dbResult = await db.runQuery(sqlQuery, [data1, data2]);
     return dbResult[0];
-}
-
-/**
- * Get all store types
- */
-pub.getAllStoreTypes = async function () {
-    let data = { "available": true };
-    return db.selectAllWhere(db.tables.catalog_store_types, data);
 }
 
 module.exports = pub;
