@@ -36,7 +36,12 @@ class modelFactory {
         if (process.env.n_mode == "production"){
             global.machineHostname = "https://www.homit.ca";
         } else {
-            global.machineHostname = "http://192.168.0.1:8080";
+            require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+                if(!add && err) {
+                    add='localhost';
+                }
+                global.machineHostname = `http://${add}:8080`;
+              });
         }
     }
 }
