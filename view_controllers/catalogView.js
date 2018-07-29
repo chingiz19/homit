@@ -1,7 +1,7 @@
-var router = require("express").Router();
-var _ = require("lodash");
+let router = require("express").Router();
+let _ = require("lodash");
 
-var homit_tags = {
+let homit_tags = {
     "d_ht_em": "</em>",
     "ht_em": "<em>",
     "d_ht_b": "</b>",
@@ -10,20 +10,6 @@ var homit_tags = {
     "ht_ul": "<ul>",
     "d_ht_li": "</li>",
     "ht_li": "<li>"
-}
-
-const categories = {
-    "local-market": ['dwarf stars', 'borderland food co', 'pure foods fresh'],
-    "liquor-station": ['beer', 'cider and cooler', 'liqueur', 'party supply', 'spirit', 'wine'],
-    "snack-vendor": ['beverages', 'everyday needs', 'snacks'],
-    "linas-italian-market": ['baked goods', 'beverages', 'canned and jarred', 'coffee and tea', 'condiments', 'confectionery', 'dairy', 'deli and meat', 'dry packaged', 'frozen food', 'grains and legumes', 'herbs and spices', 'oil and vinegar', 'pasta and baking', 'snacks']
-}
-
-const api_categories = {
-    "local-market": ['dwarf-stars', 'borderland-food-co', 'pure-foods-fresh'],
-    "liquor-station": ['beer', 'cider-and-cooler', 'liqueur', 'party-supply', 'spirit', 'wine'],
-    "snack-vendor": ['beverages', 'everyday-needs', 'snacks'],
-    "linas-italian-market": ['baked-goods', 'beverages', 'canned-and-jarred', 'coffee-and-tea', 'condiments', 'confectionery', 'dairy', 'deli-and-meat', 'dry-packaged', 'frozen-food', 'grains-and-legumes', 'herbs-and-spices', 'oil-and-vinegar', 'pasta-and-baking', 'snacks']
 }
 
 router.get("/product/:storeName/:productName/:productId", async function (req, res, next) {
@@ -132,14 +118,13 @@ router.get('/:parent/', async function (req, res, next) {
     res.render("store.ejs", req.options.ejs);
 });
 
-router.get('/:parent/:category', function (req, res, next) {
-    if (!_.includes(api_categories[req.params.parent], req.params.category)) {
+router.get('/:parent/:category', async function (req, res, next) {
+    if (!await Catalog.verifyStoreCategory(req.params.parent, req.params.category)) {
         return res.redirect("/notfound");
     }
 
     try {
         req.options.ejs.title = _.startCase(req.params.category) + " Catalog | Homit";
-        req.options.ejs.categories = convertArrayToString(categories[req.params.parent]);
         req.options.ejs.loadedStore = _.startCase(req.params.parent);
         req.options.ejs.selectedCategory = req.params.category.replace(/-/g, " ");
         res.render("catalog.ejs", req.options.ejs);
@@ -148,12 +133,8 @@ router.get('/:parent/:category', function (req, res, next) {
     }
 });
 
-function convertArrayToString(array) {
-    return "[\"" + array.join("\",\"") + "\"]";
-}
-
 function convertHomitTags(string) {
-    var tmpString = string;
+    let tmpString = string;
     for (tag in homit_tags) {
         tmpString = tmpString.replace(new RegExp(tag, 'g'), homit_tags[tag]);
     }
@@ -161,7 +142,7 @@ function convertHomitTags(string) {
 }
 
 function clearProductUrl(path) {
-    var tempPath = path;
+    let tempPath = path;
     tempPath = tempPath.replace(/[#&',.%/()]/g, "");
     tempPath = tempPath.replace(/---/g, "-");
     tempPath = tempPath.replace(/--/g, "-");
@@ -169,21 +150,14 @@ function clearProductUrl(path) {
 }
 
 function clearHomitTags(string) {
-    var tmpString = string;
+    let tmpString = string;
     for (tag in homit_tags) {
         tmpString = tmpString.replace(new RegExp(tag, 'g'), "");
     }
     return tmpString;
 }
 
-const default_category = {
-    "dwarf-stars": 0,
-    "liquor-station": 1,
-    "snack-vendor": 2,
-    "linas-italian-market": 6
-}
-
-var recommended_products = {
+let recommended_products = {
     "frozen-food": [
         {
             "brand": "Painted Turtle",
