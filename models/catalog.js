@@ -1300,7 +1300,7 @@ pub.verifyStoreCategory = async function (storeType, category) {
     }
 
     let sqlQuery = `
-        SELECT DISTINCT
+        SELECT 
         category.display_name   
         FROM
         catalog_store_types AS store_types
@@ -1314,7 +1314,8 @@ pub.verifyStoreCategory = async function (storeType, category) {
         WHERE 
             ?
         AND
-            ? ;
+            ? 
+        LIMIT 1;
     `;
 
     let result = await db.runQuery(sqlQuery, [{ "store_types.name": storeType }, { "category.name": category }]);
