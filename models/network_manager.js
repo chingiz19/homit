@@ -2,7 +2,7 @@
  * @copyright Homit 2018
  */
 
-var pub = {};
+let pub = {};
 const fs = require("fs");
 const path = require('path');
 const redis = require('socket.io-redis');
@@ -24,14 +24,14 @@ const serviceAccount = require("../homit-drivers-firebase-adminsdk.json");
 
 
 /* Building metadata for log */
-var logMeta = {
+let logMeta = {
     directory: __filename
 }
 
 /**
  * Generic parameters for connections ping interval and timeout
  */
-var genericConParams = {
+let genericConParams = {
     pingInterval: 2000,
     pingTimeout: 10000
 };
@@ -49,20 +49,20 @@ firebaseAdmin.initializeApp({
  * 1. Secure for external connections
  * 2. Non secure for internal (localhost only) connections 
  */
-var externalIOServer = require("https").createServer({
+let externalIOServer = require("https").createServer({
     key: fs.readFileSync(KEY_PATH),
     cert: fs.readFileSync(CERTIFICATE_PATH),
     passphrase: 'test'
 });
 
-// var externalIOServer = require("http").createServer();              //only for test mode
+// let externalIOServer = require("http").createServer();              //only for test mode
 
-var localCMServer = require("http").createServer();
+let localCMServer = require("http").createServer();
 
 
 /* Attaching Servers */
-var externalIO = require("socket.io")(externalIOServer, genericConParams);
-var localhostIO = require("socket.io")(localCMServer, genericConParams);
+let externalIO = require("socket.io")(externalIOServer, genericConParams);
+let localhostIO = require("socket.io")(localCMServer, genericConParams);
 
 
 /* Attaching redis servers as adapter for socket objects */
@@ -81,9 +81,9 @@ localhostIO.adapter(redis({
 }));
 
 /* Assigning namespaces */
-var stores = externalIO.of(STORES_NAMESPACE);
-var csr = externalIO.of(CSR_NAMESPACE);
-var chikimiki = localhostIO.of(CM_NAMESPACE);
+let stores = externalIO.of(STORES_NAMESPACE);
+let csr = externalIO.of(CSR_NAMESPACE);
+let chikimiki = localhostIO.of(CM_NAMESPACE);
 
 
 /**
@@ -103,7 +103,7 @@ pub.setSharedSessionMiddleware = function (session) {
  * Connection handler for CM
  */
 chikimiki.on('connection', function (client) {
-    var verification = {
+    let verification = {
         "action": "verify_server",
         "key": CM_SECRET_KEY
     }
@@ -242,10 +242,10 @@ pub.sendOrderToCM = function (customerId, customerAddress, orderId, storeType) {
  * @param {*} driverId driver id
  */
 pub.cancelCMOrder = function (orderId, driverId) {
-    var driverIdString = "d_" + driverId;
-    var orderIdString = "o_" + orderId;
+    let driverIdString = "d_" + driverId;
+    let orderIdString = "o_" + orderId;
 
-    var json = {
+    let json = {
         "action": "driver_status",
         "details": {
             "driver_id": driverIdString,
@@ -267,7 +267,7 @@ pub.notifyDriver = async function (id) {
     let token = await Driver.findFirebaseTokenById(id);
 
     if (token) {
-        var message = {
+        let message = {
             "token": token,
             "android": {
                 "priority": "HIGH",
