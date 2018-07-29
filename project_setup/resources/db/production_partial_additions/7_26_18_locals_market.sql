@@ -1,7 +1,7 @@
 use homit;
 
 -- Catalog - Store Type
-INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(8,"local-market", "Local Market","local-market_yyc.png");
+INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(8,"locals-market", "Local's Market","locals-market_yyc.png");
 
 -- Catalog - Store
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (337, "s_", "Local Market", "10 Brentwood Common Northwest, Calgary, AB", "51.087118", "-114.128275", "4033977020", "8");
