@@ -10,7 +10,7 @@ INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(156, "Sauce &
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(917, "Gluten free, dairy free, nut free, vegan sauce", "156");
 
 -- Catalog Packaging - Containers
-INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(200, "354ml");
+INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(214, "354ml");
 
 -- Catalog - Listing
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1356, "Pure Foods Fresh", "Babu's BBQ Sauce", 917);
@@ -41,9 +41,9 @@ INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7655,
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7656, 1, "ntr_b_1358.jpeg");
 
 -- Catalog - Item
-INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11763, 7654, 9, 200);
-INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11764, 7655, 9, 200);
-INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11765, 7656, 9, 200);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11763, 7654, 9, 214);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11764, 7655, 9, 214);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11765, 7656, 9, 214);
 
 -- Catalog - Depot
 INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (903, 11763, 8, 9.99, 1);

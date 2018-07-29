@@ -1668,6 +1668,9 @@ INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1352, "Borderla
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1353, "Borderland Food", "Grass-Fed Bison Bone Broth", 914);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1354, "Borderland Food", "Grass-Fed Beef Bone Broth", 915);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1355, "Borderland Food", "Free Range Chicken Smoothie Base Bone Broth", 916);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1356, "Pure Foods Fresh", "Babu's BBQ Sauce", 917);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1357, "Pure Foods Fresh", "South Western Green Pepper Sauce", 917);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (1358, "Pure Foods Fresh", "Trumato Sauce", 917);
 
 -- Catalog - Listing Description
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1001, 2, "Pale Lager");
@@ -6815,6 +6818,17 @@ INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, descri
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1355, 1, "ht_ulht_liFor individuals looking to incorporate bone broth into their daily diet, our broths are made with the highest quality ingredients and slow-cooked for over 24 hours to ensure maximum nutrient extraction and flavour.d_ht_liht_liPerfect for sipping or adding to your favourite recipes.d_ht_lid_ht_ul" );
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1355, 4, "Canada" );
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1355, 7, "ht_ulht_liPerfect for sneaking into kid's smoothie's, or perfect for adding a boost to your daily smoothie!d_ht_liht_liGet all of the health benefits of bone broth on those hot summer days.d_ht_liht_liAdd 1/4 cup to your usual smoothie recipe for added collagen and protein!d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1356, 6, "ht_ulht_liFresh tomato, tomato paste, fresh onion, fresh garlic, spices, olive oil, tamarind paste, cane sugar, organic apple cider vinegar, natural liquid smoke, non-GMO corn flour, water, black salt, saltd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1356, 1, "ht_ulht_liPure Foods Fresh Sauces are manufactured in Calgary with quality ingredients and fresh in taste made without any Chemicals, No Preservatives, No artificial Colour, 100% Natural, Suitable for Vegetarian, Gluten Free, Dairy Freed_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1356, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1357, 6, "ht_ulht_liFresh onion, fresh green pepper, fresh garlic, fresh coriander leaves, fresh ginger, olive oil, spices, tamarind paste, cane sugar, corn flour, water, saltd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1357, 1, "ht_ulht_liPure Foods Fresh Sauces are manufactured in Calgary with quality ingredients and fresh in taste made without any Chemicals, No Preservatives, No artificial Colour, 100% Natural, Suitable for Vegetarian, Gluten Free, Dairy Freed_ht_liht_liUsed as: pasta sauce and marinating meats like chicken, beef, pork, salmon, shrimp and also used as salad dressing, and dipping sauce for chips, tacos and nachos.d_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1357, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1357, 7, "ht_ulht_bEnchiladasd_ht_b Instructions (serves 4): ht_liHeat 2 tbls oil, add 1 lbs chicken diced and cook for 10 min, saeson with salt and pepper. Saute until chicken is cooked and add half bottle of South Western Green Pepper Sauce and remove from heatd_ht_liht_li To assemble Enchiladas - Lay out the Tortillas, add chicken mixtue and 1 ounce black bean and spread 1/3 cup cheese on top. Bake uncovered 20 min and garnished with cilantrod_ht_liht_liDelicious enchiladas ready to served_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1358, 6, "ht_ulht_liFresh onion, fresh tomato, fresh garlic, tomato paste, olive oil, tamarind paste, spices, cane sugar, corn flour, water, saltd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1358, 1, "ht_ulht_liPure Foods Fresh Sauces are manufactured in Calgary with quality ingredients and fresh in taste made without any Chemicals, No Preservatives, No artificial Colour, 100% Natural, Suitable for Vegetarian, Gluten Free, Dairy Freed_ht_liht_li Used as: pizza sauce, pasta sauce and marinating meats like Chicken, beef, pork, salmon, shrimp and also used as dipping sauce for chips, tacos and nachosd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1358, 4, "Canada" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1358, 7, "ht_ulht_bButter Chickend_ht_b instructions (serves 4): ht_liAdd 2 tablespoons butter in a pan with medium-heat, cook 2 lbs chicken breast for 10-15 minsd_ht_liht_liOnce chicken is cooked, add the whole bottle of Trumato (Mild/Hot) sauce, after 3 mins add 2 cup cream, and 1 cup water. You could use table cream, or sub 1 cup for milk or yogurtd_ht_liht_liStir in the 2 tbsp of butter, and season with salt and cilantro, to taste. Serve garnished with lime and cilantro, alongside rice and naand_ht_lid_ht_ulht_ulht_bChicken / Veg Kormad_ht_b instructions (serves 4): ht_liAdd 2 tbsp oil in a pan and add 2 lbs chicken and cook for 10 minsd_ht_liht_liOnce the chicken is cooked perfectly add Turmato (Mild/Hot) sauce, after 3 mins add 1 cup coconut milk or 1/4 cup desiccated coconutd_ht_liht_liSeason with salt and pepper if you need to spice up add the gravy and garnish with cilantro and lime, serve with rice or naand_ht_lid_ht_ul " );
 
 -- Catalog - Product
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (1, 1001, "b_1001.jpeg", 2);
@@ -8530,6 +8544,9 @@ INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7650,
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7651, 1353, "sup_1353.jpeg", 19);
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7652, 1354, "sup_1354.jpeg", 19);
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7653, 1355, "sup_1355.jpeg", 19);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7654, 1356, "b_1356.jpeg", 2);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7655, 1357, "b_1357.jpeg", 2);
+INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7656, 1358, "b_1358.jpeg", 2);
 
 -- Catalog - Product Images
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7283, 1, "ntr_bx_11783.png");
@@ -9281,6 +9298,9 @@ INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7650,
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7651, 1, "ntr_sup_1353.png");
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7652, 1, "ntr_sup_1354.png");
 INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7653, 1, "ntr_sup_1355.png");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7654, 1, "ntr_b_1356.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7655, 1, "ntr_b_1357.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7656, 1, "ntr_b_1358.jpeg");
 
 -- Catalog - Item
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (1, 1, 1, 1);
@@ -11224,4 +11244,6 @@ INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11760, 7651, 9, 157);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11761, 7652, 9, 157);
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11762, 7653, 9, 157);
-
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11763, 7654, 9, 214);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11764, 7655, 9, 214);
+INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11765, 7656, 9, 214);
