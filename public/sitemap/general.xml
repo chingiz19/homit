@@ -9,12 +9,6 @@
     </url>
 
     <url>
-        <loc>https://www.homit.ca/hub/dwarf-stars/chocolate-and-bar</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
         <loc>https://www.homit.ca/hub/liquor-station/beer</loc> 
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -154,6 +148,24 @@
 
     <url>
         <loc>https://www.homit.ca/hub/linas-italian-market/snacks</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/hub/local-market/dwarf-stars</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/hub/local-market/borderland-food-co</loc> 
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.homit.ca/hub/local-market/pure-foods-fresh</loc> 
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

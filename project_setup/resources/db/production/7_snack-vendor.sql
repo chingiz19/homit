@@ -3097,7 +3097,12 @@ INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (31507
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (315076, 10076, 334, 1000);
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (315077, 10077, 334, 1000);
 
-/*Insert Catalog - Types Banner*/
+-- Insert Catalog - Types Banner
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(3, "snack-vendor_banner-1.jpg", 5, 25, null);
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(3, "general_banner.jpg", 6, null, null);
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(3, "snack-vendor_banner-3.jpg", 5, null, null);
+
+-- Catalog Store Types - Category Covers
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (7, 3, 5, "3_snacks.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (8, 3, 6, "3_beverages.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (9, 3, 8, "3_everyday-needs.jpg");

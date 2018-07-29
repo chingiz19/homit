@@ -23,6 +23,9 @@ INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (899, 
 INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (900, 11760, 8, 8.99, 1);
 INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (901, 11761, 8, 8.99, 1);
 INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (902, 11762, 8, 8.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (903, 11763, 8, 9.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (904, 11764, 8, 9.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (905, 11765, 8, 9.99, 1);
 
 -- Catalog - Warehouse
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350072, 896, 337, 1000);
@@ -32,8 +35,16 @@ INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (35007
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350076, 900, 337, 1000);
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350077, 901, 337, 1000);
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350078, 902, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350079, 903, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350080, 904, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350081, 905, 337, 1000);
 
 -- Insert Catalog - Types Banners
-INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(7, "local-market_banner-1.jpg", 24, null, null);
-INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(7, "general_banner.jpg", 25, null, null);
-INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(7, "local-market_banner-3.jpg", 25, null, null);
+INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "local-market_banner-1.jpg", 24, null, null);
+INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "general_banner.jpg", 25, null, null);
+INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "local-market_banner-3.jpg", 25, null, null);
+
+-- Catalog Store Types - Category Covers
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (25, 8, 24, "8_dwarf-stars.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (26, 8, 25, "8_borderland-food-co.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (27, 8, 26, "8_pure-foods-fresh.jpg");
