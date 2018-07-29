@@ -38,7 +38,7 @@ pub.tables = {
   users_customers_guest: "users_customers_guest",
   users_customers_history: "users_customers_history",
   users_employees: "users_employees",
-  user_cart_items: "user_cart_items", 
+  user_cart_items: "user_cart_items",
   user_coupons: "user_coupons",
   orders_emails: "orders_emails",
   orders_transactions_history: "orders_transactions_history",
@@ -77,7 +77,7 @@ mysql.createConnection({
       error_message: err.message
     }
     Logger.log.error('Error connecting to DB', metadata);
-    return;
+    throw new Error('Error connecting to DB');
   }
 });
 
