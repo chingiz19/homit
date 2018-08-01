@@ -8,7 +8,7 @@ INSERT INTO `catalog_hub_special_types` (id, api_name, display_name) VALUES(3, "
 /*Catalog Hub - Special Products*/
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6 , 6506, 2);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(3 , 4529, 2);
-INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(7 , 7587, 2);
+INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(8 , 7648, 2);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(1 , 87, 2);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6 , 7614, 2);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(1 , 1146, 2);
@@ -26,7 +26,7 @@ INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_t
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6 , 7005, 2);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6 , 7612, 1);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(3 , 4539, 1);
-INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(7 , 7586, 1);
+INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(8 , 7647, 1);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(1 , 2500, 1);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6 , 7107, 1);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(1 , 1160, 1);
@@ -44,7 +44,7 @@ INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_t
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6 , 6830, 1);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6 , 7633, 3);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(3 , 4525, 3);
-INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(7 , 7588, 3);
+INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(8 , 7649, 3);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6 , 7227, 3);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6 , 6815, 3);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(1 , 34, 3);

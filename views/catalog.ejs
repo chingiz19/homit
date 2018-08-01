@@ -32,8 +32,8 @@
             <div class="category-extension-div" ng-cloak>
                 <div class="cat-ext-box">
                     <div class="cat-ext-content" ng-show="showCatBox">
-                        <h2 ng-show="!(display_storeInfo.name == 'local-market')">Store Categories</h2>
-                        <h2 ng-show="display_storeInfo.name == 'local-market'">Local Producers</h2>
+                        <h2 ng-show="!(display_storeInfo.name == 'locally-made')">Store Categories</h2>
+                        <h2 ng-show="display_storeInfo.name == 'locally-made'">YYC Vendors</h2>
                         <div class="box-a-div">
                             <a class="cat-ext-a hover-raise" ng-repeat="category in categories" href="{{category.category_url}}" target="_self">
                                 <img ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}">

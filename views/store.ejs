@@ -60,8 +60,8 @@
                 </div>
             </section>
             <section ng-show="storePage.categories.length != 0" class="category-sec">
-                <h2 ng-show="!(storePage.store_info.name == 'local-market')" class="category-hdr">{{ storePage.store_info.display_name }} - Store Categories</h2>
-                <h2 ng-show="storePage.store_info.name == 'local-market'" class="category-hdr">{{ storePage.store_info.display_name }} - Locally Made</h2>
+                <h2 ng-show="!(storePage.store_info.name == 'locally-made')" class="category-hdr">{{ storePage.store_info.display_name }} - Store Categories</h2>
+                <h2 ng-show="storePage.store_info.name == 'locally-made'" class="category-hdr">{{ storePage.store_info.display_name }} - YYC Vendors</h2>
                 <div class="category-div">
                     <a class="hover-raise" ng-repeat="category in categories" href="{{category.category_url}}" target="_self" data-aos="zoom-in">
                         <ul>

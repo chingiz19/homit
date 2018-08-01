@@ -195,7 +195,7 @@ let recommended_products = {
         {
             "brand": "Dwarf Stars",
             "name": "Pumpkin Seed Butter Cups",
-            "store_type_name": "dwarf-stars",
+            "store_type_name": "locally-made",
             "product_id": 7646,
             "category": "chocolate-and-bar",
             "image": "bg_1289.jpeg",
@@ -219,7 +219,7 @@ let recommended_products = {
         {
             "brand": "Dwarf Stars",
             "name": "Originals",
-            "store_type_name": "dwarf-stars",
+            "store_type_name": "locally-made",
             "product_id": 7586,
             "category": "chocolate-and-bar",
             "image": "bg_1288.jpeg",
@@ -1583,8 +1583,64 @@ let recommended_products = {
             "volume": "750ml",
             "price": 5.99
         }
+    ],
+    "honey-and-bloom": [
+        {
+            "brand": "Saltwest Naturas",
+            "name": "Roasted Garlic & Onion Infused",
+            "store_type_name": "linas-italian-market",
+            "product_id": 6670,
+            "category": "herbs-and-spices",
+            "image": "cntr_11169.jpeg",
+            "packaging": "1",
+            "volume": "40g",
+            "price": 5.99
+        },
+        {
+            "brand": "American Vintage",
+            "name": "Iced Tea Lemon",
+            "store_type_name": "liquor-station",
+            "product_id": 7414,
+            "category": "cider-and-cooler",
+            "image": "c_1120.jpeg",
+            "packaging": "6",
+            "volume": "355ml",
+            "price": 15.09
+        },
+        {
+            "brand": "Aurora",
+            "name": "Pomegranate Juice",
+            "store_type_name": "linas-italian-market",
+            "product_id": 7133,
+            "category": "beverages",
+            "image": "b_11633.jpeg",
+            "packaging": "1",
+            "volume": "1L",
+            "price": 7.99
+        },
+        {
+            "brand": "Borderland Food",
+            "name": "Free Range Chicken Smoothie Base Bone Broth",
+            "store_type_name": "locally-made",
+            "product_id": 7653,
+            "category": "borderland-food-co",
+            "image": "sup_1355.jpeg",
+            "packaging": "1",
+            "volume": "591ml",
+            "price": 8.99
+        },
+        {
+            "brand": "Pure Foods Fresh",
+            "name": "Trumato Sauce",
+            "store_type_name": "locally-made",
+            "product_id": 7656,
+            "category": "pure-foods-fresh",
+            "image": "b_1358.jpeg",
+            "packaging": "1",
+            "volume": "354ml",
+            "price": 9.99
+        }
     ]
-
 }
 
 module.exports = router;

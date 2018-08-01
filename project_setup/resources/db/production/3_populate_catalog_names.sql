@@ -36,6 +36,7 @@ INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(23, "fro
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(24, "dwarf-stars", "Dwarf Stars", "dwarf-stars.jpeg");
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(25, "borderland-food-co", "Borderland Food Co.", "borderland-food-co.jpeg");
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(26, "pure-foods-fresh", "Pure Foods Fresh", "pure-foods-fresh.jpg");
+INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(27, "honey-and-bloom", "Honey & Bloom", "honey-and-bloom.jpg");
 
 -- Insert Catalog - Subcategory
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(1, "Lager", "1");
@@ -194,6 +195,7 @@ INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(153, "Nutriti
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(154, "Bone Broth for People", "25");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(155, "Bone Broth for Pets", "25");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(156, "Sauce & Seasoning", "26");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(157, "Health & Body", "27");
 
 -- Insert Catalog Type
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(1, "Pale Lager", "1");
@@ -1113,6 +1115,18 @@ INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(914, "Bison bone b
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(915, "Beef bone broth for people", "154");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(916, "Chicken smoothie bath broth for people", "154");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(917, "Gluten free, dairy free, nut free, vegan sauce", "156");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(918, "Lemongrass patchouli deodorant", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(919, "Floral deodorant", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(920, "Stinky gypsy body wash", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(921, "Peppermint eucalyptus lip balm", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(922, "Spearmint lavender lip balm", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(923, "Bug repellent ", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(924, "Yoga mat cleanser", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(925, "Broken down bath salts", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(926, "Bath salts", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(927, "Soothing balm", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(928, "Face mask charcoal", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(929, "Body scrub coconut", "157");
 
 -- Catalog - Image Names
 INSERT INTO `catalog_image_names`(id, name) VALUES(1, "nutritions");
@@ -1139,6 +1153,10 @@ INSERT INTO `catalog_packaging_containers`(id, name) VALUES(16, "case");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(17, "tetra pak");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(18, "wrapped");
 INSERT INTO `catalog_packaging_containers`(id, name) VALUES(19, "stand up pouch");
+INSERT INTO `catalog_packaging_containers`(id, name) VALUES(20, "deodorant tube");
+INSERT INTO `catalog_packaging_containers`(id, name) VALUES(21, "lip balm tube");
+INSERT INTO `catalog_packaging_containers`(id, name) VALUES(22, "spray bottle");
+INSERT INTO `catalog_packaging_containers`(id, name) VALUES(23, "ointment container");
 
 -- Insert Catalog Packaging - Packaging
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(1, "6");
@@ -1162,6 +1180,7 @@ INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(18, "16ct");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(19, "24ct");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(20, "30ct");
 INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(21, "36");
+INSERT INTO `catalog_packaging_packagings`(id, name) VALUES(22, "3");
 
 -- Insert Catalog Packaging - Volume
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(1, "330ml");
@@ -1378,3 +1397,9 @@ INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(211, "12ea");
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(212, "562ml");
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(213, "521g");
 INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(214, "354ml");
+INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(215, "2.65oz");
+INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(216, "16oz");
+INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(217, "0.15oz");
+INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(218, "4oz");
+INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(219, "8oz");
+INSERT INTO `catalog_packaging_volumes`(id, name) VALUES(220, "4oz");
