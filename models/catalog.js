@@ -1101,6 +1101,7 @@ var getItemsByProductId = async function (storeType, productId) {
         JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
         
         WHERE store_type.available = true
+        AND depot.available = true
         AND ? AND ?
         
         ORDER BY listing_id, product_id, item_id, depot_id`;
