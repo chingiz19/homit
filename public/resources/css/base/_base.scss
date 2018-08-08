@@ -142,3 +142,48 @@ li {
 .email-check-div:focus{
     outline: 0;
 }
+
+// Store or Category button
+.stores-div, .categories-div{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 auto 50px auto;
+    padding: 0 10%;
+
+    a {
+        width: 200px;
+        box-shadow: 0 0px 4px 1px rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+
+        img {
+            width: 200px;
+            height: 270px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        p {
+            margin: 0;
+            padding: 7px;
+            font-size: 17px;
+            color: #68686b;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
+
+    a:hover {
+        -webkit-transform: translateY(-2px);
+        transform: translateY(-2px);
+    }
+
+    a, a:hover, a:active, a:visited, a:focus {
+        text-decoration: none;
+    }
+
+    z-index: 10;
+}

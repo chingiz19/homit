@@ -59,18 +59,27 @@
                     </button>
                 </div>
             </section>
+
             <section ng-show="storePage.categories.length != 0" class="category-sec">
-                <h2 ng-show="!(storePage.store_info.name == 'locally-made')" class="category-hdr">{{ storePage.store_info.display_name }} - Store Categories</h2>
-                <h2 ng-show="storePage.store_info.name == 'locally-made'" class="category-hdr">{{ storePage.store_info.display_name }} - YYC Vendors</h2>
-                <div class="category-div">
-                    <a class="hover-raise" ng-repeat="category in categories" href="{{category.category_url}}" target="_self" data-aos="zoom-in">
+                <h2 class="category-hdr">{{ storePage.store_info.display_name }} - Store Categories</h2>
+                <div class="categories-div">
+
+                    <a href="/hub/{{store.name}}" target="_self" class="hover-raise" ng-repeat="category in categories">
+                        <img alt="{{store.name}}" ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}">
+                        <p>{{category.category_display_name}}</p>
+                    </a>
+
+
+                    <!-- <a class="hover-raise" ng-repeat="category in categories" href="{{category.category_url}}" target="_self" data-aos="zoom-in">
                         <ul>
                             <li><img class="category-img" ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}"></li>
                             <li class="category-name">{{category.category_display_name}}</li>
                         </ul>
-                    </a>
+                    </a> -->
                 </div>
             </section>
+
+
         </section>
     </div>
 <!--googleon: snippet-->
