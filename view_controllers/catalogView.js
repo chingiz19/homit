@@ -15,7 +15,7 @@ let homit_tags = {
 router.get("/product/:storeName/:productName/:productId", async function (req, res, next) {
     if (!req.query || Object.keys(req.query) > 0) {
         return res.redirect("/hub" + req.path);
-    }else if (isNaN(req.params.productId)){
+    } else if (isNaN(req.params.productId)) {
         return res.redirect("/notfound");
     }
 
@@ -112,10 +112,18 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     res.render("product.ejs", req.options.ejs);
 });
 
-router.get('/:parent/', async function (req, res, next) {
-    req.options.ejs.title = _.startCase(req.params.parent) + " Page | Homit";
-    //TODO: og image
-    res.render("store.ejs", req.options.ejs);
+router.get('/:parent/', async function (req, res) {
+    let union = await Catalog.isParentUnion(req.params.parent);
+
+    if (union) {
+        req.options.ejs.title = union.display_name + " | Homit";
+        req.options.ejs.union_display_name = union.display_name || "Collection of Stores";
+        res.render("unions.ejs", req.options.ejs);
+    } else {
+        req.options.ejs.title = _.startCase(req.params.parent) + " | Homit";
+        //TODO: og image
+        res.render("store.ejs", req.options.ejs);
+    }
 });
 
 router.get('/:parent/:category', async function (req, res, next) {

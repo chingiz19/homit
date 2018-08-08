@@ -1329,7 +1329,57 @@ pub.verifyStoreCategory = async function (storeType, category) {
  */
 pub.getAllStoreTypes = async function () {
     let data = { "available": true };
-    return db.selectAllWhere(db.tables.catalog_store_types, data);
+    let sqlQuery = `
+    SELECT 
+	*
+    FROM 
+        catalog_store_types
+    WHERE 
+        ?
+    AND 
+        union_id IS NULL;`;
+    let resultWithNoUnions = await db.runQuery(sqlQuery, data);
+    let unions = await db.selectAllFromTable(db.tables.catalog_store_unions);
+    let result = resultWithNoUnions.concat(unions);
+    return result;
+}
+
+/**
+ * Returns object with union display name 
+ * if storeType is actually is a union
+ * Returns false otherwise
+ * @param {*} parent 
+ */
+pub.isParentUnion = async function (parent) {
+    if(parent){
+        let data = { "name": parent };
+        let result = await db.selectAllWhereLimitOne(db.tables.catalog_store_unions, data);
+        if (result.length == 0) {
+            return false;
+        }
+        return result[0];
+    }
+    return false;
+}
+
+/**
+ * Returns array of stores in the given union  
+ * @param {*} unionName 
+ */
+pub.getUnionStores = async function (unionName) {
+    if(unionName){
+        let data = { "name": unionName };
+        let sqlQuery =`
+        
+        `;
+        let result = await db.runQuery(sqlQuery, data);
+
+        if (result.length == 0) {
+            return false;
+        }
+        return result;
+    }
+    return false;
 }
 
 /**

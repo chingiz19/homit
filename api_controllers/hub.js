@@ -86,6 +86,49 @@ router.use('/getstoreinfo', async function (req, res, next) {
     }
 });
 
+router.get('/:storeType', async function (req, res) {
+    let storeType = req.params.storeType;
+
+    if (await Catalog.isParentUnion(storeType)) {
+        let unionStores = await Catalog.getUnionStores(storeType);
+
+        return res.send({
+            success: unionStores && true,
+            store: unionStores
+        });
+        
+    } else {
+        let user = Auth.getSignedUser(req);
+
+        let appliedCoupons = {};
+        let storeOpen = await Catalog.isStoreOpen(storeType);
+        let hours = await Catalog.getStoreHours(storeType);
+        let hoursScheduled = await Catalog.getStoreHours(storeType, true);
+        let info = await Catalog.getStoreTypeInfo(storeType);
+        let banners = await Catalog.getBannersByStoreType(storeType);
+        let categories = await Catalog.getCategoriesByStoreType(storeType);
+        let specials = await Catalog.getAllSpecialsByStoreType(storeType);
+        let storeCoupons = await Coupon.getStoreCoupons(storeType);
+
+        if (user && user.id) {
+            appliedCoupons = HelperUtils.formatUserCoupons(await Coupon.getUserCoupons(user.id, true))
+        }
+
+        res.send({
+            success: true,
+            store_info: info,
+            open: storeOpen,
+            hours: hours,
+            hours_scheduled: hoursScheduled,
+            banners: banners,
+            categories: categories,
+            specials: specials,
+            store_coupons: storeCoupons,
+            applied_coupons: appliedCoupons
+        });
+    }
+});
+
 router.post('/search', async function (req, res, next) {
     let searchText = req.body.search;
     let response;
@@ -124,38 +167,6 @@ router.post('/search', async function (req, res, next) {
         };
     }
     res.send(response);
-});
-
-router.get('/:storeType', async function (req, res) {
-    let storeType = req.params.storeType;
-    let user = Auth.getSignedUser(req);
-
-    let appliedCoupons = {};
-    let storeOpen = await Catalog.isStoreOpen(storeType);
-    let hours = await Catalog.getStoreHours(storeType);
-    let hoursScheduled = await Catalog.getStoreHours(storeType, true);
-    let info = await Catalog.getStoreTypeInfo(storeType);
-    let banners = await Catalog.getBannersByStoreType(storeType);
-    let categories = await Catalog.getCategoriesByStoreType(storeType);
-    let specials = await Catalog.getAllSpecialsByStoreType(storeType);
-    let storeCoupons = await Coupon.getStoreCoupons(storeType);
-
-    if (user && user.id) {
-        appliedCoupons = HelperUtils.formatUserCoupons(await Coupon.getUserCoupons(user.id, true))
-    }
-
-    res.send({
-        success: true,
-        store_info: info,
-        open: storeOpen,
-        hours: hours,
-        hours_scheduled: hoursScheduled,
-        banners: banners,
-        categories: categories,
-        specials: specials,
-        store_coupons: storeCoupons,
-        applied_coupons: appliedCoupons
-    });
 });
 
 module.exports = router;

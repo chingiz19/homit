@@ -12,6 +12,7 @@ var pub = {};
  */
 pub.tables = {
   catalog_store_types: "catalog_store_types",
+  catalog_store_unions: "catalog_store_unions",
   catalog_stores: "catalog_stores",
   catalog_packaging_containers: "catalog_packaging_containers",
   catalog_packaging_volumes: "catalog_packaging_volumes",

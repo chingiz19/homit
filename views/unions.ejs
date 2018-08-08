@@ -1,0 +1,27 @@
+<html ng-app="mainModule">
+
+<head>
+    <meta name="description" content="On Demand delivery from any of our hub stores for only C$4.99."/>
+    <meta property="og:description" content="On Demand delivery from any of our hub stores for only C$4.99."/>
+    <%- include('partial/imports')%>
+    <%- include('partial/header', {title: title}); %>
+    <link href="/resources/css/unions.css" rel="stylesheet">
+</head>
+<body ng-cloak style="position: relative; height: 100%; width: 100vw;">
+<!--googleoff: snippet-->
+    <%- include('partial/checkout_menu')%>
+    <%= union_display_name%>
+    <div ng-controller="unionsPageController">
+    </div>
+<!--googleon: snippet-->
+    <% if (!production) { %>
+        <script src="/resources/services/localStorage.js"></script>
+        <script src="/resources/services/cartService.js"></script>
+        <script src="/resources/controllers/unions.js"></script>
+    <% } %>
+</body>
+<footer>
+    <%- include('partial/footer')%>
+</footer>
+
+</html>

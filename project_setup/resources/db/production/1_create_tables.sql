@@ -2,19 +2,28 @@
 * This scripts creates tables for the database.
 */
 
-
 use homit;
-
 
 CREATE TABLE catalog_store_types ( 
 	id INT UNSIGNED NOT NULL, 
 	name VARCHAR(225) NOT NULL,
 	display_name VARCHAR(225) NOT NULL,	
 	image VARCHAR(225),  
-	image_cover VARCHAR(225),  
 	available BOOLEAN DEFAULT TRUE,
+	union_id INT UNSIGNED, 
 	del_fee_primary DOUBLE DEFAULT 4.99,
 	del_fee_secondary DOUBLE DEFAULT 2.99,
+	
+	PRIMARY KEY (id),
+	UNIQUE(name),
+	UNIQUE(display_name)
+) ENGINE = InnoDB;
+
+CREATE TABLE catalog_store_unions ( 
+	id INT UNSIGNED NOT NULL, 
+	name VARCHAR(225) NOT NULL,
+	display_name VARCHAR(225) NOT NULL,	
+	image VARCHAR(225),  
 	
 	PRIMARY KEY (id),
 	UNIQUE(name),
