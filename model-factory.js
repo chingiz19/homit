@@ -32,6 +32,7 @@ class modelFactory {
         global.Validator =      require("./models/validator");
         global.Scheduler =      require("./models/scheduler");
         global.Coupon =         require("./models/coupon");
+        global.MDB=             require("./models/mongoDB");
 
         if (process.env.n_mode == "production"){
             global.machineHostname = "https://www.homit.ca";

@@ -7,6 +7,34 @@ var con;
 
 var pub = {};
 
+/*Building metadata for log*/
+var logMeta = {
+  directory: __filename
+}
+
+/* MySQL Connection */
+mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME
+}).then(function (connection) {
+  con = connection;
+  Logger.log.debug('Connection to MySQL DB established', logMeta);
+  if (process.env.n_mode!= "production") {
+    console.log('Connection to MySQL established');
+  }
+}).catch(function (err) {
+  if (err) {
+    let metadata = {
+      directory: __filename,
+      error_message: err.message
+    }
+    Logger.log.error('Error connecting to DB', metadata);
+    throw new Error('Error connecting to DB');
+  }
+});
+
 /**
  * Database tables
  */
@@ -56,31 +84,6 @@ pub.redisTable = {
   scheduler: 5,
   sessions: 10
 }
-
-/*Building metadata for log*/
-var logMeta = {
-  directory: __filename
-}
-
-/* MySQL Connection */
-mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME
-}).then(function (connection) {
-  con = connection;
-  Logger.log.debug('Connection to DB established', logMeta);
-}).catch(function (err) {
-  if (err) {
-    let metadata = {
-      directory: __filename,
-      error_message: err.message
-    }
-    Logger.log.error('Error connecting to DB', metadata);
-    throw new Error('Error connecting to DB');
-  }
-});
 
 /*Database query functions*/
 

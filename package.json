@@ -42,6 +42,8 @@
     "kue": "^0.11.6",
     "kue-scheduler": "^0.7.4",
     "lodash": "^4.17.4",
+    "mongodb": "^3.1.1",
+    "mongoose": "^5.2.7",
     "neverbounce": "^4.1.6",
     "nodemailer": "^4.4.1",
     "nodemon": "^1.11.0",
