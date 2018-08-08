@@ -1,0 +1,52 @@
+@import "default/module";
+
+body{
+    padding-top: 70px;
+}
+
+/* start of non-mobile/tablet styles */
+@media screen and (min-device-width: 769px) {
+    //User Cart - Product Page
+    .checkout-menu-btn-div {
+        position: fixed;
+        right: 0;
+        top: 425px;
+        margin: 10px 0 10px 10px;
+        z-index: 1;
+        .checkout-menu-btn {
+            top: 5px;
+            height: 60px;
+            width: 70px;
+            background: linear-gradient(to right, rgb(42,81,145) ,#759bc5);
+            box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.27);
+            border-radius: 30px 0 0 30px;
+            transition: all 0.3s ease;
+        }
+        .checkout-menu-btn ng-md-icon {
+            fill: #f9f9f9;
+        }
+        .checkout-menu-btn ng-md-icon svg {
+            width: 35px;
+            height: 35px;
+            margin-right: 8px;
+            transform: rotateY(180deg);
+        }
+        .items-num {
+            bottom: 45px;
+            left: 2px;
+            background-color: orangered;
+            color: ghostwhite;
+            font-size: 14px;
+            font-weight: 700;
+            border: solid 2px rgb(255, 255, 255);
+            border-radius: 3px;
+        }
+    }
+}
+
+/* start of mobile/tablet styles */
+@media screen and (max-device-width: 768px) {
+    .checkout-menu-btn-div{
+        width: 15%;
+    }
+}
