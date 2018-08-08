@@ -113,13 +113,18 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
 });
 
 router.get('/:parent/', async function (req, res) {
-    let union = await Catalog.isParentUnion(req.params.parent);
+    let parent = req.params.parent;
+    let union = await Catalog.isParentUnion(parent);
 
     if (union) {
         req.options.ejs.title = union.display_name + " | Homit";
         req.options.ejs.union_display_name = union.display_name || "Collection of Stores";
         res.render("unions.ejs", req.options.ejs);
     } else {
+        let categories = await Catalog.getCategoriesByStoreType(parent);
+        if (categories.length==1) {
+            return res.redirect(`${parent}/${categories[0].category_name}`);
+        }
         req.options.ejs.title = _.startCase(req.params.parent) + " | Homit";
         //TODO: og image
         res.render("store.ejs", req.options.ejs);

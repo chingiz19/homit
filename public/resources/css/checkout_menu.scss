@@ -50,7 +50,7 @@
     width: 450px;
     height: 80%;
     margin-top: 50px;
-    border: 2px solid rgba(63, 222, 17, 0.1);
+    border: 2px solid rgba(42, 81, 145, 0.1);
     border-radius: 5px 0 0 5px;
     box-shadow: none;
     overflow-y: hidden !important;
@@ -77,7 +77,7 @@
 
 .cart-tot {
     height: 2.5em;
-    background-color: #00cc99;
+    background-color: rgb(42,81,145);
     border-radius: 5px 5px 0 0;
 }
 
@@ -121,17 +121,16 @@
     font-size: 20px;
     letter-spacing: 0.025em;
     color: rgba(255, 255, 255, 1);
-    background-color: #00cc99;
-    border: 1px solid rgba(0, 189, 149, 0.8);
+    background-color: #4d7eb6;
+    border: 1px solid #4d7eb6;
     transition: background-color 0.3s;
     outline: none;
+    opacity: 1;
     border-radius: 5px;
 }
 
 .to-checkout-btn:hover {
-    background-color: rgb(9, 160, 127);
-    border: 1px solid rgb(5, 134, 106);
-    box-shadow: 0 0px 3px 1px rgba(0, 0, 0, 0.3);
+    background-color: #35659c;
     transition: all 0.4s ease;
 }
 
