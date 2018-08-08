@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "brand": "Red Bull",
         "name": "Diet",
         "container": "can",
@@ -36,23 +37,29 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.00025,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.99,
+                        "available": 1
                     },
                     {
-                        "type": "4",
-                        "price": 10.49
+                        "id": 2,
+                        "type": 4,
+                        "price": 10.49,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 2,
         "brand": "Red Bull",
         "name": "Classic",
         "container": "can",
@@ -89,23 +96,29 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.00025,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.99,
+                        "available": 1
                     },
                     {
-                        "type": "4",
-                        "price": 10.49
+                        "id": 2,
+                        "type": 4,
+                        "price": 10.49,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 3,
         "brand": "Rockstar",
         "name": "Classic",
         "container": "can",
@@ -142,19 +155,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.000473,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.59
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.59,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 4,
         "brand": "Coca-Cola",
         "name": "Classic",
         "container": "bottle",
@@ -191,30 +208,37 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.79,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.002,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.79,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 5,
         "brand": "Coca-Cola",
         "name": "Classic",
         "container": "can",
@@ -251,19 +275,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.00022180125000000002,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "6",
-                        "price": 3.99
+                        "id": 1,
+                        "type": 6,
+                        "price": 3.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 6,
         "brand": "Coca-Cola",
         "name": "Diet",
         "container": "bottle",
@@ -300,30 +328,37 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.79,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.002,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.79,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 7,
         "brand": "Coca-Cola",
         "name": "Diet",
         "container": "can",
@@ -360,19 +395,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.00022180125000000002,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "6",
-                        "price": 3.99
+                        "id": 1,
+                        "type": 6,
+                        "price": 3.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 8,
         "brand": "Coca-Cola",
         "name": "Zero",
         "container": "bottle",
@@ -409,30 +448,37 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.79,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.002,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.79,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 9,
         "brand": "Coca-Cola",
         "name": "Zero",
         "container": "can",
@@ -469,19 +515,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.00022180125000000002,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "6",
-                        "price": 3.99
+                        "id": 1,
+                        "type": 6,
+                        "price": 3.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 10,
         "brand": "Canada Dry",
         "name": "Ginger Ale",
         "container": "bottle",
@@ -518,30 +568,37 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.79,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.002,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.79,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 11,
         "brand": "Simply Lemonade",
         "name": "Raspberry",
         "container": "bottle",
@@ -578,19 +635,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.00175,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 5.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 5.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 12,
         "brand": "Simply Lemonade",
         "name": "Orange",
         "container": "bottle",
@@ -627,19 +688,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.00175,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 5.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 5.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 13,
         "brand": "Pepsi",
         "name": "Classic",
         "container": "bottle",
@@ -676,30 +741,37 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.79,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.002,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.79,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 14,
         "brand": "Pepsi",
         "name": "Classic",
         "container": "can",
@@ -736,19 +808,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.00022180125000000002,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "6",
-                        "price": 3.99
+                        "id": 1,
+                        "type": 6,
+                        "price": 3.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 15,
         "brand": "Pepsi",
         "name": "Diet",
         "container": "bottle",
@@ -785,30 +861,37 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.79,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.002,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.79,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 16,
         "brand": "Pepsi",
         "name": "Diet",
         "container": "can",
@@ -845,19 +928,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.00022180125000000002,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "6",
-                        "price": 3.99
+                        "id": 1,
+                        "type": 6,
+                        "price": 3.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 17,
         "brand": "Mott's Clamato",
         "name": "The Original",
         "container": "bottle",
@@ -894,19 +981,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.000946352,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 18,
         "brand": "Dasani",
         "name": "Water",
         "container": "bottle",
@@ -943,30 +1034,37 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.99,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.0005,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 1.29
+                        "id": 1,
+                        "type": 1,
+                        "price": 1.29,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 19,
         "brand": "Aquafina",
         "name": "Still Water",
         "container": "bottle",
@@ -1003,30 +1101,37 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.09
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.09,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.0005,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 1.29
+                        "id": 1,
+                        "type": 1,
+                        "price": 1.29,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 20,
         "brand": "Arctic Glacier",
         "name": "Ice",
         "container": "pack",
@@ -1063,19 +1168,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 2.6988724,
                 "unit": "kg",
                 "preffered_unit": "lb",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.59
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.59,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 21,
         "brand": "Perrier",
         "name": "Sparkling Water",
         "container": "bottle",
@@ -1112,34 +1221,43 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.0005,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 1.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 1.79,
+                        "available": 1
                     },
                     {
-                        "type": "6",
-                        "price": 10.74
+                        "id": 2,
+                        "type": 6,
+                        "price": 10.74,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.79,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 22,
         "brand": "Perrier",
         "name": "Lemon & Orange",
         "container": "bottle",
@@ -1176,34 +1294,43 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.0005,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 1.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 1.79,
+                        "available": 1
                     },
                     {
-                        "type": "6",
-                        "price": 10.74
+                        "id": 2,
+                        "type": 6,
+                        "price": 10.74,
+                        "available": 1
                     }
                 ]
             },
             {
+                "id": 2,
                 "size": 0.001,
                 "unit": "m3",
                 "preffered_unit": "L",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.79
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.79,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 23,
         "brand": "Purex",
         "name": "Bathroom Tissue Paper",
         "container": "pack",
@@ -1238,9 +1365,29 @@
                 "description": "0.00%"
             }
         },
-        "variance": []
+        "variance": [
+            {
+                "id": 1,
+                "size": "D. Roll",
+                "packs": [
+                    {
+                        "id": 1,
+                        "type": 4,
+                        "price": 5.29,
+                        "available": 1
+                    },
+                    {
+                        "id": 2,
+                        "type": 12,
+                        "price": 11.99,
+                        "available": 1
+                    }
+                ]
+            }
+        ]
     },
     {
+        "id": 24,
         "brand": "Tylenol",
         "name": "Regular",
         "container": "pack",
@@ -1277,19 +1424,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.325,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "24ct",
-                        "price": 4.99
+                        "id": 1,
+                        "type": 24,
+                        "price": 4.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 25,
         "brand": "Tylenol",
         "name": "Extra Strength",
         "container": "pack",
@@ -1326,19 +1477,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.5,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "24ct",
-                        "price": 5.69
+                        "id": 1,
+                        "type": 24,
+                        "price": 5.69,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 26,
         "brand": "Advil",
         "name": "Liqui Gels",
         "container": "pack",
@@ -1375,19 +1530,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.2,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "16ct",
-                        "price": 7.19
+                        "id": 1,
+                        "type": 16,
+                        "price": 7.19,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 27,
         "brand": "Aspirin",
         "name": "Daily Low Dose",
         "container": "pack",
@@ -1424,19 +1583,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.081,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "30ct",
-                        "price": 5.99
+                        "id": 1,
+                        "type": 30,
+                        "price": 5.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 28,
         "brand": "Twizzler",
         "name": "Strawberry",
         "container": "pack",
@@ -1473,19 +1636,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.227,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 2.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 2.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 29,
         "brand": "Lindt",
         "name": "Milk Chocolate",
         "container": "bar",
@@ -1522,19 +1689,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.1,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.19
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.19,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 30,
         "brand": "Lindt",
         "name": "Hazelnut Chocolate",
         "container": "bar",
@@ -1571,19 +1742,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.1,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.19
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.19,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 31,
         "brand": "Lindt",
         "name": "White Chocolate",
         "container": "bar",
@@ -1620,19 +1795,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.1,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.19
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.19,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 32,
         "brand": "Hershey's",
         "name": "Cookies & Cream",
         "container": "bar",
@@ -1669,19 +1848,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.1,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.19
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.19,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 33,
         "brand": "Jack Link's",
         "name": "Cholula",
         "container": "pack",
@@ -1718,19 +1901,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.08,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 6.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 6.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 34,
         "brand": "Jack Link's",
         "name": "Pork",
         "container": "pack",
@@ -1767,19 +1954,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.08,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 6.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 6.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 35,
         "brand": "Jack Link's",
         "name": "Sriracha",
         "container": "pack",
@@ -1816,19 +2007,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.08,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 6.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 6.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 36,
         "brand": "Jack Link's",
         "name": "Teriyaki",
         "container": "pack",
@@ -1865,19 +2060,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.08,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 6.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 6.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 37,
         "brand": "Jack Link's",
         "name": "Sweet & Hot",
         "container": "pack",
@@ -1914,19 +2113,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.08,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 6.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 6.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 38,
         "brand": "Jack Link's",
         "name": "Hickory Smoked",
         "container": "pack",
@@ -1963,19 +2166,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.08,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 6.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 6.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 39,
         "brand": "Jack Link's",
         "name": "Chicken",
         "container": "pack",
@@ -2012,19 +2219,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.08,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 6.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 6.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 40,
         "brand": "Krave",
         "name": "Sweet Teriyaki",
         "container": "pack",
@@ -2061,19 +2272,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.075,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 7.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 7.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 41,
         "brand": "Krave",
         "name": "Chili Lime",
         "container": "pack",
@@ -2110,19 +2325,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.075,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 7.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 7.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 42,
         "brand": "Krave",
         "name": "Sweet Chipotle",
         "container": "pack",
@@ -2159,22 +2378,26 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.075,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 7.99
+                        "id": 1,
+                        "type": 1,
+                        "price": 7.99,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 43,
         "brand": "Pringles",
         "name": "Original",
-        "container": "pack",
+        "container": "can",
         "images": {
             "image_catalog": "p_9000.jpeg",
             "images_all": [
@@ -2208,22 +2431,26 @@
         },
         "variance": [
             {
-                "size": null,
-                "unit": "kg",
-                "preffered_unit": "g",
+                "id": 1,
+                "size": 0.000209972,
+                "unit": "m3",
+                "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.69
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.69,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 44,
         "brand": "Pringles",
         "name": "Sour Cream & Onion",
-        "container": "pack",
+        "container": "can",
         "images": {
             "image_catalog": "p_9001.jpeg",
             "images_all": [
@@ -2257,19 +2484,23 @@
         },
         "variance": [
             {
-                "size": null,
-                "unit": "kg",
-                "preffered_unit": "g",
+                "id": 1,
+                "size": 0.000209972,
+                "unit": "m3",
+                "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.69
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.69,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 45,
         "brand": "Cheetos",
         "name": "Crunchy",
         "container": "pack",
@@ -2306,19 +2537,23 @@
         },
         "variance": [
             {
-                "size": null,
-                "unit": "kg",
-                "preffered_unit": "g",
+                "id": 1,
+                "size": 0.000266162,
+                "unit": "m3",
+                "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.69
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.69,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 46,
         "brand": "Cheetos",
         "name": "Cheddar Jalapeno",
         "container": "pack",
@@ -2355,19 +2590,23 @@
         },
         "variance": [
             {
-                "size": null,
-                "unit": "kg",
-                "preffered_unit": "g",
+                "id": 1,
+                "size": 0.000266162,
+                "unit": "m3",
+                "preffered_unit": "oz",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 3.69
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.69,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 47,
         "brand": "Cheetos",
         "name": "Puffs",
         "container": "pack",
@@ -2402,9 +2641,25 @@
                 "description": "0.00%"
             }
         },
-        "variance": []
+        "variance": [
+            {
+                "id": 1,
+                "size": 0.000266162,
+                "unit": "m3",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.69,
+                        "available": 1
+                    }
+                ]
+            }
+        ]
     },
     {
+        "id": 48,
         "brand": "Lay's",
         "name": "Salt & Vinegar",
         "container": "pack",
@@ -2439,9 +2694,25 @@
                 "description": "0.00%"
             }
         },
-        "variance": []
+        "variance": [
+            {
+                "id": 1,
+                "size": 0.000295735,
+                "unit": "m3",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.79,
+                        "available": 1
+                    }
+                ]
+            }
+        ]
     },
     {
+        "id": 49,
         "brand": "Lay's",
         "name": "Classic",
         "container": "pack",
@@ -2476,9 +2747,25 @@
                 "description": "0.00%"
             }
         },
-        "variance": []
+        "variance": [
+            {
+                "id": 1,
+                "size": 0.000295735,
+                "unit": "m3",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "id": 1,
+                        "type": 1,
+                        "price": 3.79,
+                        "available": 1
+                    }
+                ]
+            }
+        ]
     },
     {
+        "id": 50,
         "brand": "Smartfood",
         "name": "Gouda & Chive",
         "container": "pack",
@@ -2513,9 +2800,25 @@
                 "description": "0.00%"
             }
         },
-        "variance": []
+        "variance": [
+            {
+                "id": 1,
+                "size": 0.18,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.39,
+                        "available": 1
+                    }
+                ]
+            }
+        ]
     },
     {
+        "id": 51,
         "brand": "Smartfood",
         "name": "White Cheddar",
         "container": "pack",
@@ -2550,9 +2853,25 @@
                 "description": "0.00%"
             }
         },
-        "variance": []
+        "variance": [
+            {
+                "id": 1,
+                "size": 0.18,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.39,
+                        "available": 1
+                    }
+                ]
+            }
+        ]
     },
     {
+        "id": 52,
         "brand": "Doritos",
         "name": "Cheese",
         "container": "pack",
@@ -2587,9 +2906,25 @@
                 "description": "0.00%"
             }
         },
-        "variance": []
+        "variance": [
+            {
+                "id": 1,
+                "size": 0.255,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.79,
+                        "available": 1
+                    }
+                ]
+            }
+        ]
     },
     {
+        "id": 53,
         "brand": "Doritos",
         "name": "Zesty Cheese",
         "container": "pack",
@@ -2624,9 +2959,25 @@
                 "description": "0.00%"
             }
         },
-        "variance": []
+        "variance": [
+            {
+                "id": 1,
+                "size": 0.255,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.79,
+                        "available": 1
+                    }
+                ]
+            }
+        ]
     },
     {
+        "id": 54,
         "brand": "Tostitos",
         "name": "Restaurant Style",
         "container": "pack",
@@ -2663,19 +3014,23 @@
         },
         "variance": [
             {
-                "size": null,
+                "id": 1,
+                "size": 0.248,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 4.49
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.49,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 55,
         "brand": "Tostitos",
         "name": "Round",
         "container": "pack",
@@ -2712,19 +3067,23 @@
         },
         "variance": [
             {
-                "size": null,
+                "id": 1,
+                "size": 0.248,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 4.49
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.49,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 56,
         "brand": "Ruffles",
         "name": "Dip Ranch",
         "container": "jar",
@@ -2761,19 +3120,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.425,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 4.59
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.59,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 57,
         "brand": "Tostitos",
         "name": "Red Pepper Salsa",
         "container": "jar",
@@ -2810,19 +3173,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.425,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 4.59
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.59,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 58,
         "brand": "Tostitos",
         "name": "Roasted Garlic Salsa",
         "container": "jar",
@@ -2859,19 +3226,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.425,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 4.59
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.59,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 59,
         "brand": "Tostitos",
         "name": "Spinach Dip",
         "container": "jar",
@@ -2908,19 +3279,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.425,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 4.59
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.59,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 60,
         "brand": "Tostitos",
         "name": "Mild Spicy Salsa",
         "container": "jar",
@@ -2957,19 +3332,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.425,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 4.59
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.59,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 61,
         "brand": "Tostitos",
         "name": "Medium Spicy Salsa",
         "container": "jar",
@@ -3006,19 +3385,23 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.425,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 4.59
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.59,
+                        "available": 1
                     }
                 ]
             }
         ]
     },
     {
+        "id": 62,
         "brand": "Tostitos",
         "name": "Hot Salsa",
         "container": "jar",
@@ -3055,13 +3438,16 @@
         },
         "variance": [
             {
+                "id": 1,
                 "size": 0.425,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "type": "1",
-                        "price": 4.59
+                        "id": 1,
+                        "type": 1,
+                        "price": 4.59,
+                        "available": 1
                     }
                 ]
             }
