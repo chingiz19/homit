@@ -94,9 +94,9 @@ router.get('/:storeType', async function (req, res) {
 
         return res.send({
             success: unionStores && true,
-            store: unionStores
+            stores: unionStores
         });
-        
+
     } else {
         let user = Auth.getSignedUser(req);
 

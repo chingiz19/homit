@@ -1368,10 +1368,18 @@ pub.isParentUnion = async function (parent) {
  */
 pub.getUnionStores = async function (unionName) {
     if(unionName){
-        let data = { "name": unionName };
+        let data = { "catalog_store_unions.name": unionName };
         let sqlQuery =`
-        
-        `;
+        SELECT 
+        catalog_store_types.del_fee_primary, catalog_store_types.del_fee_secondary, catalog_store_types.display_name, catalog_store_types.name, catalog_store_types.image 
+        FROM 
+        catalog_store_types
+        JOIN 
+        catalog_store_unions
+        ON 
+        catalog_store_types.union_id=catalog_store_unions.id
+        WHERE 
+        ?;`;
         let result = await db.runQuery(sqlQuery, data);
 
         if (result.length == 0) {
