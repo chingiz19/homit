@@ -1,0 +1,3070 @@
+[
+    {
+        "brand": "Red Bull",
+        "name": "Diet",
+        "container": "can",
+        "images": {
+            "image_catalog": "c_9525.jpeg",
+            "images_all": [
+                "c_9525.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Energy Drink",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Diet Energy Drink"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Red Bull GmbH"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Austria"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.00025,
+                "unit": "m3",
+                "preffered_unit": "ml",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.99
+                    },
+                    {
+                        "type": "4",
+                        "price": 10.49
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Red Bull",
+        "name": "Classic",
+        "container": "can",
+        "images": {
+            "image_catalog": "c_9526.jpeg",
+            "images_all": [
+                "c_9526.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Energy Drink",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Energy Drink"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Red Bull GmbH"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Austria"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.00025,
+                "unit": "m3",
+                "preffered_unit": "ml",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.99
+                    },
+                    {
+                        "type": "4",
+                        "price": 10.49
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Rockstar",
+        "name": "Classic",
+        "container": "can",
+        "images": {
+            "image_catalog": "c_9527.jpeg",
+            "images_all": [
+                "c_9527.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Energy Drink",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Energy Drink"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Rockstar Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.000473,
+                "unit": "m3",
+                "preffered_unit": "ml",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.59
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Coca-Cola",
+        "name": "Classic",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9500.jpeg",
+            "images_all": [
+                "b_9500.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Coca-Cola Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.79
+                    }
+                ]
+            },
+            {
+                "size": 0.002,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.79
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Coca-Cola",
+        "name": "Classic",
+        "container": "can",
+        "images": {
+            "image_catalog": "c_9500.jpeg",
+            "images_all": [
+                "c_9500.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Coca-Cola Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.00022180125000000002,
+                "unit": "m3",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "type": "6",
+                        "price": 3.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Coca-Cola",
+        "name": "Diet",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9501.jpeg",
+            "images_all": [
+                "b_9501.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Diet Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Coca-Cola Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.79
+                    }
+                ]
+            },
+            {
+                "size": 0.002,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.79
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Coca-Cola",
+        "name": "Diet",
+        "container": "can",
+        "images": {
+            "image_catalog": "c_9501.jpeg",
+            "images_all": [
+                "c_9501.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Diet Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Coca-Cola Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.00022180125000000002,
+                "unit": "m3",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "type": "6",
+                        "price": 3.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Coca-Cola",
+        "name": "Zero",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9502.jpeg",
+            "images_all": [
+                "b_9502.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Diet Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Coca-Cola Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.79
+                    }
+                ]
+            },
+            {
+                "size": 0.002,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.79
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Coca-Cola",
+        "name": "Zero",
+        "container": "can",
+        "images": {
+            "image_catalog": "c_9502.jpeg",
+            "images_all": [
+                "c_9502.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Diet Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Coca-Cola Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.00022180125000000002,
+                "unit": "m3",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "type": "6",
+                        "price": 3.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Canada Dry",
+        "name": "Ginger Ale",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9503.jpeg",
+            "images_all": [
+                "b_9503.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Ginger Ale Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Dr Pepper Snapple Grp"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.79
+                    }
+                ]
+            },
+            {
+                "size": 0.002,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.79
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Simply Lemonade",
+        "name": "Raspberry",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9505.jpeg",
+            "images_all": [
+                "b_9505.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Raspberry Limonade"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Simply Beverages Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.00175,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 5.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Simply Lemonade",
+        "name": "Orange",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9506.jpeg",
+            "images_all": [
+                "b_9506.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Orange Limonade"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Simply Beverages Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.00175,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 5.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Pepsi",
+        "name": "Classic",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9507.jpeg",
+            "images_all": [
+                "b_9507.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "PepsiCo Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.79
+                    }
+                ]
+            },
+            {
+                "size": 0.002,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.79
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Pepsi",
+        "name": "Classic",
+        "container": "can",
+        "images": {
+            "image_catalog": "c_9507.jpeg",
+            "images_all": [
+                "c_9507.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "PepsiCo Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.00022180125000000002,
+                "unit": "m3",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "type": "6",
+                        "price": 3.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Pepsi",
+        "name": "Diet",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9508.jpeg",
+            "images_all": [
+                "b_9508.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "PepsiCo Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.79
+                    }
+                ]
+            },
+            {
+                "size": 0.002,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.79
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Pepsi",
+        "name": "Diet",
+        "container": "can",
+        "images": {
+            "image_catalog": "c_9508.jpeg",
+            "images_all": [
+                "c_9508.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Soda"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "PepsiCo Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.00022180125000000002,
+                "unit": "m3",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "type": "6",
+                        "price": 3.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Mott's Clamato",
+        "name": "The Original",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9511.jpeg",
+            "images_all": [
+                "b_9511.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Soda & Juice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Clamato"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Dr Pepper Snapple Grp Inc."
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.000946352,
+                "unit": "m3",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Dasani",
+        "name": "Water",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9504.jpeg",
+            "images_all": [
+                "b_9504.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Water & Ice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Water"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Coca-Cola Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.99
+                    }
+                ]
+            },
+            {
+                "size": 0.0005,
+                "unit": "m3",
+                "preffered_unit": "ml",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 1.29
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Aquafina",
+        "name": "Still Water",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9515.jpeg",
+            "images_all": [
+                "b_9515.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Water & Ice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Water"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "PepsiCo Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.09
+                    }
+                ]
+            },
+            {
+                "size": 0.0005,
+                "unit": "m3",
+                "preffered_unit": "ml",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 1.29
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Arctic Glacier",
+        "name": "Ice",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9528.jpeg",
+            "images_all": [
+                "p_9528.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Water & Ice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Ice"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Arctic Glacier Holdings, Inc."
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 2.6988724,
+                "unit": "kg",
+                "preffered_unit": "lb",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.59
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Perrier",
+        "name": "Sparkling Water",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9529.jpeg",
+            "images_all": [
+                "b_9529.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Water & Ice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Sparkling Water"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Nestlé S.A."
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "France"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.0005,
+                "unit": "m3",
+                "preffered_unit": "ml",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 1.79
+                    },
+                    {
+                        "type": "6",
+                        "price": 10.74
+                    }
+                ]
+            },
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.79
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Perrier",
+        "name": "Lemon & Orange",
+        "container": "bottle",
+        "images": {
+            "image_catalog": "b_9530.jpeg",
+            "images_all": [
+                "b_9530.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Beverages",
+            "category_name": "beverages",
+            "category_image": "beverages.jpg",
+            "category_cover": "3_beverages.jpg"
+        },
+        "subcategory": "Water & Ice",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Lemon & Orange Sparkling Water"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Nestlé S.A."
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "France"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.0005,
+                "unit": "m3",
+                "preffered_unit": "ml",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 1.79
+                    },
+                    {
+                        "type": "6",
+                        "price": 10.74
+                    }
+                ]
+            },
+            {
+                "size": 0.001,
+                "unit": "m3",
+                "preffered_unit": "L",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.79
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Purex",
+        "name": "Bathroom Tissue Paper",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_11000.jpeg",
+            "images_all": [
+                "p_11000.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Everyday-Needs",
+            "category_name": "everyday-needs",
+            "category_image": "everyday-needs.jpg",
+            "category_cover": "3_everyday-needs.jpg"
+        },
+        "subcategory": "Miscellaneous",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Double Roll 2 Ply"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "the Dial Corporation"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": []
+    },
+    {
+        "brand": "Tylenol",
+        "name": "Regular",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_11001.jpeg",
+            "images_all": [
+                "p_11001.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Everyday-Needs",
+            "category_name": "everyday-needs",
+            "category_image": "everyday-needs.jpg",
+            "category_cover": "3_everyday-needs.jpg"
+        },
+        "subcategory": "Miscellaneous",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Regular"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "McNeil Consumer Healthcare"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.325,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "24ct",
+                        "price": 4.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Tylenol",
+        "name": "Extra Strength",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_11002.jpeg",
+            "images_all": [
+                "p_11002.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Everyday-Needs",
+            "category_name": "everyday-needs",
+            "category_image": "everyday-needs.jpg",
+            "category_cover": "3_everyday-needs.jpg"
+        },
+        "subcategory": "Miscellaneous",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Extra Strength"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "McNeil Consumer Healthcare"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.5,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "24ct",
+                        "price": 5.69
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Advil",
+        "name": "Liqui Gels",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_11003.jpeg",
+            "images_all": [
+                "p_11003.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Everyday-Needs",
+            "category_name": "everyday-needs",
+            "category_image": "everyday-needs.jpg",
+            "category_cover": "3_everyday-needs.jpg"
+        },
+        "subcategory": "Miscellaneous",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Regular"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Pfzer Inc."
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.2,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "16ct",
+                        "price": 7.19
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Aspirin",
+        "name": "Daily Low Dose",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_11004.jpeg",
+            "images_all": [
+                "p_11004.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Everyday-Needs",
+            "category_name": "everyday-needs",
+            "category_image": "everyday-needs.jpg",
+            "category_cover": "3_everyday-needs.jpg"
+        },
+        "subcategory": "Miscellaneous",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Low Dose"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Bayer AG"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Germany"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.081,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "30ct",
+                        "price": 5.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Twizzler",
+        "name": "Strawberry",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9037.jpeg",
+            "images_all": [
+                "p_9037.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Confectionery",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Strawberry Twizzler"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Y&S Candies"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.227,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 2.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Lindt",
+        "name": "Milk Chocolate",
+        "container": "bar",
+        "images": {
+            "image_catalog": "br_9038.jpeg",
+            "images_all": [
+                "br_9038.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Confectionery",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Chocolate "
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Chocoladefabriken Lindt & Sprüngli AG"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Switzerland"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.1,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.19
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Lindt",
+        "name": "Hazelnut Chocolate",
+        "container": "bar",
+        "images": {
+            "image_catalog": "br_9039.jpeg",
+            "images_all": [
+                "br_9039.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Confectionery",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Hazelnut Chocolate "
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Chocoladefabriken Lindt & Sprüngli AG"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Switzerland"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.1,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.19
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Lindt",
+        "name": "White Chocolate",
+        "container": "bar",
+        "images": {
+            "image_catalog": "br_9040.jpeg",
+            "images_all": [
+                "br_9040.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Confectionery",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "White Chocolate"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Chocoladefabriken Lindt & Sprüngli AG"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Switzerland"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.1,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.19
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Hershey's",
+        "name": "Cookies & Cream",
+        "container": "bar",
+        "images": {
+            "image_catalog": "br_9041.jpeg",
+            "images_all": [
+                "br_9041.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Confectionery",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Cookies & Cream Chocolate"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Hershey's Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.1,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.19
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Jack Link's",
+        "name": "Cholula",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9016.jpeg",
+            "images_all": [
+                "p_9016.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Beef Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Jack Link's Beef Jerky Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.08,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 6.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Jack Link's",
+        "name": "Pork",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9017.jpeg",
+            "images_all": [
+                "p_9017.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Pork Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Jack Link's Beef Jerky Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.08,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 6.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Jack Link's",
+        "name": "Sriracha",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9018.jpeg",
+            "images_all": [
+                "p_9018.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Beef Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Jack Link's Beef Jerky Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.08,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 6.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Jack Link's",
+        "name": "Teriyaki",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9019.jpeg",
+            "images_all": [
+                "p_9019.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Beef Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Jack Link's Beef Jerky Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.08,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 6.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Jack Link's",
+        "name": "Sweet & Hot",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9020.jpeg",
+            "images_all": [
+                "p_9020.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Beef Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Jack Link's Beef Jerky Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.08,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 6.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Jack Link's",
+        "name": "Hickory Smoked",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9021.jpeg",
+            "images_all": [
+                "p_9021.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Beef Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Jack Link's Beef Jerky Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.08,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 6.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Jack Link's",
+        "name": "Chicken",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9022.jpeg",
+            "images_all": [
+                "p_9022.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Chicken Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Jack Link's Beef Jerky Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.08,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 6.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Krave",
+        "name": "Sweet Teriyaki",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9023.jpeg",
+            "images_all": [
+                "p_9023.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Pork Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Hershey Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.075,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 7.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Krave",
+        "name": "Chili Lime",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9024.jpeg",
+            "images_all": [
+                "p_9024.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Beef Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Hershey Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.075,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 7.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Krave",
+        "name": "Sweet Chipotle",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9025.jpeg",
+            "images_all": [
+                "p_9025.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Meat & Cheese",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Beef Jerky"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Hershey Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.075,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 7.99
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Pringles",
+        "name": "Original",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9000.jpeg",
+            "images_all": [
+                "p_9000.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Chips"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Kellogg's Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": null,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.69
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Pringles",
+        "name": "Sour Cream & Onion",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9001.jpeg",
+            "images_all": [
+                "p_9001.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Sour Cream & Onion Chips"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "The Kellogg's Company"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": null,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.69
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Cheetos",
+        "name": "Crunchy",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9004.jpeg",
+            "images_all": [
+                "p_9004.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Cheesy Chips"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": null,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.69
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Cheetos",
+        "name": "Cheddar Jalapeno",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9005.jpeg",
+            "images_all": [
+                "p_9005.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Cheddar Jalapeno"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": null,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 3.69
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Cheetos",
+        "name": "Puffs",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9006.jpeg",
+            "images_all": [
+                "p_9006.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Cheesy Chips"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": []
+    },
+    {
+        "brand": "Lay's",
+        "name": "Salt & Vinegar",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9008.jpeg",
+            "images_all": [
+                "p_9008.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Salt & Vinegar Chips"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "PepsiCo Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": []
+    },
+    {
+        "brand": "Lay's",
+        "name": "Classic",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9009.jpeg",
+            "images_all": [
+                "p_9009.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Classic Chips"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "PepsiCo Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": []
+    },
+    {
+        "brand": "Smartfood",
+        "name": "Gouda & Chive",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9013.jpeg",
+            "images_all": [
+                "p_9013.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Cheese & Onion Popcorn"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": []
+    },
+    {
+        "brand": "Smartfood",
+        "name": "White Cheddar",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9014.jpeg",
+            "images_all": [
+                "p_9014.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "White Cheddar Popcorn"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": []
+    },
+    {
+        "brand": "Doritos",
+        "name": "Cheese",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9028.jpeg",
+            "images_all": [
+                "p_9028.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Cheesy Nachos"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "PepsiCo Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": []
+    },
+    {
+        "brand": "Doritos",
+        "name": "Zesty Cheese",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9029.jpeg",
+            "images_all": [
+                "p_9029.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Double Cheesy Nachos"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "PepsiCo Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": []
+    },
+    {
+        "brand": "Tostitos",
+        "name": "Restaurant Style",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9030.jpeg",
+            "images_all": [
+                "p_9030.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Tortilla Chips"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": null,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 4.49
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Tostitos",
+        "name": "Round",
+        "container": "pack",
+        "images": {
+            "image_catalog": "p_9031.jpeg",
+            "images_all": [
+                "p_9031.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Popcorn & Chips",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Tortilla Chips"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": null,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 4.49
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Ruffles",
+        "name": "Dip Ranch",
+        "container": "jar",
+        "images": {
+            "image_catalog": "jr_9044.jpeg",
+            "images_all": [
+                "jr_9044.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Sauce & Seasoning",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Ranch Dip"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.425,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 4.59
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Tostitos",
+        "name": "Red Pepper Salsa",
+        "container": "jar",
+        "images": {
+            "image_catalog": "jr_9045.jpeg",
+            "images_all": [
+                "jr_9045.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Sauce & Seasoning",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Red Pepper Salsa"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.425,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 4.59
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Tostitos",
+        "name": "Roasted Garlic Salsa",
+        "container": "jar",
+        "images": {
+            "image_catalog": "jr_9046.jpeg",
+            "images_all": [
+                "jr_9046.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Sauce & Seasoning",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Garlic Salsa"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.425,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 4.59
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Tostitos",
+        "name": "Spinach Dip",
+        "container": "jar",
+        "images": {
+            "image_catalog": "jr_9047.jpeg",
+            "images_all": [
+                "jr_9047.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Sauce & Seasoning",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Spinach Dip"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.425,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 4.59
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Tostitos",
+        "name": "Mild Spicy Salsa",
+        "container": "jar",
+        "images": {
+            "image_catalog": "jr_9048.jpeg",
+            "images_all": [
+                "jr_9048.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Sauce & Seasoning",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Spicy Salsa"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.425,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 4.59
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Tostitos",
+        "name": "Medium Spicy Salsa",
+        "container": "jar",
+        "images": {
+            "image_catalog": "jr_9049.jpeg",
+            "images_all": [
+                "jr_9049.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Sauce & Seasoning",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Spicy Salsa"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.425,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 4.59
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "brand": "Tostitos",
+        "name": "Hot Salsa",
+        "container": "jar",
+        "images": {
+            "image_catalog": "jr_9050.jpeg",
+            "images_all": [
+                "jr_9050.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Snacks",
+            "category_name": "snacks",
+            "category_image": "snacks.jpg",
+            "category_cover": "3_snacks.jpg"
+        },
+        "subcategory": "Sauce & Seasoning",
+        "details": {
+            "type": {
+                "display_name": "Type",
+                "description": "Spicy Salsa"
+            },
+            "producer": {
+                "display_name": "Producer",
+                "description": "Frito-Lay Inc"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "USA"
+            },
+            "alcohol_content": {
+                "display_name": "Alcohol Content",
+                "description": "0.00%"
+            }
+        },
+        "variance": [
+            {
+                "size": 0.425,
+                "unit": "kg",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "type": "1",
+                        "price": 4.59
+                    }
+                ]
+            }
+        ]
+    }
+]
