@@ -121,7 +121,7 @@
     font-size: 20px;
     letter-spacing: 0.025em;
     color: rgba(255, 255, 255, 1);
-    background-color: #4d7eb6;
+    background-color: rgb(79, 126, 202);
     border: 1px solid #4d7eb6;
     transition: background-color 0.3s;
     outline: none;
@@ -130,7 +130,7 @@
 }
 
 .to-checkout-btn:hover {
-    background-color: #35659c;
+    background-color: rgb(42,81,145);
     transition: all 0.4s ease;
 }
 

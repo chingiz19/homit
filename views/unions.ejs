@@ -10,16 +10,30 @@
 <body ng-cloak>
 <!--googleoff: snippet-->
     <%- include('partial/checkout_menu')%>
-    <div ng-controller="unionsPageController" style="min-height: calc(100vh - 270px); width: 1180px; margin: 0 auto;">
-    <%= union_display_name%>
+    <div ng-controller="unionsPageController" style="position: relative; min-height: calc(100vh - 270px);">
 
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; padding: 0 10%;">
-        <a href="/hub/{{store.name}}" target="_self" style="width: 200px;" ng-repeat="store in unionStores">
-            <img style="width: 200px; height: 270px;" alt="{{store.name}}" ng-src="/resources/images/catalog-stores/logo/{{store.image}}">
-            <div style="padding: 7px; font-size: 17px; color: #68686b; -webkit-font-smoothing: antialiased;">{{store.display_name}}</div>
-        </a>
-
+    <div class="stripes">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
+
+
+    <section style="position: relative; margin: 0 auto; width: 1180px;">
+
+        <div style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 50px; padding-top: 20px;">
+            <h2 style="text-align: center; color: #59606f; font-weight: 400;"><%= union_display_name%></h2>
+            <p style="color: #8f98af; font-size: 17px; width: 40%; text-align: center;">In a nutshell, our service gives people ability to browse available local stores in their city and deliver items right to their door within 45-minutes.</p>
+        </div>
+
+        <div class="union-stores-div fadeIn" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; padding: 0 10%; margin: 0 auto 50px auto;">
+            <a href="/hub/{{store.name}}" target="_self" class="hover-raise" style="width: 200px; box-shadow: 0 0px 4px 1px rgba(0, 0, 0, 0.12); border-radius: 10px; background-color: #fff;" ng-repeat="store in unionStores">
+                <img style="width: 200px; height: 270px; border-radius: 10px 10px 0 0;" alt="{{store.name}}" ng-src="/resources/images/catalog-stores/logo/{{store.image}}">
+                <div style="padding: 7px; font-size: 17px; color: #68686b; -webkit-font-smoothing: antialiased;">{{store.display_name}}</div>
+            </a>
+        </div>
+    </section>
+    
 
     </div>
 <!--googleon: snippet-->
