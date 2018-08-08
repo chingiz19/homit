@@ -1,38 +1,97 @@
 @import "default/module";
 
-body{
+body {
     padding-top: 70px;
 }
 
-.union-stores-div{
+.union-controller {
     position: relative;
-    a{
-        transition: all 0.3s ease;
+    min-height: calc(100vh - 270px);
+
+    .content-section {
+        position: relative;
+        margin: 0 auto;
+        width: 1180px;
     }
-    a:hover{
+
+    .header {
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+        margin-bottom: 50px;
+        padding-top: 20px;
+
+        h2 {
+            color: #59606f;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        p {
+            color: #8f98af;
+            font-size: 17px;
+            width: 40%;
+            text-align: center;
+        }
+    }
+}
+
+.union-controller .stores-div {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 auto 50px auto;
+    padding: 0 10%;
+
+    a {
+        width: 200px;
+        box-shadow: 0 0px 4px 1px rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+        background-color: #fff;
+        transition: all 0.3s ease;
+
+        img {
+            width: 200px;
+            height: 270px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        p {
+            margin: 0;
+            padding: 7px;
+            font-size: 17px;
+            color: #68686b;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
+
+    a:hover {
         -webkit-transform: translateY(-2px);
         transform: translateY(-2px);
     }
+
     a, a:hover, a:active, a:visited, a:focus {
         text-decoration: none;
     }
+
     z-index: 10;
 }
 
-.stripes{
+.stripes {
     position: absolute;
     z-index: 0;
     width: 100%;
     display: grid;
     -webkit-transform: skewY(-16deg);
     transform: skewY(-16deg);
-
     top: 0;
-    grid: repeat(5,100px)/repeat(10,1fr);
+    grid: repeat(5, 100px) / repeat(10, 1fr);
     -webkit-transform-origin: 0;
     transform-origin: 0;
-    background: -webkit-gradient(linear,left top,left bottom,from(#507eb1),color-stop(10%,#709dc7),color-stop(38%,#dde9f5),color-stop(48%,#eaf2f9),color-stop(62%,#f6f9fc));
-    background: linear-gradient(#507eb1,#709dc7 10%,#dde9f5 38%,#eaf2f9 48%,#f6f9fc 62%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#507eb1), color-stop(10%, #709dc7), color-stop(38%, #dde9f5), color-stop(48%, #eaf2f9), color-stop(62%, #f6f9fc));
+    background: linear-gradient(#507eb1, #709dc7 10%, #dde9f5 38%, #eaf2f9 48%, #f6f9fc 62%);
 }
 
 /* start of non-mobile/tablet styles */
@@ -44,24 +103,28 @@ body{
         top: 425px;
         margin: 10px 0 10px 10px;
         z-index: 1;
+
         .checkout-menu-btn {
             top: 5px;
             height: 60px;
             width: 70px;
-            background: linear-gradient(to right, rgb(42,81,145) 40% ,#759bc5);
+            background: linear-gradient(to right, rgb(42, 81, 145) 40%, #759bc5);
             box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.27);
             border-radius: 30px 0 0 30px;
             transition: all 0.3s ease;
         }
+
         .checkout-menu-btn ng-md-icon {
             fill: #f9f9f9;
         }
+
         .checkout-menu-btn ng-md-icon svg {
             width: 35px;
             height: 35px;
             margin-right: 8px;
             transform: rotateY(180deg);
         }
+
         .items-num {
             bottom: 45px;
             left: 2px;
@@ -77,7 +140,7 @@ body{
 
 /* start of mobile/tablet styles */
 @media screen and (max-device-width: 768px) {
-    .checkout-menu-btn-div{
+    .checkout-menu-btn-div {
         width: 15%;
     }
 }
