@@ -1,12 +1,26 @@
 let pub = {};
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
+let mySQLConnected = false;
+let MongoDBConnected = false;
+let inititialized = false;
+let models = [];
 
 mongoose.connect('mongodb://localhost:27017/homit', { useNewUrlParser: true }).then(function (result) {
     console.log("Connection to Mongo DB established");
+    MongoDBConnected = true;
+    init();
 }, function (err) {
     throw new Error('Error connecting to Mongo DB');
 });
+
+/**
+ * Registers when MySQL connects to start fetching data from it
+ */
+pub.mySQLConnected = function () {
+    mySQLConnected = true;
+    init();
+}
 
 let productSchema = new Schema({
     _id: Schema.Types.Mixed,
@@ -52,7 +66,7 @@ let productSchema = new Schema({
     variance: [
         {
             _id: Schema.Types.Mixed,
-            size: Number,
+            size: String,
             unit: String,
             preffered_unit: String,
             packs: [
@@ -67,5 +81,38 @@ let productSchema = new Schema({
         }
     ]
 });
+
+/**
+ * Dummy function
+ * @param {*} storeType 
+ * @param {*} productBrand 
+ */
+pub.findProductByBrand = async function (storeType, productBrand) {
+   return models[storeType].findOne({ 'brand': productBrand }, {}, function (err, product) {
+        if (err) throw new Error(err);
+        return product;
+    });
+}
+
+/**
+ * Inits storeType - Collection registration with Mongo DB
+ */
+async function init() {
+    if (mySQLConnected && MongoDBConnected && !inititialized) {
+        inititialized = true;
+        let storeTypes = await Catalog.getAllStoreTypeNames();
+        
+        if(storeTypes && storeTypes.length>0){
+            for (storeType in storeTypes){
+                let storeTypeName = storeTypes[storeType].name;
+                models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
+            }
+        }
+
+        if (process.env.n_mode != "production") {
+            console.log('Initialized store models with Mongo DB');
+        }
+    }
+}
 
 module.exports = pub;

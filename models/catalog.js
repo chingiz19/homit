@@ -224,55 +224,6 @@ pub.getAllMainSpecials = async function () {
     }
 }
 
-/**
- * Format specials
- * 
- * @param {*} specials 
- */
-var getFormattedSpecials = function (specials) {
-    let result = {};
-
-    let tmpProducts = {};
-    let tmpSpecialType;
-    let tmpSpecialTypeDisplay;
-    for (let i = 0; i < specials.length; i++) {
-        if (i == 0) {
-            tmpSpecialType = specials[i].special_types_api_name;
-            tmpSpecialTypeDisplay = specials[i].special_types_display_name;
-        }
-
-        let currentProduct = Object.assign({}, specials[i]);
-        delete currentProduct.special_types_display_name;
-        delete currentProduct.special_types_api_name;
-
-        if (tmpSpecialType != specials[i].special_types_api_name) {
-            result[tmpSpecialType] = {
-                "display_name": tmpSpecialTypeDisplay,
-                "api_name": tmpSpecialType,
-                "products": Object.values(tmpProducts)
-            };
-
-            tmpProducts = {};
-            tmpSpecialType = specials[i].special_types_api_name;
-            tmpSpecialTypeDisplay = specials[i].special_types_display_name;
-        }
-
-        if (!tmpProducts[currentProduct.product_id]) {
-            tmpProducts[currentProduct.product_id] = currentProduct;
-        }
-
-        if (i == specials.length - 1) {
-            result[tmpSpecialType] = {
-                "display_name": tmpSpecialTypeDisplay,
-                "api_name": tmpSpecialType,
-                "products": Object.values(tmpProducts)
-            };
-        }
-    }
-
-    return result;
-}
-
 pub.getStoreTypeInfo = async function (storeType) {
     let data = { "name": storeType };
     let dbResult = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, data);
@@ -461,6 +412,55 @@ pub.getAllProductsByCategory = async function (storeType, categoryName) {
     let data = [{ "category.name": categoryName }, { "store_type.name": storeType }];
     let dbResult = await db.runQuery(sqlQuery, data);
     return getFormattedProducts(dbResult);
+}
+
+/**
+ * Format specials
+ * 
+ * @param {*} specials 
+ */
+var getFormattedSpecials = function (specials) {
+    let result = {};
+
+    let tmpProducts = {};
+    let tmpSpecialType;
+    let tmpSpecialTypeDisplay;
+    for (let i = 0; i < specials.length; i++) {
+        if (i == 0) {
+            tmpSpecialType = specials[i].special_types_api_name;
+            tmpSpecialTypeDisplay = specials[i].special_types_display_name;
+        }
+
+        let currentProduct = Object.assign({}, specials[i]);
+        delete currentProduct.special_types_display_name;
+        delete currentProduct.special_types_api_name;
+
+        if (tmpSpecialType != specials[i].special_types_api_name) {
+            result[tmpSpecialType] = {
+                "display_name": tmpSpecialTypeDisplay,
+                "api_name": tmpSpecialType,
+                "products": Object.values(tmpProducts)
+            };
+
+            tmpProducts = {};
+            tmpSpecialType = specials[i].special_types_api_name;
+            tmpSpecialTypeDisplay = specials[i].special_types_display_name;
+        }
+
+        if (!tmpProducts[currentProduct.product_id]) {
+            tmpProducts[currentProduct.product_id] = currentProduct;
+        }
+
+        if (i == specials.length - 1) {
+            result[tmpSpecialType] = {
+                "display_name": tmpSpecialTypeDisplay,
+                "api_name": tmpSpecialType,
+                "products": Object.values(tmpProducts)
+            };
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -1325,9 +1325,9 @@ pub.verifyStoreCategory = async function (storeType, category) {
 }
 
 /**
- * Get all store types
+ * Get all store types without unions and unions
  */
-pub.getAllStoreTypes = async function () {
+pub.getAllStoreTypesAndUnions = async function () {
     let data = { "available": true };
     let sqlQuery = `
     SELECT 
@@ -1341,6 +1341,22 @@ pub.getAllStoreTypes = async function () {
     let resultWithNoUnions = await db.runQuery(sqlQuery, data);
     let unions = await db.selectAllFromTable(db.tables.catalog_store_unions);
     let result = resultWithNoUnions.concat(unions);
+    return result;
+}
+
+/**
+ * Get all store type names regardless of unions
+ */
+pub.getAllStoreTypeNames = async function () {
+    let data = { "available": true };
+    let sqlQuery = `
+    SELECT 
+        catalog_store_types.name as name
+    FROM 
+        catalog_store_types
+    WHERE 
+        ?`;
+    let result = await db.runQuery(sqlQuery, data);
     return result;
 }
 

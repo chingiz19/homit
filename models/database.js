@@ -20,6 +20,7 @@ mysql.createConnection({
   database: process.env.DB_NAME
 }).then(function (connection) {
   con = connection;
+  MDB.mySQLConnected();
   Logger.log.debug('Connection to MySQL DB established', logMeta);
   if (process.env.n_mode!= "production") {
     console.log('Connection to MySQL established');
