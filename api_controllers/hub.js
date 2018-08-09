@@ -106,7 +106,7 @@ router.get('/:storeType', async function (req, res) {
         let hoursScheduled = await Catalog.getStoreHours(storeType, true);
         let info = await Catalog.getStoreTypeInfo(storeType);
         let banners = await Catalog.getBannersByStoreType(storeType);
-        let categories = await Catalog.getCategoriesByStoreType(storeType);
+        let categories = await Catalog.getCategoriesByStoreType(storeType);             
         let specials = await Catalog.getAllSpecialsByStoreType(storeType);
         let storeCoupons = await Coupon.getStoreCoupons(storeType);
 
