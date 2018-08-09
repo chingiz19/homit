@@ -1,93 +1,81 @@
 <html ng-app="mainModule">
 
 <head>
-    <meta name="description" content="On Demand delivery from any of our hub stores for only C$4.99."/>
-    <meta property="og:description" content="On Demand delivery from any of our hub stores for only C$4.99."/>
+    <meta name="description" content="On Demand delivery from any of our hub stores for only C$4.99." />
+    <meta property="og:description" content="On Demand delivery from any of our hub stores for only C$4.99." />
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
-    <link href="/resources/css/store.css" rel="stylesheet">
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/store.css" rel="stylesheet">
 </head>
+
 <body ng-cloak>
-<!--googleoff: snippet-->
+    <!--googleoff: snippet-->
     <%- include('partial/checkout_menu')%>
-    <div ng-controller="storePageController">
-        <section class="store-page-content">
-            <h2 class="store-name-sp"></h2>
-            <section class="banners-sec">
-                <ul class="banners-dots">
-                    <li class="banner-dot-1" ng-click="selectBanner(1)">
-                        <div ng-style="( bannerDot == 1 ) && {'background-color': 'rgb(255,255,255)', 'border': '1px solid rgb(255,255,255)'}"></div>
-                    </li>
-                    <li class="banner-dot-2" ng-click="selectBanner(2)">
-                        <div ng-style="( bannerDot == 2 ) && {'background-color': 'rgb(255,255,255)'}"></div>
-                    </li>
-                    <li class="banner-dot-3" ng-click="selectBanner(3)">
-                        <div ng-style="( bannerDot == 3 ) && {'background-color': 'rgb(255,255,255)'}"></div>
-                    </li>
-                </ul>
-                <div class="sp-banners-images fadeIn">
-                    <img class="none" ng-repeat="none_banner in storePage.banners" ng-src="/resources/images/catalog-stores/banners/{{none_banner.image}}">
-                    <div class="banner box-center" ng-click="hrefBanner(storePage.banners[2].product, storePage.banners[2].subcategory_name, storePage.banners[2].category_name)">
-                        <img ng-src="/resources/images/catalog-stores/banners/{{storePage.banners[2].image}}">
-                    </div>
-                    <div class="banner box-center" ng-repeat="banner in storePage.banners" ng-click="hrefBanner(banner.product, banner.subcategory_name, banner.category_name)">
-                        <img ng-src="/resources/images/catalog-stores/banners/{{banner.image}}">
-                    </div>
-                    <div class="banner box-center" ng-click="hrefBanner(storePage.banners[0].product, storePage.banners[0].subcategory_name, storePage.banners[0].category_name)">
-                        <img ng-src="/resources/images/catalog-stores/banners/{{storePage.banners[0].image}}">
-                    </div>
-                </div>
-            </section>
-            <section ng-show="storeCoupons.length != 0" class="store-coupons-sec">
-                <h2 class="coupon-hdr">Store Coupons</h2>
-                <div class="coupon-div" ng-repeat="coupon in storeCoupons">
-                    <ul class="cpn-amount-ul">
-                        <li class="left-li">GET</li>
-                        <li  class="middle-li">{{ coupon.amount }}</li>
-                        <li class="right-li">
-                            <div class="sign">{{ coupon.sign }}</div>
-                            <div class="off">OFF</div>
+        <div ng-controller="storePageController" class="store-controller-div">
+            <section class="store-page-content">
+                <section class="banners-sec">
+                    <ul class="banners-dots">
+                        <li class="banner-dot-1" ng-click="selectBanner(1)">
+                            <div ng-style="( bannerDot == 1 ) && {'background-color': 'rgb(255,255,255)', 'border': '1px solid rgb(255,255,255)'}"></div>
+                        </li>
+                        <li class="banner-dot-2" ng-click="selectBanner(2)">
+                            <div ng-style="( bannerDot == 2 ) && {'background-color': 'rgb(255,255,255)'}"></div>
+                        </li>
+                        <li class="banner-dot-3" ng-click="selectBanner(3)">
+                            <div ng-style="( bannerDot == 3 ) && {'background-color': 'rgb(255,255,255)'}"></div>
                         </li>
                     </ul>
-                    <div class="cpn-header-txt">{{ coupon.couponHeader }}</div>
-                    <div class="cpn-body-txt">{{ coupon.couponBody }}</div>
-                    <div class="cpn-expiry-txt">valid until: {{ coupon.expiryDate }}</div>
-                    <button ng-click="updateCoupon(coupon.couponCode, $index, coupon.assignedBy, <%= userLoggedIn %>)" class="cpn-apply-btn box-center">
-                        <p ng-show="!coupon.applied" class="apply-p">apply</p>
-                        <p ng-show="coupon.applied" class="remove-p">remove</p>
-                        <ng-md-icon icon="content_cut" size="20"></ng-md-icon>
-                    </button>
-                </div>
-            </section>
-
-            <section ng-show="storePage.categories.length != 0" class="category-sec">
-                <h2 class="category-hdr">{{ storePage.store_info.display_name }} - Store Categories</h2>
-                <div class="categories-div">
-
-                    <a href="/hub/{{store.name}}" target="_self" class="hover-raise" ng-repeat="category in categories">
-                        <img alt="{{store.name}}" ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}">
-                        <p>{{category.category_display_name}}</p>
-                    </a>
-
-
-                    <!-- <a class="hover-raise" ng-repeat="category in categories" href="{{category.category_url}}" target="_self" data-aos="zoom-in">
-                        <ul>
-                            <li><img class="category-img" ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}"></li>
-                            <li class="category-name">{{category.category_display_name}}</li>
+                    <div class="sp-banners-images fadeIn">
+                        <img class="none" ng-repeat="none_banner in storePage.banners" ng-src="/resources/images/catalog-stores/banners/{{none_banner.image}}">
+                        <div class="banner box-center" ng-click="hrefBanner(storePage.banners[2].product, storePage.banners[2].subcategory_name, storePage.banners[2].category_name)">
+                            <img ng-src="/resources/images/catalog-stores/banners/{{storePage.banners[2].image}}">
+                        </div>
+                        <div class="banner box-center" ng-repeat="banner in storePage.banners" ng-click="hrefBanner(banner.product, banner.subcategory_name, banner.category_name)">
+                            <img ng-src="/resources/images/catalog-stores/banners/{{banner.image}}">
+                        </div>
+                        <div class="banner box-center" ng-click="hrefBanner(storePage.banners[0].product, storePage.banners[0].subcategory_name, storePage.banners[0].category_name)">
+                            <img ng-src="/resources/images/catalog-stores/banners/{{storePage.banners[0].image}}">
+                        </div>
+                    </div>
+                </section>
+                <section ng-show="storeCoupons.length != 0" class="store-coupons-sec">
+                    <h2 class="coupon-hdr">Store Coupons</h2>
+                    <div class="coupon-div" ng-repeat="coupon in storeCoupons">
+                        <ul class="cpn-amount-ul">
+                            <li class="left-li">GET</li>
+                            <li class="middle-li">{{ coupon.amount }}</li>
+                            <li class="right-li">
+                                <div class="sign">{{ coupon.sign }}</div>
+                                <div class="off">OFF</div>
+                            </li>
                         </ul>
-                    </a> -->
-                </div>
+                        <div class="cpn-header-txt">{{ coupon.couponHeader }}</div>
+                        <div class="cpn-body-txt">{{ coupon.couponBody }}</div>
+                        <div class="cpn-expiry-txt">valid until: {{ coupon.expiryDate }}</div>
+                        <button ng-click="updateCoupon(coupon.couponCode, $index, coupon.assignedBy, <%= userLoggedIn %>)" class="cpn-apply-btn box-center">
+                            <p ng-show="!coupon.applied" class="apply-p">apply</p>
+                            <p ng-show="coupon.applied" class="remove-p">remove</p>
+                            <ng-md-icon icon="content_cut" size="20"></ng-md-icon>
+                        </button>
+                    </div>
+                </section>
+                <section ng-show="storePage.categories.length != 0" class="category-sec">
+                    <div class="categories-div">
+                        <h2 class="category-hdr">{{ storePage.store_info.display_name }} - Store Categories</h2>
+                        <a href="/hub/{{store.name}}" target="_self" class="hover-raise" ng-repeat="category in categories">
+                            <img alt="{{store.name}}" ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}">
+                            <p>{{category.category_display_name}}</p>
+                        </a>
+                    </div>
+                </section>
             </section>
-
-
-        </section>
-    </div>
-<!--googleon: snippet-->
-    <% if (!production) { %>
-        <script src="/resources/services/localStorage.js"></script>
-        <script src="/resources/services/cartService.js"></script>
-        <script src="/resources/controllers/store.js"></script>
-    <% } %>
+        </div>
+        <!--googleon: snippet-->
+        <% if (!production) { %>
+            <script src="/resources/services/localStorage.js"></script>
+            <script src="/resources/services/cartService.js"></script>
+            <script src="/resources/controllers/store.js"></script>
+            <% } %>
 </body>
 <footer>
     <%- include('partial/footer')%>
