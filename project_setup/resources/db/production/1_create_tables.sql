@@ -23,7 +23,8 @@ CREATE TABLE catalog_store_unions (
 	id INT UNSIGNED NOT NULL, 
 	name VARCHAR(225) NOT NULL,
 	display_name VARCHAR(225) NOT NULL,	
-	image VARCHAR(225),  
+	image VARCHAR(225)
+	description_text TEXT NOT NULL,  
 	
 	PRIMARY KEY (id),
 	UNIQUE(name),

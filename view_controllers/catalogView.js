@@ -119,6 +119,7 @@ router.get('/:parent/', async function (req, res) {
     if (union) {
         req.options.ejs.title = union.display_name + " | Homit";
         req.options.ejs.union_display_name = union.display_name || "Collection of Stores";
+        req.options.ejs.union_description = union.description_text || "Collection of Stores";
         res.render("unions.ejs", req.options.ejs);
     } else {
         let categories = await Catalog.getCategoriesByStoreType(parent);

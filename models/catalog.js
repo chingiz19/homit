@@ -1346,7 +1346,7 @@ pub.getAllStoreTypes = async function () {
 
 /**
  * Returns object with union display name 
- * if storeType is actually is a union
+ * if storeType is actually a union
  * Returns false otherwise
  * @param {*} parent 
  */

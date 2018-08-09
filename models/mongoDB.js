@@ -8,20 +8,64 @@ mongoose.connect('mongodb://localhost:27017/homit', { useNewUrlParser: true }).t
     throw new Error('Error connecting to Mongo DB');
 });
 
-let productSchema = new Schema({     //sample schema implementation
-    name:String,
-    brand:String,    
-    category: String,
+let productSchema = new Schema({
+    _id: Schema.Types.Mixed,
+    brand: String,
+    name: String,
+    container: String,
+    images: {
+        image_catalog: String,
+        images_all: [String]
+    },
+    category: {
+        category_display_name: String,
+        category_name: String,
+        category_image: String,
+        category_cover: String
+    },
     subcategory: String,
-    image: String,
-    image: String,
-    details: [{ country: String, description: Date, soldBy: String, country: String, }],
-    date: { type: Date, default: Date.now },
-    hidden: Boolean,
-    meta: {
-        votes: Number,
-        favs: Number
-    }
+    details: {
+        ingredients: {
+            display_name: String,
+            description: String,
+        },
+        preview: {
+            display_name: String,
+            description: String
+        },
+        country_of_origin: {
+            display_name: String,
+            description: String
+        },
+        serving_suggestions: {
+            display_name: String,
+            description: String
+        }
+    },
+    tags: [
+        {
+            name: Number,
+            rating: String,
+            icon_url: String
+        }
+    ],
+    variance: [
+        {
+            _id: Schema.Types.Mixed,
+            size: Number,
+            unit: String,
+            preffered_unit: String,
+            packs: [
+                {
+                    _id: Schema.Types.Mixed,
+                    type: Number,
+                    price: Number,
+                    available: Boolean,
+                    stock_quantity: Number
+                }
+            ]
+        }
+    ]
 });
 
 module.exports = pub;
