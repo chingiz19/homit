@@ -29,7 +29,7 @@ router.get('/:storeType/:categoryName', async function (req, res, next) {
 });
 
 router.get('/allstores', async function (req, res, next) {
-    let storeTypes = await Catalog.getAllStoreTypes();
+    let storeTypes = await Catalog.getAllStoreTypesAndUnions();
 
     let response = {
         success: true,
