@@ -5,9 +5,15 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
+.store-controller-div{
+    background: linear-gradient(to top, #f5f7f9, #fefefe);
+}
+
 .store-page-content {
     width: 1180px;
-    margin: 90px auto 150px auto;
+    margin: 70px auto 0px auto;
+    padding: 20px 0 150px 0;
+    z-index: 10;
 }
 
 .banners-sec {
