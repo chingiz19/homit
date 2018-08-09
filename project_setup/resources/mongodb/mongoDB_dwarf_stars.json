@@ -1,6 +1,6 @@
 [
     {
-        "id": 1,
+        "_id": "7-1",
         "brand": "Dwarf Stars",
         "name": "Originals",
         "container": "stand up pouch",
@@ -34,23 +34,24 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "7-1-1",
                 "size": 0.12,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "7-1-1-1",
                         "type": 1,
                         "price": 11.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 2,
+        "_id": "7-2",
         "brand": "Dwarf Stars",
         "name": "Pumpkin Seed Butter Cups",
         "container": "bag",
@@ -84,23 +85,24 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "7-2-1",
                 "size": 0.042,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "7-2-1-1",
                         "type": 1,
                         "price": 4.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 3,
+        "_id": "7-3",
         "brand": "Dwarf Stars",
         "name": "PumpKING Protein Balls",
         "container": "bag",
@@ -134,16 +136,17 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "7-3-1",
                 "size": 0.06,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "7-3-1-1",
                         "type": 1,
                         "price": 5.49,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
