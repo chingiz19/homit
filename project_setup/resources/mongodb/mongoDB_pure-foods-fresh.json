@@ -1,6 +1,6 @@
 [
     {
-        "id": 1,
+        "_id": "9-1",
         "brand": "Pure Foods Fresh",
         "name": "Babu's BBQ Sauce",
         "container": "bottle",
@@ -34,13 +34,13 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "9-1-1",
                 "size": 0.000354,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "9-1-1-1",
                         "type": 1,
                         "price": 9.99,
                         "available": 1
@@ -50,7 +50,7 @@
         ]
     },
     {
-        "id": 2,
+        "_id": "9-2",
         "brand": "Pure Foods Fresh",
         "name": "South Western Green Pepper Sauce",
         "container": "bottle",
@@ -88,13 +88,13 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "9-2-1",
                 "size": 0.000354,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "9-2-1-1",
                         "type": 1,
                         "price": 9.99,
                         "available": 1
@@ -104,7 +104,7 @@
         ]
     },
     {
-        "id": 3,
+        "_id": "9-3",
         "brand": "Pure Foods Fresh",
         "name": "Trumato Sauce",
         "container": "bottle",
@@ -142,13 +142,13 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "9-3-1",
                 "size": 0.000354,
                 "unit": "m3",
                 "preffered_unit": "ml",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "9-3-1-1",
                         "type": 1,
                         "price": 9.99,
                         "available": 1

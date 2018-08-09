@@ -1,6 +1,6 @@
 [
     {
-        "id": 1,
+        "_id": "11-1",
         "brand": "Honey & Bloom",
         "name": "Dirty Hippy Deodorant - Lemongrass Patchouli",
         "container": "deodorant tube",
@@ -37,29 +37,31 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-1-1",
                 "size": 0.000078369775,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-1-1-1",
                         "type": 1,
                         "price": 14.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     },
                     {
-                        "id": 2,
+                        "_id": "11-1-1-2",
                         "type": 2,
                         "price": 27.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 2,
+        "_id": "11-2",
         "brand": "Honey & Bloom",
         "name": "Dirty Hippy Deodorant - Floral",
         "container": "deodorant tube",
@@ -96,29 +98,31 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-2-1",
                 "size": 0.000078369775,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-2-1-1",
                         "type": 1,
                         "price": 14.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     },
                     {
-                        "id": 2,
+                        "_id": "11-2-1-2",
                         "type": 2,
                         "price": 27.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 3,
+        "_id": "11-3",
         "brand": "Honey & Bloom",
         "name": "Stinky Gypsy Body Wash",
         "container": "bottle",
@@ -155,23 +159,24 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-3-1",
                 "size": 0.000473176,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-3-1-1",
                         "type": 1,
                         "price": 19.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 4,
+        "_id": "11-4",
         "brand": "Honey & Bloom",
         "name": "Lip Balm - Peppermint Eucalyptus",
         "container": "lip balm tube",
@@ -208,29 +213,31 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-4-1",
                 "size": 0.000004436025,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-4-1-1",
                         "type": 1,
                         "price": 4.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     },
                     {
-                        "id": 2,
+                        "_id": "11-4-1-2",
                         "type": 3,
                         "price": 11.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 5,
+        "_id": "11-5",
         "brand": "Honey & Bloom",
         "name": "Lip Balm - Spearmint Lavender",
         "container": "lip balm tube",
@@ -267,29 +274,31 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-5-1",
                 "size": 0.000004436025,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-5-1-1",
                         "type": 1,
                         "price": 4.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     },
                     {
-                        "id": 2,
+                        "_id": "11-5-1-2",
                         "type": 3,
                         "price": 11.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 6,
+        "_id": "11-6",
         "brand": "Honey & Bloom",
         "name": "Buzz Off - Bug Repellent ",
         "container": "spray bottle",
@@ -326,23 +335,24 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-6-1",
                 "size": 0.000118294,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-6-1-1",
                         "type": 1,
                         "price": 8.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 7,
+        "_id": "11-7",
         "brand": "Honey & Bloom",
         "name": "Kriya - Yoga Mat (All-purpose) Cleanser",
         "container": "spray bottle",
@@ -379,23 +389,24 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-7-1",
                 "size": 0.000236588,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-7-1-1",
                         "type": 1,
                         "price": 8.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 8,
+        "_id": "11-8",
         "brand": "Honey & Bloom",
         "name": "Bath Salts - Bleeding Love",
         "container": "bag",
@@ -432,29 +443,31 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-8-1",
                 "size": 0.3,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-8-1-1",
                         "type": 1,
                         "price": 9.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     },
                     {
-                        "id": 2,
+                        "_id": "11-8-1-2",
                         "type": 2,
                         "price": 14.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 9,
+        "_id": "11-9",
         "brand": "Honey & Bloom",
         "name": "Bath Salts - Wo(man)ly",
         "container": "bag",
@@ -491,29 +504,31 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-9-1",
                 "size": 0.3,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-9-1-1",
                         "type": 1,
                         "price": 9.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     },
                     {
-                        "id": 2,
+                        "_id": "11-9-1-2",
                         "type": 2,
                         "price": 14.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 10,
+        "_id": "11-10",
         "brand": "Honey & Bloom",
         "name": "Soothing Balm",
         "container": "ointment container",
@@ -550,23 +565,24 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-10-1",
                 "size": 0.04,
                 "unit": "kg",
                 "preffered_unit": "g",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-10-1-1",
                         "type": 1,
                         "price": 13.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 11,
+        "_id": "11-11",
         "brand": "Honey & Bloom",
         "name": "Charcoal Face Mask",
         "container": "jar",
@@ -603,23 +619,24 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-11-1",
                 "size": 0.000118294,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-11-1-1",
                         "type": 1,
                         "price": 17.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
         ]
     },
     {
-        "id": 12,
+        "_id": "11-12",
         "brand": "Honey & Bloom",
         "name": "Coconut Lavender Body Scrub",
         "container": "jar",
@@ -656,16 +673,17 @@
         },
         "variance": [
             {
-                "id": 1,
+                "_id": "11-12-1",
                 "size": 0.000236588,
                 "unit": "m3",
                 "preffered_unit": "oz",
                 "packs": [
                     {
-                        "id": 1,
+                        "_id": "11-12-1-1",
                         "type": 1,
                         "price": 15.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100
                     }
                 ]
             }
