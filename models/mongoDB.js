@@ -4,7 +4,7 @@ let Schema = mongoose.Schema;
 let mySQLConnected = false;
 let MongoDBConnected = false;
 let inititialized = false;
-let models = [];
+pub.models = [];
 
 mongoose.connect('mongodb://localhost:27017/homit', { useNewUrlParser: true }).then(function (result) {
     console.log("Connection to Mongo DB established");
@@ -87,8 +87,8 @@ let productSchema = new Schema({
  * @param {*} storeType 
  * @param {*} productBrand 
  */
-pub.findProductByBrand = async function (storeType, productBrand) {
-   return models[storeType].findOne({ 'brand': productBrand }, {}, function (err, product) {
+pub.findProductByBrand = async function (storeType, productBrand) {                                     //will be deleted 
+    return pub.models[storeType].findOne({ 'brand': productBrand }, {}, function (err, product) {
         if (err) throw new Error(err);
         return product;
     });
@@ -101,11 +101,11 @@ async function init() {
     if (mySQLConnected && MongoDBConnected && !inititialized) {
         inititialized = true;
         let storeTypes = await Catalog.getAllStoreTypeNames();
-        
-        if(storeTypes && storeTypes.length>0){
-            for (storeType in storeTypes){
+
+        if (storeTypes && storeTypes.length > 0) {
+            for (storeType in storeTypes) {
                 let storeTypeName = storeTypes[storeType].name;
-                models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
+                pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
             }
         }
 

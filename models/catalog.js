@@ -14,30 +14,7 @@ pub.getCategoriesByStoreType = async function (storeType) {
         return false;
     }
 
-    let sqlQuery = `
-        SELECT DISTINCT
-        category.display_name AS category_display_name ,category.name AS category_name,
-        category.image AS category_image, category_covers.cover_image AS category_cover
-        FROM
-        catalog_store_types AS store_types
-        JOIN catalog_depot AS depot ON (store_types.id = depot.store_type_id)
-        JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcat ON (type.subcategory_id = subcat.id)
-        JOIN catalog_categories AS category ON (subcat.category_id = category.id)
-        LEFT JOIN catalog_store_types_category_covers AS category_covers ON 
-        (category_covers.category_id = category.id AND category_covers.store_type_id = store_types.id)
-        WHERE ?
-        ORDER BY category_display_name;
-    `;
-
-    let data = {
-        "store_types.name": storeType
-    };
-
-    return await db.runQuery(sqlQuery, data);
+    return MDB.models[storeType].find({}).distinct('category').exec();
 }
 
 /**
@@ -1292,36 +1269,17 @@ pub.getSimilarProducts = async function (productId) {
  * Returns true if storeType exists and category 
  * belongs to given store type
  * @param {*} storeType store type name (e.g. liquor-station)
- * @param {*} category  category from that store (e.g. beer)
+ * @param {*} receivedCategory  category from that store (e.g. beer)
  */
-pub.verifyStoreCategory = async function (storeType, category) {
-    if (!(storeType && category)) {
+pub.verifyStoreCategory = async function (storeType, receivedCategory) {
+    if (!(storeType && receivedCategory)) {
         Logger.log.error("Undefined Store type for getCategoriesByStoreType function");
         return false;
     }
 
-    let sqlQuery = `
-        SELECT 
-        category.display_name   
-        FROM
-        catalog_store_types AS store_types
-        JOIN catalog_depot AS depot ON (store_types.id = depot.store_type_id)
-        JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcat ON (type.subcategory_id = subcat.id)
-        JOIN catalog_categories AS category ON (subcat.category_id = category.id)
-        WHERE 
-            ?
-        AND
-            ? 
-        LIMIT 1;
-    `;
+    let result = await MDB.models[storeType].find({ 'category.category_name': receivedCategory }).exec();
 
-    let result = await db.runQuery(sqlQuery, [{ "store_types.name": storeType }, { "category.name": category }]);
-
-    return (result && result.length == 1);
+    return (!result.error && result.length > 0);
 }
 
 /**
@@ -1367,7 +1325,7 @@ pub.getAllStoreTypeNames = async function () {
  * @param {*} parent 
  */
 pub.isParentUnion = async function (parent) {
-    if(parent){
+    if (parent) {
         let data = { "name": parent };
         let result = await db.selectAllWhereLimitOne(db.tables.catalog_store_unions, data);
         if (result.length == 0) {
@@ -1383,9 +1341,9 @@ pub.isParentUnion = async function (parent) {
  * @param {*} unionName 
  */
 pub.getUnionStores = async function (unionName) {
-    if(unionName){
+    if (unionName) {
         let data = { "catalog_store_unions.name": unionName };
-        let sqlQuery =`
+        let sqlQuery = `
         SELECT 
         catalog_store_types.del_fee_primary, catalog_store_types.del_fee_secondary, catalog_store_types.display_name, catalog_store_types.name, catalog_store_types.image 
         FROM 
