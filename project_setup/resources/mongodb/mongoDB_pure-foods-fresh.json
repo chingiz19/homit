@@ -12,10 +12,10 @@
             ]
         },
         "category": {
-            "category_display_name": "Pure Foods Fresh",
-            "category_name": "pure-foods-fresh",
-            "category_image": "pure-foods-fresh.jpg",
-            "category_cover": "8_pure-foods-fresh.jpg"
+            "category_display_name": "condiments",
+            "category_name": "Condiments",
+            "category_image": "condiments.jpg",
+            "category_cover": "condiments.jpg"
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
@@ -62,10 +62,10 @@
             ]
         },
         "category": {
-            "category_display_name": "Pure Foods Fresh",
-            "category_name": "pure-foods-fresh",
-            "category_image": "pure-foods-fresh.jpg",
-            "category_cover": "8_pure-foods-fresh.jpg"
+            "category_display_name": "condiments",
+            "category_name": "Condiments",
+            "category_image": "condiments.jpg",
+            "category_cover": "condiments.jpg"
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
@@ -116,10 +116,10 @@
             ]
         },
         "category": {
-            "category_display_name": "Pure Foods Fresh",
-            "category_name": "pure-foods-fresh",
-            "category_image": "pure-foods-fresh.jpg",
-            "category_cover": "8_pure-foods-fresh.jpg"
+            "category_display_name": "condiments",
+            "category_name": "Condiments",
+            "category_image": "condiments.jpg",
+            "category_cover": "condiments.jpg"
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
