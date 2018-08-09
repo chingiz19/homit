@@ -7,10 +7,11 @@ router.get('/:storeType/:categoryName', async function (req, res, next) {
     let storeType = req.params.storeType;
     let categoryName = req.params.categoryName;
 
-    let productsBySubcat = await Catalog.getAllProductsByCategory(storeType, categoryName);
+    let productsBySubcat = await Catalog.getAllProductsByCategory(storeType, categoryName);   //moving to Mongo
     let storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
     let categories = await Catalog.getCategoriesByStoreType(storeType);
     let storeOpen = await Catalog.isStoreOpen(storeType);
+    
     let storeInfo = {
         name: storeTypeInfo.name,
         display_name: storeTypeInfo.display_name,
@@ -25,6 +26,7 @@ router.get('/:storeType/:categoryName', async function (req, res, next) {
         subcategories: productsBySubcat.subcategories,
         products: productsBySubcat.products
     };
+    
     res.send(response);
 });
 

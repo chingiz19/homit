@@ -348,47 +348,13 @@ pub.isStoreOpenForScheduled = async function (storeType, timestamp) {
  * @param {*} categoryName 
  */
 pub.getAllProductsByCategory = async function (storeType, categoryName) {
-    let sqlQuery = `
-        SELECT
-        depot.id AS depot_id,
-        item.id AS item_id,
-        listing.id AS listing_id,
-        product.id AS product_id,
-        type.name AS type,
-        subcategory.name AS subcategory,
-        category.name AS category,
-        store_type.name AS store_type_name,
-        store_type.display_name AS store_type_display_name,
-        listing.id AS listing_id,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        depot.price AS price,
-        depot.tax AS tax,
-        packaging.name AS packaging,
-        container.name AS container,
-        volume.name AS volume
-        
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
-        JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
-        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
-        
-        WHERE depot.available = true
-        AND ? AND ?
-        
-        ORDER BY subcategory, listing_id, product_id, price`;
-
-    let data = [{ "category.name": categoryName }, { "store_type.name": storeType }];
-    let dbResult = await db.runQuery(sqlQuery, data);
-    return getFormattedProducts(dbResult);
+    let result = await MDB.models[storeType].aggregate([{$match : {"category.category_name" : categoryName}}, {
+        $group : {
+            _id : "$subcategory",
+            products : { $push: "$$ROOT" }
+        }
+    }]);
+    return result;
 }
 
 /**
@@ -436,57 +402,6 @@ var getFormattedSpecials = function (specials) {
             };
         }
     }
-
-    return result;
-}
-
-/**
- * Format products for front-end
- * 
- * @param {*} items 
- */
-var getFormattedProducts = function (items) {
-    let products = {};
-
-    let tmpProducts = {};
-    let tmpSubcategory;
-    for (let i = 0; i < items.length; i++) {
-        if (i == 0) {
-            tmpSubcategory = items[i].subcategory;
-        }
-
-        let currentItem = Object.assign({}, items[i]);
-
-        if (tmpSubcategory != items[i].subcategory) {
-            products[tmpSubcategory] = {
-                "subcategory": tmpSubcategory,
-                "products": Object.values(tmpProducts)
-            };
-
-            tmpProducts = {};
-            tmpSubcategory = items[i].subcategory;
-        }
-
-        if (!tmpProducts[currentItem.product_id]) {
-            let imageLocation = "/resources/images/products/" + currentItem.category.toLowerCase() + "/";
-            currentItem.image = imageLocation + currentItem.image;
-            tmpProducts[currentItem.product_id] = currentItem;
-        }
-
-        if (i == items.length - 1) {
-            products[tmpSubcategory] = {
-                "subcategory": tmpSubcategory,
-                "products": Object.values(tmpProducts)
-            };
-        }
-    }
-
-    let subcategories = Object.keys(products);
-
-    let result = {
-        subcategories: subcategories,
-        products: products
-    };
 
     return result;
 }
