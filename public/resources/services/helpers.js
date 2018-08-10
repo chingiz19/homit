@@ -49,7 +49,7 @@ app.service('helpers', function () {
      * @param {array} categories store categories
      * @param {string} storeApiName 
      */
-    pub.buildCategoryUrl = function(categories, storeApiName) {
+    pub.buildCategoryUrl = function (categories, storeApiName) {
         let tmpList = categories;
         for (let x = 0; x < tmpList.length; x++) {
             tmpList[x]["category_url"] = "/hub/" + storeApiName + "/" + pub.urlReplaceSpaceWithDash(tmpList[x].category_name);
@@ -112,6 +112,32 @@ app.service('helpers', function () {
         }
 
         return localArray;
+    };
+
+    /**
+     * Used to convert SI unit to other displayed units
+     * @param {object} product_variant 
+     */
+    pub.unitConverter = function (product_variant) {
+        let unit_list = {
+            "kg": {
+                "g": 1000,
+                "lb": 2.20462
+            },
+            "m3": {
+                "oz": 33814,
+                "ml": 1000000,
+                "L": 1000
+            },
+            "m": {
+                "in": 39.3701,
+                "ft": 3.28084,
+                "cm": 100
+            }
+        }
+
+        return (Math.round(product_variant.size * unit_list[product_variant.unit][product_variant.preffered_unit]));
+
     };
 
     return pub;

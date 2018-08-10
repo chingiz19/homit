@@ -103,27 +103,27 @@
                         <span>{{key}}</span>
                     </div>
                     <div class="item-subcat-sec">
-                        <a ng-repeat="product in value.products | orderBy:sortBy['sorting_key']:sortBy['descending']" href="{{product.product_url}}" target="_blank">
+                        <a ng-repeat="product in value | orderBy:sortBy['sorting_key']:sortBy['descending']" href="{{product.product_url}}" target="_blank">
                             <div class="item-box hover-raise" id="{{ product.product_id }}">
                                 <ul class="item-box-ul fadeIn">
                                     <li class="item-pic">
-                                        <img ng-src="{{ product.image }}">
+                                        <img ng-src="/resources/images/products/{{display_storeInfo.name}}/{{ product.images.image_catalog }}">
                                     </li>
                                     <li class="catalog-text item-brand">
-                                        <div ng-if="product.packaging > 1">
+                                        <div ng-if="product.variance[0].packs[0].type > 1">
                                             <span class="catalog-item-brand">{{ product.brand }}</span>
                                             <br>
-                                            <span class="catalog-item-name">{{ product.name }}</span> ({{ product.packaging }} x {{ product.volume }})
+                                            <span class="catalog-item-name">{{ product.name }}</span> ({{ product.variance[0].packs[0].type }} x {{ convertUnit(product.variance[0]) + product.variance[0].preffered_unit  }})
                                         </div>
-                                        <div ng-if="!(product.packaging > 1)">
+                                        <div ng-if="!(product.variance[0].packs[0].type > 1)">
                                             <span class="catalog-item-brand">{{ product.brand }}</span>
                                             <br>
-                                            <span class="catalog-item-name">{{ product.name }}</span> ({{ product.volume }})
+                                            <span class="catalog-item-name">{{ product.name }}</span> ({{ product.variance[0].preffered_unit_size + product.variance[0].preffered_unit  }})
                                         </div>
                                     </li>
                                     <li class="catalog-text item-price box-center">
                                         <span class="item-curency">C$</span>
-                                        <span>{{ product.price}}</span>
+                                        <span>{{ product.variance[0].packs[0].price}}</span>
                                     </li>
                                 </ul>
                             </div>

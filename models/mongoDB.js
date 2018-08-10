@@ -6,7 +6,7 @@ let MongoDBConnected = false;
 let inititialized = false;
 pub.models = [];
 
-mongoose.connect('mongodb://localhost:27017/homit', { useNewUrlParser: true }).then(function (result) {
+mongoose.connect('mongodb://localhost:27017/Homit', { useNewUrlParser: true }).then(function (result) {
     console.log("Connection to Mongo DB established");
     MongoDBConnected = true;
     init();

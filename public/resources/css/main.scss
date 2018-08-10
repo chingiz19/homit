@@ -830,12 +830,12 @@ body {
     position: relative;
     height: 80%;
     width: 50%;
-    color: white;
+    color: #6f8ba7;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
     z-index: 20;
 
     .header {
@@ -846,6 +846,7 @@ body {
 
         h2 {
             font-size: 35px;
+            color: #97b6d4;
         }
     }
 
@@ -890,6 +891,7 @@ body {
 
         p {
             font-size: 20px;
+            color: #97b6d4;
         }
     }
 
