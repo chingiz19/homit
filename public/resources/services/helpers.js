@@ -37,8 +37,8 @@ app.service('helpers', function () {
     pub.buildProductUrl = function (mainSpecials) {
         let tmpProductList = mainSpecials;
         for (let key in tmpProductList) {
-            for (let x = 0; x < tmpProductList[key].products.length; x++) {
-                tmpProductList[key].products[x]["product_url"] = pub.buildProductPagePath(tmpProductList[key].products[x]);
+            for (let x = 0; x < tmpProductList[key].length; x++) {
+                tmpProductList[key][x]["product_url"] = pub.buildProductPagePath(tmpProductList[key][x]);
             }
         }
         return tmpProductList;
