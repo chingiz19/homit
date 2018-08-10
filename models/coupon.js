@@ -208,7 +208,7 @@ pub.invalidatePrivateGuestCoupon = async function (couponId) {
  */
 pub.assignCouponToUser = async function (userId, couponCode, trialsLimit) {
     let couponId = await getCouponIdByCode(couponCode);
-    let userHaveIt = await doesUserHaveCoupon(couponId);
+    let userHaveIt = await doesUserHaveCoupon(couponId, userId);
 
     if (userId && couponId && trialsLimit && !userHaveIt) {
         let data = {
@@ -307,14 +307,14 @@ pub.getStoreCoupons = async function (storeType) {
  * Returns true if user already has coupon with given ID
  * otherwise false
  * @param {*} coupon
+ * @param {*} userId
  */
-async function doesUserHaveCoupon(coupon) {
+async function doesUserHaveCoupon(coupon, userId) {
     if (coupon) {
-        let data = {
-            "coupon_id": coupon.id
-        }
+        let data1 = { "coupon_id": coupon.id };
+        let data2 = { "user_id": userId };
 
-        let result = await db.selectAllWhere(db.tables.user_coupons, data);
+        let result = await db.selectAllWhere2(db.tables.user_coupons, [data1, data2]);
 
         return (result.length > 0);
     }
