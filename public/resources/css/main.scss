@@ -846,39 +846,14 @@ body {
 
         h2 {
             font-size: 35px;
-            color: #97b6d4;
+            color: #8da6be;
         }
     }
 
-    .lead-sec {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-
-        .leader {
-            font-size: 45px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-            text-align: center;
-        }
-
-        .follower {
-            font-size: 22px;
-            padding: 20px;
-        }
-    }
-
-    .center-align {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 90%;
-
-        p {
-            font-size: 20px;
-        }
+    .leader {
+        font-size: 45px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        text-align: center;
     }
 
     .center-align-secondary {
@@ -891,7 +866,7 @@ body {
 
         p {
             font-size: 20px;
-            color: #97b6d4;
+            color: #8da6be;
         }
     }
 
@@ -906,7 +881,7 @@ body {
     .right-info-box{
         min-width: 510px;
     }
-    .left-info-box .lead-sec .leader {
+    .left-info-box .leader .leader {
         font-size: 40px;
     }
 }
@@ -915,7 +890,7 @@ body {
     .right-info-box{
         min-width: 450px;
     }
-    .left-info-box .lead-sec .leader {
+    .left-info-box .leader .leader {
         font-size: 35px;
     }
 }
@@ -942,7 +917,7 @@ body {
         }
     }
 
-    .left-info-box .lead-sec .leader {
+    .left-info-box .leader .leader {
         font-size: 40px;
         @media (max-width: 567px) and (min-width: 400px), screen and (max-device-width: 479px) {
             font-size: 26px;

@@ -194,38 +194,33 @@ button {
         text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
         text-align: center;
     }
-    .box-a-div{
-        width: 87%;
+    .categories-div{
+        position: relative;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        margin: 0 auto;
-        padding-bottom: 30px;
-    }
-    .cat-ext-a{
-        margin: 12.5px;
-        padding: 0;
-        box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.12);
-        transition: all 0.4s ease;
-        img {
-            width: 180px;
-            height: 243px;
+        justify-content: space-around;
+        margin: 0 auto 50px auto;
+        padding: 0 13%;
+    
+        a {
+            width: 150px;
+            border-radius: 10px;
+            margin: 10px;
+    
+            img {
+                width: 150px;
+                height: 202.5px;
+                border-radius: 10px 10px 0 0;
+            }
+    
+            p {
+                padding: 4px;
+                font-size: 14px;
+            }
         }
-    }
-    .cat-ext-a:hover {
-        -webkit-transform: translateY(-2px);
-        transform: translateY(-2px);
-    }
-    a, a:hover, a:active, a:visited, a:focus {
-        text-decoration: none;
-    }
-}
 
-.cat-ext-li {
-    padding: 5px;
-    font-size: 15px;
-    color: #4d4d4f;
-    -webkit-font-smoothing: antialiased;
+    }
 }
 
 .cat-ext-box-grow {
@@ -466,9 +461,9 @@ button {
     margin: 2px 4px 4px 4px;
     padding-top: 45px;
     border: lightgray solid 1px;
-    border-radius: 1px;
+    border-radius: 3px;
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0px 4px 1px rgba(0, 0, 0, 0.12);
     user-select: none;
     cursor: pointer;
     transition: all 0.2s ease;

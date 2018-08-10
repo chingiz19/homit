@@ -62,7 +62,7 @@
                 <section ng-show="storePage.categories.length != 0" class="category-sec">
                     <div class="categories-div">
                         <h2 class="category-hdr">{{ storePage.store_info.display_name }} - Store Categories</h2>
-                        <a href="/hub/{{storePage.store_info.name}}/{{category.category_name}}" target="_self" class="hover-raise" ng-repeat="category in categories">
+                        <a href="/hub/{{storePage.store_info.name}}/{{category.category_name}}" target="_self" class="hover-raise fadeIn" ng-repeat="category in categories">
                             <img alt="{{category.category_name}}" ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}">
                             <p>{{category.category_display_name}}</p>
                         </a>

@@ -31,15 +31,16 @@
         <section class="catalog-sub-hdr" ng-cloak>
             <div class="category-extension-div" ng-cloak>
                 <div class="cat-ext-box">
-                    <div class="cat-ext-content" ng-show="showCatBox">
-                        <h2 ng-show="!(display_storeInfo.name == 'locally-made')">Store Categories</h2>
-                        <h2 ng-show="display_storeInfo.name == 'locally-made'">YYC Vendors</h2>
-                        <div class="box-a-div">
-                            <a class="cat-ext-a hover-raise" ng-repeat="category in categories" href="{{category.category_url}}" target="_self">
-                                <img ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}">
-                                <div class="cat-ext-li">{{category.category_display_name}}</div>
+                    <div class="cat-ext-content" >
+                        <div class="categories-div">
+                            <h2 ng-show="!(display_storeInfo.name == 'locally-made')">Store Categories</h2>
+                            <h2 ng-show="display_storeInfo.name == 'locally-made'">YYC Vendors</h2>
+                            <a href="/hub/{{storeType}}/{{category.category_name}}" target="_self" class="hover-raise fadeIn" ng-repeat="category in categories">
+                                <img alt="{{category.category_name}}" ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}">
+                                <p>{{category.category_display_name}}</p>
                             </a>
                         </div>
+
                     </div>
                 </div>
             </div>
