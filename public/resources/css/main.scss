@@ -748,58 +748,28 @@ body {
     min-height: 400px;
     overflow: hidden;
 
-    .oval-1 {
-        position: absolute;
-        top: 0%;
-        left: -10%;
-        width: 114%;
-        height: 100%;
-        border-radius: 100%;
-        transform: rotateZ(-20deg);
-        background: linear-gradient(to top, rgba(71, 187, 251, 0.98), #514A9D);
-        z-index: 2;
+    .stripes{
+        background: -webkit-gradient(linear, left top, left bottom, from(#1aa0ee), color-stop(10%, #20b8d3), color-stop(38%, #67e1f7c7), color-stop(48%, #84fbffa1), color-stop(72%, #b1fffb5e));
+        background: linear-gradient(#1aa0ee, #20b8d3 10%, #67e1f7c7 38%, #84fbffa1 48%, #b1fffb5e 72%);
+        
+        :nth-child(1) {
+            grid-area: auto/8/-3/-1;
+            background: -webkit-gradient(linear,left top,right top,color-stop(40%,#95eff88a),to(#b9b1ff96));
+            background: linear-gradient(100grad, #9df5fd5b 44%, #b9b1ff96);
+        }
+
+        :nth-child(2) {
+            grid-area: auto/1/-1/-1;
+            background: -webkit-gradient(linear,left top,right top,color-stop(40%,rgba(255, 255, 255, 0)),to(#b1fffb5e));
+            background: linear-gradient(100grad,#f9f9f9 50%,#b1fffb5e);
+        }
     }
 
-    .oval-2 {
-        position: absolute;
-        top: 0%;
-        right: -20%;
-        width: 103%;
-        height: 84%;
-        border-radius: 0%;
-        transform: rotateZ(-13deg);
-        background: linear-gradient(to bottom, #2a75ff, rgba(146, 239, 209, 0.3));
-        z-index: 1;
-    }
-
-    .left-rec-1 {
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        width: 15%;
-        height: 100%;
-        background: linear-gradient(to top, #2a7fff, rgb(78, 79, 141));
-        z-index: 0;
-    }
-
-    .left-rec-2 {
-        position: absolute;
-        top: 0%;
-        left: 15%;
-        width: 15%;
-        height: 100%;
-        background: linear-gradient(to right, rgb(78, 79, 141), rgb(109, 79, 192));
-        z-index: 0;
-    }
-
-    .left-rec-3 {
-        position: absolute;
-        top: 0%;
-        left: 30%;
-        width: 15%;
-        height: 100%;
-        background: linear-gradient(to right, rgb(109, 79, 192), #514ba5);
-        z-index: 0;
+    .main-pg-stipes{
+        top: 0px;
+        -webkit-transform: skewY(-16deg);
+        transform: skewY(-16deg);
+        grid: repeat(5, 17vh) / repeat(10, 1fr);
     }
 
     .df-condition {
@@ -940,6 +910,7 @@ body {
         .leader {
             font-size: 45px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            text-align: center;
         }
 
         .follower {
@@ -1003,31 +974,6 @@ body {
     .info-sec-background{
         height: 90vh;
         flex-direction: column;
-        .oval-1{
-            left: -20%;
-            width: 121%;
-            height: 108%;
-            @media screen and (max-device-width: 479px){
-                left: -45%;
-                width: 127%;
-                height: 113%;
-                top: -5%;
-                background: linear-gradient(to top, rgba(227, 255, 182, 0.98), #4a749d);
-            }
-        }
-
-        .oval-2{
-            height: 110%;
-            @media screen and (max-device-width: 479px){
-                width: 155%;
-            }
-        }
-        .left-rec-3{
-            width: 35%;
-            @media screen and (max-device-width: 479px){
-                height: 80%;
-            }
-        }
     }
 
     .right-info-box{
