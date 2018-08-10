@@ -800,7 +800,7 @@ body {
     }
 }
 
-.left-info-box {
+.right-info-box {
     position: relative;
     height: 80%;
     width: 40%;
@@ -823,61 +823,10 @@ body {
         padding: 0px;
         transition: all 0.4s ease;
     }
-
-    .header {
-        position: absolute;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        border-bottom: 0.5px solid #cb9c72;
-
-        h2 {
-            font-size: 35px;
-        }
-    }
-
-    .lead-sec {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-
-        .leader {
-            font-size: 50px;
-        }
-
-        .follower {
-            font-size: 22px;
-            padding: 20px;
-        }
-    }
-
-    .center-align {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 80%;
-        margin-top: 50px;
-    }
-
-    .center-align-secondary {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 60%;
-
-        p {
-            font-size: 20px;
-        }
-    }
+    
 }
 
-.right-info-box {
+.left-info-box {
     position: relative;
     height: 80%;
     width: 50%;
@@ -952,19 +901,19 @@ body {
 
 /* start of window shrinkage affect solution */
 @media (max-width: 1273px) and (min-width: 1133px) {
-    .left-info-box{
+    .right-info-box{
         min-width: 510px;
     }
-    .right-info-box .lead-sec .leader {
+    .left-info-box .lead-sec .leader {
         font-size: 40px;
     }
 }
 
 @media (max-width: 1132px) and (min-width: 992px) {
-    .left-info-box{
+    .right-info-box{
         min-width: 450px;
     }
-    .right-info-box .lead-sec .leader {
+    .left-info-box .lead-sec .leader {
         font-size: 35px;
     }
 }
@@ -976,11 +925,11 @@ body {
         flex-direction: column;
     }
 
-    .right-info-box{
+    .left-info-box{
         width: 100%;
     }
 
-    .left-info-box{
+    .right-info-box{
         margin-top: 5vh;
         width: 500px;
         @media (max-width: 567px) and (min-width: 400px) {
@@ -991,7 +940,7 @@ body {
         }
     }
 
-    .right-info-box .lead-sec .leader {
+    .left-info-box .lead-sec .leader {
         font-size: 40px;
         @media (max-width: 567px) and (min-width: 400px), screen and (max-device-width: 479px) {
             font-size: 26px;
@@ -1592,7 +1541,7 @@ body {
         height: 660px;
     }
 
-    .right-info-box {
+    .left-info-box {
         .header {
             top: -20px;
 
@@ -1681,7 +1630,7 @@ body {
             }
         }
 
-        .right-info-box {
+        .left-info-box {
             .center-align-secondary {
                 margin: 10px 0 0 60px;
             }
