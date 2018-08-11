@@ -6,7 +6,13 @@ let MongoDBConnected = false;
 let inititialized = false;
 pub.models = [];
 
-mongoose.connect('mongodb://localhost:27017/Homit', { useNewUrlParser: true }).then(function (result) {
+if (!process.env.DB_NAME_MONGO) {
+    throw new Error('Missing env variable for Mongo DB name');
+}
+
+let db_name = process.env.DB_NAME_MONGO;
+
+mongoose.connect(`mongodb://localhost:27017/${db_name}`, { useNewUrlParser: true }).then(function (result) {
     console.log("Connection to Mongo DB established");
     MongoDBConnected = true;
     init();
