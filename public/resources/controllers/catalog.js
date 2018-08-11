@@ -90,13 +90,6 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                 } catch (e) {
                     // oops
                 }
-
-                for(tmp_key in $scope.productsBySubcat){
-                    for(let x=0; x< $scope.productsBySubcat[tmp_key].length; x++){
-                        $scope.productsBySubcat[tmp_key][x].variance[0]["preffered_unit_size"] =  helpers.unitConverter($scope.productsBySubcat[tmp_key][x].variance[0]);
-                    }
-                }
-
                 $timeout(function () {
                     $(".catalog-store-cover").css({ "background-image": "url('/resources/images/catalog-stores/categories/covers/" + $scope.categoryCoverImage, "opacity": "1" });
                 }, 500);

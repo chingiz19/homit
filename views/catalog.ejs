@@ -111,15 +111,20 @@
                                         <img ng-src="/resources/images/products/{{display_storeInfo.name}}/{{ product.images.image_catalog }}">
                                     </li>
                                     <li class="catalog-text item-brand">
-                                        <div ng-if="product.variance[0].packs[0].type > 1">
+                                        <div ng-if="product.variance[0].packs[0].type > 1 && product.variance[0].preffered_unit">
                                             <span class="catalog-item-brand">{{ product.brand }}</span>
                                             <br>
-                                            <span class="catalog-item-name">{{ product.name }}</span> ({{ product.variance[0].packs[0].type }} x {{ convertUnit(product.variance[0]) + product.variance[0].preffered_unit  }})
+                                            <span class="catalog-item-name">{{ product.name }}</span> ({{ product.variance[0].packs[0].type }} x {{ product.variance[0].preffered_unit_size + product.variance[0].preffered_unit  }})
                                         </div>
-                                        <div ng-if="!(product.variance[0].packs[0].type > 1)">
+                                        <div ng-if="!(product.variance[0].packs[0].type > 1) && product.variance[0].preffered_unit">
                                             <span class="catalog-item-brand">{{ product.brand }}</span>
                                             <br>
                                             <span class="catalog-item-name">{{ product.name }}</span> ({{ product.variance[0].preffered_unit_size + product.variance[0].preffered_unit  }})
+                                        </div>
+                                        <div ng-if="!product.variance[0].preffered_unit">
+                                            <span class="catalog-item-brand">{{ product.brand }}</span>
+                                            <br>
+                                            <span class="catalog-item-name">{{ product.name }}</span> ({{ product.variance[0].preffered_unit_size }})
                                         </div>
                                     </li>
                                     <li class="catalog-text item-price box-center">

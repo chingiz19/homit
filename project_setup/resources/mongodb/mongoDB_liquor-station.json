@@ -15150,14 +15150,18 @@
         "variance": [
             {
                 "_id": "1-214-1",
-                "size": "combo",
+                "preffered_unit_size": "combo",
                 "packs": [
                     {
                         "_id": "1-214-1-1",
                         "type": 1,
                         "price": 10.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
