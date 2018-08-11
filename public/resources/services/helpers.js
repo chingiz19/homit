@@ -14,7 +14,7 @@ app.service('helpers', function () {
 
     pub.buildProductPagePath = function (product) {
         let path;
-        path = "/hub/product/" + product.store_type_name + "/" + _.toLower(pub.clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id;
+        path = "/hub/product/" + product.store_type_name + "/" + _.toLower(pub.clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id.split("-")[1];
         return path;
     };
 
