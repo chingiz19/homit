@@ -352,11 +352,23 @@ pub.getAllProductsByCategory = async function (storeType, categoryName) {
     {
         $group: {
             _id: "$subcategory",
-            subcategories: { $addToSet: "$subcategory" },
             products: { $push: "$$ROOT" }
         }
     }
     ]);
+    return result;
+}
+
+/**
+ * Return all subcategories based on the store type and category provided
+ * 
+ * @param {*} storeType 
+ * @param {*} categoryName 
+ */
+pub.getAllSubcategoriesByCategory = async function (storeType, categoryName) {
+    let result = await MDB.models[storeType]
+    .find({ "category.category_name": categoryName })
+    .distinct('subcategory');
     return result;
 }
 
