@@ -1,11 +1,23 @@
 app.controller("productController", function ($scope, $rootScope, $window, sessionStorage, notification, helpers, googleAnalytics) {
     $scope.init = function () {
-        $scope.recommended_products = buildProductUrl(JSON.parse($("#recommendedProducts").val()));
         $scope.product = JSON.parse($("#product").val());
         $scope.productImages = JSON.parse($("#product-images").val()).images;
         if($scope.productImages.length > 0){
             $scope.selectedImage = $scope.productImages[0];
         }
+
+        $http({
+            method: 'GET',
+            url: "/api/hub/randomproducts",
+            body:{
+                limit: 5
+            }
+        }).then(function successCallback(response) {
+            $scope.recommended_products = response.data;
+        }, function errorCallback(response) {
+            notification.addErrorMessage("Ups.. Error loading page");
+        });
+
     };
 
     function buildProductUrl(products){
