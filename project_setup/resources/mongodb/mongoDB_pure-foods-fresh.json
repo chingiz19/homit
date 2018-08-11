@@ -12,8 +12,8 @@
             ]
         },
         "category": {
-            "category_display_name": "condiments",
-            "category_name": "Condiments",
+            "category_display_name": "Condiments",
+            "category_name": "condiments",
             "category_image": "condiments.jpg",
             "category_cover": "9_condiments.jpg"
         },
@@ -68,8 +68,8 @@
             ]
         },
         "category": {
-            "category_display_name": "condiments",
-            "category_name": "Condiments",
+            "category_display_name": "Condiments",
+            "category_name": "condiments",
             "category_image": "condiments.jpg",
             "category_cover": "9_condiments.jpg"
         },
@@ -128,8 +128,8 @@
             ]
         },
         "category": {
-            "category_display_name": "condiments",
-            "category_name": "Condiments",
+            "category_display_name": "Condiments",
+            "category_name": "condiments",
             "category_image": "condiments.jpg",
             "category_cover": "9_condiments.jpg"
         },
