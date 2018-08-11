@@ -10,9 +10,9 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
 
     function buildProductUrl(products){
         let tmpList = products;
-        for(let x=0; x<tmpList.length; x++){
-            tmpList[x]["product_url"] = helpers.buildProductPagePath(tmpList[x]);
-        }
+        // for(let x=0; x<tmpList.length; x++){
+        //     tmpList[x]["product_url"] = helpers.buildProductPagePath(tmpList[x]);
+        // }
         return tmpList;
     }
 
