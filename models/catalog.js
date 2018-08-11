@@ -584,56 +584,6 @@ pub.searchSubcategory = async function (searchText, limit) {
     }
 }
 
-var searchProductsBase = async function (limit, sqlWhereExtra, sqlSelectExtra, sqlFromExtra) {
-    let sqlSelect = `
-        listing.id AS listing_id,
-        product.id AS product_id,
-        type.name AS type,
-        subcategory.name AS subcategory,
-        category.name AS category,
-        store_type.display_name AS store_type_display_name,
-        store_type.name AS store_type_name,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        container.name AS container`;
-
-    let sqlFrom = `
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)`;
-
-    let sqlWhere = `
-        WHERE store_type.available = true AND depot.available = true`;
-
-    if (!sqlWhereExtra) {
-        sqlWhereExtra = ` `;
-    }
-
-    if (!sqlFromExtra) {
-        sqlFromExtra = ` `;
-    }
-
-    if (!sqlSelectExtra) {
-        sqlSelectExtra = ` `;
-    }
-
-    let sqlQuery = `
-        SELECT DISTINCT ` + sqlSelect + ` ` + sqlSelectExtra
-        + ` ` + sqlFrom + ` ` + sqlFromExtra
-        + ` ` + sqlWhere + ` ` + sqlWhereExtra
-        + ` LIMIT ` + limit + ` ;`;
-
-    let dbResult = await db.runQuery(sqlQuery);
-    return dbResult;
-}
-
 /**
  * Search for the beginning text in brand, name
  * 
@@ -891,6 +841,30 @@ pub.getCartProducts = async function (cartProducts) {
 }
 
 /**
+ * Creater random array of products from random stores,
+ * categories and products
+ */
+pub.getRandomArrayOfProducts = async function (numberOfTimes) {
+    let productsArray = [];
+    let availableStoreTypes = await db.selectAllWhere(db.tables.catalog_store_types, { available: true });
+
+    if (availableStoreTypes && availableStoreTypes.length > 0) {
+        for (let i = 0; i < numberOfTimes; i++) {
+            let randomNumber = getRandomNmber(availableStoreTypes.length - 1);
+            let selectedStore = availableStoreTypes[randomNumber];
+            let product = await MDB.models[selectedStore.name].aggregate([
+                { $sample: { size: 1 } }
+            ]).exec();
+            if (product && product.length == 1) {
+                productsArray.push(product[0]);
+            }
+        }
+    }
+
+    return productsArray;
+}
+
+/**
  * Get cart products with respective store type
  * 
  * @param {*} dbProducts
@@ -936,57 +910,6 @@ pub.getCartProductsWithStoreType = function (dbProducts, cartProducts) {
     }
 
     return products;
-}
-
-/**
- * Get products by product id and store type
- * 
- * @param {*} storeType
- * @param {*} productId 
- */
-var getItemsByProductId = async function (storeType, productId) {
-    let sqlQuery = `
-        SELECT
-        depot.id AS depot_id,
-        item.id AS item_id,
-        listing.id AS listing_id,
-        product.id AS product_id,
-        type.name AS type,
-        subcategory.name AS subcategory,
-        category.name AS category,
-        store_type.name AS store_type,
-        store_type.display_name AS store_type_display_name,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        depot.price AS price,
-        depot.tax AS tax,
-        packaging.name AS packaging,
-        container.name AS container,
-        volume.name AS volume
-        
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
-        JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
-        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
-        
-        WHERE store_type.available = true
-        AND depot.available = true
-        AND ? AND ?
-        
-        ORDER BY listing_id, product_id, item_id, depot_id`;
-
-    let data1 = { "store_type.name": storeType };
-    let data2 = { "product.id": productId };
-    let dbResult = await db.runQuery(sqlQuery, [data1, data2]);
-    return getFormattedProductsForProductPage(dbResult);
 }
 
 pub.getProductPageItemsByProductId = async function (storeType, productId) {
@@ -1221,6 +1144,56 @@ pub.getUnionStores = async function (unionName) {
     return false;
 }
 
+async function searchProductsBase(limit, sqlWhereExtra, sqlSelectExtra, sqlFromExtra) {
+    let sqlSelect = `
+        listing.id AS listing_id,
+        product.id AS product_id,
+        type.name AS type,
+        subcategory.name AS subcategory,
+        category.name AS category,
+        store_type.display_name AS store_type_display_name,
+        store_type.name AS store_type_name,
+        listing.brand AS brand,
+        listing.name AS name,
+        product.image AS image,
+        container.name AS container`;
+
+    let sqlFrom = `
+        FROM
+        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
+        JOIN catalog_products AS product ON (item.product_id = product.id)
+        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
+        JOIN catalog_types AS type ON (listing.type_id = type.id)
+        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
+        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
+        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
+        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)`;
+
+    let sqlWhere = `
+        WHERE store_type.available = true AND depot.available = true`;
+
+    if (!sqlWhereExtra) {
+        sqlWhereExtra = ` `;
+    }
+
+    if (!sqlFromExtra) {
+        sqlFromExtra = ` `;
+    }
+
+    if (!sqlSelectExtra) {
+        sqlSelectExtra = ` `;
+    }
+
+    let sqlQuery = `
+        SELECT DISTINCT ` + sqlSelect + ` ` + sqlSelectExtra
+        + ` ` + sqlFrom + ` ` + sqlFromExtra
+        + ` ` + sqlWhere + ` ` + sqlWhereExtra
+        + ` LIMIT ` + limit + ` ;`;
+
+    let dbResult = await db.runQuery(sqlQuery);
+    return dbResult;
+}
+
 /**
  * Get similar products bought at the same transaction
  * 
@@ -1400,6 +1373,15 @@ async function getItemByProductId(storeType, productId) {
     let data2 = { "product.id": productId };
     let dbResult = await db.runQuery(sqlQuery, [data1, data2]);
     return dbResult[0];
+}
+
+/**
+ * Returns random number between 0 and limit (including)
+ * 
+ * @param {*} limit
+ */
+function getRandomNmber(limit) {
+    return Math.floor(Math.random() * (limit + 1));
 }
 
 module.exports = pub;

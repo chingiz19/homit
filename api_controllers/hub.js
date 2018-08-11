@@ -7,12 +7,12 @@ router.get('/:storeType/:categoryName', async function (req, res, next) {
     let storeType = req.params.storeType;
     let categoryName = req.params.categoryName;
 
-    let categoryProducts = await Catalog.getAllProductsByCategory(storeType, categoryName);   
+    let categoryProducts = await Catalog.getAllProductsByCategory(storeType, categoryName);
     let storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
     let categories = await Catalog.getCategoriesByStoreType(storeType);
     let storeOpen = await Catalog.isStoreOpen(storeType);
     let subcategories = await Catalog.getAllSubcategoriesByCategory(storeType, categoryName);
-    
+
     let storeInfo = {
         name: storeTypeInfo.name,
         display_name: storeTypeInfo.display_name,
@@ -27,7 +27,7 @@ router.get('/:storeType/:categoryName', async function (req, res, next) {
         "subcategories": subcategories,
         products: categoryProducts
     };
-    
+
     res.send(response);
 });
 
@@ -109,7 +109,7 @@ router.get('/:storeType', async function (req, res) {
         let hoursScheduled = await Catalog.getStoreHours(storeType, true);
         let info = await Catalog.getStoreTypeInfo(storeType);
         let banners = await Catalog.getBannersByStoreType(storeType);
-        let categories = await Catalog.getCategoriesByStoreType(storeType);             
+        let categories = await Catalog.getCategoriesByStoreType(storeType);
         let specials = await Catalog.getAllSpecialsByStoreType(storeType);
         let storeCoupons = await Coupon.getStoreCoupons(storeType);
 
@@ -129,6 +129,21 @@ router.get('/:storeType', async function (req, res) {
             store_coupons: storeCoupons,
             applied_coupons: appliedCoupons
         });
+    }
+});
+
+router.post('/randomproducts', async function (req, res) {
+    let numberOfTimes = req.body.limit;
+    if (numberOfTimes && isNaN(numberOfTimes)) {
+        let products = await Catalog.getRandomArrayOfProducts(numberOfTimes);
+        if (products && products.length > 0) {
+            res.send({
+                success: true,
+                result: products,
+            });
+        }
+    } else {
+        ErrorMessages.sendErrorResponse(res);
     }
 });
 
