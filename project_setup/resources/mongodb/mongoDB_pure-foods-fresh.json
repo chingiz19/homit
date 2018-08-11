@@ -4,6 +4,7 @@
         "brand": "Pure Foods Fresh",
         "name": "Babu's BBQ Sauce",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_1356.jpeg",
             "images_all": [
@@ -46,7 +47,6 @@
                         "price": 9.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -60,6 +60,7 @@
         "brand": "Pure Foods Fresh",
         "name": "South Western Green Pepper Sauce",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_1357.jpeg",
             "images_all": [
@@ -106,7 +107,6 @@
                         "price": 9.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -120,6 +120,7 @@
         "brand": "Pure Foods Fresh",
         "name": "Trumato Sauce",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_1358.jpeg",
             "images_all": [
@@ -166,7 +167,6 @@
                         "price": 9.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }

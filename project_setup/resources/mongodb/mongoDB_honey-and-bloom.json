@@ -4,6 +4,7 @@
         "brand": "Honey & Bloom",
         "name": "Dirty Hippy Deodorant - Lemongrass Patchouli",
         "container": "deodorant tube",
+        "tax": 1,
         "images": {
             "image_catalog": "ddt_1359.jpeg",
             "images_all": [
@@ -42,7 +43,6 @@
                 "si_unit": "m3",
                 "preffered_unit_size": "2.64",
                 "preffered_unit": "oz",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-1-1-1",
@@ -73,6 +73,7 @@
         "brand": "Honey & Bloom",
         "name": "Dirty Hippy Deodorant - Floral",
         "container": "deodorant tube",
+        "tax": 1,
         "images": {
             "image_catalog": "ddt_1360.jpeg",
             "images_all": [
@@ -111,7 +112,6 @@
                 "si_unit": "m3",
                 "preffered_unit_size": "2.64",
                 "preffered_unit": "oz",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-2-1-1",
@@ -142,6 +142,7 @@
         "brand": "Honey & Bloom",
         "name": "Stinky Gypsy Body Wash",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_1361.jpeg",
             "images_all": [
@@ -180,7 +181,6 @@
                 "si_unit": "m3",
                 "preffered_unit_size": "16",
                 "preffered_unit": "oz",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-3-1-1",
@@ -201,6 +201,7 @@
         "brand": "Honey & Bloom",
         "name": "Lip Balm - Peppermint Eucalyptus",
         "container": "lip balm tube",
+        "tax": 1,
         "images": {
             "image_catalog": "lbt_1362.jpeg",
             "images_all": [
@@ -239,7 +240,6 @@
                 "si_unit": "m3",
                 "preffered_unit_size": "0.15",
                 "preffered_unit": "oz",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-4-1-1",
@@ -270,6 +270,7 @@
         "brand": "Honey & Bloom",
         "name": "Lip Balm - Spearmint Lavender",
         "container": "lip balm tube",
+        "tax": 1,
         "images": {
             "image_catalog": "lbt_1363.jpeg",
             "images_all": [
@@ -308,7 +309,6 @@
                 "si_unit": "m3",
                 "preffered_unit_size": "0.15",
                 "preffered_unit": "oz",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-5-1-1",
@@ -339,6 +339,7 @@
         "brand": "Honey & Bloom",
         "name": "Buzz Off - Bug Repellent ",
         "container": "spray bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "spb_1364.jpeg",
             "images_all": [
@@ -377,7 +378,6 @@
                 "si_unit": "m3",
                 "preffered_unit_size": "4",
                 "preffered_unit": "oz",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-6-1-1",
@@ -398,6 +398,7 @@
         "brand": "Honey & Bloom",
         "name": "Kriya - Yoga Mat (All-purpose) Cleanser",
         "container": "spray bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "spb_1365.jpeg",
             "images_all": [
@@ -436,7 +437,6 @@
                 "si_unit": "m3",
                 "preffered_unit_size": "8",
                 "preffered_unit": "oz",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-7-1-1",
@@ -457,6 +457,7 @@
         "brand": "Honey & Bloom",
         "name": "Bath Salts - Bleeding Love",
         "container": "bag",
+        "tax": 1,
         "images": {
             "image_catalog": "bg_1366.jpeg",
             "images_all": [
@@ -495,7 +496,6 @@
                 "si_unit": "kg",
                 "preffered_unit_size": "300",
                 "preffered_unit": "g",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-8-1-1",
@@ -526,6 +526,7 @@
         "brand": "Honey & Bloom",
         "name": "Bath Salts - Wo(man)ly",
         "container": "bag",
+        "tax": 1,
         "images": {
             "image_catalog": "bg_1367.jpeg",
             "images_all": [
@@ -564,7 +565,6 @@
                 "si_unit": "kg",
                 "preffered_unit_size": "300",
                 "preffered_unit": "g",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-9-1-1",
@@ -595,6 +595,7 @@
         "brand": "Honey & Bloom",
         "name": "Soothing Balm",
         "container": "ointment container",
+        "tax": 1,
         "images": {
             "image_catalog": "onc_1368.jpeg",
             "images_all": [
@@ -633,7 +634,6 @@
                 "si_unit": "kg",
                 "preffered_unit_size": "40",
                 "preffered_unit": "g",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-10-1-1",
@@ -654,6 +654,7 @@
         "brand": "Honey & Bloom",
         "name": "Charcoal Face Mask",
         "container": "jar",
+        "tax": 1,
         "images": {
             "image_catalog": "jr_1369.jpeg",
             "images_all": [
@@ -692,7 +693,6 @@
                 "si_unit": "m3",
                 "preffered_unit_size": "4",
                 "preffered_unit": "oz",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-11-1-1",
@@ -713,6 +713,7 @@
         "brand": "Honey & Bloom",
         "name": "Coconut Lavender Body Scrub",
         "container": "jar",
+        "tax": 1,
         "images": {
             "image_catalog": "jr_1370.jpeg",
             "images_all": [
@@ -751,7 +752,6 @@
                 "si_unit": "m3",
                 "preffered_unit_size": "8",
                 "preffered_unit": "oz",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "11-12-1-1",

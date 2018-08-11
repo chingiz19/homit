@@ -4,6 +4,7 @@
         "brand": "Dwarf Stars",
         "name": "Originals",
         "container": "stand up pouch",
+        "tax": 1,
         "images": {
             "image_catalog": "sup_1349.jpeg",
             "images_all": [
@@ -39,7 +40,6 @@
                 "si_unit": "kg",
                 "preffered_unit_size": "120",
                 "preffered_unit": "g",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "7-1-1-1",
@@ -60,6 +60,7 @@
         "brand": "Dwarf Stars",
         "name": "Pumpkin Seed Butter Cups",
         "container": "bag",
+        "tax": 1,
         "images": {
             "image_catalog": "bg_1350.jpeg",
             "images_all": [
@@ -95,7 +96,6 @@
                 "si_unit": "kg",
                 "preffered_unit_size": "42",
                 "preffered_unit": "g",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "7-2-1-1",
@@ -116,6 +116,7 @@
         "brand": "Dwarf Stars",
         "name": "PumpKING Protein Balls",
         "container": "bag",
+        "tax": 1,
         "images": {
             "image_catalog": "bg_1351.jpeg",
             "images_all": [
@@ -151,7 +152,6 @@
                 "si_unit": "kg",
                 "preffered_unit_size": "60",
                 "preffered_unit": "g",
-                "tax": 1,
                 "packs": [
                     {
                         "_id": "7-3-1-1",
