@@ -10,7 +10,8 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     // }
 
     let product = await Catalog.getProductPageItemsByProductId(req.params.storeName, req.params.productId);
-    let similarProducts = await Catalog.getSimilarProducts(req.params.productId);
+    // let similarProducts = await Catalog.getSimilarProducts(req.params.productId);
+    let similarProducts = [];
     let validationUrl = "/product/" + product.store_type_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id.split("-")[1];
 
     if (!product || validationUrl != req.url) {
@@ -21,8 +22,8 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     req.options.ejs.product_brand = product.brand;
     req.options.ejs.product_name = product.name;
 
-    if (product.store_type_name == "linas-italian-market") {
-        req.options.ejs.store_type_display_name = '<li><span class="bold">Sold By: </span><a href="' + "https://linasmarket.com/" + '" target="_blank" itemprop="additionalProperty">' + _.startCase(product.store_type_display_name, '-', ' ') + '</a></li>';
+    if (product.store_type_name != "liquor-station") {
+        req.options.ejs.store_type_display_name = '<li><span class="bold">Sold By: </span>' + product.store_type_display_name + '</li>';
     } else {
         req.options.ejs.store_type_display_name = undefined;
     }
@@ -63,11 +64,11 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
         req.options.ejs.serving_suggestions = "";
     }
 
-    if (product.images.length > 0) {
-        req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="' + product.images[0] + '">';
+    if (product.images.image_catalog) {
+        req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="/resources/images/catalog-stores/categories/"' + product.images.image_catalog + '">';
     }
 
-    req.options.ejs.product_images = JSON.stringify({ "images": product.images });
+    req.options.ejs.product_images = JSON.stringify({ "images": product.images.images_all });
     req.options.ejs.see_more_url = "/hub/" + product.store_type_name + "/" + product.category.category_name;
     if (similarProducts.length < 12) {
         let remainder = 12 - similarProducts.length;
@@ -77,7 +78,7 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
         req.options.ejs.recommended_products = JSON.stringify(similarProducts);
     }
 
-    req.options.ejs.og_image = product.images[0];
+    req.options.ejs.og_image = product.images.image_catalog;
 
     req.options.ejs.title = _.trim(product.brand + _.trimEnd(" " + product.name) + " - Delivered to Your Doorstep | Homit");
 

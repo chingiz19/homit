@@ -4,6 +4,7 @@
         "brand": "Red Bull",
         "name": "Diet",
         "container": "can",
+        "tax": 1,
         "images": {
             "image_catalog": "c_9525.jpeg",
             "images_all": [
@@ -19,10 +20,6 @@
         },
         "subcategory": "Energy Drink",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Diet Energy Drink"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Red Bull GmbH"
@@ -46,22 +43,20 @@
                 "packs": [
                     {
                         "_id": "3-1-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
                     },
                     {
                         "_id": "3-1-1-2",
-                        "type": 4,
+                        "h_value": 4,
                         "price": 10.49,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -75,6 +70,7 @@
         "brand": "Red Bull",
         "name": "Classic",
         "container": "can",
+        "tax": 1,
         "images": {
             "image_catalog": "c_9526.jpeg",
             "images_all": [
@@ -90,10 +86,6 @@
         },
         "subcategory": "Energy Drink",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Energy Drink"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Red Bull GmbH"
@@ -117,22 +109,20 @@
                 "packs": [
                     {
                         "_id": "3-2-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
                     },
                     {
                         "_id": "3-2-1-2",
-                        "type": 4,
+                        "h_value": 4,
                         "price": 10.49,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -146,6 +136,7 @@
         "brand": "Rockstar",
         "name": "Classic",
         "container": "can",
+        "tax": 1,
         "images": {
             "image_catalog": "c_9527.jpeg",
             "images_all": [
@@ -161,10 +152,6 @@
         },
         "subcategory": "Energy Drink",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Energy Drink"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Rockstar Inc"
@@ -188,11 +175,10 @@
                 "packs": [
                     {
                         "_id": "3-3-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.59,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -206,6 +192,7 @@
         "brand": "Coca-Cola",
         "name": "Classic",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9500.jpeg",
             "images_all": [
@@ -221,10 +208,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Coca-Cola Company"
@@ -248,11 +231,10 @@
                 "packs": [
                     {
                         "_id": "3-4-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -268,11 +250,10 @@
                 "packs": [
                     {
                         "_id": "3-4-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -286,6 +267,7 @@
         "brand": "Coca-Cola",
         "name": "Classic",
         "container": "can",
+        "tax": 1,
         "images": {
             "image_catalog": "c_9500.jpeg",
             "images_all": [
@@ -301,10 +283,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Coca-Cola Company"
@@ -328,11 +306,10 @@
                 "packs": [
                     {
                         "_id": "3-5-1-1",
-                        "type": 6,
+                        "h_value": 6,
                         "price": 3.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -346,6 +323,7 @@
         "brand": "Coca-Cola",
         "name": "Diet",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9501.jpeg",
             "images_all": [
@@ -361,10 +339,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Diet Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Coca-Cola Company"
@@ -388,11 +362,10 @@
                 "packs": [
                     {
                         "_id": "3-6-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -408,11 +381,10 @@
                 "packs": [
                     {
                         "_id": "3-6-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -426,6 +398,7 @@
         "brand": "Coca-Cola",
         "name": "Diet",
         "container": "can",
+        "tax": 1,
         "images": {
             "image_catalog": "c_9501.jpeg",
             "images_all": [
@@ -441,10 +414,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Diet Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Coca-Cola Company"
@@ -468,11 +437,10 @@
                 "packs": [
                     {
                         "_id": "3-7-1-1",
-                        "type": 6,
+                        "h_value": 6,
                         "price": 3.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -486,6 +454,7 @@
         "brand": "Coca-Cola",
         "name": "Zero",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9502.jpeg",
             "images_all": [
@@ -501,10 +470,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Diet Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Coca-Cola Company"
@@ -528,11 +493,10 @@
                 "packs": [
                     {
                         "_id": "3-8-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -548,11 +512,10 @@
                 "packs": [
                     {
                         "_id": "3-8-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -566,6 +529,7 @@
         "brand": "Coca-Cola",
         "name": "Zero",
         "container": "can",
+        "tax": 1,
         "images": {
             "image_catalog": "c_9502.jpeg",
             "images_all": [
@@ -581,10 +545,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Diet Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Coca-Cola Company"
@@ -608,11 +568,10 @@
                 "packs": [
                     {
                         "_id": "3-9-1-1",
-                        "type": 6,
+                        "h_value": 6,
                         "price": 3.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -626,6 +585,7 @@
         "brand": "Canada Dry",
         "name": "Ginger Ale",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9503.jpeg",
             "images_all": [
@@ -641,10 +601,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Ginger Ale Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Dr Pepper Snapple Grp"
@@ -668,11 +624,10 @@
                 "packs": [
                     {
                         "_id": "3-10-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -688,11 +643,10 @@
                 "packs": [
                     {
                         "_id": "3-10-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -706,6 +660,7 @@
         "brand": "Simply Lemonade",
         "name": "Raspberry",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9505.jpeg",
             "images_all": [
@@ -721,10 +676,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Raspberry Limonade"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Simply Beverages Company"
@@ -748,11 +699,10 @@
                 "packs": [
                     {
                         "_id": "3-11-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 5.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -766,6 +716,7 @@
         "brand": "Simply Lemonade",
         "name": "Orange",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9506.jpeg",
             "images_all": [
@@ -781,10 +732,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Orange Limonade"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Simply Beverages Company"
@@ -808,11 +755,10 @@
                 "packs": [
                     {
                         "_id": "3-12-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 5.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -826,6 +772,7 @@
         "brand": "Pepsi",
         "name": "Classic",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9507.jpeg",
             "images_all": [
@@ -841,10 +788,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "PepsiCo Inc"
@@ -868,11 +811,10 @@
                 "packs": [
                     {
                         "_id": "3-13-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -888,11 +830,10 @@
                 "packs": [
                     {
                         "_id": "3-13-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -906,6 +847,7 @@
         "brand": "Pepsi",
         "name": "Classic",
         "container": "can",
+        "tax": 1,
         "images": {
             "image_catalog": "c_9507.jpeg",
             "images_all": [
@@ -921,10 +863,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "PepsiCo Inc"
@@ -948,11 +886,10 @@
                 "packs": [
                     {
                         "_id": "3-14-1-1",
-                        "type": 6,
+                        "h_value": 6,
                         "price": 3.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -966,6 +903,7 @@
         "brand": "Pepsi",
         "name": "Diet",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9508.jpeg",
             "images_all": [
@@ -981,10 +919,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "PepsiCo Inc"
@@ -1008,11 +942,10 @@
                 "packs": [
                     {
                         "_id": "3-15-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1028,11 +961,10 @@
                 "packs": [
                     {
                         "_id": "3-15-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1046,6 +978,7 @@
         "brand": "Pepsi",
         "name": "Diet",
         "container": "can",
+        "tax": 1,
         "images": {
             "image_catalog": "c_9508.jpeg",
             "images_all": [
@@ -1061,10 +994,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Soda"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "PepsiCo Inc"
@@ -1088,11 +1017,10 @@
                 "packs": [
                     {
                         "_id": "3-16-1-1",
-                        "type": 6,
+                        "h_value": 6,
                         "price": 3.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1106,6 +1034,7 @@
         "brand": "Mott's Clamato",
         "name": "The Original",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9511.jpeg",
             "images_all": [
@@ -1121,10 +1050,6 @@
         },
         "subcategory": "Soda & Juice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Clamato"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Dr Pepper Snapple Grp Inc."
@@ -1148,11 +1073,10 @@
                 "packs": [
                     {
                         "_id": "3-17-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1166,6 +1090,7 @@
         "brand": "Dasani",
         "name": "Water",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9504.jpeg",
             "images_all": [
@@ -1181,10 +1106,6 @@
         },
         "subcategory": "Water & Ice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Water"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Coca-Cola Company"
@@ -1208,11 +1129,10 @@
                 "packs": [
                     {
                         "_id": "3-18-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1228,11 +1148,10 @@
                 "packs": [
                     {
                         "_id": "3-18-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 1.29,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1246,6 +1165,7 @@
         "brand": "Aquafina",
         "name": "Still Water",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9515.jpeg",
             "images_all": [
@@ -1261,10 +1181,6 @@
         },
         "subcategory": "Water & Ice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Water"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "PepsiCo Inc"
@@ -1288,11 +1204,10 @@
                 "packs": [
                     {
                         "_id": "3-19-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.09,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1308,11 +1223,10 @@
                 "packs": [
                     {
                         "_id": "3-19-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 1.29,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1326,6 +1240,7 @@
         "brand": "Arctic Glacier",
         "name": "Ice",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9528.jpeg",
             "images_all": [
@@ -1341,10 +1256,6 @@
         },
         "subcategory": "Water & Ice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Ice"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Arctic Glacier Holdings, Inc."
@@ -1368,11 +1279,10 @@
                 "packs": [
                     {
                         "_id": "3-20-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.59,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1386,6 +1296,7 @@
         "brand": "Perrier",
         "name": "Sparkling Water",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9529.jpeg",
             "images_all": [
@@ -1401,10 +1312,6 @@
         },
         "subcategory": "Water & Ice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Sparkling Water"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Nestlé S.A."
@@ -1428,22 +1335,20 @@
                 "packs": [
                     {
                         "_id": "3-21-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 1.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
                     },
                     {
                         "_id": "3-21-1-2",
-                        "type": 6,
+                        "h_value": 6,
                         "price": 10.74,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1459,11 +1364,10 @@
                 "packs": [
                     {
                         "_id": "3-21-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1477,6 +1381,7 @@
         "brand": "Perrier",
         "name": "Lemon & Orange",
         "container": "bottle",
+        "tax": 1,
         "images": {
             "image_catalog": "b_9530.jpeg",
             "images_all": [
@@ -1492,10 +1397,6 @@
         },
         "subcategory": "Water & Ice",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Lemon & Orange Sparkling Water"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Nestlé S.A."
@@ -1519,22 +1420,20 @@
                 "packs": [
                     {
                         "_id": "3-22-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 1.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
                     },
                     {
                         "_id": "3-22-1-2",
-                        "type": 6,
+                        "h_value": 6,
                         "price": 10.74,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1550,11 +1449,10 @@
                 "packs": [
                     {
                         "_id": "3-22-2-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1568,6 +1466,7 @@
         "brand": "Purex",
         "name": "Bathroom Tissue Paper",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_11000.jpeg",
             "images_all": [
@@ -1583,10 +1482,6 @@
         },
         "subcategory": "Miscellaneous",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Double Roll 2 Ply"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "the Dial Corporation"
@@ -1607,22 +1502,20 @@
                 "packs": [
                     {
                         "_id": "3-23-1-1",
-                        "type": 4,
+                        "h_value": 4,
                         "price": 5.29,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
                     },
                     {
                         "_id": "3-23-1-2",
-                        "type": 12,
+                        "h_value": 12,
                         "price": 11.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1636,6 +1529,7 @@
         "brand": "Tylenol",
         "name": "Regular",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_11001.jpeg",
             "images_all": [
@@ -1651,10 +1545,6 @@
         },
         "subcategory": "Miscellaneous",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Regular"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "McNeil Consumer Healthcare"
@@ -1678,11 +1568,10 @@
                 "packs": [
                     {
                         "_id": "3-24-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1696,6 +1585,7 @@
         "brand": "Tylenol",
         "name": "Extra Strength",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_11002.jpeg",
             "images_all": [
@@ -1711,10 +1601,6 @@
         },
         "subcategory": "Miscellaneous",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Extra Strength"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "McNeil Consumer Healthcare"
@@ -1738,11 +1624,10 @@
                 "packs": [
                     {
                         "_id": "3-25-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 5.69,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1756,6 +1641,7 @@
         "brand": "Advil",
         "name": "Liqui Gels",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_11003.jpeg",
             "images_all": [
@@ -1771,10 +1657,6 @@
         },
         "subcategory": "Miscellaneous",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Regular"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Pfzer Inc."
@@ -1798,11 +1680,10 @@
                 "packs": [
                     {
                         "_id": "3-26-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 7.19,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1816,6 +1697,7 @@
         "brand": "Aspirin",
         "name": "Daily Low Dose",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_11004.jpeg",
             "images_all": [
@@ -1831,10 +1713,6 @@
         },
         "subcategory": "Miscellaneous",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Low Dose"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Bayer AG"
@@ -1858,11 +1736,10 @@
                 "packs": [
                     {
                         "_id": "3-27-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 5.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1876,6 +1753,7 @@
         "brand": "Twizzler",
         "name": "Strawberry",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9037.jpeg",
             "images_all": [
@@ -1891,10 +1769,6 @@
         },
         "subcategory": "Confectionery",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Strawberry Twizzler"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Y&S Candies"
@@ -1918,11 +1792,10 @@
                 "packs": [
                     {
                         "_id": "3-28-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 2.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1936,6 +1809,7 @@
         "brand": "Lindt",
         "name": "Milk Chocolate",
         "container": "bar",
+        "tax": 1,
         "images": {
             "image_catalog": "br_9038.jpeg",
             "images_all": [
@@ -1951,10 +1825,6 @@
         },
         "subcategory": "Confectionery",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Chocolate "
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Chocoladefabriken Lindt & Sprüngli AG"
@@ -1978,11 +1848,10 @@
                 "packs": [
                     {
                         "_id": "3-29-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.19,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -1996,6 +1865,7 @@
         "brand": "Lindt",
         "name": "Hazelnut Chocolate",
         "container": "bar",
+        "tax": 1,
         "images": {
             "image_catalog": "br_9039.jpeg",
             "images_all": [
@@ -2011,10 +1881,6 @@
         },
         "subcategory": "Confectionery",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Hazelnut Chocolate "
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Chocoladefabriken Lindt & Sprüngli AG"
@@ -2038,11 +1904,10 @@
                 "packs": [
                     {
                         "_id": "3-30-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.19,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2056,6 +1921,7 @@
         "brand": "Lindt",
         "name": "White Chocolate",
         "container": "bar",
+        "tax": 1,
         "images": {
             "image_catalog": "br_9040.jpeg",
             "images_all": [
@@ -2071,10 +1937,6 @@
         },
         "subcategory": "Confectionery",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "White Chocolate"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Chocoladefabriken Lindt & Sprüngli AG"
@@ -2098,11 +1960,10 @@
                 "packs": [
                     {
                         "_id": "3-31-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.19,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2116,6 +1977,7 @@
         "brand": "Hershey's",
         "name": "Cookies & Cream",
         "container": "bar",
+        "tax": 1,
         "images": {
             "image_catalog": "br_9041.jpeg",
             "images_all": [
@@ -2131,10 +1993,6 @@
         },
         "subcategory": "Confectionery",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Cookies & Cream Chocolate"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Hershey's Company"
@@ -2158,11 +2016,10 @@
                 "packs": [
                     {
                         "_id": "3-32-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.19,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2176,6 +2033,7 @@
         "brand": "Jack Link's",
         "name": "Cholula",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9016.jpeg",
             "images_all": [
@@ -2191,10 +2049,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Beef Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Jack Link's Beef Jerky Company"
@@ -2218,11 +2072,10 @@
                 "packs": [
                     {
                         "_id": "3-33-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 6.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2236,6 +2089,7 @@
         "brand": "Jack Link's",
         "name": "Pork",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9017.jpeg",
             "images_all": [
@@ -2251,10 +2105,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Pork Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Jack Link's Beef Jerky Company"
@@ -2278,11 +2128,10 @@
                 "packs": [
                     {
                         "_id": "3-34-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 6.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2296,6 +2145,7 @@
         "brand": "Jack Link's",
         "name": "Sriracha",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9018.jpeg",
             "images_all": [
@@ -2311,10 +2161,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Beef Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Jack Link's Beef Jerky Company"
@@ -2338,11 +2184,10 @@
                 "packs": [
                     {
                         "_id": "3-35-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 6.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2356,6 +2201,7 @@
         "brand": "Jack Link's",
         "name": "Teriyaki",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9019.jpeg",
             "images_all": [
@@ -2371,10 +2217,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Beef Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Jack Link's Beef Jerky Company"
@@ -2398,11 +2240,10 @@
                 "packs": [
                     {
                         "_id": "3-36-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 6.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2416,6 +2257,7 @@
         "brand": "Jack Link's",
         "name": "Sweet & Hot",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9020.jpeg",
             "images_all": [
@@ -2431,10 +2273,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Beef Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Jack Link's Beef Jerky Company"
@@ -2458,11 +2296,10 @@
                 "packs": [
                     {
                         "_id": "3-37-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 6.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2476,6 +2313,7 @@
         "brand": "Jack Link's",
         "name": "Hickory Smoked",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9021.jpeg",
             "images_all": [
@@ -2491,10 +2329,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Beef Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Jack Link's Beef Jerky Company"
@@ -2518,11 +2352,10 @@
                 "packs": [
                     {
                         "_id": "3-38-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 6.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2536,6 +2369,7 @@
         "brand": "Jack Link's",
         "name": "Chicken",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9022.jpeg",
             "images_all": [
@@ -2551,10 +2385,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Chicken Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Jack Link's Beef Jerky Company"
@@ -2578,11 +2408,10 @@
                 "packs": [
                     {
                         "_id": "3-39-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 6.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2596,6 +2425,7 @@
         "brand": "Krave",
         "name": "Sweet Teriyaki",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9023.jpeg",
             "images_all": [
@@ -2611,10 +2441,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Pork Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Hershey Company"
@@ -2638,11 +2464,10 @@
                 "packs": [
                     {
                         "_id": "3-40-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 7.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2656,6 +2481,7 @@
         "brand": "Krave",
         "name": "Chili Lime",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9024.jpeg",
             "images_all": [
@@ -2671,10 +2497,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Beef Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Hershey Company"
@@ -2698,11 +2520,10 @@
                 "packs": [
                     {
                         "_id": "3-41-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 7.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2716,6 +2537,7 @@
         "brand": "Krave",
         "name": "Sweet Chipotle",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9025.jpeg",
             "images_all": [
@@ -2731,10 +2553,6 @@
         },
         "subcategory": "Meat & Cheese",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Beef Jerky"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Hershey Company"
@@ -2758,11 +2576,10 @@
                 "packs": [
                     {
                         "_id": "3-42-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 7.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2776,6 +2593,7 @@
         "brand": "Pringles",
         "name": "Original",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9000.jpeg",
             "images_all": [
@@ -2791,10 +2609,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Chips"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Kellogg's Company"
@@ -2818,11 +2632,10 @@
                 "packs": [
                     {
                         "_id": "3-43-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.69,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2836,6 +2649,7 @@
         "brand": "Pringles",
         "name": "Sour Cream & Onion",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9001.jpeg",
             "images_all": [
@@ -2851,10 +2665,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Sour Cream & Onion Chips"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "The Kellogg's Company"
@@ -2878,11 +2688,10 @@
                 "packs": [
                     {
                         "_id": "3-44-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.69,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2896,6 +2705,7 @@
         "brand": "Cheetos",
         "name": "Crunchy",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9004.jpeg",
             "images_all": [
@@ -2911,10 +2721,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Cheesy Chips"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -2938,11 +2744,10 @@
                 "packs": [
                     {
                         "_id": "3-45-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.69,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -2956,6 +2761,7 @@
         "brand": "Cheetos",
         "name": "Cheddar Jalapeno",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9005.jpeg",
             "images_all": [
@@ -2971,10 +2777,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Cheddar Jalapeno"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -2998,11 +2800,10 @@
                 "packs": [
                     {
                         "_id": "3-46-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.69,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3016,6 +2817,7 @@
         "brand": "Cheetos",
         "name": "Puffs",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9006.jpeg",
             "images_all": [
@@ -3031,10 +2833,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Cheesy Chips"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3058,11 +2856,10 @@
                 "packs": [
                     {
                         "_id": "3-47-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.69,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3076,6 +2873,7 @@
         "brand": "Lay's",
         "name": "Salt & Vinegar",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9008.jpeg",
             "images_all": [
@@ -3091,10 +2889,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Salt & Vinegar Chips"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "PepsiCo Inc"
@@ -3118,11 +2912,10 @@
                 "packs": [
                     {
                         "_id": "3-48-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3136,6 +2929,7 @@
         "brand": "Lay's",
         "name": "Classic",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9009.jpeg",
             "images_all": [
@@ -3151,10 +2945,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Classic Chips"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "PepsiCo Inc"
@@ -3178,11 +2968,10 @@
                 "packs": [
                     {
                         "_id": "3-49-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3196,6 +2985,7 @@
         "brand": "Smartfood",
         "name": "Gouda & Chive",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9013.jpeg",
             "images_all": [
@@ -3211,10 +3001,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Cheese & Onion Popcorn"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3238,11 +3024,10 @@
                 "packs": [
                     {
                         "_id": "3-50-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3256,6 +3041,7 @@
         "brand": "Smartfood",
         "name": "White Cheddar",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9014.jpeg",
             "images_all": [
@@ -3271,10 +3057,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "White Cheddar Popcorn"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3298,11 +3080,10 @@
                 "packs": [
                     {
                         "_id": "3-51-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 3.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3316,6 +3097,7 @@
         "brand": "Doritos",
         "name": "Cheese",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9028.jpeg",
             "images_all": [
@@ -3331,10 +3113,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Cheesy Nachos"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "PepsiCo Inc"
@@ -3358,11 +3136,10 @@
                 "packs": [
                     {
                         "_id": "3-52-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3376,6 +3153,7 @@
         "brand": "Doritos",
         "name": "Zesty Cheese",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9029.jpeg",
             "images_all": [
@@ -3391,10 +3169,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Double Cheesy Nachos"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "PepsiCo Inc"
@@ -3418,11 +3192,10 @@
                 "packs": [
                     {
                         "_id": "3-53-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.79,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3436,6 +3209,7 @@
         "brand": "Tostitos",
         "name": "Restaurant Style",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9030.jpeg",
             "images_all": [
@@ -3451,10 +3225,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Tortilla Chips"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3478,11 +3248,10 @@
                 "packs": [
                     {
                         "_id": "3-54-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.49,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3496,6 +3265,7 @@
         "brand": "Tostitos",
         "name": "Round",
         "container": "pack",
+        "tax": 1,
         "images": {
             "image_catalog": "p_9031.jpeg",
             "images_all": [
@@ -3511,10 +3281,6 @@
         },
         "subcategory": "Popcorn & Chips",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Tortilla Chips"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3538,11 +3304,10 @@
                 "packs": [
                     {
                         "_id": "3-55-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.49,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3556,6 +3321,7 @@
         "brand": "Ruffles",
         "name": "Dip Ranch",
         "container": "jar",
+        "tax": 1,
         "images": {
             "image_catalog": "jr_9044.jpeg",
             "images_all": [
@@ -3571,10 +3337,6 @@
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Ranch Dip"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3598,11 +3360,10 @@
                 "packs": [
                     {
                         "_id": "3-56-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.59,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3616,6 +3377,7 @@
         "brand": "Tostitos",
         "name": "Red Pepper Salsa",
         "container": "jar",
+        "tax": 1,
         "images": {
             "image_catalog": "jr_9045.jpeg",
             "images_all": [
@@ -3631,10 +3393,6 @@
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Red Pepper Salsa"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3658,11 +3416,10 @@
                 "packs": [
                     {
                         "_id": "3-57-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.59,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3676,6 +3433,7 @@
         "brand": "Tostitos",
         "name": "Roasted Garlic Salsa",
         "container": "jar",
+        "tax": 1,
         "images": {
             "image_catalog": "jr_9046.jpeg",
             "images_all": [
@@ -3691,10 +3449,6 @@
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Garlic Salsa"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3718,11 +3472,10 @@
                 "packs": [
                     {
                         "_id": "3-58-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.59,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3736,6 +3489,7 @@
         "brand": "Tostitos",
         "name": "Spinach Dip",
         "container": "jar",
+        "tax": 1,
         "images": {
             "image_catalog": "jr_9047.jpeg",
             "images_all": [
@@ -3751,10 +3505,6 @@
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Spinach Dip"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3778,11 +3528,10 @@
                 "packs": [
                     {
                         "_id": "3-59-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.59,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3796,6 +3545,7 @@
         "brand": "Tostitos",
         "name": "Mild Spicy Salsa",
         "container": "jar",
+        "tax": 1,
         "images": {
             "image_catalog": "jr_9048.jpeg",
             "images_all": [
@@ -3811,10 +3561,6 @@
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Spicy Salsa"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3838,11 +3584,10 @@
                 "packs": [
                     {
                         "_id": "3-60-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.59,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3856,6 +3601,7 @@
         "brand": "Tostitos",
         "name": "Medium Spicy Salsa",
         "container": "jar",
+        "tax": 1,
         "images": {
             "image_catalog": "jr_9049.jpeg",
             "images_all": [
@@ -3871,10 +3617,6 @@
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Spicy Salsa"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3898,11 +3640,10 @@
                 "packs": [
                     {
                         "_id": "3-61-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.59,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -3916,6 +3657,7 @@
         "brand": "Tostitos",
         "name": "Hot Salsa",
         "container": "jar",
+        "tax": 1,
         "images": {
             "image_catalog": "jr_9050.jpeg",
             "images_all": [
@@ -3931,10 +3673,6 @@
         },
         "subcategory": "Sauce & Seasoning",
         "details": {
-            "type": {
-                "display_name": "Type",
-                "description": "Spicy Salsa"
-            },
             "producer": {
                 "display_name": "Producer",
                 "description": "Frito-Lay Inc"
@@ -3958,11 +3696,10 @@
                 "packs": [
                     {
                         "_id": "3-62-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.59,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }

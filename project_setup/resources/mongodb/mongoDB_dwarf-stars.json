@@ -4,6 +4,7 @@
         "brand": "Dwarf Stars",
         "name": "Originals",
         "container": "stand up pouch",
+        "tax": 1,
         "images": {
             "image_catalog": "sup_1349.jpeg",
             "images_all": [
@@ -42,11 +43,10 @@
                 "packs": [
                     {
                         "_id": "7-1-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 11.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -60,6 +60,7 @@
         "brand": "Dwarf Stars",
         "name": "Pumpkin Seed Butter Cups",
         "container": "bag",
+        "tax": 1,
         "images": {
             "image_catalog": "bg_1350.jpeg",
             "images_all": [
@@ -98,11 +99,10 @@
                 "packs": [
                     {
                         "_id": "7-2-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -116,6 +116,7 @@
         "brand": "Dwarf Stars",
         "name": "PumpKING Protein Balls",
         "container": "bag",
+        "tax": 1,
         "images": {
             "image_catalog": "bg_1351.jpeg",
             "images_all": [
@@ -154,11 +155,10 @@
                 "packs": [
                     {
                         "_id": "7-3-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 5.49,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
