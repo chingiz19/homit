@@ -39,23 +39,32 @@
         "variance": [
             {
                 "_id": "3-1-1",
-                "size": 0.00025,
-                "unit": "m3",
+                "si_unit_size": 0.00025,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "250",
                 "packs": [
                     {
                         "_id": "3-1-1-1",
                         "type": 1,
                         "price": 2.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     },
                     {
                         "_id": "3-1-1-2",
                         "type": 4,
                         "price": 10.49,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -101,23 +110,32 @@
         "variance": [
             {
                 "_id": "3-2-1",
-                "size": 0.00025,
-                "unit": "m3",
+                "si_unit_size": 0.00025,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "250",
                 "packs": [
                     {
                         "_id": "3-2-1-1",
                         "type": 1,
                         "price": 2.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     },
                     {
                         "_id": "3-2-1-2",
                         "type": 4,
                         "price": 10.49,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -163,16 +181,21 @@
         "variance": [
             {
                 "_id": "3-3-1",
-                "size": 0.000473,
-                "unit": "m3",
+                "si_unit_size": 0.000473,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "473",
                 "packs": [
                     {
                         "_id": "3-3-1-1",
                         "type": 1,
                         "price": 3.59,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -218,31 +241,41 @@
         "variance": [
             {
                 "_id": "3-4-1",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-4-1-1",
                         "type": 1,
                         "price": 2.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-4-2",
-                "size": 0.002,
-                "unit": "m3",
+                "si_unit_size": 0.002,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "2",
                 "packs": [
                     {
                         "_id": "3-4-2-1",
                         "type": 1,
                         "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -288,16 +321,21 @@
         "variance": [
             {
                 "_id": "3-5-1",
-                "size": 0.00022180125000000002,
-                "unit": "m3",
+                "si_unit_size": 0.00022180125000000002,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "7.5",
                 "packs": [
                     {
                         "_id": "3-5-1-1",
                         "type": 6,
                         "price": 3.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -343,31 +381,41 @@
         "variance": [
             {
                 "_id": "3-6-1",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-6-1-1",
                         "type": 1,
                         "price": 2.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-6-2",
-                "size": 0.002,
-                "unit": "m3",
+                "si_unit_size": 0.002,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "2",
                 "packs": [
                     {
                         "_id": "3-6-2-1",
                         "type": 1,
                         "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -413,16 +461,21 @@
         "variance": [
             {
                 "_id": "3-7-1",
-                "size": 0.00022180125000000002,
-                "unit": "m3",
+                "si_unit_size": 0.00022180125000000002,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "7.5",
                 "packs": [
                     {
                         "_id": "3-7-1-1",
                         "type": 6,
                         "price": 3.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -468,31 +521,41 @@
         "variance": [
             {
                 "_id": "3-8-1",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-8-1-1",
                         "type": 1,
                         "price": 2.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-8-2",
-                "size": 0.002,
-                "unit": "m3",
+                "si_unit_size": 0.002,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "2",
                 "packs": [
                     {
                         "_id": "3-8-2-1",
                         "type": 1,
                         "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -538,16 +601,21 @@
         "variance": [
             {
                 "_id": "3-9-1",
-                "size": 0.00022180125000000002,
-                "unit": "m3",
+                "si_unit_size": 0.00022180125000000002,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "7.5",
                 "packs": [
                     {
                         "_id": "3-9-1-1",
                         "type": 6,
                         "price": 3.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -593,31 +661,41 @@
         "variance": [
             {
                 "_id": "3-10-1",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-10-1-1",
                         "type": 1,
                         "price": 2.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-10-2",
-                "size": 0.002,
-                "unit": "m3",
+                "si_unit_size": 0.002,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "2",
                 "packs": [
                     {
                         "_id": "3-10-2-1",
                         "type": 1,
                         "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -663,16 +741,21 @@
         "variance": [
             {
                 "_id": "3-11-1",
-                "size": 0.00175,
-                "unit": "m3",
+                "si_unit_size": 0.00175,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1.75",
                 "packs": [
                     {
                         "_id": "3-11-1-1",
                         "type": 1,
                         "price": 5.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -718,16 +801,21 @@
         "variance": [
             {
                 "_id": "3-12-1",
-                "size": 0.00175,
-                "unit": "m3",
+                "si_unit_size": 0.00175,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1.75",
                 "packs": [
                     {
                         "_id": "3-12-1-1",
                         "type": 1,
                         "price": 5.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -773,31 +861,41 @@
         "variance": [
             {
                 "_id": "3-13-1",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-13-1-1",
                         "type": 1,
                         "price": 2.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-13-2",
-                "size": 0.002,
-                "unit": "m3",
+                "si_unit_size": 0.002,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "2",
                 "packs": [
                     {
                         "_id": "3-13-2-1",
                         "type": 1,
                         "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -843,16 +941,21 @@
         "variance": [
             {
                 "_id": "3-14-1",
-                "size": 0.00022180125000000002,
-                "unit": "m3",
+                "si_unit_size": 0.00022180125000000002,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "7.5",
                 "packs": [
                     {
                         "_id": "3-14-1-1",
                         "type": 6,
                         "price": 3.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -898,31 +1001,41 @@
         "variance": [
             {
                 "_id": "3-15-1",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-15-1-1",
                         "type": 1,
                         "price": 2.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-15-2",
-                "size": 0.002,
-                "unit": "m3",
+                "si_unit_size": 0.002,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "2",
                 "packs": [
                     {
                         "_id": "3-15-2-1",
                         "type": 1,
                         "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -968,16 +1081,21 @@
         "variance": [
             {
                 "_id": "3-16-1",
-                "size": 0.00022180125000000002,
-                "unit": "m3",
+                "si_unit_size": 0.00022180125000000002,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "7.5",
                 "packs": [
                     {
                         "_id": "3-16-1-1",
                         "type": 6,
                         "price": 3.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1023,16 +1141,21 @@
         "variance": [
             {
                 "_id": "3-17-1",
-                "size": 0.000946352,
-                "unit": "m3",
+                "si_unit_size": 0.000946352,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "32",
                 "packs": [
                     {
                         "_id": "3-17-1-1",
                         "type": 1,
                         "price": 3.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1078,31 +1201,41 @@
         "variance": [
             {
                 "_id": "3-18-1",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-18-1-1",
                         "type": 1,
                         "price": 2.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-18-2",
-                "size": 0.0005,
-                "unit": "m3",
+                "si_unit_size": 0.0005,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "500",
                 "packs": [
                     {
                         "_id": "3-18-2-1",
                         "type": 1,
                         "price": 1.29,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1148,31 +1281,41 @@
         "variance": [
             {
                 "_id": "3-19-1",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-19-1-1",
                         "type": 1,
                         "price": 3.09,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-19-2",
-                "size": 0.0005,
-                "unit": "m3",
+                "si_unit_size": 0.0005,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "500",
                 "packs": [
                     {
                         "_id": "3-19-2-1",
                         "type": 1,
                         "price": 1.29,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1218,16 +1361,21 @@
         "variance": [
             {
                 "_id": "3-20-1",
-                "size": 2.6988724,
-                "unit": "kg",
+                "si_unit_size": 2.6988724,
+                "si_unit": "kg",
                 "preffered_unit": "lb",
+                "preffered_unit_size": "5.95",
                 "packs": [
                     {
                         "_id": "3-20-1-1",
                         "type": 1,
                         "price": 3.59,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1273,38 +1421,52 @@
         "variance": [
             {
                 "_id": "3-21-1",
-                "size": 0.0005,
-                "unit": "m3",
+                "si_unit_size": 0.0005,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "500",
                 "packs": [
                     {
                         "_id": "3-21-1-1",
                         "type": 1,
                         "price": 1.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     },
                     {
                         "_id": "3-21-1-2",
                         "type": 6,
                         "price": 10.74,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-21-2",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-21-2-1",
                         "type": 1,
                         "price": 2.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1350,38 +1512,52 @@
         "variance": [
             {
                 "_id": "3-22-1",
-                "size": 0.0005,
-                "unit": "m3",
+                "si_unit_size": 0.0005,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "500",
                 "packs": [
                     {
                         "_id": "3-22-1-1",
                         "type": 1,
                         "price": 1.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     },
                     {
                         "_id": "3-22-1-2",
                         "type": 6,
                         "price": 10.74,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             },
             {
                 "_id": "3-22-2",
-                "size": 0.001,
-                "unit": "m3",
+                "si_unit_size": 0.001,
+                "si_unit": "m3",
                 "preffered_unit": "L",
+                "preffered_unit_size": "1",
                 "packs": [
                     {
                         "_id": "3-22-2-1",
                         "type": 1,
                         "price": 2.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1427,19 +1603,29 @@
         "variance": [
             {
                 "_id": "3-23-1",
-                "size": "D. Roll",
+                "preffered_unit_size": "D. Roll",
                 "packs": [
                     {
                         "_id": "3-23-1-1",
                         "type": 4,
                         "price": 5.29,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     },
                     {
                         "_id": "3-23-1-2",
                         "type": 12,
                         "price": 11.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1485,16 +1671,21 @@
         "variance": [
             {
                 "_id": "3-24-1",
-                "size": 0.325,
-                "unit": "kg",
+                "si_unit_size": 0.325,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "325",
                 "packs": [
                     {
                         "_id": "3-24-1-1",
                         "type": 24,
                         "price": 4.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1540,16 +1731,21 @@
         "variance": [
             {
                 "_id": "3-25-1",
-                "size": 0.5,
-                "unit": "kg",
+                "si_unit_size": 0.5,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "500",
                 "packs": [
                     {
                         "_id": "3-25-1-1",
                         "type": 24,
                         "price": 5.69,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1595,16 +1791,21 @@
         "variance": [
             {
                 "_id": "3-26-1",
-                "size": 0.2,
-                "unit": "kg",
+                "si_unit_size": 0.2,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "200",
                 "packs": [
                     {
                         "_id": "3-26-1-1",
                         "type": 16,
                         "price": 7.19,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1650,16 +1851,21 @@
         "variance": [
             {
                 "_id": "3-27-1",
-                "size": 0.081,
-                "unit": "kg",
+                "si_unit_size": 0.081,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "81",
                 "packs": [
                     {
                         "_id": "3-27-1-1",
                         "type": 30,
                         "price": 5.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1705,16 +1911,21 @@
         "variance": [
             {
                 "_id": "3-28-1",
-                "size": 0.227,
-                "unit": "kg",
+                "si_unit_size": 0.227,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "227",
                 "packs": [
                     {
                         "_id": "3-28-1-1",
                         "type": 1,
                         "price": 2.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1760,16 +1971,21 @@
         "variance": [
             {
                 "_id": "3-29-1",
-                "size": 0.1,
-                "unit": "kg",
+                "si_unit_size": 0.1,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "100",
                 "packs": [
                     {
                         "_id": "3-29-1-1",
                         "type": 1,
                         "price": 3.19,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1815,16 +2031,21 @@
         "variance": [
             {
                 "_id": "3-30-1",
-                "size": 0.1,
-                "unit": "kg",
+                "si_unit_size": 0.1,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "100",
                 "packs": [
                     {
                         "_id": "3-30-1-1",
                         "type": 1,
                         "price": 3.19,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1870,16 +2091,21 @@
         "variance": [
             {
                 "_id": "3-31-1",
-                "size": 0.1,
-                "unit": "kg",
+                "si_unit_size": 0.1,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "100",
                 "packs": [
                     {
                         "_id": "3-31-1-1",
                         "type": 1,
                         "price": 3.19,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1925,16 +2151,21 @@
         "variance": [
             {
                 "_id": "3-32-1",
-                "size": 0.1,
-                "unit": "kg",
+                "si_unit_size": 0.1,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "100",
                 "packs": [
                     {
                         "_id": "3-32-1-1",
                         "type": 1,
                         "price": 3.19,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -1980,16 +2211,21 @@
         "variance": [
             {
                 "_id": "3-33-1",
-                "size": 0.08,
-                "unit": "kg",
+                "si_unit_size": 0.08,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "80",
                 "packs": [
                     {
                         "_id": "3-33-1-1",
                         "type": 1,
                         "price": 6.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2035,16 +2271,21 @@
         "variance": [
             {
                 "_id": "3-34-1",
-                "size": 0.08,
-                "unit": "kg",
+                "si_unit_size": 0.08,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "80",
                 "packs": [
                     {
                         "_id": "3-34-1-1",
                         "type": 1,
                         "price": 6.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2090,16 +2331,21 @@
         "variance": [
             {
                 "_id": "3-35-1",
-                "size": 0.08,
-                "unit": "kg",
+                "si_unit_size": 0.08,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "80",
                 "packs": [
                     {
                         "_id": "3-35-1-1",
                         "type": 1,
                         "price": 6.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2145,16 +2391,21 @@
         "variance": [
             {
                 "_id": "3-36-1",
-                "size": 0.08,
-                "unit": "kg",
+                "si_unit_size": 0.08,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "80",
                 "packs": [
                     {
                         "_id": "3-36-1-1",
                         "type": 1,
                         "price": 6.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2200,16 +2451,21 @@
         "variance": [
             {
                 "_id": "3-37-1",
-                "size": 0.08,
-                "unit": "kg",
+                "si_unit_size": 0.08,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "80",
                 "packs": [
                     {
                         "_id": "3-37-1-1",
                         "type": 1,
                         "price": 6.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2255,16 +2511,21 @@
         "variance": [
             {
                 "_id": "3-38-1",
-                "size": 0.08,
-                "unit": "kg",
+                "si_unit_size": 0.08,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "80",
                 "packs": [
                     {
                         "_id": "3-38-1-1",
                         "type": 1,
                         "price": 6.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2310,16 +2571,21 @@
         "variance": [
             {
                 "_id": "3-39-1",
-                "size": 0.08,
-                "unit": "kg",
+                "si_unit_size": 0.08,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "80",
                 "packs": [
                     {
                         "_id": "3-39-1-1",
                         "type": 1,
                         "price": 6.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2365,16 +2631,21 @@
         "variance": [
             {
                 "_id": "3-40-1",
-                "size": 0.075,
-                "unit": "kg",
+                "si_unit_size": 0.075,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "75",
                 "packs": [
                     {
                         "_id": "3-40-1-1",
                         "type": 1,
                         "price": 7.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2420,16 +2691,21 @@
         "variance": [
             {
                 "_id": "3-41-1",
-                "size": 0.075,
-                "unit": "kg",
+                "si_unit_size": 0.075,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "75",
                 "packs": [
                     {
                         "_id": "3-41-1-1",
                         "type": 1,
                         "price": 7.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2475,16 +2751,21 @@
         "variance": [
             {
                 "_id": "3-42-1",
-                "size": 0.075,
-                "unit": "kg",
+                "si_unit_size": 0.075,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "75",
                 "packs": [
                     {
                         "_id": "3-42-1-1",
                         "type": 1,
                         "price": 7.99,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2494,7 +2775,7 @@
         "_id": "3-43",
         "brand": "Pringles",
         "name": "Original",
-        "container": "can",
+        "container": "pack",
         "images": {
             "image_catalog": "p_9000.jpeg",
             "images_all": [
@@ -2530,16 +2811,21 @@
         "variance": [
             {
                 "_id": "3-43-1",
-                "size": 0.000209972,
-                "unit": "m3",
+                "si_unit_size": 0.000209972,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "7",
                 "packs": [
                     {
                         "_id": "3-43-1-1",
                         "type": 1,
                         "price": 3.69,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2549,7 +2835,7 @@
         "_id": "3-44",
         "brand": "Pringles",
         "name": "Sour Cream & Onion",
-        "container": "can",
+        "container": "pack",
         "images": {
             "image_catalog": "p_9001.jpeg",
             "images_all": [
@@ -2585,16 +2871,21 @@
         "variance": [
             {
                 "_id": "3-44-1",
-                "size": 0.000209972,
-                "unit": "m3",
+                "si_unit_size": 0.000209972,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "7",
                 "packs": [
                     {
                         "_id": "3-44-1-1",
                         "type": 1,
                         "price": 3.69,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2640,16 +2931,21 @@
         "variance": [
             {
                 "_id": "3-45-1",
-                "size": 0.000266162,
-                "unit": "m3",
+                "si_unit_size": 0.000266162,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "9",
                 "packs": [
                     {
                         "_id": "3-45-1-1",
                         "type": 1,
                         "price": 3.69,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2695,16 +2991,21 @@
         "variance": [
             {
                 "_id": "3-46-1",
-                "size": 0.000266162,
-                "unit": "m3",
+                "si_unit_size": 0.000266162,
+                "si_unit": "m3",
                 "preffered_unit": "oz",
+                "preffered_unit_size": "9",
                 "packs": [
                     {
                         "_id": "3-46-1-1",
                         "type": 1,
                         "price": 3.69,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2750,8 +3051,9 @@
         "variance": [
             {
                 "_id": "3-47-1",
-                "size": 0.000266162,
-                "unit": "m3",
+                "si_unit_size": 0.000266162,
+                "si_unit": "m3",
+                "preffered_unit_size": "9",
                 "preffered_unit": "oz",
                 "packs": [
                     {
@@ -2759,7 +3061,11 @@
                         "type": 1,
                         "price": 3.69,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2805,8 +3111,9 @@
         "variance": [
             {
                 "_id": "3-48-1",
-                "size": 0.000295735,
-                "unit": "m3",
+                "si_unit_size": 0.000295735,
+                "si_unit": "m3",
+                "preffered_unit_size": "10",
                 "preffered_unit": "oz",
                 "packs": [
                     {
@@ -2814,7 +3121,11 @@
                         "type": 1,
                         "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2860,8 +3171,9 @@
         "variance": [
             {
                 "_id": "3-49-1",
-                "size": 0.000295735,
-                "unit": "m3",
+                "si_unit_size": 0.000295735,
+                "si_unit": "m3",
+                "preffered_unit_size": "10",
                 "preffered_unit": "oz",
                 "packs": [
                     {
@@ -2869,7 +3181,11 @@
                         "type": 1,
                         "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2915,16 +3231,21 @@
         "variance": [
             {
                 "_id": "3-50-1",
-                "size": 0.18,
-                "unit": "kg",
+                "si_unit_size": 0.18,
+                "si_unit": "kg",
+                "preffered_unit_size": "180",
                 "preffered_unit": "g",
                 "packs": [
                     {
                         "_id": "3-50-1-1",
                         "type": 1,
-                        "price": 4.39,
+                        "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -2970,16 +3291,21 @@
         "variance": [
             {
                 "_id": "3-51-1",
-                "size": 0.18,
-                "unit": "kg",
+                "si_unit_size": 0.18,
+                "si_unit": "kg",
+                "preffered_unit_size": "180",
                 "preffered_unit": "g",
                 "packs": [
                     {
                         "_id": "3-51-1-1",
                         "type": 1,
-                        "price": 4.39,
+                        "price": 3.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3025,8 +3351,9 @@
         "variance": [
             {
                 "_id": "3-52-1",
-                "size": 0.255,
-                "unit": "kg",
+                "si_unit_size": 0.255,
+                "si_unit": "kg",
+                "preffered_unit_size": "250",
                 "preffered_unit": "g",
                 "packs": [
                     {
@@ -3034,7 +3361,11 @@
                         "type": 1,
                         "price": 4.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3080,8 +3411,9 @@
         "variance": [
             {
                 "_id": "3-53-1",
-                "size": 0.255,
-                "unit": "kg",
+                "si_unit_size": 0.255,
+                "si_unit": "kg",
+                "preffered_unit_size": "250",
                 "preffered_unit": "g",
                 "packs": [
                     {
@@ -3089,7 +3421,11 @@
                         "type": 1,
                         "price": 4.79,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3135,16 +3471,21 @@
         "variance": [
             {
                 "_id": "3-54-1",
-                "size": 0.248,
-                "unit": "kg",
+                "si_unit_size": 0.248,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "248",
                 "packs": [
                     {
                         "_id": "3-54-1-1",
                         "type": 1,
                         "price": 4.49,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3190,16 +3531,21 @@
         "variance": [
             {
                 "_id": "3-55-1",
-                "size": 0.248,
-                "unit": "kg",
+                "si_unit_size": 0.248,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "248",
                 "packs": [
                     {
                         "_id": "3-55-1-1",
                         "type": 1,
                         "price": 4.49,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3245,16 +3591,21 @@
         "variance": [
             {
                 "_id": "3-56-1",
-                "size": 0.425,
-                "unit": "kg",
+                "si_unit_size": 0.425,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "425",
                 "packs": [
                     {
                         "_id": "3-56-1-1",
                         "type": 1,
                         "price": 4.59,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3300,16 +3651,21 @@
         "variance": [
             {
                 "_id": "3-57-1",
-                "size": 0.425,
-                "unit": "kg",
+                "si_unit_size": 0.425,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "425",
                 "packs": [
                     {
                         "_id": "3-57-1-1",
                         "type": 1,
                         "price": 4.59,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3355,16 +3711,21 @@
         "variance": [
             {
                 "_id": "3-58-1",
-                "size": 0.425,
-                "unit": "kg",
+                "si_unit_size": 0.425,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "425",
                 "packs": [
                     {
                         "_id": "3-58-1-1",
                         "type": 1,
                         "price": 4.59,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3410,16 +3771,21 @@
         "variance": [
             {
                 "_id": "3-59-1",
-                "size": 0.425,
-                "unit": "kg",
+                "si_unit_size": 0.425,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "425",
                 "packs": [
                     {
                         "_id": "3-59-1-1",
                         "type": 1,
                         "price": 4.59,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3465,16 +3831,21 @@
         "variance": [
             {
                 "_id": "3-60-1",
-                "size": 0.425,
-                "unit": "kg",
+                "si_unit_size": 0.425,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "425",
                 "packs": [
                     {
                         "_id": "3-60-1-1",
                         "type": 1,
                         "price": 4.59,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3520,16 +3891,21 @@
         "variance": [
             {
                 "_id": "3-61-1",
-                "size": 0.425,
-                "unit": "kg",
+                "si_unit_size": 0.425,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "425",
                 "packs": [
                     {
                         "_id": "3-61-1-1",
                         "type": 1,
                         "price": 4.59,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -3575,16 +3951,21 @@
         "variance": [
             {
                 "_id": "3-62-1",
-                "size": 0.425,
-                "unit": "kg",
+                "si_unit_size": 0.425,
+                "si_unit": "kg",
                 "preffered_unit": "g",
+                "preffered_unit_size": "425",
                 "packs": [
                     {
                         "_id": "3-62-1-1",
                         "type": 1,
                         "price": 4.59,
                         "available": 1,
-                        "stock_quantity": 100
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }

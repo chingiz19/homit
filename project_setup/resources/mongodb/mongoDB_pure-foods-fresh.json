@@ -35,15 +35,21 @@
         "variance": [
             {
                 "_id": "9-1-1",
-                "size": 0.000354,
-                "unit": "m3",
+                "si_unit_size": 0.000354,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "354",
                 "packs": [
                     {
                         "_id": "9-1-1-1",
                         "type": 1,
                         "price": 9.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -89,15 +95,21 @@
         "variance": [
             {
                 "_id": "9-2-1",
-                "size": 0.000354,
-                "unit": "m3",
+                "si_unit_size": 0.000354,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "354",
                 "packs": [
                     {
                         "_id": "9-2-1-1",
                         "type": 1,
                         "price": 9.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -143,15 +155,21 @@
         "variance": [
             {
                 "_id": "9-3-1",
-                "size": 0.000354,
-                "unit": "m3",
+                "si_unit_size": 0.000354,
+                "si_unit": "m3",
                 "preffered_unit": "ml",
+                "preffered_unit_size": "354",
                 "packs": [
                     {
                         "_id": "9-3-1-1",
                         "type": 1,
                         "price": 9.99,
-                        "available": 1
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "tax": 1,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
