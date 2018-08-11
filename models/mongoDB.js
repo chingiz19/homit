@@ -81,7 +81,8 @@ let productSchema = new Schema({
                     type: Number,
                     price: Number,
                     available: Boolean,
-                    stock_quantity: Number
+                    stock_quantity: Number,
+                    sold : Object
                 }
             ]
         }
