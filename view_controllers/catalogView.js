@@ -15,13 +15,14 @@ let homit_tags = {
 router.get("/product/:storeName/:productName/:productId", async function (req, res, next) {
     if (!req.query || Object.keys(req.query) > 0) {
         return res.redirect("/hub" + req.path);
-    } else if (isNaN(req.params.productId)) {
-        return res.redirect("/notfound");
-    }
+    } 
+    // else if (isNaN(req.params.productId)) {
+    //     return res.redirect("/notfound");
+    // }
 
     let product = await Catalog.getProductPageItemsByProductId(req.params.storeName, req.params.productId);
     let similarProducts = await Catalog.getSimilarProducts(req.params.productId);
-    let validationUrl = "/product/" + product.store_type_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
+    let validationUrl = "/product/" + product.store_type_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id.split("-")[1];
 
     if (!product || validationUrl != req.url) {
         return res.redirect("/notfound");
@@ -84,10 +85,10 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     }
 
     req.options.ejs.product_images = JSON.stringify({ "images": product.images });
-    req.options.ejs.see_more_url = "/hub/" + product.store_type_name + "/" + product.category;
+    req.options.ejs.see_more_url = "/hub/" + product.store_type_name + "/" + product.category.category_name;
     if (similarProducts.length < 12) {
         let remainder = 12 - similarProducts.length;
-        let tmpRecommended = recommended_products[product.category].slice(0, remainder);
+        let tmpRecommended = recommended_products[product.category.category_name].slice(0, remainder);
         req.options.ejs.recommended_products = JSON.stringify(similarProducts.concat(tmpRecommended));
     } else {
         req.options.ejs.recommended_products = JSON.stringify(similarProducts);
@@ -103,9 +104,8 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
         req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. Let us Home It and liberate your precious time.");
     }
 
-    product.product_variants.selectedVolume = 0;
-    product.product_variants.selectedPack = 0;
-    product.product_variants.container = product.container;
+    product.selectedVolume = 0;
+    product.selectedPack = 0;
 
     req.options.ejs.product = JSON.stringify(product);
 
@@ -148,7 +148,7 @@ router.get('/:parent/:category', async function (req, res, next) {
 });
 
 function convertHomitTags(string) {
-    let tmpString = string;
+    let tmpString = string.description;
     for (tag in homit_tags) {
         tmpString = tmpString.replace(new RegExp(tag, 'g'), homit_tags[tag]);
     }
@@ -164,7 +164,7 @@ function clearProductUrl(path) {
 }
 
 function clearHomitTags(string) {
-    let tmpString = string;
+    let tmpString = string.description;
     for (tag in homit_tags) {
         tmpString = tmpString.replace(new RegExp(tag, 'g'), "");
     }

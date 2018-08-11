@@ -367,8 +367,8 @@ pub.getAllProductsByCategory = async function (storeType, categoryName) {
  */
 pub.getAllSubcategoriesByCategory = async function (storeType, categoryName) {
     let result = await MDB.models[storeType]
-    .find({ "category.category_name": categoryName })
-    .distinct('subcategory');
+        .find({ "category.category_name": categoryName })
+        .distinct('subcategory');
     return result;
 }
 
@@ -939,36 +939,6 @@ pub.getCartProductsWithStoreType = function (dbProducts, cartProducts) {
 }
 
 /**
- * Get all descriptions for the product id
- * 
- * @param {*} productId 
- */
-var getDescriptionsByProductId = async function (productId) {
-    let sqlQuery = `
-        SELECT name.name AS name, description.description AS description
-        FROM catalog_listings AS listing
-        JOIN catalog_products AS product ON (product.listing_id = listing.id)
-        JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id)
-        JOIN catalog_description_names AS name ON (description.description_key = name.id)
-        WHERE ?`;
-
-    let data = { "product.id": productId };
-    let dbResult = await db.runQuery(sqlQuery, data);
-    return dbResult;
-}
-
-var getImagesByProductId = async function (productId) {
-    let sqlQuery = `
-        SELECT name.name AS name, image.image AS image, image.product_id AS product_id
-        FROM catalog_image_names AS name
-        JOIN catalog_products_images AS image ON (name.id = image.image_key)
-        WHERE ?`;
-
-    let data = { "image.product_id": productId };
-    return await db.runQuery(sqlQuery, data);
-}
-
-/**
  * Get products by product id and store type
  * 
  * @param {*} storeType
@@ -1020,69 +990,26 @@ var getItemsByProductId = async function (storeType, productId) {
 }
 
 pub.getProductPageItemsByProductId = async function (storeType, productId) {
-    let isStoreOpen = await pub.isStoreOpen(storeType);
-    let products = await getItemsByProductId(storeType, productId);
-    let descriptions = await getDescriptionsByProductId(productId);
-    let images = await getImagesByProductId(productId);
+    let storeObject = {};
+    let finalResult = {};
+    let storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
 
-    if (products.length == 0) {
-        return false;
-    }
-    return convertToProductPageItem(products, descriptions, images, isStoreOpen);
-}
+    if (storeTypeInfo) {
+        let searchId = storeTypeInfo.id + '-' + productId;
+        let product = await MDB.models[storeType].findById(searchId).exec();
 
-/**
- * 
- * @param {*} products - array of products
- * @param {*} descriptions
- * @param {*} images
- * @param {*} isStoreOpen
- */
-var convertToProductPageItem = async function (product, descriptions, images, isStoreOpen) {
-    let tmpPr = product[0];
+        if (product) {
+            storeObject.store_open = await pub.isStoreOpen(storeType)
+            storeObject.store_type_name = storeType;
+            storeObject.store_type_display_name = storeTypeInfo.display_name;
 
-    // Extract common fields of products
-    let finalResult = {
-        "store_type_name": tmpPr.store_type,
-        "store_type_display_name": tmpPr.store_type_display_name,
-        "category": tmpPr.category,
-        "subcategory": tmpPr.subcategory,
-        "type": tmpPr.type,
-        "brand": tmpPr.brand,
-        "name": tmpPr.name,
-        "product_id": tmpPr.product_id,
-        "description": tmpPr.description,
-        "store_open": isStoreOpen,
-        "tax": tmpPr.tax,
-        "container": tmpPr.container,
-        "images": [],
-        "product_variants": tmpPr.product_variants,
-        "details": {}
-    };
+            Object.assign(finalResult, product.toObject(), storeObject);
 
-    for (let i = 0; i < descriptions.length; i++) {
-        finalResult.details[descriptions[i].name] = descriptions[i].description;
-    }
-
-    finalResult.images.push(tmpPr.image);
-
-    for (let j = 0; j < images.length; j++) {
-        if (images[j].name == "nutritions") {
-            finalResult.images.push("/resources/images/products/" + tmpPr.category + "/nutritions/" + images[j].image);
-        } else {
-            finalResult.images.push("/resources/images/products/" + tmpPr.category + "/" + images[j].image);
+            return finalResult;
         }
     }
 
-    if (!finalResult.name) {
-        finalResult.name = "";
-    }
-
-    if (!finalResult.brand) {
-        finalResult.brand = "";
-    }
-
-    return finalResult;
+    return false;
 }
 
 /**

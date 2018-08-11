@@ -77,7 +77,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                 $scope.display_storeInfo = response.data.store_info;
                 $scope.categories = helpers.buildCategoryUrl(response.data.categories, $scope.storeType);
                 $scope.subcategories = response.data.subcategories;
-                $scope.productsBySubcat = helpers.buildProductUrl(formatReceivedProducts(response.data.products));                 
+                $scope.productsBySubcat = helpers.buildProductUrl(formatReceivedProducts(response.data.products), response.data.store_info.name);                 
                 try {
                     let category_name = $scope.selection.split("/")[3];
                     for (let i = 0; i < $scope.categories.length; i++) {

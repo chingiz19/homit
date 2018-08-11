@@ -103,13 +103,13 @@
                                             </div>
                                             <ul layout="row">
                                                 <li class="size-box-left text-verflow">
-                                                    {{ product.product_variants.all_volumes[product.product_variants.selectedVolume - 1] }}
+                                                    {{ product.variance[product.selectedVolume - 1] }}
                                                 </li>
                                                 <li class="size-box-middle">
-                                                    {{ product.product_variants.all_volumes[product.product_variants.selectedVolume] }}
+                                                    {{ product.variance[product.selectedVolume] }}
                                                 </li>
                                                 <li class="size-box-right text-verflow">
-                                                    {{ product.product_variants.all_volumes[product.product_variants.selectedVolume + 1] }}
+                                                    {{ product.variance[product.selectedVolume + 1] }}
                                                 </li>
                                             </ul>
                                         </div>
@@ -125,17 +125,17 @@
                                             </div>
                                             <ul layout="row">
                                                 <li class="size-box-left text-verflow">
-                                                    {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack - 1 ] + ' '}}
+                                                    {{ product.product_variants[product.variance[product.selectedVolume]].all_packagings[product.selectedPack - 1 ] + ' '}}
                                                 </li>
                                                 <li class="size-box-middle">
-                                                    {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack ] + ' '}}
+                                                    {{ product.product_variants[product.variance[product.selectedVolume]].all_packagings[product.selectedPack ] + ' '}}
                                                 </li>
                                                 <li class="size-box-right text-verflow">
-                                                    {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack + 1] + ' '}}
+                                                    {{ product.product_variants[product.variance[product.selectedVolume]].all_packagings[product.selectedPack + 1] + ' '}}
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="selected-product-price">C${{' ' + product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]][product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack]].price }}
+                                        <div class="selected-product-price">C${{' ' + product.product_variants[product.variance[product.selectedVolume]][product.variance[product.variance[product.selectedVolume]].all_packagings[product.selectedPack]].price }}
                                         </div>
                                         <button class="add-to-cart hover-raise" ng-click="addToCart(product)">Add To Basket</button>
                                     </section>
@@ -143,8 +143,8 @@
                                         <h3 class="product-details-header sub-header">Product Details</h3>
                                         <ul class="bullet-description">
                                             <li>
-                                                <span class="bold">Product:</span> {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack] }} x {{ product.product_variants.all_volumes[product.product_variants.selectedVolume] }}
-                                                <span class="product-details-container">{{ product.product_variants.container }}</span>
+                                                <span class="bold">Product:</span> {{ product.product_variants[product.variance[product.selectedVolume]].all_packagings[product.selectedPack] }} x {{ product.variance[product.selectedVolume] }}
+                                                <span class="product-details-container">{{ product.product.container }}</span>
                                             </li>
 <!--googleon: snippet-->
                                             <%- store_type_display_name %>

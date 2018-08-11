@@ -1,7 +1,6 @@
 /**
  * This service is for helper functions that are commonly used in many placesd
  * 
- * 
  * @copyright Homit
  * @author Jeyhun Gurbanov
  */
@@ -12,9 +11,9 @@ app.service('helpers', function () {
         return Math.floor(Math.random() * 90000000) + 10000000;
     };
 
-    pub.buildProductPagePath = function (product) {
+    pub.buildProductPagePath = function (product, storeType) {
         let path;
-        path = "/hub/product/" + product.store_type_name + "/" + _.toLower(pub.clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id.split("-")[1];
+        path = "/hub/product/" + storeType + "/" + _.toLower(pub.clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id.split("-")[1];
         return path;
     };
 
@@ -34,11 +33,11 @@ app.service('helpers', function () {
      * Builds product url
      * @param {key map} mainSpecials 
      */
-    pub.buildProductUrl = function (mainSpecials) {
+    pub.buildProductUrl = function (mainSpecials, storeType) {
         let tmpProductList = mainSpecials;
         for (let key in tmpProductList) {
             for (let x = 0; x < tmpProductList[key].length; x++) {
-                tmpProductList[key][x]["product_url"] = pub.buildProductPagePath(tmpProductList[key][x]);
+                tmpProductList[key][x]["product_url"] = pub.buildProductPagePath(tmpProductList[key][x], storeType);
             }
         }
         return tmpProductList;
