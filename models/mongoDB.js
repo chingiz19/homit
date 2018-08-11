@@ -72,17 +72,21 @@ let productSchema = new Schema({
     variance: [
         {
             _id: Schema.Types.Mixed,
-            size: String,
-            unit: String,
+            si_unit_size: Number,
+            si_unit: String,
             preffered_unit: String,
+            preffered_unit_size: String,
             packs: [
                 {
                     _id: Schema.Types.Mixed,
-                    type: Number,
+                    h_value: Number,
                     price: Number,
-                    available: Boolean,
+                    available: Number,
                     stock_quantity: Number,
-                    sold : Object
+                    tax: Number,
+                    sold: {
+                        quantity: Number
+                    }
                 }
             ]
         }

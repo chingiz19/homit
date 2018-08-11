@@ -39,14 +39,14 @@
                 "si_unit": "kg",
                 "preffered_unit_size": "120",
                 "preffered_unit": "g",
+                "tax": 1,
                 "packs": [
                     {
                         "_id": "7-1-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 11.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -95,14 +95,14 @@
                 "si_unit": "kg",
                 "preffered_unit_size": "42",
                 "preffered_unit": "g",
+                "tax": 1,
                 "packs": [
                     {
                         "_id": "7-2-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 4.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -151,14 +151,14 @@
                 "si_unit": "kg",
                 "preffered_unit_size": "60",
                 "preffered_unit": "g",
+                "tax": 1,
                 "packs": [
                     {
                         "_id": "7-3-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 5.49,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }

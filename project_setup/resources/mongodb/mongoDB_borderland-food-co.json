@@ -43,14 +43,14 @@
                 "si_unit": "m3",
                 "preffered_unit": "ml",
                 "preffered_unit_size": "590",
+                "tax": 1,
                 "packs": [
                     {
                         "_id": "10-1-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 8.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -103,14 +103,14 @@
                 "si_unit": "m3",
                 "preffered_unit": "ml",
                 "preffered_unit_size": "590",
+                "tax": 1,
                 "packs": [
                     {
                         "_id": "10-2-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 8.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -163,14 +163,14 @@
                 "si_unit": "m3",
                 "preffered_unit": "ml",
                 "preffered_unit_size": "590",
+                "tax": 1,
                 "packs": [
                     {
                         "_id": "10-3-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 8.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }
@@ -223,14 +223,14 @@
                 "si_unit": "m3",
                 "preffered_unit": "ml",
                 "preffered_unit_size": "590",
+                "tax": 1,
                 "packs": [
                     {
                         "_id": "10-4-1-1",
-                        "type": 1,
+                        "h_value": 1,
                         "price": 8.99,
                         "available": 1,
                         "stock_quantity": 100,
-                        "tax": 1,
                         "sold": {
                             "quantity": 0
                         }

@@ -21,7 +21,8 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     // }
 
     let product = await Catalog.getProductPageItemsByProductId(req.params.storeName, req.params.productId);
-    let similarProducts = await Catalog.getSimilarProducts(req.params.productId);
+    // let similarProducts = await Catalog.getSimilarProducts(req.params.productId);
+    let similarProducts = [];
     let validationUrl = "/product/" + product.store_type_name + "/" + _.toLower(clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id.split("-")[1];
 
     if (!product || validationUrl != req.url) {
@@ -81,7 +82,7 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     }
 
     if (product.images.image_catalog) {
-        req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="' + product.images.image_catalog + '">';
+        req.options.ejs.product_image = '<img itemprop="image" width="0px" height="0px" src="/resources/images/catalog-stores/categories/"' + product.images.image_catalog + '">';
     }
 
     req.options.ejs.product_images = JSON.stringify({ "images": product.images.images_all });
