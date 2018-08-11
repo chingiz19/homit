@@ -125,17 +125,17 @@
                                             </div>
                                             <ul layout="row">
                                                 <li class="size-box-left text-verflow">
-                                                    {{ product.variance[product.selectedVolume].packs[product.selectedPack - 1].type + ' '}}
+                                                    {{ product.variance[product.selectedVolume].packs[product.selectedPack - 1].h_value + ' '}}
                                                 </li>
                                                 <li class="size-box-middle">
-                                                    {{ product.variance[product.selectedVolume].packs[product.selectedPack].type + ' '}}
+                                                    {{ product.variance[product.selectedVolume].packs[product.selectedPack].h_value + ' '}}
                                                 </li>
                                                 <li class="size-box-right text-verflow">
-                                                    {{ product.variance[product.selectedVolume].packs[product.selectedPack + 1].type + ' '}}
+                                                    {{ product.variance[product.selectedVolume].packs[product.selectedPack + 1].h_value + ' '}}
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="selected-product-price">C${{' ' + product.variance[product.selectedVolume].packs[product.selectedPack - 1].price }}
+                                        <div class="selected-product-price">C${{' ' + product.variance[product.selectedVolume].packs[product.selectedPack].price }}
                                         </div>
                                         <button class="add-to-cart hover-raise" ng-click="addToCart(product)">Add To Basket</button>
                                     </section>
@@ -143,8 +143,8 @@
                                         <h3 class="product-details-header sub-header">Product Details</h3>
                                         <ul class="bullet-description">
                                             <li>
-                                                <span class="bold">Product:</span> {{ product.product_variants[product.variance[product.selectedVolume]].all_packagings[product.selectedPack] }} x {{ product.variance[product.selectedVolume] }}
-                                                <span class="product-details-container">{{ product.product.container }}</span>
+                                                <span class="bold">Product:</span> {{ product.variance[product.selectedVolume].packs[product.selectedPack].h_value + " x " +  product.variance[product.selectedVolume].preffered_unit_size +  product.variance[product.selectedVolume].preffered_unit }}
+                                                <span class="product-details-container">{{ product.container}}</span>
                                             </li>
 <!--googleon: snippet-->
                                             <%- store_type_display_name %>
