@@ -1,4 +1,4 @@
-app.controller("productController", function ($scope, $rootScope, $window, sessionStorage, notification, helpers, googleAnalytics) {
+app.controller("productController", function ($scope, $rootScope, $window, $http, sessionStorage, notification, helpers, googleAnalytics) {
     $scope.init = function () {
         $scope.product = JSON.parse($("#product").val());
         $scope.productImages = JSON.parse($("#product-images").val()).images;
@@ -7,13 +7,13 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
         }
 
         $http({
-            method: 'GET',
+            method: 'POST',
             url: "/api/hub/randomproducts",
-            body:{
+            data:{
                 limit: 5
             }
         }).then(function successCallback(response) {
-            $scope.recommended_products = response.data;
+            $scope.recommended_products = response.data.result;
         }, function errorCallback(response) {
             notification.addErrorMessage("Ups.. Error loading page");
         });

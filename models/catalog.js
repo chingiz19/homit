@@ -855,7 +855,8 @@ pub.getRandomArrayOfProducts = async function (numberOfTimes) {
             let product = await MDB.models[selectedStore.name].aggregate([
                 { $sample: { size: 1 } }
             ]).exec();
-            if (product && product.length == 1) {
+            if (product && product.length > 0) {
+                product[0].store_type_name = selectedStore.name;
                 productsArray.push(product[0]);
             }
         }

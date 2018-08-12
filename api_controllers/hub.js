@@ -134,7 +134,7 @@ router.get('/:storeType', async function (req, res) {
 
 router.post('/randomproducts', async function (req, res) {
     let numberOfTimes = req.body.limit;
-    if (numberOfTimes && isNaN(numberOfTimes)) {
+    if (numberOfTimes && !isNaN(numberOfTimes)) {
         let products = await Catalog.getRandomArrayOfProducts(numberOfTimes);
         if (products && products.length > 0) {
             res.send({
