@@ -178,8 +178,8 @@
                                                 <img ng-src="/resources/images/products/{{ item.store_type_name }}/{{ item.images.image_catalog }}">
                                             </li>
                                             <li class="recomended-item-brand">{{ item.brand }}</li>
-                                            <li class="recomended-item-name" ng-if="item.variance[0].packs[0].type > 1 && item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].packs[0].type + "x" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span></span></li>
-                                            <li class="recomended-item-name" ng-if="!(item.variance[0].packs[0].type > 1) && item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span></span></li>
+                                            <li class="recomended-item-name" ng-if="item.variance[0].packs[0].h_value > 1 && item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].packs[0].type + "x" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span></span></li>
+                                            <li class="recomended-item-name" ng-if="!(item.variance[0].packs[0].h_value > 1) && item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span></span></li>
                                             <li class="recomended-item-name" ng-if="!item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].preffered_unit_size + ")"}}</span></span></li>
                                             <li class="item-price">{{ item.variance[0].packs[0].price }}
                                                 <span>C$</span>

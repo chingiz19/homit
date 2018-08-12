@@ -13,7 +13,7 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
                 limit: 5
             }
         }).then(function successCallback(response) {
-            $scope.recommended_products = response.data.result;
+            $scope.recommended_products = buildProductUrl(response.data.result);
         }, function errorCallback(response) {
             notification.addErrorMessage("Ups.. Error loading page");
         });
@@ -22,26 +22,27 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
 
     function buildProductUrl(products){
         let tmpList = products;
-        // for(let x=0; x<tmpList.length; x++){
-        //     tmpList[x]["product_url"] = helpers.buildProductPagePath(tmpList[x]);
-        // }
+        for(let x=0; x<tmpList.length; x++){
+            tmpList[x]["product_url"] = helpers.buildProductPagePath(tmpList[x], tmpList[x].store_type_name);
+        }
         return tmpList;
     }
 
     $scope.addToCart = function (product) {
             var p = {};
-            p.store_type_name = product.store_type_name;
-            p.volume = product.product_variants.all_volumes[product.product_variants.selectedVolume];
-            p.packaging = product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack];
-            p.price = product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]][product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack]].price;
-            p.depot_id = product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]][product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack]].depot_id;
-            if (!$scope.productImages[0].includes("nutritions")) {
-                p.image = $scope.productImages[0];
-            } else {
-                p.image = $scope.productImages[1];
-            }
+
             p.brand = product.brand;
             p.name = product.name;
+            p.image = product.images.image_catalog;
+            p.store_type_name = product.store_type_name;
+            if(product.variance[product.selectedVolume].preffered_unit){
+                p.volume = product.variance[product.selectedVolume].preffered_unit_size + product.variance[product.selectedVolume].preffered_unit;
+            }else{
+                p.volume = product.variance[product.selectedVolume].preffered_unit_size ;
+            }
+            p.packaging = product.variance[product.selectedVolume].packs[product.selectedPack].h_value;
+            p.price = product.variance[product.selectedVolume].packs[product.selectedPack].price;
+            p.UID = product.variance[product.selectedVolume].packs[product.selectedPack]._id;
 
             $rootScope.$broadcast("addToCart", p);
             googleAnalytics.addEvent('add_to_cart', {
