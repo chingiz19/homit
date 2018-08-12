@@ -22,7 +22,7 @@ mysql.createConnection({
   con = connection;
   MDB.mySQLConnected();
   Logger.log.debug('Connection to MySQL DB established', logMeta);
-  if (process.env.n_mode!= "production") {
+  if (process.env.n_mode != "production") {
     console.log('Connection to MySQL established');
   }
 }).catch(function (err) {
@@ -89,16 +89,19 @@ pub.redisTable = {
 /*Database query functions*/
 
 pub.runQuery = function (query, data) {
-  return con.query(query, data).then(function (result) {
-    return result;
-  }).catch(function (error) {
-    let metadata = {
-      directory: __filename,
-      error_message: error.message
-    }
-    Logger.log.error('Could not run query', metadata);
-    return false;
-  });
+  if (con) {
+    return con.query(query, data).then(function (result) {
+      return result;
+    }).catch(function (error) {
+      let metadata = {
+        directory: __filename,
+        error_message: error.message
+      }
+      Logger.log.error('Could not run query', metadata);
+      return false;
+    });
+  }
+  return false;
 };
 
 pub.insertQuery = function (table, data) {

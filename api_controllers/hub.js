@@ -94,12 +94,10 @@ router.get('/:storeType', async function (req, res) {
 
     if (await Catalog.isParentUnion(storeType)) {
         let unionStores = await Catalog.getUnionStores(storeType);
-
         return res.send({
             success: unionStores && true,
             stores: unionStores
         });
-
     } else {
         let user = Auth.getSignedUser(req);
 
@@ -137,13 +135,13 @@ router.post('/randomproducts', async function (req, res) {
     if (numberOfTimes && !isNaN(numberOfTimes)) {
         let products = await Catalog.getRandomArrayOfProducts(numberOfTimes);
         if (products && products.length > 0) {
-            res.send({
+            return res.send({
                 success: true,
                 result: products,
             });
         }
     } else {
-        ErrorMessages.sendErrorResponse(res);
+        return ErrorMessages.sendErrorResponse(res);
     }
 });
 

@@ -693,10 +693,10 @@ pub.getStoreTypeIdByName = async function (storeType) {
 /**
  * Calculate prices for products
  * 
- * @param {*} products 
+ * @param {*} cartProducts 
  * @param {*} couponDetails - optional, passed if there are coupon details
  */
-pub.calculatePrice = async function (products, couponDetails) {
+pub.calculatePrice = async function (cartProducts, couponDetails) {
     let ALBERTA_GST = 0.05;
 
     let pricesPerOrder = {};
@@ -708,6 +708,10 @@ pub.calculatePrice = async function (products, couponDetails) {
     let totalCouponOff = 0;
 
     let couponsUsed = [];
+
+    let products = await prepareProductsForCalculator(cartProducts);
+
+    if (!products || products.length == 0) { return false; }
 
     for (let storeType in products) {
         let tmpAmount = 0;
@@ -814,30 +818,50 @@ pub.calculatePrice = async function (products, couponDetails) {
     return finalPrices;
 }
 
+
+// finalObject.storeId = splitArray[0];
+// finalObject.productId = splitArray[1];
+// finalObject.varianceId = splitArray[2];
+// finalObject.packId = splitArray[3];
+
+
 /**
- * Get cart products by depot ids
- * 
- * @param {*} cartProducts 
+ * Get cart products by UIDs for calculator to process
+ *  
+ * @param {*} cartProducts {UID : quantity}
  */
-pub.getCartProducts = async function (cartProducts) {
-    if (!(Object.keys(cartProducts).length === 0 && cartProducts.constructor === Object)) {
-        let depotIds = Object.keys(cartProducts);
+async function prepareProductsForCalculator(cartProducts) {
+    let finalResult = [];
+    let UIDs = Object.keys(cartProducts);
 
-        let sqlQuery = `
-            SELECT depot.id             AS depot_id,
-            depot.price                 AS price, 
-            depot.tax                   AS tax,
-            store_type.name             AS store_type,
-            store_type.del_fee_primary,
-            store_type.del_fee_secondary
-            FROM catalog_depot AS depot JOIN catalog_store_types AS store_type ON(depot.store_type_id = store_type.id)
-            WHERE depot.id in (` + depotIds + `)
-            ORDER BY store_type`;
-
-        let dbResult = await db.runQuery(sqlQuery);
-        return dbResult;
+    if (!(UIDs.length === 0 && cartProducts.constructor === Object)) {
+        if (allAvailableStores && allAvailableStores.length > 0) {
+            for (let id in UIDs) {
+                let selectedQuantity = cartProducts[id];
+                let IDobject = formatReceviedUID(id);
+                let selectedStore = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": IDobject.storeId });
+                if (selectedStore) {
+                    let searchId = IDobject.storeId + '' + IDobject.productId;
+                    let product = await MDB.models[selectedStore.name].findById(searchId).exec();
+                    if (product && product.variance && product.tax) {
+                        let selectedvariance = product.variance[varianceId];
+                        if (selectedvariance && selectedvariance.packs) {
+                            let selectedPack = selectedvariance.packs[IDobject.packId];
+                            if (selectedPack && selectedPack.price) {
+                                finalResult[selectedStore] = {
+                                    tax: product.tax,
+                                    price: selectedPack.price,
+                                    quantity: selectedQuantity
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
-    return [];
+
+    return finalResult;
 }
 
 /**
@@ -865,54 +889,6 @@ pub.getRandomArrayOfProducts = async function (numberOfTimes) {
     }
 
     return productsArray;
-}
-
-/**
- * Get cart products with respective store type
- * 
- * @param {*} dbProducts
- * @param {*} cartProducts
- */
-pub.getCartProductsWithStoreType = function (dbProducts, cartProducts) {
-    let products = {};
-    let currentStoreType = {
-        products: {}
-    };
-    for (let i = 0; i < dbProducts.length; i++) {
-        let tmpQuantity;
-        if (cartProducts) {
-            tmpQuantity = cartProducts[dbProducts[i].depot_id];
-        } else {
-            tmpQuantity = dbProducts[i].quantity;
-        }
-        let currentItem = {
-            depot_id: dbProducts[i].depot_id,
-            price: dbProducts[i].price,
-            tax: dbProducts[i].tax,
-            quantity: tmpQuantity
-        };
-
-
-        if (i == 0) {
-            currentStoreType.products[dbProducts[i].depot_id] = currentItem;
-        } else {
-            if (dbProducts[i - 1].store_type != dbProducts[i].store_type) {
-                products[dbProducts[i - 1].store_type] = currentStoreType;
-                currentStoreType = {
-                    products: {}
-                };
-            }
-            currentStoreType.products[dbProducts[i].depot_id] = currentItem;
-        }
-        currentStoreType.del_fee_primary = dbProducts[i].del_fee_primary;
-        currentStoreType.del_fee_secondary = dbProducts[i].del_fee_secondary;
-
-        if (i == dbProducts.length - 1) {
-            products[dbProducts[i].store_type] = currentStoreType;
-        }
-    }
-
-    return products;
 }
 
 pub.getProductPageItemsByProductId = async function (storeType, productId) {
@@ -1393,6 +1369,25 @@ function getRandomNmber(limit, exclusionArray) {
         }
         i++;
     }
+}
+
+/**
+ * Returns formatted id as object 
+ * 
+ * @param {String} raw received UID
+ */
+function formatReceviedUID(raw) {
+    let finalObject = {};
+
+    if (raw && typeof raw === 'string') {
+        let splitArray = raw.split('-');
+        finalObject.storeId = splitArray[0];
+        finalObject.productId = splitArray[1];
+        finalObject.varianceId = splitArray[2];
+        finalObject.packId = splitArray[3];
+    }
+
+    return finalObject;
 }
 
 module.exports = pub;

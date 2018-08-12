@@ -89,36 +89,24 @@ router.post('/calculate', async function (req, res) {
         "coupon_details": {}
     };
 
-    req.body = HelperUtils.validateParams(req.body, allValidParams);
-
-    if (!req.body) {
+    if (!HelperUtils.validateParams(req.body, allValidParams)) {
         return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     }
 
     let cartProducts = req.body.products;
-    let dbProducts = await Catalog.getCartProducts(cartProducts);
-
-    if (!dbProducts) {
-        ErrorMessages.sendErrorResponse(res);
-        return;
-    }
-
-    let user = await Auth.getSignedUser(req);
     let couponDetails = req.body.coupon_details;
+    let user = await Auth.getSignedUser(req);
 
     if (user) {
         couponDetails = Object.assign({ "user_id": user.id, }, HelperUtils.formatUserCoupons(await Coupon.getUserCoupons(user.id, true)));
     }
 
-    let products = Catalog.getCartProductsWithStoreType(dbProducts, cartProducts);
-    let allPrices = await Catalog.calculatePrice(products, couponDetails);
+    let allPrices = await Catalog.calculatePrice(cartProducts, couponDetails);
 
-    let localResponse = {
-        success: true,
+    res.send({
+        success: true && allPrices,
         prices: allPrices
-    }
-
-    res.send(localResponse);
+    });
 });
 
 /**
