@@ -70,12 +70,12 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
      * @param {object} product 
      */
     $scope.volumeRight = function (product) {
-        let i = product.product_variants.selectedVolume;
+        let i = product.selectedVolume;
         i = i + 1;
-        if (i >= product.product_variants.all_volumes.length) {
-            $scope.product.product_variants.selectedVolume = i - 1;
+        if (i >= product.variance.length) {
+            $scope.product.selectedVolume = i - 1;
         } else {
-            $scope.product.product_variants.selectedVolume = i;
+            $scope.product.selectedVolume = i;
         }
     };
 
@@ -84,12 +84,12 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
      * @param {object} product 
      */
     $scope.volumeLeft = function (product) {
-        let i = product.product_variants.selectedVolume;
+        let i = product.selectedVolume;
         i = i - 1;
         if (i < 0) {
-            $scope.product.product_variants.selectedVolume = i + 1;
+            $scope.product.selectedVolume = i + 1;
         } else {
-            $scope.product.product_variants.selectedVolume = i;
+            $scope.product.selectedVolume = i;
         }
     };
 
@@ -98,13 +98,13 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
      * @param {object} product 
      */
     $scope.packRight = function (product) {
-        let i = product.product_variants.selectedPack;
-        let volume = product.product_variants.all_volumes[product.product_variants.selectedVolume];
-        i = i + 1;
-        if (i >= product.product_variants[volume].all_packagings.length) {
-            $scope.product.product_variants.selectedPack = i - 1;
+        let selected_pack = product.selectedPack;
+        let selected_volume = product.selectedVolume;
+        selected_pack = selected_pack + 1;
+        if ( selected_pack >= product.variance[selected_volume].packs.length) {
+            $scope.product.selectedPack = selected_pack - 1;
         } else {
-            $scope.product.product_variants.selectedPack = i;
+            $scope.product.selectedPack = selected_pack;
         }
     };
 
@@ -113,12 +113,12 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
      * @param {object} product 
      */
     $scope.packLeft = function (product) {
-        let i = product.product_variants.selectedPack;
-        i = i - 1;
-        if (i < 0) {
-            $scope.product.product_variants.selectedPack = i + 1;
+        let selected_pack = product.selectedPack;
+        selected_pack = selected_pack - 1;
+        if (selected_pack < 0) {
+            $scope.product.selectedPack = selected_pack + 1;
         } else {
-            $scope.product.product_variants.selectedPack = i;
+            $scope.product.selectedPack = selected_pack;
         }
     };
 

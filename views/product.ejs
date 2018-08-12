@@ -127,7 +127,8 @@
                                                     {{ product.variance[product.selectedVolume].packs[product.selectedPack - 1].h_value + ' '}}
                                                 </li>
                                                 <li class="size-box-middle">
-                                                    {{ product.variance[product.selectedVolume].packs[product.selectedPack].h_value + ' '}}
+                                                    <span ng-show="product.variance[product.selectedVolume].packs[product.selectedPack].h_value == 1">Single</span>
+                                                    <span ng-show="!(product.variance[product.selectedVolume].packs[product.selectedPack].h_value == 1)">{{ product.variance[product.selectedVolume].packs[product.selectedPack].h_value + ' '}}</span>
                                                 </li>
                                                 <li class="size-box-right text-verflow">
                                                     {{ product.variance[product.selectedVolume].packs[product.selectedPack + 1].h_value + ' '}}
@@ -142,7 +143,7 @@
                                         <h3 class="product-details-header sub-header">Product Details</h3>
                                         <ul class="bullet-description">
                                             <li>
-                                                <span class="bold">Product:</span> {{ product.variance[product.selectedVolume].packs[product.selectedPack].h_value + " x " +  product.variance[product.selectedVolume].preffered_unit_size +  product.variance[product.selectedVolume].preffered_unit }}
+                                                <span class="bold">Product:</span> <span ng-show="product.variance[product.selectedVolume].packs[product.selectedPack].h_value > 1">{{ product.variance[product.selectedVolume].packs[product.selectedPack].h_value + " x " }}</span>{{ product.variance[product.selectedVolume].preffered_unit_size +  product.variance[product.selectedVolume].preffered_unit }}
                                                 <span class="product-details-container">{{ product.container}}</span>
                                             </li>
 <!--googleon: snippet-->
