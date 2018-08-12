@@ -121,7 +121,7 @@ app.service('cartService', function ($http, localStorage, $cookies) {
     };
 
     /**
-     * Used to convert userCart object to object consisting of "depot_id: quantity"
+     * Used to convert userCart object to object consisting of "UID: quantity"
      * @param {*} cart  - user cart
      */
     function _parseCartToSend(rcart){
@@ -130,7 +130,7 @@ app.service('cartService', function ($http, localStorage, $cookies) {
         for (var i = 0; i < cart.length; i++){
             var super_categories = Object.values(cart[i]);
             for (var j = 0; j < super_categories.length; j++){
-                parsedCart[super_categories[j].depot_id] = super_categories[j].quantity;
+                parsedCart[super_categories[j].UID] = super_categories[j].quantity;
             }
         }
 
