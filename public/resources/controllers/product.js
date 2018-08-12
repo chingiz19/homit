@@ -36,9 +36,9 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
             p.image = product.images.image_catalog;
             p.store_type_name = product.store_type_name;
             if(product.variance[product.selectedVolume].preffered_unit){
-                p.volume = product.variance[product.selectedVolume].preffered_unit_size + product.variance[product.selectedVolume].preffered_unit;
+                p.size = product.variance[product.selectedVolume].preffered_unit_size + product.variance[product.selectedVolume].preffered_unit;
             }else{
-                p.volume = product.variance[product.selectedVolume].preffered_unit_size ;
+                p.size = product.variance[product.selectedVolume].preffered_unit_size ;
             }
             p.packaging = product.variance[product.selectedVolume].packs[product.selectedPack].h_value;
             p.price = product.variance[product.selectedVolume].packs[product.selectedPack].price;
@@ -55,7 +55,7 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
                         brand: product.brand,
                         price: product.price,
                         category: product.packaging,
-                        variant: product.volume,
+                        variant: product.size,
                     }
                 ]
             });
