@@ -846,11 +846,13 @@ pub.getCartProducts = async function (cartProducts) {
  */
 pub.getRandomArrayOfProducts = async function (numberOfTimes) {
     let productsArray = [];
+    let knownNumbers = [];
     let availableStoreTypes = await db.selectAllWhere(db.tables.catalog_store_types, { available: true });
 
     if (availableStoreTypes && availableStoreTypes.length > 0) {
         for (let i = 0; i < numberOfTimes; i++) {
-            let randomNumber = getRandomNmber(availableStoreTypes.length - 1);
+            let randomNumber = getRandomNmber(availableStoreTypes.length - 1, knownNumbers);
+            knownNumbers.push(randomNumber);
             let selectedStore = availableStoreTypes[randomNumber];
             let product = await MDB.models[selectedStore.name].aggregate([
                 { $sample: { size: 1 } }
@@ -1380,9 +1382,17 @@ async function getItemByProductId(storeType, productId) {
  * Returns random number between 0 and limit (including)
  * 
  * @param {*} limit
+ * @param {*} exclusionArray numbers to avaoid
  */
-function getRandomNmber(limit) {
-    return Math.floor(Math.random() * (limit + 1));
+function getRandomNmber(limit, exclusionArray) {
+    let i = 0;
+    while (i < 100) {
+        let generated = Math.floor(Math.random() * (limit + 1));
+        if (exclusionArray.length == 0 || !exclusionArray.includes(generated)) {
+            return generated;
+        }
+        i++;
+    }
 }
 
 module.exports = pub;
