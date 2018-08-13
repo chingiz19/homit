@@ -37,6 +37,7 @@ INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(24, "dwa
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(25, "borderland-food-co", "Borderland Food Co.", "borderland-food-co.jpeg");
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(26, "pure-foods-fresh", "Pure Foods Fresh", "pure-foods-fresh.jpg");
 INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(27, "honey-and-bloom", "Honey & Bloom", "honey-and-bloom.jpg");
+INSERT INTO `catalog_categories` (id, name, display_name, image) VALUES(28, "westtaste", "WestTaste", "westtaste.jpeg");
 
 -- Insert Catalog - Subcategory
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(1, "Lager", "1");
@@ -196,6 +197,9 @@ INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(154, "Bone Br
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(155, "Bone Broth for Pets", "25");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(156, "Sauce & Seasoning", "26");
 INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(157, "Health & Body", "27");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(158, "Jams & Spreads", "28");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(159, "Hot Sauce", "28");
+INSERT INTO `catalog_subcategories` (id, name, category_id) VALUES(160, "Salad Dressing", "28");
 
 -- Insert Catalog Type
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(1, "Pale Lager", "1");
@@ -1127,6 +1131,13 @@ INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(926, "Bath salts",
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(927, "Soothing balm", "157");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(928, "Face mask charcoal", "157");
 INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(929, "Body scrub coconut", "157");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(930, "Honey and Beet Spread", "158");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(931, "Beet Spread", "158");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(932, "Mango Hot Sauce", "159");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(933, "Balsamic Salad Dressing", "160");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(934, "Chia Seed Salad Dressing", "160");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(935, "Fresh Carrot Spread", "158");
+INSERT INTO `catalog_types` (id, name, subcategory_id) VALUES(936, "Jam Style Carrot Spread", "158");
 
 -- Catalog - Image Names
 INSERT INTO `catalog_image_names`(id, name) VALUES(1, "nutritions");
