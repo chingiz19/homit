@@ -29,37 +29,37 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     }
 
     if (product.details.country_of_origin) {
-        req.options.ejs.country_of_origin = '<li><span class="bold">Country of Origin:</span><span itemprop="additionalProperty"> ' + product.details.country_of_origin + '</span></li>';
+        req.options.ejs.country_of_origin = '<li><span class="bold">Country of Origin:</span><span itemprop="additionalProperty"> ' + product.details.country_of_origin.description + '</span></li>';
     } else {
         req.options.ejs.country_of_origin = "";
     }
 
     if (product.details.producer) {
-        req.options.ejs.producer = '<li><span class="bold">Made by:</span><span itemprop="manufacturer"> ' + product.details.producer + '</span></li>';
+        req.options.ejs.producer = '<li><span class="bold">Made by:</span><span itemprop="manufacturer"> ' + product.details.producer.description + '</span></li>';
     } else {
         req.options.ejs.producer = "";
     }
 
     if (product.details.alcohol_content) {
-        req.options.ejs.alcohol_content = '<li><span class="bold">Alcohol/Vol:</span><span itemprop="additionalProperty"> ' + product.details.alcohol_content + '</span></li>';
+        req.options.ejs.alcohol_content = '<li><span class="bold">Alcohol/Vol:</span><span itemprop="additionalProperty"> ' + product.details.alcohol_content.description + '</span></li>';
     } else {
         req.options.ejs.alcohol_content = "";
     }
 
     if (product.details.preview) {
-        req.options.ejs.preview = '<section class="preview-sec" itemprop="description"><div class="description"><h3 class="sub-header">Product Description:</h3><p> ' + HelperUtils.convertHomitTags(product.details.preview) + '</p></div></section>';
+        req.options.ejs.preview = '<section class="preview-sec" itemprop="description"><div class="description"><h3 class="sub-header">Product Description:</h3><p> ' + HelperUtils.convertHomitTags(product.details.preview.description) + '</p></div></section>';
     } else {
         req.options.ejs.preview = "";
     }
 
     if (product.details.ingredients) {
-        req.options.ejs.ingredients = '<section class="ingredients-sec" itemprop="disambiguatingDescription"><div class="ingredients"><h3 class="sub-header">Ingredients:</h3><span> ' + HelperUtils.convertHomitTags(product.details.ingredients) + '</span></div></section>';
+        req.options.ejs.ingredients = '<section class="ingredients-sec" itemprop="disambiguatingDescription"><div class="ingredients"><h3 class="sub-header">Ingredients:</h3><span> ' + HelperUtils.convertHomitTags(product.details.ingredients.description) + '</span></div></section>';
     } else {
         req.options.ejs.ingredients = "";
     }
 
     if (product.details.serving_suggestions) {
-        req.options.ejs.serving_suggestions = '<section class="preview-sec" itemprop="additionalProperty"><div class="description"><h3 class="sub-header">Serving Sugestions:</h3><p> ' + HelperUtils.convertHomitTags(product.details.serving_suggestions) + '</p></div></section>';
+        req.options.ejs.serving_suggestions = '<section class="preview-sec" itemprop="additionalProperty"><div class="description"><h3 class="sub-header">Serving Sugestions:</h3><p> ' + HelperUtils.convertHomitTags(product.details.serving_suggestions.description) + '</p></div></section>';
     } else {
         req.options.ejs.serving_suggestions = "";
     }
@@ -76,7 +76,7 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
     req.options.ejs.title = _.trim(product.brand + _.trimEnd(" " + product.name) + " - Delivered to Your Doorstep | Homit");
 
     if (product.details.preview) {
-        req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. " + HelperUtils.clearHomitTags(product.details.preview).split(".")[0]);
+        req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. " + HelperUtils.clearHomitTags(product.details.preview.description).split(".")[0]);
     } else {
         req.options.ejs.meta_description = _.trim(product.brand + _.trimEnd(" " + product.name) + " - 45 minutes delivery in Calgary. Let us Home It and liberate your precious time.");
     }

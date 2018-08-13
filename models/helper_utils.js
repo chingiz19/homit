@@ -105,7 +105,7 @@ pub.formatUserCoupons = function (coupons) {
 }
 
 pub.convertHomitTags = function (string) {
-    let tmpString = string.description;
+    let tmpString = string;
     for (tag in homit_tags) {
         tmpString = tmpString.replace(new RegExp(tag, 'g'), homit_tags[tag]);
     }
@@ -113,7 +113,7 @@ pub.convertHomitTags = function (string) {
 }
 
 pub.clearHomitTags = function (string) {
-    let tmpString = string.description;
+    let tmpString = string;
     for (tag in homit_tags) {
         tmpString = tmpString.replace(new RegExp(tag, 'g'), "");
     }
