@@ -32,6 +32,7 @@ let productSchema = new Schema({
     _id: Schema.Types.Mixed,
     brand: String,
     name: String,
+    tax: Number,
     container: String,
     images: {
         image_catalog: String,
@@ -83,7 +84,6 @@ let productSchema = new Schema({
                     price: Number,
                     available: Number,
                     stock_quantity: Number,
-                    tax: Number,
                     sold: {
                         quantity: Number
                     }

@@ -706,6 +706,7 @@ pub.calculatePrice = async function (products, couponDetails) {
     let totalDelivery = 0;
     let totalPrice = 0;
     let totalCouponOff = 0;
+    let usedRateIDs = [];
 
     let couponsUsed = [];
 
@@ -713,18 +714,25 @@ pub.calculatePrice = async function (products, couponDetails) {
         let tmpAmount = 0;
         let tmpTax = 0;
         let tmpCouponOff = 0;
+        let tmpDelivery = 0;
         let tmpCouponId = undefined;
         let tmpCouponMessage = undefined;
 
+        //*product cost calculation
         for (let item in products[storeType].products) {
             tmpAmount = tmpAmount + parseFloat(products[storeType].products[item].price) * products[storeType].products[item].quantity;
             if (products[storeType].products[item].tax) {
                 tmpTax = tmpTax + parseFloat(products[storeType].products[item].price) * products[storeType].products[item].quantity * ALBERTA_GST;
             }
         }
-        let tmpDelivery = products[storeType].del_fee_primary + Math.floor(parseInt(tmpAmount / 100)) * products[storeType].del_fee_secondary;
-        tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
 
+        //*delivery cost calculation 
+        if (!usedRateIDs.includes(products[storeType].rateId)) {
+            tmpDelivery = products[storeType].del_fee_primary + Math.floor(parseInt(tmpAmount / 100)) * products[storeType].del_fee_secondary;
+            usedRateIDs.push(products[storeType].rateId);
+        }
+
+        tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
         tmpTax = parseFloat(tmpTax.toFixed(2));
         tmpAmount = parseFloat(tmpAmount.toFixed(2));
         tmpDelivery = parseFloat(tmpDelivery.toFixed(2));
@@ -815,29 +823,76 @@ pub.calculatePrice = async function (products, couponDetails) {
 }
 
 /**
- * Get cart products by depot ids
- * 
- * @param {*} cartProducts 
+ * Get cart products by UIDs for calculator to process
+ *  
+ * @param {*} cartProducts {UID : quantity}
  */
-pub.getCartProducts = async function (cartProducts) {
-    if (!(Object.keys(cartProducts).length === 0 && cartProducts.constructor === Object)) {
-        let depotIds = Object.keys(cartProducts);
+pub.prepareProductsForCalculator = async function (cartProducts) {
+    let finalResult = [];
+    let UIDs = Object.keys(cartProducts);
 
-        let sqlQuery = `
-            SELECT depot.id             AS depot_id,
-            depot.price                 AS price, 
-            depot.tax                   AS tax,
-            store_type.name             AS store_type,
-            store_type.del_fee_primary,
-            store_type.del_fee_secondary
-            FROM catalog_depot AS depot JOIN catalog_store_types AS store_type ON(depot.store_type_id = store_type.id)
-            WHERE depot.id in (` + depotIds + `)
-            ORDER BY store_type`;
-
-        let dbResult = await db.runQuery(sqlQuery);
-        return dbResult;
+    if (!(UIDs.length === 0 && cartProducts.constructor === Object)) {
+        for (let id in UIDs) {
+            let selectedQuantity = cartProducts[UIDs[id]];
+            let IDobject = formatReceviedUID(UIDs[id]);
+            let rawStore = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": IDobject.storeId });
+            if (rawStore && rawStore.length > 0) {
+                let selectedStore = rawStore[0];
+                let searchId = IDobject.storeId + '-' + IDobject.productId;
+                let result = await MDB.models[selectedStore.name].findById(searchId).exec();
+                let tax = result.tax;
+                let product = pub.findNestedProductPrice(result.toObject(), [searchId, IDobject.varianceId, IDobject.packId]);
+                if (product) {
+                    finalResult[selectedStore.name] = {
+                        products: [],
+                        del_fee_primary: String,
+                        del_fee_secondary: String,
+                        rateId: Number
+                    };
+                    finalResult[selectedStore.name].products.push({
+                        UID: searchId,
+                        "tax": tax,
+                        "price": product.price,
+                        quantity: selectedQuantity
+                    });
+                    finalResult[selectedStore.name].del_fee_primary = selectedStore.del_fee_primary;
+                    finalResult[selectedStore.name].del_fee_secondary = selectedStore.del_fee_secondary;
+                    finalResult[selectedStore.name].rateId = selectedStore.rate_id;
+                }
+            }
+        }
     }
-    return [];
+
+    return finalResult;
+}
+
+/**
+ * Finds nested product object including size
+ * 
+ * @param {Object} product  document from Mongo DB
+ * @param {array} searchId [product, variance and pack ids] e.g. 9-3-1 and 9-3-1-1
+ */
+pub.findNestedProductPrice = function (product, ids) {
+    if (product && ids && product.variance && product.tax) {
+        let selectedvariances = product.variance;
+        for (let k in selectedvariances) {
+            let variance = selectedvariances[k];
+            searchId = ids[0] + '-' + ids[1];
+            if (variance._id == searchId && variance.packs) {
+                let packs = variance.packs;
+                let localSize = variance.preffered_unit_size + variance.preffered_unit;
+                for (let l in packs) {
+                    let pack = packs[l];
+                    searchId += '-' + ids[2];
+                    if (pack._id == searchId && pack.price) {
+                        pack.size = localSize;
+                        return pack;
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }
 
 /**
@@ -865,54 +920,6 @@ pub.getRandomArrayOfProducts = async function (numberOfTimes) {
     }
 
     return productsArray;
-}
-
-/**
- * Get cart products with respective store type
- * 
- * @param {*} dbProducts
- * @param {*} cartProducts
- */
-pub.getCartProductsWithStoreType = function (dbProducts, cartProducts) {
-    let products = {};
-    let currentStoreType = {
-        products: {}
-    };
-    for (let i = 0; i < dbProducts.length; i++) {
-        let tmpQuantity;
-        if (cartProducts) {
-            tmpQuantity = cartProducts[dbProducts[i].depot_id];
-        } else {
-            tmpQuantity = dbProducts[i].quantity;
-        }
-        let currentItem = {
-            depot_id: dbProducts[i].depot_id,
-            price: dbProducts[i].price,
-            tax: dbProducts[i].tax,
-            quantity: tmpQuantity
-        };
-
-
-        if (i == 0) {
-            currentStoreType.products[dbProducts[i].depot_id] = currentItem;
-        } else {
-            if (dbProducts[i - 1].store_type != dbProducts[i].store_type) {
-                products[dbProducts[i - 1].store_type] = currentStoreType;
-                currentStoreType = {
-                    products: {}
-                };
-            }
-            currentStoreType.products[dbProducts[i].depot_id] = currentItem;
-        }
-        currentStoreType.del_fee_primary = dbProducts[i].del_fee_primary;
-        currentStoreType.del_fee_secondary = dbProducts[i].del_fee_secondary;
-
-        if (i == dbProducts.length - 1) {
-            products[dbProducts[i].store_type] = currentStoreType;
-        }
-    }
-
-    return products;
 }
 
 pub.getProductPageItemsByProductId = async function (storeType, productId) {
@@ -1393,6 +1400,25 @@ function getRandomNmber(limit, exclusionArray) {
         }
         i++;
     }
+}
+
+/**
+ * Returns formatted id as object 
+ * 
+ * @param {String} raw received UID
+ */
+function formatReceviedUID(raw) {
+    let finalObject = {};
+
+    if (raw && typeof raw === 'string') {
+        let splitArray = raw.split('-');
+        finalObject.storeId = splitArray[0];
+        finalObject.productId = splitArray[1];
+        finalObject.varianceId = splitArray[2];
+        finalObject.packId = splitArray[3];
+    }
+
+    return finalObject;
 }
 
 module.exports = pub;

@@ -2,13 +2,13 @@
  * @copyright Homit 2018
  */
 
-var mysql = require("promise-mysql");
-var con;
+let mysql = require("promise-mysql");
+let con;
 
-var pub = {};
+let pub = {};
 
 /*Building metadata for log*/
-var logMeta = {
+let logMeta = {
   directory: __filename
 }
 
@@ -22,7 +22,7 @@ mysql.createConnection({
   con = connection;
   MDB.mySQLConnected();
   Logger.log.debug('Connection to MySQL DB established', logMeta);
-  if (process.env.n_mode!= "production") {
+  if (process.env.n_mode != "production") {
     console.log('Connection to MySQL established');
   }
 }).catch(function (err) {
@@ -89,16 +89,19 @@ pub.redisTable = {
 /*Database query functions*/
 
 pub.runQuery = function (query, data) {
-  return con.query(query, data).then(function (result) {
-    return result;
-  }).catch(function (error) {
-    let metadata = {
-      directory: __filename,
-      error_message: error.message
-    }
-    Logger.log.error('Could not run query', metadata);
-    return false;
-  });
+  if (con) {
+    return con.query(query, data).then(function (result) {
+      return result;
+    }).catch(function (error) {
+      let metadata = {
+        directory: __filename,
+        error_message: error.message
+      }
+      Logger.log.error('Could not run query', metadata);
+      return false;
+    });
+  }
+  return false;
 };
 
 pub.insertQuery = function (table, data) {
@@ -144,16 +147,5 @@ pub.deleteQueryWithTwoCond = function (table, data) {
 pub.selectAllWhereLimitOne = function (table, data) {
   return pub.runQuery('SELECT * FROM ' + table + ' WHERE ? LIMIT 1', data);
 }
-
-/**
- * Ends database connection in ethical/gracefull way, ensuring
- * all previously enqueued queries are still before sending
- * COM_QUIT packet to the MySQL server.
- */
-var end = function () {
-  con.end(function (err) {
-    Logger.log.debug("Ended connection to DB.", logMeta);
-  });
-};
 
 module.exports = pub;

@@ -48,10 +48,9 @@ router.post('/placeorder', async function (req, res, next) {
     }
 
     if (!paramsMissing) {
-        let dbProducts = await Catalog.getCartProducts(cartProducts);
-        let storeProducts = Catalog.getCartProductsWithStoreType(dbProducts, cartProducts);
-
+        let storeProducts = await Catalog.prepareProductsForCalculator(req.body.products);
         let allStoresOpen = await validateStoresOpen(Object.keys(storeProducts), scheduleDetails);
+
         if (allStoresOpen) {
             let allPrices = await Catalog.calculatePrice(storeProducts, couponDetails);
             let totalPrice = allPrices.total_price;
@@ -89,36 +88,24 @@ router.post('/calculate', async function (req, res) {
         "coupon_details": {}
     };
 
-    req.body = HelperUtils.validateParams(req.body, allValidParams);
-
-    if (!req.body) {
+    if (!HelperUtils.validateParams(req.body, allValidParams)) {
         return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     }
 
-    let cartProducts = req.body.products;
-    let dbProducts = await Catalog.getCartProducts(cartProducts);
-
-    if (!dbProducts) {
-        ErrorMessages.sendErrorResponse(res);
-        return;
-    }
-
-    let user = await Auth.getSignedUser(req);
     let couponDetails = req.body.coupon_details;
+    let storeProducts = await Catalog.prepareProductsForCalculator(req.body.products);
+    let user = await Auth.getSignedUser(req);
 
     if (user) {
         couponDetails = Object.assign({ "user_id": user.id, }, HelperUtils.formatUserCoupons(await Coupon.getUserCoupons(user.id, true)));
     }
 
-    let products = Catalog.getCartProductsWithStoreType(dbProducts, cartProducts);
-    let allPrices = await Catalog.calculatePrice(products, couponDetails);
+    let allPrices = await Catalog.calculatePrice(storeProducts, couponDetails);
 
-    let localResponse = {
-        success: true,
+    res.send({
+        success: true && allPrices,
         prices: allPrices
-    }
-
-    res.send(localResponse);
+    });
 });
 
 /**
@@ -144,17 +131,10 @@ router.post('/check', async function (req, res) {
 
     let messageCounter = 0;
     let scheduleDetails = req.body.schedule_details;
-    let cartProducts = req.body.products;
     let email = req.body.email;
-    let dbProducts = await Catalog.getCartProducts(cartProducts);
     let emailIsOk = false;
 
-    if (!dbProducts) {
-        ErrorMessages.sendErrorResponse(res);
-        return;
-    }
-
-    let storeProducts = Catalog.getCartProductsWithStoreType(dbProducts, cartProducts);
+    let storeProducts = await Catalog.prepareProductsForCalculator(req.body.products);
     let allStoresOpen = await validateStoresOpen(Object.keys(storeProducts), scheduleDetails);
     let user = await Auth.getSignedUser(req);
 
@@ -370,11 +350,11 @@ async function sendOrderEmail(email, firstName, lastName, phone, address, cardDi
 
     for (let currentOrder in orderIds) {
         let orderId = orderIds[currentOrder].order_id;
-        let products = await Orders.getOrderItemsById(orderId);
+        let products = await Orders.getOrderItemsById(orderId);                                              
         let storeType = await Catalog.getStoreTypeInfo(orderIds[currentOrder].store_type);
 
         let tmpOrder = {
-            scheduledTime: filterScheduledTime(scheduleDetails[storeType.name]),
+            scheduledTime: filterScheduledTime(scheduleDetails[store_type.name]),
             id: currentOrder,
             products: products,
             store_type_display_name: storeType.display_name,
