@@ -353,6 +353,13 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http) {
                     let delivery_hrs = localStorage.getOrderDeliveryHrs();
 
                     if (delivery_hrs && delivery_hrs.hasOwnProperty(scope.store_name)) {
+                        let todays_date = new Date().getTime();
+                        if(delivery_hrs[scope.store_name] < todays_date + 3600000000){
+                            delete delivery_hrs[scope.store_name];
+                        }
+                    }
+
+                    if (delivery_hrs && delivery_hrs.hasOwnProperty(scope.store_name)) {
                         scope.deliveryOption = "Scheduled Delivery";
                         scope.dates.selected.date = delivery_hrs[scope.store_name].date_selected;
                         scope.dates.selected.time = delivery_hrs[scope.store_name].hrs_selected;

@@ -197,3 +197,20 @@ li {
     transform-origin: 0;
     z-index: 0;
 }
+
+//Don't display md-input-container label when input focused
+md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {
+    display: none;
+}
+
+md-input-container.md-input-focused .md-input, md-input-container .md-input.ng-invalid.ng-dirty{
+    border-width: 0 0 1px;
+    border-color: rgba(0, 0, 0, 0.45) !important;
+    padding-bottom: 1px !important;
+}
+
+//Upon valid input makes input bottom-border green
+md-input-container .ng-valid.ng-not-empty, #autocompleteAddressInputBox .ng-valid.ng-not-empty {
+    border-bottom-width: 1px !important;
+    padding-bottom: 1px !important;
+}
