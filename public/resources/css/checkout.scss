@@ -91,10 +91,13 @@ label {
     height: 15px !important;
 }
 
+body, body button{
+    font-family: 'Nunito', sans-serif;
+}
+
 body {
     background-color: rgb(253, 253, 253);
     letter-spacing: 0.01em;
-    font-family: 'Nunito', sans-serif;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
