@@ -1641,7 +1641,7 @@ let recommended_products = {
             "price": 9.99
         }
     ],
-    "honey-and-bloom": [
+    "westtaste": [
         {
             "brand": "Allessia's",
             "name": "Breadsticks with Seasame Seeds",
@@ -1673,7 +1673,7 @@ let recommended_products = {
             "image": "btc_11584.jpeg",
             "packaging": "1",
             "volume": "340g",
-            "price": 0
+            "price": 7.99
         },
         {
             "brand": "Mission Hill Five Vineyards",

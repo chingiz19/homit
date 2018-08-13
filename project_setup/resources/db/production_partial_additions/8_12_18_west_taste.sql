@@ -47,7 +47,7 @@ INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, descri
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1375, 7, "ht_ulht_liDress up your veggi salads with shia seed salad dressing!d_ht_liht_liYou can make a cooling drink with adding two spoon of salad dressing to a cup of soda or water and iced_ht_lid_ht_ul" );
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1375, 1, "ht_ulht_liLocal made in Calgary, Non GMO, No gelatin, No chemical adetives, All naturald_ht_lid_ht_ul" );
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1375, 4, "Canada" );
-INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1376, 6, "ht_ulht_liFresh Carrot, Honey, Vinegar, Pectin, Natural Flavor, Citric Acidd_ht_lid_ht_ul" );
+INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1376, 6, "ht_ulht_liFresh Carrot, Raw Honey, Vinegar, Pectin, Natural Flavor, Citric Acidd_ht_lid_ht_ul" );
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1376, 7, "ht_ulht_liUse with cream chees and crackers, spread over toast with butter, cream or any nut butter like peanut butter, use with meats, egg and bacond_ht_liht_liUse as spread over salads with olive oil; mix with yogurtd_ht_lid_ht_ul" );
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1376, 1, "ht_ulht_liLocal made in Calgary, Non GMO, No gelatin, No chemical adetives, All naturald_ht_lid_ht_ul" );
 INSERT INTO `catalog_listings_descriptions` (listing_id, description_key, description) VALUES ( 1376, 4, "Canada" );
@@ -66,9 +66,13 @@ INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7674,
 INSERT INTO `catalog_products`(id,listing_id, image, container_id) VALUES (7675, 1377, "jr_7675.jpeg", 6);
 
 -- Catalog - Product Images
-INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7654, 1, "ntr_b_7671.jpeg");
-INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7655, 1, "ntr_b_7672.jpeg");
-INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7656, 1, "ntr_b_7673.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7669, 1, "ntr_jr_7669.jpg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7670, 1, "ntr_jr_7670.jpg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7671, 1, "ntr_b_7671.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7672, 1, "ntr_b_7672.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7673, 1, "ntr_b_7673.jpeg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7674, 1, "ntr_jr_7674.jpg");
+INSERT INTO `catalog_products_images`(product_id, image_key, image) VALUES(7675, 1, "ntr_jr_7675.jpg");
 
 -- Catalog - Item
 INSERT INTO `catalog_items` (id, product_id, packaging_id, volume_id) VALUES (11784, 7669, 9, 38);
