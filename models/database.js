@@ -2,13 +2,13 @@
  * @copyright Homit 2018
  */
 
-var mysql = require("promise-mysql");
-var con;
+let mysql = require("promise-mysql");
+let con;
 
-var pub = {};
+let pub = {};
 
 /*Building metadata for log*/
-var logMeta = {
+let logMeta = {
   directory: __filename
 }
 
@@ -147,16 +147,5 @@ pub.deleteQueryWithTwoCond = function (table, data) {
 pub.selectAllWhereLimitOne = function (table, data) {
   return pub.runQuery('SELECT * FROM ' + table + ' WHERE ? LIMIT 1', data);
 }
-
-/**
- * Ends database connection in ethical/gracefull way, ensuring
- * all previously enqueued queries are still before sending
- * COM_QUIT packet to the MySQL server.
- */
-var end = function () {
-  con.end(function (err) {
-    Logger.log.debug("Ended connection to DB.", logMeta);
-  });
-};
 
 module.exports = pub;

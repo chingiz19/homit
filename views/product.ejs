@@ -49,7 +49,7 @@
                                 <span class="loc-errow"> > </span>
                                 <a class="web-location-a" href="/hub/{{ product.store_type_name }}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
                                 <span class="loc-errow"> > </span>
-                                <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" ng-click="navCatClicked(product.category)" target="_self">{{ product.category.category_name }}</a>
+                                <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category.category_name }}" ng-click="navCatClicked(product.category.category_name)" target="_self">{{ product.category.category_display_name }}</a>
                                 <span class="loc-errow"> > </span>
                                 <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                             </section>
@@ -80,7 +80,7 @@
                                     <span class="loc-errow"> > </span>
                                     <a class="web-location-a" href="/hub/{{product.store_type_name}}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
                                     <span class="loc-errow"> > </span>
-                                    <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" ng-click="navCatClicked(product.category)" target="_self">{{ product.category.category_name }}</a>
+                                    <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category.category_name }}" ng-click="navCatClicked(product.category.category_name)" target="_self">{{ product.category.category_display_name }}</a>
                                     <span class="loc-errow"> > </span>
                                     <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                                 </div>

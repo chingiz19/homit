@@ -86,7 +86,7 @@ function sendEmailViaNoReply(mailOptions) {
 }
 
 pub.sendOrderSlip = async function (orderInfo, prices) {
-    let priceObject = await getTotalPriceForProducts(orderInfo.orders, prices);
+    let priceObject = await getTotalPriceForProducts(prices);
     let html = getEmailHtml(orderInfo.customer, priceObject);
 
     prepareOrderSlip(orderInfo, priceObject, function (pdfFileFath) {
@@ -420,7 +420,7 @@ function getOrderSlipHtml(OI, priceObject) {
             let product = orders[sub_order].products[k];
             let Description = filterInputField(product.brand) + " " + filterInputField(product.name) + " " + filterInputField(product.volume) + " " + " x" + filterInputField(product.packaging);
             let Quantity = product.quantity;
-            let Price = product.price_sold;
+            let Price = product.price;
             html_email +=
                 "<tr>" +
                 "<td class='order-cnt-table-cnt-tr-1'>" + filterInputField(Description) + "</td>" +
@@ -499,7 +499,7 @@ function prepareOrderSlip(orderInfo, priceObject, callback) {
  * Prepare received products array for catalog price calculator. 
  * @param {*Array} products - Products recieved after dispatch [array of product objecs] 
  */
-async function getTotalPriceForProducts(orders, price) {
+async function getTotalPriceForProducts(price) {
     let priceObject = {};
 
     priceObject.deliveryFee = (price.delivery_fee == 0 ? "FREE" : "C$ " + parseFloat(Math.round(price.delivery_fee * 100) / 100).toFixed(2));

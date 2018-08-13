@@ -693,10 +693,10 @@ pub.getStoreTypeIdByName = async function (storeType) {
 /**
  * Calculate prices for products
  * 
- * @param {*} cartProducts 
+ * @param {*} products 
  * @param {*} couponDetails - optional, passed if there are coupon details
  */
-pub.calculatePrice = async function (cartProducts, couponDetails) {
+pub.calculatePrice = async function (products, couponDetails) {
     let ALBERTA_GST = 0.05;
 
     let pricesPerOrder = {};
@@ -706,29 +706,33 @@ pub.calculatePrice = async function (cartProducts, couponDetails) {
     let totalDelivery = 0;
     let totalPrice = 0;
     let totalCouponOff = 0;
+    let usedRateIDs = [];
 
     let couponsUsed = [];
-
-    let products = await prepareProductsForCalculator(cartProducts);
-
-    if (!products || products.length == 0) { return false; }
 
     for (let storeType in products) {
         let tmpAmount = 0;
         let tmpTax = 0;
         let tmpCouponOff = 0;
+        let tmpDelivery = 0;
         let tmpCouponId = undefined;
         let tmpCouponMessage = undefined;
 
+        //*product cost calculation
         for (let item in products[storeType].products) {
             tmpAmount = tmpAmount + parseFloat(products[storeType].products[item].price) * products[storeType].products[item].quantity;
             if (products[storeType].products[item].tax) {
                 tmpTax = tmpTax + parseFloat(products[storeType].products[item].price) * products[storeType].products[item].quantity * ALBERTA_GST;
             }
         }
-        let tmpDelivery = products[storeType].del_fee_primary + Math.floor(parseInt(tmpAmount / 100)) * products[storeType].del_fee_secondary;
-        tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
 
+        //*delivery cost calculation 
+        if (!usedRateIDs.includes(products[storeType].rateId)) {
+            tmpDelivery = products[storeType].del_fee_primary + Math.floor(parseInt(tmpAmount / 100)) * products[storeType].del_fee_secondary;
+            usedRateIDs.push(products[storeType].rateId);
+        }
+
+        tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
         tmpTax = parseFloat(tmpTax.toFixed(2));
         tmpAmount = parseFloat(tmpAmount.toFixed(2));
         tmpDelivery = parseFloat(tmpDelivery.toFixed(2));
@@ -818,50 +822,77 @@ pub.calculatePrice = async function (cartProducts, couponDetails) {
     return finalPrices;
 }
 
-
-// finalObject.storeId = splitArray[0];
-// finalObject.productId = splitArray[1];
-// finalObject.varianceId = splitArray[2];
-// finalObject.packId = splitArray[3];
-
-
 /**
  * Get cart products by UIDs for calculator to process
  *  
  * @param {*} cartProducts {UID : quantity}
  */
-async function prepareProductsForCalculator(cartProducts) {
+pub.prepareProductsForCalculator = async function (cartProducts) {
     let finalResult = [];
     let UIDs = Object.keys(cartProducts);
 
     if (!(UIDs.length === 0 && cartProducts.constructor === Object)) {
-        if (allAvailableStores && allAvailableStores.length > 0) {
-            for (let id in UIDs) {
-                let selectedQuantity = cartProducts[id];
-                let IDobject = formatReceviedUID(id);
-                let selectedStore = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": IDobject.storeId });
-                if (selectedStore) {
-                    let searchId = IDobject.storeId + '' + IDobject.productId;
-                    let product = await MDB.models[selectedStore.name].findById(searchId).exec();
-                    if (product && product.variance && product.tax) {
-                        let selectedvariance = product.variance[varianceId];
-                        if (selectedvariance && selectedvariance.packs) {
-                            let selectedPack = selectedvariance.packs[IDobject.packId];
-                            if (selectedPack && selectedPack.price) {
-                                finalResult[selectedStore] = {
-                                    tax: product.tax,
-                                    price: selectedPack.price,
-                                    quantity: selectedQuantity
-                                };
-                            }
-                        }
-                    }
+        for (let id in UIDs) {
+            let selectedQuantity = cartProducts[UIDs[id]];
+            let IDobject = formatReceviedUID(UIDs[id]);
+            let rawStore = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": IDobject.storeId });
+            if (rawStore && rawStore.length > 0) {
+                let selectedStore = rawStore[0];
+                let searchId = IDobject.storeId + '-' + IDobject.productId;
+                let result = await MDB.models[selectedStore.name].findById(searchId).exec();
+                let tax = result.tax;
+                let product = pub.findNestedProductPrice(result.toObject(), [searchId, IDobject.varianceId, IDobject.packId]);
+                if (product) {
+                    finalResult[selectedStore.name] = {
+                        products: [],
+                        del_fee_primary: String,
+                        del_fee_secondary: String,
+                        rateId: Number
+                    };
+                    finalResult[selectedStore.name].products.push({
+                        UID: searchId,
+                        "tax": tax,
+                        "price": product.price,
+                        quantity: selectedQuantity
+                    });
+                    finalResult[selectedStore.name].del_fee_primary = selectedStore.del_fee_primary;
+                    finalResult[selectedStore.name].del_fee_secondary = selectedStore.del_fee_secondary;
+                    finalResult[selectedStore.name].rateId = selectedStore.rate_id;
                 }
             }
         }
     }
 
     return finalResult;
+}
+
+/**
+ * Finds nested product object including size
+ * 
+ * @param {Object} product  document from Mongo DB
+ * @param {array} searchId [product, variance and pack ids] e.g. 9-3-1 and 9-3-1-1
+ */
+pub.findNestedProductPrice = function (product, ids) {
+    if (product && ids && product.variance && product.tax) {
+        let selectedvariances = product.variance;
+        for (let k in selectedvariances) {
+            let variance = selectedvariances[k];
+            searchId = ids[0] + '-' + ids[1];
+            if (variance._id == searchId && variance.packs) {
+                let packs = variance.packs;
+                let localSize = variance.preffered_unit_size + variance.preffered_unit;
+                for (let l in packs) {
+                    let pack = packs[l];
+                    searchId += '-' + ids[2];
+                    if (pack._id == searchId && pack.price) {
+                        pack.size = localSize;
+                        return pack;
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }
 
 /**

@@ -13,6 +13,7 @@ CREATE TABLE catalog_store_types (
 	union_id INT UNSIGNED, 
 	del_fee_primary DOUBLE DEFAULT 4.99,
 	del_fee_secondary DOUBLE DEFAULT 2.99,
+	rate_id INT UNSIGNED,
 	
 	PRIMARY KEY (id),
 	UNIQUE(name),
@@ -414,7 +415,7 @@ CREATE TABLE orders_history (
 CREATE TABLE orders_cart_items ( 
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	order_id INT UNSIGNED NOT NULL,	 
-	depot_id INT UNSIGNED NOT NULL, 
+	depot_id VARCHAR(225) NOT NULL, 
 	quantity VARCHAR(225) NOT NULL,
 	price_sold DECIMAL(6,2) NOT NULL,
 	modified_quantity INT NULL,
@@ -422,8 +423,7 @@ CREATE TABLE orders_cart_items (
 	store_ready BOOLEAN DEFAULT FALSE,
 	
 	PRIMARY KEY (id),
-	CONSTRAINT fk_orders_cart_items_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_orders_cart_items_depot_id FOREIGN KEY (depot_id) REFERENCES catalog_depot(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	CONSTRAINT fk_orders_cart_items_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 
