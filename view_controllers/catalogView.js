@@ -1640,6 +1640,63 @@ let recommended_products = {
             "volume": "354ml",
             "price": 9.99
         }
+    ],
+    "westtaste": [
+        {
+            "brand": "Allessia's",
+            "name": "Breadsticks with Seasame Seeds",
+            "store_type_name": "linas-italian-market",
+            "product_id": 6816,
+            "category": "baked-goods",
+            "image": "bx_11248.jpeg",
+            "packaging": "1",
+            "volume": "100g",
+            "price": 2.49
+        },
+        {
+            "brand": "Good Drink",
+            "name": "Green Tea with Lemon and Honey",
+            "store_type_name": "linas-italian-market",
+            "product_id": 7152,
+            "category": "beverages",
+            "image": "b_11652.jpeg",
+            "packaging": "1",
+            "volume": "473ml",
+            "price": 2.99
+        },
+        {
+            "brand": "Xochitl",
+            "name": "Sea Salt Chips",
+            "store_type_name": "linas-italian-market",
+            "product_id": 7084,
+            "category": "snacks",
+            "image": "btc_11584.jpeg",
+            "packaging": "1",
+            "volume": "340g",
+            "price": 7.99
+        },
+        {
+            "brand": "Mission Hill Five Vineyards",
+            "name": "Cabernet Merlot",
+            "store_type_name": "liquor-station",
+            "product_id": 1036,
+            "category": "wine",
+            "image": "b_3036.jpeg",
+            "packaging": "1",
+            "volume": "750ml",
+            "price": 19.89
+        },
+        {
+            "brand": "Dwarf Stars",
+            "name": "Originals",
+            "store_type_name": "locally-made",
+            "product_id": 7647,
+            "category": "dwarf-stars",
+            "image": "sup_1349.jpeg",
+            "packaging": "1",
+            "volume": "11.99",
+            "price": 11.99
+        }
     ]
 }
 

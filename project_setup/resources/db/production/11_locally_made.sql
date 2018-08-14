@@ -44,6 +44,13 @@ INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (920, 
 INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (921, 11781, 8, 13.99, 1);
 INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (922, 11782, 8, 17.99, 1);
 INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (923, 11783, 8, 15.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (924, 11784, 8, 7.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (925, 11785, 8, 5.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (926, 11786, 8, 6.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (927, 11787, 8, 6.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (928, 11788, 8, 6.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (929, 11789, 8, 7.99, 1);
+INSERT INTO `catalog_depot`(id,item_id, store_type_id, price, tax) VALUES (930, 11790, 8, 5.99, 1);
 
 -- Catalog - Warehouse
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350072, 896, 337, 1000);
@@ -74,6 +81,13 @@ INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (35009
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350097, 921, 337, 1000);
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350098, 922, 337, 1000);
 INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350099, 923, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350100, 924, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350101, 925, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350102, 926, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350103, 927, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350104, 928, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350105, 929, 337, 1000);
+INSERT INTO `catalog_warehouse` (id, depot_id, store_id, quantity) VALUES (350106, 930, 337, 1000);
 
 -- Insert Catalog - Types Banners
 INSERT INTO `catalog_store_types_banners` (store_type_id, image, category_id, subcategory_id, product_id) VALUES(8, "local-market_banner-1.jpg", 24, null, null);
@@ -85,3 +99,4 @@ INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id
 INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (26, 8, 25, "8_borderland-food-co.jpg");
 INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (27, 8, 26, "8_pure-foods-fresh.jpg");
 INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (28, 8, 27, "8_honey-and-bloom.jpg");
+INSERT INTO `catalog_store_types_category_covers`(id, store_type_id, category_id, cover_image) VALUES (29, 8, 28, "8_westtaste.jpg");
