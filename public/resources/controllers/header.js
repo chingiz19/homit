@@ -23,13 +23,13 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             $scope.userSelectCategoryName = locationUrl[3];
         }
 
-        if ($scope.screenMob || $scope.screenTablet) {
+        if (($scope.screenMob || $scope.screenTablet) && $scope.storeType != undefined) {
             $http({
                 method: 'GET',
                 url: "/api/hub/" + $scope.storeType
             }).then(function successCallback(response) {
                 $scope.categories = response.data.categories;
-                if ($scope.categories.length == 0) {
+                if ($scope.categories && $scope.categories.length == 0) {
                     $scope.mobMenuStoresClass = "selected-mob-menu-btn width-100";
                     $scope.mobMenuCatClass = "none";
                 }

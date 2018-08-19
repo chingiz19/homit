@@ -99,4 +99,51 @@ body {
     .checkout-menu-btn-div {
         width: 15%;
     }
+
+    .union-controller {
+        min-height: calc(100vh - 197px);
+    
+        .content-section {
+            width: 100vw;
+        }
+    
+        .header {
+            margin-bottom: 40px;
+            padding-top: 0px;
+    
+            p {
+                color: #80889c;
+                width: 100%;
+                padding: 0 5%;
+            }
+        }
+
+        .stores-div{
+            margin: 0 auto 50px auto;
+            padding: 0 2%;
+        
+            a {
+                width: 155px;
+                margin-bottom: 20px;
+        
+                img {
+                    width: 155px;
+                    height: 209px;
+                    border-radius: 10px 10px 0 0;
+                }
+        
+                p {
+                    margin: 0;
+                    padding: 4px;
+                    font-size: 15px;
+                    color: #68686b;
+                    -webkit-font-smoothing: antialiased;
+                }
+            }
+        
+            z-index: 9;
+        }
+
+    }
+
 }

@@ -9,20 +9,18 @@
 </head>
 
 <body ng-cloak>
-    <!--googleoff: snippet-->
     <%- include('partial/checkout_menu')%>
         <div ng-controller="unionsPageController" class="union-controller">
             <div class="stripes union-pg-stipes">
             </div>
             <section class="content-section">
-
                 <div class="header box-center">
                     <h2>
                         <%= union_display_name%>
                     </h2>
                     <p><%= union_description%></p>
                 </div>
-
+<!--googleoff: snippet-->
                 <div class="stores-div fadeIn">
                     <a href="/hub/{{store.name}}" target="_self" class="hover-raise"
                         ng-repeat="store in unionStores">
@@ -31,10 +29,8 @@
                     </a>
                 </div>
             </section>
-
-
         </div>
-        <!--googleon: snippet-->
+<!--googleon: snippet-->
         <% if (!production) { %>
             <script src="/resources/services/localStorage.js"></script>
             <script src="/resources/services/cartService.js"></script>

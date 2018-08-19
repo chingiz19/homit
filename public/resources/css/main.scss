@@ -25,6 +25,23 @@ body {
     fill: rgb(42, 81, 145);
 }
 
+.logo-white{
+    display: initial !important;
+}
+
+.logo-rgb{
+    display: none;
+}
+
+.homit-nav .signUp-btn{
+    color: #fff !important;
+}
+
+.homit-nav .logIn-btn{
+    border-color: #fff !important;
+    color: #fff !important;
+}
+
 .homit-nav {
     display: flex;
     flex-direction: column;
@@ -124,11 +141,10 @@ body {
 .store-li-footer {
     position: absolute;
     top: -60px;
-    left: calc((100% - 285px)/2);
+    left: calc((100% - 242px)/2);
     font-size: 35px;
-    opacity: 0.6;
-    color: #39435a;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    color: #FFF;
 }
 
 .store-list-ul li {
@@ -203,7 +219,7 @@ body {
     width: 160px;
     border-radius: 95px;
     border: none;
-    box-shadow: 0 15px 35px rgba(100, 100, 100, 0.2), 0 3px 10px rgba(100, 100, 100, 0.17);
+    box-shadow: 0 15px 35px rgba(145, 145, 145, 0.2), 0 3px 10px rgba(145, 145, 145, 0.17);
     will-change: padding, height, width;
     transition: all 0.4s ease-out;
 }
@@ -226,21 +242,18 @@ body {
 
 .full-screen {
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     overflow-y: scroll;
 }
 
-.address-section {
+.landing-section {
     position: relative;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     overflow-y: hidden;
-}
-
-.address-section {
-    background-image: url("/resources/images/non-catalog-image/cover-image/calgary.jpg");
+    background-image: url("/resources/images/non-catalog-image/cover-image/landing_background.jpg");
 }
 
 .predictions-container {
@@ -259,11 +272,6 @@ body {
     position: relative;
     height: 230px;
     width: 100%;
-    background-color: rgba(230, 230, 230, 1);
-    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.2);
-    background-attachment: fixed;
-    background-position: center;
-    background-image: url("/resources/images/non-catalog-image/cover-image/hub-main_cover.png");
     display: flex;
     align-items: center;
     justify-content: center;
@@ -336,7 +344,7 @@ body {
 
 .main-page-address-box {
     position: relative;
-    top: 70px;
+    top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -352,10 +360,10 @@ body {
 .landing-message {
     text-align: center;
     font-size: 48px;
-    font-weight: 500;
-    letter-spacing: 0.065em;
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
-    color: rgba(203, 157, 114, 1);
+    font-weight: 100;
+    letter-spacing: 0.055em;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    color: #fff;
     user-select: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -367,43 +375,6 @@ body {
 
 .promotion-sec {
     width: 100%;
-}
-
-.steps-div {
-    width: 1140px;
-    height: 50vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0 auto;
-    padding: 10vh 0;
-}
-
-.steps-div div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 33%;
-    border-left: 2px solid rgb(220, 220, 220);
-    padding: 0 20px;
-}
-
-.steps-div h2 {
-    font-size: 35px;
-    margin-top: 0;
-    margin-bottom: 20px;
-    text-align: center;
-    letter-spacing: 0.4px;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-}
-
-.steps-div p {
-    font-size: 17px;
-    color: rgb(75, 75, 75);
-    letter-spacing: 0.2px;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
 }
 
 .promotion-1-2-sec {
@@ -473,7 +444,7 @@ body {
 .trending-prd-sec {
     height: 110vh;
     width: 100%;
-    padding: 5vh 0;
+    padding: 15px 0;
 }
 
 .tranding-hdr {
@@ -713,7 +684,7 @@ body {
     flex-direction: column;
     cursor: pointer;
     outline: none;
-    color: #475073e0;
+    color: #abb1cce0;
 
     .svg-1, .svg-2 {
         position: absolute;
@@ -749,13 +720,13 @@ body {
     overflow: hidden;
 
     .stripes{
-        background: -webkit-gradient(linear, left top, left bottom, from(#1aa0ee), color-stop(10%, #20b8d3), color-stop(38%, #67e1f7c7), color-stop(48%, #84fbffa1), color-stop(72%, #b1fffb5e));
-        background: linear-gradient(#1aa0ee, #20b8d3 10%, #67e1f7c7 38%, #84fbffa1 48%, #b1fffb5e 72%);
+        background: -webkit-gradient(linear, left top, left bottom, from(#638aa3ea), color-stop(10%, #7dabca), color-stop(38%, #82b6d8ec), color-stop(48%, #8ac7f0d5), color-stop(72%, #8ac7f042));
+        background: linear-gradient(#638aa3ea, #7dabca 10%, #82b6d8ec 38%, #8ac7f0d5 48%, #8ac7f042 72%);
         
         :nth-child(1) {
             grid-area: auto/8/-3/-1;
-            background: -webkit-gradient(linear,left top,right top,color-stop(40%,#95eff88a),to(#b9b1ff96));
-            background: linear-gradient(100grad, #9df5fd5b 44%, #b9b1ff96);
+            background: -webkit-gradient(linear,left top,right top,color-stop(40%,#a3d2f361),to(#b1beff96));
+            background: linear-gradient(100grad, #a3d2f361 44%, #b1beff96);
         }
 
         :nth-child(2) {
@@ -830,7 +801,7 @@ body {
     position: relative;
     height: 80%;
     width: 50%;
-    color: #6f8ba7;
+    color: #FFF;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -846,7 +817,7 @@ body {
 
         h2 {
             font-size: 35px;
-            color: #8da6be;
+            color: #FFF;
         }
     }
 
@@ -898,7 +869,9 @@ body {
 @media (max-width: 991px) and (min-width: 400px), screen and (max-device-width: 479px){
 
     .info-sec-background{
-        height: 90vh;
+        @media (max-width: 991px) and (min-width: 400px){
+            height: 90vh;
+        }
         flex-direction: column;
     }
 
@@ -926,7 +899,7 @@ body {
 }
 
 @media (max-width: 1140px) and (min-width: 856px) {
-    .homit-nav-content, .steps-div, .subscribe-section {
+    .homit-nav-content, .subscribe-section {
         width: 855px;
     }
 
@@ -942,16 +915,8 @@ body {
         min-height: 400px;
     }
 
-    .steps-div {
-        padding: 5vh 0;
-    }
-
     .span-text-step {
         display: none;
-    }
-
-    .steps-div h2 {
-        font-size: 30px;
     }
 
     .tranding-body {
@@ -989,40 +954,6 @@ body {
 
     .promotion-sec {
         width: 100vw;
-    }
-
-    .steps-div {
-        width: 100vw;
-        height: 535px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        margin: 0;
-        padding: 0;
-    }
-
-    .steps-div div {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 94%;
-        border-left: 2px solid rgb(230, 226, 226);
-        margin: 0 3%;
-    }
-
-    .steps-div h2 {
-        text-align: left;
-        font-size: 25px;
-        margin-bottom: 15px;
-        margin-top: 0;
-        margin-bottom: 10px;
-        letter-spacing: 0.1px;
-    }
-
-    .steps-div p {
-        font-size: 16px;
-        margin-bottom: 0;
-        color: #8f95a3;
     }
 
     .span-text-step {
@@ -1163,7 +1094,7 @@ body {
     }
 
     .landing-message, .location-msg {
-        font-size: 28px;
+        font-size: 35px;
     }
 }
 
@@ -1247,7 +1178,7 @@ body {
 }
 
 @media (max-width: 699px) and (min-width: 560px) {
-    .address-section {
+    .landing-section {
         overflow-x: hidden;
     }
 
@@ -1281,7 +1212,7 @@ body {
 }
 
 @media (max-width: 579px) and (min-width: 400px) {
-    .address-section {
+    .landing-section {
         overflow-x: hidden;
     }
 
@@ -1332,6 +1263,10 @@ body {
 
     .CG-done-icon{
         display: none;
+    }
+
+    .main-pg-stipes{
+        grid: repeat(5, 220px) / repeat(10, 1fr);
     }
 
     .subscribe-button:hover {
@@ -1405,6 +1340,7 @@ body {
     .signUp-btn {
         display: initial !important;
     }
+    
 }
 
 /* start of phone styles */
@@ -1427,35 +1363,16 @@ body {
     }
 
     .store-li img {
-        width: calc((100vw - 3*2*15px)/3);
-        height: calc((100vw - 3*2*15px)/3);
+        width: 115px;
+        height: 115px;
+        // width: calc((100vw - 3*2*15px)/3);
+        // height: calc((100vw - 3*2*15px)/3);
         box-shadow: 0 0px 6px 3px rgba(0, 0, 0, 0.15);
         user-select: none;
     }
 
     #address {
         overflow-x: hidden;
-    }
-
-    .store-li:hover span {
-        opacity: initial;
-        -webkit-transform: translate(-50%, -15px);
-        transform: translate(-50%, -15px);
-    }
-
-    .store-li span {
-        bottom: -20px;
-        left: 50%;
-        padding: 4px;
-        font-size: 11px;
-        transform: translate(-50%, -50px);
-        opacity: 1;
-        user-select: none;
-    }
-
-    .store-li:hover img {
-        box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.4);
-        transition: all 0.4s ease-out;
     }
 
     .address-input-span input::-webkit-input-placeholder {
@@ -1475,6 +1392,10 @@ body {
 }
 
 @media screen and (max-device-width: 479px) {
+
+    .main-pg-stipes{
+        grid: repeat(5, 145px) / repeat(10, 1fr);
+    }
 
     .CG-done-icon{
         display: none;
@@ -1496,12 +1417,6 @@ body {
         }
     }
 
-    .store-li:hover span {
-        opacity: initial;
-        -webkit-transform: translate(-50%, -50px);
-        transform: translate(-50%, -50px);
-    }
-
     .log-in-icon {
         fill: rgb(42, 81, 145);
     }
@@ -1519,12 +1434,23 @@ body {
     }
 
     .left-info-box {
+
+        color: #fff;
+
+        .leader{
+            font-size: 35px;
+        }
+
         .header {
             top: -20px;
 
             h2 {
-                font-size: 27px;
+                font-size: 20px;
             }
+        }
+
+        .center-align-secondary {
+            margin: 10px 0 0 60px;
         }
 
         .center-align-secondary p {
@@ -1547,9 +1473,15 @@ body {
         margin-right: 5px;
     }
 
+    .store-li span {
+        display: none;
+    }
+
     .store-li-footer {
         top: -40px;
-        left: calc((100% - 220px)/2);
+        width: 100%;
+        left: 0;
+        text-align: center;
         font-size: 25px;
         opacity: 0.8;
     }
@@ -1585,14 +1517,10 @@ body {
 
     .info-sec-background {
 
+        height: 600px;
+
         @media (max-width: 1100px) {
             flex-direction: column;
-        }
-
-        .left-info-box {
-            .header h2 {
-                font-size: 20px;
-            }
         }
 
         .check-row {
@@ -1604,12 +1532,6 @@ body {
 
             p {
                 font-size: 17px;
-            }
-        }
-
-        .left-info-box {
-            .center-align-secondary {
-                margin: 10px 0 0 60px;
             }
         }
 
@@ -1656,7 +1578,7 @@ body {
         display: initial !important;
     }
 
-    .address-section {
+    .landing-section {
         background-attachment: inherit !important;
 
         /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
