@@ -1,9 +1,10 @@
 let pub = {};
-let mongoose = require('mongoose');
+let mongoose = require('mongoose'), mongoosastic = require('mongoosastic');
 let Schema = mongoose.Schema;
 let mySQLConnected = false;
 let MongoDBConnected = false;
 let inititialized = false;
+let indexedStores = [];
 pub.models = [];
 
 if (!process.env.DB_NAME_MONGO) {
@@ -21,7 +22,7 @@ mongoose.connect(`mongodb://localhost:27017/${db_name}`, { useNewUrlParser: true
 });
 
 /**
- * Registers when MySQL connects to start fetching data from it
+ * Registers when MySQL connection
  */
 pub.mySQLConnected = function () {
     mySQLConnected = true;
@@ -29,63 +30,91 @@ pub.mySQLConnected = function () {
 }
 
 let productSchema = new Schema({
-    _id: Schema.Types.Mixed,
-    brand: String,
-    name: String,
-    tax: Number,
-    container: String,
+    _id: { type: Schema.Types.Mixed, es_indexed: true, es_type: 'keyword' },
+    brand: {
+        type: Schema.Types.String,
+        required: true,
+        es_indexed: true,
+        es_type: 'text',
+    },
+    name: {
+        type: Schema.Types.String,
+        required: true,
+        es_indexed: true,
+        es_type: 'text',
+    },
+    brandname: {
+        type: Schema.Types.String,
+        required: true,
+        es_indexed: true,
+        es_type: 'completion',
+    },
+    tax: { type: Schema.Types.Number, es_indexed: false },
+    container: { type: Schema.Types.String, es_indexed: false },
     images: {
-        image_catalog: String,
-        images_all: [String]
+        es_indexed: false,
+        image_catalog: {
+            type: Schema.Types.String,
+            es_indexed: false
+        },
+        images_all: [Schema.Types.String]
     },
     category: {
-        category_display_name: String,
-        category_name: String,
-        category_image: String,
-        category_cover: String
+        category_display_name: {
+            type: Schema.Types.String,
+            es_indexed: true,
+            es_type: 'keyword'
+        },
+        category_name: { type: Schema.Types.String, es_indexed: false },
+        category_image: { type: Schema.Types.String, es_indexed: false },
+        category_cover: { type: Schema.Types.String, es_indexed: false }
     },
-    subcategory: String,
+    subcategory: {
+        type: Schema.Types.String,
+        es_indexed: true,
+        es_type: 'keyword'
+    },
     details: {
         ingredients: {
-            display_name: String,
-            description: String,
+            display_name: { type: Schema.Types.String, es_indexed: false },
+            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text' }
         },
         preview: {
-            display_name: String,
-            description: String
+            display_name: { type: Schema.Types.String, es_indexed: false },
+            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text' }
         },
         country_of_origin: {
-            display_name: String,
-            description: String
+            display_name: { type: Schema.Types.String, es_indexed: false },
+            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text' }
         },
         serving_suggestions: {
-            display_name: String,
-            description: String
+            display_name: { type: Schema.Types.String, es_indexed: false },
+            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text' }
         }
     },
     tags: [
         {
-            name: Number,
-            rating: String,
-            icon_url: String
+            name: { type: Schema.Types.String, es_indexed: true, es_type: 'keyword' },
+            rating: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
+            icon_url: { type: Schema.Types.String, es_indexed: false }
         }
     ],
     variance: [
         {
-            _id: Schema.Types.Mixed,
-            si_unit_size: Number,
-            si_unit: String,
-            preffered_unit: String,
-            preffered_unit_size: String,
+            _id: { type: Schema.Types.Mixed, es_indexed: false },
+            si_unit_size: { type: Schema.Types.Number, es_indexed: false },
+            si_unit: { type: Schema.Types.String, es_indexed: false },
+            preffered_unit: { type: Schema.Types.String, es_indexed: false },
+            preffered_unit_size: { type: Schema.Types.String, es_indexed: false },
             packs: [
                 {
-                    _id: Schema.Types.Mixed,
-                    h_value: Number,
-                    price: Number,
-                    available: Number,
-                    stock_quantity: Number,
+                    _id: { type: Schema.Types.Mixed, es_indexed: false },
+                    h_value: { type: Schema.Types.Number, es_indexed: false },
+                    price: { type: Schema.Types.Number, es_indexed: false },
+                    available: { type: Schema.Types.Number, es_indexed: false },
+                    stock_quantity: { type: Schema.Types.Number, es_indexed: false },
                     sold: {
-                        quantity: Number
+                        quantity: { type: Schema.Types.Number, es_indexed: false },
                     }
                 }
             ]
@@ -93,17 +122,7 @@ let productSchema = new Schema({
     ]
 });
 
-/**
- * Dummy function
- * @param {*} storeType 
- * @param {*} productBrand 
- */
-pub.findProductByBrand = async function (storeType, productBrand) {                                     //will be deleted 
-    return pub.models[storeType].findOne({ 'brand': productBrand }, {}, function (err, product) {
-        if (err) throw new Error(err);
-        return product;
-    });
-}
+productSchema.plugin(mongoosastic);
 
 /**
  * Inits storeType - Collection registration with Mongo DB
@@ -117,12 +136,78 @@ async function init() {
             for (storeType in storeTypes) {
                 let storeTypeName = storeTypes[storeType].name;
                 pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
+                pub.models[storeTypeName].createMapping(function (err, mapping) {
+                    if (err) {
+                        Logger.log.error('Error creating mapping (you can safely ignore this)');
+                        if (process.env.n_mode != "production") { console.log(err); }
+                    } else {
+                        Logger.log.debug(`Mapping created for ${storeTypeName} and mapping is ${JSON.stringify(mapping)}`);
+                    }
+                    synchronizeModel(pub.models[storeTypeName], storeTypeName);
+                });
             }
         }
 
         if (process.env.n_mode != "production") {
             console.log('Initialized store models with Mongo DB');
         }
+    }
+}
+
+async function synchronizeModel(mongoModel, storeType) {
+    indexedStores[storeType] = false;
+    let stream = mongoModel.synchronize(), count = 0;
+
+    stream.on('data', function (err, doc) {
+        count++;
+    });
+    stream.on('close', function () {
+        indexedStores[storeType] = true;
+        checkIfSyncIsDone();
+    });
+    stream.on('error', function (err) {
+        console.log(err);
+    });
+}
+
+function checkIfSyncIsDone() {
+    for (let i in indexedStores) {
+        if (!indexedStores[i]) {
+            return;
+        }
+    }
+    if (process.env.n_mode != "production") {
+        return console.log('All Mongo DB documents have been sync-ed');
+    }
+    return true;
+}
+
+pub.testSearch = async function (suggest) {
+    MDB.models['pure-foods-fresh'].esSearch({
+        "suggest": {
+            "suggested": {
+                "prefix": suggest,
+                "completion": {
+                    "field": "brandname",
+                    "fuzzy": {
+                        "fuzziness": 1
+                    }
+                }
+            }
+        }
+    }, function (err, results) {
+        if (err) {
+            return console.log(JSON.stringify(err, null, 4));
+        }
+        return displayOptions(results);
+    });
+}
+
+function displayOptions(results) {
+    let options = results.suggest.suggested[0].options;
+
+    for (let i in options) {
+        console.log(options[i].text);
     }
 }
 

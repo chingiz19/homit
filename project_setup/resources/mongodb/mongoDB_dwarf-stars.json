@@ -53,7 +53,8 @@
                     }
                 ]
             }
-        ]
+        ],
+        "brandname": "Dwarf Stars Originals"
     },
     {
         "_id": "7-2",
@@ -109,7 +110,8 @@
                     }
                 ]
             }
-        ]
+        ],
+        "brandname": "Dwarf Stars Pumpkin Seed Butter Cups"
     },
     {
         "_id": "7-3",
@@ -165,6 +167,7 @@
                     }
                 ]
             }
-        ]
+        ],
+        "brandname": "Dwarf Stars PumpKING Protein Balls"
     }
 ]
