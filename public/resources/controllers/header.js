@@ -23,7 +23,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             $scope.userSelectCategoryName = locationUrl[3];
         }
 
-        if ($scope.screenMob || $scope.screenTablet) {
+        if (($scope.screenMob || $scope.screenTablet) && $scope.storeType != undefined) {
             $http({
                 method: 'GET',
                 url: "/api/hub/" + $scope.storeType
