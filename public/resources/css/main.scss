@@ -25,6 +25,23 @@ body {
     fill: rgb(42, 81, 145);
 }
 
+.logo-white{
+    display: initial !important;
+}
+
+.logo-rgb{
+    display: none;
+}
+
+.homit-nav .signUp-btn{
+    color: #fff !important;
+}
+
+.homit-nav .logIn-btn{
+    border-color: #fff !important;
+    color: #fff !important;
+}
+
 .homit-nav {
     display: flex;
     flex-direction: column;
@@ -127,7 +144,7 @@ body {
     left: calc((100% - 242px)/2);
     font-size: 35px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    color: rgba(203, 157, 114, 1);
+    color: #FFF;
 }
 
 .store-list-ul li {
@@ -239,7 +256,7 @@ body {
 }
 
 .address-section {
-    background-image: url("/resources/images/non-catalog-image/cover-image/calgary.jpg");
+    background-image: url("/resources/images/non-catalog-image/cover-image/landing_background.jpg");
 }
 
 .predictions-container {
@@ -258,11 +275,6 @@ body {
     position: relative;
     height: 230px;
     width: 100%;
-    background-color: rgba(230, 230, 230, 1);
-    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.2);
-    background-attachment: fixed;
-    background-position: center;
-    background-image: url("/resources/images/non-catalog-image/cover-image/hub-main_cover.png");
     display: flex;
     align-items: center;
     justify-content: center;
@@ -335,7 +347,7 @@ body {
 
 .main-page-address-box {
     position: relative;
-    top: 70px;
+    top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -351,10 +363,10 @@ body {
 .landing-message {
     text-align: center;
     font-size: 48px;
-    font-weight: 500;
-    letter-spacing: 0.065em;
+    font-weight: 100;
+    letter-spacing: 0.055em;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    color: rgba(203, 157, 114, 1);
+    color: #fff;
     user-select: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -675,7 +687,7 @@ body {
     flex-direction: column;
     cursor: pointer;
     outline: none;
-    color: #475073e0;
+    color: #abb1cce0;
 
     .svg-1, .svg-2 {
         position: absolute;
@@ -1085,7 +1097,7 @@ body {
     }
 
     .landing-message, .location-msg {
-        font-size: 28px;
+        font-size: 35px;
     }
 }
 
@@ -1331,6 +1343,7 @@ body {
     .signUp-btn {
         display: initial !important;
     }
+    
 }
 
 /* start of phone styles */
@@ -1353,8 +1366,10 @@ body {
     }
 
     .store-li img {
-        width: calc((100vw - 3*2*15px)/3);
-        height: calc((100vw - 3*2*15px)/3);
+        width: 115px;
+        height: 115px;
+        // width: calc((100vw - 3*2*15px)/3);
+        // height: calc((100vw - 3*2*15px)/3);
         box-shadow: 0 0px 6px 3px rgba(0, 0, 0, 0.15);
         user-select: none;
     }
@@ -1422,12 +1437,23 @@ body {
     }
 
     .left-info-box {
+
+        color: #fff;
+
+        .leader{
+            font-size: 35px;
+        }
+
         .header {
             top: -20px;
 
             h2 {
-                font-size: 27px;
+                font-size: 20px;
             }
+        }
+
+        .center-align-secondary {
+            margin: 10px 0 0 60px;
         }
 
         .center-align-secondary p {
@@ -1500,12 +1526,6 @@ body {
             flex-direction: column;
         }
 
-        .left-info-box {
-            .header h2 {
-                font-size: 20px;
-            }
-        }
-
         .check-row {
             .check-mark-icon {
                 height: 22px;
@@ -1515,12 +1535,6 @@ body {
 
             p {
                 font-size: 17px;
-            }
-        }
-
-        .left-info-box {
-            .center-align-secondary {
-                margin: 10px 0 0 60px;
             }
         }
 
