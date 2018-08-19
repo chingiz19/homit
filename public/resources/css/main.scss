@@ -219,7 +219,7 @@ body {
     width: 160px;
     border-radius: 95px;
     border: none;
-    box-shadow: 0 15px 35px rgba(100, 100, 100, 0.2), 0 3px 10px rgba(100, 100, 100, 0.17);
+    box-shadow: 0 15px 35px rgba(145, 145, 145, 0.2), 0 3px 10px rgba(145, 145, 145, 0.17);
     will-change: padding, height, width;
     transition: all 0.4s ease-out;
 }
@@ -246,16 +246,13 @@ body {
     overflow-y: scroll;
 }
 
-.address-section {
+.landing-section {
     position: relative;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     overflow-y: hidden;
-}
-
-.address-section {
     background-image: url("/resources/images/non-catalog-image/cover-image/landing_background.jpg");
 }
 
@@ -723,13 +720,13 @@ body {
     overflow: hidden;
 
     .stripes{
-        background: -webkit-gradient(linear, left top, left bottom, from(#1aa0ee), color-stop(10%, #20b8d3), color-stop(38%, #67e1f7c7), color-stop(48%, #84fbffa1), color-stop(72%, #b1fffb5e));
-        background: linear-gradient(#1aa0ee, #20b8d3 10%, #67e1f7c7 38%, #84fbffa1 48%, #b1fffb5e 72%);
+        background: -webkit-gradient(linear, left top, left bottom, from(#638aa3ea), color-stop(10%, #7dabca), color-stop(38%, #82b6d8ec), color-stop(48%, #8ac7f0d5), color-stop(72%, #8ac7f042));
+        background: linear-gradient(#638aa3ea, #7dabca 10%, #82b6d8ec 38%, #8ac7f0d5 48%, #8ac7f042 72%);
         
         :nth-child(1) {
             grid-area: auto/8/-3/-1;
-            background: -webkit-gradient(linear,left top,right top,color-stop(40%,#95eff88a),to(#b9b1ff96));
-            background: linear-gradient(100grad, #9df5fd5b 44%, #b9b1ff96);
+            background: -webkit-gradient(linear,left top,right top,color-stop(40%,#a3d2f361),to(#b1beff96));
+            background: linear-gradient(100grad, #a3d2f361 44%, #b1beff96);
         }
 
         :nth-child(2) {
@@ -804,7 +801,7 @@ body {
     position: relative;
     height: 80%;
     width: 50%;
-    color: #6f8ba7;
+    color: #FFF;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -820,7 +817,7 @@ body {
 
         h2 {
             font-size: 35px;
-            color: #8da6be;
+            color: #FFF;
         }
     }
 
@@ -1181,7 +1178,7 @@ body {
 }
 
 @media (max-width: 699px) and (min-width: 560px) {
-    .address-section {
+    .landing-section {
         overflow-x: hidden;
     }
 
@@ -1215,7 +1212,7 @@ body {
 }
 
 @media (max-width: 579px) and (min-width: 400px) {
-    .address-section {
+    .landing-section {
         overflow-x: hidden;
     }
 
@@ -1581,7 +1578,7 @@ body {
         display: initial !important;
     }
 
-    .address-section {
+    .landing-section {
         background-attachment: inherit !important;
 
         /*forces the browser to use hardware acceleration to access the device’s GPU (Graphical Processing Unit)*/
