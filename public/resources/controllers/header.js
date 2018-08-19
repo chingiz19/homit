@@ -29,7 +29,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
                 url: "/api/hub/" + $scope.storeType
             }).then(function successCallback(response) {
                 $scope.categories = response.data.categories;
-                if ($scope.categories.length == 0) {
+                if ($scope.categories && $scope.categories.length == 0) {
                     $scope.mobMenuStoresClass = "selected-mob-menu-btn width-100";
                     $scope.mobMenuCatClass = "none";
                 }

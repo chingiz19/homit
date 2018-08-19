@@ -7,12 +7,14 @@ INSERT INTO 'catalog_store_unions' (id, name, display_name, image, description_t
 INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(9,"pure-foods-fresh", "Pure Foods Fresh", "pure-foods-fresh.jpg");
 INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(10,"borderland-food-co", "Borderland Food Co.","border-land-co.jpg");
 INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(11,"honey-and-bloom", "Honey & Bloom","honey-and-bloom.jpg");
+INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(12,"westtaste", "WestTaste","westtaste.jpg");
 
 -- Catalog - Store
 -- !!! Update Dwarf Stars location in DB
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (338, "s_", "Pure Foods Fresh", "10 Brentwood Common Northwest, Calgary, AB", "51.087118", "-114.128275", "4033977020", "9");
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (339, "s_", "Borderland Food Co.", "10 Brentwood Common Northwest, Calgary, AB", "51.087118", "-114.128275", "4033977020", "10");
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (340, "s_", "Honey & Bloom", "10 Brentwood Common Northwest, Calgary, AB", "51.087118", "-114.128275", "4033977020", "11");
+INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (341, "s_", "WestTaste", "10 Brentwood Common Northwest, Calgary, AB", "51.087118", "-114.128275", "4033977020", "12");
 
 -- Catalog - Store Hours
 -- !!! Update Dwarf Stars store hours in DB
@@ -39,3 +41,11 @@ INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_s
 INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (340, 5, "10:00:00", "780", "10:00:00", "780");
 INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (340, 6, "10:00:00", "780", "10:00:00", "780");
 INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (340, 7, "10:00:00", "780", "10:00:00", "780");
+
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (341, 1, "10:00:00", "780", "10:00:00", "780");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (341, 2, "10:00:00", "780", "10:00:00", "780");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (341, 3, "10:00:00", "780", "10:00:00", "780");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (341, 4, "10:00:00", "780", "10:00:00", "780");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (341, 5, "10:00:00", "780", "10:00:00", "780");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (341, 6, "10:00:00", "780", "10:00:00", "780");
+INSERT INTO `stores_hours` (store_id, day, open_time, open_duration, open_time_scheduled, open_duration_scheduled) VALUES (341, 7, "10:00:00", "780", "10:00:00", "780");
