@@ -7,7 +7,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
     $scope.userSubscribed = false;
     $scope.hubStores = [];
 
-    $scope.mainSpecials={};
+    $scope.mainSpecials = {};
 
     $scope.init = function () {
 
@@ -49,7 +49,12 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
             method: 'GET',
             url: "/api/hub/mainspecials"
         }).then(function successCallback(response) {
-            $scope.mainSpecials = helpers.buildProductUrl(response.data.specials);
+            $scope.mainSpecials = response.data.specials;
+            for (let speciatType in $scope.mainSpecials) {
+                for (let x = 0; x < $scope.mainSpecials[speciatType].products.length; x++) {
+                    $scope.mainSpecials[speciatType].products[x]["product_url"] = helpers.buildProductPagePath($scope.mainSpecials[speciatType].products[x], tmpProduct.store_name);
+                }
+            }
         }, function errorCallback(response) {
             notification.addErrorMessage("Sorry. Something went wrong.");
         });
@@ -93,9 +98,9 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
         $window.location.href = $window.location.origin + path;
     };
 
-    $scope.changeTranPrd = function(type){
-        let old_type= $scope.specialSelected;
-        if(old_type == type) return;
+    $scope.changeTranPrd = function (type) {
+        let old_type = $scope.specialSelected;
+        if (old_type == type) return;
         $('#' + old_type).addClass('tranding-type-btn');
         $('#' + type).removeClass('tranding-type-btn');
         $scope.specialSelected = type;
@@ -135,7 +140,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
      */
     $scope.subscribe = function () {
         let userEmail = $scope.subscribeEmail;
-        if(!$scope.userSubscribed){
+        if (!$scope.userSubscribed) {
             if (userEmail) {
                 $http({
                     method: 'POST',
@@ -167,7 +172,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
             } else {
                 $scope.subscribeErrorMessage = "Valid email only";
             }
-        } else{
+        } else {
             $scope.subscribeClassBtn = "subscribe-button";
             $scope.subscribeClassInput = "subscribe-input";
             $scope.subscribeButtonText = "SUBSCRIBE";
@@ -181,7 +186,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
         $scope.subscribeErrorMessage = "";
     };
 
-    $scope.productClick = function(item){
+    $scope.productClick = function (item) {
         googleAnalytics.addEvent('product_clicked', {
             "event_label": item.name + " " + item.brand,
             "event_category": googleAnalytics.eventCategories.main_actions
@@ -195,13 +200,13 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
         AOS.init();
     };
 
-    function addStoreAnimationClass (array, class1, class2){
+    function addStoreAnimationClass(array, class1, class2) {
         let store_class_added = false;
-        for(let x=0; x<$scope.hubStores.length; x++){
-            if(!store_class_added){
+        for (let x = 0; x < $scope.hubStores.length; x++) {
+            if (!store_class_added) {
                 $("#store_" + x).addClass(class1);
                 store_class_added = !store_class_added;
-            } else{
+            } else {
                 $("#store_" + x).addClass(class2);
                 store_class_added = !store_class_added;
             }

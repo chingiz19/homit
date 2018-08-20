@@ -132,17 +132,17 @@
                                 <img alt="{{item.name + ' ' + item.brand}}" ng-src="/resources/images/products/{{ item.store_type_name }}/{{ item.product_image }}">
                             </li>
                             <li class="prom-item-brand">{{ item.brand }}</li>
-                            <li class="prom-item-name" ng-if="item.packaging > 1">
+                            <li class="prom-item-name" ng-if="item.variance[0].packs[0].h_value > 1">
                                 <span>{{ item.name }}
-                                    <span class="prom-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span>
+                                    <span class="prom-item-size"> {{ "(" + item.variance[0].packs[0].h_value + "x" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span>
                                 </span>
                             </li>
-                            <li class="prom-item-name" ng-if="!(item.packaging > 1)">
+                            <li class="prom-item-name" ng-if="!(item.variance[0].packs[0].h_value > 1)">
                                 <span>{{ item.name }}
-                                    <span class="prom-item-size"> {{ "(" + item.volume + ")"}}</span>
+                                    <span class="prom-item-size"> {{ "(" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span>
                                 </span>
                             </li>
-                            <li class="item-price">{{ item.price }}
+                            <li class="item-price">{{ item.variance[0].packs[0].price }}
                                 <span>C$</span>
                             </li>
                         </ul>

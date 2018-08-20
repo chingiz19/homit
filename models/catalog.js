@@ -163,35 +163,15 @@ pub.getAllMainSpecials = async function () {
         special_types.display_name AS special_types_display_name,
         special_types.api_name AS special_types_api_name,
         special_products.product_id AS product_id,
-        store_types.name AS store_type_name,
-        category.name AS category,
-        products.image AS product_image,
-        listings.brand AS brand,
-        listings.name AS name,
-        depot.price AS price,
-        containers.name AS container,
-        packagings.name AS packaging,
-        volumes.name AS volume
+        store_types.name AS store_type_name
         
         FROM catalog_hub_special_types AS special_types
         JOIN catalog_hub_special_products AS special_products ON (special_types.id = special_products.special_type_id)
         JOIN catalog_store_types AS store_types ON (store_types.id = special_products.store_type_id)
-        JOIN catalog_products AS products ON (special_products.product_id = products.id)
-        JOIN catalog_listings AS listings ON (products.listing_id = listings.id)
-        JOIN catalog_types AS type ON (listings.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_items AS items ON (items.product_id = products.id)
-        JOIN catalog_depot AS depot ON (depot.item_id = items.id)
-        
-        JOIN catalog_packaging_containers AS containers ON (containers.id = products.container_id)
-        JOIN catalog_packaging_packagings AS packagings ON (packagings.id = items.packaging_id)
-        JOIN catalog_packaging_volumes AS volumes ON (volumes.id = items.volume_id)
         
         WHERE
         special_products.active = true
-        AND depot.available = true
-        ORDER by special_type_id, product_id, price;`;
+        ORDER by special_type_id;`;
 
     let specials = await db.runQuery(sqlQuery);
     if (specials == false) {
@@ -201,6 +181,39 @@ pub.getAllMainSpecials = async function () {
     }
 }
 
+/**
+ * Format specials
+ * 
+ * @param {*} specials 
+ */
+var getFormattedSpecials = async function (specials) {
+    let result = {};
+    let tmpSpecialType = "";
+    let tmpSpecialTypeDisplay = "";
+
+    for(let x = 0; x < specials.length; x ++ ){
+        let product = await MDB.models[specials[x]["store_type_name"]].findById(specials[x]["product_id"]).exec();
+
+        tmpSpecialType = specials[x].special_types_api_name;
+        tmpSpecialTypeDisplay = specials[x].special_types_display_name;
+
+        if (!result.hasOwnProperty(tmpSpecialType)) {
+            result[tmpSpecialType] = {
+                "display_name": tmpSpecialTypeDisplay,
+                "api_name": tmpSpecialType,
+                "products": []
+            };
+        }
+        product["store_name"] = specials[x]["store_type_name"];
+        result[tmpSpecialType].products.push(product);
+    }
+    return result;
+}
+
+/**
+ * Returns store info object
+ * @param {string} storeType 
+ */
 pub.getStoreTypeInfo = async function (storeType) {
     let data = { "name": storeType };
     let dbResult = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, data);
@@ -370,124 +383,6 @@ pub.getAllSubcategoriesByCategory = async function (storeType, categoryName) {
         .find({ "category.category_name": categoryName })
         .distinct('subcategory');
     return result;
-}
-
-/**
- * Format specials
- * 
- * @param {*} specials 
- */
-var getFormattedSpecials = function (specials) {
-    let result = {};
-
-    let tmpProducts = {};
-    let tmpSpecialType;
-    let tmpSpecialTypeDisplay;
-    for (let i = 0; i < specials.length; i++) {
-        if (i == 0) {
-            tmpSpecialType = specials[i].special_types_api_name;
-            tmpSpecialTypeDisplay = specials[i].special_types_display_name;
-        }
-
-        let currentProduct = Object.assign({}, specials[i]);
-        delete currentProduct.special_types_display_name;
-        delete currentProduct.special_types_api_name;
-
-        if (tmpSpecialType != specials[i].special_types_api_name) {
-            result[tmpSpecialType] = {
-                "display_name": tmpSpecialTypeDisplay,
-                "api_name": tmpSpecialType,
-                "products": Object.values(tmpProducts)
-            };
-
-            tmpProducts = {};
-            tmpSpecialType = specials[i].special_types_api_name;
-            tmpSpecialTypeDisplay = specials[i].special_types_display_name;
-        }
-
-        if (!tmpProducts[currentProduct.product_id]) {
-            tmpProducts[currentProduct.product_id] = currentProduct;
-        }
-
-        if (i == specials.length - 1) {
-            result[tmpSpecialType] = {
-                "display_name": tmpSpecialTypeDisplay,
-                "api_name": tmpSpecialType,
-                "products": Object.values(tmpProducts)
-            };
-        }
-    }
-
-    return result;
-}
-
-/* Format products for front-end - for product page
-* 
-* @param {*} products 
-*/
-var getFormattedProductsForProductPage = function (products) {
-    let tmpResult = {};
-
-    for (let i = 0; i < products.length; i++) {
-        let product = products[i];
-        let p_package = product.packaging;
-        let p_volume = product.volume;
-
-        let imageLocation = "/resources/images/products/" + product.category.toLowerCase() + "/";
-
-        if (tmpResult.hasOwnProperty(product.product_id)) {
-            // Adding to product variant
-            if (tmpResult[product.product_id].product_variants.hasOwnProperty(p_volume)) {
-                tmpResult[product.product_id].product_variants[p_volume][p_package] = {
-                    "depot_id": product.depot_id,
-                    "price": product.price
-                }
-            } else {
-                tmpResult[product.product_id].product_variants[p_volume] = {
-                    all_packagings: []
-                };
-                tmpResult[product.product_id].product_variants[p_volume][p_package] = {
-                    "depot_id": product.depot_id,
-                    "price": product.price
-                }
-            }
-        } else {
-            // Adding to tmpResult
-            tmpResult[product.product_id] = {
-                product_id: products[i].product_id,
-                listing_id: products[i].listing_id,
-                subcategory: products[i].subcategory,
-                type: products[i].type,
-                brand: products[i].brand,
-                name: products[i].name,
-                store_type: product.store_type,
-                store_type_display_name: product.store_type_display_name,
-                image: imageLocation + products[i].image,
-                quantity: products[i].quantity,
-                container: products[i].container,
-                category: products[i].category,
-                tax: products[i].tax,
-                product_variants: {
-                    all_volumes: []
-                }
-            };
-            tmpResult[product.product_id].product_variants[p_volume] = {
-                all_packagings: []
-            };
-            tmpResult[product.product_id].product_variants[p_volume][p_package] = {
-                "depot_id": product.depot_id,
-                "item_id": products[i].item_id,
-                "price": product.price
-            }
-        }
-
-        if (!tmpResult[product.product_id].product_variants.all_volumes.includes(p_volume))
-            tmpResult[product.product_id].product_variants.all_volumes.push(p_volume);
-        if (!tmpResult[product.product_id].product_variants[p_volume].all_packagings.includes(p_package))
-            tmpResult[product.product_id].product_variants[p_volume].all_packagings.push(p_package);
-    }
-
-    return Object.values(tmpResult);
 }
 
 /**
