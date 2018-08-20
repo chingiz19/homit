@@ -182,8 +182,8 @@ function checkIfSyncIsDone() {
     return true;
 }
 
-pub.testSearch = async function (suggest) {
-    MDB.models['pure-foods-fresh'].esSearch({
+pub.suggestSearch = async function (suggest) {
+    MDB.models['liquor-station'].esSearch({
         "suggest": {
             "suggested": {
                 "prefix": suggest,
@@ -203,8 +203,56 @@ pub.testSearch = async function (suggest) {
     });
 }
 
+pub.search = async function (text) {
+    MDB.models['liquor-station'].search({
+        query_string: {
+            query: text,
+        }
+    }, function (err, results) {
+        if (err) {
+            return console.log(JSON.stringify(err, null, 4));
+        }
+        return console.log(results);
+    });
+}
+
+pub.termSuggest = async function (inText) {
+    MDB.models['liquor-station'].esSearch({
+        "suggest": {
+            "text": inText,
+            "brand-suggest": { "phrase": { "field": "brand" } },
+            "brand-name-suggest": { "phrase": { "field": "brandname" } },
+            "name-suggest": { "phrase": { "field": "name" } },
+            "cat-suggest": { "phrase": { "field": "category.category_display_name" } },
+            "subcat-suggest": { "phrase": { "field": "subcategory" } },
+            "country-suggest": { "phrase": { "field": "details.country_of_origin.description" } },
+            "desc-suggest": { "phrase": { "field": "details.preview.description" } }
+        }
+    }, function (err, results) {
+        if (err) {
+            return console.log(JSON.stringify(err, null, 4));
+        }
+        return displayPhraseOptions(results);
+    });
+}
+
 function displayOptions(results) {
     let options = results.suggest.suggested[0].options;
+
+    for (let i in options) {
+        console.log(options[i].text);
+    }
+}
+
+function displayPhraseOptions(results) {
+    let options = [];
+    options = options.concat(results.suggest['brand-suggest'][0].options);
+    options = options.concat(results.suggest['brand-name-suggest'][0].options);
+    options = options.concat(results.suggest['name-suggest'][0].options);
+    options = options.concat(results.suggest['cat-suggest'][0].options);
+    options = options.concat(results.suggest['subcat-suggest'][0].options);
+    options = options.concat(results.suggest['country-suggest'][0].options);
+    options = options.concat(results.suggest['desc-suggest'][0].options);
 
     for (let i in options) {
         console.log(options[i].text);

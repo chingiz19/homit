@@ -3,6 +3,7 @@
         "_id": "12-1",
         "brand": "WestTaste",
         "name": "Tungo Mango Hot Sauce",
+        "brandname": "WestTaste Tungo Mango Hot Sauce",
         "container": "bottle",
         "tax": 1,
         "images": {
@@ -64,6 +65,7 @@
         "_id": "12-2",
         "brand": "WestTaste",
         "name": "Honey & Beet Spread",
+        "brandname": "WestTaste Honey & Beet Spread",
         "container": "jar",
         "tax": 1,
         "images": {
@@ -125,6 +127,7 @@
         "_id": "12-3",
         "brand": "WestTaste",
         "name": "Jan Style Beet Spread",
+        "brandname": "WestTaste Jan Style Beet Spread",
         "container": "jar",
         "tax": 1,
         "images": {
@@ -186,6 +189,7 @@
         "_id": "12-4",
         "brand": "WestTaste",
         "name": "Honey & Carrot Spread",
+        "brandname": "WestTaste Honey & Carrot Spread",
         "container": "jar",
         "tax": 1,
         "images": {
@@ -247,6 +251,7 @@
         "_id": "12-5",
         "brand": "WestTaste",
         "name": "Jam Style Carrot Spread",
+        "brandname": "WestTaste Jam Style Carrot Spread",
         "container": "jar",
         "tax": 1,
         "images": {
@@ -308,6 +313,7 @@
         "_id": "12-6",
         "brand": "WestTaste",
         "name": "Balsamic & Beet Salad Dressing",
+        "brandname": "WestTaste Balsamic & Beet Salad Dressing",
         "container": "bottle",
         "tax": 1,
         "images": {
@@ -369,6 +375,7 @@
         "_id": "12-7",
         "brand": "WestTaste",
         "name": "Chia Seed & Mint Salad Dressing",
+        "brandname": "WestTaste Chia Seed & Mint Salad Dressing",
         "container": "bottle",
         "tax": 1,
         "images": {
@@ -430,6 +437,7 @@
         "_id": "12-8",
         "brand": "WestTaste",
         "name": "Sipcy Hot Sauce",
+        "brandname": "WestTaste Sipcy Hot Sauce",
         "container": "bottle",
         "tax": 1,
         "images": {
