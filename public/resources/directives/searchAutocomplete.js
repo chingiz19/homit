@@ -105,12 +105,13 @@ app.directive("searchAutocomplete", function (localStorage, $interval, $timeout,
                 }
                 //event key "esc"
                 else if (evt.keyCode == 27) {
-                    $(".search-btn").click();
                     $(".search-input").blur();
+                    clearSearch();
                 }
             }
 
             scope.startSearch = function(search_text){
+                if(!search_text) return;
                 $window.location.href = $window.location.origin + "/search/" + search_text;
             };
 

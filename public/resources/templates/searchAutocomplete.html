@@ -102,14 +102,13 @@
     .li-content a {
         text-decoration: none !important;
         display: flex;
-        padding: 10px 0;
+        padding: 6px 0 6px 10px;
     }
 
     .store-text {
         margin: auto 0;
-        padding-left: 25px;
         color: rgba(0, 0, 0, 0.65);
-        font-size: 18px;
+        font-size: 17px;
     }
 
     .srch-result-sep-line {
@@ -142,16 +141,22 @@
 
     .not-found-li {
         height: 35px;
-        display: flex;
-        align-content: center;
-        padding-left: 35px;
+        display: flex; 
+        flex-direction: row; 
+        align-items: center;
+        padding-left: 10px;
+    }
+
+    .not-found-li ng-md-icon{
+        fill: rgb(68, 88, 97); margin-right: 3px;
     }
 
     .not-found-span {
         display: flex;
         align-items: center;
-        font-size: 20px;
+        font-size: 17px;
         font-weight: 500;
+        color: rgb(68, 88, 97);
     }
 
     .highlighted-arrow {
@@ -198,7 +203,7 @@
     <button class="search-btn" ng-click="startSearch(searchRequest)">
         <span>Search</span>
     </button>
-    <div ng-if="resultStores.length || resultProducts.length" class="search-result-box">
+    <div ng-if="resultStores || resultProducts" class="search-result-box">
         <ul ng-if="resultStores.length" id="glbSrchA" class="store-ul">
             <li class="li-content" ng-repeat="store in resultStores">
                 <a class="navigate-search" href="/hub/{{ store.store_type_name }}/" target="_self" id="store{{ $index + 1 }}">
@@ -217,8 +222,8 @@
             </li>
         </ul>
         <ul class="not-found-ul" ng-if="!(resultStores.length || resultProducts.length)">
-            <li class="not-found-li">
-                <span class="not-found-span">Not Found Yet...</span>
+            <li class="not-found-li" ng-click="startSearch(searchRequest)">
+                <ng-md-icon icon="search" size="22"></ng-md-icon><span class="not-found-span">Look for more items..</span>
             </li>
         </ul>
     </div>
