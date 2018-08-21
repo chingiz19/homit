@@ -260,7 +260,7 @@
     <button class="search-btn" ng-click="">
         <span>Search</span>
     </button>
-    <div ng-if="searchDisplay" class="search-result-box">
+    <div ng-if="resultStores.length || resultProducts.length" class="search-result-box">
         
         <ul ng-if="resultStores.length" id="glbSrchA" class="store-ul">
             <li class="li-content" ng-repeat="store in resultStores">
@@ -303,6 +303,7 @@
                 <div></div>
             </li>
         </ul> -->
+
 
         <ul ng-if="resultProducts.length" class="product-ul">
             <li ng-repeat="product in resultProducts">
