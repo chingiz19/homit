@@ -49,12 +49,20 @@ app.directive("searchAutocomplete", function (localStorage, $interval, $timeout,
 
             function closeSearchOnClick(evt) {
                 if (!scope.searchRequest || (evt.target.className && evt.target.className.includes("search-input")) || $(evt.target).parents("#search-sec").length) return;
-                $(".search-btn").click();
+                clearSearch();
+            }
+
+            function clearSearch(){
+                $timeout(function () {
+                    scope.resultStores = "";
+                    scope.resultProducts = "";
+                }, 0);
+                $timeout(function () {
+                    scope.searchRequest = "";
+                }, 200);
             }
 
             function navigateSearchResult(evt, searchResult) {
-                // TODO make arrow selected result node appear in the "input line"
-
                 var el = document.querySelectorAll('.navigate-search');
                 //Key down
                 if (evt.keyCode == 40) {
@@ -89,7 +97,11 @@ app.directive("searchAutocomplete", function (localStorage, $interval, $timeout,
                 }
                 //event key "enter"
                 else if (evt.keyCode == 13) {
-                    $("#" + el[scope.searchListNode].id)[0].click();
+                    if(scope.searchListNode == 0){
+                        scope.startSearch(scope.searchRequest);
+                    }else{
+                        $("#" + el[scope.searchListNode].id)[0].click();
+                    }
                 }
                 //event key "esc"
                 else if (evt.keyCode == 27) {
@@ -97,6 +109,10 @@ app.directive("searchAutocomplete", function (localStorage, $interval, $timeout,
                     $(".search-input").blur();
                 }
             }
+
+            scope.startSearch = function(search_text){
+                $window.location.href = $window.location.origin + "/search/" + search_text;
+            };
 
             scope.hrefToPrdPage = function (product) {
                 googleAnalytics.addEvent('product_clicked', {

@@ -8,7 +8,6 @@
 <!--googleoff: snippet-->
 <body>
     <div ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" style="margin-top: 100px;">
-        Nere {{searchText}}
         <div ng-repeat="(key, value) in searchResult.products">
             <div ng-repeat="node in value">
 

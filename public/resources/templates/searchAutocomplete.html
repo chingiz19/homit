@@ -13,6 +13,10 @@
         margin: 0;
     }
 
+    .product-ul{
+        padding: 6px 0;
+    }
+
     .search-sec {
         position: relative;
         display: flex;
@@ -84,7 +88,7 @@
     }
 
     .search-result-box .li-content:hover, .search-result-box .srch-product-content:hover {
-        background-color: rgba(230, 230, 230, 1);
+        background-color: #f5fafd;
         transition: background-color 0.3s;
         text-decoration: none;
     }
@@ -108,13 +112,6 @@
         font-size: 18px;
     }
 
-    .match-em {
-        font-weight: 600;
-
-        font-style: normal;
-        color: rgba(39, 9, 9, 1);
-    }
-
     .srch-result-sep-line {
         display: flex;
         justify-content: center;
@@ -128,71 +125,19 @@
         margin: 5px 0 0 0;
     }
 
-    .cat-subcat-ul-2 {
-        padding: 0 0 0 25px;
-        margin: auto 0;
-        display: flex;
-        flex-direction: row;
-        color: rgb(73, 73, 73);
-        font-size: 16px;
-    }
-
-    .greater-char {
-        font-size: 13px;
-        color: rgba(36, 51, 80, 0.5);
-        width: 15px;
-        padding: 0px 5px 0 0;
-    }
-
-    .match-cat-subcat-span {
-        margin: auto 0;
-        padding-left: 0px;
-    }
-
-    .subcat-div {
-        text-decoration: none !important;
-        display: flex;
-        padding: 10px 0;
-    }
-
     .srch-product-content {
-        padding: 5px 0 5px 25px;
-    }
-
-    .search-prd-img {
-        margin-right: 15px;
-        min-width: 50px;
-        width: 50px;
-        height: 50px;
+        padding: 6px 0 6px 10px;
     }
 
     .product-brand-txt {
         display: inline-block;
         width: 100%;
         margin: auto 0;
-        font-size: 16px;
+        font-size: 17px;
         color: rgb(73, 73, 73);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-    }
-
-    .product-2-ul {
-        width: 80%;
-        margin: 0;
-        padding: 0;
-        margin: auto 0;
-    }
-
-    .product-descr-txt {
-        margin: auto 0;
-        font-size: 14px;
-        font-weight: 500;
-        color: rgba(0, 0, 0, 0.35);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding-left: 0;
     }
 
     .not-found-li {
@@ -210,7 +155,7 @@
     }
 
     .highlighted-arrow {
-        background-color: rgba(196, 217, 255, 0.3) !important;
+        background-color: #f5fafd !important;
         transition: background-color 0.3s;
     }
 
@@ -240,13 +185,6 @@
             padding: 10px 0 10px 15px;
         }
 
-        .search-prd-img{
-            margin-right: 10px;
-            min-width: 60px;
-            width: 60px;
-            height: 60px;
-        }
-
         .search-result-box .li-content:hover, .search-result-box .srch-product-content:hover {
             background-color: initial;
             text-decoration: none;
@@ -257,11 +195,10 @@
 
 <section id="search-sec" class="search-sec">
     <input id="global-search-input" class="search-input" ng-model="searchRequest" placeholder="Search for items or stores">
-    <button class="search-btn" ng-click="">
+    <button class="search-btn" ng-click="startSearch(searchRequest)">
         <span>Search</span>
     </button>
     <div ng-if="resultStores.length || resultProducts.length" class="search-result-box">
-        
         <ul ng-if="resultStores.length" id="glbSrchA" class="store-ul">
             <li class="li-content" ng-repeat="store in resultStores">
                 <a class="navigate-search" href="/hub/{{ store.store_type_name }}/" target="_self" id="store{{ $index + 1 }}">
@@ -272,85 +209,17 @@
                 <div></div>
             </li>
         </ul>
-
-        <!-- <ul ng-if="resultCategory.length || resultSubcategory.length" class="cat-subcat-ul">
-            <li class="li-content" ng-repeat="node in resultCategory">
-                <a class="navigate-search" href="/hub/{{ node.store_type_name }}/{{ node.category }}" target="_self" id="category_{{$index + 1}}">
-                    <ul class="cat-subcat-ul-2">
-                        <li>{{ node.store_type_display_name }}
-                            <span class="greater-char">></span>
-                        </li>
-                        <li>
-                            <span class="match-cat-subcat-span">{{ node.tree_start }}<em class="match-em">{{ node.tree_matched }}</em>{{ node.tree_end }}</span>
-                        </li>
-                    </ul>
-                </a>
-            </li>
-            <li class="li-content" ng-repeat="node in resultSubcategory">
-                <div class="navigate-search subcat-div" ng-click="goToSubcat(node)" id="subcategory_{{ $index + 1 }}">
-                    <ul class="cat-subcat-ul-2">
-                        <li>{{ node.store_type_display_name }}
-                            <span class="greater-char">></span>{{ node.category_display_name }}
-                            <span class="greater-char">></span>
-                        </li>
-                        <li>
-                            <span class="match-cat-subcat-span">{{ node.tree_start }}<em class="match-em">{{ node.tree_matched }}</em>{{ node.tree_end }}</span>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="srch-result-sep-line" ng-if="resultProducts_start.length || resultProducts_descr || resultProducts_end">
-                <div></div>
-            </li>
-        </ul> -->
-
-
         <ul ng-if="resultProducts.length" class="product-ul">
             <li ng-repeat="product in resultProducts">
                 <div class="navigate-search flex-row srch-product-content" ng-click="hrefToPrdPage(product)" id="product{{ $index + 1 }}">
-                    <!-- IMPORTANT - Keep "span" tag content on the same line -->
-                    <span></span>
                     <span class="product-brand-txt">{{product.brandname}}</span>
                 </div>
             </li>
         </ul>
-
-        <!-- <ul ng-if="resultProducts_start.length" class="product-ul">
-            <li ng-repeat="node in resultProducts_start">
-                <div class="navigate-search flex-row srch-product-content" ng-click="hrefToPrdPage(node)" id="product_start_{{ $index + 1 }}">
-                    <img class="search-prd-img" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
-                    <span class="product-brand-txt">{{node.brand_name_str}}<em class="match-em">{{node.brand_name_matched}}</em>{{node.brand_name_end}}</span>
-                </div>
-            </li>
-        </ul>
-        <ul ng-if="resultProducts_descr.length" class="product-ul">
-            <li ng-repeat="node in resultProducts_descr">
-                <div class="navigate-search flex-row srch-product-content" ng-click="hrefToPrdPage(node)" id="product_descr_{{ $index + 1 }}">
-                    <img class="search-prd-img" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
-                    <ul class="product-2-ul">
-                        <li class="product-brand-txt">{{ node.brand + " " + node.name }}</li>
-                        <li>
-                            <span class="product-descr-txt">{{ node.description_key_display_name }}: {{ node.description_str }}<em class="match-em">{{ node.description_matched }}</em>{{ node.description_end }}</span>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-        <ul ng-if="resultProducts_end.length" class="product-ul">
-            <li ng-repeat="node in resultProducts_end">
-                <a class="navigate-search flex-row srch-product-content" ng-click="hrefToPrdPage(node)" id="product_end_{{ $index + 1 }}">
-                    <img class="search-prd-img" ng-src="/resources/images/products/{{node.category}}/{{node.image}}">
-                    <ul class="product-2-ul">
-                        <span class="product-brand-txt">{{ node.brand_name_str }}<em class="match-em">{{ node.brand_name_matched }}</em>{{ node.brand_name_end }}</span>
-                    </ul>
-                </a>
-            </li>
-        </ul>
-        <ul class="not-found-ul" ng-if="!resultProducts_start.length && !resultProducts_descr.length && !resultProducts_end.length && !resultSubcategory.length  && !resultCategory.length && !resultStoreType.length">
+        <ul class="not-found-ul" ng-if="!(resultStores.length || resultProducts.length)">
             <li class="not-found-li">
                 <span class="not-found-span">Not Found Yet...</span>
             </li>
-        </ul> -->
-
+        </ul>
     </div>
 </section>
