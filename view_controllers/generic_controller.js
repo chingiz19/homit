@@ -66,6 +66,12 @@ router.get('/main', function (req, res, next) {
 	res.render("main.ejs", req.options.ejs);
 });
 
+router.get('/search/:searchText', function (req, res, next) {
+	req.options.ejs["title"] = "Homit | Search Results";
+	req.options.ejs["search_text"] = req.params.searchText;
+	res.render("search.ejs", req.options.ejs);
+});
+
 router.get("/checkout", function (req, res, next) {
 	req.options.ejs["title"] = "Checkout";
 	req.options.ejs['stripeToken'] = process.env.STRIPE_TOKEN_PUB;

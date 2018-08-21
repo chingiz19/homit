@@ -223,7 +223,7 @@ async function getMongoProducts(inObject, cb) {
 
     for (let key in inObject) {
         for (let i = 0; i < inObject[key].length; i++) {
-            searchedFields.set(key, false);
+            searchedFields.set(key, inObject[key].length);
             MDB.models['liquor-station'].search({
                 query_string: {
                     query: inObject[key][i].text
@@ -232,13 +232,14 @@ async function getMongoProducts(inObject, cb) {
                 if (result && !err) {
                     if (!finalResult[key]) finalResult[key] = [];
                     finalResult[key] = finalResult[key].concat(result.hits.hits);
-                    searchedFields.set(key, true);
+                    searchedFields.set(key, searchedFields.get(key)-1);
                     for (let value of searchedFields.values()) {
-                        if (!value) {
-                            return;
+                        if (value) {
+                            return false;
                         }
                     }
                     cb(finalResult);
+                    return;
                 }
             });
         }
@@ -284,7 +285,14 @@ pub.globalSearch = async function (inText, cb) {
             "cat-suggest": { "phrase": { "field": "category.category_display_name" } },
             "subcat-suggest": { "phrase": { "field": "subcategory" } },
             "country-suggest": { "phrase": { "field": "details.country_of_origin.description" } },
-            "desc-suggest": { "phrase": { "field": "details.preview.description" } },
+            "desc-suggest": { 
+                "phrase": { 
+                    "field": "details.preview.description" ,
+                    "size": 1,
+                    "gram_size": 4,
+                    "max_errors": 1,
+                }
+            },
 
         }
     }, async function (err, results) {

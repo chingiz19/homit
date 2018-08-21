@@ -1,0 +1,27 @@
+<html ng-app="mainModule">
+
+<head ng-cloak>
+    <%- include('partial/imports')%>
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/search.css" rel="stylesheet">
+</head>
+<!--googleoff: snippet-->
+<body>
+    <div ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" style="margin-top: 100px;">
+        Nere {{searchText}}
+        <div ng-repeat="(key, value) in searchResult.products">
+            <div ng-repeat="node in value">
+
+                <div>{{ node._source.brandname }}</div>
+
+            </div>
+        </div>
+            
+    </div>
+    <% if (!production) { %>
+        <script src="/resources/services/localStorage.js"></script>
+        <script src="/resources/controllers/search.js"></script>
+        <% } %>
+</body>
+<!--googleon: snippet-->
+</html>

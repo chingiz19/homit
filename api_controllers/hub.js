@@ -171,7 +171,7 @@ router.post('/autocomplete', async function (req, res, next) {
 
 router.post('/search', async function (req, res, next) {
     let searchText = req.body.search;
-    if (searchText.length >= 3) {
+    if (searchText && searchText.length >= 3) {
         let limit = 7;
         let storeTypes = await Catalog.searchStoreType(searchText, limit);
         limit = limit - storeTypes.length;

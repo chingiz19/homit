@@ -189,7 +189,7 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
                 if (scope.searchRequest && scope.searchRequest.length >= 3 && evt.keyCode != 40 && evt.keyCode != 38 && evt.keyCode != 13 && evt.keyCode != 27) {
                     $http({
                         method: 'POST',
-                        url: "/api/hub/search",
+                        url: "/api/hub/autocomplete",
                         data: {
                             search: scope.searchRequest.toLowerCase()
                         }
