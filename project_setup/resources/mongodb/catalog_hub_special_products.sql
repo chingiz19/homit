@@ -1,7 +1,7 @@
 use homit;
 
 -- Catalog Hub - Special Products
--- !!! Drop the table and run with removed store_type_id column and product_id column changed to varchar
+-- !!! Drop the table and run with product_id column changed to varchar
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6, "6-805", 2);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(9, "9-1", 2);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(7, "7-2", 2);

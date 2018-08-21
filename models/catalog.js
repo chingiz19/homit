@@ -191,8 +191,9 @@ var getFormattedSpecials = async function (specials) {
     let tmpSpecialType = "";
     let tmpSpecialTypeDisplay = "";
 
-    for(let x = 0; x < specials.length; x ++ ){
-        let product = await MDB.models[specials[x]["store_type_name"]].findById(specials[x]["product_id"]).exec();
+    for (let x = 0; x < specials.length; x++) {
+        let mongoProduct = await MDB.models[specials[x]["store_type_name"]].findById(specials[x]["product_id"]).exec();
+        let product = mongoProduct.toObject();
 
         tmpSpecialType = specials[x].special_types_api_name;
         tmpSpecialTypeDisplay = specials[x].special_types_display_name;

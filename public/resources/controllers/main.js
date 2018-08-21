@@ -52,7 +52,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
             $scope.mainSpecials = response.data.specials;
             for (let speciatType in $scope.mainSpecials) {
                 for (let x = 0; x < $scope.mainSpecials[speciatType].products.length; x++) {
-                    $scope.mainSpecials[speciatType].products[x]["product_url"] = helpers.buildProductPagePath($scope.mainSpecials[speciatType].products[x], tmpProduct.store_name);
+                    $scope.mainSpecials[speciatType].products[x]["product_url"] = helpers.buildProductPagePath($scope.mainSpecials[speciatType].products[x], $scope.mainSpecials[speciatType].products[x].store_name);
                 }
             }
         }, function errorCallback(response) {
