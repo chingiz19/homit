@@ -145,7 +145,7 @@ router.post('/randomproducts', async function (req, res) {
     }
 });
 
-router.post('/search', async function (req, res, next) {
+router.post('/autocomplete', async function (req, res, next) {
     let searchText = req.body.search;
     if (searchText.length >= 3) {
         let limit = 7;
@@ -153,6 +153,30 @@ router.post('/search', async function (req, res, next) {
         limit = limit - storeTypes.length;
         if (limit > 0) {
             MDB.suggestSearch(searchText, limit, function (products) {
+                res.send({
+                    success: true,
+                    result: {
+                        "store_type": storeTypes,
+                        "products": products
+                    }
+                });
+            });
+        }
+    } else {
+        res.send({
+            success: false
+        });
+    }
+});
+
+router.post('/search', async function (req, res, next) {
+    let searchText = req.body.search;
+    if (searchText.length >= 3) {
+        let limit = 7;
+        let storeTypes = await Catalog.searchStoreType(searchText, limit);
+        limit = limit - storeTypes.length;
+        if (limit > 0) {
+            MDB.globalSearch(searchText, function (products) {
                 res.send({
                     success: true,
                     result: {

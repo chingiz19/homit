@@ -182,7 +182,7 @@ function checkIfSyncIsDone() {
     return true;
 }
 
-pub.suggestSearch = async function (suggest, limit, cb) {
+pub.suggestSearch = async function (suggest, inLimit, cb) {
     MDB.models['liquor-station'].esSearch({
         "suggest": {
             "suggested": {
@@ -195,79 +195,114 @@ pub.suggestSearch = async function (suggest, limit, cb) {
                 }
             }
         }
-    }, function (err, results) {
+    }, async function (err, results) {
         if (err) {
             return console.log(JSON.stringify(err, null, 4));
         }
-        displayOptions(results, limit, cb);
+        let options = results.suggest.suggested[0].options;
+        let result = [];
+        let limit = Math.min(inLimit, options.length);
+
+        for (let i = 0; i < limit; i++) {
+            let id = options[i]._id.split('-')[0];
+            let product = options[i]._source;
+            product._id = options[i]._id;
+            let storeInfo = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": id });
+            product.store_name = storeInfo[0].name;
+            delete product.details;
+            result.push(product);
+        }
+
+        cb(result);
     });
 }
 
-pub.search = async function (text) {
-    MDB.models['liquor-station'].search({
-        query_string: {
-            query: text,
+async function getMongoProducts(inObject, cb) {
+    let finalResult = {};
+    let searchedFields = new Map();
+
+    for (let key in inObject) {
+        for (let i = 0; i < inObject[key].length; i++) {
+            searchedFields.set(key, false);
+            MDB.models['liquor-station'].search({
+                query_string: {
+                    query: inObject[key][i].text
+                }
+            }, function (err, result) {
+                if (result && !err) {
+                    if (!finalResult[key]) finalResult[key] = [];
+                    finalResult[key] = finalResult[key].concat(result.hits.hits);
+                    searchedFields.set(key, true);
+                    for (let value of searchedFields.values()) {
+                        if (!value) {
+                            return;
+                        }
+                    }
+                    cb(finalResult);
+                }
+            });
         }
-    }, function (err, results) {
-        if (err) {
-            return console.log(JSON.stringify(err, null, 4));
-        }
-        return console.log(results);
-    });
+    }
 }
 
-pub.termSuggest = async function (inText) {
+pub.globalSearch = async function (inText, cb) {
     MDB.models['liquor-station'].esSearch({
         "suggest": {
             "text": inText,
-            "brand-suggest": { "phrase": { "field": "brand" } },
-            "brand-name-suggest": { "phrase": { "field": "brandname" } },
-            "name-suggest": { "phrase": { "field": "name" } },
+            "brand-suggest": {
+                "phrase": {
+                    "field": "brand",
+                    "size": 3,
+                    "gram_size": 3,
+                    "max_errors": 3,
+                    "direct_generator": [{
+                        "field": "brand",
+                        "suggest_mode": "always"
+                    }],
+                    "highlight": {
+                        "pre_tag": "<em>",
+                        "post_tag": "</em>"
+                    }
+                }
+            },
+            "name-suggest": {
+                "phrase": {
+                    "field": "name",
+                    "size": 3,
+                    "gram_size": 3,
+                    "max_errors": 3,
+                    "direct_generator": [{
+                        "field": "name",
+                        "suggest_mode": "always"
+                    }],
+                    "highlight": {
+                        "pre_tag": "<em>",
+                        "post_tag": "</em>"
+                    }
+                }
+            },
             "cat-suggest": { "phrase": { "field": "category.category_display_name" } },
             "subcat-suggest": { "phrase": { "field": "subcategory" } },
             "country-suggest": { "phrase": { "field": "details.country_of_origin.description" } },
-            "desc-suggest": { "phrase": { "field": "details.preview.description" } }
+            "desc-suggest": { "phrase": { "field": "details.preview.description" } },
+
         }
-    }, function (err, results) {
+    }, async function (err, results) {
         if (err) {
             return console.log(JSON.stringify(err, null, 4));
         }
-        return displayPhraseOptions(results);
+        let options = {};
+
+        options['brand-suggest'] = results.suggest['brand-suggest'][0].options;
+        options['name-suggest'] = results.suggest['name-suggest'][0].options;
+        options['cat-suggest'] = results.suggest['cat-suggest'][0].options;
+        options['subcat-suggest'] = results.suggest['subcat-suggest'][0].options;
+        options['country-suggest'] = results.suggest['country-suggest'][0].options;
+        options['desc-suggest'] = results.suggest['desc-suggest'][0].options;
+
+       getMongoProducts(options, cb);
+
     });
-}
-
-async function displayOptions(results, inLimit, cb) {
-    let options = results.suggest.suggested[0].options;
-    let result = [];
-    let limit = Math.min(inLimit, options.length);
-
-    for (let i = 0; i < limit; i++) {
-        let id = options[i]._id.split('-')[0];
-        let product = options[i]._source;
-        product._id = options[i]._id;
-        let storeInfo = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": id });
-        product.store_name = storeInfo[0].name;
-        delete product.details;
-        result.push(product);
-    }
-
-    cb(result);
-    return;
-}
-
-function displayPhraseOptions(results) {
-    let options = [];
-    options = options.concat(results.suggest['brand-suggest'][0].options);
-    options = options.concat(results.suggest['brand-name-suggest'][0].options);
-    options = options.concat(results.suggest['name-suggest'][0].options);
-    options = options.concat(results.suggest['cat-suggest'][0].options);
-    options = options.concat(results.suggest['subcat-suggest'][0].options);
-    options = options.concat(results.suggest['country-suggest'][0].options);
-    options = options.concat(results.suggest['desc-suggest'][0].options);
-
-    for (let i in options) {
-        console.log(options[i].text);
-    }
 }
 
 module.exports = pub;
