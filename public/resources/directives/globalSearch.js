@@ -195,17 +195,17 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
                         }
                     }).then(function successCallback(response) {
                         scope.searchDisplay = response.data.result;
-                        scope.resultStoreType = prepareTreeSrch(scope.searchRequest, scope.searchDisplay.store_type, "store_type_display_name");
-                        scope.resultCategory = prepareTreeSrch(scope.searchRequest, scope.searchDisplay.category, "category_display_name");
-                        scope.resultSubcategory = prepareTreeSrch(scope.searchRequest, scope.searchDisplay.subcategory, "subcategory");
-                        scope.resultProducts_start = prepareStrtSrch(scope.searchRequest, scope.searchDisplay.products_start);
-                        scope.resultProducts_descr = prepareDescrSrch(scope.searchRequest, scope.searchDisplay.products_descr);
-                        scope.resultProducts_end = prepareEndSrch(scope.searchRequest, scope.searchDisplay.products_end);
+                        scope.resultStores = scope.searchDisplay.store_type;
+                        scope.resultProducts = scope.searchDisplay.products;
+                        // scope.resultSubcategory = prepareTreeSrch(scope.searchRequest, scope.searchDisplay.subcategory, "subcategory");
+                        // scope.resultProducts_start = prepareStrtSrch(scope.searchRequest, scope.searchDisplay.products_start);
+                        // scope.resultProducts_descr = prepareDescrSrch(scope.searchRequest, scope.searchDisplay.products_descr);
+                        // scope.resultProducts_end = prepareEndSrch(scope.searchRequest, scope.searchDisplay.products_end);
         
-                        scope.resultProducts = scope.resultProducts_start.concat(scope.resultProducts_descr.concat(scope.resultProducts_end));
-                        scope.searchResult = scope.resultStoreType.concat(scope.resultCategory.concat(scope.resultSubcategory.concat(scope.resultProducts)));
+                        // scope.resultProducts = scope.resultProducts_start.concat(scope.resultProducts_descr.concat(scope.resultProducts_end));
+                        // scope.searchResult = scope.resultStoreType.concat(scope.resultCategory.concat(scope.resultSubcategory.concat(scope.resultProducts)));
         
-                        if (scope.resultProducts.length == 0 && scope.resultSubcategory.length == 0 && scope.resultCategory.length == 0 && scope.resultStoreType.length == 0) {
+                        if (scope.resultProducts.length == 0 && scope.resultStores.length) {
                             googleAnalytics.addEvent('search_not_found', {
                                 "event_label": scope.searchRequest,
                                 "event_category": googleAnalytics.eventCategories.catalog_actions
@@ -279,7 +279,7 @@ app.directive("globalSearch", function (localStorage, $interval, $timeout, $http
                     "event_label": product.brand + " " + product.name + "; Catalog",
                     "event_category": googleAnalytics.eventCategories.catalog_actions
                 });
-                $window.location.href = $window.location.origin + helpers.buildProductPagePath(product);
+                $window.location.href = $window.location.origin + helpers.buildProductPagePath(product, product.store_name);
             };
         }
     };

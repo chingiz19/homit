@@ -182,7 +182,7 @@ function checkIfSyncIsDone() {
     return true;
 }
 
-pub.suggestSearch = async function (suggest) {
+pub.suggestSearch = async function (suggest, limit, cb) {
     MDB.models['liquor-station'].esSearch({
         "suggest": {
             "suggested": {
@@ -199,7 +199,7 @@ pub.suggestSearch = async function (suggest) {
         if (err) {
             return console.log(JSON.stringify(err, null, 4));
         }
-        return displayOptions(results);
+        displayOptions(results, limit, cb);
     });
 }
 
@@ -236,12 +236,23 @@ pub.termSuggest = async function (inText) {
     });
 }
 
-function displayOptions(results) {
+async function displayOptions(results, inLimit, cb) {
     let options = results.suggest.suggested[0].options;
+    let result = [];
+    let limit = Math.min(inLimit, options.length);
 
-    for (let i in options) {
-        console.log(options[i].text);
+    for (let i = 0; i < limit; i++) {
+        let id = options[i]._id.split('-')[0];
+        let product = options[i]._source;
+        product._id = options[i]._id;
+        let storeInfo = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": id });
+        product.store_name = storeInfo[0].name;
+        delete product.details;
+        result.push(product);
     }
+
+    cb(result);
+    return;
 }
 
 function displayPhraseOptions(results) {

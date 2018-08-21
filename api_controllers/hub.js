@@ -147,42 +147,26 @@ router.post('/randomproducts', async function (req, res) {
 
 router.post('/search', async function (req, res, next) {
     let searchText = req.body.search;
-    let response;
     if (searchText.length >= 3) {
         let limit = 7;
         let storeTypes = await Catalog.searchStoreType(searchText, limit);
         limit = limit - storeTypes.length;
-        let categories = await Catalog.searchCategory(searchText, limit);
-        limit = limit - categories.length;
-        let subcategories = await Catalog.searchSubcategory(searchText, limit);
-        limit = limit - subcategories.length;
-        let productsStart = await Catalog.searchProductsStart(searchText, limit);
-        limit = limit - productsStart.length;
-        let productsTypes = await Catalog.searchProductsTypes(searchText, limit);
-        limit = limit - productsTypes.length;
-        let productsWithDescription = await Catalog.searchProductsWithDescription(searchText, limit);
-        limit = limit - productsWithDescription.length;
-        let productsEnd = await Catalog.searchProductsEnd(searchText, limit);
-
-        let finalResult = {
-            store_type: storeTypes,
-            category: categories,
-            subcategory: subcategories,
-            products_start: productsStart,
-            products_types: productsTypes,
-            products_end: productsEnd,
-            products_descr: productsWithDescription
-        };
-        response = {
-            success: true,
-            result: finalResult
-        };
+        if (limit > 0) {
+            MDB.suggestSearch(searchText, limit, function (products) {
+                res.send({
+                    success: true,
+                    result: {
+                        "store_type": storeTypes,
+                        "products": products
+                    }
+                });
+            });
+        }
     } else {
-        response = {
+        res.send({
             success: false
-        };
+        });
     }
-    res.send(response);
 });
 
 module.exports = router;
