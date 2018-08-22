@@ -15,7 +15,8 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
             }
         }).then(function successCallback(response) {
             if(response.data.success){
-                $scope.searchResult = response.data.result;
+                $scope.resultProducts = response.data.result.products;
+                $scope.resultStores = response.data.result.store_type;
             }else{
                 notification.addErrorMessage("Ups.. Error getting search query");    
             }

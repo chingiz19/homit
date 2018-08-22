@@ -6,16 +6,60 @@
             <link href="/resources/css/search.css" rel="stylesheet">
 </head>
 <!--googleoff: snippet-->
-<body>
-    <div ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" style="margin-top: 100px;">
-        <div ng-repeat="(key, value) in searchResult.products">
-            <div ng-repeat="node in value">
 
-                <div>{{ node._source.brandname }}</div>
+<body>
+    <div ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" style="position: relative; min-height: calc(100vh - 270px); padding-top: 100px; width: 800px; margin: 0 auto;">
+
+
+        <section ng-repeat="(key, value) in resultProducts">
+            <div ng-repeat="product in value">
+
+                <div ng-if="key == 'brand-suggest'">
+
+                    <div style="display: grid; height: 140px; margin-bottom: 20px; grid-template-columns: 140px auto;">
+                        <img style="width: 130px; height: 130px; border: 1px solid grey;"ng-src="/resources/images/products/{{ product._source.store_name }}/{{ product._source.images.image_catalog }}">
+                        <div style="display: grid; grid-column: 2">
+                            <p style="width: calc(100% - 140px); height: 14%;"></p>
+                            <p style="width: calc(100% - 140px); height: 24%;">{{product._source.brandname}}</p>
+                            <p style="width: calc(100% - 140px); height: 24%;">Sold by: {{product._source.store.display_name}}	&nbsp; 	&nbsp;Category: {{product._source.category.category_display_name }}</p>
+                            <p style="width: calc(100% - 140px); height: 24%;">Country of Origin: {{product._source.details.country_of_origin.description}}</p>
+                            <p style="width: calc(100% - 140px); height: 14%;"></p>
+                        </div>
+                    </div>
+
+                    <!-- <table style="width: 100%; height: 140px;">
+                        <tr style="width: 100%; height: 100%;">
+                            <td style="height: 100%; width: 140px;">
+                                <img style="width: 130px; height: 130px; border: 1px solid grey;"ng-src="/resources/images/products/{{ product._source.store_name }}/{{ product._source.images.image_catalog }}">
+                            </td>
+                            <td style="height: 100%; width: calc(100% - 140px);">
+                                <tr style="width: 100%; height: 14%;"></tr>
+                                <tr style="width: 100%; height: 24%;">{{product._source.store.brandname}}</tr>
+                                <tr style="width: 100%; height: 24%;">
+                                    Sold by: {{"Sold by: " + product._source.store.display_name + "   Category: " + product._source.category.category_display_name }}
+                                </tr>
+                                <tr style="width: 100%; height: 24%;">Country of Origin: {{product._source.details.country_of_origin.description}}</tr>
+                                <tr style="width: 100%; height: 14%;"></tr>
+                            </td>
+                        </tr>
+                    </table> -->
+
+                    <!-- <div style="display: flex; flex-direction: row; width: 100%; align-items: left;">
+                        <img alt="{{product._source.name + ' ' + product._source.brand}}"  style="width: 130px; height: 130px; border: 1px solid grey;"ng-src="/resources/images/products/{{ product._source.store_name }}/{{ product._source.images.image_catalog }}">
+                        <div style="display: flex; flex-direction: column;">
+                            <div style="display: flex; flex-direction: row;">
+                                <span>Sold by: {{product._source.store.display_name}}</span>
+                                <span>Category: {{product._source.category.category_display_name}}</span>
+                                <span>Country of Origin: {{product._source.details.country_of_origin.description}}</span>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
 
             </div>
-        </div>
-            
+        </section>
+
     </div>
     <% if (!production) { %>
         <script src="/resources/services/localStorage.js"></script>
@@ -23,4 +67,8 @@
         <% } %>
 </body>
 <!--googleon: snippet-->
+<footer>
+    <%- include('partial/footer')%>
+</footer>
+
 </html>
