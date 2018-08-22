@@ -7,6 +7,33 @@
 app.service('helpers', function () {
     var pub = {};
 
+    const homit_tags = {
+        "d_ht_em": "</em>",
+        "ht_em": "<em>",
+        "d_ht_b": "</b>",
+        "ht_b": "<b>",
+        "d_ht_ul": "</ul>",
+        "ht_ul": "<ul>",
+        "d_ht_li": "</li>",
+        "ht_li": "<li>"
+    }
+
+    pub.convertHomitTags = function (string) {
+        let tmpString = string;
+        for (tag in homit_tags) {
+            tmpString = tmpString.replace(new RegExp(tag, 'g'), homit_tags[tag]);
+        }
+        return tmpString;
+    }
+    
+    pub.clearHomitTags = function (string) {
+        let tmpString = string;
+        for (tag in homit_tags) {
+            tmpString = tmpString.replace(new RegExp(tag, 'g'), "");
+        }
+        return tmpString;
+    }
+
     pub.randomDigitGenerator = function () {
         return Math.floor(Math.random() * 90000000) + 10000000;
     };

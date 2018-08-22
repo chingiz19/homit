@@ -1,5 +1,13 @@
 @import "default/module";
 
+body {
+    top: 80px;
+    letter-spacing: 0.01em;
+    font-family: 'Nunito', sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
 /* start of mobile/tablet styles */
 @media screen and (max-device-width: 768px) {
 
