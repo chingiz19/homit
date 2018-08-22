@@ -27,6 +27,7 @@ app.service('helpers', function () {
     }
     
     pub.clearHomitTags = function (string) {
+        if(!string) return;
         let tmpString = string;
         for (tag in homit_tags) {
             tmpString = tmpString.replace(new RegExp(tag, 'g'), "");

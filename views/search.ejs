@@ -8,13 +8,13 @@
 <!--googleoff: snippet-->
 
 <body>
-    <div ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" style="position: relative; min-height: calc(100vh - 270px); width: 800px; margin: 0 auto;">
+    <div ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" style="position: relative; min-height: calc(100vh - 270px); width: 800px; margin: 0 auto;" ng-cloak>
 
-        <h3 style="margin-top: 20px; font-weight: 400; font-size: 24px; color: #424242;">Search results for <em>'{{searchText}}'</em></h3>
-        <h5 style="color: #8f95a3; margin-bottom: 30px; margin-top: 3px;" ng-show="resultLength">About {{resultLength}} results</h5>
+        <h3 style="margin-top: 20px; font-weight: 400; font-size: 24px; color: #424242;" ng-show="searchText">Search results for <em>'{{searchText}}'</em></h3>
+        <h5 style="color: #8f95a3; margin-bottom: 30px; margin-top: 3px;" ng-show="result_length">About {{result_length}} results</h5>
 
-        <section ng-repeat="(key, value) in resultProducts">
-            <div ng-repeat="product in value">
+        <section ng-repeat="(key, value) in result_products">
+            <div ng-repeat="product in value | orderBy:'_score':true">
 
                 <div ng-if="key == 'brand-suggest'">
 
@@ -22,7 +22,7 @@
                         <img style="width: 130px; height: 130px; position: relative; padding: 5px;" ng-src="/resources/images/products/linas-italian-market/bx_11006.jpeg">
                         <div style="display: grid; grid-column: 2; grid-template-rows: 30px 20px 22px minmax(15px, 50px);">
                             <a style="color: #1a0dab; font-size: 18px; margin: 5px 0 5px 0;" href="{{product._source.product_url}}" target="_self">{{product._source.brandname}}</a>
-                            <p style="margin-bottom: 3px; color: #8f95a3;">Lina's Italian Market > {{product._source.category.category_display_name }}</p>
+                            <p style="margin-bottom: 3px; color: #006621;">Lina's Italian Market > {{product._source.category.category_display_name }}</p>
                             <p style="margin-bottom: 3px; font-size: 16px; color: #000000;">C$23.99 for 3kg Glass Jar</p>
                             <!-- <p class="recomended-item-name" ng-if="product.variance[0].packs[0].h_value > 1 && product.variance[0].preffered_unit"><span class="recomended-item-size"> {{product.variance[0].packs[0].price}} for {{ "(" + product.variance[0].packs[0].type + "x" + product.variance[0].preffered_unit_size + product.variance[0].preffered_unit + ")"}}</span></p> -->
                             <!-- <p class="recomended-item-name" ng-if="!(product.variance[0].packs[0].h_value > 1) && product.variance[0].preffered_unit"><span class="recomended-item-size"> {{product.variance[0].packs[0].price}} for {{ "(" + product.variance[0].preffered_unit_size + product.variance[0].preffered_unit + ")"}}</span></p> -->
@@ -34,6 +34,22 @@
                 </div>
 
 
+            </div>
+        </section>
+
+        <section ng-show="recommended_products">
+            <h2>People also Homit</h2>
+            <div ng-repeat="recommended_product in recommended_products">
+                <div style="display: grid; height: 140px; margin-bottom: 20px; grid-template-columns: 140px auto;">
+                    <img style="width: 130px; height: 130px; position: relative; padding: 5px;" ng-src="/resources/images/products/{{recommended_product.store_type_name}}/{{recommended_product.images.image_catalog}}">
+                    <div style="display: grid; grid-column: 2; grid-template-rows: 30px 20px 22px minmax(15px, 50px);">
+                        <a style="color: #1a0dab; font-size: 18px; margin: 5px 0 5px 0;" href="{{recommended_product.product_url}}" target="_self">{{recommended_product.brandname}}</a>
+                        <p style="margin-bottom: 3px; color: #006621;">Lina's Italian Market > {{recommended_product.category.category_display_name }}</p>
+                        <p style="margin-bottom: 3px; font-size: 16px; color: #000000;" ng-if="recommended_product.variance[0].preffered_unit"> {{recommended_product.variance[0].packs[0].price}} for {{ recommended_product.variance[0].packs[0].h_value + " x " + recommended_product.variance[0].preffered_unit_size + recommended_product.variance[0].preffered_unit }} <span style="text-transform: capitalize;">{{recommended_product.container}}</span></p>
+
+                        <p style="display: inline-block; box-sizing: border-box; white-space: pre-line; word-wrap: break-word; margin-bottom: 0;"><span style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{recommended_product.details.preview.description_tagged}}</span></p>
+                    </div>
+                </div>
             </div>
         </section>
 
