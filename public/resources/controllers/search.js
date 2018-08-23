@@ -1,6 +1,7 @@
 app.controller("searchController", function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $log, sessionStorage, notification, googleAnalytics, localStorage, helpers) {
 
     $scope.init = function () {
+        $scope.search_result = {};
         $scope.result_length = 0;
 
         $http({
@@ -33,31 +34,27 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
             }
         }).then(function successCallback(response) {
             if (response.data.success) {
-                let maxScore = 0;
-                let correctedQuery = $scope.searchText;
-                $scope.result_stores = response.data.result.store_type;
-                $scope.result_products = response.data.result.products;
-                for (let key in $scope.result_products) {
-                    let results = $scope.result_products[key].results;
+                let data = response.data.result.products;
+                let tmp_data = new Map();
 
-                    if (!maxScore || ($scope.result_products[key].highlight && $scope.result_products[key].score && maxScore < $scope.result_products[key].score)) {
-                        maxScore = $scope.result_products[key].score;
-                        correctedQuery = $scope.result_products[key].highlight;
+                let search_text = "<em>" + $scope.searchText + "</em>";
+                for (let i = 0; i < data.length; i++) {
+                    let tmp_list = [];
+
+                    for (let j = 0; j < data[i].results.length; j++) {
+                        let tmp_product = data[i].results[j]._source;
+                        tmp_product["_id"] = data[i].results[j]._id;
+                        tmp_product["image"] = "/resources/images/products/" + tmp_product.store.name + tmp_product.images.image_catalog;
+                        tmp_product["url"] = helpers.buildProductPagePath(tmp_product);
+                        tmp_list.push(tmp_product);
+                        $scope.result_length = $scope.result_length + 1;
                     }
 
-                    for (let i = 0; i < results.length; i++) {
-                        let product = results[i]._source;
-                        product["_id"] = results[i]["_id"];
-                        product["product_url"] = helpers.buildProductPagePath(product, "linas-italian-market");
-                        if (product.details.preview) {
-                            product.details.preview["description_tagged"] = helpers.clearHomitTags(product.details.preview.description);
-                        }
-                        results[i]._source = product;
-                    }
-                    $scope.result_length = $scope.result_length + results.length;
+                    tmp_data.set(data[i].highlight || search_text, tmp_list);
+
                 }
-                $scope.result_length = $scope.result_length + $scope.result_stores.length;
-                $scope.searchText = correctedQuery;
+                $scope.search_result.products = tmp_data;
+
             } else {
                 notification.addErrorMessage("Ups.. Error getting search query");
             }

@@ -39,9 +39,9 @@ app.service('helpers', function () {
         return Math.floor(Math.random() * 90000000) + 10000000;
     };
 
-    pub.buildProductPagePath = function (product, storeType) {
+    pub.buildProductPagePath = function (product) {
         let path;
-        path = "/hub/product/" + storeType + "/" + _.toLower(pub.clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id.split("-")[1];
+        path = "/hub/product/" + product.store.name + "/" + _.toLower(pub.clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id.split("-")[1];
         return path;
     };
 

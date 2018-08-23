@@ -272,8 +272,8 @@ pub.globalSearch = async function (inText, cb) {
                                 "suggest_mode": "always"
                             }],
                             "highlight": {
-                                "pre_tag": "<strong>",
-                                "post_tag": "</strong>"
+                                "pre_tag": "<em>",
+                                "post_tag": "</em>"
                             }
                         }
                     },
@@ -288,20 +288,47 @@ pub.globalSearch = async function (inText, cb) {
                                 "suggest_mode": "always"
                             }],
                             "highlight": {
-                                "pre_tag": "<strong>",
-                                "post_tag": "</strong>"
+                                "pre_tag": "<em>",
+                                "post_tag": "</em>"
                             }
                         }
                     },
-                    "cat-suggest": { "phrase": { "field": "category.category_display_name" } },
-                    "subcat-suggest": { "phrase": { "field": "subcategory" } },
-                    "country-suggest": { "phrase": { "field": "details.country_of_origin.description" } },
+                    "cat-suggest": {
+                        "phrase": {
+                            "field": "category.category_display_name",
+                            "highlight": {
+                                "pre_tag": "<em>",
+                                "post_tag": "</em>"
+                            }
+                        }
+                    },
+                    "subcat-suggest": {
+                        "phrase": {
+                            "field": "subcategory", "highlight": {
+                                "pre_tag": "<em>",
+                                "post_tag": "</em>"
+                            }
+                        }
+                    },
+                    "country-suggest": {
+                        "phrase": {
+                            "field": "details.country_of_origin.description",
+                            "highlight": {
+                                "pre_tag": "<em>",
+                                "post_tag": "</em>"
+                            }
+                        }
+                    },
                     "desc-suggest": {
                         "phrase": {
                             "field": "details.preview.description",
                             "size": 1,
                             "gram_size": 4,
                             "max_errors": 1,
+                            "highlight": {
+                                "pre_tag": "<em>",
+                                "post_tag": "</em>"
+                            }
                         }
                     },
 
@@ -321,14 +348,14 @@ pub.globalSearch = async function (inText, cb) {
                 suggestResults = suggestResults.concat(results.suggest['desc-suggest'][0].options);
 
                 for (let key in suggestResults) {
-                    searchedFields.set(suggestResults[key].text, false);
+                    searchedFields.set(suggestResults[key].text + key, false);
                     MDB.models['liquor-station'].search({
                         query_string: {
                             query: suggestResults[key].text
                         }
                     }, function (err, result) {
                         if (!err && result && result.hits && result.hits.hits && result.hits.hits.length > 0) {
-                            searchedFields.set(suggestResults[key].text, true);
+                            searchedFields.set(suggestResults[key].text + key, true);
 
                             finalResult.push({
                                 "results": result.hits.hits,
