@@ -186,7 +186,7 @@ pub.getAllMainSpecials = async function () {
  * 
  * @param {*} specials 
  */
-var getFormattedSpecials = async function (specials) {
+async function getFormattedSpecials (specials) {
     let result = {};
     let tmpSpecialType = "";
     let tmpSpecialTypeDisplay = "";

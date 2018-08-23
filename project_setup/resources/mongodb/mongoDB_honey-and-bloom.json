@@ -67,7 +67,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Dirty Hippy Deodorant - Lemongrass Patchouli"
+        "brandname": "Honey & Bloom Dirty Hippy Deodorant - Lemongrass Patchouli",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-2",
@@ -137,7 +142,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Dirty Hippy Deodorant - Floral"
+        "brandname": "Honey & Bloom Dirty Hippy Deodorant - Floral",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-3",
@@ -197,7 +207,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Stinky Gypsy Body Wash"
+        "brandname": "Honey & Bloom Stinky Gypsy Body Wash",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-4",
@@ -267,7 +282,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Lip Balm - Peppermint Eucalyptus"
+        "brandname": "Honey & Bloom Lip Balm - Peppermint Eucalyptus",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-5",
@@ -337,7 +357,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Lip Balm - Spearmint Lavender"
+        "brandname": "Honey & Bloom Lip Balm - Spearmint Lavender",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-6",
@@ -397,7 +422,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Buzz Off - Bug Repellent "
+        "brandname": "Honey & Bloom Buzz Off - Bug Repellent ",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-7",
@@ -457,7 +487,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Kriya - Yoga Mat (All-purpose) Cleanser"
+        "brandname": "Honey & Bloom Kriya - Yoga Mat (All-purpose) Cleanser",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-8",
@@ -527,7 +562,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Bath Salts - Bleeding Love"
+        "brandname": "Honey & Bloom Bath Salts - Bleeding Love",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-9",
@@ -597,7 +637,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Bath Salts - Wo(man)ly"
+        "brandname": "Honey & Bloom Bath Salts - Wo(man)ly",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-10",
@@ -657,7 +702,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Soothing Balm"
+        "brandname": "Honey & Bloom Soothing Balm",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-11",
@@ -717,7 +767,12 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Charcoal Face Mask"
+        "brandname": "Honey & Bloom Charcoal Face Mask",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     },
     {
         "_id": "11-12",
@@ -777,6 +832,11 @@
                 ]
             }
         ],
-        "brandname": "Honey & Bloom Coconut Lavender Body Scrub"
+        "brandname": "Honey & Bloom Coconut Lavender Body Scrub",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        }
     }
 ]

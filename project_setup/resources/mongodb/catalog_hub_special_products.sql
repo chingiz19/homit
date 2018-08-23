@@ -1,5 +1,20 @@
 use homit;
 
+DROP TABLE IF EXISTS catalog_hub_special_products;
+
+CREATE TABLE catalog_hub_special_products (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	store_type_id INT UNSIGNED NOT NULL,
+	product_id VARCHAR(225) NOT NULL,
+	special_type_id INT UNSIGNED NOT NULL,
+	active BOOLEAN DEFAULT TRUE,
+	
+	PRIMARY KEY (id),
+	CONSTRAINT fk_catalog_hub_special_products_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_catalog_hub_special_products_special_type_id FOREIGN KEY (special_type_id) REFERENCES catalog_hub_special_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+
 -- Catalog Hub - Special Products
 -- !!! Drop the table and run with product_id column changed to varchar
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6, "6-805", 2);
@@ -56,4 +71,3 @@ INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_t
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(1, "1-394", 3);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(9, "9-3", 3);
 INSERT INTO `catalog_hub_special_products` (store_type_id, product_id, special_type_id) VALUES(6, "6-475", 3);
-

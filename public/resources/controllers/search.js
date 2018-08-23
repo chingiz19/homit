@@ -1,7 +1,6 @@
 app.controller("searchController", function ($location, $scope, $cookies, $window, $http, $rootScope, $timeout, $log, sessionStorage, notification, googleAnalytics, localStorage, helpers) {
 
     $scope.init = function () {
-
         $scope.result_length = 0;
 
         $http({
@@ -23,9 +22,7 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
         }, function errorCallback(response) {
             notification.addErrorMessage("Ups.. Error loading page");
         });
-
     }
-
 
     $window.onload = function () {
         $http({
@@ -36,22 +33,31 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
             }
         }).then(function successCallback(response) {
             if (response.data.success) {
+                let maxScore = 0;
+                let correctedQuery = $scope.searchText;
                 $scope.result_stores = response.data.result.store_type;
                 $scope.result_products = response.data.result.products;
                 for (let key in $scope.result_products) {
-                    for (let i = 0; i < $scope.result_products[key].length; i++) {
-                        let product = $scope.result_products[key][i]._source;
+                    let results = $scope.result_products[key].results;
 
-                        product["_id"] = $scope.result_products[key][i]["_id"];
+                    if (!maxScore || ($scope.result_products[key].highlight && $scope.result_products[key].score && maxScore < $scope.result_products[key].score)) {
+                        maxScore = $scope.result_products[key].score;
+                        correctedQuery = $scope.result_products[key].highlight;
+                    }
+
+                    for (let i = 0; i < results.length; i++) {
+                        let product = results[i]._source;
+                        product["_id"] = results[i]["_id"];
                         product["product_url"] = helpers.buildProductPagePath(product, "linas-italian-market");
                         if (product.details.preview) {
                             product.details.preview["description_tagged"] = helpers.clearHomitTags(product.details.preview.description);
                         }
-                        $scope.result_products[key][i]._source = product;
+                        results[i]._source = product;
                     }
-                    $scope.result_length = $scope.result_length + $scope.result_products[key].length;
+                    $scope.result_length = $scope.result_length + results.length;
                 }
                 $scope.result_length = $scope.result_length + $scope.result_stores.length;
+                $scope.searchText = correctedQuery;
             } else {
                 notification.addErrorMessage("Ups.. Error getting search query");
             }

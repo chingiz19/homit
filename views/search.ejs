@@ -10,7 +10,7 @@
 <body>
     <div ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" style="position: relative; min-height: calc(100vh - 270px); width: 800px; margin: 0 auto;" ng-cloak>
 
-        <h3 style="margin-top: 20px; font-weight: 400; font-size: 24px; color: #424242;" ng-show="searchText">Search results for <em>'{{searchText}}'</em></h3>
+        <h3 style="margin-top: 20px; font-weight: 400; font-size: 24px; color: #424242;" ng-show="searchText">Search results for  <span ng-bind-html="searchText"></span></h3>
         <h5 style="color: #8f95a3; margin-bottom: 30px; margin-top: 3px;" ng-show="result_length">About {{result_length}} results</h5>
 
         <section ng-repeat="(key, value) in result_products">

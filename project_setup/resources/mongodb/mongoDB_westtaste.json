@@ -59,7 +59,12 @@
                     }
                 ]
             }
-        ]
+        ],
+        "store": {
+            "name": "westtaste",
+            "display_name": "WestTaste",
+            "image_url": "westtaste.jpg"
+        }
     },
     {
         "_id": "12-2",
@@ -121,7 +126,12 @@
                     }
                 ]
             }
-        ]
+        ],
+        "store": {
+            "name": "westtaste",
+            "display_name": "WestTaste",
+            "image_url": "westtaste.jpg"
+        }
     },
     {
         "_id": "12-3",
@@ -183,7 +193,12 @@
                     }
                 ]
             }
-        ]
+        ],
+        "store": {
+            "name": "westtaste",
+            "display_name": "WestTaste",
+            "image_url": "westtaste.jpg"
+        }
     },
     {
         "_id": "12-4",
@@ -245,7 +260,12 @@
                     }
                 ]
             }
-        ]
+        ],
+        "store": {
+            "name": "westtaste",
+            "display_name": "WestTaste",
+            "image_url": "westtaste.jpg"
+        }
     },
     {
         "_id": "12-5",
@@ -307,7 +327,12 @@
                     }
                 ]
             }
-        ]
+        ],
+        "store": {
+            "name": "westtaste",
+            "display_name": "WestTaste",
+            "image_url": "westtaste.jpg"
+        }
     },
     {
         "_id": "12-6",
@@ -369,7 +394,12 @@
                     }
                 ]
             }
-        ]
+        ],
+        "store": {
+            "name": "westtaste",
+            "display_name": "WestTaste",
+            "image_url": "westtaste.jpg"
+        }
     },
     {
         "_id": "12-7",
@@ -431,7 +461,12 @@
                     }
                 ]
             }
-        ]
+        ],
+        "store": {
+            "name": "westtaste",
+            "display_name": "WestTaste",
+            "image_url": "westtaste.jpg"
+        }
     },
     {
         "_id": "12-8",
@@ -493,6 +528,11 @@
                     }
                 ]
             }
-        ]
+        ],
+        "store": {
+            "name": "westtaste",
+            "display_name": "WestTaste",
+            "image_url": "westtaste.jpg"
+        }
     }
 ]

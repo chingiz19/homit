@@ -64,7 +64,12 @@
                 ]
             }
         ],
-        "brandname": "Red Bull Diet"
+        "brandname": "Red Bull Diet",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-2",
@@ -131,7 +136,12 @@
                 ]
             }
         ],
-        "brandname": "Red Bull Classic"
+        "brandname": "Red Bull Classic",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-3",
@@ -188,7 +198,12 @@
                 ]
             }
         ],
-        "brandname": "Rockstar Classic"
+        "brandname": "Rockstar Classic",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-4",
@@ -264,7 +279,12 @@
                 ]
             }
         ],
-        "brandname": "Coca-Cola Classic"
+        "brandname": "Coca-Cola Classic",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-5",
@@ -321,7 +341,12 @@
                 ]
             }
         ],
-        "brandname": "Coca-Cola Classic"
+        "brandname": "Coca-Cola Classic",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-6",
@@ -397,7 +422,12 @@
                 ]
             }
         ],
-        "brandname": "Coca-Cola Diet"
+        "brandname": "Coca-Cola Diet",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-7",
@@ -454,7 +484,12 @@
                 ]
             }
         ],
-        "brandname": "Coca-Cola Diet"
+        "brandname": "Coca-Cola Diet",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-8",
@@ -530,7 +565,12 @@
                 ]
             }
         ],
-        "brandname": "Coca-Cola Zero"
+        "brandname": "Coca-Cola Zero",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-9",
@@ -587,7 +627,12 @@
                 ]
             }
         ],
-        "brandname": "Coca-Cola Zero"
+        "brandname": "Coca-Cola Zero",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-10",
@@ -663,7 +708,12 @@
                 ]
             }
         ],
-        "brandname": "Canada Dry Ginger Ale"
+        "brandname": "Canada Dry Ginger Ale",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-11",
@@ -720,7 +770,12 @@
                 ]
             }
         ],
-        "brandname": "Simply Lemonade Raspberry"
+        "brandname": "Simply Lemonade Raspberry",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-12",
@@ -777,7 +832,12 @@
                 ]
             }
         ],
-        "brandname": "Simply Lemonade Orange"
+        "brandname": "Simply Lemonade Orange",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-13",
@@ -853,7 +913,12 @@
                 ]
             }
         ],
-        "brandname": "Pepsi Classic"
+        "brandname": "Pepsi Classic",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-14",
@@ -910,7 +975,12 @@
                 ]
             }
         ],
-        "brandname": "Pepsi Classic"
+        "brandname": "Pepsi Classic",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-15",
@@ -986,7 +1056,12 @@
                 ]
             }
         ],
-        "brandname": "Pepsi Diet"
+        "brandname": "Pepsi Diet",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-16",
@@ -1043,7 +1118,12 @@
                 ]
             }
         ],
-        "brandname": "Pepsi Diet"
+        "brandname": "Pepsi Diet",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-17",
@@ -1100,7 +1180,12 @@
                 ]
             }
         ],
-        "brandname": "Mott's Clamato The Original"
+        "brandname": "Mott's Clamato The Original",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-18",
@@ -1176,7 +1261,12 @@
                 ]
             }
         ],
-        "brandname": "Dasani Water"
+        "brandname": "Dasani Water",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-19",
@@ -1252,7 +1342,12 @@
                 ]
             }
         ],
-        "brandname": "Aquafina Still Water"
+        "brandname": "Aquafina Still Water",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-20",
@@ -1309,7 +1404,12 @@
                 ]
             }
         ],
-        "brandname": "Arctic Glacier Ice"
+        "brandname": "Arctic Glacier Ice",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-21",
@@ -1395,7 +1495,12 @@
                 ]
             }
         ],
-        "brandname": "Perrier Sparkling Water"
+        "brandname": "Perrier Sparkling Water",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-22",
@@ -1481,7 +1586,12 @@
                 ]
             }
         ],
-        "brandname": "Perrier Lemon & Orange"
+        "brandname": "Perrier Lemon & Orange",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-23",
@@ -1545,7 +1655,12 @@
                 ]
             }
         ],
-        "brandname": "Purex Bathroom Tissue Paper"
+        "brandname": "Purex Bathroom Tissue Paper",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-24",
@@ -1602,7 +1717,12 @@
                 ]
             }
         ],
-        "brandname": "Tylenol Regular"
+        "brandname": "Tylenol Regular",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-25",
@@ -1659,7 +1779,12 @@
                 ]
             }
         ],
-        "brandname": "Tylenol Extra Strength"
+        "brandname": "Tylenol Extra Strength",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-26",
@@ -1716,7 +1841,12 @@
                 ]
             }
         ],
-        "brandname": "Advil Liqui Gels"
+        "brandname": "Advil Liqui Gels",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-27",
@@ -1773,7 +1903,12 @@
                 ]
             }
         ],
-        "brandname": "Aspirin Daily Low Dose"
+        "brandname": "Aspirin Daily Low Dose",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-28",
@@ -1830,7 +1965,12 @@
                 ]
             }
         ],
-        "brandname": "Twizzler Strawberry"
+        "brandname": "Twizzler Strawberry",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-29",
@@ -1887,7 +2027,12 @@
                 ]
             }
         ],
-        "brandname": "Lindt Milk Chocolate"
+        "brandname": "Lindt Milk Chocolate",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-30",
@@ -1944,7 +2089,12 @@
                 ]
             }
         ],
-        "brandname": "Lindt Hazelnut Chocolate"
+        "brandname": "Lindt Hazelnut Chocolate",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-31",
@@ -2001,7 +2151,12 @@
                 ]
             }
         ],
-        "brandname": "Lindt White Chocolate"
+        "brandname": "Lindt White Chocolate",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-32",
@@ -2058,7 +2213,12 @@
                 ]
             }
         ],
-        "brandname": "Hershey's Cookies & Cream"
+        "brandname": "Hershey's Cookies & Cream",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-33",
@@ -2115,7 +2275,12 @@
                 ]
             }
         ],
-        "brandname": "Jack Link's Cholula"
+        "brandname": "Jack Link's Cholula",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-34",
@@ -2172,7 +2337,12 @@
                 ]
             }
         ],
-        "brandname": "Jack Link's Pork"
+        "brandname": "Jack Link's Pork",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-35",
@@ -2229,7 +2399,12 @@
                 ]
             }
         ],
-        "brandname": "Jack Link's Sriracha"
+        "brandname": "Jack Link's Sriracha",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-36",
@@ -2286,7 +2461,12 @@
                 ]
             }
         ],
-        "brandname": "Jack Link's Teriyaki"
+        "brandname": "Jack Link's Teriyaki",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-37",
@@ -2343,7 +2523,12 @@
                 ]
             }
         ],
-        "brandname": "Jack Link's Sweet & Hot"
+        "brandname": "Jack Link's Sweet & Hot",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-38",
@@ -2400,7 +2585,12 @@
                 ]
             }
         ],
-        "brandname": "Jack Link's Hickory Smoked"
+        "brandname": "Jack Link's Hickory Smoked",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-39",
@@ -2457,7 +2647,12 @@
                 ]
             }
         ],
-        "brandname": "Jack Link's Chicken"
+        "brandname": "Jack Link's Chicken",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-40",
@@ -2514,7 +2709,12 @@
                 ]
             }
         ],
-        "brandname": "Krave Sweet Teriyaki"
+        "brandname": "Krave Sweet Teriyaki",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-41",
@@ -2571,7 +2771,12 @@
                 ]
             }
         ],
-        "brandname": "Krave Chili Lime"
+        "brandname": "Krave Chili Lime",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-42",
@@ -2628,7 +2833,12 @@
                 ]
             }
         ],
-        "brandname": "Krave Sweet Chipotle"
+        "brandname": "Krave Sweet Chipotle",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-43",
@@ -2685,7 +2895,12 @@
                 ]
             }
         ],
-        "brandname": "Pringles Original"
+        "brandname": "Pringles Original",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-44",
@@ -2742,7 +2957,12 @@
                 ]
             }
         ],
-        "brandname": "Pringles Sour Cream & Onion"
+        "brandname": "Pringles Sour Cream & Onion",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-45",
@@ -2799,7 +3019,12 @@
                 ]
             }
         ],
-        "brandname": "Cheetos Crunchy"
+        "brandname": "Cheetos Crunchy",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-46",
@@ -2856,7 +3081,12 @@
                 ]
             }
         ],
-        "brandname": "Cheetos Cheddar Jalapeno"
+        "brandname": "Cheetos Cheddar Jalapeno",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-47",
@@ -2913,7 +3143,12 @@
                 ]
             }
         ],
-        "brandname": "Cheetos Puffs"
+        "brandname": "Cheetos Puffs",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-48",
@@ -2970,7 +3205,12 @@
                 ]
             }
         ],
-        "brandname": "Lay's Salt & Vinegar"
+        "brandname": "Lay's Salt & Vinegar",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-49",
@@ -3027,7 +3267,12 @@
                 ]
             }
         ],
-        "brandname": "Lay's Classic"
+        "brandname": "Lay's Classic",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-50",
@@ -3084,7 +3329,12 @@
                 ]
             }
         ],
-        "brandname": "Smartfood Gouda & Chive"
+        "brandname": "Smartfood Gouda & Chive",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-51",
@@ -3141,7 +3391,12 @@
                 ]
             }
         ],
-        "brandname": "Smartfood White Cheddar"
+        "brandname": "Smartfood White Cheddar",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-52",
@@ -3198,7 +3453,12 @@
                 ]
             }
         ],
-        "brandname": "Doritos Cheese"
+        "brandname": "Doritos Cheese",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-53",
@@ -3255,7 +3515,12 @@
                 ]
             }
         ],
-        "brandname": "Doritos Zesty Cheese"
+        "brandname": "Doritos Zesty Cheese",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-54",
@@ -3312,7 +3577,12 @@
                 ]
             }
         ],
-        "brandname": "Tostitos Restaurant Style"
+        "brandname": "Tostitos Restaurant Style",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-55",
@@ -3369,7 +3639,12 @@
                 ]
             }
         ],
-        "brandname": "Tostitos Round"
+        "brandname": "Tostitos Round",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-56",
@@ -3426,7 +3701,12 @@
                 ]
             }
         ],
-        "brandname": "Ruffles Dip Ranch"
+        "brandname": "Ruffles Dip Ranch",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-57",
@@ -3483,7 +3763,12 @@
                 ]
             }
         ],
-        "brandname": "Tostitos Red Pepper Salsa"
+        "brandname": "Tostitos Red Pepper Salsa",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-58",
@@ -3540,7 +3825,12 @@
                 ]
             }
         ],
-        "brandname": "Tostitos Roasted Garlic Salsa"
+        "brandname": "Tostitos Roasted Garlic Salsa",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-59",
@@ -3597,7 +3887,12 @@
                 ]
             }
         ],
-        "brandname": "Tostitos Spinach Dip"
+        "brandname": "Tostitos Spinach Dip",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-60",
@@ -3654,7 +3949,12 @@
                 ]
             }
         ],
-        "brandname": "Tostitos Mild Spicy Salsa"
+        "brandname": "Tostitos Mild Spicy Salsa",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-61",
@@ -3711,7 +4011,12 @@
                 ]
             }
         ],
-        "brandname": "Tostitos Medium Spicy Salsa"
+        "brandname": "Tostitos Medium Spicy Salsa",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     },
     {
         "_id": "3-62",
@@ -3768,6 +4073,11 @@
                 ]
             }
         ],
-        "brandname": "Tostitos Hot Salsa"
+        "brandname": "Tostitos Hot Salsa",
+        "store": {
+            "name": "snack-vendor",
+            "display_name": "Snack Vendor",
+            "image_url": "snack-vendor_icon.png"
+        }
     }
 ]

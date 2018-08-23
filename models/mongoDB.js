@@ -52,12 +52,19 @@ let productSchema = new Schema({
     tax: { type: Schema.Types.Number, es_indexed: false },
     container: { type: Schema.Types.String, es_indexed: false },
     images: {
-        es_indexed: false,
         image_catalog: {
             type: Schema.Types.String,
-            es_indexed: false
+            required: true,
+            es_indexed: true,
+            es_type: 'text'
         },
-        images_all: [Schema.Types.String]
+        images_all: [
+            {
+                type: Schema.Types.String,
+                required: true,
+                es_indexed: true,
+                es_type: 'text'
+            }]
     },
     category: {
         category_display_name: {
@@ -73,6 +80,23 @@ let productSchema = new Schema({
         type: Schema.Types.String,
         es_indexed: true,
         es_type: 'keyword'
+    },
+    store: {
+        name: {
+            type: Schema.Types.String,
+            es_indexed: true,
+            es_type: 'keyword'
+        },
+        display_name: {
+            type: Schema.Types.String,
+            es_indexed: true,
+            es_type: 'text'
+        },
+        image_url: {
+            type: Schema.Types.String,
+            es_indexed: true,
+            es_type: 'text'
+        },
     },
     details: {
         ingredients: {
@@ -102,17 +126,17 @@ let productSchema = new Schema({
     variance: [
         {
             _id: { type: Schema.Types.Mixed, es_indexed: false },
-            si_unit_size: { type: Schema.Types.Number, es_indexed: false },
-            si_unit: { type: Schema.Types.String, es_indexed: false },
-            preffered_unit: { type: Schema.Types.String, es_indexed: false },
-            preffered_unit_size: { type: Schema.Types.String, es_indexed: false },
+            si_unit_size: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
+            si_unit: { type: Schema.Types.String, es_indexed: true, es_type: 'text' },
+            preffered_unit: { type: Schema.Types.String, es_indexed: true, es_type: 'text' },
+            preffered_unit_size: { type: Schema.Types.String, es_indexed: true, es_type: 'text' },
             packs: [
                 {
                     _id: { type: Schema.Types.Mixed, es_indexed: false },
-                    h_value: { type: Schema.Types.Number, es_indexed: false },
-                    price: { type: Schema.Types.Number, es_indexed: false },
-                    available: { type: Schema.Types.Number, es_indexed: false },
-                    stock_quantity: { type: Schema.Types.Number, es_indexed: false },
+                    h_value: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
+                    price: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
+                    available: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
+                    stock_quantity: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     sold: {
                         quantity: { type: Schema.Types.Number, es_indexed: false },
                     }
@@ -217,99 +241,113 @@ pub.suggestSearch = async function (suggest, inLimit, cb) {
     });
 }
 
-async function getMongoProducts(inObject, cb) {
-    let finalResult = {};
+pub.globalSearch = async function (inText, cb) {
+    let finalResult = [];
     let searchedFields = new Map();
 
-    for (let key in inObject) {
-        for (let i = 0; i < inObject[key].length; i++) {
-            searchedFields.set(key, inObject[key].length);
-            MDB.models['liquor-station'].search({
-                query_string: {
-                    query: inObject[key][i].text
-                }
-            }, function (err, result) {
-                if (result && !err) {
-                    if (!finalResult[key]) finalResult[key] = [];
-                    finalResult[key] = finalResult[key].concat(result.hits.hits);
-                    searchedFields.set(key, searchedFields.get(key)-1);
-                    for (let value of searchedFields.values()) {
-                        if (value) {
-                            return false;
+    MDB.models['liquor-station'].search({
+        query_string: {
+            query: inText
+        }
+    }, function (err, result) {
+        if (!err && result && result.hits && result.hits.hits && result.hits.hits.length > 0) {
+            finalResult.push({
+                "results": result.hits.hits,
+                "highlight": undefined,
+                "score": undefined
+            });
+            cb(finalResult);
+        } else {
+            MDB.models['liquor-station'].esSearch({
+                "suggest": {
+                    "text": inText,
+                    "brand-suggest": {
+                        "phrase": {
+                            "field": "brand",
+                            "size": 3,
+                            "gram_size": 3,
+                            "max_errors": 3,
+                            "direct_generator": [{
+                                "field": "brand",
+                                "suggest_mode": "always"
+                            }],
+                            "highlight": {
+                                "pre_tag": "<strong>",
+                                "post_tag": "</strong>"
+                            }
                         }
-                    }
-                    cb(finalResult);
-                    return;
+                    },
+                    "name-suggest": {
+                        "phrase": {
+                            "field": "name",
+                            "size": 3,
+                            "gram_size": 3,
+                            "max_errors": 3,
+                            "direct_generator": [{
+                                "field": "name",
+                                "suggest_mode": "always"
+                            }],
+                            "highlight": {
+                                "pre_tag": "<strong>",
+                                "post_tag": "</strong>"
+                            }
+                        }
+                    },
+                    "cat-suggest": { "phrase": { "field": "category.category_display_name" } },
+                    "subcat-suggest": { "phrase": { "field": "subcategory" } },
+                    "country-suggest": { "phrase": { "field": "details.country_of_origin.description" } },
+                    "desc-suggest": {
+                        "phrase": {
+                            "field": "details.preview.description",
+                            "size": 1,
+                            "gram_size": 4,
+                            "max_errors": 1,
+                        }
+                    },
+
+                }
+            }, async function (err, results) {
+                if (err && process.env.n_mode != "production") {
+                    return console.log(JSON.stringify(err, null, 4));
+                }
+
+                let suggestResults = [];
+
+                suggestResults = suggestResults.concat(results.suggest['brand-suggest'][0].options);
+                suggestResults = suggestResults.concat(results.suggest['name-suggest'][0].options);
+                suggestResults = suggestResults.concat(results.suggest['cat-suggest'][0].options);
+                suggestResults = suggestResults.concat(results.suggest['subcat-suggest'][0].options);
+                suggestResults = suggestResults.concat(results.suggest['country-suggest'][0].options);
+                suggestResults = suggestResults.concat(results.suggest['desc-suggest'][0].options);
+
+                for (let key in suggestResults) {
+                    searchedFields.set(suggestResults[key].text, false);
+                    MDB.models['liquor-station'].search({
+                        query_string: {
+                            query: suggestResults[key].text
+                        }
+                    }, function (err, result) {
+                        if (!err && result && result.hits && result.hits.hits && result.hits.hits.length > 0) {
+                            searchedFields.set(suggestResults[key].text, true);
+
+                            finalResult.push({
+                                "results": result.hits.hits,
+                                "highlight": suggestResults[key].highlighted,
+                                "score": suggestResults[key].score
+                            });
+
+                            for (let value of searchedFields.values()) {
+                                if (!value) {
+                                    return false;
+                                }
+                            }
+                            cb(finalResult);
+                            return;
+                        }
+                    });
                 }
             });
         }
-    }
-}
-
-pub.globalSearch = async function (inText, cb) {
-    MDB.models['liquor-station'].esSearch({
-        "suggest": {
-            "text": inText,
-            "brand-suggest": {
-                "phrase": {
-                    "field": "brand",
-                    "size": 3,
-                    "gram_size": 3,
-                    "max_errors": 3,
-                    "direct_generator": [{
-                        "field": "brand",
-                        "suggest_mode": "always"
-                    }],
-                    "highlight": {
-                        "pre_tag": "<em>",
-                        "post_tag": "</em>"
-                    }
-                }
-            },
-            "name-suggest": {
-                "phrase": {
-                    "field": "name",
-                    "size": 3,
-                    "gram_size": 3,
-                    "max_errors": 3,
-                    "direct_generator": [{
-                        "field": "name",
-                        "suggest_mode": "always"
-                    }],
-                    "highlight": {
-                        "pre_tag": "<em>",
-                        "post_tag": "</em>"
-                    }
-                }
-            },
-            "cat-suggest": { "phrase": { "field": "category.category_display_name" } },
-            "subcat-suggest": { "phrase": { "field": "subcategory" } },
-            "country-suggest": { "phrase": { "field": "details.country_of_origin.description" } },
-            "desc-suggest": { 
-                "phrase": { 
-                    "field": "details.preview.description" ,
-                    "size": 1,
-                    "gram_size": 4,
-                    "max_errors": 1,
-                }
-            },
-
-        }
-    }, async function (err, results) {
-        if (err) {
-            return console.log(JSON.stringify(err, null, 4));
-        }
-        let options = {};
-
-        options['brand-suggest'] = results.suggest['brand-suggest'][0].options;
-        options['name-suggest'] = results.suggest['name-suggest'][0].options;
-        options['cat-suggest'] = results.suggest['cat-suggest'][0].options;
-        options['subcat-suggest'] = results.suggest['subcat-suggest'][0].options;
-        options['country-suggest'] = results.suggest['country-suggest'][0].options;
-        options['desc-suggest'] = results.suggest['desc-suggest'][0].options;
-
-       getMongoProducts(options, cb);
-
     });
 }
 

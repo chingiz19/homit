@@ -54,7 +54,12 @@
                 ]
             }
         ],
-        "brandname": "Dwarf Stars Originals"
+        "brandname": "Dwarf Stars Originals",
+        "store": {
+            "name": "dwarf-stars",
+            "display_name": "Dwarf Stars",
+            "image_url": "dwarf-stars.jpg"
+        }
     },
     {
         "_id": "7-2",
@@ -111,7 +116,12 @@
                 ]
             }
         ],
-        "brandname": "Dwarf Stars Pumpkin Seed Butter Cups"
+        "brandname": "Dwarf Stars Pumpkin Seed Butter Cups",
+        "store": {
+            "name": "dwarf-stars",
+            "display_name": "Dwarf Stars",
+            "image_url": "dwarf-stars.jpg"
+        }
     },
     {
         "_id": "7-3",
@@ -168,6 +178,11 @@
                 ]
             }
         ],
-        "brandname": "Dwarf Stars PumpKING Protein Balls"
+        "brandname": "Dwarf Stars PumpKING Protein Balls",
+        "store": {
+            "name": "dwarf-stars",
+            "display_name": "Dwarf Stars",
+            "image_url": "dwarf-stars.jpg"
+        }
     }
 ]

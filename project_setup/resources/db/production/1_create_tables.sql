@@ -525,13 +525,12 @@ CREATE TABLE catalog_hub_special_types (
 CREATE TABLE catalog_hub_special_products (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	store_type_id INT UNSIGNED NOT NULL,
-	product_id INT UNSIGNED NOT NULL,
+	product_id VARCHAR(225) NOT NULL,
 	special_type_id INT UNSIGNED NOT NULL,
 	active BOOLEAN DEFAULT TRUE,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_catalog_hub_special_products_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_catalog_hub_special_products_product_id FOREIGN KEY (product_id) REFERENCES catalog_products(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_catalog_hub_special_products_special_type_id FOREIGN KEY (special_type_id) REFERENCES catalog_hub_special_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
