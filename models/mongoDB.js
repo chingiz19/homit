@@ -200,9 +200,11 @@ function checkIfSyncIsDone() {
             return;
         }
     }
+
     if (process.env.n_mode != "production") {
         return console.log('All Mongo DB documents have been sync-ed');
     }
+
     return true;
 }
 
@@ -228,12 +230,10 @@ pub.suggestSearch = async function (suggest, inLimit, cb) {
         let limit = Math.min(inLimit, options.length);
 
         for (let i = 0; i < limit; i++) {
-            let id = options[i]._id.split('-')[0];
             let product = options[i]._source;
             product._id = options[i]._id;
-            let storeInfo = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": id });
-            product.store_name = storeInfo[0].name;
             delete product.details;
+            delete product.variance;
             result.push(product);
         }
 
