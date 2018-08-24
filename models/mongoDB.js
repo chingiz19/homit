@@ -272,8 +272,8 @@ pub.globalSearch = async function (inText, cb) {
                                 "suggest_mode": "always"
                             }],
                             "highlight": {
-                                "pre_tag": "<em>",
-                                "post_tag": "</em>"
+                                "pre_tag": "",
+                                "post_tag": ""
                             }
                         }
                     },
@@ -288,8 +288,8 @@ pub.globalSearch = async function (inText, cb) {
                                 "suggest_mode": "always"
                             }],
                             "highlight": {
-                                "pre_tag": "<em>",
-                                "post_tag": "</em>"
+                                "pre_tag": "",
+                                "post_tag": ""
                             }
                         }
                     },
@@ -297,16 +297,16 @@ pub.globalSearch = async function (inText, cb) {
                         "phrase": {
                             "field": "category.category_display_name",
                             "highlight": {
-                                "pre_tag": "<em>",
-                                "post_tag": "</em>"
+                                "pre_tag": "",
+                                "post_tag": ""
                             }
                         }
                     },
                     "subcat-suggest": {
                         "phrase": {
                             "field": "subcategory", "highlight": {
-                                "pre_tag": "<em>",
-                                "post_tag": "</em>"
+                                "pre_tag": "",
+                                "post_tag": ""
                             }
                         }
                     },
@@ -314,8 +314,8 @@ pub.globalSearch = async function (inText, cb) {
                         "phrase": {
                             "field": "details.country_of_origin.description",
                             "highlight": {
-                                "pre_tag": "<em>",
-                                "post_tag": "</em>"
+                                "pre_tag": "",
+                                "post_tag": ""
                             }
                         }
                     },
@@ -326,8 +326,8 @@ pub.globalSearch = async function (inText, cb) {
                             "gram_size": 4,
                             "max_errors": 1,
                             "highlight": {
-                                "pre_tag": "<em>",
-                                "post_tag": "</em>"
+                                "pre_tag": "",
+                                "post_tag": ""
                             }
                         }
                     },

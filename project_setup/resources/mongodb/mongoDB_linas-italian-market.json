@@ -22307,7 +22307,7 @@
     {
         "_id": "6-359",
         "brand": "La Chinata",
-        "name": "Hot Suace",
+        "name": "Hot Sauce",
         "container": "container",
         "tax": 1,
         "images": {
@@ -22356,7 +22356,7 @@
                 ]
             }
         ],
-        "brandname": "La Chinata Hot Suace",
+        "brandname": "La Chinata Hot Sauce",
         "store": {
             "name": "linas-italian-market",
             "display_name": "Lina's Italian Market",
@@ -22555,7 +22555,7 @@
     {
         "_id": "6-363",
         "brand": "Encore",
-        "name": "Hot Suace",
+        "name": "Hot Sauce",
         "container": "container",
         "tax": 1,
         "images": {
@@ -22608,7 +22608,7 @@
                 ]
             }
         ],
-        "brandname": "Encore Hot Suace",
+        "brandname": "Encore Hot Sauce",
         "store": {
             "name": "linas-italian-market",
             "display_name": "Lina's Italian Market",

@@ -1,11 +1,29 @@
-@import "default/module";
-
 body {
     top: 80px;
     letter-spacing: 0.01em;
     font-family: 'Nunito', sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+}
+
+.item-price{
+    height: 45px;
+    width: 37px;
+    font-size: 12px;
+    padding-top: 17px;
+    span{
+        position: relative; 
+        top: -35px; 
+        right: -10;
+        font-size: 10px; 
+    }
+    .item-curency {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        text-align: right;
+        font-size: 9px;
+    }
 }
 
 /* start of mobile/tablet styles */
