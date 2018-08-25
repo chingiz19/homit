@@ -64,18 +64,16 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
                         tmp_list.push(tmp_product);
                         $scope.result_length = $scope.result_length + 1;
                     }
-
                     if(data[i].highlight){
                         tmp_data[data[i].highlight] = tmp_list;
                     } else{
                         tmp_data[$scope.searchText] = tmp_list;
                     }
-                    
                 }
                 $scope.search_result.products = tmp_data;
 
             } else {
-                notification.addErrorMessage("Ups.. Error getting search query");
+                $scope.search_result.products = [];
             }
         }, function errorCallback(response) {
             notification.addErrorMessage("Ups.. Error getting search query");
