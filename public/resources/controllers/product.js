@@ -8,9 +8,9 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
 
         $http({
             method: 'POST',
-            url: "/api/hub/randomproducts",
+            url: "/api/hub/similarproducts",
             data:{
-                limit: 5
+                limit: 8
             }
         }).then(function successCallback(response) {
             $scope.recommended_products = buildProductUrl(response.data.result);
@@ -23,7 +23,7 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
     function buildProductUrl(products){
         let tmpList = products;
         for(let x=0; x<tmpList.length; x++){
-            tmpList[x]["product_url"] = helpers.buildProductPagePath(tmpList[x], tmpList[x].store_type_name);
+            tmpList[x]["product_url"] = helpers.buildProductPagePath(tmpList[x]);
         }
         return tmpList;
     }

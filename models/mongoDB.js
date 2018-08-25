@@ -160,64 +160,6 @@ let productSchema = new Schema({
 
 productSchema.plugin(mongoosastic);
 
-/**
- * Inits storeType - Collection registration with Mongo DB
- */
-async function init() {
-    if (mySQLConnected && MongoDBConnected && !inititialized) {
-        inititialized = true;
-        let storeTypes = await Catalog.getAllStoreTypeNames();
-
-        if (storeTypes && storeTypes.length > 0) {
-            for (storeType in storeTypes) {
-                let storeTypeName = storeTypes[storeType].name;
-                pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
-                pub.models[storeTypeName].createMapping(function (err, mapping) {
-                    if (err) {
-                        Logger.log.error('Error creating mapping (you can safely ignore this)');
-                        if (process.env.n_mode != "production") { console.log(err); }
-                    } else {
-                        Logger.log.debug(`Mapping created for ${storeTypeName} and mapping is ${JSON.stringify(mapping)}`);
-                    }
-                    synchronizeModel(pub.models[storeTypeName], storeTypeName);
-                });
-            }
-        }
-
-        if (process.env.n_mode != "production") {
-            console.log('Initialized store models with Mongo DB');
-        }
-    }
-}
-
-async function synchronizeModel(mongoModel, storeType) {
-    indexedStores[storeType] = false;
-    let stream = mongoModel.synchronize(), count = 0;
-
-    stream.on('data', function (err, doc) {
-        count++;
-    });
-    stream.on('close', function () {
-        indexedStores[storeType] = true;
-        checkIfSyncIsDone();
-    });
-    stream.on('error', function (err) {
-        console.log(err);
-    });
-}
-
-function checkIfSyncIsDone() {
-    for (let i in indexedStores) {
-        if (!indexedStores[i]) {
-            return;
-        }
-    }
-    if (process.env.n_mode != "production") {
-        return console.log('All Mongo DB documents have been sync-ed');
-    }
-    return true;
-}
-
 pub.suggestSearch = async function (suggest, inLimit, cb) {
     MDB.models['liquor-station'].esSearch({
         "suggest": {
@@ -240,12 +182,10 @@ pub.suggestSearch = async function (suggest, inLimit, cb) {
         let limit = Math.min(inLimit, options.length);
 
         for (let i = 0; i < limit; i++) {
-            let id = options[i]._id.split('-')[0];
             let product = options[i]._source;
             product._id = options[i]._id;
-            let storeInfo = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": id });
-            product.store_name = storeInfo[0].name;
             delete product.details;
+            delete product.variance;
             result.push(product);
         }
 
@@ -392,6 +332,103 @@ pub.globalSearch = async function (inText, cb) {
             });
         }
     });
+}
+
+/**
+ * Function takes array of product UIDs
+ * @param {*} UIDs 
+ */
+pub.findProducts = async function (UIDs) {
+    let finalResult = [];
+
+    for (let id in UIDs) {
+        let IDobject = pub.formatReceviedUID(UIDs[id]);
+        let rawStore = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": IDobject.storeId });
+        if (rawStore && rawStore.length > 0) {
+            let selectedStore = rawStore[0];
+            let searchId = IDobject.storeId + '-' + IDobject.productId;
+            let product = await MDB.models[selectedStore.name].findById(searchId).exec();
+            finalResult.push(product.toObject());
+        }
+    }
+
+    return finalResult;
+}
+
+/**
+* Returns formatted id as object 
+* 
+* @param {String} raw received UID
+*/
+pub.formatReceviedUID = function (raw) {
+   let finalObject = {};
+
+   if (raw && typeof raw === 'string') {
+       let splitArray = raw.split('-');
+       finalObject.storeId = splitArray[0];
+       finalObject.productId = splitArray[1];
+       finalObject.varianceId = splitArray[2];
+       finalObject.packId = splitArray[3];
+   }
+
+   return finalObject;
+}
+
+/**
+ * Inits storeType - Collection registration with Mongo DB
+ */
+async function init() {
+    if (mySQLConnected && MongoDBConnected && !inititialized) {
+        inititialized = true;
+        let storeTypes = await Catalog.getAllStoreTypeNames();
+
+        if (storeTypes && storeTypes.length > 0) {
+            for (storeType in storeTypes) {
+                let storeTypeName = storeTypes[storeType].name;
+                pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
+                pub.models[storeTypeName].createMapping(function (err, mapping) {
+                    if (err) {
+                        Logger.log.error('Error creating mapping (you can safely ignore this)');
+                        if (process.env.n_mode != "production") { console.log(err); }
+                    } else {
+                        Logger.log.debug(`Mapping created for ${storeTypeName} and mapping is ${JSON.stringify(mapping)}`);
+                    }
+                    synchronizeModel(pub.models[storeTypeName], storeTypeName);
+                });
+            }
+        }
+
+        if (process.env.n_mode != "production") {
+            console.log('Initialized store models with Mongo DB');
+        }
+    }
+}
+
+async function synchronizeModel(mongoModel, storeType) {
+    indexedStores[storeType] = false;
+    let stream = mongoModel.synchronize();
+
+    stream.on('close', function () {
+        indexedStores[storeType] = true;
+        checkIfSyncIsDone();
+    });
+    stream.on('error', function (err) {
+        console.log(err);
+    });
+}
+
+function checkIfSyncIsDone() {
+    for (let i in indexedStores) {
+        if (!indexedStores[i]) {
+            return;
+        }
+    }
+
+    if (process.env.n_mode != "production") {
+        return console.log('All Mongo DB documents have been sync-ed');
+    }
+
+    return true;
 }
 
 module.exports = pub;

@@ -103,7 +103,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                         }
 
                         for (var store_type_name in scope.userCart) {
-                            for (var a in scope.userCart[store_type_name]) {
+                            for (let a in scope.userCart[store_type_name]) {
                                 scope.totalAmount = scope.totalAmount + (scope.userCart[store_type_name][a].quantity * scope.userCart[store_type_name][a].price);
                                 scope.numberOfItemsInCart = scope.numberOfItemsInCart + scope.userCart[store_type_name][a].quantity;
                                 scope.totalAmount = Math.round(scope.totalAmount * 100) / 100;

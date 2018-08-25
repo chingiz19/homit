@@ -338,13 +338,12 @@ CREATE TABLE drivers_status (
 CREATE TABLE user_cart_items ( 
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT, 
 	user_id INT UNSIGNED NOT NULL, 
-	depot_id INT UNSIGNED NOT NULL, 
+	depot_id VARCHAR(225) NOT NULL,
 	quantity INT NOT NULL,
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_id, depot_id), 
 	CONSTRAINT fk_user_cart_items_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT fk_user_cart_items_depot_id FOREIGN KEY (depot_id) REFERENCES catalog_depot(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 
