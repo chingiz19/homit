@@ -335,6 +335,46 @@ pub.globalSearch = async function (inText, cb) {
 }
 
 /**
+ * Function takes array of product UIDs
+ * @param {*} UIDs 
+ */
+pub.findProducts = async function (UIDs) {
+    let finalResult = [];
+
+    for (let id in UIDs) {
+        let IDobject = pub.formatReceviedUID(UIDs[id]);
+        let rawStore = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": IDobject.storeId });
+        if (rawStore && rawStore.length > 0) {
+            let selectedStore = rawStore[0];
+            let searchId = IDobject.storeId + '-' + IDobject.productId;
+            let product = await MDB.models[selectedStore.name].findById(searchId).exec();
+            finalResult.push(product.toObject());
+        }
+    }
+
+    return finalResult;
+}
+
+/**
+* Returns formatted id as object 
+* 
+* @param {String} raw received UID
+*/
+pub.formatReceviedUID = function (raw) {
+   let finalObject = {};
+
+   if (raw && typeof raw === 'string') {
+       let splitArray = raw.split('-');
+       finalObject.storeId = splitArray[0];
+       finalObject.productId = splitArray[1];
+       finalObject.varianceId = splitArray[2];
+       finalObject.packId = splitArray[3];
+   }
+
+   return finalObject;
+}
+
+/**
  * Inits storeType - Collection registration with Mongo DB
  */
 async function init() {

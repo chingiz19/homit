@@ -495,7 +495,7 @@ pub.prepareProductsForCalculator = async function (cartProducts) {
     if (!(UIDs.length === 0 && cartProducts.constructor === Object)) {
         for (let id in UIDs) {
             let selectedQuantity = cartProducts[UIDs[id]];
-            let IDobject = formatReceviedUID(UIDs[id]);
+            let IDobject = MDB.formatReceviedUID(UIDs[id]);
             let rawStore = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": IDobject.storeId });
             if (rawStore && rawStore.length > 0) {
                 let selectedStore = rawStore[0];
@@ -926,25 +926,6 @@ function getRandomNmber(limit, exclusionArray) {
     }
 
     return Math.floor(Math.random() * (limit + 1));
-}
-
-/**
- * Returns formatted id as object 
- * 
- * @param {String} raw received UID
- */
-function formatReceviedUID(raw) {
-    let finalObject = {};
-
-    if (raw && typeof raw === 'string') {
-        let splitArray = raw.split('-');
-        finalObject.storeId = splitArray[0];
-        finalObject.productId = splitArray[1];
-        finalObject.varianceId = splitArray[2];
-        finalObject.packId = splitArray[3];
-    }
-
-    return finalObject;
 }
 
 module.exports = pub;
