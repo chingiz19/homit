@@ -2,7 +2,7 @@
  * @copyright Homit 2018
  */
 
-var pub = {};
+let pub = {};
 
 pub.sanitizeUserObject = function (user) {
     delete user.password;

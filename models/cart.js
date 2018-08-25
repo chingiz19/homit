@@ -2,7 +2,7 @@
  * @copyright Homit 2018
  */
 
-var pub = {};
+let pub = {};
 
 /**
  * Get user's cart based on userId
@@ -70,7 +70,7 @@ pub.modifyProductInCart = async function (userId, depotId, quantity) {
         if (result == false) {
             return false;
         } else {
-            return true;            
+            return true;
         }
     } else {
         let cartItem = await getCartProduct(userId, depotId);
@@ -93,12 +93,8 @@ pub.modifyProductInCart = async function (userId, depotId, quantity) {
                 depot_id: depotId,
                 quantity: quantity
             };
-            let inserted = await db.insertQuery(db.tables.user_cart_items, data);
-            if (inserted == false) {
-                return false;
-            } else {
-                return true;
-            }
+            
+            return await db.insertQuery(db.tables.user_cart_items, data) && true;
         }
     }
 }

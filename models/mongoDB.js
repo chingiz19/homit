@@ -160,66 +160,6 @@ let productSchema = new Schema({
 
 productSchema.plugin(mongoosastic);
 
-/**
- * Inits storeType - Collection registration with Mongo DB
- */
-async function init() {
-    if (mySQLConnected && MongoDBConnected && !inititialized) {
-        inititialized = true;
-        let storeTypes = await Catalog.getAllStoreTypeNames();
-
-        if (storeTypes && storeTypes.length > 0) {
-            for (storeType in storeTypes) {
-                let storeTypeName = storeTypes[storeType].name;
-                pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
-                pub.models[storeTypeName].createMapping(function (err, mapping) {
-                    if (err) {
-                        Logger.log.error('Error creating mapping (you can safely ignore this)');
-                        if (process.env.n_mode != "production") { console.log(err); }
-                    } else {
-                        Logger.log.debug(`Mapping created for ${storeTypeName} and mapping is ${JSON.stringify(mapping)}`);
-                    }
-                    synchronizeModel(pub.models[storeTypeName], storeTypeName);
-                });
-            }
-        }
-
-        if (process.env.n_mode != "production") {
-            console.log('Initialized store models with Mongo DB');
-        }
-    }
-}
-
-async function synchronizeModel(mongoModel, storeType) {
-    indexedStores[storeType] = false;
-    let stream = mongoModel.synchronize(), count = 0;
-
-    stream.on('data', function (err, doc) {
-        count++;
-    });
-    stream.on('close', function () {
-        indexedStores[storeType] = true;
-        checkIfSyncIsDone();
-    });
-    stream.on('error', function (err) {
-        console.log(err);
-    });
-}
-
-function checkIfSyncIsDone() {
-    for (let i in indexedStores) {
-        if (!indexedStores[i]) {
-            return;
-        }
-    }
-
-    if (process.env.n_mode != "production") {
-        return console.log('All Mongo DB documents have been sync-ed');
-    }
-
-    return true;
-}
-
 pub.suggestSearch = async function (suggest, inLimit, cb) {
     MDB.models['liquor-station'].esSearch({
         "suggest": {
@@ -392,6 +332,63 @@ pub.globalSearch = async function (inText, cb) {
             });
         }
     });
+}
+
+/**
+ * Inits storeType - Collection registration with Mongo DB
+ */
+async function init() {
+    if (mySQLConnected && MongoDBConnected && !inititialized) {
+        inititialized = true;
+        let storeTypes = await Catalog.getAllStoreTypeNames();
+
+        if (storeTypes && storeTypes.length > 0) {
+            for (storeType in storeTypes) {
+                let storeTypeName = storeTypes[storeType].name;
+                pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
+                pub.models[storeTypeName].createMapping(function (err, mapping) {
+                    if (err) {
+                        Logger.log.error('Error creating mapping (you can safely ignore this)');
+                        if (process.env.n_mode != "production") { console.log(err); }
+                    } else {
+                        Logger.log.debug(`Mapping created for ${storeTypeName} and mapping is ${JSON.stringify(mapping)}`);
+                    }
+                    synchronizeModel(pub.models[storeTypeName], storeTypeName);
+                });
+            }
+        }
+
+        if (process.env.n_mode != "production") {
+            console.log('Initialized store models with Mongo DB');
+        }
+    }
+}
+
+async function synchronizeModel(mongoModel, storeType) {
+    indexedStores[storeType] = false;
+    let stream = mongoModel.synchronize();
+
+    stream.on('close', function () {
+        indexedStores[storeType] = true;
+        checkIfSyncIsDone();
+    });
+    stream.on('error', function (err) {
+        console.log(err);
+    });
+}
+
+function checkIfSyncIsDone() {
+    for (let i in indexedStores) {
+        if (!indexedStores[i]) {
+            return;
+        }
+    }
+
+    if (process.env.n_mode != "production") {
+        return console.log('All Mongo DB documents have been sync-ed');
+    }
+
+    return true;
 }
 
 module.exports = pub;

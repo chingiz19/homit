@@ -104,10 +104,6 @@ pub.runQuery = function (query, data) {
   return false;
 };
 
-pub.insertQuery = function (table, data) {
-  return pub.runQuery('INSERT INTO ' + table + ' SET ?', data);
-}
-
 pub.selectColumnsWhereLimitOne = function (columns, table, data) {
   return pub.runQuery('SELECT ' + columns + ' FROM ' + table + ' WHERE ? LIMIT 1', data);
 }
@@ -120,8 +116,16 @@ pub.selectAllWhere2 = function (table, data) {
   return pub.runQuery('SELECT * FROM ' + table + ' WHERE ? AND ?', data);
 }
 
+pub.selectAllWhereLimitOne = function (table, data) {
+  return pub.runQuery('SELECT * FROM ' + table + ' WHERE ? LIMIT 1', data);
+}
+
 pub.selectAllFromTable = function (table) {
   return pub.runQuery('SELECT * FROM ' + table);
+}
+
+pub.insertQuery = function (table, data) {
+  return pub.runQuery('INSERT INTO ' + table + ' SET ?', data);
 }
 
 pub.updateQuery = function (table, data) {
@@ -142,10 +146,6 @@ pub.deleteQuery = function (table, data) {
 
 pub.deleteQueryWithTwoCond = function (table, data) {
   return pub.runQuery('DELETE FROM ' + table + ' WHERE ? AND ?', data);
-}
-
-pub.selectAllWhereLimitOne = function (table, data) {
-  return pub.runQuery('SELECT * FROM ' + table + ' WHERE ? LIMIT 1', data);
 }
 
 module.exports = pub;

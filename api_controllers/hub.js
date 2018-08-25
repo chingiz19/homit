@@ -130,14 +130,20 @@ router.get('/:storeType', async function (req, res) {
     }
 });
 
-router.post('/randomproducts', async function (req, res) {
-    let numberOfTimes = req.body.limit;
-    if (numberOfTimes && !isNaN(numberOfTimes)) {
-        let products = await Catalog.getRandomArrayOfProducts(numberOfTimes);
+router.post('/similarproducts', async function (req, res) {
+    let limit = req.body.limit;
+    let productId = req.body.product_id;
+
+    if (limit && !isNaN(limit)) {
+        let products = await Catalog.getSimilarProducts(limit, productId);  
         if (products && products.length > 0) {
             return res.send({
                 success: true,
                 result: products,
+            });
+        } else {
+            return res.send({
+                success: false
             });
         }
     } else {
