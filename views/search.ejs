@@ -18,21 +18,22 @@
         <h5 style="color: #b6bdce; margin-bottom: 30px; margin-top: 3px;" ng-show="result_length">{{result_length}} results found</h5>
 
         <section ng-repeat="(key, value) in search_result.products">
-            <h4 style="color: #b6bdce;" ng-show="key != searchText">Did you mean <em style="text-transform: capitalize;">'{{key}}'</em> ?</h4>
+            <div style="font-size: 18px; margin: 10px 0; color: #888e9c;" ng-show="key != searchText" ng-click="searchSuggestion(key)">Did you mean <em style="text-transform: capitalize;">'{{key}}'</em> ?</div>
             <div ng-repeat="product in value" style="margin-bottom: 30px;">
                 <div style="display: grid; height: 140px; margin-bottom: 20px; grid-template-columns: 140px auto;" class="fadeIn">
                     <img style="width: 130px; height: 130px; position: relative; padding: 5px;" ng-src="{{product.images.catalog_image_url}}">
                     <div style="display: grid; grid-column: 2; grid-template-rows: 30px 24px 22px minmax(15px, 50px);">
-                        <a style="color: #1a0dab; font-size: 18px; margin: 5px 0 5px 0;" ng-href="{{product.url}}" target="_self">{{product.brandname}}</a>
-                        <div layout="row" style="margin: 2px 0;">
-                            <a href="/hub/product.store.name" target="_self" style="display: flex; align-items: center; height: 20px; padding: 0 7px; background-color: rgba(195, 218, 228, 0.4); font-size: 12px; color: rgb(86, 89, 99); text-align: center; border-radius: 14px; transition: background-color 0.3s ease; margin-right: 3px;">{{product.store.display_name}}</a>
-                            <a href="/hub/{{product.store.name}}/{{product.category.category_name}}" style="display: flex; align-items: center; height: 20px; padding: 0 7px; background-color: rgba(195, 218, 228, 0.4); font-size: 12px; color: rgb(86, 89, 99); text-align: center; border-radius: 14px; transition: background-color 0.3s ease;" target="_self">{{product.category.category_display_name}}</a>
+                        <a style="color: #0045a0; font-size: 18px; margin: 5px 0 5px 0;" ng-href="{{product.url}}" target="_self">{{product.brandname}}</a>
+                        <div layout="row" style="margin: 2px 0;" class="location-map">
+                            <a class="store-a" href="/hub/product.store.name" target="_self">{{product.store.display_name}}</a>
+                            <a class="category-a" href="/hub/{{product.store.name}}/{{product.category.category_name}}" target="_self">{{product.category.category_display_name}}</a>
                         </div>
-                        <!-- <p style="margin-bottom: 3px; color: #006621;">{{product.store.display_name}} > {{product.category.category_display_name }}</p> -->
                         
-                        <p style="margin-bottom: 3px; font-size: 16px; color: #000000;" ng-if="product.variance[0].preffered_unit"> C${{product.variance[0].packs[0].price}} for {{ product.variance[0].packs[0].h_value + " x " + product.variance[0].preffered_unit_size + product.variance[0].preffered_unit }} <span style="text-transform: capitalize;">{{product.container}}</span></p>
+                        <p style="margin-bottom: 3px; font-size: 16px;" ng-if="product.variance[0].packs[0].h_value > 1 && product.variance[0].preffered_unit"> {{ product.variance[0].packs[0].h_value + "x" + product.variance[0].preffered_unit_size + product.variance[0].preffered_unit }} <span style="text-transform: capitalize;">{{product.container}}</span> C${{product.variance[0].packs[0].price}} </p>
+                        <p style="margin-bottom: 3px; font-size: 16px;" ng-if="product.variance[0].packs[0].h_value == 1 && product.variance[0].preffered_unit"> {{ product.variance[0].preffered_unit_size + product.variance[0].preffered_unit }} <span style="text-transform: capitalize;">{{product.container}}</span> C${{product.variance[0].packs[0].price}} </p>
 
-                        <p style="display: inline-block; box-sizing: border-box; white-space: pre-line; word-wrap: break-word; margin-bottom: 0;"><span style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{product.details.untagged_description}}</span></p>
+                        <p ng-show="(product.details.untagged_description)" style="display: inline-block; box-sizing: border-box; white-space: pre-line; word-wrap: break-word; margin-bottom: 0;"><span style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{product.details.untagged_description}}</span></p>
+                        <p ng-show="!(product.details.untagged_description)" style="display: inline-block; box-sizing: border-box; white-space: pre-line; word-wrap: break-word; margin-bottom: 0;"><span style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">Country of Origin: {{" " + product.details.country_of_origin.description}}</span></p>
                     </div>
                 </div>
             </div>

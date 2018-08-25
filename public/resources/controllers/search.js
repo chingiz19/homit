@@ -27,6 +27,16 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
         });
     }
 
+    
+    /**
+     * Search suggested text
+     * @param {string} search_text 
+     */
+    $scope.searchSuggestion = function(search_text){
+        if(!search_text) return;
+        $window.location.href = $window.location.origin + "/search/" + search_text;
+    };
+
     $window.onload = function () {
         $http({
             method: 'POST',
@@ -35,7 +45,6 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
                 "search": $scope.searchText
             }
         }).then(function successCallback(response) {
-            console.log("girdi");
             if (response.data.success) {
                 let data = response.data.result.products;
                 let tmp_data = {};
