@@ -203,7 +203,7 @@
     <button class="search-btn" ng-click="startSearch(searchRequest)">
         <span>Search</span>
     </button>
-    <div ng-if="resultStores || resultProducts" class="search-result-box">
+    <div ng-if="resultStores || resultProducts || noAutocompleteFound" class="search-result-box">
         <ul ng-if="resultStores.length" id="glbSrchA" class="store-ul">
             <li class="li-content" ng-repeat="store in resultStores">
                 <a class="navigate-search" href="/hub/{{ store.store_type_name }}/" target="_self" id="store{{ $index + 1 }}">
@@ -221,7 +221,7 @@
                 </div>
             </li>
         </ul>
-        <ul class="not-found-ul" ng-if="!(resultStores.length || resultProducts.length)">
+        <ul class="not-found-ul" ng-if="noAutocompleteFound">
             <li class="not-found-li" ng-click="startSearch(searchRequest)">
                 <ng-md-icon icon="search" size="22"></ng-md-icon><span class="not-found-span">Look for more items..</span>
             </li>

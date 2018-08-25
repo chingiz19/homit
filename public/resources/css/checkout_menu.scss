@@ -180,7 +180,11 @@
 }
 
 /* start of medium tablet styles */
-@media screen and (min-device-width: 480px) and (max-device-width: 768px) {}
+@media screen and (min-device-width: 480px) and (max-device-width: 768px) {
+    .items-num-mob{
+        right: 24%;
+    }
+}
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {

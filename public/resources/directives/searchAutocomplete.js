@@ -30,11 +30,13 @@ app.directive("searchAutocomplete", function (localStorage, $interval, $timeout,
                             search: scope.searchRequest.toLowerCase()
                         }
                     }).then(function successCallback(response) {
+                        scope.noAutocompleteFound = false;
                         scope.resultStores = response.data.result.store_type;
                         scope.resultProducts = response.data.result.products;
                         scope.searchResult = scope.resultStores.concat(scope.resultProducts);
 
-                        if (scope.resultProducts.length == 0 && scope.resultStores.length) {
+                        if (scope.resultProducts.length == 0 && scope.resultStores.length == 0) {
+                            scope.noAutocompleteFound = true;
                             googleAnalytics.addEvent('search_not_found', {
                                 "event_label": scope.searchRequest,
                                 "event_category": googleAnalytics.eventCategories.catalog_actions
@@ -48,7 +50,7 @@ app.directive("searchAutocomplete", function (localStorage, $interval, $timeout,
             }
 
             function closeSearchOnClick(evt) {
-                if (!scope.searchRequest || (evt.target.className && evt.target.className.includes("search-input")) || $(evt.target).parents("#search-sec").length) return;
+                if (evt.target.className && evt.target.className.includes("search-input") || $(evt.target).parents("#search-sec").length) return;
                 clearSearch();
             }
 
@@ -56,6 +58,7 @@ app.directive("searchAutocomplete", function (localStorage, $interval, $timeout,
                 $timeout(function () {
                     scope.resultStores = "";
                     scope.resultProducts = "";
+                    scope.noAutocompleteFound = false;
                 }, 0);
                 $timeout(function () {
                     scope.searchRequest = "";
