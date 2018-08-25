@@ -4,6 +4,7 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
         $scope.recommended_products = [];
         $scope.search_result = {};
         $scope.result_length = 0;
+        $scope.screen_is_mob = global_screenIsMob;
 
         $http({
             method: 'POST',

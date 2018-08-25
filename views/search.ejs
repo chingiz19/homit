@@ -6,7 +6,6 @@
             <link href="/resources/css/search.css" rel="stylesheet">
 </head>
 <!--googleoff: snippet-->
-
 <body>
     <div class="search-controller" ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" ng-cloak>
         <h3 class="search-text" ng-show="searchText && search_result.products">Search results for '<em ng-bind-html="searchText"></em>'</h3>
@@ -15,7 +14,8 @@
             <h4>Oops.. No results found for '<em ng-bind-html="searchText"></em>'</h4>
         </div>
         <h5 class="result-length" ng-show="result_length">{{result_length}} results found</h5>
-        <section class="product-section" ng-repeat="(key, value) in search_result.products">
+        <!-- Web and Tablet version -->
+        <section ng-show="!screen_is_mob" class="product-section" ng-repeat="(key, value) in search_result.products">
             <div class="did-you-mean" ng-show="key != searchText" ng-click="searchSuggestion(key)">Did you mean <em>'{{key}}'</em>
                 ?</div>
             <div ng-repeat="product in value" class="product-div">
@@ -31,11 +31,29 @@
                             product.variance[0].packs[0].h_value + "x" + product.variance[0].preffered_unit_size + product.variance[0].preffered_unit
                             }} <span>{{product.container}}</span> C${{product.variance[0].packs[0].price}} </p>
                         <p class="type" ng-if="product.variance[0].packs[0].h_value == 1 && product.variance[0].preffered_unit"> {{
-                            product.variance[0].preffered_unit_size + product.variance[0].preffered_unit }} <span>{{product.container}}</span>
-                            C${{product.variance[0].packs[0].price}} </p>
+                            product.variance[0].preffered_unit_size + product.variance[0].preffered_unit }} C${{product.variance[0].packs[0].price}} </p>
                         <p class="description" ng-show="(product.details.untagged_description)"><span>{{product.details.untagged_description}}</span></p>
                         <p class="description" ng-show="!(product.details.untagged_description)"><span>Country of Origin: {{" " + product.details.country_of_origin.description}}</span></p>
                     </div>
+                </div>
+            </div>
+        </section>
+        <!-- Mobile -->
+        <section ng-show="screen_is_mob" class="product-section-mob" ng-repeat="(key, value) in search_result.products">
+            <div class="did-you-mean" ng-show="key != searchText" ng-click="searchSuggestion(key)">Did you mean <em>'{{key}}'</em>?</div>
+            <div ng-repeat="product in value" class="product-div">
+                <div class="product-div-mob fadeIn">
+                    <a class="brand" ng-href="{{product.url}}" target="_self">{{product.brandname}}</a>
+                    <a ng-href="{{product.url}}" target="_self"><img ng-src="{{product.images.catalog_image_url}}"></a>
+                    <div layout="row" class="a-tag-button">
+                        <a href="/hub/product.store.name" target="_self">{{product.store.display_name}}</a>
+                        <a href="/hub/{{product.store.name}}/{{product.category.category_name}}" target="_self">{{product.category.category_display_name}}</a>
+                    </div>
+                    <p class="type" ng-if="product.variance[0].packs[0].h_value > 1 && product.variance[0].preffered_unit"> {{
+                        product.variance[0].packs[0].h_value + "x" + product.variance[0].preffered_unit_size + product.variance[0].preffered_unit
+                        }} <span>{{product.container}}</span> C${{product.variance[0].packs[0].price}} </p>
+                    <p class="type" ng-if="product.variance[0].packs[0].h_value == 1 && product.variance[0].preffered_unit"> {{
+                        product.variance[0].preffered_unit_size + product.variance[0].preffered_unit }} C${{product.variance[0].packs[0].price}} </p>
                 </div>
             </div>
         </section>
@@ -46,7 +64,7 @@
             </section>
             <section class="recomended-item fadeIn">
                 <div class="recomended-item-div">
-                    <a ng-repeat="item in recommended_products" href="{{item.product_url}}" ng-cklick="peopleHomitPrdClicked(item)" target="_self">
+                    <a ng-repeat="item in recommended_products" href="{{item.url}}" ng-cklick="peopleHomitPrdClicked(item)" target="_self">
                         <ul class="recomended-item-ul">
                             <li class="also-image-li box-center">
                                 <img ng-src="/resources/images/products/{{ item.store_type_name }}/{{ item.images.image_catalog }}">
