@@ -72,9 +72,21 @@ let productSchema = new Schema({
             es_indexed: true,
             es_type: 'keyword'
         },
-        category_name: { type: Schema.Types.String, es_indexed: false },
-        category_image: { type: Schema.Types.String, es_indexed: false },
-        category_cover: { type: Schema.Types.String, es_indexed: false }
+        category_name: {
+            type: Schema.Types.String,
+            es_indexed: true,
+            es_type: 'keyword'
+        },
+        category_image: {
+            type: Schema.Types.String,
+            es_indexed: true,
+            es_type: 'keyword'
+        },
+        category_cover: {
+            type: Schema.Types.String,
+            es_indexed: true,
+            es_type: 'keyword'
+        }
     },
     subcategory: {
         type: Schema.Types.String,
@@ -347,31 +359,35 @@ pub.globalSearch = async function (inText, cb) {
                 suggestResults = suggestResults.concat(results.suggest['country-suggest'][0].options);
                 suggestResults = suggestResults.concat(results.suggest['desc-suggest'][0].options);
 
-                for (let key in suggestResults) {
-                    searchedFields.set(suggestResults[key].text + key, false);
-                    MDB.models['liquor-station'].search({
-                        query_string: {
-                            query: suggestResults[key].text
-                        }
-                    }, function (err, result) {
-                        if (!err && result && result.hits && result.hits.hits && result.hits.hits.length > 0) {
-                            searchedFields.set(suggestResults[key].text + key, true);
-
-                            finalResult.push({
-                                "results": result.hits.hits,
-                                "highlight": suggestResults[key].highlighted,
-                                "score": suggestResults[key].score
-                            });
-
-                            for (let value of searchedFields.values()) {
-                                if (!value) {
-                                    return false;
-                                }
+                if (suggestResults.length > 0) {
+                    for (let key in suggestResults) {
+                        searchedFields.set(suggestResults[key].text + key, false);
+                        MDB.models['liquor-station'].search({
+                            query_string: {
+                                query: suggestResults[key].text
                             }
-                            cb(finalResult);
-                            return;
-                        }
-                    });
+                        }, function (err, result) {
+                            if (!err && result && result.hits && result.hits.hits && result.hits.hits.length > 0) {
+                                searchedFields.set(suggestResults[key].text + key, true);
+
+                                finalResult.push({
+                                    "results": result.hits.hits,
+                                    "highlight": suggestResults[key].highlighted,
+                                    "score": suggestResults[key].score
+                                });
+
+                                for (let value of searchedFields.values()) {
+                                    if (!value) {
+                                        return false;
+                                    }
+                                }
+                                cb(finalResult);
+                                return;
+                            }
+                        });
+                    }
+                } else {
+                    cb(false);
                 }
             });
         }

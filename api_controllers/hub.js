@@ -178,7 +178,7 @@ router.post('/search', async function (req, res, next) {
         if (limit > 0) {
             MDB.globalSearch(searchText, function (products) {
                 res.send({
-                    success: true,
+                    success: true && products,
                     result: {
                         "store_type": storeTypes,
                         "products": products

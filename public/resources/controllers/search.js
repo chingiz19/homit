@@ -35,6 +35,7 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
                 "search": $scope.searchText
             }
         }).then(function successCallback(response) {
+            console.log("girdi");
             if (response.data.success) {
                 let data = response.data.result.products;
                 let tmp_data = {};
