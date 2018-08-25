@@ -8,37 +8,37 @@
 <!--googleoff: snippet-->
 
 <body>
-    <div ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" style="position: relative; min-height: calc(100vh - 270px); width: 800px; margin: 0 auto;" ng-cloak>
-
-        <h3 style="margin-top: 20px; font-weight: 400; font-size: 24px; color: #424242;" ng-show="searchText && (search_result.products || search_result.strores)">Search results for  '<em ng-bind-html="searchText"></em>'</h3>
-        <div ng-show="!(searchText && (search_result.products || search_result.strores))" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 60px 0 150px 0;">
-            <img class="fadeIn" style="width: auto; height: 180px;" ng-src="/resources/images/non-catalog-image/pages/no_search_result.png">
-            <h4 style="color: #9198a8; margin-top: 15px;">Ops.. No results found for '<em ng-bind-html="searchText"></em>'</h4>
+    <div class="search-controller" ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" ng-cloak>
+        <h3 class="search-text" ng-show="searchText && search_result.products">Search results for '<em ng-bind-html="searchText"></em>'</h3>
+        <div class="no-results-div box-center" ng-show="search_result.products.length">
+            <img class="fadeIn" ng-src="/resources/images/non-catalog-image/pages/no_search_result.png">
+            <h4>Oops.. No results found for '<em ng-bind-html="searchText"></em>'</h4>
         </div>
-        <h5 style="color: #b6bdce; margin-bottom: 30px; margin-top: 3px;" ng-show="result_length">{{result_length}} results found</h5>
-
-        <section ng-repeat="(key, value) in search_result.products">
-            <h4 style="color: #b6bdce;" ng-show="key != searchText">Did you mean <em style="text-transform: capitalize;">'{{key}}'</em> ?</h4>
-            <div ng-repeat="product in value" style="margin-bottom: 30px;">
-                <div style="display: grid; height: 140px; margin-bottom: 20px; grid-template-columns: 140px auto;" class="fadeIn">
-                    <img style="width: 130px; height: 130px; position: relative; padding: 5px;" ng-src="{{product.images.catalog_image_url}}">
-                    <div style="display: grid; grid-column: 2; grid-template-rows: 30px 24px 22px minmax(15px, 50px);">
-                        <a style="color: #1a0dab; font-size: 18px; margin: 5px 0 5px 0;" ng-href="{{product.url}}" target="_self">{{product.brandname}}</a>
-                        <div layout="row" style="margin: 2px 0;">
-                            <a href="/hub/product.store.name" target="_self" style="display: flex; align-items: center; height: 20px; padding: 0 7px; background-color: rgba(195, 218, 228, 0.4); font-size: 12px; color: rgb(86, 89, 99); text-align: center; border-radius: 14px; transition: background-color 0.3s ease; margin-right: 3px;">{{product.store.display_name}}</a>
-                            <a href="/hub/{{product.store.name}}/{{product.category.category_name}}" style="display: flex; align-items: center; height: 20px; padding: 0 7px; background-color: rgba(195, 218, 228, 0.4); font-size: 12px; color: rgb(86, 89, 99); text-align: center; border-radius: 14px; transition: background-color 0.3s ease;" target="_self">{{product.category.category_display_name}}</a>
+        <h5 class="result-length" ng-show="result_length">{{result_length}} results found</h5>
+        <section class="product-section" ng-repeat="(key, value) in search_result.products">
+            <div class="did-you-mean" ng-show="key != searchText" ng-click="searchSuggestion(key)">Did you mean <em>'{{key}}'</em>
+                ?</div>
+            <div ng-repeat="product in value" class="product-div">
+                <div class="content-div fadeIn">
+                    <a ng-href="{{product.url}}" target="_self"><img ng-src="{{product.images.catalog_image_url}}"></a>
+                    <div class="info-div">
+                        <a class="brand" ng-href="{{product.url}}" target="_self">{{product.brandname}}</a>
+                        <div layout="row" class="a-tag-button">
+                            <a href="/hub/product.store.name" target="_self">{{product.store.display_name}}</a>
+                            <a href="/hub/{{product.store.name}}/{{product.category.category_name}}" target="_self">{{product.category.category_display_name}}</a>
                         </div>
-                        <!-- <p style="margin-bottom: 3px; color: #006621;">{{product.store.display_name}} > {{product.category.category_display_name }}</p> -->
-                        
-                        <p style="margin-bottom: 3px; font-size: 16px; color: #000000;" ng-if="product.variance[0].preffered_unit"> C${{product.variance[0].packs[0].price}} for {{ product.variance[0].packs[0].h_value + " x " + product.variance[0].preffered_unit_size + product.variance[0].preffered_unit }} <span style="text-transform: capitalize;">{{product.container}}</span></p>
-
-                        <p style="display: inline-block; box-sizing: border-box; white-space: pre-line; word-wrap: break-word; margin-bottom: 0;"><span style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{product.details.untagged_description}}</span></p>
+                        <p class="type" ng-if="product.variance[0].packs[0].h_value > 1 && product.variance[0].preffered_unit"> {{
+                            product.variance[0].packs[0].h_value + "x" + product.variance[0].preffered_unit_size + product.variance[0].preffered_unit
+                            }} <span>{{product.container}}</span> C${{product.variance[0].packs[0].price}} </p>
+                        <p class="type" ng-if="product.variance[0].packs[0].h_value == 1 && product.variance[0].preffered_unit"> {{
+                            product.variance[0].preffered_unit_size + product.variance[0].preffered_unit }} <span>{{product.container}}</span>
+                            C${{product.variance[0].packs[0].price}} </p>
+                        <p class="description" ng-show="(product.details.untagged_description)"><span>{{product.details.untagged_description}}</span></p>
+                        <p class="description" ng-show="!(product.details.untagged_description)"><span>Country of Origin: {{" " + product.details.country_of_origin.description}}</span></p>
                     </div>
                 </div>
             </div>
         </section>
-
-
         <div class="recomended-products" ng-show="recommended_products">
             <section layout="row" class="recomended-products-header">
                 <div class="recomended-products-header-line"></div>
@@ -52,9 +52,16 @@
                                 <img ng-src="/resources/images/products/{{ item.store_type_name }}/{{ item.images.image_catalog }}">
                             </li>
                             <li class="recomended-item-brand">{{ item.brand }}</li>
-                            <li class="recomended-item-name" ng-if="item.variance[0].packs[0].h_value > 1 && item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].packs[0].type + "x" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span></span></li>
-                            <li class="recomended-item-name" ng-if="!(item.variance[0].packs[0].h_value > 1) && item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span></span></li>
-                            <li class="recomended-item-name" ng-if="!item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].preffered_unit_size + ")"}}</span></span></li>
+                            <li class="recomended-item-name" ng-if="item.variance[0].packs[0].h_value > 1 && item.variance[0].preffered_unit"><span>{{
+                                    item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].packs[0].type
+                                        + "x" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit +
+                                        ")"}}</span></span></li>
+                            <li class="recomended-item-name" ng-if="!(item.variance[0].packs[0].h_value > 1) && item.variance[0].preffered_unit"><span>{{
+                                    item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].preffered_unit_size
+                                        + item.variance[0].preffered_unit + ")"}}</span></span></li>
+                            <li class="recomended-item-name" ng-if="!item.variance[0].preffered_unit"><span>{{ item.name
+                                    }}<span class="recomended-item-size"> {{ "(" + item.variance[0].preffered_unit_size +
+                                        ")"}}</span></span></li>
                             <li class="item-price">{{ item.variance[0].packs[0].price }}
                                 <span>C$</span>
                             </li>
@@ -63,7 +70,6 @@
                 </div>
             </section>
         </div>
-
     </div>
     <% if (!production) { %>
         <script src="/resources/services/localStorage.js"></script>

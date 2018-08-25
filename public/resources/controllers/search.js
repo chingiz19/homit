@@ -27,6 +27,16 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
         });
     }
 
+    
+    /**
+     * Search suggested text
+     * @param {string} search_text 
+     */
+    $scope.searchSuggestion = function(search_text){
+        if(!search_text) return;
+        $window.location.href = $window.location.origin + "/search/" + search_text;
+    };
+
     $window.onload = function () {
         $http({
             method: 'POST',
@@ -35,7 +45,6 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
                 "search": $scope.searchText
             }
         }).then(function successCallback(response) {
-            console.log("girdi");
             if (response.data.success) {
                 let data = response.data.result.products;
                 let tmp_data = {};
@@ -55,18 +64,16 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
                         tmp_list.push(tmp_product);
                         $scope.result_length = $scope.result_length + 1;
                     }
-
                     if(data[i].highlight){
                         tmp_data[data[i].highlight] = tmp_list;
                     } else{
                         tmp_data[$scope.searchText] = tmp_list;
                     }
-                    
                 }
                 $scope.search_result.products = tmp_data;
 
             } else {
-                notification.addErrorMessage("Ups.. Error getting search query");
+                $scope.search_result.products = [];
             }
         }, function errorCallback(response) {
             notification.addErrorMessage("Ups.. Error getting search query");

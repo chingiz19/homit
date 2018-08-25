@@ -5,7 +5,7 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
-.store-controller-div{
+.store-controller-div {
     background: linear-gradient(to top, #f5f7f9, #fefefe);
 }
 
@@ -296,9 +296,14 @@ body {
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
+
+    .store-controller-div {
+        background: inherit;
+    }
+
     .store-page-content {
         width: 100vw;
-        margin: 70px auto 125px auto;
+        margin: 70px auto 0 auto;
     }
 
     .banners-sec {
@@ -316,5 +321,18 @@ body {
 
     .category-hdr, .coupon-hdr {
         margin-top: 30px;
+    }
+
+    .categories-div {
+        padding: 0 5%;
+
+        a {
+            width: 160px;
+
+            img {
+                width: 160px;
+                height: 216px;
+            }
+        }
     }
 }
