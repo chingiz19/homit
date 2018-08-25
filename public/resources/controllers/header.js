@@ -2,6 +2,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
     $scope.init = function () {
         let locationUrl = $location.path().split("/");
         $scope.storeType = locationUrl[2];
+        $scope.categories = [];
         $scope.isCouponSeen = true;
         $scope.user_names = "";
         $scope.user_coupons = [];
@@ -23,18 +24,17 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
             $scope.userSelectCategoryName = locationUrl[3];
         }
 
-        if (($scope.screenMob || $scope.screenTablet) && $scope.storeType != undefined) {
+        if (($scope.screenMob || $scope.screenTablet) && locationUrl[1] == "hub") {
             $http({
                 method: 'GET',
                 url: "/api/hub/" + $scope.storeType
             }).then(function successCallback(response) {
                 $scope.categories = response.data.categories;
-                if ($scope.categories && $scope.categories.length == 0) {
-                    $scope.mobMenuStoresClass = "selected-mob-menu-btn width-100";
-                    $scope.mobMenuCatClass = "none";
-                }
             }, function errorCallback(response) {
             });
+        } else{
+            $scope.mobMenuStoresClass = "selected-mob-menu-btn width-100";
+            $scope.mobMenuCatClass = "none";
         }
 
         $http({
