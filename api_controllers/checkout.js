@@ -87,7 +87,6 @@ router.post('/calculate', async function (req, res) {
         "products": {},
         "coupon_details": {}
     };
-    console.log("mest");
 
     if (!HelperUtils.validateParams(req.body, allValidParams)) {
         return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);

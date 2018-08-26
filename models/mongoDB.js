@@ -48,6 +48,8 @@ let productSchema = new Schema({
         required: true,
         es_indexed: true,
         es_type: 'completion',
+        // es_analyzer: "autocomplete", 
+        // es_search_analyzer: "standard" 
     },
     tax: { type: Schema.Types.Number, es_indexed: false },
     container: { type: Schema.Types.String, es_indexed: false },
@@ -168,7 +170,8 @@ pub.suggestSearch = async function (suggest, inLimit, cb) {
                 "completion": {
                     "field": "brandname",
                     "fuzzy": {
-                        "fuzziness": 1
+                        "fuzziness": 1,
+                        "skip_duplicates": true
                     }
                 }
             }
@@ -393,7 +396,27 @@ async function init() {
             for (storeType in storeTypes) {
                 let storeTypeName = storeTypes[storeType].name;
                 pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
-                pub.models[storeTypeName].createMapping(function (err, mapping) {
+                pub.models[storeTypeName].createMapping({
+                    "analysis": {
+                        "filter": {
+                            "autocomplete_filter": {
+                                "type": "edge_ngram",
+                                "min_gram": 1,
+                                "max_gram": 20
+                            }
+                        },
+                        "analyzer": {
+                            "autocomplete": {
+                                "type": "custom",
+                                "tokenizer": "standard",
+                                "filter": [
+                                    "lowercase",
+                                    "autocomplete_filter"
+                                ]
+                            }
+                        }
+                    }
+                }, function (err, mapping) {
                     if (err) {
                         Logger.log.error('Error creating mapping (you can safely ignore this)');
                         if (process.env.n_mode != "production") { console.log(err); }

@@ -8,7 +8,7 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
 
         $http({
             method: 'POST',
-            url: "/api/hub/randomproducts",
+            url: "/api/hub/similarproducts",
             data: {
                 limit: 6
             }

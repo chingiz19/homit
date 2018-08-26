@@ -361,6 +361,7 @@ pub.calculatePrice = async function (inObject, couponDetails) {
     let products = inObject ? (inObject.products || []) : [];
     let rates = inObject ? (inObject.rates || new Map()) : new Map();
     let rateToStoreMap = inObject ? (inObject.rate_to_store_map || new Map()) : new Map();
+    let usedRateIds = [];
 
     let totalAmount = 0;
     let totalTax = 0;
@@ -387,8 +388,9 @@ pub.calculatePrice = async function (inObject, couponDetails) {
         }
 
         //*delivery cost calculation 
-        if (rates.has(rateToStoreMap.get(storeType))) {
+        if (rates.has(rateToStoreMap.get(storeType)) && !usedRateIds.includes(rateToStoreMap.get(storeType))) {
             tmpDelivery = rates.get(rateToStoreMap.get(storeType)) || 0;
+            usedRateIds.push(rateToStoreMap.get(storeType));
         }
 
         tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
@@ -520,7 +522,7 @@ pub.prepareProductsForCalculator = async function (cartProducts) {
                         "price": product.price,
                         "quantity": selectedQuantity
                     });
-    console.log("test");
+
                     if (!ratesMap.has(rateId) || selectedStore.del_fee_primary < ratesMap.get(rateId)) {
                         ratesMap.set(rateId, selectedStore.del_fee_primary);
                         storesMap.set(storeName, rateId);
@@ -654,11 +656,11 @@ pub.getSimilarProducts = async function (limit, productId) {
     let result = [];
 
     if (productId) {
-
+        result = await getItemsBoughtTogether(productId);
     }
 
     if (limit > 0 || result.length == 0) {
-       result =  result.concat(await getRandomArrayOfProducts(limit));
+        result = result.concat(await getRandomArrayOfProducts(limit));
     }
 
     return result;
@@ -763,7 +765,7 @@ pub.getUnionStores = async function (unionName) {
     return false;
 }
 
-pub.getItemsBoughtTogether = async function (productId) {
+async function getItemsBoughtTogether(productId) {
     let finalResult = [];
     let newRegEx = new RegExp("([0-9]-)");
     let orderIds = await db.selectAllWhere(db.tables.orders_cart_items, { "depot_id": productId });
@@ -803,7 +805,7 @@ pub.getItemsBoughtTogether = async function (productId) {
             }
         }
     }
-    
+
     return finalResult;
 }
 
