@@ -9,15 +9,17 @@ let pub = {};
  */
 pub.getUserCart = async function (userId) {
     let productUIDs = [];
+    let quantities = {};
     let productIds = await db.selectAllWhere(db.tables.user_cart_items, { "user_id": userId });
 
     if (productIds && productIds.length > 0) {
         for (let k in productIds) {
             productUIDs.push(productIds[k].depot_id);
+            quantities[productIds[k].depot_id] = productIds[k].quantity;
         }
     }
 
-    return MDB.findProducts(productUIDs);
+    return MDB.findProducts(productUIDs, quantities);
 }
 
 /**
@@ -54,7 +56,7 @@ async function getCartProduct(userId, depotId) {
     let result = await db.selectAllWhere2(db.tables.user_cart_items, [{ user_id: userId }, { depot_id: depotId }]);
 
     if (result.length > 0) {
-        return dbResult[0];
+        return result[0];
     }
 
     return false;

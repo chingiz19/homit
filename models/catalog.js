@@ -520,7 +520,7 @@ pub.prepareProductsForCalculator = async function (cartProducts) {
                         "price": product.price,
                         "quantity": selectedQuantity
                     });
-
+    console.log("test");
                     if (!ratesMap.has(rateId) || selectedStore.del_fee_primary < ratesMap.get(rateId)) {
                         ratesMap.set(rateId, selectedStore.del_fee_primary);
                         storesMap.set(storeName, rateId);
@@ -548,7 +548,7 @@ pub.findNestedProductPrice = function (product, ids) {
         let selectedvariances = product.variance;
         for (let k in selectedvariances) {
             let variance = selectedvariances[k];
-            searchId = ids[0] + '-' + ids[1];
+            let searchId = ids[0] + '-' + ids[1];
             if (variance._id == searchId && variance.packs) {
                 let packs = variance.packs;
                 let localSize = variance.preffered_unit_size + variance.preffered_unit;
@@ -658,7 +658,7 @@ pub.getSimilarProducts = async function (limit, productId) {
     }
 
     if (limit > 0 || result.length == 0) {
-        result.push(await getRandomArrayOfProducts(limit));
+       result =  result.concat(await getRandomArrayOfProducts(limit));
     }
 
     return result;

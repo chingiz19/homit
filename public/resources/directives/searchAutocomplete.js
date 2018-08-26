@@ -50,7 +50,7 @@ app.directive("searchAutocomplete", function (localStorage, $interval, $timeout,
             }
 
             function closeSearchOnClick(evt) {
-                if (evt.target.className && evt.target.className.includes("search-input") || $(evt.target).parents("#search-sec").length) return;
+                if (!scope.searchRequest || evt.target.className && evt.target.className.includes("search-input") || $(evt.target).parents("#search-sec").length) return;
                 clearSearch();
             }
 

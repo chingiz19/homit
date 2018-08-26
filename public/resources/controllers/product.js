@@ -29,33 +29,33 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
     }
 
     $scope.addToCart = function (product) {
-            var p = {};
+            var p = product;
 
-            p.brand = product.brand;
-            p.name = product.name;
-            p.image = product.images.image_catalog;
-            p.store_type_name = product.store_type_name;
+            p["selected"] = {
+                "UID": p.UID = product.variance[product.selectedVolume].packs[product.selectedPack]._id,
+                "quantity": 1,
+                "price": p.price = product.variance[product.selectedVolume].packs[product.selectedPack].price,
+                "pack": product.variance[product.selectedVolume].packs[product.selectedPack].h_value 
+            };
+
             if(product.variance[product.selectedVolume].preffered_unit){
-                p.size = product.variance[product.selectedVolume].preffered_unit_size + product.variance[product.selectedVolume].preffered_unit;
+                p.selected.size = product.variance[product.selectedVolume].preffered_unit_size + product.variance[product.selectedVolume].preffered_unit;
             }else{
-                p.size = product.variance[product.selectedVolume].preffered_unit_size ;
+                p.selected.size = product.variance[product.selectedVolume].preffered_unit_size ;
             }
-            p.packaging = product.variance[product.selectedVolume].packs[product.selectedPack].h_value;
-            p.price = product.variance[product.selectedVolume].packs[product.selectedPack].price;
-            p.UID = product.variance[product.selectedVolume].packs[product.selectedPack]._id;
 
             $rootScope.$broadcast("addToCart", p);
             googleAnalytics.addEvent('add_to_cart', {
-                "event_label": product.brand + " " + product.name,
+                "event_label": p.brand + " " + p.name,
                 "event_category": googleAnalytics.eventCategories.product_actions,
                 "value": "product_page",
                 "items": [
                     {
-                        name: product.name,
-                        brand: product.brand,
-                        price: product.price,
-                        category: product.packaging,
-                        variant: product.size,
+                        name: p.name,
+                        brand: p.brand,
+                        price: p.selected.price,
+                        category: p.selected.pack,
+                        variant: p.selected.size,
                     }
                 ]
             });
