@@ -87,6 +87,7 @@ router.post('/calculate', async function (req, res) {
         "products": {},
         "coupon_details": {}
     };
+    console.log("mest");
 
     if (!HelperUtils.validateParams(req.body, allValidParams)) {
         return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
@@ -102,7 +103,7 @@ router.post('/calculate', async function (req, res) {
 
     let allPrices = await Catalog.calculatePrice(storeProducts, couponDetails);
 
-    res.send({
+   return res.send({
         success: true && allPrices,
         prices: allPrices
     });
@@ -154,7 +155,7 @@ router.post('/check', async function (req, res) {
         messageCounter += 2;
     }
 
-    res.send({
+    return res.send({
         success: (allStoresOpen && emailIsOk),
         ui_message: userMessages[messageCounter]
     });

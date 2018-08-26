@@ -338,17 +338,24 @@ pub.globalSearch = async function (inText, cb) {
  * Function takes array of product UIDs
  * @param {*} UIDs 
  */
-pub.findProducts = async function (UIDs) {
+pub.findProducts = async function (UIDs, quantityArray) {
     let finalResult = [];
 
-    for (let id in UIDs) {
-        let IDobject = pub.formatReceviedUID(UIDs[id]);
+    for (let k in UIDs) {
+        let IDobject = pub.formatReceviedUID(UIDs[k]);
         let rawStore = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": IDobject.storeId });
         if (rawStore && rawStore.length > 0) {
             let selectedStore = rawStore[0];
             let searchId = IDobject.storeId + '-' + IDobject.productId;
             let product = await MDB.models[selectedStore.name].findById(searchId).exec();
-            finalResult.push(product.toObject());
+            let cleanProduct = product.toObject();
+            if (quantityArray && quantityArray[UIDs[k]]) {
+                cleanProduct.selected = {
+                    quantity: quantityArray[UIDs[k]],
+                    UID: UIDs[k]
+                }
+            }
+            finalResult.push(cleanProduct);
         }
     }
 
@@ -361,17 +368,17 @@ pub.findProducts = async function (UIDs) {
 * @param {String} raw received UID
 */
 pub.formatReceviedUID = function (raw) {
-   let finalObject = {};
+    let finalObject = {};
 
-   if (raw && typeof raw === 'string') {
-       let splitArray = raw.split('-');
-       finalObject.storeId = splitArray[0];
-       finalObject.productId = splitArray[1];
-       finalObject.varianceId = splitArray[2];
-       finalObject.packId = splitArray[3];
-   }
+    if (raw && typeof raw === 'string') {
+        let splitArray = raw.split('-');
+        finalObject.storeId = splitArray[0];
+        finalObject.productId = splitArray[1];
+        finalObject.varianceId = splitArray[2];
+        finalObject.packId = splitArray[3];
+    }
 
-   return finalObject;
+    return finalObject;
 }
 
 /**

@@ -246,15 +246,15 @@
                     <button id="item-remove-button" class="item-btn remove-btn" ng-click="removeItem(product)" ng-if="canRemove">
                         <ng-md-icon icon="clear"></ng-md-icon>
                     </button>
-                    <span class="product-quantity">{{ product.quantity }}</span>
-                    <img class="item-img" ng-src="/resources/images/products/{{ product.store_type_name }}/{{ product.image }}">
+                    <span class="product-quantity">{{ product.selected.quantity }}</span>
+                    <img class="item-img" ng-src="/resources/images/products/{{ product.store.name }}/{{ product.images.image_catalog }}">
                 </div>
                 <div class="item-right-div">
-                    <div class="produc-name">{{ product.brand }} {{ product.name }} 
-                        <span ng-if="product.packaging > 1">({{product.packaging }} x {{ product.size }})</span>
-                        <span ng-if="product.packaging <= 1">({{ product.size }})</span>
+                    <div class="produc-name">{{ product.brandname }} 
+                        <span ng-if="product.packaging > 1">({{product.selected.h_value }} x {{ product.selected.size }})</span>
+                        <span ng-if="product.packaging <= 1">({{ product.selected.size }})</span>
                     </div>
-                    <div class="cart-prd-price" style="text-align: center;">C${{ product.price }}</div>
+                    <div class="cart-prd-price" style="text-align: center;">C${{ product.selected.price }}</div>
                 </div>
             </div>
         </div>

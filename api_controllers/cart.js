@@ -23,7 +23,7 @@ router.post('/modifyitem', async function (req, res) {
         return ErrorMessages.sendBadRequest(res, ErrorMessages.UIMessageJar.USER_NOT_SIGNED);
     }
 
-    if (depotId && quantity) {
+    if (depotId && quantity != undefined) {
         let userId = signedUser.id;
         return res.send({
             success: await Cart.modifyProductInCart(userId, depotId, quantity) && true
