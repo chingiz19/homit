@@ -63,7 +63,8 @@
             "name": "borderland-food-co",
             "display_name": "Borderland Food Co.",
             "image_url": "borderland-food-co.jpeg"
-        }
+        },
+        "namebrand": "Free Range Chicken Broth Borderland Food"
     },
     {
         "_id": "10-2",
@@ -129,7 +130,8 @@
             "name": "borderland-food-co",
             "display_name": "Borderland Food Co.",
             "image_url": "borderland-food-co.jpeg"
-        }
+        },
+        "namebrand": "Grass-Fed Bison Bone Broth Borderland Food"
     },
     {
         "_id": "10-3",
@@ -195,7 +197,8 @@
             "name": "borderland-food-co",
             "display_name": "Borderland Food Co.",
             "image_url": "borderland-food-co.jpeg"
-        }
+        },
+        "namebrand": "Grass-Fed Beef Bone Broth Borderland Food"
     },
     {
         "_id": "10-4",
@@ -261,6 +264,7 @@
             "name": "borderland-food-co",
             "display_name": "Borderland Food Co.",
             "image_url": "borderland-food-co.jpeg"
-        }
+        },
+        "namebrand": "Free Range Chicken Smoothie Base Bone Broth Borderland Food"
     }
 ]

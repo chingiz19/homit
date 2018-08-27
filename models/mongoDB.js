@@ -50,7 +50,16 @@ let productSchema = new Schema({
         required: true,
         es_indexed: true,
         es_type: 'completion',
-        es_analyzer: "standard"
+        es_analyzer: "standard",
+        es_search_analyzer: "standard"
+    },
+    namebrand: {
+        type: Schema.Types.String,
+        required: true,
+        es_indexed: true,
+        es_type: 'completion',
+        es_analyzer: "standard",
+        es_search_analyzer: "standard"
     },
     tax: { type: Schema.Types.Number, es_indexed: false },
     container: { type: Schema.Types.String, es_indexed: false },
@@ -166,28 +175,41 @@ productSchema.plugin(mongoosastic, { index: INDEX_NAME, type: TYPE_NAME });
 pub.suggestSearch = async function (suggest, inLimit, cb) {
     MDB.models['liquor-station'].esSearch({
         "suggest": {
-            "suggested": {
+            "left_suggest": {
                 "prefix": suggest,
                 "completion": {
                     "field": "brandname",
                     "skip_duplicates": true,
+                    "size": 5,
                     "fuzzy": {
                         "fuzziness": 1,
                     }
                 }
-            }
+            }, "right_suggest": {
+                "prefix": suggest,
+                "completion": {
+                    "field": "namebrand",
+                    "skip_duplicates": true,
+                    "size": 5,
+                    "fuzzy": {
+                        "fuzziness": 1,
+                    }
+                }
+            },
         }
     }, async function (err, results) {
         if (err) {
             return console.log(JSON.stringify(err, null, 4));
         }
-        let options = results.suggest.suggested[0].options;
+        let brandname = results.suggest.left_suggest[0].options;
+        let namebrand = results.suggest.right_suggest[0].options;
+        let mergedArray = brandname.concat(namebrand);
         let result = [];
-        let limit = Math.min(inLimit, options.length);
+        let limit = Math.min(inLimit, mergedArray.length);
 
         for (let i = 0; i < limit; i++) {
-            let product = options[i]._source;
-            product._id = options[i]._id;
+            let product = mergedArray[i]._source;
+            product._id = mergedArray[i]._id;
             delete product.details;
             delete product.variance;
             result.push(product);
