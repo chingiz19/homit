@@ -72,7 +72,7 @@ body {
 
         .rec-prod-hdr-text {
             font-size: 23px;
-            background-color: transparent;
+            background-color: rgb(253,253,253);
         }
     }
 }
@@ -107,7 +107,7 @@ body {
                 .brand {
                     color: #0045a0;
                     font-size: 19px;
-                    margin: 5px 0 5px 0;
+                    padding: 5px 0 5px 0;
                     overflow: hidden;
                     transition: all 0.3s ease;
                 }
@@ -196,7 +196,7 @@ body {
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
     body {
-        top: 60px;
+        padding-top: 55px;
     }
 
     .recomended-item {
@@ -204,7 +204,7 @@ body {
     }
 
     .search-section {
-        padding: 0 3%;
+        padding: 20px 3% 0 3%;
 
         .a-tag-button {
             a {
