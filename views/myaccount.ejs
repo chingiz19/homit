@@ -326,7 +326,7 @@
             </div>
         </section>
         <!-- Coupons (Private only) -->
-        <section ng-show="section == 6" class="coupon-section" ng-class="{'fadeIn': section == 6}">
+        <section ng-show="section == 6"  ng-class="{'fadeIn': section == 6}">
             <span class="divider"></span>
             <div class="flex-100 flex-row-wrap content-div">
                 <div ng-show="coupons" class="coupon-content-div" ng-repeat="coupon in coupons">
@@ -346,7 +346,7 @@
                         <ng-md-icon icon="content_cut" size="20"></ng-md-icon>
                     </button>
                 </div>
-                <div ng-show="coupons.length == 0" class="no-coupon box-center" style="flex-direction: column;">
+                <div ng-show="coupons.length == 0" class="no-coupon flex-column" style="flex-direction: column;">
                     <ng-md-icon icon="loyalty" size="130"></ng-md-icon>
                     <h4>No assigned coupons at the moment.</h4>
                 </div>
