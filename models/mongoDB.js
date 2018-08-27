@@ -5,6 +5,8 @@ let mySQLConnected = false;
 let MongoDBConnected = false;
 let inititialized = false;
 let indexedStores = [];
+const INDEX_NAME = "homit_products";
+const TYPE_NAME = "product";
 pub.models = [];
 
 if (!process.env.DB_NAME_MONGO) {
@@ -48,8 +50,16 @@ let productSchema = new Schema({
         required: true,
         es_indexed: true,
         es_type: 'completion',
-        // es_analyzer: "autocomplete", 
-        // es_search_analyzer: "standard" 
+        es_analyzer: "standard",
+        es_search_analyzer: "standard"
+    },
+    namebrand: {
+        type: Schema.Types.String,
+        required: true,
+        es_indexed: true,
+        es_type: 'completion',
+        es_analyzer: "standard",
+        es_search_analyzer: "standard"
     },
     tax: { type: Schema.Types.Number, es_indexed: false },
     container: { type: Schema.Types.String, es_indexed: false },
@@ -160,39 +170,52 @@ let productSchema = new Schema({
     ]
 });
 
-productSchema.plugin(mongoosastic);
+productSchema.plugin(mongoosastic, { index: INDEX_NAME, type: TYPE_NAME });
 
 pub.suggestSearch = async function (suggest, inLimit, cb) {
     MDB.models['liquor-station'].esSearch({
         "suggest": {
-            "suggested": {
+            "left_suggest": {
                 "prefix": suggest,
                 "completion": {
                     "field": "brandname",
+                    "skip_duplicates": true,
+                    "size": 5,
                     "fuzzy": {
                         "fuzziness": 1,
-                        "skip_duplicates": true
                     }
                 }
-            }
+            }, "right_suggest": {
+                "prefix": suggest,
+                "completion": {
+                    "field": "namebrand",
+                    "skip_duplicates": true,
+                    "size": 5,
+                    "fuzzy": {
+                        "fuzziness": 1,
+                    }
+                }
+            },
         }
     }, async function (err, results) {
         if (err) {
             return console.log(JSON.stringify(err, null, 4));
         }
-        let options = results.suggest.suggested[0].options;
+        let brandname = results.suggest.left_suggest[0].options;
+        let namebrand = results.suggest.right_suggest[0].options;
+        let mergedArray = brandname.concat(namebrand);
         let result = [];
-        let limit = Math.min(inLimit, options.length);
+        let limit = Math.min(inLimit, mergedArray.length);
 
         for (let i = 0; i < limit; i++) {
-            let product = options[i]._source;
-            product._id = options[i]._id;
+            let product = mergedArray[i]._source;
+            product._id = mergedArray[i]._id;
             delete product.details;
             delete product.variance;
             result.push(product);
         }
 
-        cb(result);
+        cb(result || false);
     });
 }
 
@@ -396,27 +419,7 @@ async function init() {
             for (storeType in storeTypes) {
                 let storeTypeName = storeTypes[storeType].name;
                 pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
-                pub.models[storeTypeName].createMapping({
-                    "analysis": {
-                        "filter": {
-                            "autocomplete_filter": {
-                                "type": "edge_ngram",
-                                "min_gram": 1,
-                                "max_gram": 20
-                            }
-                        },
-                        "analyzer": {
-                            "autocomplete": {
-                                "type": "custom",
-                                "tokenizer": "standard",
-                                "filter": [
-                                    "lowercase",
-                                    "autocomplete_filter"
-                                ]
-                            }
-                        }
-                    }
-                }, function (err, mapping) {
+                pub.models[storeTypeName].createMapping(function (err, mapping) {
                     if (err) {
                         Logger.log.error('Error creating mapping (you can safely ignore this)');
                         if (process.env.n_mode != "production") { console.log(err); }

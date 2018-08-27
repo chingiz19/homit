@@ -59,7 +59,8 @@
             "name": "dwarf-stars",
             "display_name": "Dwarf Stars",
             "image_url": "dwarf-stars.jpg"
-        }
+        },
+        "namebrand": "Originals Dwarf Stars"
     },
     {
         "_id": "7-2",
@@ -121,7 +122,8 @@
             "name": "dwarf-stars",
             "display_name": "Dwarf Stars",
             "image_url": "dwarf-stars.jpg"
-        }
+        },
+        "namebrand": "Pumpkin Seed Butter Cups Dwarf Stars"
     },
     {
         "_id": "7-3",
@@ -183,6 +185,7 @@
             "name": "dwarf-stars",
             "display_name": "Dwarf Stars",
             "image_url": "dwarf-stars.jpg"
-        }
+        },
+        "namebrand": "PumpKING Protein Balls Dwarf Stars"
     }
 ]

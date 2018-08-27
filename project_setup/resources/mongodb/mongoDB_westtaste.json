@@ -64,7 +64,8 @@
             "name": "westtaste",
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
-        }
+        },
+        "namebrand": "Tungo Mango Hot Sauce WestTaste"
     },
     {
         "_id": "12-2",
@@ -131,7 +132,8 @@
             "name": "westtaste",
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
-        }
+        },
+        "namebrand": "Honey & Beet Spread WestTaste"
     },
     {
         "_id": "12-3",
@@ -198,7 +200,8 @@
             "name": "westtaste",
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
-        }
+        },
+        "namebrand": "Jan Style Beet Spread WestTaste"
     },
     {
         "_id": "12-4",
@@ -265,7 +268,8 @@
             "name": "westtaste",
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
-        }
+        },
+        "namebrand": "Honey & Carrot Spread WestTaste"
     },
     {
         "_id": "12-5",
@@ -332,7 +336,8 @@
             "name": "westtaste",
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
-        }
+        },
+        "namebrand": "Jam Style Carrot Spread WestTaste"
     },
     {
         "_id": "12-6",
@@ -399,7 +404,8 @@
             "name": "westtaste",
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
-        }
+        },
+        "namebrand": "Balsamic & Beet Salad Dressing WestTaste"
     },
     {
         "_id": "12-7",
@@ -466,7 +472,8 @@
             "name": "westtaste",
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
-        }
+        },
+        "namebrand": "Chia Seed & Mint Salad Dressing WestTaste"
     },
     {
         "_id": "12-8",
@@ -533,6 +540,7 @@
             "name": "westtaste",
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
-        }
+        },
+        "namebrand": "Spicy Hot Sauce WestTaste"
     }
 ]

@@ -60,7 +60,8 @@
             "name": "pure-foods-fresh",
             "display_name": "Pure Foods Fresh",
             "image_url": "pure-foods-fresh.jpg"
-        }
+        },
+        "namebrand": "Babu's BBQ Sauce Pure Foods Fresh"
     },
     {
         "_id": "9-2",
@@ -127,7 +128,8 @@
             "name": "pure-foods-fresh",
             "display_name": "Pure Foods Fresh",
             "image_url": "pure-foods-fresh.jpg"
-        }
+        },
+        "namebrand": "South Western Green Pepper Sauce Pure Foods Fresh"
     },
     {
         "_id": "9-3",
@@ -194,6 +196,7 @@
             "name": "pure-foods-fresh",
             "display_name": "Pure Foods Fresh",
             "image_url": "pure-foods-fresh.jpg"
-        }
+        },
+        "namebrand": "Trumato Sauce Pure Foods Fresh"
     }
 ]
