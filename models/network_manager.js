@@ -3,6 +3,7 @@
  */
 
 let pub = {};
+let externalIOServer = {};
 const fs = require("fs");
 const path = require('path');
 const redis = require('socket.io-redis');
@@ -49,13 +50,15 @@ firebaseAdmin.initializeApp({
  * 1. Secure for external connections
  * 2. Non secure for internal (localhost only) connections 
  */
-let externalIOServer = require("https").createServer({
-    key: fs.readFileSync(KEY_PATH),
-    cert: fs.readFileSync(CERTIFICATE_PATH),
-    passphrase: 'test'
-});
-
-// let externalIOServer = require("http").createServer();              //only for test mode
+if (process.env.n_mode == "production") {
+    externalIOServer = require("https").createServer({
+        key: fs.readFileSync(KEY_PATH),
+        cert: fs.readFileSync(CERTIFICATE_PATH),
+        passphrase: 'test'
+    });
+} else {
+    externalIOServer = require("http").createServer();
+}
 
 let localCMServer = require("http").createServer();
 
