@@ -509,15 +509,17 @@ pub.prepareProductsForCalculator = async function (cartProducts) {
                 let product = pub.findNestedProductPrice(result.toObject(), [searchId, IDobject.varianceId, IDobject.packId]);
                 if (product) {
 
-                    finalResult[storeName] = {
-                        products: [],
-                        del_fee_primary: String,
-                        del_fee_secondary: String,
-                        rateId: Number
-                    };
+                    if (!finalResult.hasOwnProperty(storeName)) {
+                        finalResult[storeName] = {
+                            products: [],
+                            del_fee_primary: String,
+                            del_fee_secondary: String,
+                            rateId: Number
+                        };
+                    }
 
                     finalResult[storeName].products.push({
-                        "UID": searchId,
+                        "UID": UIDs[id],
                         "tax": tax,
                         "price": product.price,
                         "quantity": selectedQuantity

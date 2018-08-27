@@ -251,8 +251,8 @@
                 </div>
                 <div class="item-right-div">
                     <div class="produc-name">{{ product.brandname }} 
-                        <span ng-if="product.packaging > 1">({{product.selected.h_value }} x {{ product.selected.size }})</span>
-                        <span ng-if="product.packaging <= 1">({{ product.selected.size }})</span>
+                        <span ng-if="product.selected.pack > 1">({{product.selected.pack }} x {{ product.selected.size }})</span>
+                        <span ng-if="product.selected.pack <= 1">({{ product.selected.size }})</span>
                     </div>
                     <div class="cart-prd-price" style="text-align: center;">C${{ product.selected.price }}</div>
                 </div>
