@@ -8,8 +8,8 @@
 <!--googleoff: snippet-->
 <body>
     <div class="search-controller" ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" ng-cloak>
-        <h3 class="search-text" ng-show="searchText && search_result.products">Search results for '<em ng-bind-html="searchText"></em>'</h3>
-        <div class="no-results-div box-center" ng-show="search_result.products.length">
+        <h3 class="search-text" ng-show="search_result.products != 0 && searchText">Search results for '<em ng-bind-html="searchText"></em>'</h3>
+        <div class="no-results-div box-center" ng-show="search_result.products.length == 0">
             <img class="fadeIn" ng-src="/resources/images/non-catalog-image/pages/no_search_result.png">
             <h4>Oops.. No results found for '<em ng-bind-html="searchText"></em>'</h4>
         </div>

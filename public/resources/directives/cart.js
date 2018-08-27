@@ -226,26 +226,26 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                     scope.onPriceChange();
                 };
 
-                scope.updateUserCart = function (cart, store_type_name, initialise, user_signed) {
+                scope.updateUserCart = function (cart, store_name, initialise, user_signed) {
                     scope.userCart = cart;
                     if(initialise){
-                        for (var store_type_name in scope.userCart) {
-                            for (let a in scope.userCart[store_type_name]) {
-                                let pack = scope.findNestedProductPrice(scope.userCart[store_type_name][a], a);
-                                scope.userCart[store_type_name][a].selected.price = pack.price;
-                                scope.userCart[store_type_name][a].selected.pack = pack.h_value;
-                                scope.userCart[store_type_name][a].selected.size = pack.size;
-                                scope.totalAmount = scope.totalAmount + (scope.userCart[store_type_name][a].selected.quantity * scope.userCart[store_type_name][a].selected.price);
-                                scope.numberOfItemsInCart = scope.numberOfItemsInCart + scope.userCart[store_type_name][a].selected.quantity;
+                        for (var store in scope.userCart) {
+                            for (let a in scope.userCart[store]) {
+                                let pack = scope.findNestedProductPrice(scope.userCart[store][a], a);
+                                scope.userCart[store][a].selected.price = pack.price;
+                                scope.userCart[store][a].selected.pack = pack.h_value;
+                                scope.userCart[store][a].selected.size = pack.size;
+                                scope.totalAmount = scope.totalAmount + (scope.userCart[store][a].selected.quantity * scope.userCart[store][a].selected.price);
+                                scope.numberOfItemsInCart = scope.numberOfItemsInCart + scope.userCart[store][a].selected.quantity;
                                 scope.totalAmount = Math.round(scope.totalAmount * 100) / 100;
                                 if(user_signed){
-                                    scope.prepareItemForDB(a, scope.userCart[store_type_name][a].selected.quantity);
+                                    scope.prepareItemForDB(a, scope.userCart[store][a].selected.quantity);
                                 }
 
                             }
                         }
                     }
-                    scope.userCartToView = cartService.getViewUserCart(store_type_name, scope.userCart);
+                    scope.userCartToView = cartService.getViewUserCart(store_name, scope.userCart);
                 };
 
                 /**
