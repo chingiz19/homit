@@ -335,7 +335,7 @@ router.post('/reverify', Auth.validate(Auth.RolesJar.CUSTOMER), async function (
     if (result) {
         res.send({
             success: true,
-            ui_message: "Successfully sent verification email!"
+            ui_message: "Verification email successfully sent!"
         });
     } else {
         ErrorMessages.sendErrorResponse(res);
