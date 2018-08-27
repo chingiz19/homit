@@ -54,8 +54,8 @@ var homitSharedSessions = session({
 	cookie: {
 		secure: false, // Setting to false as reverse proxy is used in production
 		httpOnly: true,
-		expires: new Date(Date.now() + (24 * 60 * 60 * 1000)),
-		maxAge: 24 * 60 * 60 * 1000  // 24 hours
+		expires: new Date(Date.now() + (150 * 24 * 60 * 60 * 1000)), //150 days
+		maxAge: 150 * 24 * 60 * 60 * 1000  // 150 days
 	}
 })
 

@@ -158,6 +158,13 @@ footer {
     }
 }
 
+.span-city{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    color: white;
+}
+
 /* start of window shrinkage affect solution */
 @media (max-width: 1190px) and (min-width: 980px) {
     .content-section {
