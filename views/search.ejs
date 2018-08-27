@@ -36,8 +36,7 @@
                                 product.variance[0].preffered_unit_size + product.variance[0].preffered_unit }} C${{product.variance[0].packs[0].price}}
                                 </p>
                             <p class="description" ng-show="(product.details.untagged_description)"><span>{{product.details.untagged_description}}</span></p>
-                            <p class="description" ng-show="!(product.details.untagged_description)"><span>Country of Origin:
-                                    {{" " + product.details.country_of_origin.description}}</span></p>
+                            <p class="description" ng-show="!(product.details.untagged_description)"><span>Country of Origin:{{" " + product.details.country_of_origin.description}}</span></p>
                         </div>
                     </div>
                 </div>
@@ -47,8 +46,8 @@
                 <div class="did-you-mean" ng-show="key != searchText" ng-click="searchSuggestion(key)">Did you mean <em>'{{key}}'</em>?</div>
                 <div ng-repeat="product in value" class="product-div">
                     <div class="product-div-mob fadeIn">
-                        <a class="brand" ng-href="{{product.url}}" target="_self">{{product.brandname}}</a>
                         <a ng-href="{{product.url}}" target="_self"><img ng-src="{{product.images.catalog_image_url}}"></a>
+                        <a class="brand" ng-href="{{product.url}}" target="_self">{{product.brandname}}</a>
                         <div layout="row" class="a-tag-button">
                             <a href="/hub/product.store.name" target="_self">{{product.store.display_name}}</a>
                             <a href="/hub/{{product.store.name}}/{{product.category.category_name}}" target="_self">{{product.category.category_display_name}}</a>
