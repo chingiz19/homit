@@ -125,9 +125,10 @@ label {
     margin-bottom: 0;
 }
 
-.no-orders{
+.no-orders, .no-coupon{
     flex-direction: column; 
     padding-left: 100px;
+    width: 100%;
     a{
         color: #6AB5B1; 
         font-size: 17px;
@@ -145,9 +146,6 @@ label {
     a:hover ng-md-icon {
         fill: #11283b;
     }
-}
-
-.no-orders, .no-coupon{
     ng-md-icon{
         fill: rgb(194, 83, 83);
         filter: drop-shadow(0 0px 2px rgba(0, 0, 0, 0.4));
@@ -158,6 +156,11 @@ label {
         text-align: center; 
         letter-spacing: 0.2px;
     }
+}
+
+.no-coupon{
+    align-items: center;
+    width: 100%;
 }
 
 .burger-menu {

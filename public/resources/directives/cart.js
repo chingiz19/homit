@@ -80,6 +80,11 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 scope.cartCtrl = publicFunctions;
                 pScope = scope;
 
+                //Call dummy function when the function not passed to directive
+                if (!scope.onPriceChange){
+                    scope.onPriceChange = function(){};
+                }
+
                 //controller variables
                 scope.numberOfItemsInCart = 0;
                 scope.totalAmount = 0;
@@ -88,7 +93,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 cartService.getCart()
                     .then(function successCallback(response) {
                         if (response.data.success === true) {
-                            scope.updateUserCart(cartService.mergeCarts(scope.userCart, response.data.cart), scope.storeTypeName, true);
+                            scope.updateUserCart(cartService.mergeCarts(scope.userCart, response.data.cart), scope.storeTypeName, true, true);
                             localStorage.setUserCart({});
                         } else {
                             scope.updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {}), scope.storeTypeName, true); //REQUIRED to convert to new convention with store_type_name
@@ -110,7 +115,6 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                  * @param {string} UID
                  */
                 scope.findNestedProductPrice = function (product, UID) {
-                    if(product.selected) return;
                     let idArray = UID.split("-")
                     if (product && idArray && product.variance && product.tax) {
                         let selectedvariances = product.variance;
@@ -203,9 +207,9 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                                 {
                                     name: product.name,
                                     brand: product.brand,
-                                    price: product.price,
-                                    category: product.packaging,
-                                    variant: product.size,
+                                    price: product.selected.price,
+                                    category: product.selected.pack,
+                                    variant: product.selected.size
                                 }
                             ]
                         });
@@ -222,23 +226,24 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                     scope.onPriceChange();
                 };
 
-                scope.updateUserCart = function (cart, store_type_name, initialise) {
+                scope.updateUserCart = function (cart, store_type_name, initialise, user_signed) {
                     scope.userCart = cart;
                     if(initialise){
                         for (var store_type_name in scope.userCart) {
                             for (let a in scope.userCart[store_type_name]) {
                                 let pack = scope.findNestedProductPrice(scope.userCart[store_type_name][a], a);
-                                if(pack){
-                                    scope.userCart[store_type_name][a].selected.price = pack.price;
-                                    scope.userCart[store_type_name][a].selected.pack = pack.h_value;
-                                    scope.userCart[store_type_name][a].selected.size = pack.size;
-                                }
+                                scope.userCart[store_type_name][a].selected.price = pack.price;
+                                scope.userCart[store_type_name][a].selected.pack = pack.h_value;
+                                scope.userCart[store_type_name][a].selected.size = pack.size;
                                 scope.totalAmount = scope.totalAmount + (scope.userCart[store_type_name][a].selected.quantity * scope.userCart[store_type_name][a].selected.price);
                                 scope.numberOfItemsInCart = scope.numberOfItemsInCart + scope.userCart[store_type_name][a].selected.quantity;
                                 scope.totalAmount = Math.round(scope.totalAmount * 100) / 100;
+                                if(user_signed){
+                                    scope.prepareItemForDB(a, scope.userCart[store_type_name][a].selected.quantity);
+                                }
+
                             }
                         }
-                        // scope.prepareItemForDB(a, scope.userCart[store_type_name][a].selected.quantity);
                     }
                     scope.userCartToView = cartService.getViewUserCart(store_type_name, scope.userCart);
                 };

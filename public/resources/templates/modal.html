@@ -4,6 +4,10 @@
         display: flex;
     }
 
+    md-progress-circular.md-default-theme path, md-progress-circular path {
+        stroke: #fff;
+    }
+
     .email-check-grow span{
         margin-left: 3px;
     }
@@ -398,7 +402,7 @@
                 <button class="log-btn" type="submit">
                     <md-progress-circular ng-class="loading_spin" md-diameter="20"></md-progress-circular>
                     <span ng-class="signup_text">SIGN UP</span>
-                <ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon></button>
+                <ng-md-icon icon="done" ng-class="check_mark_class" size="20"></ng-md-icon></button>
             </form>
         </section>
         <!-- Footer -->
