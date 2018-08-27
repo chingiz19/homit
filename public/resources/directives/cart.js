@@ -89,10 +89,10 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                     .then(function successCallback(response) {
                         if (response.data.success === true) {
                             scope.updateUserCart(cartService.mergeCarts(scope.userCart, response.data.cart), scope.storeTypeName, true);
+                            localStorage.setUserCart({});
                         } else {
                             scope.updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {}), scope.storeTypeName, true); //REQUIRED to convert to new convention with store_type_name
                         }
-                        localStorage.setUserCart({});
                         if (scope.onCartLoad) {
                             scope.onCartLoad();
                         }
@@ -110,6 +110,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                  * @param {string} UID
                  */
                 scope.findNestedProductPrice = function (product, UID) {
+                    if(product.selected) return;
                     let idArray = UID.split("-")
                     if (product && idArray && product.variance && product.tax) {
                         let selectedvariances = product.variance;
@@ -227,9 +228,11 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                         for (var store_type_name in scope.userCart) {
                             for (let a in scope.userCart[store_type_name]) {
                                 let pack = scope.findNestedProductPrice(scope.userCart[store_type_name][a], a);
-                                scope.userCart[store_type_name][a].selected.price = pack.price;
-                                scope.userCart[store_type_name][a].selected.h_value = pack.h_value;
-                                scope.userCart[store_type_name][a].selected.size = pack.size;
+                                if(pack){
+                                    scope.userCart[store_type_name][a].selected.price = pack.price;
+                                    scope.userCart[store_type_name][a].selected.pack = pack.h_value;
+                                    scope.userCart[store_type_name][a].selected.size = pack.size;
+                                }
                                 scope.totalAmount = scope.totalAmount + (scope.userCart[store_type_name][a].selected.quantity * scope.userCart[store_type_name][a].selected.price);
                                 scope.numberOfItemsInCart = scope.numberOfItemsInCart + scope.userCart[store_type_name][a].selected.quantity;
                                 scope.totalAmount = Math.round(scope.totalAmount * 100) / 100;
