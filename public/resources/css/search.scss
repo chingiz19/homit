@@ -6,18 +6,18 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-.search-controller {
+.search-section {
     position: relative;
     min-height: calc(100vh - 270px);
     max-width: 800px;
     margin: 0 auto;
+    padding-top: 30px;
 
     @media (max-width: 799px) and (min-width: 400px) {
         margin: 0px 30px;
     }
 
     .search-text {
-        margin-top: 20px;
         font-weight: 400;
         font-size: 24px;
         color: #424242;
@@ -64,6 +64,17 @@ body {
         color: #50555f;
     }
 
+    .recomended-products{
+        margin-bottom: 0px;
+        padding-top: 60px;
+        padding-bottom: 60px;
+        background-color: transparent;
+        .rec-prod-hdr-text{
+            font-size: 23px;
+            background-color: transparent;
+        }
+    }
+
 }
 
 .product-section {
@@ -80,13 +91,18 @@ body {
                 position: relative;
                 width: 130px;
                 height: 130px;
-                margin: auto;
+                margin: 5px;
+                background-color: #fff;
+                padding: 5px;
+                border: 1px solid rgba(175, 175, 175, 0.34);
+                border-radius: 5px;
             }
 
             .info-div {
                 display: grid;
                 grid-column: 2;
                 grid-template-rows: 30px 26px 22px minmax(15px, 50px);
+                padding-left: 10px;
 
                 .brand {
                     color: #0045a0;
@@ -97,6 +113,12 @@ body {
 
                 .a-tag-button{
                     padding-top: 2px;
+                    a::before {
+                        background-color: rgb(253,253,253);
+                    }
+                    a::after {
+                        background-color: rgb(253,253,253);
+                    }
                 }
 
                 .type{
@@ -171,7 +193,7 @@ body {
         -webkit-overflow-scrolling: touch;
     }
 
-    .search-controller{
+    .search-section{
         padding: 0 3%;
         .a-tag-button{
             a{
