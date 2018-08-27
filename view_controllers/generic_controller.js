@@ -144,6 +144,8 @@ router.get("/verify/:token", async function (req, res) {
 				req.options.ejs["error"] = false;
 				req.options.ejs.emailVerified = true;
 				displayMessage = "Your account has been successfully verified. Let's get rolling!";
+				let userObject = await User.findUser(result.email);
+				await Auth.signSession(req, userObject, Auth.RolesJar.CUSTOMER);
 				let couponAssigned = await Coupon.assignCouponToUser(userId, Coupon.CODES.DEFAULT_SIGNUP, 1);
 				if (couponAssigned) {
 					displayMessage += "<br> You just received a welcome gift. Go to My Coupons to redeem your offer.";

@@ -453,10 +453,6 @@ app.controller("checkoutController",
 
         };
 
-        // $("#email-input").keypress(function() {
-        //     console.log("Key pressed");
-        // });
-
         $scope.clearPage = function () {
             if ($scope.paymentResult == "1") {
                 $scope.userInfo = {};
