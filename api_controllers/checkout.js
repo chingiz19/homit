@@ -49,7 +49,7 @@ router.post('/placeorder', async function (req, res, next) {
 
     if (!paramsMissing) {
         let storeProducts = await Catalog.prepareProductsForCalculator(req.body.products);
-        let allStoresOpen = await validateStoresOpen(Object.keys(storeProducts), scheduleDetails);
+        let allStoresOpen = await validateStoresOpen(Object.keys(storeProducts.products), scheduleDetails);
 
         if (allStoresOpen) {
             let allPrices = await Catalog.calculatePrice(storeProducts, couponDetails);
@@ -60,7 +60,7 @@ router.post('/placeorder', async function (req, res, next) {
                 MP.chargeCustomer(custId, totalPrice).then(async function (chargeResult) {
                     postCharge(chargeResult, res, birth_year, birth_month, birth_day,
                         address, address_lat, address_long, phone, unitNumber, driverInstruction,
-                        allPrices, storeProducts, scheduleDetails, userObject);
+                        allPrices, storeProducts.products, scheduleDetails, userObject);
                 }, async function (error) {
                     chargeFailed(error, res);
                 });
@@ -68,7 +68,7 @@ router.post('/placeorder', async function (req, res, next) {
                 MP.chargeCard(cardToken, totalPrice).then(async function (chargeResult) {
                     postCharge(chargeResult, res, birth_year, birth_month, birth_day,
                         address, address_lat, address_long, phone, unitNumber, driverInstruction,
-                        allPrices, storeProducts, scheduleDetails, userObject);
+                        allPrices, storeProducts.products, scheduleDetails, userObject);
                 }, async function (error) {
                     chargeFailed(error, res);
                 });
@@ -135,7 +135,7 @@ router.post('/check', async function (req, res) {
     let emailIsOk = false;
 
     let storeProducts = await Catalog.prepareProductsForCalculator(req.body.products);
-    let allStoresOpen = await validateStoresOpen(Object.keys(storeProducts), scheduleDetails);
+    let allStoresOpen = await validateStoresOpen(Object.keys(storeProducts.products), scheduleDetails);
     let user = await Auth.getSignedUser(req);
 
     if (user) {
@@ -354,7 +354,7 @@ async function sendOrderEmail(email, firstName, lastName, phone, address, cardDi
         let storeType = await Catalog.getStoreTypeInfo(orderIds[currentOrder].store_type);
 
         let tmpOrder = {
-            scheduledTime: filterScheduledTime(scheduleDetails[store_type.name]),
+            scheduledTime: filterScheduledTime(scheduleDetails[storeType.name]),
             id: currentOrder,
             products: products,
             store_type_display_name: storeType.display_name,

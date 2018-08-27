@@ -770,13 +770,25 @@ pub.getUnionStores = async function (unionName) {
 async function getItemsBoughtTogether(productId) {
     let finalResult = [];
     let newRegEx = new RegExp("([0-9]-)");
-    let orderIds = await db.selectAllWhere(db.tables.orders_cart_items, { "depot_id": productId });
+    let sqlQuery = `
+        SELECT 
+            orders_history.order_transaction_id as id
+        FROM
+            orders_cart_items
+        JOIN
+            orders_history
+        ON 
+            orders_cart_items.order_id = orders_history.id
+        WHERE 
+            (depot_id LIKE '${productId}%')
+    `;
+    let transactions = await db.runQuery(sqlQuery);
 
-    if (orderIds && orderIds.length > 0) {
+    if (transactions && transactions.length > 0) {
         let data = [];
 
-        for (order in orderIds) {
-            data.push(orderIds[order].order_id);
+        for (let k in transactions) {
+            data.push(transactions[k].id);
         }
 
         let products = await db.runQuery(`
@@ -793,16 +805,20 @@ async function getItemsBoughtTogether(productId) {
         ON 
             catalog_store_types.id = orders_history.store_type
         WHERE
-            depot_id <> ${productId} 
+            depot_id NOT LIKE '${productId}%'
         AND
             catalog_store_types.available = TRUE
         AND 
-        order_id IN (${data.toString()});`);
+            order_transaction_id 
+        IN 
+            (${data.toString()});`);
 
         if (products) {
             for (let k in products) {
                 if (newRegEx.test(products[k].id)) {
-                    finalResult.push(await MDB.models[products[k].name].findById(products[k].id).exec());
+                    let fullIdArray = products[k].id.split('-');
+                    let searchId = fullIdArray[0] + '-' + fullIdArray[1];
+                    finalResult.push(await MDB.models[products[k].name].findById(searchId).exec());
                 }
             }
         }

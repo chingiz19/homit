@@ -10,7 +10,8 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
             method: 'POST',
             url: "/api/hub/similarproducts",
             data:{
-                limit: 8
+                limit: 8,
+                product_id: $scope.product._id
             }
         }).then(function successCallback(response) {
             $scope.recommended_products = buildProductUrl(response.data.result);

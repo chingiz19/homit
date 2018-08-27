@@ -397,7 +397,7 @@ function getOrderSlipHtml(OI, priceObject) {
             "<td class='orders-details-table-td-input'>" + filterInputField(createDeliveryOptionsText(orders[sub_order].scheduledTime)) + "</td>" +
             "</tr>" +
             "<tr class='orders-details-table-tr'>" +
-            "<td class='orders-details-table-td-hdr'>Store coupons:</td>" +
+            "<td class='orders-details-table-td-hdr'>Store Coupons:</td>" +
             "<td class='orders-details-table-td-input'>" + filterInputField(orders[sub_order].couponInvoiceMessage, "No coupons used") + "</td>" +               
             "</tr>" +
             "</table>"
@@ -418,7 +418,7 @@ function getOrderSlipHtml(OI, priceObject) {
             ;
         for (let k = 0; k < orders[sub_order].products.length; k++) {
             let product = orders[sub_order].products[k];
-            let Description = filterInputField(product.brand) + " " + filterInputField(product.name) + " " + filterInputField(product.volume) + " " + " x" + filterInputField(product.packaging);
+            let Description = filterInputField(product.brand) + " " + filterInputField(product.name, "") + " " + filterInputField(product.volume, "") + " " + " x" + filterInputField(product.packaging, "");
             let Quantity = product.quantity;
             let Price = product.price;
             html_email +=

@@ -512,7 +512,7 @@ pub.removeOrderRouteNode = async function (driverId, orderId) {
  * @param {*} driverId 
  */
 pub.getRoutes = async function (driverId) {
-    var sqlQuery = `
+    let sqlQuery = `
         SELECT routes.id AS route_id, routes.position AS position, history.id_prefix AS node_id_prefix,
         routes.order_id AS node_id, transaction.delivery_address AS node_address, "order" AS node_type,
         transaction.delivery_latitude AS node_latitude, transaction.delivery_longitude AS node_longitude
@@ -536,11 +536,11 @@ pub.getRoutes = async function (driverId) {
         
         ORDER BY position`;
 
-    var data = {
+    let data = {
         "routes.driver_id": driverId
     };
 
-    var routes = await db.runQuery(sqlQuery, [data, data]);
+    let routes = await db.runQuery(sqlQuery, [data, data]);
     return routes;
 }
 
