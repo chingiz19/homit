@@ -209,7 +209,7 @@ pub.getOrderItemsById = async function (orderId) {
                 let searchId = idArray[0] + '-' + idArray[1];
                 let product = await MDB.models[store[0].name].findById(searchId).exec();;
                 if (product) {
-                    result.push(formatNewStyleProducts(depotIds[k].quantity, product.toObject(), store[0], Catalog.findNestedProductPrice(product.toObject(), [searchId, idArray[2], idArray[3]])));
+                    result.push(formatNewStyleProducts(depotIds[k].quantity, product.toObject(), Catalog.findNestedProductPrice(product.toObject(), [searchId, idArray[2], idArray[3]])));
                 }
             }
         }
@@ -548,7 +548,7 @@ pub.getGuestsByOrderPhone = async function (phoneNumber) {
  * 
  * @param {Object} raw form Mongo DB
  */
-function formatNewStyleProducts(quantity, raw, store, nestedProduct) {
+function formatNewStyleProducts(quantity, raw, nestedProduct) {
     let localObject = raw;
 
    delete localObject._id;
@@ -556,11 +556,11 @@ function formatNewStyleProducts(quantity, raw, store, nestedProduct) {
    delete localObject.tags;
    delete localObject.variance;
 
-    localObject.store_type = store.name;
-    localObject.store_type_display_name = store.display_name;
+    localObject.store_type = raw.store.name;
+    localObject.store_type_display_name = raw.store.display_name;
     localObject.category = raw.category.category_name;
     localObject.image = raw.images.image_catalog;
-    localObject.price = nestedProduct.price;
+    localObject.price_sold = nestedProduct.price;
     localObject.packaging = nestedProduct.h_value;
     localObject.volume = nestedProduct.size;
     localObject.quantity = quantity;
