@@ -57,6 +57,18 @@ app.service('helpers', function () {
         return string.toLowerCase().replace(/ /g, "-");
     };
 
+    pub.mm_dd_yyyy = function(inDate) {
+        if (inDate) {
+            return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
+        }
+    }
+
+    pub.hh_mm = function(inDate) {
+        if (inDate) {
+            return parseInt(inDate.slice(12, 13), 10) + ":" + parseInt(inDate.slice(15, 16), 10);
+        }
+    }
+
     /**
      * Builds product url
      * @param {key map} mainSpecials 

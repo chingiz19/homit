@@ -144,10 +144,10 @@ router.post('/resetpassword', Auth.validate(Auth.RolesJar.CUSTOMER), function (r
 });
 
 router.post('/viewordertransactions', async function (req, res, next) {
-    var signedUser = Auth.getSignedUser(req);
+    let signedUser = Auth.getSignedUser(req);
     if (signedUser) {
-        var userId = signedUser.id;
-        var data = await Orders.getOrderTransactionsByUserId(userId);
+        let userId = signedUser.id;
+        let data = await Orders.getOrderTransactionsByUserId(userId);
         res.json({
             success: true,
             transactions: data
@@ -158,17 +158,17 @@ router.post('/viewordertransactions', async function (req, res, next) {
 });
 
 router.post("/viewallorders", Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, res, next) {
-    var signedUser = Auth.getSignedUser(req);
+    let signedUser = Auth.getSignedUser(req);
     if (!signedUser) {
         return ErrorMessages.sendErrorResponse(res);
     }
-    var orders = [];
-    var transactions = await Orders.getOrderTransactionsByUserId(signedUser.id);
+    let orders = [];
+    let transactions = await Orders.getOrderTransactionsByUserId(signedUser.id);
 
     for (let tr of transactions) {
-        var individualOrders = await Orders.getOrdersByTransactionIdWithUserId(tr.id, signedUser.id);
+        let individualOrders = await Orders.getOrdersByTransactionIdWithUserId(tr.id, signedUser.id);
         for (let individualOrder of individualOrders) {
-            var order = {
+            let order = {
                 id: individualOrder.order_id,
                 card_digits: tr.card_digits,
                 delivery_address: tr.delivery_address,
@@ -190,7 +190,7 @@ router.post("/viewallorders", Auth.validate(Auth.RolesJar.CUSTOMER), async funct
     }
 
     orders = _.reverse(orders);
-    res.status(200).json({
+    return res.status(200).json({
         success: true,
         orders: orders
     });
@@ -204,12 +204,12 @@ router.post('/vieworders', Auth.validate(Auth.RolesJar.CUSTOMER), async function
         if (orderTransactionId) {
             var data = await Orders.getOrdersByTransactionIdWithUserId(orderTransactionId, userId);
             if (data) {
-                res.json({
+                return res.json({
                     success: true,
                     orders: data
                 });
             } else {
-                res.json({
+                return res.json({
                     success: false
                 });
             }
@@ -223,19 +223,19 @@ router.post('/vieworders', Auth.validate(Auth.RolesJar.CUSTOMER), async function
 });
 
 router.post('/getorder', async function (req, res, next) {
-    var signedUser = Auth.getSignedUser(req);
+    let signedUser = Auth.getSignedUser(req);
     if (signedUser) {
-        var userId = signedUser.id;
-        var orderId = req.body.order_id;
+        let userId = signedUser.id;
+        let orderId = req.body.order_id;
         if (orderId) {
-            var data = await Orders.getOrderItemsByIdUserId(orderId, userId);
+            let data = await Orders.getOrderItemsByIdUserId(orderId, userId);
             if (data) {
-                res.json({
+                return res.json({
                     success: true,
                     order: data
                 });
             } else {
-                res.json({
+                return res.json({
                     success: false
                 });
             }
@@ -266,7 +266,7 @@ router.get('/user', Auth.validate(Auth.RolesJar.CUSTOMER), async function (req, 
     }
 
     if (signedUser.birth_date) {
-        var date = signedUser.birth_date.split("T")[0].split("-");
+        let date = signedUser.birth_date.split("T")[0].split("-");
         signedUser.dob = date[1] + '-' + date[2] + '-' + date[0];
         delete signedUser.birth_date;
     }
@@ -294,7 +294,7 @@ router.post('/paymentmethod/update', Auth.validate(Auth.RolesJar.CUSTOMER), asyn
     // add token to the user
     try {
         if (await MP.updateCustomerPaymentMethod(signedUser.stripe_customer_id, req.body.token)) {
-            res.send({
+            return res.send({
                 success: true
             });
         }
@@ -313,7 +313,7 @@ router.post('/paymentmethod/remove', Auth.validate(Auth.RolesJar.CUSTOMER), asyn
     try {
         var card = await MP.getCustomerPaymentMethodAsToken(signedUser.stripe_customer_id);
         if (await MP.removeCustomerPaymentMethod(signedUser.stripe_customer_id, card)) {
-            res.send({
+            return res.send({
                 success: true
             });
         } else {
@@ -333,7 +333,7 @@ router.post('/reverify', Auth.validate(Auth.RolesJar.CUSTOMER), async function (
     let result = await User.sendVerificationEmail(signedUser);
 
     if (result) {
-        res.send({
+        return res.send({
             success: true,
             ui_message: "Verification email successfully sent!"
         });

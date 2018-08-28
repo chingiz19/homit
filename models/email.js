@@ -420,7 +420,7 @@ function getOrderSlipHtml(OI, priceObject) {
             let product = orders[sub_order].products[k];
             let Description = filterInputField(product.brand) + " " + filterInputField(product.name, "") + " " + filterInputField(product.volume, "") + " " + " x" + filterInputField(product.packaging, "");
             let Quantity = product.quantity;
-            let Price = product.price;
+            let Price = product.price_sold;
             html_email +=
                 "<tr>" +
                 "<td class='order-cnt-table-cnt-tr-1'>" + filterInputField(Description) + "</td>" +

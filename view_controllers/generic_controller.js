@@ -18,9 +18,9 @@ let ejsOptions = {
 	haveNotificationsToShow: false
 };
 
-// router.use(async function (req, res, next) {
-// 	routeToNewHub(req, res, next);
-// });
+router.use(async function (req, res, next) {
+	routeToNewHub(req, res, next);
+});
 
 /**
  * Assings default options
@@ -166,27 +166,16 @@ router.use("/hub/", require("./catalogView.js"));
 router.use(require("./viewAuth_controller.js"));
 router.use(require("./adminAuth_controller.js"));
 
-// function routeToNewHub(req, res, next) {
-// 	let urlArray = req.url.split("/");
-// 	// if (urlArray[3] == 'chocolate-and-bar') {
-// 	// 	let newUrl = "/hub/local-market/" + urlArray[2];
-// 	// 	return res.redirect(newUrl);
-// 	// }
-// 	if (urlArray[1] == "catalog") {
-// 		let newUrl = "/hub/";
-// 		if (urlArray.length == 4) {
-// 			newUrl += urlArray[2];
-// 		} else {
-// 			for (let i = 2; i < urlArray.length; i++) {
-// 				newUrl += urlArray[i];
-// 				if (i != urlArray.length - 1) {
-// 					newUrl += "/";
-// 				}
-// 			}
-// 		}
-// 		return res.redirect(newUrl);
-// 	}
-// 	next();
-// }
+function routeToNewHub(req, res, next) {
+	let urlArray = req.url;
+
+	if(urlArray == "/catalog/linas-italian-market/baked-goods"){
+		return res.redirect("/hub/linas-italian-market");
+	} else if(urlArray == "/catalog/dwarf-stars/chocolate-and-bar"){
+		return res.redirect("/hub/dwarf-stars/chocolates-and-bars");
+	}
+
+	next();
+}
 
 module.exports = router;

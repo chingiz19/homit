@@ -303,10 +303,15 @@
                         <div class="order-content">
                             <span class="order-items" ng-show="order.showDetails" ng-repeat="item in order.items">
                                 <div class="item">
-                                    <img width="100" height="100" ng-src="{{'/resources/images/products/' + item.category.toLowerCase() + '/' + item.image}}">
-                                    <span class="details">
-                                        {{ item.volume }} {{ item.brand }}
-                                    </span>
+                                    <img ng-show="item.images" width="100" height="100" src="/resources/images/products/{{item.store.name}}/{{item.images.image_catalog}}">
+                                    <img ng-show="!(item.images)" width="100" height="100" src="/resources/images/products/{{item.store_type}}/{{item.image}}">
+                                    <ul class="details">
+                                        <li ng-show="item.brandname">{{ item.brandname }}</li>
+                                        <li ng-show="!(item.brandname)">{{item.brand + " " + item.name}}</li>
+                                        <li>{{item.packaging + " x " + item.volume}}</li>
+                                        <li ng-show="item.quantity == 1">{{item.quantity}} item</li>
+                                        <li ng-show="item.quantity > 1">{{item.quantity}} items</li>
+                                    </ul>
                                 </div>
                             </span>
                         </div>

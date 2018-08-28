@@ -123,10 +123,10 @@ pub.getOrderTransactionById = async function (transactionId) {
  * @param {*} userId 
  */
 pub.getOrderTransactionsByUserId = async function (userId) {
-    var data = {
+    let data = {
         user_id: userId
     };
-    var orderTransactions = await db.selectAllWhere(db.tables.orders_transactions_history, data);
+    let orderTransactions = await db.selectAllWhere(db.tables.orders_transactions_history, data);
     return orderTransactions;
 }
 
@@ -265,11 +265,7 @@ pub.getOrderItemsById = async function (orderId) {
  * @param {*} orderId 
  */
 pub.getUserWithOrderByOrderId = async function (orderId) {
-    var data = {
-        id: orderId
-    };
-
-    var orders = await db.selectAllWhereLimitOne(db.tables.orders_history, data);
+    let orders = await db.selectAllWhereLimitOne(db.tables.orders_history, { id: orderId });
     if (orders.length > 0) {
         var order = orders[0];
         var transactionId = order.order_transaction_id;
@@ -281,12 +277,11 @@ pub.getUserWithOrderByOrderId = async function (orderId) {
             } else {
                 user = await User.findUserById(transaction.user_id);
             }
-            var result = {
+            return {
                 transaction: transaction,
                 order: order,
                 user: user
             };
-            return result;
         }
     }
     return false;
@@ -526,6 +521,36 @@ pub.getUsersByOrderPhone = async function (phoneNumber) {
 }
 
 /**
+ * Get pending orders by store id
+ * 
+ * @param {*} storeId 
+ */
+pub.getPendingOrdersWithItemsByStoreId = async function (storeId) {
+    let sqlCondition = "history.date_picked IS NULL";
+    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
+}
+
+/**
+ * Get pending orders by store id
+ * 
+ * @param {*} storeId 
+ */
+pub.getAllOrdersWithItemsByStoreId = async function (storeId) {
+    let sqlCondition = "1=1";
+    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
+}
+
+/**
+ * Get pevious orders by store id
+ * 
+ * @param {*} storeId 
+ */
+pub.getPreviousOrdersWithItemsByStoreId = async function (storeId) {
+    let sqlCondition = "history.date_picked IS NOT NULL";
+    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
+}
+
+/**
  * Finds guests by phone number in orders transactions history
  * 
  * @param {*} phoneNumber 
@@ -551,10 +576,10 @@ pub.getGuestsByOrderPhone = async function (phoneNumber) {
 function formatNewStyleProducts(quantity, raw, nestedProduct) {
     let localObject = raw;
 
-   delete localObject._id;
-   delete localObject.details;
-   delete localObject.tags;
-   delete localObject.variance;
+    delete localObject._id;
+    delete localObject.details;
+    delete localObject.tags;
+    delete localObject.variance;
 
     localObject.store_type = raw.store.name;
     localObject.store_type_display_name = raw.store.display_name;
@@ -645,36 +670,6 @@ function getFormattedOrdersForStore(orderProducts) {
         }
     }
     return result;
-}
-
-/**
- * Get pending orders by store id
- * 
- * @param {*} storeId 
- */
-pub.getPendingOrdersWithItemsByStoreId = async function (storeId) {
-    let sqlCondition = "history.date_picked IS NULL";
-    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
-}
-
-/**
- * Get pending orders by store id
- * 
- * @param {*} storeId 
- */
-pub.getAllOrdersWithItemsByStoreId = async function (storeId) {
-    let sqlCondition = "1=1";
-    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
-}
-
-/**
- * Get pevious orders by store id
- * 
- * @param {*} storeId 
- */
-pub.getPreviousOrdersWithItemsByStoreId = async function (storeId) {
-    let sqlCondition = "history.date_picked IS NOT NULL";
-    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
 }
 
 /**

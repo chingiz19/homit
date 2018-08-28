@@ -6,6 +6,11 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+.search-controller{
+    background-color: rgb(253, 253, 253); 
+    overflow-x: hidden;
+}
+
 .search-section {
     position: relative;
     min-height: calc(100vh - 270px);

@@ -8,7 +8,7 @@
 <!--googleoff: snippet-->
 
 <body>
-    <div style="background-color: rgb(253, 253, 253);" ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" ng-cloak>
+    <div class="search-controller" ng-controller="searchController" ng-init="searchText = '<%= search_text %>'" ng-cloak>
         <section class="search-section">
             <h3 class="search-text" ng-show="search_result.products != 0 && searchText">Search results for '<em ng-bind-html="searchText"></em>'</h3>
             <div class="no-results-div box-center" ng-show="search_result.products.length == 0">
