@@ -4,10 +4,10 @@ use homit;
 INSERT INTO 'catalog_store_unions' (id, name, display_name, image, description_text) VALUES(1, "locally-made", "Local Market", "locally-made.png", "Just like farmers' market! All your favorite local stores in one place and all year round. Enjoy our quick home delivery service for one of the lowest delivery prices in the city.");
 
 -- Catalog - Store Type
-INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(9,"pure-foods-fresh", "Pure Foods Fresh", "pure-foods-fresh.jpg");
-INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(10,"borderland-food-co", "Borderland Food Co.","border-land-co.jpg");
-INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(11,"honey-and-bloom", "Honey & Bloom","honey-and-bloom.jpg");
-INSERT INTO `catalog_store_types`(id, name, display_name, image) VALUES(12,"westtaste", "WestTaste","westtaste.jpg");
+INSERT INTO `catalog_store_types`(id, name, display_name, image, available, del_fee_primary, del_fee_secondary, union_id, rate_id) VALUES(9,"pure-foods-fresh", "Pure Foods Fresh", "pure-foods-fresh.jpg", TRUE, 4.99, 2.99, 1, 4);
+INSERT INTO `catalog_store_types`(id, name, display_name, image, available, del_fee_primary, del_fee_secondary, union_id, rate_id) VALUES(10,"borderland-food-co", "Borderland Food Co.","border-land-co.jpg", TRUE, 4.99, 2.99, 1, 4);
+INSERT INTO `catalog_store_types`(id, name, display_name, image, available, del_fee_primary, del_fee_secondary, union_id, rate_id) VALUES(11,"honey-and-bloom", "Honey & Bloom","honey-and-bloom.jpg", TRUE, 4.99, 2.99, 1, 4);
+INSERT INTO `catalog_store_types`(id, name, display_name, image, available, del_fee_primary, del_fee_secondary, union_id, rate_id) VALUES(12,"westtaste", "WestTaste","westtaste.jpg", TRUE, 4.99, 2.99, 1, 4);
 
 -- Catalog - Store
 -- !!! Update Dwarf Stars location in DB
