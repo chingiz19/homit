@@ -33,7 +33,7 @@
 }
 
 .CG-cur-button:hover {
-    box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0px 4px 1px rgba(0, 0, 0, 0.33);
     transition: all 0.4s ease;
 }
 
@@ -113,4 +113,57 @@
     -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 1;
+}
+
+// 'a' tag buttons
+.a-tag-button {
+
+    a {
+        background: #698fcc;
+        border-radius: 3px 0 0 3px;
+        color: #fff;
+        display: inline-block;
+        height: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 0 20px 0 10px;
+        position: relative;
+        margin: 0 3px 3px 0;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+    }
+
+    a:hover {
+        background: #4f6c9b;
+    }
+
+    a:hover::after{
+        border-left-color: #4f6c9b;
+    }
+
+    a::before {
+        background-color: #fff;
+        border-radius: 10px;
+        content: '';
+        height: 4px;
+        right: 9px;
+        position: absolute;
+        width: 4px;
+        top: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    a::after {
+        background: #fff;
+        border-bottom: 10px solid transparent;
+        border-left: 9px solid #698fcc;
+        border-top: 10px solid transparent;
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: all 0.3s ease-in-out;
+    }
+
 }

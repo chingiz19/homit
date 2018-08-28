@@ -20,7 +20,8 @@
     <div class="homit-nav-content" ng-cloak>
         <section class="logo-sec">
             <a class="rgb-logo" href="/main" target="_self">
-                <img alt="Homit Logo" class="logo-img" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM_rgb.png" />
+                <img alt="Homit Logo" class="logo-img logo-rgb" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM_rgb.png" />
+                <img alt="Homit Logo" class="logo-img logo-white" src="/resources/images/non-catalog-image/homit_logo/Homit_Logo_TM.png" />
             </a>
         </section>
         <button class="hdr-mob-button" ng-click="showMobBoxFun('menu')">
@@ -43,7 +44,7 @@
         </button>
         <section class="hdr-ext-content" class="fadeIn">
             <div class="mob-search-div" ng-show="showHdrBox == 'search' || (!screenMob && !screenTablet)">
-                <global-search input-id="inputId" class="global-search-header"></global-search>
+                <search-autocomplete input-id="inputId" class="global-search-header"></search-autocomplete>
                 <img alt="background" class="hdr-search-cover-img" src="/resources/images/non-catalog-image/pages/search_background.jpg"
                 />
             </div>
@@ -124,6 +125,6 @@
     <script src="/resources/services/sessionStorage.js"></script>
     <script src="/resources/services/userAction.js"></script>
     <script src="/resources/directives/modal.js"></script>
-    <script src="/resources/directives/globalSearch.js"></script>
+    <script src="/resources/directives/searchAutocomplete.js"></script>
     <script src="/resources/controllers/header.js"></script>
     <% } %>

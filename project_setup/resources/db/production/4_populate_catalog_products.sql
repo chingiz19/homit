@@ -724,12 +724,12 @@ INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11185, "D.L Jar
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11186, "D.L Jardines", "Texas Champagne - Hot", 331);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11187, "Alberta Crude", "Hot Sauce", 332);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11188, "Lea&Perrins", "Worcestershire Sauce", 333);
-INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11189, "La Chinata", "Hot Suace", 334);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11189, "La Chinata", "Hot Sauce", 334);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11190, "Quinta's", "Lemon Pepper Sauce", 335);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11191, "Quinta's", "Chicken PERI-PERI - Hot Sauce", 336);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11192, "Crystal", "Louisiana's Pure - Hot Sauce", 337);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11193, "Quinta's", "PIRI-PIRI Hot Sauce", 336);
-INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11194, "Encore", "Hot Suace", 334);
+INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11194, "Encore", "Hot Sauce", 334);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11195, "A Taste of Portugal", "PIRI-PIRI Hot Sauce", 336);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11196, "Hatari", "Addiction Chipotle - Hot Sauce", 338);
 INSERT INTO `catalog_listings`(id, brand, name, type_id) VALUES (11197, "Dave's Gourmet", "Insanity Sauce", 339);

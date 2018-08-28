@@ -61,7 +61,7 @@ var homitSharedSessions = session({
 
 NM.setSharedSessionMiddleware(homitSharedSessions);
 
-var cart_version = 3;
+var cart_version = 4;
 
 /* make logs folder */
 var errorLog = ".logs/error_log";

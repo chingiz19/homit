@@ -461,6 +461,11 @@ app.controller("myaccountController", function ($scope, $window, $timeout, local
             if (res.data.success) {
                 $scope.orders = res.data.orders;
                 $scope.orderSectionText = "No Orders"; //won't be shown if orders contains something                        
+                for(let i=0; i<$scope.orders.length; i++){
+                    if($scope.orders[i].date_delivered != "Pending..."){
+                        $scope.orders[i]["date_delivered"] = helpers.mm_dd_yyyy($scope.orders[i].date_delivered);
+                    }
+                }
             }
         }, function (error) {
             $scope.orderSectionText = "Something went wrong while retrieving orders, please refresh the page";

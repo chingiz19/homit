@@ -1,12 +1,39 @@
 /**
  * This service is for helper functions that are commonly used in many placesd
  * 
- * 
  * @copyright Homit
  * @author Jeyhun Gurbanov
  */
 app.service('helpers', function () {
     var pub = {};
+
+    const homit_tags = {
+        "d_ht_em": "</em>",
+        "ht_em": "<em>",
+        "d_ht_b": "</b>",
+        "ht_b": "<b>",
+        "d_ht_ul": "</ul>",
+        "ht_ul": "<ul>",
+        "d_ht_li": "</li>",
+        "ht_li": "<li>"
+    }
+
+    pub.convertHomitTags = function (string) {
+        let tmpString = string;
+        for (tag in homit_tags) {
+            tmpString = tmpString.replace(new RegExp(tag, 'g'), homit_tags[tag]);
+        }
+        return tmpString;
+    }
+    
+    pub.clearHomitTags = function (string) {
+        if(!string) return;
+        let tmpString = string;
+        for (tag in homit_tags) {
+            tmpString = tmpString.replace(new RegExp(tag, 'g'), "");
+        }
+        return tmpString;
+    }
 
     pub.randomDigitGenerator = function () {
         return Math.floor(Math.random() * 90000000) + 10000000;
@@ -14,7 +41,7 @@ app.service('helpers', function () {
 
     pub.buildProductPagePath = function (product) {
         let path;
-        path = "/hub/product/" + product.store_type_name + "/" + _.toLower(pub.clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product.product_id;
+        path = "/hub/product/" + product.store.name + "/" + _.toLower(pub.clearProductUrl(_.trim(_.toLower(_.trim(product.brand) + " " + _.trim(product.name))).replace(/ /g, "-"))) + "/" + product._id.split("-")[1];
         return path;
     };
 
@@ -30,15 +57,27 @@ app.service('helpers', function () {
         return string.toLowerCase().replace(/ /g, "-");
     };
 
+    pub.mm_dd_yyyy = function(inDate) {
+        if (inDate) {
+            return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
+        }
+    }
+
+    pub.hh_mm = function(inDate) {
+        if (inDate) {
+            return parseInt(inDate.slice(12, 13), 10) + ":" + parseInt(inDate.slice(15, 16), 10);
+        }
+    }
+
     /**
      * Builds product url
      * @param {key map} mainSpecials 
      */
-    pub.buildProductUrl = function (mainSpecials) {
+    pub.buildProductUrl = function (mainSpecials, storeType) {
         let tmpProductList = mainSpecials;
         for (let key in tmpProductList) {
-            for (let x = 0; x < tmpProductList[key].products.length; x++) {
-                tmpProductList[key].products[x]["product_url"] = pub.buildProductPagePath(tmpProductList[key].products[x]);
+            for (let x = 0; x < tmpProductList[key].length; x++) {
+                tmpProductList[key][x]["product_url"] = pub.buildProductPagePath(tmpProductList[key][x], storeType);
             }
         }
         return tmpProductList;
@@ -49,7 +88,7 @@ app.service('helpers', function () {
      * @param {array} categories store categories
      * @param {string} storeApiName 
      */
-    pub.buildCategoryUrl = function(categories, storeApiName) {
+    pub.buildCategoryUrl = function (categories, storeApiName) {
         let tmpList = categories;
         for (let x = 0; x < tmpList.length; x++) {
             tmpList[x]["category_url"] = "/hub/" + storeApiName + "/" + pub.urlReplaceSpaceWithDash(tmpList[x].category_name);
@@ -112,6 +151,32 @@ app.service('helpers', function () {
         }
 
         return localArray;
+    };
+
+    /**
+     * Used to convert SI unit to other displayed units
+     * @param {object} product_variant 
+     */
+    pub.unitConverter = function (product_variant) {
+        let unit_list = {
+            "kg": {
+                "g": 1000,
+                "lb": 2.20462
+            },
+            "m3": {
+                "oz": 33814,
+                "ml": 1000000,
+                "L": 1000
+            },
+            "m": {
+                "in": 39.3701,
+                "ft": 3.28084,
+                "cm": 100
+            }
+        }
+
+        return (Math.round(product_variant.size * unit_list[product_variant.unit][product_variant.preffered_unit]));
+
     };
 
     return pub;

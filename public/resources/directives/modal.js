@@ -59,6 +59,7 @@ app.directive("modal", function ($timeout, user, $window, localStorage) {
         if (!valid) return;
         pScope.signup_text = "none";
         pScope.loading_spin = "login-spin";
+        pScope.check_mark_class = "none";
         hideErrorMessage();
         user.signup({
             email: pScope.signup_email,
@@ -77,6 +78,7 @@ app.directive("modal", function ($timeout, user, $window, localStorage) {
             }
             pScope.loading_spin = "none";
             pScope.signup_text = "";
+            pScope.check_mark_class = "CG-done-icon";
         }, function errorCallback(response) {
             displayErrorMessage();
         });
@@ -132,6 +134,7 @@ app.directive("modal", function ($timeout, user, $window, localStorage) {
     function init() {
         pScope.email_check_message = "";
         pScope.loading_spin = "none";
+        pScope.check_mark_class = "CG-done-icon";
         pScope.signup_text = "";
         pScope.login_text = "";
         /**

@@ -11,7 +11,7 @@
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
 </head>
 <!--googleoff: snippet-->
-<body class="flex-row flex-space-between flex-100 container ng-cloak" ng-controller="myaccountController" ng-cloak>
+<body class="flex-row flex-space-between flex-100 container ng-cloak my-account-controller" ng-controller="myaccountController" ng-cloak>
     <!-- Sidebar -->
     <aside class="sidebar-div hide-mobile">
         <div class="sidebar-default">
@@ -119,26 +119,26 @@
                 <span class="flex-centered">
                     <form name="profile" ng-submit="updateProfile(profile.$valid)" class="form-profile">
                         <md-input-container class="md-block container-margin font-20" flex="100">
-                            <label>First Name</label>
-                            <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="fname" type="text" required/>
+                            <label></label>
+                            <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="fname" placeholder="First Name" type="text" required/>
                             <div ng-messages="profile.fname.$error">
                                 <div ng-message="pattern">Letters only</div>
                                 <div ng-message="required">Required</div>
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block container-margin font-20" flex="100">
-                            <label>Last Name</label>
-                            <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="lname" type="text" required/>
+                            <label></label>
+                            <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-model="lname" placeholder="Last Name" type="text" required/>
                             <div ng-messages="profile.lname.$error">
                                 <div ng-message="pattern">Letters only</div>
                                 <div ng-message="required">Required</div>
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block container-margin font-20 email-container" flex="100">
-                            <label>Email</label>
+                            <label></label>
                             <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion, true)">Did you mean <span>{{suggestion}}</span>?</div>
                             <div class="flex-row-reverse">
-                                <input id="myaccount-email-input" name="email" ng-pattern="/^.+@.+\..+$/" ng-model="email" type="email" required/>
+                                <input id="myaccount-email-input" name="email" ng-pattern="/^.+@.+\..+$/" ng-model="email" placeholder="Email" type="email" required/>
                                 <button class="resend-email-btn" ng-show="((<%= emailVerified %>==false))" ng-click="resendVerificationEmail()">Resend Verification Email</button>
                             </div>
                             <div ng-messages="profile.email.$error">
@@ -147,9 +147,8 @@
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block container-margin font-20" flex="100">
-                            <label>Date of Birth MM-DD-YYYY</label>
-                            <input id="date_of_birth" name="dob" ng-pattern="dobPattern" ng-model="dob" ng-blur="checkDOB()" ng-required="requireDOB"
-                            />
+                            <label></label>
+                            <input id="date_of_birth" name="dob" ng-pattern="dobPattern" ng-model="dob" ng-blur="checkDOB()" ng-required="requireDOB" placeholder="Date of Birth MM-DD-YYYY"/>
                             <div ng-messages="profile.dob.$error" ng-messages-multiple>
                                 <div ng-message="pattern">Date format only</div>
                                 <div ng-message="required">Required</div>
@@ -157,9 +156,8 @@
                             <div ng-if="userInfo.dob_not_valid" class="error-message">Not legal age</div>
                         </md-input-container>
                         <md-input-container class="md-block container-margin font-20" flex="100">
-                            <label>Phone</label>
-                            <input id="phone-number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9() -]+$/" ng-model="phone" ng-required="requirePhone"
-                            />
+                            <label></label>
+                            <input id="phone-number" name="phone" minlength="5" maxlength="14" ng-pattern="/^[0-9() -]+$/" ng-model="phone" ng-required="requirePhone" placeholder="Phone"/>
                             <div ng-messages="checkoutInput.phone.$error">
                                 <div ng-message="pattern">Numbers only</div>
                                 <div ng-message="minlength">Required</div>
@@ -204,9 +202,8 @@
                     <form class="form-card" name="payment_method" ng-submit="updatePaymentMethod(payment_method.$valid)" ng-show="editEnabled">
                         <div style="display: flex; flex-direction: row;">
                             <md-input-container class="cad-name md-block container-margin" flex="50">
-                                <label>Full Name</label>
-                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="!editEnabled" ng-model="card_name" type="text"
-                                    ng-required="" />
+                                <label></label>
+                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="!editEnabled" ng-model="card_name" placeholder="Full Name" type="text" ng-required="" />
                                 <div ng-messages="profile.fname.$error">
                                     <div ng-message="pattern">Letters only</div>
                                     <div ng-message="required">Required</div>
@@ -252,16 +249,15 @@
                 <span class="flex-centered">
                     <form class="form-password" name="security_set" ng-submit="updateSecuritySettings(security_set.$valid)">
                         <md-input-container class="md-block container-margin" flex="100">
-                            <label>Old Password</label>
-                            <input id="current_pass" name="current_pass" ng-model="current_pass" ng-disabled="!editEnabled" type="password" />
+                            <label></label>
+                            <input id="current_pass" name="current_pass" ng-model="current_pass" ng-disabled="!editEnabled" placeholder="Old Password" type="password" />
                             <div ng-messages="security_set.current_pass.$error">
                                 <div ng-message="minlength">Required</div>
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block container-margin" flex="100">
-                            <label>New Password</label>
-                            <input id="new_pass" name="new_pass" ng-pattern="passPattern" ng-disabled="!editEnabled" ng-model="new_pass" ng-required="old_pass"
-                                type="password" maxlength="30" minlength="8" />
+                            <label></label>
+                            <input id="new_pass" name="new_pass" ng-pattern="passPattern" ng-disabled="!editEnabled" ng-model="new_pass" ng-required="old_pass" placeholder="New Password" type="password" maxlength="30" minlength="8" />
                             <div ng-messages="security_set.new_pass.$error">
                                 <div ng-message="pattern">Invalid characters</div>
                                 <div ng-message="maxlength">30 characters maximum</div>
@@ -270,9 +266,8 @@
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block container-margin" flex="100">
-                            <label>Confirm Password</label>
-                            <input id="confirm_pass" name="confirm_pass" ng-disabled="!editEnabled" ng-model="confirm_pass" ng-change="validateConfirmPass()"
-                                ng-required="old_pass" type="password" />
+                            <label></label>
+                            <input id="confirm_pass" name="confirm_pass" ng-disabled="!editEnabled" ng-model="confirm_pass" ng-change="validateConfirmPass()" placeholder="Confirm Password" ng-required="old_pass" type="password" />
                             <div ng-messages="security_set.confirm_pass.$error">
                                 <div ng-message="required">Required</div>
                                 <div ng-message="confirm_pass">Passwords don't match</div>
@@ -308,10 +303,15 @@
                         <div class="order-content">
                             <span class="order-items" ng-show="order.showDetails" ng-repeat="item in order.items">
                                 <div class="item">
-                                    <img width="100" height="100" ng-src="{{'/resources/images/products/' + item.category.toLowerCase() + '/' + item.image}}">
-                                    <span class="details">
-                                        {{ item.volume }} {{ item.brand }}
-                                    </span>
+                                    <img ng-show="item.images" width="100" height="100" src="/resources/images/products/{{item.store.name}}/{{item.images.image_catalog}}">
+                                    <img ng-show="!(item.images)" width="100" height="100" src="/resources/images/products/{{item.store_type}}/{{item.image}}">
+                                    <ul class="details">
+                                        <li ng-show="item.brandname">{{ item.brandname }}</li>
+                                        <li ng-show="!(item.brandname)">{{item.brand + " " + item.name}}</li>
+                                        <li>{{item.packaging + " x " + item.volume}}</li>
+                                        <li ng-show="item.quantity == 1">{{item.quantity}} item</li>
+                                        <li ng-show="item.quantity > 1">{{item.quantity}} items</li>
+                                    </ul>
                                 </div>
                             </span>
                         </div>
@@ -326,7 +326,7 @@
             </div>
         </section>
         <!-- Coupons (Private only) -->
-        <section ng-show="section == 6" class="coupon-section" ng-class="{'fadeIn': section == 6}">
+        <section ng-show="section == 6"  class="coupon-section" ng-class="{'fadeIn': section == 6}">
             <span class="divider"></span>
             <div class="flex-100 flex-row-wrap content-div">
                 <div ng-show="coupons" class="coupon-content-div" ng-repeat="coupon in coupons">
@@ -346,7 +346,7 @@
                         <ng-md-icon icon="content_cut" size="20"></ng-md-icon>
                     </button>
                 </div>
-                <div ng-show="coupons.length == 0" class="no-coupon box-center" style="flex-direction: column;">
+                <div ng-show="coupons.length == 0" class="no-coupon flex-column" style="flex-direction: column;">
                     <ng-md-icon icon="loyalty" size="130"></ng-md-icon>
                     <h4>No assigned coupons at the moment.</h4>
                 </div>

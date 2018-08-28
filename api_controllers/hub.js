@@ -7,10 +7,12 @@ router.get('/:storeType/:categoryName', async function (req, res, next) {
     let storeType = req.params.storeType;
     let categoryName = req.params.categoryName;
 
-    let productsBySubcat = await Catalog.getAllProductsByCategory(storeType, categoryName);
+    let categoryProducts = await Catalog.getAllProductsByCategory(storeType, categoryName);
     let storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
     let categories = await Catalog.getCategoriesByStoreType(storeType);
     let storeOpen = await Catalog.isStoreOpen(storeType);
+    let subcategories = await Catalog.getAllSubcategoriesByCategory(storeType, categoryName);
+
     let storeInfo = {
         name: storeTypeInfo.name,
         display_name: storeTypeInfo.display_name,
@@ -22,14 +24,15 @@ router.get('/:storeType/:categoryName', async function (req, res, next) {
         success: true,
         store_info: storeInfo,
         categories: categories,
-        subcategories: productsBySubcat.subcategories,
-        products: productsBySubcat.products
+        "subcategories": subcategories,
+        products: categoryProducts
     };
+
     res.send(response);
 });
 
 router.get('/allstores', async function (req, res, next) {
-    let storeTypes = await Catalog.getAllStoreTypes();
+    let storeTypes = await Catalog.getAllStoreTypesAndUnions();
 
     let response = {
         success: true,
@@ -86,76 +89,114 @@ router.use('/getstoreinfo', async function (req, res, next) {
     }
 });
 
-router.post('/search', async function (req, res, next) {
+router.get('/:storeType', async function (req, res) {
+    let storeType = req.params.storeType;
+
+    if (await Catalog.isParentUnion(storeType)) {
+        let unionStores = await Catalog.getUnionStores(storeType);
+        return res.send({
+            success: unionStores && true,
+            stores: unionStores
+        });
+    } else {
+        let user = Auth.getSignedUser(req);
+
+        let appliedCoupons = {};
+        let storeOpen = await Catalog.isStoreOpen(storeType);
+        let hours = await Catalog.getStoreHours(storeType);
+        let hoursScheduled = await Catalog.getStoreHours(storeType, true);
+        let info = await Catalog.getStoreTypeInfo(storeType);
+        let banners = await Catalog.getBannersByStoreType(storeType);
+        let categories = await Catalog.getCategoriesByStoreType(storeType);
+        let specials = await Catalog.getAllSpecialsByStoreType(storeType);
+        let storeCoupons = await Coupon.getStoreCoupons(storeType);
+
+        if (user && user.id) {
+            appliedCoupons = HelperUtils.formatUserCoupons(await Coupon.getUserCoupons(user.id, true))
+        }
+
+        res.send({
+            success: true,
+            store_info: info,
+            open: storeOpen,
+            hours: hours,
+            hours_scheduled: hoursScheduled,
+            banners: banners,
+            categories: categories,
+            specials: specials,
+            store_coupons: storeCoupons,
+            applied_coupons: appliedCoupons
+        });
+    }
+});
+
+router.post('/similarproducts', async function (req, res) {
+    let limit = req.body.limit;
+    let productId = req.body.product_id;
+
+    if (limit && !isNaN(limit)) {
+        let products = await Catalog.getSimilarProducts(limit, productId);  
+        if (products && products.length > 0) {
+            return res.send({
+                success: true,
+                result: products,
+            });
+        } else {
+            return res.send({
+                success: false
+            });
+        }
+    } else {
+        return ErrorMessages.sendErrorResponse(res);
+    }
+});
+
+router.post('/autocomplete', async function (req, res, next) {
     let searchText = req.body.search;
-    let response;
     if (searchText.length >= 3) {
         let limit = 7;
         let storeTypes = await Catalog.searchStoreType(searchText, limit);
         limit = limit - storeTypes.length;
-        let categories = await Catalog.searchCategory(searchText, limit);
-        limit = limit - categories.length;
-        let subcategories = await Catalog.searchSubcategory(searchText, limit);
-        limit = limit - subcategories.length;
-        let productsStart = await Catalog.searchProductsStart(searchText, limit);
-        limit = limit - productsStart.length;
-        let productsTypes = await Catalog.searchProductsTypes(searchText, limit);
-        limit = limit - productsTypes.length;
-        let productsWithDescription = await Catalog.searchProductsWithDescription(searchText, limit);
-        limit = limit - productsWithDescription.length;
-        let productsEnd = await Catalog.searchProductsEnd(searchText, limit);
-
-        let finalResult = {
-            store_type: storeTypes,
-            category: categories,
-            subcategory: subcategories,
-            products_start: productsStart,
-            products_types: productsTypes,
-            products_end: productsEnd,
-            products_descr: productsWithDescription
-        };
-        response = {
-            success: true,
-            result: finalResult
-        };
+        if (limit > 0) {
+            MDB.suggestSearch(searchText, limit, function (products) {
+                res.send({
+                    success: true,
+                    result: {
+                        "store_type": storeTypes,
+                        "products": products
+                    }
+                });
+            });
+        }
     } else {
-        response = {
+        res.send({
             success: false
-        };
+        });
     }
-    res.send(response);
 });
 
-router.get('/:storeType', async function (req, res) {
-    let storeType = req.params.storeType;
-    let user = Auth.getSignedUser(req);
-
-    let appliedCoupons = {};
-    let storeOpen = await Catalog.isStoreOpen(storeType);
-    let hours = await Catalog.getStoreHours(storeType);
-    let hoursScheduled = await Catalog.getStoreHours(storeType, true);
-    let info = await Catalog.getStoreTypeInfo(storeType);
-    let banners = await Catalog.getBannersByStoreType(storeType);
-    let categories = await Catalog.getCategoriesByStoreType(storeType);
-    let specials = await Catalog.getAllSpecialsByStoreType(storeType);
-    let storeCoupons = await Coupon.getStoreCoupons(storeType);
-
-    if (user && user.id) {
-        appliedCoupons = HelperUtils.formatUserCoupons(await Coupon.getUserCoupons(user.id, true))
+router.post('/search', async function (req, res, next) {
+    let searchText = req.body.search;
+    if (searchText && searchText.length >= 3) {
+        let limit = 7;
+        let storeTypes = await Catalog.searchStoreType(searchText, limit);
+        limit = limit - storeTypes.length;
+        if (limit > 0) {
+            MDB.globalSearch(searchText, function (products) {
+                res.send({
+                    success: true && products,
+                    result: {
+                        "store_type": storeTypes,
+                        "products": products
+                    }
+                });
+            });
+        }
+    } else {
+        res.send({
+            success: false
+        });
     }
-
-    res.send({
-        success: true,
-        store_info: info,
-        open: storeOpen,
-        hours: hours,
-        hours_scheduled: hoursScheduled,
-        banners: banners,
-        categories: categories,
-        specials: specials,
-        store_coupons: storeCoupons,
-        applied_coupons: appliedCoupons
-    });
 });
 
 module.exports = router;

@@ -2,28 +2,28 @@
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-    <url>
-        <loc>https://homit.ca/hub/product/locally-made/borderland-food-free-range-chicken-broth/7650</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
+<url>
+  <loc>https://homit.ca/hub/product/borderland-food-co/borderland-food-free-range-chicken-broth/1</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
 
-    <url>
-        <loc>https://homit.ca/hub/product/locally-made/borderland-food-grass-fed-bison-bone-broth/7651</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
+<url>
+  <loc>https://homit.ca/hub/product/borderland-food-co/borderland-food-grass-fed-bison-bone-broth/2</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
 
-    <url>
-        <loc>https://homit.ca/hub/product/locally-made/borderland-food-grass-fed-beef-bone-broth/7652</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
+<url>
+  <loc>https://homit.ca/hub/product/borderland-food-co/borderland-food-grass-fed-beef-bone-broth/3</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
 
-    <url>
-        <loc>https://homit.ca/hub/product/locally-made/borderland-food-free-range-chicken-smoothie-base-bone-broth/7653</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
+<url>
+  <loc>https://homit.ca/hub/product/borderland-food-co/borderland-food-free-range-chicken-smoothie-base-bone-broth/4</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
 
 </urlset>

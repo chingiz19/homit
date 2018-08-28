@@ -1,99 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/beer.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
 
-  <sitemap>
-    <loc>https://homit.ca/sitemap/cider-and-cooler.xml</loc>
-    <lastmod>2018-05-06</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/wine.xml</loc>
-    <lastmod>2018-05-06</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/liqueur.xml</loc>
-    <lastmod>2018-05-06</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/spirit.xml</loc>
-    <lastmod>2018-05-06</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/everydayneeds.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/snacks.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/partysupply.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/beverages.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/baked-goods.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/canned-and-jarred.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/coffee-and-tea.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/condiments.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/confectionery.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/dry-packaged.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/herbs-and-spices.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/oil-and-vinegar.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/pasta-and-baking.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
-  
-  <sitemap>
-    <loc>https://homit.ca/sitemap/general.xml</loc>
-    <lastmod>2018-04-15</lastmod>
-  </sitemap>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/liquor-station.xml</loc>
+  <lastmod>2018-07-01</lastmod>
+</sitemap>
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/borderland-food-co.xml</loc>
+  <lastmod>2018-07-01</lastmod>
+</sitemap>
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/dwarf-stars.xml</loc>
+  <lastmod>2018-07-01</lastmod>
+</sitemap>
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/honey-and-bloom.xml</loc>
+  <lastmod>2018-07-01</lastmod>
+</sitemap>
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/linas-italian-market.xml</loc>
+  <lastmod>2018-07-01</lastmod>
+</sitemap>
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/pure-foods-fresh.xml</loc>
+  <lastmod>2018-07-01</lastmod>
+</sitemap>
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/snack-vendor.xml</loc>
+  <lastmod>2018-07-01</lastmod>
+</sitemap>
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/westtaste.xml</loc>
+  <lastmod>2018-07-01</lastmod>
+</sitemap>
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/general.xml</loc>
+  <lastmod>2018-07-01</lastmod>
+</sitemap>
 
 </sitemapindex>

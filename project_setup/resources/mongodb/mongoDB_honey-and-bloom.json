@@ -1,0 +1,854 @@
+[
+    {
+        "_id": "11-1",
+        "brand": "Honey & Bloom",
+        "name": "Dirty Hippy Deodorant - Lemongrass Patchouli",
+        "container": "deodorant tube",
+        "tax": 1,
+        "images": {
+            "image_catalog": "ddt_1359.jpeg",
+            "images_all": [
+                "ddt_1359.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liCoconut Oil, Beeswax, Grapeseed Oil, Shea Butter, Cocoa Butter, Arrowroot Powder, Baking Soda, Kaolin Clay, Bentonite Clay, Witch Hazel, Essential Oilsd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liSpread a thin layer of deodorant on underarms after shower. Reapply when needed. d_ht_liht_liFor best results, store product in fridge.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liThis all-natural deodorant is created to combat smell. Switching from conventional deodorant to natural includes a small detox phase where your body will get rid of the toxins it has absorbed from regular deodorant. d_ht_liht_liWe have included many detoxifying ingredients to help with that process, such as arrowroot powder and bentonite clay. d_ht_liht_liAs we don't use aluminum, this deodorant won't stop you from sweating, however following the detox phase, your sweat will smell less. The two scents are lemongrass patchouli, and floral.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-1-1",
+                "si_unit_size": 0.000078369775,
+                "si_unit": "m3",
+                "preffered_unit_size": "2.64",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "_id": "11-1-1-1",
+                        "h_value": 1,
+                        "price": 14.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    },
+                    {
+                        "_id": "11-1-1-2",
+                        "h_value": 2,
+                        "price": 27.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Dirty Hippy Deodorant - Lemongrass Patchouli",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Dirty Hippy Deodorant - Lemongrass Patchouli Honey & Bloom"
+    },
+    {
+        "_id": "11-2",
+        "brand": "Honey & Bloom",
+        "name": "Dirty Hippy Deodorant - Floral",
+        "container": "deodorant tube",
+        "tax": 1,
+        "images": {
+            "image_catalog": "ddt_1360.jpeg",
+            "images_all": [
+                "ddt_1360.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liCoconut Oil, Beeswax, Grapeseed Oil, Shea Butter, Cocoa Butter, Arrowroot Powder, Baking Soda, Kaolin Clay, Bentonite Clay, Witch Hazel, Essential Oilsd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liSpread a thin layer of deodorant on underarms after shower. Reapply when needed. d_ht_liht_liFor best results, store product in fridge.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liThis all-natural deodorant is created to combat smell. Switching from conventional deodorant to natural includes a small detox phase where your body will get rid of the toxins it has absorbed from regular deodorant. d_ht_liht_liWe have included many detoxifying ingredients to help with that process, such as arrowroot powder and bentonite clay.d_ht_liht_liAs we don't use aluminum, this deodorant won't stop you from sweating, however following the detox phase, your sweat will smell less. The two scents are lemongrass patchouli, and floral.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-2-1",
+                "si_unit_size": 0.000078369775,
+                "si_unit": "m3",
+                "preffered_unit_size": "2.64",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "_id": "11-2-1-1",
+                        "h_value": 1,
+                        "price": 14.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    },
+                    {
+                        "_id": "11-2-1-2",
+                        "h_value": 2,
+                        "price": 27.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Dirty Hippy Deodorant - Floral",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Dirty Hippy Deodorant - Floral Honey & Bloom"
+    },
+    {
+        "_id": "11-3",
+        "brand": "Honey & Bloom",
+        "name": "Stinky Gypsy Body Wash",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "b_1361.jpeg",
+            "images_all": [
+                "b_1361.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liHemp Oil, Neem Leaf, Safflower Oil, Sunflower Oil, Castor Oil, Castile Soap, Glycerin, Vitamin E, Kaolin Clay, Essential Oilsd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liLather Stinky Gypsy Body Wash onto body. Rinse well and enjoy the fresh scent.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liThis all-natural body wash is safe for bathing in a lake! It is made with moisturizing, skin beneficial oils such as hemp oil, sunflower oil, safflower oil and castor oil, and is extremely moisturizing.d_ht_liht_liThe scent is grapefruit, saje and eucalyptus.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-3-1",
+                "si_unit_size": 0.000473176,
+                "si_unit": "m3",
+                "preffered_unit_size": "16",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "_id": "11-3-1-1",
+                        "h_value": 1,
+                        "price": 19.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Stinky Gypsy Body Wash",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Stinky Gypsy Body Wash Honey & Bloom"
+    },
+    {
+        "_id": "11-4",
+        "brand": "Honey & Bloom",
+        "name": "Lip Balm - Peppermint Eucalyptus",
+        "container": "lip balm tube",
+        "tax": 1,
+        "images": {
+            "image_catalog": "lbt_1362.jpeg",
+            "images_all": [
+                "lbt_1362.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liCoconut Oil, Beeswax, Shea Butter, Grapeseed Oil, Lanolin, Essential Oilsd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liApply generously to lips & kiss your honey to share the love.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liThis was created without any artificial waxes or oils, so it won't just cover-up the problem. d_ht_liht_liMade with vitamin E, grapeseed oil, and beeswax, it was designed to actually promote healing on your lips and protect them from further damage.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-4-1",
+                "si_unit_size": 0.000004436025,
+                "si_unit": "m3",
+                "preffered_unit_size": "0.15",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "_id": "11-4-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    },
+                    {
+                        "_id": "11-4-1-2",
+                        "h_value": 3,
+                        "price": 11.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Lip Balm - Peppermint Eucalyptus",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Lip Balm - Peppermint Eucalyptus Honey & Bloom"
+    },
+    {
+        "_id": "11-5",
+        "brand": "Honey & Bloom",
+        "name": "Lip Balm - Spearmint Lavender",
+        "container": "lip balm tube",
+        "tax": 1,
+        "images": {
+            "image_catalog": "lbt_1363.jpeg",
+            "images_all": [
+                "lbt_1363.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liCoconut Oil, Beeswax, Shea Butter, Grapeseed Oil, Lanolin, Essential Oilsd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liApply generously to lips & kiss your honey to share the love.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liThis was created without any artificial waxes or oils, so it won't just cover-up the problem. d_ht_liht_liMade with vitamin E, grapeseed oil, and beeswax, it was designed to actually promote healing on your lips and protect them from further damage.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-5-1",
+                "si_unit_size": 0.000004436025,
+                "si_unit": "m3",
+                "preffered_unit_size": "0.15",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "_id": "11-5-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    },
+                    {
+                        "_id": "11-5-1-2",
+                        "h_value": 3,
+                        "price": 11.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Lip Balm - Spearmint Lavender",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Lip Balm - Spearmint Lavender Honey & Bloom"
+    },
+    {
+        "_id": "11-6",
+        "brand": "Honey & Bloom",
+        "name": "Buzz Off - Bug Repellent ",
+        "container": "spray bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "spb_1364.jpeg",
+            "images_all": [
+                "spb_1364.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liWitch Hazel, Vinegar, Distilled Water, Essential Oilsd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liSpray on your body and surrounding area to keep the critters away.d_ht_liht_liShake well before use - separation is normal.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liBuzz Off is an all-natural bug repellent crafted with essential oils that are effective against bugs such as ticks and mosquitoes.d_ht_liht_liIt is crafted without chemicals - no DEET involved!d_ht_liht_liThis is the kind of bug repellent you can spray and still go to dinner after.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-6-1",
+                "si_unit_size": 0.000118294,
+                "si_unit": "m3",
+                "preffered_unit_size": "4",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "_id": "11-6-1-1",
+                        "h_value": 1,
+                        "price": 8.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Buzz Off - Bug Repellent ",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Buzz Off - Bug Repellent  Honey & Bloom"
+    },
+    {
+        "_id": "11-7",
+        "brand": "Honey & Bloom",
+        "name": "Kriya - Yoga Mat (All-purpose) Cleanser",
+        "container": "spray bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "spb_1365.jpeg",
+            "images_all": [
+                "spb_1365.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liDistilled Water, Vinegar, Essential Oilsd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liApply a generous amount to your mat after your practice. Wipe clean with a cloth.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liMade without chemicals, this all-natural cleaner can be used anywhere from your yoga mat to your kitchen counter.d_ht_liht_liThe essential oils are grapefruit, tea trea, lavender, and lemongrass.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-7-1",
+                "si_unit_size": 0.000236588,
+                "si_unit": "m3",
+                "preffered_unit_size": "8",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "_id": "11-7-1-1",
+                        "h_value": 1,
+                        "price": 8.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Kriya - Yoga Mat (All-purpose) Cleanser",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Kriya - Yoga Mat (All-purpose) Cleanser Honey & Bloom"
+    },
+    {
+        "_id": "11-8",
+        "brand": "Honey & Bloom",
+        "name": "Bath Salts - Bleeding Love",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "bg_1366.jpeg",
+            "images_all": [
+                "bg_1366.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liBaking Soda, Arrowroot Powder, Almond Oil, Lavender Flower Buds, Coconut Milk Powder, Epsom Salts, Sea Salt, Citric Acid, Essential Oils (Saje and Lavender)d_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liTurn on your tuens and light a candle. After filling your bathtub with water at your perfect temperature, pour a generous amount of salts into your bathwater.d_ht_liht_liEnter your happy place and relax!d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liEssentially a broken down bath bomb, so you don't have to break it down yourself! It's created the same way as a bath bomb, so it will still fizz in your tub, however I added sea salt and epsom salts to get extra relaxation benefits.d_ht_liht_liIt's made with almond oil, to leave you feeling super moisturized when leaving the tub.d_ht_liht_liThe two scents are Wo(man)ly - Cedarwood and Lemongrass with Calendula flowers in it, and Bleeding Love - Saje and Lavender with Lavender buds in it.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-8-1",
+                "si_unit_size": 0.3,
+                "si_unit": "kg",
+                "preffered_unit_size": "300",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "_id": "11-8-1-1",
+                        "h_value": 1,
+                        "price": 9.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    },
+                    {
+                        "_id": "11-8-1-2",
+                        "h_value": 2,
+                        "price": 14.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Bath Salts - Bleeding Love",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Bath Salts - Bleeding Love Honey & Bloom"
+    },
+    {
+        "_id": "11-9",
+        "brand": "Honey & Bloom",
+        "name": "Bath Salts - Wo(man)ly",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "bg_1367.jpeg",
+            "images_all": [
+                "bg_1367.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liBaking Soda, Arrowroot Powder, Almond Oil, Calendula Flower Buds, Coconut Milk Powder, Epsom Salts, Sea Salt, Citric Acid, Essential Oils (Lemongrass and Cedarwood)d_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liTurn on your tuens and light a candle. After filling your bathtub with water at your perfect temperature, pour a generous amount of salts into your bathwater.d_ht_liht_liEnter your happy place and relax!d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liEssentially a broken down bath bomb, so you don't have to break it down yourself! It's created the same way as a bath bomb, so it will still fizz in your tub, however I added sea salt and epsom salts to get extra relaxation benefits.d_ht_liht_liIt's made with almond oil, to leave you feeling super moisturized when leaving the tub.d_ht_liht_liThe two scents are Wo(man)ly - Cedarwood and Lemongrass with Calendula flowers in it, and Bleeding Love - Saje and Lavender with Lavender buds in it.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-9-1",
+                "si_unit_size": 0.3,
+                "si_unit": "kg",
+                "preffered_unit_size": "300",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "_id": "11-9-1-1",
+                        "h_value": 1,
+                        "price": 9.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    },
+                    {
+                        "_id": "11-9-1-2",
+                        "h_value": 2,
+                        "price": 14.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Bath Salts - Wo(man)ly",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Bath Salts - Wo(man)ly Honey & Bloom"
+    },
+    {
+        "_id": "11-10",
+        "brand": "Honey & Bloom",
+        "name": "Soothing Balm",
+        "container": "ointment container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "onc_1368.jpeg",
+            "images_all": [
+                "onc_1368.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liCastor Oil, Olive Oil, Avocado Oil, Calendula Flower Oil, Vitamin E, Beeswax, Lanolin, Shea Butter, Sunflower Oil, Tea Tree Essential Oil, Lavender Essential Oild_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liApply topically to any areas of irritation. Beneficial for use on cuts, scrapes, burns, bug bites, eczema, dry skin and acne.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liMade with the calendula flower, this balm has many healing properties.d_ht_liht_liIt's designed for spot treatment on cuts, burns, scrapes, eczema, acne, etc.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-10-1",
+                "si_unit_size": 0.04,
+                "si_unit": "kg",
+                "preffered_unit_size": "40",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "_id": "11-10-1-1",
+                        "h_value": 1,
+                        "price": 13.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Soothing Balm",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Soothing Balm Honey & Bloom"
+    },
+    {
+        "_id": "11-11",
+        "brand": "Honey & Bloom",
+        "name": "Charcoal Face Mask",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "jr_1369.jpeg",
+            "images_all": [
+                "jr_1369.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liArrowroot Powder, Bentonite Clay, Grapeseed Oil, Charcoal, Honey, Coconut Milk Powder, Orange Peel, Witch Hazel, Essential Oilsd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liDab a thin layer of our Charcoal Mask all over your face & leave for 15-20 minutes. Rinse mask off & wash-up with your favourite cleanser. Complete with your go-to moisturizer.d_ht_liht_liFeel the toxins being drawn to the surface of your skin & appear fresh and renewed. This detoxifying face mask is a helping hand to acne prone & blemished skin.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liThis mask was designed to detox and heal. Made with charcoal, arrowroot powder, and bentonite clay, this mask will pull toxins from your skin, and heal what's underneath with honey and grapeseed oil.d_ht_liht_liIt was designed for trouble skin, however is suitable for all skin types.d_ht_liht_liIt's very soft and cleansing - it won't peel though, so you won't end up on youtube!d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-11-1",
+                "si_unit_size": 0.000118294,
+                "si_unit": "m3",
+                "preffered_unit_size": "4",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "_id": "11-11-1-1",
+                        "h_value": 1,
+                        "price": 17.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Charcoal Face Mask",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Charcoal Face Mask Honey & Bloom"
+    },
+    {
+        "_id": "11-12",
+        "brand": "Honey & Bloom",
+        "name": "Coconut Lavender Body Scrub",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "jr_1370.jpeg",
+            "images_all": [
+                "jr_1370.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "health-and-beauty.jpg",
+            "category_cover": "11_health-and-beauty.jpg"
+        },
+        "subcategory": "Personal Care",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liCoconut, Sea Salt, Epsom Salt, Coconut Milk Powder, Lavender Buds, Coconut Oil, Sunflower Oil, Shea Butter, Ground Almondsd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liApply a generous amount onto legs and body to maximize exfoliating and moisturizing benefits Rinse off after 3-5 minutes using circular motions and enjoy your soft skin.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liThis body scrub is designed to exfoliate your skin and moisturize it with sunflower oil, coconut oil, and shea butter. d_ht_liht_liIt doesn't have any essential oils in it, however I left the lavender buds in full to help exfoliate, and break down during the motion, releasing lavender oil straight from the source! Other than that, it smells like cookies.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "11-12-1",
+                "si_unit_size": 0.000236588,
+                "si_unit": "m3",
+                "preffered_unit_size": "8",
+                "preffered_unit": "oz",
+                "packs": [
+                    {
+                        "_id": "11-12-1-1",
+                        "h_value": 1,
+                        "price": 15.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Honey & Bloom Coconut Lavender Body Scrub",
+        "store": {
+            "name": "honey-and-bloom",
+            "display_name": "Honey & Bloom",
+            "image_url": "honey-and-bloom.jpg"
+        },
+        "namebrand": "Coconut Lavender Body Scrub Honey & Bloom"
+    }
+]

@@ -1,0 +1,270 @@
+[
+    {
+        "_id": "10-1",
+        "brand": "Borderland Food",
+        "name": "Free Range Chicken Broth",
+        "container": "stand up pouch",
+        "tax": 1,
+        "images": {
+            "image_catalog": "sup_1352.jpeg",
+            "images_all": [
+                "sup_1352.jpeg",
+                "ntr_sup_1352.png"
+            ]
+        },
+        "category": {
+            "category_display_name": "Soups & Broths",
+            "category_name": "soups-and-broths",
+            "category_image": "soups-and-broths.jpeg",
+            "category_cover": "10_soups-and-broths.jpg"
+        },
+        "subcategory": "Bone Broth for People",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liFree-range chicken bones (backs, necks, feet + wings), organic carrots, organic celery, organic onions, apple cider vinegar, pink himalayan sea salt, organic peppercorns, organic parsley, organic rosemary, organic bay leavesd_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liFor individuals looking to incorporate bone broth into their daily diet, our broths are made with the highest quality ingredients and slow-cooked for over 24 hours to ensure maximum nutrient extraction and flavour.d_ht_liht_liPerfect for sipping or adding to your favourite recipes.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liDrink on it's own, or use as a substitute for stock in your recipes.d_ht_liht_li Bone broth is a healthy alternative to shelf-bought soup stock and is also a superfood rich with minerals and collagen to improve your gut health, joint health, and much, much  more.d_ht_lid_ht_ul"
+            }
+        },
+        "variance": [
+            {
+                "_id": "10-1-1",
+                "si_unit_size": 0.0005909999999999999,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": "590",
+                "packs": [
+                    {
+                        "_id": "10-1-1-1",
+                        "h_value": 1,
+                        "price": 8.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Borderland Food Free Range Chicken Broth",
+        "store": {
+            "name": "borderland-food-co",
+            "display_name": "Borderland Food Co.",
+            "image_url": "borderland-food-co.jpeg"
+        },
+        "namebrand": "Free Range Chicken Broth Borderland Food"
+    },
+    {
+        "_id": "10-2",
+        "brand": "Borderland Food",
+        "name": "Grass-Fed Bison Bone Broth",
+        "container": "stand up pouch",
+        "tax": 1,
+        "images": {
+            "image_catalog": "sup_1353.jpeg",
+            "images_all": [
+                "sup_1353.jpeg",
+                "ntr_sup_1353.png"
+            ]
+        },
+        "category": {
+            "category_display_name": "Soups & Broths",
+            "category_name": "soups-and-broths",
+            "category_image": "soups-and-broths.jpeg",
+            "category_cover": "10_soups-and-broths.jpg"
+        },
+        "subcategory": "Bone Broth for People",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liGrass-fed bison bones (knuckles, marrow, shins + meaty bones), organic carrots, organic celery, organic onions, organic apple cider vinegar, pink himalayan sea salt, organic peppercorns, organic parsley, organic rosemary, organic bay leaves.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liFor individuals looking to incorporate bone broth into their daily diet, our broths are made with the highest quality ingredients and slow-cooked for over 24 hours to ensure maximum nutrient extraction and flavour.d_ht_liht_liPerfect for sipping or adding to your favourite recipes.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liDrink on it's own, or use as a substitute for stock in your recipes.d_ht_liht_liBone broth is a healthy alternative to shelf-bought soup stock and is also a superfood rich with minerals and collagen to improve your gut health, joint health, and much, much  more.d_ht_lid_ht_ul"
+            }
+        },
+        "variance": [
+            {
+                "_id": "10-2-1",
+                "si_unit_size": 0.0005909999999999999,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": "590",
+                "packs": [
+                    {
+                        "_id": "10-2-1-1",
+                        "h_value": 1,
+                        "price": 8.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Borderland Food Grass-Fed Bison Bone Broth",
+        "store": {
+            "name": "borderland-food-co",
+            "display_name": "Borderland Food Co.",
+            "image_url": "borderland-food-co.jpeg"
+        },
+        "namebrand": "Grass-Fed Bison Bone Broth Borderland Food"
+    },
+    {
+        "_id": "10-3",
+        "brand": "Borderland Food",
+        "name": "Grass-Fed Beef Bone Broth",
+        "container": "stand up pouch",
+        "tax": 1,
+        "images": {
+            "image_catalog": "sup_1354.jpeg",
+            "images_all": [
+                "sup_1354.jpeg",
+                "ntr_sup_1354.png"
+            ]
+        },
+        "category": {
+            "category_display_name": "Soups & Broths",
+            "category_name": "soups-and-broths",
+            "category_image": "soups-and-broths.jpeg",
+            "category_cover": "10_soups-and-broths.jpg"
+        },
+        "subcategory": "Bone Broth for People",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liGrass-fed beef bones (knuckles, marrow, shins + meaty bones), organic carrots, organic celery, organic onions, organic apple cider vinegar, pink himalayan sea salt, organic peppercorns, organic parsley, organic rosemary, organic bay leavesd_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liFor individuals looking to incorporate bone broth into their daily diet, our broths are made with the highest quality ingredients and slow-cooked for over 24 hours to ensure maximum nutrient extraction and flavour.d_ht_liht_liPerfect for sipping or adding to your favourite recipes.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liDrink on it's own, or use as a substitute for stock in your recipes.d_ht_liht_liBone broth is a healthy alternative to shelf-bought soup stock and is also a superfood rich with minerals and collagen to improve your gut health, joint health, and much, much  more.d_ht_lid_ht_ul"
+            }
+        },
+        "variance": [
+            {
+                "_id": "10-3-1",
+                "si_unit_size": 0.0005909999999999999,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": "590",
+                "packs": [
+                    {
+                        "_id": "10-3-1-1",
+                        "h_value": 1,
+                        "price": 8.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Borderland Food Grass-Fed Beef Bone Broth",
+        "store": {
+            "name": "borderland-food-co",
+            "display_name": "Borderland Food Co.",
+            "image_url": "borderland-food-co.jpeg"
+        },
+        "namebrand": "Grass-Fed Beef Bone Broth Borderland Food"
+    },
+    {
+        "_id": "10-4",
+        "brand": "Borderland Food",
+        "name": "Free Range Chicken Smoothie Base Bone Broth",
+        "container": "stand up pouch",
+        "tax": 1,
+        "images": {
+            "image_catalog": "sup_1355.jpeg",
+            "images_all": [
+                "sup_1355.jpeg",
+                "ntr_sup_1355.png"
+            ]
+        },
+        "category": {
+            "category_display_name": "Soups & Broths",
+            "category_name": "soups-and-broths",
+            "category_image": "soups-and-broths.jpeg",
+            "category_cover": "10_soups-and-broths.jpg"
+        },
+        "subcategory": "Bone Broth for People",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liFree-range chicken bones (backs, necks, feet + wings), organic coconut water, organic apple cider vinegar.d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liFor individuals looking to incorporate bone broth into their daily diet, our broths are made with the highest quality ingredients and slow-cooked for over 24 hours to ensure maximum nutrient extraction and flavour.d_ht_liht_liPerfect for sipping or adding to your favourite recipes.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liPerfect for sneaking into kid's smoothie's, or perfect for adding a boost to your daily smoothie!d_ht_liht_liGet all of the health benefits of bone broth on those hot summer days.d_ht_liht_liAdd 1/4 cup to your usual smoothie recipe for added collagen and protein!d_ht_lid_ht_ul"
+            }
+        },
+        "variance": [
+            {
+                "_id": "10-4-1",
+                "si_unit_size": 0.0005909999999999999,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": "590",
+                "packs": [
+                    {
+                        "_id": "10-4-1-1",
+                        "h_value": 1,
+                        "price": 8.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Borderland Food Free Range Chicken Smoothie Base Bone Broth",
+        "store": {
+            "name": "borderland-food-co",
+            "display_name": "Borderland Food Co.",
+            "image_url": "borderland-food-co.jpeg"
+        },
+        "namebrand": "Free Range Chicken Smoothie Base Bone Broth Borderland Food"
+    }
+]

@@ -2,19 +2,30 @@
 * This scripts creates tables for the database.
 */
 
-
 use homit;
-
 
 CREATE TABLE catalog_store_types ( 
 	id INT UNSIGNED NOT NULL, 
 	name VARCHAR(225) NOT NULL,
 	display_name VARCHAR(225) NOT NULL,	
 	image VARCHAR(225),  
-	image_cover VARCHAR(225),  
 	available BOOLEAN DEFAULT TRUE,
+	union_id INT UNSIGNED, 
 	del_fee_primary DOUBLE DEFAULT 4.99,
 	del_fee_secondary DOUBLE DEFAULT 2.99,
+	rate_id INT UNSIGNED,
+	
+	PRIMARY KEY (id),
+	UNIQUE(name),
+	UNIQUE(display_name)
+) ENGINE = InnoDB;
+
+CREATE TABLE catalog_store_unions ( 
+	id INT UNSIGNED NOT NULL, 
+	name VARCHAR(225) NOT NULL,
+	display_name VARCHAR(225) NOT NULL,	
+	image VARCHAR(225),
+	description_text TEXT NOT NULL,  
 	
 	PRIMARY KEY (id),
 	UNIQUE(name),
@@ -327,13 +338,12 @@ CREATE TABLE drivers_status (
 CREATE TABLE user_cart_items ( 
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT, 
 	user_id INT UNSIGNED NOT NULL, 
-	depot_id INT UNSIGNED NOT NULL, 
+	depot_id VARCHAR(225) NOT NULL,
 	quantity INT NOT NULL,
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_id, depot_id), 
 	CONSTRAINT fk_user_cart_items_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT fk_user_cart_items_depot_id FOREIGN KEY (depot_id) REFERENCES catalog_depot(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 
@@ -404,7 +414,7 @@ CREATE TABLE orders_history (
 CREATE TABLE orders_cart_items ( 
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	order_id INT UNSIGNED NOT NULL,	 
-	depot_id INT UNSIGNED NOT NULL, 
+	depot_id VARCHAR(225) NOT NULL, 
 	quantity VARCHAR(225) NOT NULL,
 	price_sold DECIMAL(6,2) NOT NULL,
 	modified_quantity INT NULL,
@@ -412,8 +422,7 @@ CREATE TABLE orders_cart_items (
 	store_ready BOOLEAN DEFAULT FALSE,
 	
 	PRIMARY KEY (id),
-	CONSTRAINT fk_orders_cart_items_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_orders_cart_items_depot_id FOREIGN KEY (depot_id) REFERENCES catalog_depot(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	CONSTRAINT fk_orders_cart_items_order_id FOREIGN KEY (order_id) REFERENCES orders_history(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 
@@ -515,13 +524,12 @@ CREATE TABLE catalog_hub_special_types (
 CREATE TABLE catalog_hub_special_products (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	store_type_id INT UNSIGNED NOT NULL,
-	product_id INT UNSIGNED NOT NULL,
+	product_id VARCHAR(225) NOT NULL,
 	special_type_id INT UNSIGNED NOT NULL,
 	active BOOLEAN DEFAULT TRUE,
 	
 	PRIMARY KEY (id),
 	CONSTRAINT fk_catalog_hub_special_products_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_catalog_hub_special_products_product_id FOREIGN KEY (product_id) REFERENCES catalog_products(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	CONSTRAINT fk_catalog_hub_special_products_special_type_id FOREIGN KEY (special_type_id) REFERENCES catalog_hub_special_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 

@@ -86,7 +86,7 @@ function sendEmailViaNoReply(mailOptions) {
 }
 
 pub.sendOrderSlip = async function (orderInfo, prices) {
-    let priceObject = await getTotalPriceForProducts(orderInfo.orders, prices);
+    let priceObject = await getTotalPriceForProducts(prices);
     let html = getEmailHtml(orderInfo.customer, priceObject);
 
     prepareOrderSlip(orderInfo, priceObject, function (pdfFileFath) {
@@ -380,7 +380,7 @@ function getOrderSlipHtml(OI, priceObject) {
 
     if (priceObject.couponsUsed.length != 0 && priceObject.couponsUsed[0].privacy_type) {
         general_coupon_html = `<tr class='customer-details-table-tr'>
-        <td class='customer-details-table-td-hdr'>General coupons:</td>
+        <td class='customer-details-table-td-hdr'>General Coupons:</td>
         <td id='customer_phone' class='customer-details-table-td-cnt'>` + filterInputField(OI.customer.generalCouponInvoiceMessage, "No coupons used") + `</td></tr>`;
     }
 
@@ -397,7 +397,7 @@ function getOrderSlipHtml(OI, priceObject) {
             "<td class='orders-details-table-td-input'>" + filterInputField(createDeliveryOptionsText(orders[sub_order].scheduledTime)) + "</td>" +
             "</tr>" +
             "<tr class='orders-details-table-tr'>" +
-            "<td class='orders-details-table-td-hdr'>Store coupons:</td>" +
+            "<td class='orders-details-table-td-hdr'>Store Coupons:</td>" +
             "<td class='orders-details-table-td-input'>" + filterInputField(orders[sub_order].couponInvoiceMessage, "No coupons used") + "</td>" +               
             "</tr>" +
             "</table>"
@@ -418,7 +418,7 @@ function getOrderSlipHtml(OI, priceObject) {
             ;
         for (let k = 0; k < orders[sub_order].products.length; k++) {
             let product = orders[sub_order].products[k];
-            let Description = filterInputField(product.brand) + " " + filterInputField(product.name) + " " + filterInputField(product.volume) + " " + " x" + filterInputField(product.packaging);
+            let Description = filterInputField(product.brand) + " " + filterInputField(product.name, "") + " " + filterInputField(product.volume, "") + " " + " x" + filterInputField(product.packaging, "");
             let Quantity = product.quantity;
             let Price = product.price_sold;
             html_email +=
@@ -499,7 +499,7 @@ function prepareOrderSlip(orderInfo, priceObject, callback) {
  * Prepare received products array for catalog price calculator. 
  * @param {*Array} products - Products recieved after dispatch [array of product objecs] 
  */
-async function getTotalPriceForProducts(orders, price) {
+async function getTotalPriceForProducts(price) {
     let priceObject = {};
 
     priceObject.deliveryFee = (price.delivery_fee == 0 ? "FREE" : "C$ " + parseFloat(Math.round(price.delivery_fee * 100) / 100).toFixed(2));

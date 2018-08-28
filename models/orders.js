@@ -2,7 +2,7 @@
  * @copyright Homit 2018
  */
 
-var pub = {};
+let pub = {};
 
 /**
  * Create transaction order in orders_transactions_history table
@@ -33,7 +33,7 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
         original_price: allPrices.original_total_price,
         coupon_applied: allPrices.general_coupon_id
     };
-    
+
     if (isGuest) {
         data.guest_id = userId;
     } else {
@@ -86,20 +86,18 @@ pub.createOrder = async function (orderTransactionId, receivedStoreType, prices,
  * @param {*} products 
  */
 pub.insertProducts = async function (orderId, products) {
-    for (var key in products) {
-        var data = {
+    for (let key in products) {
+        let data = {
             order_id: orderId,
-            depot_id: products[key].depot_id,
+            depot_id: products[key].UID,
             quantity: products[key].quantity,
             price_sold: products[key].price,
             tax: products[key].tax
         };
-        var success = await db.insertQuery(db.tables.orders_cart_items, data);
-        if (!success) {
-            return false;
-        }
+        let result = await db.insertQuery(db.tables.orders_cart_items, data);
+        return result && true;
     }
-    return true;
+    return false;
 }
 
 /**
@@ -108,10 +106,10 @@ pub.insertProducts = async function (orderId, products) {
  * @param {*} transactionId 
  */
 pub.getOrderTransactionById = async function (transactionId) {
-    var data = {
+    let data = {
         id: transactionId
     };
-    var orderTransactions = await db.selectAllWhereLimitOne(db.tables.orders_transactions_history, data);
+    let orderTransactions = await db.selectAllWhereLimitOne(db.tables.orders_transactions_history, data);
     if (orderTransactions.length > 0) {
         return orderTransactions[0];
     } else {
@@ -125,10 +123,10 @@ pub.getOrderTransactionById = async function (transactionId) {
  * @param {*} userId 
  */
 pub.getOrderTransactionsByUserId = async function (userId) {
-    var data = {
+    let data = {
         user_id: userId
     };
-    var orderTransactions = await db.selectAllWhere(db.tables.orders_transactions_history, data);
+    let orderTransactions = await db.selectAllWhere(db.tables.orders_transactions_history, data);
     return orderTransactions;
 }
 
@@ -185,7 +183,38 @@ pub.getOrdersByTransactionId = async function (orderTransactionId) {
  * @param {*} orderId 
  */
 pub.getOrderItemsById = async function (orderId) {
-    var sqlQuery = `
+    let result = [];
+    let oldStyleId = false;
+    let newStyleId = false;
+    let newRegEx = new RegExp("([0-9]-)");
+
+    let depotIds = await db.selectAllWhere(db.tables.orders_cart_items, { "orders_cart_items.order_id": orderId });
+
+    if (depotIds) {
+        for (let k in depotIds) {
+            let id = depotIds[k].depot_id;
+            if (newRegEx.test(id)) {
+                newStyleId = true;
+            } else {
+                oldStyleId = true;
+            }
+        }
+    }
+
+    if (newStyleId && !oldStyleId) {
+        for (let k in depotIds) {
+            let idArray = depotIds[k].depot_id.split('-');
+            let store = await db.selectColumnsWhereLimitOne('name, display_name', db.tables.catalog_store_types, { "id": idArray[0] });
+            if (store && store.length > 0) {
+                let searchId = idArray[0] + '-' + idArray[1];
+                let product = await MDB.models[store[0].name].findById(searchId).exec();;
+                if (product) {
+                    result.push(formatNewStyleProducts(depotIds[k].quantity, product.toObject(), Catalog.findNestedProductPrice(product.toObject(), [searchId, idArray[2], idArray[3]])));
+                }
+            }
+        }
+    } else if (oldStyleId && !newStyleId) {
+        let sqlQuery = `
         SELECT
         cart_item.depot_id AS depot_id,
         store_type.name AS store_type,
@@ -207,7 +236,8 @@ pub.getOrderItemsById = async function (orderId) {
         store_type.del_fee_secondary
         
         FROM
-        orders_cart_items AS cart_item JOIN catalog_depot AS depot ON (cart_item.depot_id = depot.id)
+        orders_cart_items AS cart_item 
+        JOIN catalog_depot AS depot ON (cart_item.depot_id = depot.id)
         JOIN catalog_items AS item ON (depot.item_id = item.id)
         JOIN catalog_products AS product ON (item.product_id = product.id)
         JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
@@ -221,9 +251,12 @@ pub.getOrderItemsById = async function (orderId) {
 
         WHERE ?`;
 
-    var data = { "cart_item.order_id": orderId };
-    var dbResult = await db.runQuery(sqlQuery, [data, data]);
-    return dbResult;
+        result = await db.runQuery(sqlQuery, { "cart_item.order_id": orderId });
+    } else {
+        return false; // error (impossible depot id found)
+    }
+
+    return result;
 }
 
 /**
@@ -232,11 +265,7 @@ pub.getOrderItemsById = async function (orderId) {
  * @param {*} orderId 
  */
 pub.getUserWithOrderByOrderId = async function (orderId) {
-    var data = {
-        id: orderId
-    };
-
-    var orders = await db.selectAllWhereLimitOne(db.tables.orders_history, data);
+    let orders = await db.selectAllWhereLimitOne(db.tables.orders_history, { id: orderId });
     if (orders.length > 0) {
         var order = orders[0];
         var transactionId = order.order_transaction_id;
@@ -248,12 +277,11 @@ pub.getUserWithOrderByOrderId = async function (orderId) {
             } else {
                 user = await User.findUserById(transaction.user_id);
             }
-            var result = {
+            return {
                 transaction: transaction,
                 order: order,
                 user: user
             };
-            return result;
         }
     }
     return false;
@@ -427,10 +455,10 @@ pub.getPendingOrders = async function () {
  * @param {*} userId 
  */
 pub.getOrdersByTransactionIdWithUserId = async function (transactionId, userId) {
-    var transaction = await pub.getOrderTransactionById(transactionId);
+    let transaction = await pub.getOrderTransactionById(transactionId);
     if (transaction) {
         if (transaction.user_id == userId) {
-            var orders = await pub.getOrdersByTransactionId(transactionId);
+            let orders = await pub.getOrdersByTransactionId(transactionId);
             return orders;
         }
     }
@@ -445,9 +473,9 @@ pub.getOrdersByTransactionIdWithUserId = async function (transactionId, userId) 
  * @param {*} userId 
  */
 pub.getOrderItemsByIdUserId = async function (orderId, userId) {
-    var userOrder = await pub.getUserWithOrderByOrderId(orderId);
+    let userOrder = await pub.getUserWithOrderByOrderId(orderId);
     if (userOrder.user.id == userId) {
-        var order = await pub.getOrderItemsById(orderId);
+        let order = await pub.getOrderItemsById(orderId);
         return order;
     }
     return false;
@@ -459,7 +487,7 @@ pub.getOrderItemsByIdUserId = async function (orderId, userId) {
  * @param {*} transactionId 
  */
 pub.areAllDispatched = async function (transactionId) {
-    var sqlQuery = `
+    let sqlQuery = `
         SELECT id
         FROM orders_history
         WHERE ?
@@ -467,9 +495,9 @@ pub.areAllDispatched = async function (transactionId) {
         LIMIT 1
     `;
 
-    var data = { order_transaction_id: transactionId };
+    let data = { order_transaction_id: transactionId };
 
-    var dbResult = await db.runQuery(sqlQuery, data);
+    let dbResult = await db.runQuery(sqlQuery, data);
     return dbResult.length == 0;
 }
 
@@ -479,17 +507,47 @@ pub.areAllDispatched = async function (transactionId) {
  * @param {*} phoneNumber 
  */
 pub.getUsersByOrderPhone = async function (phoneNumber) {
-    var sql = `
+    let sql = `
         SELECT DISTINCT user.id, user.id_prefix, user.user_email, user.first_name,
         user.last_name, user.phone_number, user.birth_date, user.address, false AS is_guest
         FROM orders_transactions_history AS transaction
         JOIN users_customers AS user ON (transaction.user_id = user.id)
         WHERE ?`;
 
-    var data = { "transaction.phone_number": phoneNumber };
+    let data = { "transaction.phone_number": phoneNumber };
 
-    var dbResult = await db.runQuery(sql, data);
+    let dbResult = await db.runQuery(sql, data);
     return dbResult;
+}
+
+/**
+ * Get pending orders by store id
+ * 
+ * @param {*} storeId 
+ */
+pub.getPendingOrdersWithItemsByStoreId = async function (storeId) {
+    let sqlCondition = "history.date_picked IS NULL";
+    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
+}
+
+/**
+ * Get pending orders by store id
+ * 
+ * @param {*} storeId 
+ */
+pub.getAllOrdersWithItemsByStoreId = async function (storeId) {
+    let sqlCondition = "1=1";
+    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
+}
+
+/**
+ * Get pevious orders by store id
+ * 
+ * @param {*} storeId 
+ */
+pub.getPreviousOrdersWithItemsByStoreId = async function (storeId) {
+    let sqlCondition = "history.date_picked IS NOT NULL";
+    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
 }
 
 /**
@@ -498,16 +556,41 @@ pub.getUsersByOrderPhone = async function (phoneNumber) {
  * @param {*} phoneNumber 
  */
 pub.getGuestsByOrderPhone = async function (phoneNumber) {
-    var sql = `
+    let sql = `
         SELECT DISTINCT guest.*, true AS is_guest
         FROM orders_transactions_history AS transaction
         JOIN users_customers_guest AS guest ON (transaction.guest_id = guest.id)
         WHERE ?`;
 
-    var data = { "transaction.phone_number": phoneNumber };
+    let data = { "transaction.phone_number": phoneNumber };
 
-    var dbResult = await db.runQuery(sql, data);
+    let dbResult = await db.runQuery(sql, data);
     return dbResult;
+}
+
+/**
+ * Formats new Mongo DB style products onto new one 
+ * 
+ * @param {Object} raw form Mongo DB
+ */
+function formatNewStyleProducts(quantity, raw, nestedProduct) {
+    let localObject = raw;
+
+    delete localObject._id;
+    delete localObject.details;
+    delete localObject.tags;
+    delete localObject.variance;
+
+    localObject.store_type = raw.store.name;
+    localObject.store_type_display_name = raw.store.display_name;
+    localObject.category = raw.category.category_name;
+    localObject.image = raw.images.image_catalog;
+    localObject.price_sold = nestedProduct.price;
+    localObject.packaging = nestedProduct.h_value;
+    localObject.volume = nestedProduct.size;
+    localObject.quantity = quantity;
+
+    return localObject;
 }
 
 /**
@@ -515,9 +598,9 @@ pub.getGuestsByOrderPhone = async function (phoneNumber) {
  * 
  * @param {*} orderProducts 
  */
-var getFormattedOrdersForStore = function (orderProducts) {
-    var result = [];
-    var currentItems = [];
+function getFormattedOrdersForStore(orderProducts) {
+    let result = [];
+    let currentItems = [];
 
     for (let i = 0; i < orderProducts.length; i++) {
         var item = {
@@ -590,42 +673,12 @@ var getFormattedOrdersForStore = function (orderProducts) {
 }
 
 /**
- * Get pending orders by store id
- * 
- * @param {*} storeId 
- */
-pub.getPendingOrdersWithItemsByStoreId = async function (storeId) {
-    let sqlCondition = "history.date_picked IS NULL";
-    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
-}
-
-/**
- * Get pending orders by store id
- * 
- * @param {*} storeId 
- */
-pub.getAllOrdersWithItemsByStoreId = async function (storeId) {
-    let sqlCondition = "1=1";
-    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
-}
-
-/**
- * Get pevious orders by store id
- * 
- * @param {*} storeId 
- */
-pub.getPreviousOrdersWithItemsByStoreId = async function (storeId) {
-    let sqlCondition = "history.date_picked IS NOT NULL";
-    return await getOrdersWithItemsByStoreId(storeId, sqlCondition);
-}
-
-/**
  * Get orders by store id based on condition
  * 
  * @param {*} storeId 
  * @param {*} sqlCondition 
  */
-var getOrdersWithItemsByStoreId = async function (storeId, sqlCondition) {
+async function getOrdersWithItemsByStoreId(storeId, sqlCondition) {
     var sqlGeneric = `
         history.id AS order_id, history.id_prefix AS order_id_prefix, transaction.date_placed AS date_placed,
         history.date_assigned AS date_assigned, history.date_store_ready AS date_store_ready,

@@ -20,6 +20,10 @@ nav {
     font-family: 'Nunito', sans-serif;
 }
 
+.logo-white{
+    display: none;
+}
+
 .user-btn-notification {
     padding-left: 5px;
     padding-right: 5px;
@@ -41,7 +45,7 @@ nav {
     max-height: 95px;
     border-bottom: 1px solid #E1E3DF;
     transition: height 0.4s ease;
-    z-index: 11;
+    z-index: 10;
 
     .header-notification {
         display: flex;
@@ -162,7 +166,7 @@ nav {
 }
 
 .user-signed-btn ng-md-icon {
-    fill: rgb(42, 81, 145);
+    fill: rgb(42,81,145);
 }
 
 .user-signed-btn ng-md-icon svg {
@@ -375,6 +379,10 @@ h3 {
 
     .global-search-header {
         display: none;
+    }
+
+    .hub-btn{
+        width: 75px;
     }
 }
 

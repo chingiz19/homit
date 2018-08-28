@@ -3,7 +3,18 @@
  * Add all helpers that could be shared among models here.
  */
 
-var pub = {};
+let pub = {};
+
+const homit_tags = {
+    "d_ht_em": "</em>",
+    "ht_em": "<em>",
+    "d_ht_b": "</b>",
+    "ht_b": "<b>",
+    "d_ht_ul": "</ul>",
+    "ht_ul": "<ul>",
+    "d_ht_li": "</li>",
+    "ht_li": "<li>"
+}
 
 /**
  * Takes Object and checks that invalid params(e.g typos in name, unexpected) params do not exist
@@ -92,6 +103,23 @@ pub.formatUserCoupons = function (coupons) {
 
     return localObject;
 }
+
+pub.convertHomitTags = function (string) {
+    let tmpString = string;
+    for (tag in homit_tags) {
+        tmpString = tmpString.replace(new RegExp(tag, 'g'), homit_tags[tag]);
+    }
+    return tmpString;
+}
+
+pub.clearHomitTags = function (string) {
+    let tmpString = string;
+    for (tag in homit_tags) {
+        tmpString = tmpString.replace(new RegExp(tag, 'g'), "");
+    }
+    return tmpString;
+}
+
 
 function filterStoreTypeForCupon(storeType) {
     if (storeType == null) {

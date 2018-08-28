@@ -1,0 +1,44 @@
+<html ng-app="mainModule">
+
+<head>
+    <meta name="description" content="On Demand delivery from any of our hub stores for only C$4.99." />
+    <meta property="og:description" content="On Demand delivery from any of our hub stores for only C$4.99." />
+    <%- include('partial/imports')%>
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/unions.css" rel="stylesheet">
+</head>
+
+<body ng-cloak>
+    <%- include('partial/checkout_menu')%>
+        <div ng-controller="unionsPageController" class="union-controller">
+            <div class="stripes union-pg-stipes">
+            </div>
+            <section class="content-section">
+                <div class="header box-center">
+                    <h2>
+                        <%= union_display_name%>
+                    </h2>
+                    <p><%= union_description%></p>
+                </div>
+<!--googleoff: snippet-->
+                <div class="stores-div fadeIn">
+                    <a href="/hub/{{store.name}}" target="_self" class="hover-raise"
+                        ng-repeat="store in unionStores">
+                        <img alt="{{store.name}}" ng-src="/resources/images/catalog-stores/logo/{{store.image}}">
+                        <p>{{store.display_name}}</p>
+                    </a>
+                </div>
+            </section>
+        </div>
+<!--googleon: snippet-->
+        <% if (!production) { %>
+            <script src="/resources/services/localStorage.js"></script>
+            <script src="/resources/services/cartService.js"></script>
+            <script src="/resources/controllers/unions.js"></script>
+            <% } %>
+</body>
+<footer>
+    <%- include('partial/footer')%>
+</footer>
+
+</html>

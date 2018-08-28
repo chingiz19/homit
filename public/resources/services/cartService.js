@@ -18,26 +18,25 @@ app.service('cartService', function ($http, localStorage, $cookies) {
 
     var _mergeCarts = function (lCart, rCart) {
         var localCart = jQuery.extend(true, {}, lCart);
-        var remoteCart = Object.entries(rCart); // turns Object to Array
+        var remoteCart = rCart;
 
         for (var i = 0; i < remoteCart.length; i++) {
-            var product_array = remoteCart[i];
-            var store_type_name = product_array[1].store_type_name;
-            var depot_id = product_array[0];
-            if (localCart.hasOwnProperty(store_type_name) && localCart[store_type_name].hasOwnProperty(depot_id)) {
+            var product = remoteCart[i];
+            var store_type_name = product.store.name;
+            var UID = product["variance"][0]["packs"][0]._id;
+
+            if (localCart.hasOwnProperty(store_type_name) && localCart[store_type_name].hasOwnProperty(UID)) {
                 // add to quantity, not exceeding 10
-                var tmpQuantity = localCart[store_type_name][depot_id].quantity;
-                tmpQuantity += product_array[1].quantity;
-
+                var tmpQuantity = localCart[store_type_name][UID].quantity;
+                tmpQuantity += product.selected.quantity;
                 if (tmpQuantity >= 10) tmpQuantity = 10;
-
-                localCart[store_type_name][depot_id].quantity = tmpQuantity;
+                localCart[store_type_name][UID].quantity = tmpQuantity;
             } else {
                 // for empty localCart
                 if (!localCart.hasOwnProperty(store_type_name)) {
                     localCart[store_type_name] = {};
                 }
-                localCart[store_type_name][depot_id] = product_array[1];
+                localCart[store_type_name][UID] = product;
             }
         }
         
@@ -121,7 +120,7 @@ app.service('cartService', function ($http, localStorage, $cookies) {
     };
 
     /**
-     * Used to convert userCart object to object consisting of "depot_id: quantity"
+     * Used to convert userCart object to object consisting of "UID: quantity"
      * @param {*} cart  - user cart
      */
     function _parseCartToSend(rcart){
@@ -130,7 +129,7 @@ app.service('cartService', function ($http, localStorage, $cookies) {
         for (var i = 0; i < cart.length; i++){
             var super_categories = Object.values(cart[i]);
             for (var j = 0; j < super_categories.length; j++){
-                parsedCart[super_categories[j].depot_id] = super_categories[j].quantity;
+                parsedCart[super_categories[j].selected.UID] = super_categories[j].selected.quantity;
             }
         }
 

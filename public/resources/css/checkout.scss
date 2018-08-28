@@ -91,23 +91,16 @@ label {
     height: 15px !important;
 }
 
+body, body button{
+    font-family: 'Nunito', sans-serif;
+}
+
 body {
     background-color: rgb(253, 253, 253);
     letter-spacing: 0.01em;
-    font-family: 'Nunito', sans-serif;
     overflow-y: auto;
+    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-}
-
-//Don't display md-input-container label when input focused
-md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {
-    display: none;
-}
-
-//Upon valid input makes input bottom-border green
-md-input-container .ng-valid.ng-not-empty, #autocompleteAddressInputBox .ng-valid.ng-not-empty {
-    border-bottom-color: rgb(0, 204, 153) !important;
-    border-bottom-width: 2px !important;
 }
 
 md-input-container .md-input {
@@ -387,6 +380,7 @@ md-input-container {
     padding-left: 0px;
     border-radius: 24px;
     font-size: 16px;
+    background-color: #698fcc;
     margin: 30px auto;
 }
 

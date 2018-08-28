@@ -1,11 +1,24 @@
-app.controller("productController", function ($scope, $rootScope, $window, sessionStorage, notification, helpers, googleAnalytics) {
+app.controller("productController", function ($scope, $rootScope, $window, $http, sessionStorage, notification, helpers, googleAnalytics) {
     $scope.init = function () {
-        $scope.recommended_products = buildProductUrl(JSON.parse($("#recommendedProducts").val()));
         $scope.product = JSON.parse($("#product").val());
         $scope.productImages = JSON.parse($("#product-images").val()).images;
         if($scope.productImages.length > 0){
             $scope.selectedImage = $scope.productImages[0];
         }
+
+        $http({
+            method: 'POST',
+            url: "/api/hub/similarproducts",
+            data:{
+                limit: 8,
+                product_id: $scope.product._id
+            }
+        }).then(function successCallback(response) {
+            $scope.recommended_products = buildProductUrl(response.data.result);
+        }, function errorCallback(response) {
+            notification.addErrorMessage("Ups.. Error loading page");
+        });
+
     };
 
     function buildProductUrl(products){
@@ -17,32 +30,33 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
     }
 
     $scope.addToCart = function (product) {
-            var p = {};
-            p.store_type_name = product.store_type_name;
-            p.volume = product.product_variants.all_volumes[product.product_variants.selectedVolume];
-            p.packaging = product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack];
-            p.price = product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]][product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack]].price;
-            p.depot_id = product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]][product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack]].depot_id;
-            if (!$scope.productImages[0].includes("nutritions")) {
-                p.image = $scope.productImages[0];
-            } else {
-                p.image = $scope.productImages[1];
+            var p = product;
+
+            p["selected"] = {
+                "UID": p.UID = product.variance[product.selectedVolume].packs[product.selectedPack]._id,
+                "quantity": 1,
+                "price": p.price = product.variance[product.selectedVolume].packs[product.selectedPack].price,
+                "pack": product.variance[product.selectedVolume].packs[product.selectedPack].h_value 
+            };
+
+            if(product.variance[product.selectedVolume].preffered_unit){
+                p.selected.size = product.variance[product.selectedVolume].preffered_unit_size + product.variance[product.selectedVolume].preffered_unit;
+            }else{
+                p.selected.size = product.variance[product.selectedVolume].preffered_unit_size ;
             }
-            p.brand = product.brand;
-            p.name = product.name;
 
             $rootScope.$broadcast("addToCart", p);
             googleAnalytics.addEvent('add_to_cart', {
-                "event_label": product.brand + " " + product.name,
+                "event_label": p.brand + " " + p.name,
                 "event_category": googleAnalytics.eventCategories.product_actions,
                 "value": "product_page",
                 "items": [
                     {
-                        name: product.name,
-                        brand: product.brand,
-                        price: product.price,
-                        category: product.packaging,
-                        variant: product.volume,
+                        name: p.name,
+                        brand: p.brand,
+                        price: p.selected.price,
+                        category: p.selected.pack,
+                        variant: p.selected.size,
                     }
                 ]
             });
@@ -57,12 +71,12 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
      * @param {object} product 
      */
     $scope.volumeRight = function (product) {
-        let i = product.product_variants.selectedVolume;
+        let i = product.selectedVolume;
         i = i + 1;
-        if (i >= product.product_variants.all_volumes.length) {
-            $scope.product.product_variants.selectedVolume = i - 1;
+        if (i >= product.variance.length) {
+            $scope.product.selectedVolume = i - 1;
         } else {
-            $scope.product.product_variants.selectedVolume = i;
+            $scope.product.selectedVolume = i;
         }
     };
 
@@ -71,12 +85,12 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
      * @param {object} product 
      */
     $scope.volumeLeft = function (product) {
-        let i = product.product_variants.selectedVolume;
+        let i = product.selectedVolume;
         i = i - 1;
         if (i < 0) {
-            $scope.product.product_variants.selectedVolume = i + 1;
+            $scope.product.selectedVolume = i + 1;
         } else {
-            $scope.product.product_variants.selectedVolume = i;
+            $scope.product.selectedVolume = i;
         }
     };
 
@@ -85,13 +99,13 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
      * @param {object} product 
      */
     $scope.packRight = function (product) {
-        let i = product.product_variants.selectedPack;
-        let volume = product.product_variants.all_volumes[product.product_variants.selectedVolume];
-        i = i + 1;
-        if (i >= product.product_variants[volume].all_packagings.length) {
-            $scope.product.product_variants.selectedPack = i - 1;
+        let selected_pack = product.selectedPack;
+        let selected_volume = product.selectedVolume;
+        selected_pack = selected_pack + 1;
+        if ( selected_pack >= product.variance[selected_volume].packs.length) {
+            $scope.product.selectedPack = selected_pack - 1;
         } else {
-            $scope.product.product_variants.selectedPack = i;
+            $scope.product.selectedPack = selected_pack;
         }
     };
 
@@ -100,12 +114,12 @@ app.controller("productController", function ($scope, $rootScope, $window, sessi
      * @param {object} product 
      */
     $scope.packLeft = function (product) {
-        let i = product.product_variants.selectedPack;
-        i = i - 1;
-        if (i < 0) {
-            $scope.product.product_variants.selectedPack = i + 1;
+        let selected_pack = product.selectedPack;
+        selected_pack = selected_pack - 1;
+        if (selected_pack < 0) {
+            $scope.product.selectedPack = selected_pack + 1;
         } else {
-            $scope.product.product_variants.selectedPack = i;
+            $scope.product.selectedPack = selected_pack;
         }
     };
 

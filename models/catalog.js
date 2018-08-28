@@ -14,30 +14,7 @@ pub.getCategoriesByStoreType = async function (storeType) {
         return false;
     }
 
-    let sqlQuery = `
-        SELECT DISTINCT
-        category.display_name AS category_display_name ,category.name AS category_name,
-        category.image AS category_image, category_covers.cover_image AS category_cover
-        FROM
-        catalog_store_types AS store_types
-        JOIN catalog_depot AS depot ON (store_types.id = depot.store_type_id)
-        JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcat ON (type.subcategory_id = subcat.id)
-        JOIN catalog_categories AS category ON (subcat.category_id = category.id)
-        LEFT JOIN catalog_store_types_category_covers AS category_covers ON 
-        (category_covers.category_id = category.id AND category_covers.store_type_id = store_types.id)
-        WHERE ?
-        ORDER BY category_display_name;
-    `;
-
-    let data = {
-        "store_types.name": storeType
-    };
-
-    return await db.runQuery(sqlQuery, data);
+    return MDB.models[storeType].find({}).distinct('category').exec();
 }
 
 /**
@@ -79,49 +56,6 @@ pub.getBannersByStoreType = async function (storeType) {
 
     let dbResult = await db.runQuery(sqlQuery, data);
     return getFormattedBanners(dbResult);
-}
-
-var getFormattedBanners = async function (banners) {
-    let result = [];
-
-    for (let i = 0; i < banners.length; i++) {
-        let tmpProductId = banners[i].product_id;
-        delete banners[i].product_id;
-        if (tmpProductId == null) {
-            banners[i].product = undefined;
-        } else {
-            let tmpProduct = await getProductInfoById(tmpProductId);
-            if (!tmpProduct) {
-                banners[i].product = undefined;
-            } else {
-                banners[i].product = {
-                    product_id: tmpProductId,
-                    brand: tmpProduct.brand,
-                    name: tmpProduct.name
-                };
-            }
-        }
-        result.push(banners[i]);
-    }
-
-    return result;
-}
-
-var getProductInfoById = async function (productId) {
-    let sqlQuery = `
-        SELECT *
-        FROM catalog_listings AS listing JOIN catalog_products AS product ON (listing.id = product.listing_id)
-        WHERE ?;`;
-
-    let data = { "product.id": productId };
-
-    let tmpResult = await db.runQuery(sqlQuery, data);
-
-    if (tmpResult.length > 0) {
-        return tmpResult[0];
-    } else {
-        return false;
-    }
 }
 
 /**
@@ -186,35 +120,15 @@ pub.getAllMainSpecials = async function () {
         special_types.display_name AS special_types_display_name,
         special_types.api_name AS special_types_api_name,
         special_products.product_id AS product_id,
-        store_types.name AS store_type_name,
-        category.name AS category,
-        products.image AS product_image,
-        listings.brand AS brand,
-        listings.name AS name,
-        depot.price AS price,
-        containers.name AS container,
-        packagings.name AS packaging,
-        volumes.name AS volume
+        store_types.name AS store_type_name
         
         FROM catalog_hub_special_types AS special_types
         JOIN catalog_hub_special_products AS special_products ON (special_types.id = special_products.special_type_id)
         JOIN catalog_store_types AS store_types ON (store_types.id = special_products.store_type_id)
-        JOIN catalog_products AS products ON (special_products.product_id = products.id)
-        JOIN catalog_listings AS listings ON (products.listing_id = listings.id)
-        JOIN catalog_types AS type ON (listings.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_items AS items ON (items.product_id = products.id)
-        JOIN catalog_depot AS depot ON (depot.item_id = items.id)
-        
-        JOIN catalog_packaging_containers AS containers ON (containers.id = products.container_id)
-        JOIN catalog_packaging_packagings AS packagings ON (packagings.id = items.packaging_id)
-        JOIN catalog_packaging_volumes AS volumes ON (volumes.id = items.volume_id)
         
         WHERE
         special_products.active = true
-        AND depot.available = true
-        ORDER by special_type_id, product_id, price;`;
+        ORDER by special_type_id;`;
 
     let specials = await db.runQuery(sqlQuery);
     if (specials == false) {
@@ -225,54 +139,9 @@ pub.getAllMainSpecials = async function () {
 }
 
 /**
- * Format specials
- * 
- * @param {*} specials 
+ * Returns store info object
+ * @param {string} storeType 
  */
-var getFormattedSpecials = function (specials) {
-    let result = {};
-
-    let tmpProducts = {};
-    let tmpSpecialType;
-    let tmpSpecialTypeDisplay;
-    for (let i = 0; i < specials.length; i++) {
-        if (i == 0) {
-            tmpSpecialType = specials[i].special_types_api_name;
-            tmpSpecialTypeDisplay = specials[i].special_types_display_name;
-        }
-
-        let currentProduct = Object.assign({}, specials[i]);
-        delete currentProduct.special_types_display_name;
-        delete currentProduct.special_types_api_name;
-
-        if (tmpSpecialType != specials[i].special_types_api_name) {
-            result[tmpSpecialType] = {
-                "display_name": tmpSpecialTypeDisplay,
-                "api_name": tmpSpecialType,
-                "products": Object.values(tmpProducts)
-            };
-
-            tmpProducts = {};
-            tmpSpecialType = specials[i].special_types_api_name;
-            tmpSpecialTypeDisplay = specials[i].special_types_display_name;
-        }
-
-        if (!tmpProducts[currentProduct.product_id]) {
-            tmpProducts[currentProduct.product_id] = currentProduct;
-        }
-
-        if (i == specials.length - 1) {
-            result[tmpSpecialType] = {
-                "display_name": tmpSpecialTypeDisplay,
-                "api_name": tmpSpecialType,
-                "products": Object.values(tmpProducts)
-            };
-        }
-    }
-
-    return result;
-}
-
 pub.getStoreTypeInfo = async function (storeType) {
     let data = { "name": storeType };
     let dbResult = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, data);
@@ -420,167 +289,28 @@ pub.isStoreOpenForScheduled = async function (storeType, timestamp) {
  * @param {*} categoryName 
  */
 pub.getAllProductsByCategory = async function (storeType, categoryName) {
-    let sqlQuery = `
-        SELECT
-        depot.id AS depot_id,
-        item.id AS item_id,
-        listing.id AS listing_id,
-        product.id AS product_id,
-        type.name AS type,
-        subcategory.name AS subcategory,
-        category.name AS category,
-        store_type.name AS store_type_name,
-        store_type.display_name AS store_type_display_name,
-        listing.id AS listing_id,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        depot.price AS price,
-        depot.tax AS tax,
-        packaging.name AS packaging,
-        container.name AS container,
-        volume.name AS volume
-        
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
-        JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
-        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
-        
-        WHERE depot.available = true
-        AND ? AND ?
-        
-        ORDER BY subcategory, listing_id, product_id, price`;
-
-    let data = [{ "category.name": categoryName }, { "store_type.name": storeType }];
-    let dbResult = await db.runQuery(sqlQuery, data);
-    return getFormattedProducts(dbResult);
-}
-
-/**
- * Format products for front-end
- * 
- * @param {*} items 
- */
-var getFormattedProducts = function (items) {
-    let products = {};
-
-    let tmpProducts = {};
-    let tmpSubcategory;
-    for (let i = 0; i < items.length; i++) {
-        if (i == 0) {
-            tmpSubcategory = items[i].subcategory;
-        }
-
-        let currentItem = Object.assign({}, items[i]);
-
-        if (tmpSubcategory != items[i].subcategory) {
-            products[tmpSubcategory] = {
-                "subcategory": tmpSubcategory,
-                "products": Object.values(tmpProducts)
-            };
-
-            tmpProducts = {};
-            tmpSubcategory = items[i].subcategory;
-        }
-
-        if (!tmpProducts[currentItem.product_id]) {
-            let imageLocation = "/resources/images/products/" + currentItem.category.toLowerCase() + "/";
-            currentItem.image = imageLocation + currentItem.image;
-            tmpProducts[currentItem.product_id] = currentItem;
-        }
-
-        if (i == items.length - 1) {
-            products[tmpSubcategory] = {
-                "subcategory": tmpSubcategory,
-                "products": Object.values(tmpProducts)
-            };
+    let result = await MDB.models[storeType].aggregate([{ $match: { "category.category_name": categoryName } },
+    {
+        $group: {
+            _id: "$subcategory",
+            products: { $push: "$$ROOT" }
         }
     }
-
-    let subcategories = Object.keys(products);
-
-    let result = {
-        subcategories: subcategories,
-        products: products
-    };
-
+    ]);
     return result;
 }
 
-/* Format products for front-end - for product page
-* 
-* @param {*} products 
-*/
-var getFormattedProductsForProductPage = function (products) {
-    let tmpResult = {};
-
-    for (let i = 0; i < products.length; i++) {
-        let product = products[i];
-        let p_package = product.packaging;
-        let p_volume = product.volume;
-
-        let imageLocation = "/resources/images/products/" + product.category.toLowerCase() + "/";
-
-        if (tmpResult.hasOwnProperty(product.product_id)) {
-            // Adding to product variant
-            if (tmpResult[product.product_id].product_variants.hasOwnProperty(p_volume)) {
-                tmpResult[product.product_id].product_variants[p_volume][p_package] = {
-                    "depot_id": product.depot_id,
-                    "price": product.price
-                }
-            } else {
-                tmpResult[product.product_id].product_variants[p_volume] = {
-                    all_packagings: []
-                };
-                tmpResult[product.product_id].product_variants[p_volume][p_package] = {
-                    "depot_id": product.depot_id,
-                    "price": product.price
-                }
-            }
-        } else {
-            // Adding to tmpResult
-            tmpResult[product.product_id] = {
-                product_id: products[i].product_id,
-                listing_id: products[i].listing_id,
-                subcategory: products[i].subcategory,
-                type: products[i].type,
-                brand: products[i].brand,
-                name: products[i].name,
-                store_type: product.store_type,
-                store_type_display_name: product.store_type_display_name,
-                image: imageLocation + products[i].image,
-                quantity: products[i].quantity,
-                container: products[i].container,
-                category: products[i].category,
-                tax: products[i].tax,
-                product_variants: {
-                    all_volumes: []
-                }
-            };
-            tmpResult[product.product_id].product_variants[p_volume] = {
-                all_packagings: []
-            };
-            tmpResult[product.product_id].product_variants[p_volume][p_package] = {
-                "depot_id": product.depot_id,
-                "item_id": products[i].item_id,
-                "price": product.price
-            }
-        }
-
-        if (!tmpResult[product.product_id].product_variants.all_volumes.includes(p_volume))
-            tmpResult[product.product_id].product_variants.all_volumes.push(p_volume);
-        if (!tmpResult[product.product_id].product_variants[p_volume].all_packagings.includes(p_package))
-            tmpResult[product.product_id].product_variants[p_volume].all_packagings.push(p_package);
-    }
-
-    return Object.values(tmpResult);
+/**
+ * Return all subcategories based on the store type and category provided
+ * 
+ * @param {*} storeType 
+ * @param {*} categoryName 
+ */
+pub.getAllSubcategoriesByCategory = async function (storeType, categoryName) {
+    let result = await MDB.models[storeType]
+        .find({ "category.category_name": categoryName })
+        .distinct('subcategory');
+    return result;
 }
 
 /**
@@ -599,221 +329,6 @@ pub.searchStoreType = async function (searchText, limit) {
         LIMIT ` + limit;
         let dbResult = await db.runQuery(sqlQuery);
         return dbResult;
-    } else {
-        return [];
-    }
-}
-
-/**
- * Search text among categories
- * 
- * @param {*} searchText 
- * @param {*} limit
- */
-pub.searchCategory = async function (searchText, limit) {
-    if (limit > 0) {
-        let sqlQuery = `
-        SELECT DISTINCT
-        category.name AS category,
-        category.display_name AS category_display_name,
-        store_type.display_name AS store_type_display_name,
-        store_type.name AS store_type_name,
-        store_type.image AS store_type_image
-        
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        
-        WHERE store_type.available = true
-        AND category.name LIKE '` + searchText + `%'   OR category.display_name LIKE '%` + searchText + `%'
-        LIMIT ` + limit;
-
-        let dbResult = await db.runQuery(sqlQuery);
-        return dbResult;
-    } else {
-        return [];
-    }
-}
-
-/**
- * Search for the text in subcategories
- * 
- * @param {*} searchText 
- * @param {*} limit
- */
-pub.searchSubcategory = async function (searchText, limit) {
-    if (limit > 0) {
-        let sqlQuery = `
-        SELECT DISTINCT
-        category.name AS category,
-        category.display_name AS category_display_name,
-        store_type.display_name AS store_type_display_name,
-        store_type.name AS store_type_name,
-        store_type.image AS store_type_image,
-        subcategory.name AS subcategory
-        
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        
-        WHERE store_type.available = true
-        AND subcategory.name LIKE '` + searchText + `%'
-        LIMIT ` + limit;
-
-        let dbResult = await db.runQuery(sqlQuery);
-        return dbResult;
-    } else {
-        return [];
-    }
-}
-
-var searchProductsBase = async function (limit, sqlWhereExtra, sqlSelectExtra, sqlFromExtra) {
-    let sqlSelect = `
-        listing.id AS listing_id,
-        product.id AS product_id,
-        type.name AS type,
-        subcategory.name AS subcategory,
-        category.name AS category,
-        store_type.display_name AS store_type_display_name,
-        store_type.name AS store_type_name,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        container.name AS container`;
-
-    let sqlFrom = `
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)`;
-
-    let sqlWhere = `
-        WHERE store_type.available = true AND depot.available = true`;
-
-    if (!sqlWhereExtra) {
-        sqlWhereExtra = ` `;
-    }
-
-    if (!sqlFromExtra) {
-        sqlFromExtra = ` `;
-    }
-
-    if (!sqlSelectExtra) {
-        sqlSelectExtra = ` `;
-    }
-
-    let sqlQuery = `
-        SELECT DISTINCT ` + sqlSelect + ` ` + sqlSelectExtra
-        + ` ` + sqlFrom + ` ` + sqlFromExtra
-        + ` ` + sqlWhere + ` ` + sqlWhereExtra
-        + ` LIMIT ` + limit + ` ;`;
-
-    let dbResult = await db.runQuery(sqlQuery);
-    return dbResult;
-}
-
-/**
- * Search for the beginning text in brand, name
- * 
- * @param {*} searchText 
- * @param {*} limit
- */
-pub.searchProductsStart = async function (searchText, limit) {
-    if (limit > 0) {
-        let sqlWhereExtra =
-            `AND (listing.brand LIKE '` + searchText + `%' OR listing.name LIKE '` + searchText + `%'
-            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '` + searchText + `%')`;
-
-        let result = await searchProductsBase(limit, sqlWhereExtra);
-        return result;
-    } else {
-        return [];
-    }
-}
-
-/**
- * Search for the end text in brand, name
- * 
- * @param {*} searchText 
- * @param {*} limit
- */
-pub.searchProductsEnd = async function (searchText, limit) {
-    if (limit > 0) {
-        let sqlWhereExtra =
-            `AND (listing.brand LIKE '%` + searchText + `%' OR listing.name LIKE '%` + searchText + `%'
-            OR CONCAT(listing.brand,  ' ', listing.name) LIKE '%` + searchText + `%')
-            AND (listing.brand NOT LIKE '` + searchText + `%' AND listing.name NOT LIKE '` + searchText + `%'
-            AND CONCAT(listing.brand,  ' ', listing.name) NOT LIKE '` + searchText + `%')`;
-
-        let result = await searchProductsBase(limit, sqlWhereExtra);
-        return result;
-    } else {
-        return [];
-    }
-}
-
-/**
- * Search for the text in types
- * 
- * @param {*} searchText 
- * @param {*} limit 
- */
-pub.searchProductsTypes = async function (searchText, limit) {
-    if (limit > 0) {
-        let sqlWhereExtra = `
-            AND listing.brand NOT LIKE '%` + searchText + `%' AND listing.name NOT LIKE '%` + searchText + `%'
-            AND CONCAT(listing.brand,  ' ', listing.name) NOT LIKE '%` + searchText + `%'
-
-            AND type.name LIKE '` + searchText + `%'`;
-
-        let result = await searchProductsBase(limit, sqlWhereExtra);
-        return result;
-    } else {
-        return [];
-    }
-}
-
-/**
- * Search for the text in description
- * 
- * @param {*} searchText 
- * @param {*} limit
- */
-pub.searchProductsWithDescription = async function (searchText, limit) {
-    if (limit > 0) {
-        let sqlSelectExtra = `
-            , description_names.name AS description_key,            
-            description_names.display_name AS description_key_display_name,            
-            description.description AS description`;
-
-        let sqlFromExtra = `
-            JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id)
-            JOIN catalog_description_names AS description_names ON (description_names.id = description.description_key)`;
-
-        let sqlWhereExtra = `
-            AND listing.brand NOT LIKE '%` + searchText + `%' AND listing.name NOT LIKE '%` + searchText + `%'
-            AND CONCAT(listing.brand,  ' ', listing.name) NOT LIKE '%` + searchText + `%'
-            AND type.name NOT LIKE '` + searchText + `%'
-
-            AND description.description LIKE '` + searchText + `%'`
-
-        let result = await searchProductsBase(limit, sqlWhereExtra, sqlSelectExtra, sqlFromExtra);
-        return result;
     } else {
         return [];
     }
@@ -839,10 +354,14 @@ pub.getStoreTypeIdByName = async function (storeType) {
  * @param {*} products 
  * @param {*} couponDetails - optional, passed if there are coupon details
  */
-pub.calculatePrice = async function (products, couponDetails) {
+pub.calculatePrice = async function (inObject, couponDetails) {
     let ALBERTA_GST = 0.05;
 
     let pricesPerOrder = {};
+    let products = inObject ? (inObject.products || []) : [];
+    let rates = inObject ? (inObject.rates || new Map()) : new Map();
+    let rateToStoreMap = inObject ? (inObject.rate_to_store_map || new Map()) : new Map();
+    let usedRateIds = [];
 
     let totalAmount = 0;
     let totalTax = 0;
@@ -856,18 +375,25 @@ pub.calculatePrice = async function (products, couponDetails) {
         let tmpAmount = 0;
         let tmpTax = 0;
         let tmpCouponOff = 0;
+        let tmpDelivery = 0;
         let tmpCouponId = undefined;
         let tmpCouponMessage = undefined;
 
+        //*product cost calculation
         for (let item in products[storeType].products) {
             tmpAmount = tmpAmount + parseFloat(products[storeType].products[item].price) * products[storeType].products[item].quantity;
             if (products[storeType].products[item].tax) {
                 tmpTax = tmpTax + parseFloat(products[storeType].products[item].price) * products[storeType].products[item].quantity * ALBERTA_GST;
             }
         }
-        let tmpDelivery = products[storeType].del_fee_primary + Math.floor(parseInt(tmpAmount / 100)) * products[storeType].del_fee_secondary;
-        tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
 
+        //*delivery cost calculation 
+        if (rates.has(rateToStoreMap.get(storeType)) && !usedRateIds.includes(rateToStoreMap.get(storeType))) {
+            tmpDelivery = rates.get(rateToStoreMap.get(storeType)) || 0;
+            usedRateIds.push(rateToStoreMap.get(storeType));
+        }
+
+        tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
         tmpTax = parseFloat(tmpTax.toFixed(2));
         tmpAmount = parseFloat(tmpAmount.toFixed(2));
         tmpDelivery = parseFloat(tmpDelivery.toFixed(2));
@@ -958,224 +484,113 @@ pub.calculatePrice = async function (products, couponDetails) {
 }
 
 /**
- * Get cart products by depot ids
- * 
- * @param {*} cartProducts 
+ * Get cart products by UIDs for calculator to process
+ *  
+ * @param {*} cartProducts {UID : quantity}
  */
-pub.getCartProducts = async function (cartProducts) {
-    if (!(Object.keys(cartProducts).length === 0 && cartProducts.constructor === Object)) {
-        let depotIds = Object.keys(cartProducts);
+pub.prepareProductsForCalculator = async function (cartProducts) {
+    let ratesMap = new Map();
+    let storesMap = new Map();
+    let finalResult = [];
+    let UIDs = Object.keys(cartProducts);
 
-        let sqlQuery = `
-            SELECT depot.id             AS depot_id,
-            depot.price                 AS price, 
-            depot.tax                   AS tax,
-            store_type.name             AS store_type,
-            store_type.del_fee_primary,
-            store_type.del_fee_secondary
-            FROM catalog_depot AS depot JOIN catalog_store_types AS store_type ON(depot.store_type_id = store_type.id)
-            WHERE depot.id in (` + depotIds + `)
-            ORDER BY store_type`;
+    if (!(UIDs.length === 0 && cartProducts.constructor === Object)) {
+        for (let id in UIDs) {
+            let selectedQuantity = cartProducts[UIDs[id]];
+            let IDobject = MDB.formatReceviedUID(UIDs[id]);
+            let rawStore = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, { "id": IDobject.storeId });
+            if (rawStore && rawStore.length > 0) {
+                let selectedStore = rawStore[0];
+                let searchId = IDobject.storeId + '-' + IDobject.productId;
+                let storeName = selectedStore.name;
+                let rateId = selectedStore.rate_id;
+                let result = await MDB.models[storeName].findById(searchId).exec();
+                let tax = result.tax;
+                let product = pub.findNestedProductPrice(result.toObject(), [searchId, IDobject.varianceId, IDobject.packId]);
+                if (product) {
 
-        let dbResult = await db.runQuery(sqlQuery);
-        return dbResult;
-    }
-    return [];
-}
+                    if (!finalResult.hasOwnProperty(storeName)) {
+                        finalResult[storeName] = {
+                            products: [],
+                            del_fee_primary: String,
+                            del_fee_secondary: String,
+                            rateId: Number
+                        };
+                    }
 
-/**
- * Get cart products with respective store type
- * 
- * @param {*} dbProducts
- * @param {*} cartProducts
- */
-pub.getCartProductsWithStoreType = function (dbProducts, cartProducts) {
-    let products = {};
-    let currentStoreType = {
-        products: {}
-    };
-    for (let i = 0; i < dbProducts.length; i++) {
-        let tmpQuantity;
-        if (cartProducts) {
-            tmpQuantity = cartProducts[dbProducts[i].depot_id];
-        } else {
-            tmpQuantity = dbProducts[i].quantity;
-        }
-        let currentItem = {
-            depot_id: dbProducts[i].depot_id,
-            price: dbProducts[i].price,
-            tax: dbProducts[i].tax,
-            quantity: tmpQuantity
-        };
+                    finalResult[storeName].products.push({
+                        "UID": UIDs[id],
+                        "tax": tax,
+                        "price": product.price,
+                        "quantity": selectedQuantity
+                    });
 
-
-        if (i == 0) {
-            currentStoreType.products[dbProducts[i].depot_id] = currentItem;
-        } else {
-            if (dbProducts[i - 1].store_type != dbProducts[i].store_type) {
-                products[dbProducts[i - 1].store_type] = currentStoreType;
-                currentStoreType = {
-                    products: {}
-                };
+                    if (!ratesMap.has(rateId) || selectedStore.del_fee_primary < ratesMap.get(rateId)) {
+                        ratesMap.set(rateId, selectedStore.del_fee_primary);
+                        storesMap.set(storeName, rateId);
+                    }
+                }
             }
-            currentStoreType.products[dbProducts[i].depot_id] = currentItem;
-        }
-        currentStoreType.del_fee_primary = dbProducts[i].del_fee_primary;
-        currentStoreType.del_fee_secondary = dbProducts[i].del_fee_secondary;
-
-        if (i == dbProducts.length - 1) {
-            products[dbProducts[i].store_type] = currentStoreType;
         }
     }
 
-    return products;
+    return {
+        rates: ratesMap,
+        rate_to_store_map: storesMap,
+        products: finalResult
+    };
 }
 
 /**
- * Get all descriptions for the product id
+ * Finds nested product object including size
  * 
- * @param {*} productId 
+ * @param {Object} product  document from Mongo DB
+ * @param {array} searchId [product, variance and pack ids] e.g. 9-3-1 and 9-3-1-1
  */
-var getDescriptionsByProductId = async function (productId) {
-    let sqlQuery = `
-        SELECT name.name AS name, description.description AS description
-        FROM catalog_listings AS listing
-        JOIN catalog_products AS product ON (product.listing_id = listing.id)
-        JOIN catalog_listings_descriptions AS description ON (listing.id = description.listing_id)
-        JOIN catalog_description_names AS name ON (description.description_key = name.id)
-        WHERE ?`;
-
-    let data = { "product.id": productId };
-    let dbResult = await db.runQuery(sqlQuery, data);
-    return dbResult;
-}
-
-var getImagesByProductId = async function (productId) {
-    let sqlQuery = `
-        SELECT name.name AS name, image.image AS image, image.product_id AS product_id
-        FROM catalog_image_names AS name
-        JOIN catalog_products_images AS image ON (name.id = image.image_key)
-        WHERE ?`;
-
-    let data = { "image.product_id": productId };
-    return await db.runQuery(sqlQuery, data);
-}
-
-/**
- * Get products by product id and store type
- * 
- * @param {*} storeType
- * @param {*} productId 
- */
-var getItemsByProductId = async function (storeType, productId) {
-    let sqlQuery = `
-        SELECT
-        depot.id AS depot_id,
-        item.id AS item_id,
-        listing.id AS listing_id,
-        product.id AS product_id,
-        type.name AS type,
-        subcategory.name AS subcategory,
-        category.name AS category,
-        store_type.name AS store_type,
-        store_type.display_name AS store_type_display_name,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        depot.price AS price,
-        depot.tax AS tax,
-        packaging.name AS packaging,
-        container.name AS container,
-        volume.name AS volume
-        
-        FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (product.container_id = container.id)
-        JOIN catalog_packaging_volumes AS volume ON (item.volume_id = volume.id)
-        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
-        
-        WHERE store_type.available = true
-        AND depot.available = true
-        AND ? AND ?
-        
-        ORDER BY listing_id, product_id, item_id, depot_id`;
-
-    let data1 = { "store_type.name": storeType };
-    let data2 = { "product.id": productId };
-    let dbResult = await db.runQuery(sqlQuery, [data1, data2]);
-    return getFormattedProductsForProductPage(dbResult);
+pub.findNestedProductPrice = function (product, ids) {
+    if (product && ids && product.variance && product.tax) {
+        let selectedvariances = product.variance;
+        for (let k in selectedvariances) {
+            let variance = selectedvariances[k];
+            let searchId = ids[0] + '-' + ids[1];
+            if (variance._id == searchId && variance.packs) {
+                let packs = variance.packs;
+                let localSize = variance.preffered_unit_size + variance.preffered_unit;
+                for (let l in packs) {
+                    let pack = packs[l];
+                    searchId += '-' + ids[2];
+                    if (pack._id == searchId && pack.price) {
+                        pack.size = localSize;
+                        return pack;
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }
 
 pub.getProductPageItemsByProductId = async function (storeType, productId) {
-    let isStoreOpen = await pub.isStoreOpen(storeType);
-    let products = await getItemsByProductId(storeType, productId);
-    let descriptions = await getDescriptionsByProductId(productId);
-    let images = await getImagesByProductId(productId);
+    let storeObject = {};
+    let finalResult = {};
+    let storeTypeInfo = await Catalog.getStoreTypeInfo(storeType);
 
-    if (products.length == 0) {
-        return false;
-    }
-    return convertToProductPageItem(products, descriptions, images, isStoreOpen);
-}
+    if (storeTypeInfo) {
+        let searchId = storeTypeInfo.id + '-' + productId;
+        let product = await MDB.models[storeType].findById(searchId).exec();
 
-/**
- * 
- * @param {*} products - array of products
- * @param {*} descriptions
- * @param {*} images
- * @param {*} isStoreOpen
- */
-var convertToProductPageItem = async function (product, descriptions, images, isStoreOpen) {
-    let tmpPr = product[0];
+        if (product) {
+            storeObject.store_open = await pub.isStoreOpen(storeType)
+            storeObject.store_type_name = storeType;
+            storeObject.store_type_display_name = storeTypeInfo.display_name;
 
-    // Extract common fields of products
-    let finalResult = {
-        "store_type_name": tmpPr.store_type,
-        "store_type_display_name": tmpPr.store_type_display_name,
-        "category": tmpPr.category,
-        "subcategory": tmpPr.subcategory,
-        "type": tmpPr.type,
-        "brand": tmpPr.brand,
-        "name": tmpPr.name,
-        "product_id": tmpPr.product_id,
-        "description": tmpPr.description,
-        "store_open": isStoreOpen,
-        "tax": tmpPr.tax,
-        "container": tmpPr.container,
-        "images": [],
-        "product_variants": tmpPr.product_variants,
-        "details": {}
-    };
+            Object.assign(finalResult, product.toObject(), storeObject);
 
-    for (let i = 0; i < descriptions.length; i++) {
-        finalResult.details[descriptions[i].name] = descriptions[i].description;
-    }
-
-    finalResult.images.push(tmpPr.image);
-
-    for (let j = 0; j < images.length; j++) {
-        if (images[j].name == "nutritions") {
-            finalResult.images.push("/resources/images/products/" + tmpPr.category + "/nutritions/" + images[j].image);
-        } else {
-            finalResult.images.push("/resources/images/products/" + tmpPr.category + "/" + images[j].image);
+            return finalResult;
         }
     }
 
-    if (!finalResult.name) {
-        finalResult.name = "";
-    }
-
-    if (!finalResult.brand) {
-        finalResult.brand = "";
-    }
-
-    return finalResult;
+    return false;
 }
 
 /**
@@ -1239,50 +654,15 @@ pub.checkProductsForStoreOpen = async function (depotIds) {
  * 
  * @param {*} productId 
  */
-pub.getSimilarProducts = async function (productId) {
+pub.getSimilarProducts = async function (limit, productId) {
     let result = [];
-    let limit = 12;
-    let sameTransaction = await getSimilarProductsBySameTransaction(productId, limit);
-    limit = limit - sameTransaction.length;
-    result = result.concat(sameTransaction);
-    if (limit > 0) {
-        let sameCustomer = await getSimilarProductsBySameCustomer(productId, limit);
-        let tmpResult = [];
 
-        for (let i = 0; i < sameCustomer.length; i++) {
-            let same = false;
-            for (let j = 0; j < result.length; j++) {
-                if (sameCustomer[i].product_id == result[j].product_id
-                    && sameCustomer[i].store_type == result[j].store_type) {
-                    result[j].sum_point = sameCustomer[i].sum_point;
-                    same = true;
-                    break;
-                }
-            }
-
-            if (!same) {
-                tmpResult.push(sameCustomer[i]);
-            }
-        }
-        result = result.concat(tmpResult);
-
-        result.sort(function (a, b) { return (a.sum_point < b.sum_point) ? 1 : ((b.sum_point > a.sum_point) ? -1 : 0); });
+    if (productId) {
+        result = await getItemsBoughtTogether(productId);
     }
 
-
-    for (let i = 0; i < result.length; i++) {
-        var item = await getItemByProductId(result[i].store_type_name, result[i].product_id);
-        result[i].type = item.type;
-        result[i].subcategory = item.subcategory;
-        result[i].category = item.category;
-        result[i].type = item.type;
-        result[i].brand = item.brand;
-        result[i].name = item.name;
-        result[i].image = item.image;
-        result[i].price = item.price;
-        result[i].container = item.container;
-        result[i].volume = item.volume;
-        result[i].packaging = item.packaging;
+    if (limit > 0 || result.length == 0) {
+        result = result.concat(await getRandomArrayOfProducts(limit));
     }
 
     return result;
@@ -1292,225 +672,280 @@ pub.getSimilarProducts = async function (productId) {
  * Returns true if storeType exists and category 
  * belongs to given store type
  * @param {*} storeType store type name (e.g. liquor-station)
- * @param {*} category  category from that store (e.g. beer)
+ * @param {*} receivedCategory  category from that store (e.g. beer)
  */
-pub.verifyStoreCategory = async function (storeType, category) {
-    if (!(storeType && category)) {
+pub.verifyStoreCategory = async function (storeType, receivedCategory) {
+    if (!(storeType && receivedCategory)) {
         Logger.log.error("Undefined Store type for getCategoriesByStoreType function");
         return false;
     }
 
+    let result = await MDB.models[storeType].find({ 'category.category_name': receivedCategory }).exec();
+
+    return (!result.error && result.length > 0);
+}
+
+/**
+ * Get all store types without unions and unions
+ */
+pub.getAllStoreTypesAndUnions = async function () {
+    let data = { "available": true };
+    let sqlQuery = `
+    SELECT 
+	*
+    FROM 
+        catalog_store_types
+    WHERE 
+        ?
+    AND 
+        union_id IS NULL;`;
+    let resultWithNoUnions = await db.runQuery(sqlQuery, data);
+    let unions = await db.selectAllFromTable(db.tables.catalog_store_unions);
+    let result = resultWithNoUnions.concat(unions);
+    return result;
+}
+
+/**
+ * Get all store type names regardless of unions
+ */
+pub.getAllStoreTypeNames = async function () {
+    let data = { "available": true };
+    let sqlQuery = `
+    SELECT 
+        catalog_store_types.name as name
+    FROM 
+        catalog_store_types
+    WHERE 
+        ?`;
+    let result = await db.runQuery(sqlQuery, data);
+    return result;
+}
+
+/**
+ * Returns object with union display name 
+ * if storeType is actually a union
+ * Returns false otherwise
+ * @param {*} parent 
+ */
+pub.isParentUnion = async function (parent) {
+    if (parent) {
+        let data = { "name": parent };
+        let result = await db.selectAllWhereLimitOne(db.tables.catalog_store_unions, data);
+        if (result.length == 0) {
+            return false;
+        }
+        return result[0];
+    }
+    return false;
+}
+
+/**
+ * Returns array of stores in the given union  
+ * @param {*} unionName 
+ */
+pub.getUnionStores = async function (unionName) {
+    if (unionName) {
+        let data = { "catalog_store_unions.name": unionName };
+        let sqlQuery = `
+        SELECT 
+        catalog_store_types.del_fee_primary, catalog_store_types.del_fee_secondary, catalog_store_types.display_name, catalog_store_types.name, catalog_store_types.image 
+        FROM 
+        catalog_store_types
+        JOIN 
+        catalog_store_unions
+        ON 
+        catalog_store_types.union_id=catalog_store_unions.id
+        WHERE 
+        ?;`;
+        let result = await db.runQuery(sqlQuery, data);
+
+        if (result.length == 0) {
+            return false;
+        }
+        return result;
+    }
+    return false;
+}
+
+async function getItemsBoughtTogether(productId) {
+    let finalResult = [];
+    let newRegEx = new RegExp("([0-9]-)");
     let sqlQuery = `
         SELECT 
-        category.display_name   
+            orders_history.order_transaction_id as id
         FROM
-        catalog_store_types AS store_types
-        JOIN catalog_depot AS depot ON (store_types.id = depot.store_type_id)
-        JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcat ON (type.subcategory_id = subcat.id)
-        JOIN catalog_categories AS category ON (subcat.category_id = category.id)
+            orders_cart_items
+        JOIN
+            orders_history
+        ON 
+            orders_cart_items.order_id = orders_history.id
         WHERE 
-            ?
-        AND
-            ? 
-        LIMIT 1;
+            (depot_id LIKE '${productId}%')
     `;
+    let transactions = await db.runQuery(sqlQuery);
 
-    let result = await db.runQuery(sqlQuery, [{ "store_types.name": storeType }, { "category.name": category }]);
+    if (transactions && transactions.length > 0) {
+        let data = [];
 
-    return (result && result.length == 1);
-}
+        for (let k in transactions) {
+            data.push(transactions[k].id);
+        }
 
-/**
- * Get all store types
- */
-pub.getAllStoreTypes = async function () {
-    let data = { "available": true };
-    return db.selectAllWhere(db.tables.catalog_store_types, data);
-}
-
-/**
- * Get similar products bought at the same transaction
- * 
- * @param {*} productId 
- * @param {*} limit 
- */
-async function getSimilarProductsBySameTransaction(productId, limit) {
-    if (limit > 0) {
-        let sqlQuery = `
-            SELECT 
-            product.id AS product_id,
-            store_type.name AS store_type_name,
-            COUNT(*) AS sum_point
-
-            FROM orders_cart_items
-            JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
-            JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
-            JOIN catalog_items AS item ON (item.id = depot.item_id)
-            JOIN catalog_products AS product ON (product.id = item.product_id)
-            JOIN catalog_store_types AS store_type ON (store_type.id = depot.store_type_id)
-
-            WHERE store_type.available = true
-            AND depot.available = true
-            AND product.id <>  ` + productId + `
-            AND orders_history.order_transaction_id IN
-            (
-                SELECT
-                DISTINCT orders_history.order_transaction_id
-                FROM orders_cart_items
-                JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
-                JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
-                JOIN catalog_items AS item ON (item.id = depot.item_id)
-                JOIN catalog_products AS product ON (product.id = item.product_id)
-                WHERE ?
-            )
-            GROUP BY product_id, store_type_name
-            ORDER BY sum_point DESC
-            LIMIT ` + limit + `;`;
-
-        let data = { "product.id": productId };
-        let dbResult = await db.runQuery(sqlQuery, data);
-        return dbResult;
-    } else {
-        return [];
-    }
-}
-
-/**
- * Get similar products bought by the same customer
- * 
- * @param {*} productId 
- * @param {*} limit 
- */
-async function getSimilarProductsBySameCustomer(productId, limit) {
-    if (limit > 0) {
-        let sqlQuery = `
-            SELECT              
-            product_id,
-            store_type_name,
-            COUNT(*) AS sum_point
-            FROM
-                (
-                SELECT 
-                product.id AS product_id,
-                store_type.name AS store_type_name
-
-                FROM orders_cart_items
-                JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
-                JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
-                JOIN catalog_items AS item ON (item.id = depot.item_id)
-                JOIN catalog_products AS product ON (product.id = item.product_id)
-                JOIN catalog_store_types AS store_type ON (store_type.id = depot.store_type_id)
-                JOIN orders_transactions_history AS transaction ON (orders_history.order_transaction_id = transaction.id)
-
-                WHERE store_type.available = true
-                AND depot.available = true
-                AND product.id <> ` + productId + `
-                AND (
-                transaction.guest_id IN
-                (
-                    SELECT
-                    DISTINCT transaction.guest_id
-                    FROM orders_cart_items
-                    JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
-                    JOIN orders_transactions_history AS transaction ON (transaction.id = orders_history.order_transaction_id)
-                    JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
-                    JOIN catalog_items AS item ON (item.id = depot.item_id)
-                    JOIN catalog_products AS product ON (product.id = item.product_id)
-                    WHERE ?
-                )
-                )
-                UNION ALL
-                SELECT 
-                
-                product.id AS product_id,
-                store_type.name AS store_type_name
-
-                FROM orders_cart_items
-                JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
-                JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
-                JOIN catalog_items AS item ON (item.id = depot.item_id)
-                JOIN catalog_products AS product ON (product.id = item.product_id)
-                JOIN catalog_store_types AS store_type ON (store_type.id = depot.store_type_id)
-                JOIN orders_transactions_history AS transaction ON (orders_history.order_transaction_id = transaction.id)
-
-                WHERE store_type.available = true
-                AND depot.available = true
-                AND product.id <> ` + productId + `
-                AND (
-                transaction.user_id IN
-                (
-                    SELECT
-                    DISTINCT transaction.user_id
-                    FROM orders_cart_items
-                    JOIN orders_history ON (orders_cart_items.order_id = orders_history.id)
-                    JOIN orders_transactions_history AS transaction ON (transaction.id = orders_history.order_transaction_id)
-                    JOIN catalog_depot AS depot ON (depot.id = orders_cart_items.depot_id)
-                    JOIN catalog_items AS item ON (item.id = depot.item_id)
-                    JOIN catalog_products AS product ON (product.id = item.product_id)
-                    WHERE ?
-                )
-                )
-            ) AS T
-            GROUP BY product_id, store_type_name
-            ORDER BY sum_point DESC
-            LIMIT ` + limit + `;`;
-
-        let data = { "product.id": productId };
-        let dbResult = await db.runQuery(sqlQuery, [data, data]);
-        return dbResult;
-    } else {
-        return [];
-    }
-}
-
-/**
- * Get a single item by product id
- * 
- * @param {*} storeType
- * @param {*} productId 
- */
-async function getItemByProductId(storeType, productId) {
-    let sqlQuery = `
-        SELECT
-        product.id AS product_id,
-        type.name AS type,
-        subcategory.name AS subcategory,
-        category.name AS category,
-        store_type.name AS store_type_name,
-        listing.brand AS brand,
-        listing.name AS name,
-        product.image AS image,
-        depot.price AS price,
-        container.name AS container,
-        volume.name AS volume,
-        packaging.name AS packaging
-        
+        let products = await db.runQuery(`
+        SELECT DISTINCT
+            depot_id as id, catalog_store_types.name as name
         FROM
-        catalog_depot AS depot JOIN catalog_items AS item ON (depot.item_id = item.id)
-        JOIN catalog_products AS product ON (item.product_id = product.id)
-        JOIN catalog_listings AS listing ON (product.listing_id = listing.id)
-        JOIN catalog_types AS type ON (listing.type_id = type.id)
-        JOIN catalog_subcategories AS subcategory ON (type.subcategory_id = subcategory.id)
-        JOIN catalog_categories AS category ON (subcategory.category_id = category.id)
-        JOIN catalog_store_types AS store_type ON (depot.store_type_id = store_type.id)
-        JOIN catalog_packaging_containers AS container ON (container.id = product.container_id)
-        JOIN catalog_packaging_packagings AS packaging ON (item.packaging_id = packaging.id)
-        JOIN catalog_packaging_volumes AS volume ON (volume.id = item.volume_id)
+            orders_cart_items
+        JOIN 
+            orders_history 
+        ON
+            orders_history.id = orders_cart_items.order_id
+        JOIN
+            catalog_store_types
+        ON 
+            catalog_store_types.id = orders_history.store_type
+        WHERE
+            depot_id NOT LIKE '${productId}%'
+        AND
+            catalog_store_types.available = TRUE
+        AND 
+            order_transaction_id 
+        IN 
+            (${data.toString()});`);
 
-        WHERE store_type.available = true
-        AND ? AND ?
-        
-        ORDER BY price
-        LIMIT 1`;
+        if (products) {
+            for (let k in products) {
+                if (newRegEx.test(products[k].id)) {
+                    let fullIdArray = products[k].id.split('-');
+                    let searchId = fullIdArray[0] + '-' + fullIdArray[1];
+                    finalResult.push(await MDB.models[products[k].name].findById(searchId).exec());
+                }
+            }
+        }
+    }
 
-    let data1 = { "store_type.name": storeType };
-    let data2 = { "product.id": productId };
-    let dbResult = await db.runQuery(sqlQuery, [data1, data2]);
-    return dbResult[0];
+    return finalResult;
+}
+
+/**
+ * Creater random array of products from random stores,
+ * categories and products
+ */
+async function getRandomArrayOfProducts(limit) {
+    let productsArray = [];
+    let knownNumbers = [];
+    let chosenProductIds = [];
+    let counter = 0, safetyBreak = 0;
+    let availableStoreTypes = await db.selectAllWhere(db.tables.catalog_store_types, { available: true });
+
+    if (availableStoreTypes && availableStoreTypes.length > 0) {
+        while (counter < limit && safetyBreak < 100) {
+            let randomNumber = getRandomNmber(availableStoreTypes.length - 1, knownNumbers);
+            knownNumbers.push(randomNumber);
+            let selectedStore = availableStoreTypes[randomNumber];
+            let product = await MDB.models[selectedStore.name].aggregate([{ $sample: { size: 1 } }]).exec();
+            if (product.length > 0 && !chosenProductIds.includes(product[0]._id) && product) {
+                productsArray.push(product[0]);
+                chosenProductIds.push(product[0]._id);
+                counter++;
+            }
+            safetyBreak++;
+        }
+    }
+
+    return productsArray;
+}
+
+async function getFormattedBanners(banners) {
+    let result = [];
+
+    for (let i = 0; i < banners.length; i++) {
+        let tmpProductId = banners[i].product_id;
+        delete banners[i].product_id;
+        if (tmpProductId == null) {
+            banners[i].product = undefined;
+        } else {
+            let tmpProduct = await getProductInfoById(tmpProductId);
+            if (!tmpProduct) {
+                banners[i].product = undefined;
+            } else {
+                banners[i].product = {
+                    product_id: tmpProductId,
+                    brand: tmpProduct.brand,
+                    name: tmpProduct.name
+                };
+            }
+        }
+        result.push(banners[i]);
+    }
+
+    return result;
+}
+
+async function getProductInfoById(productId) {
+    let sqlQuery = `
+        SELECT *
+        FROM catalog_listings AS listing JOIN catalog_products AS product ON (listing.id = product.listing_id)
+        WHERE ?;`;
+
+    let data = { "product.id": productId };
+
+    let tmpResult = await db.runQuery(sqlQuery, data);
+
+    if (tmpResult.length > 0) {
+        return tmpResult[0];
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Format specials
+ * 
+ * @param {*} specials 
+ */
+async function getFormattedSpecials(specials) {
+    let result = {};
+    let tmpSpecialType = "";
+    let tmpSpecialTypeDisplay = "";
+
+    for (let x = 0; x < specials.length; x++) {
+        let mongoProduct = await MDB.models[specials[x]["store_type_name"]].findById(specials[x]["product_id"]).exec();
+        let product = mongoProduct.toObject();
+
+        tmpSpecialType = specials[x].special_types_api_name;
+        tmpSpecialTypeDisplay = specials[x].special_types_display_name;
+
+        if (!result.hasOwnProperty(tmpSpecialType)) {
+            result[tmpSpecialType] = {
+                "display_name": tmpSpecialTypeDisplay,
+                "api_name": tmpSpecialType,
+                "products": []
+            };
+        }
+        product["store_name"] = specials[x]["store_type_name"];
+        result[tmpSpecialType].products.push(product);
+    }
+    return result;
+}
+
+/**
+ * Returns random number between 0 and limit (including)
+ * 
+ * @param {*} limit
+ * @param {*} exclusionArray numbers to avaoid
+ */
+function getRandomNmber(limit, exclusionArray) {
+    let i = 0;
+    while (i < 100 || exclusionArray - 1 == limit) {
+        let generated = Math.floor(Math.random() * (limit + 1));
+        if (exclusionArray.length == 0 || !exclusionArray.includes(generated)) {
+            return generated;
+        }
+        i++;
+    }
+
+    return Math.floor(Math.random() * (limit + 1));
 }
 
 module.exports = pub;

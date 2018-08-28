@@ -23,6 +23,7 @@
         border-radius: 20px;
         color: rgb(42, 81, 145);
     }
+    z-index: 11;
 }
 
 .user-signed-btn{
@@ -39,6 +40,7 @@ body {
     letter-spacing: 0.025em;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
 }
 
 footer {

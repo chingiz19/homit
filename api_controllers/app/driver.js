@@ -3,7 +3,6 @@
  */
 
 let router = require("express").Router();
-let path = require("path");
 
 const driverStatus = {
     ONLINE: "online",

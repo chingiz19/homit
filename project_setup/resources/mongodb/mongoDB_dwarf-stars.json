@@ -1,0 +1,191 @@
+[
+    {
+        "_id": "7-1",
+        "brand": "Dwarf Stars",
+        "name": "Originals",
+        "container": "stand up pouch",
+        "tax": 1,
+        "images": {
+            "image_catalog": "sup_1349.jpeg",
+            "images_all": [
+                "sup_1349.jpeg",
+                "ntr_sup_1349.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Chocolates & Bars",
+            "category_name": "chocolates-and-bars",
+            "category_image": "chocolates-and-bars.jpeg",
+            "category_cover": "7_chocolates-and-bars.jpg"
+        },
+        "subcategory": "Chocolates",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liOrganic pumpkin seed butter, dry roasted chickpeas, vegan dark chocolate, icing sugar, cocoa butter, himalayan sea salt. butter extract, vanilla extractd_ht_liht_liht_bCONTAINS:d_ht_b Corn starchd_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liDry roasted chickpeas covered in a rich pumpkin seed butter filling, white & dark vegan chocolate (Available in a plain finish or lustre dusted)d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "7-1-1",
+                "si_unit_size": 0.12,
+                "si_unit": "kg",
+                "preffered_unit_size": "120",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "_id": "7-1-1-1",
+                        "h_value": 1,
+                        "price": 11.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Dwarf Stars Originals",
+        "store": {
+            "name": "dwarf-stars",
+            "display_name": "Dwarf Stars",
+            "image_url": "dwarf-stars.jpg"
+        },
+        "namebrand": "Originals Dwarf Stars"
+    },
+    {
+        "_id": "7-2",
+        "brand": "Dwarf Stars",
+        "name": "Pumpkin Seed Butter Cups",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "bg_1350.jpeg",
+            "images_all": [
+                "bg_1350.jpeg",
+                "ntr_bg_1350.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Chocolates & Bars",
+            "category_name": "chocolates-and-bars",
+            "category_image": "chocolates-and-bars.jpeg",
+            "category_cover": "7_chocolates-and-bars.jpg"
+        },
+        "subcategory": "Chocolates",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liCocoa butter, dry roasted organic pumpkin seeds, icing sugar, dark chocolate, vanilla extract, himalayan sea saltd_ht_liht_liht_bCONTAINS:d_ht_b Corn starchd_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liPumpkin seed butter filling covered in a vegan dark chocolate.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "7-2-1",
+                "si_unit_size": 0.042,
+                "si_unit": "kg",
+                "preffered_unit_size": "42",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "_id": "7-2-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Dwarf Stars Pumpkin Seed Butter Cups",
+        "store": {
+            "name": "dwarf-stars",
+            "display_name": "Dwarf Stars",
+            "image_url": "dwarf-stars.jpg"
+        },
+        "namebrand": "Pumpkin Seed Butter Cups Dwarf Stars"
+    },
+    {
+        "_id": "7-3",
+        "brand": "Dwarf Stars",
+        "name": "PumpKING Protein Balls",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "bg_1351.jpeg",
+            "images_all": [
+                "bg_1351.jpeg",
+                "ntr_bg_1351.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Chocolates & Bars",
+            "category_name": "chocolates-and-bars",
+            "category_image": "chocolates-and-bars.jpeg",
+            "category_cover": "7_chocolates-and-bars.jpg"
+        },
+        "subcategory": "Nutrition & Protein Bars",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liOrganic pumpkin seed butter, organic pumpkin seed protein powder, gluten free rolled oats, organic maple syrup, shredded coconut, cocoa butter, organic whole brown flaxseeds, himalayan sea saltd_ht_liht_liht_bMAY CONTAIN:d_ht_b Corn starchd_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liPumpkin seed protein powder energy balls that pack 10 grams of clean protein per ball.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "7-3-1",
+                "si_unit_size": 0.06,
+                "si_unit": "kg",
+                "preffered_unit_size": "60",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "_id": "7-3-1-1",
+                        "h_value": 1,
+                        "price": 5.49,
+                        "available": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "brandname": "Dwarf Stars PumpKING Protein Balls",
+        "store": {
+            "name": "dwarf-stars",
+            "display_name": "Dwarf Stars",
+            "image_url": "dwarf-stars.jpg"
+        },
+        "namebrand": "PumpKING Protein Balls Dwarf Stars"
+    }
+]

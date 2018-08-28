@@ -2,190 +2,22 @@
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-    <url>
-       <loc>https://www.homit.ca/main</loc> 
-        <changefreq>monthly</changefreq>
-        <priority>1.0</priority>
-    </url>
+<url>
+  <loc>https://www.homit.ca/main</loc>
+  <changefreq>monthly</changefreq>
+  <priority>1.0</priority>
+</url>
 
-    <url>
-        <loc>https://www.homit.ca/hub/liquor-station/beer</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
+<url>
+  <loc>https://www.homit.ca/about</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
 
-    <url>
-        <loc>https://www.homit.ca/hub/liquor-station/cider-and-cooler</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/liquor-station/wine</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/liquor-station/spirit</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/liquor-station/liqueur</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/liquor-station/party-supply</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/snack-vendor/snacks</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/snack-vendor/beverages</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-     <url>
-        <loc>https://www.homit.ca/hub/snack-vendor/everyday-needs</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/baked-goods</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/beverages</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/canned-and-jarred</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/coffee-and-tea</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/condiments</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/confectionery</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/dairy</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/deli-and-meat</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/dry-packaged</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/frozen-food</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/grains-and-legumes</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/herbs-and-spices</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/oil-and-vinegar</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/pasta-and-baking</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/linas-italian-market/snacks</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/local-market/dwarf-stars</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/local-market/borderland-food-co</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/local-market/pure-foods-fresh</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/hub/local-market/honey-and-bloom</loc> 
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/about</loc> 
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-
-    <url>
-        <loc>https://www.homit.ca/contact</loc> 
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
+<url>
+  <loc>https://www.homit.ca/contact</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
 
 </urlset>

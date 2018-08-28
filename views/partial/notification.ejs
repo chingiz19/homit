@@ -12,7 +12,7 @@
                     </button>
                     <div layout="column">
                         <li>
-                            <img class="addItem_img" ng-src={{item.product.image}}>
+                            <img class="addItem_img" ng-src="/resources/images/products/{{ item.product.store.name }}/{{ item.product.images.image_catalog }}">
                         </li>
                     </div>
                     <ul class="addItem_ul">
@@ -20,7 +20,7 @@
                             <span>{{item.product.brand}}</span>
                         </li>
                         <li class="addItem_ulB">
-                            <span>{{item.product.volume}} &#8202X{{item.product.packaging}}</span>
+                            <span>{{item.product.selected.size}} &#8202X{{item.product.selected.pack}}</span>
                         </li>
                     </ul>
                 </div>

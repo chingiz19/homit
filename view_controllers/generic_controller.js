@@ -66,6 +66,12 @@ router.get('/main', function (req, res, next) {
 	res.render("main.ejs", req.options.ejs);
 });
 
+router.get('/search/:searchText', function (req, res, next) {
+	req.options.ejs["title"] = "Homit | Search Results";
+	req.options.ejs["search_text"] = req.params.searchText;
+	res.render("search.ejs", req.options.ejs);
+});
+
 router.get("/checkout", function (req, res, next) {
 	req.options.ejs["title"] = "Checkout";
 	req.options.ejs['stripeToken'] = process.env.STRIPE_TOKEN_PUB;
@@ -138,6 +144,8 @@ router.get("/verify/:token", async function (req, res) {
 				req.options.ejs["error"] = false;
 				req.options.ejs.emailVerified = true;
 				displayMessage = "Your account has been successfully verified. Let's get rolling!";
+				let userObject = await User.findUser(result.email);
+				await Auth.signSession(req, userObject, Auth.RolesJar.CUSTOMER);
 				let couponAssigned = await Coupon.assignCouponToUser(userId, Coupon.CODES.DEFAULT_SIGNUP, 1);
 				if (couponAssigned) {
 					displayMessage += "<br> You just received a welcome gift. Go to My Coupons to redeem your offer.";
@@ -159,25 +167,14 @@ router.use(require("./viewAuth_controller.js"));
 router.use(require("./adminAuth_controller.js"));
 
 function routeToNewHub(req, res, next) {
-	let urlArray = req.url.split("/");
-	if (urlArray[3] == 'chocolate-and-bar') {
-		let newUrl = "/hub/local-market/" + urlArray[2];
-		return res.redirect(newUrl);
+	let urlArray = req.url;
+
+	if(urlArray == "/catalog/linas-italian-market/baked-goods"){
+		return res.redirect("/hub/linas-italian-market");
+	} else if(urlArray == "/catalog/dwarf-stars/chocolate-and-bar"){
+		return res.redirect("/hub/dwarf-stars/chocolates-and-bars");
 	}
-	if (urlArray[1] == "catalog") {
-		let newUrl = "/hub/";
-		if (urlArray.length == 4) {
-			newUrl += urlArray[2];
-		} else {
-			for (let i = 2; i < urlArray.length; i++) {
-				newUrl += urlArray[i];
-				if (i != urlArray.length - 1) {
-					newUrl += "/";
-				}
-			}
-		}
-		return res.redirect(newUrl);
-	}
+
 	next();
 }
 

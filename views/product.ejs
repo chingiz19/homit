@@ -31,7 +31,6 @@
             </div>
 <!--googleon: snippet-->
             <div class="product-content" itemscope itemtype="http://schema.org/Product">
-                <input id="recommendedProducts" class="none" value="<%= recommended_products %>">
                 <input id="product" class="none" value="<%= product %>">
                 <input id="product-images" class="none" value="<%= product_images %>">
                 <h2 class="product-name-h2-mob">
@@ -45,23 +44,20 @@
                     <section>
 <!--googleoff: snippet-->
                         <div class="col-md-6 product-img box-center" layout="column">
-                            <section class="web-location-sec">
-                                <a class="web-location-a" href="/main" ng-cklick="navHubClicked()" target="_self">Store Hub</a>
-                                <span class="loc-errow"> > </span>
-                                <a class="web-location-a" href="/hub/{{ product.store_type_name }}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
-                                <span class="loc-errow"> > </span>
-                                <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" ng-click="navCatClicked(product.category)" target="_self">{{ product.category }}</a>
-                                <span class="loc-errow"> > </span>
-                                <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
+                            <section class="location-map-web a-tag-button">
+                                <a href="/main" ng-cklick="navHubClicked()" target="_self">Store Hub</a>
+                                <a href="/hub/{{ product.store_type_name }}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
+                                <a href="/hub/{{ product.store_type_name }}/{{ product.category.category_name }}" ng-click="navCatClicked(product.category.category_name)" target="_self">{{ product.category.category_display_name }}</a>
+                                <a ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                             </section>
                             <div class="selected-img-frame box-center">
-                                <img class="product-image-selected" ng-src="{{ selectedImage }}">
+                                <img class="product-image-selected" ng-src="/resources/images/products/{{ product.store_type_name }}/{{ selectedImage }}">
                             </div>
                             <div class="product-image-line"></div>
                             <div layout="row">
                                 <div ng-repeat="image in productImages" class="product-img-list">
                                     <img class="product-image-to-select" ng-style="(image == selectedImage) && {'border':'1px solid rgba(0,0,0,0.1)', 'border-radius' : '4px'}"
-                                        ng-click="selectImage(image)" ng-src="{{ image }}">
+                                        ng-click="selectImage(image)" ng-src="/resources/images/products/{{ product.store_type_name }}/{{ image }}">
                                 </div>
                             </div>
                         </div>
@@ -75,14 +71,11 @@
                                     <%= product_name %>
                                 </span> - 45-Minutes Delivery</h2>
 <!--googleoff: snippet-->
-                            <section class="web-location-sec-mob">
-                                <div>
+                            <section class="location-map-mob">
+                                <div class="a-tag-button">
                                     <a class="web-location-a" href="/main" ng-cklick="navHubClicked()" target="_self">Store Hub</a>
-                                    <span class="loc-errow"> > </span>
                                     <a class="web-location-a" href="/hub/{{product.store_type_name}}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
-                                    <span class="loc-errow"> > </span>
-                                    <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category }}" ng-click="navCatClicked(product.category)" target="_self">{{ product.category }}</a>
-                                    <span class="loc-errow"> > </span>
+                                    <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category.category_name }}" ng-click="navCatClicked(product.category.category_name)" target="_self">{{ product.category.category_display_name }}</a>
                                     <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
                                 </div>
                             </section>
@@ -103,13 +96,13 @@
                                             </div>
                                             <ul layout="row">
                                                 <li class="size-box-left text-verflow">
-                                                    {{ product.product_variants.all_volumes[product.product_variants.selectedVolume - 1] }}
+                                                    {{ product.variance[product.selectedVolume - 1].preffered_unit_size +  product.variance[product.selectedVolume - 1].preffered_unit}}
                                                 </li>
                                                 <li class="size-box-middle">
-                                                    {{ product.product_variants.all_volumes[product.product_variants.selectedVolume] }}
+                                                    {{ product.variance[product.selectedVolume].preffered_unit_size +  product.variance[product.selectedVolume].preffered_unit }}
                                                 </li>
                                                 <li class="size-box-right text-verflow">
-                                                    {{ product.product_variants.all_volumes[product.product_variants.selectedVolume + 1] }}
+                                                    {{ product.variance[product.selectedVolume + 1].preffered_unit_size +  product.variance[product.selectedVolume + 1].preffered_unit }}
                                                 </li>
                                             </ul>
                                         </div>
@@ -125,17 +118,18 @@
                                             </div>
                                             <ul layout="row">
                                                 <li class="size-box-left text-verflow">
-                                                    {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack - 1 ] + ' '}}
+                                                    {{ product.variance[product.selectedVolume].packs[product.selectedPack - 1].h_value + ' '}}
                                                 </li>
                                                 <li class="size-box-middle">
-                                                    {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack ] + ' '}}
+                                                    <span ng-show="product.variance[product.selectedVolume].packs[product.selectedPack].h_value == 1">Single</span>
+                                                    <span ng-show="!(product.variance[product.selectedVolume].packs[product.selectedPack].h_value == 1)">{{ product.variance[product.selectedVolume].packs[product.selectedPack].h_value + ' '}}</span>
                                                 </li>
                                                 <li class="size-box-right text-verflow">
-                                                    {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack + 1] + ' '}}
+                                                    {{ product.variance[product.selectedVolume].packs[product.selectedPack + 1].h_value + ' '}}
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="selected-product-price">C${{' ' + product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]][product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack]].price }}
+                                        <div class="selected-product-price">C${{' ' + product.variance[product.selectedVolume].packs[product.selectedPack].price }}
                                         </div>
                                         <button class="add-to-cart hover-raise" ng-click="addToCart(product)">Add To Basket</button>
                                     </section>
@@ -143,8 +137,8 @@
                                         <h3 class="product-details-header sub-header">Product Details</h3>
                                         <ul class="bullet-description">
                                             <li>
-                                                <span class="bold">Product:</span> {{ product.product_variants[product.product_variants.all_volumes[product.product_variants.selectedVolume]].all_packagings[product.product_variants.selectedPack] }} x {{ product.product_variants.all_volumes[product.product_variants.selectedVolume] }}
-                                                <span class="product-details-container">{{ product.product_variants.container }}</span>
+                                                <span class="bold">Product:</span> <span ng-show="product.variance[product.selectedVolume].packs[product.selectedPack].h_value > 1">{{ product.variance[product.selectedVolume].packs[product.selectedPack].h_value + " x " }}</span>{{ product.variance[product.selectedVolume].preffered_unit_size +  product.variance[product.selectedVolume].preffered_unit }}
+                                                <span class="product-details-container">{{ product.container}}</span>
                                             </li>
 <!--googleon: snippet-->
                                             <%- store_type_display_name %>
@@ -152,13 +146,12 @@
                                                     <span class="bold">Location:</span>
                                                     <span itemprop="additionalProperty">Calgary, AB</span>
                                                 </li>
-                                                <%- product_type %>
-                                                    <%- country_of_origin %>
-                                                        <%- producer %>
-                                                            <%- alcohol_content %>
-                                                                <li>
-                                                                    <a href="<%= see_more_url %>" target="_self" itemprop="isSimilarTo">See More Similar Products</a>
-                                                                </li>
+                                                <%- country_of_origin %>
+                                                    <%- producer %>
+                                                        <%- alcohol_content %>
+                                                            <li>
+                                                                <a href="<%= see_more_url %>" target="_self" itemprop="isSimilarTo">See More Similar Products</a>
+                                                            </li>
                                         </ul>
                                     </div>
                         </div>
@@ -177,12 +170,13 @@
                                     <a ng-repeat="item in recommended_products" href="{{item.product_url}}" ng-cklick="peopleHomitPrdClicked(item)" target="_self">
                                         <ul class="recomended-item-ul">
                                             <li class="also-image-li box-center">
-                                                <img ng-src="/resources/images/products/{{ item.category }}/{{ item.image }}">
+                                                <img ng-src="/resources/images/products/{{ item.store.name }}/{{ item.images.image_catalog }}">
                                             </li>
                                             <li class="recomended-item-brand">{{ item.brand }}</li>
-                                            <li class="recomended-item-name" ng-if="item.packaging > 1"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.packaging + "x" + item.volume + ")"}}</span></span></li>
-                                            <li class="recomended-item-name" ng-if="!(item.packaging > 1)"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.volume + ")"}}</span></span></li>
-                                            <li class="item-price">{{ item.price }}
+                                            <li class="recomended-item-name" ng-if="item.variance[0].packs[0].h_value > 1 && item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].packs[0].type + "x" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span></span></li>
+                                            <li class="recomended-item-name" ng-if="!(item.variance[0].packs[0].h_value > 1) && item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].preffered_unit_size + item.variance[0].preffered_unit + ")"}}</span></span></li>
+                                            <li class="recomended-item-name" ng-if="!item.variance[0].preffered_unit"><span>{{ item.name }}<span class="recomended-item-size"> {{ "(" + item.variance[0].preffered_unit_size + ")"}}</span></span></li>
+                                            <li class="item-price">{{ item.variance[0].packs[0].price }}
                                                 <span>C$</span>
                                             </li>
                                         </ul>

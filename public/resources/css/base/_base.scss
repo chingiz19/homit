@@ -142,3 +142,166 @@ li {
 .email-check-div:focus{
     outline: 0;
 }
+
+// Store or Category button
+.stores-div, .categories-div{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 auto 50px auto;
+    padding: 0 10%;
+
+    a {
+        width: 200px;
+        box-shadow: 0 0px 4px 1px rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+
+        img {
+            width: 200px;
+            height: 270px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        p {
+            margin: 0;
+            padding: 7px;
+            font-size: 17px;
+            color: #68686b;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
+
+    a:hover {
+        -webkit-transform: translateY(-2px);
+        transform: translateY(-2px);
+    }
+
+    a, a:hover, a:active, a:visited, a:focus {
+        text-decoration: none;
+    }
+
+    z-index: 9;
+}
+
+//Background stripes
+.stripes {
+    position: absolute;
+    width: 100%;
+    display: grid;
+    -webkit-transform-origin: 0;
+    transform-origin: 0;
+    z-index: 0;
+}
+
+//Don't display md-input-container label when input focused
+md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {
+    display: none;
+}
+
+md-input-container.md-input-focused .md-input, md-input-container .md-input.ng-invalid.ng-dirty{
+    border-width: 0 0 1px;
+    border-color: rgba(0, 0, 0, 0.45) !important;
+    padding-bottom: 1px !important;
+}
+
+//Upon valid input makes input bottom-border green
+md-input-container .ng-valid.ng-not-empty, #autocompleteAddressInputBox .ng-valid.ng-not-empty {
+    border-bottom-width: 1px !important;
+    padding-bottom: 1px !important;
+}
+
+//Recomended products section
+
+.rec-prod-hdr-text {
+    margin: 0 3px 0 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 1);
+    z-index: 1;
+}
+
+.recomended-products {
+    position: relative;
+    right: calc((100vw - 100%)/2);
+    margin-top: 80px;
+    margin-bottom: 60px;
+    background-color: rgba(255, 255, 255, 1);
+    width: 100vw;
+}
+
+.recomended-products-header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.recomended-products-header-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    border-bottom: 1px solid rgba(220, 220, 220, 0.5);
+    z-index: 0;
+}
+
+.recomended-item{
+    display: flex;
+}
+
+.recomended-item-div {
+    position: relative;
+    display: inline-flex;
+    overflow-x: auto;
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+    a{
+        color: initial;
+    }
+    a, a:hover, a:active, a:visited, a:focus {
+        text-decoration: none;
+    }
+}
+
+.recomended-item-ul {
+    position: relative;
+    width: 165px;
+    height: 205px;
+    padding: 10px;
+    background-color: #fff;
+    margin: 5px;
+    box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+    transition: all 0.4s ease;
+    .recomended-item-brand{
+        margin-top: 3px;
+        font-size: 11px; 
+        color: #81848c;
+        letter-spacing: 0.2px;
+    }
+    .recomended-item-name {
+        height: 60px !important;
+        text-align: left; 
+        font-size: 14px;
+        color: #3e4248;
+    }
+}
+
+.recomended-item-ul:hover{
+    opacity: 0.7;
+    box-shadow: 0 0px 4px 2px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s ease;
+}
+
+.also-image-li img {
+    padding-bottom: 5px;
+    width: 100px;
+    height: 100px;
+}
