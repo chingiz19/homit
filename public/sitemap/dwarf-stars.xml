@@ -2,22 +2,22 @@
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-    <url>
-        <loc>https://homit.ca/hub/product/locally-made/dwarf-stars-originals/7647</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
+<url>
+  <loc>https://homit.ca/hub/product/dwarf-stars/dwarf-stars-originals/1</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
 
-    <url>
-        <loc>https://homit.ca/hub/product/locally-made/dwarf-stars-pumpkin-seed-butter-cups/7648</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
+<url>
+  <loc>https://homit.ca/hub/product/dwarf-stars/dwarf-stars-pumpkin-seed-butter-cups/2</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
 
-    <url>
-        <loc>https://homit.ca/hub/product/locally-made/dwarf-stars-pumpking-protein-balls/7649</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
+<url>
+  <loc>https://homit.ca/hub/product/dwarf-stars/dwarf-stars-pumpking-protein-balls/3</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
 
 </urlset>
