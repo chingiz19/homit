@@ -110,5 +110,7 @@ function clearProductUrl(path) {
     return tempPath;
 };
 
+//Will further add create store and add product functionality
+
 module.exports = pub;
 
