@@ -1,7 +1,10 @@
 ##format
 mongoimport --db [db_name]  --collection [collection_name] --type json --file [file_name] --jsonArray	
 
-##Run this script after some adjustments
+##Run this script after some adjustments, IF NEEDED
+
+# Optional params if auth=true [-u homit_user -p "secretPass"] e.g. mongoimport -u homit_user -p "secretPass" --db homit_products  --collection dwarf-stars --type json --file mongoDB_dwarf-stars.json --jsonArray &
+
 mongoimport --db homit_products  --collection dwarf-stars --type json --file mongoDB_dwarf-stars.json --jsonArray &
 mongoimport --db homit_products  --collection borderland-food-co --type json --file mongoDB_borderland-food-co.json --jsonArray & 
 mongoimport --db homit_products  --collection honey-and-bloom --type json --file mongoDB_honey-and-bloom.json --jsonArray & 

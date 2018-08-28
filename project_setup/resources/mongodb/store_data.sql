@@ -1,7 +1,7 @@
 use homit;
 
 -- Catalog - Store Unions
-INSERT INTO 'catalog_store_unions' (id, name, display_name, image, description_text) VALUES(1, "locally-made", "Local Market", "locally-made.png", "Just like farmers' market! All your favorite local stores in one place and all year round. Enjoy our quick home delivery service for one of the lowest delivery prices in the city.");
+INSERT INTO `catalog_store_unions` (id, name, display_name, image, description_text) VALUES(1, "locally-made", "Local Market", "locally-made.png", "Just like farmers' market! All your favorite local stores in one place and all year round. Enjoy our quick home delivery service for one of the lowest delivery prices in the city.");
 
 -- Catalog - Store Type
 INSERT INTO `catalog_store_types`(id, name, display_name, image, available, del_fee_primary, del_fee_secondary, union_id, rate_id) VALUES(9,"pure-foods-fresh", "Pure Foods Fresh", "pure-foods-fresh.jpg", TRUE, 4.99, 2.99, 1, 4);
