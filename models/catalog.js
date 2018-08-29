@@ -556,9 +556,9 @@ pub.findNestedProductPrice = function (product, ids) {
             if (variance._id == searchId && variance.packs) {
                 let packs = variance.packs;
                 let localSize = variance.preffered_unit_size + variance.preffered_unit;
+                searchId += '-' + ids[2];
                 for (let l in packs) {
                     let pack = packs[l];
-                    searchId += '-' + ids[2];
                     if (pack._id == searchId && pack.price) {
                         pack.size = localSize;
                         return pack;
