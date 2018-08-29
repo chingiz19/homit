@@ -124,9 +124,9 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                             if (variance._id == searchId && variance.packs) {
                                 let packs = variance.packs;
                                 let localSize = variance.preffered_unit_size + variance.preffered_unit;
+                                searchId += '-' + idArray[3];
                                 for (let l in packs) {
                                     let pack = packs[l];
-                                    searchId += '-' + idArray[3];
                                     if (pack._id == searchId && pack.price) {
                                         pack.size = localSize;
                                         return pack;
