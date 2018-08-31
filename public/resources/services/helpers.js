@@ -133,7 +133,7 @@ app.service('helpers', function () {
 
             if (rawCoupons[coupon].couponExpiry) {
                 let tmpDate = new Date(rawCoupons[coupon].couponExpiry);
-                localObject.expiryDate = tmpDate.getDay() + "/" + tmpDate.getMonth() + "/" + tmpDate.getFullYear();
+                localObject.expiryDate = pub.getMonthString(tmpDate.getMonth()) + " " + tmpDate.getDate() + ", " + tmpDate.getFullYear();
             }
 
             if (rawCoupons[coupon].couponCode) {
@@ -151,6 +151,41 @@ app.service('helpers', function () {
         }
 
         return localArray;
+    };
+
+    /**
+     * Converts month int to 3 letters month name
+     * @param {string} data 
+     */
+    pub.getMonthString = function(data) {
+        switch (data) {
+            case 0:
+                return "Jan";
+            case 1:
+                return "Feb";
+            case 2:
+                return "Mar";
+            case 3:
+                return "Apr";
+            case 4:
+                return "May";
+            case 5:
+                return "Jun";
+            case 6:
+                return "Jul";
+            case 7:
+                return "Aug";
+            case 8:
+                return "Sep";
+            case 9:
+                return "Oct";
+            case 10:
+                return "Nov";
+            case 11:
+                return "Dec";
+            default:
+                return "Invalid Month";
+        }
     };
 
     /**

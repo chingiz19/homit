@@ -47,11 +47,16 @@
 #### Available commands
 	Note: no spaces around '='
 
-		# Database
+		# Database - MySQL
 		DB_HOST=
 		DB_USER=
 		DB_PASS=
 		DB_NAME=
+
+		# Database - MongoDB
+		DB_NAME_MONGO=
+		DB_USER_NAME=
+		DB_PASSWORD=
 
 		# Twilio
 		TWILIO_SID=

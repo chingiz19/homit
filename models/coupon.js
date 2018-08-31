@@ -293,12 +293,8 @@ pub.getStoreCoupons = async function (storeType) {
     AND
         ?;
     `;
-        let data = {
-            "storeTypes.name": storeType,
-        }
 
-        let result = await db.runQuery(sqlQuery, data);
-        return result;
+        return await db.runQuery(sqlQuery, { "storeTypes.name": storeType });
     }
     return false;
 }
