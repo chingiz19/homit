@@ -115,7 +115,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                  * @param {string} UID
                  */
                 scope.findNestedProductPrice = function (product, UID) {
-                    let idArray = UID.split("-")
+                    let idArray = UID.split("-");
                     if (product && idArray && product.variance && product.tax) {
                         let selectedvariances = product.variance;
                         for (let k in selectedvariances) {
@@ -136,7 +136,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                         }
                     }
                     return false;
-                }
+                };
 
                 /* Helper functions */
                 scope.plusItem = function (product) {

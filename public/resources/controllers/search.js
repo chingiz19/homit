@@ -26,7 +26,7 @@ app.controller("searchController", function ($location, $scope, $cookies, $windo
         }, function errorCallback(response) {
             notification.addErrorMessage("Ups.. Error loading page");
         });
-    }
+    };
 
     
     /**

@@ -16,24 +16,24 @@ app.service('helpers', function () {
         "ht_ul": "<ul>",
         "d_ht_li": "</li>",
         "ht_li": "<li>"
-    }
+    };
 
     pub.convertHomitTags = function (string) {
         let tmpString = string;
-        for (tag in homit_tags) {
+        for (let tag in homit_tags) {
             tmpString = tmpString.replace(new RegExp(tag, 'g'), homit_tags[tag]);
         }
         return tmpString;
-    }
+    };
     
     pub.clearHomitTags = function (string) {
         if(!string) return;
         let tmpString = string;
-        for (tag in homit_tags) {
+        for (let tag in homit_tags) {
             tmpString = tmpString.replace(new RegExp(tag, 'g'), "");
         }
         return tmpString;
-    }
+    };
 
     pub.randomDigitGenerator = function () {
         return Math.floor(Math.random() * 90000000) + 10000000;
@@ -61,13 +61,13 @@ app.service('helpers', function () {
         if (inDate) {
             return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
         }
-    }
+    };
 
     pub.hh_mm = function(inDate) {
         if (inDate) {
             return parseInt(inDate.slice(12, 13), 10) + ":" + parseInt(inDate.slice(15, 16), 10);
         }
-    }
+    };
 
     /**
      * Builds product url
@@ -208,7 +208,7 @@ app.service('helpers', function () {
                 "ft": 3.28084,
                 "cm": 100
             }
-        }
+        };
 
         return (Math.round(product_variant.size * unit_list[product_variant.unit][product_variant.preffered_unit]));
 

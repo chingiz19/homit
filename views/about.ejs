@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html ng-app="mainModule">
 
 <head>
@@ -7,11 +8,12 @@
     <%- include('partial/imports')%>
         <%- include('partial/header', {title: title}); %>
             <link href="/resources/css/about.css" rel="stylesheet">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs"></script>
             
 </head>
 <img class="none" ng-src="/resources/images/non-catalog-image/pages/about-page.jpg">
 
-<body ng-cloak>
+<body ng-controller="aboutController" ng-cloak>
     <div class="about-cover-div">
         <div class="about-cover"></div>
     </div>
@@ -63,14 +65,21 @@
         <br>
         <br>
         <br>
-        <h1>Cities we are at</h1>
+        <h1 style="margin-bottom: 0px;">Cities We Serve</h1>
         <div class="who-seperation-line"></div>
         <span class="span-city">
-            <img ng-src="/resources/images/non-catalog-image/cities/calgary.jpg" width="335" height="150">
+            <img title="View map" ng-src="/resources/images/non-catalog-image/cities/calgary.jpg" width="335" height="150" ng-click="toggleMap('calgary')">
         </span>
+
+        <div id="map-wrapper" ng-class="mapWrapperClass">
+            <span ng-show="mapIsLoading">Loading...</span>
+            <div id="map" class="map" ng-show="!mapIsLoading"></div>
+        </div>
     </section>
     <% if (!production) { %>
         <script src="/resources/services/localStorage.js"></script>
+        <script src="/resources/services/mapServices.js"></script>
+        <script src="/resources/controllers/about.js"></script>
     <% } %>
 </body>
 
