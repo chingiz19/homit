@@ -86,6 +86,7 @@ pub.createOrder = async function (orderTransactionId, receivedStoreType, prices,
  * @param {*} products 
  */
 pub.insertProducts = async function (orderId, products) {
+    let finalResult = true;
     for (let key in products) {
         let data = {
             order_id: orderId,
@@ -95,9 +96,12 @@ pub.insertProducts = async function (orderId, products) {
             tax: products[key].tax
         };
         let result = await db.insertQuery(db.tables.orders_cart_items, data);
-        return result && true;
+
+        if (result == false) {
+            finalResult = false;
+        }
     }
-    return false;
+    return finalResult;
 }
 
 /**
