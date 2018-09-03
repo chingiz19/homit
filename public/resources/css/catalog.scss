@@ -230,8 +230,26 @@ button {
     transition: height 0.6s ease;
 }
 
+.category-div:focus[homit-title]:before, .category-div:focus[homit-title]:after,
+.filter-div:focus[homit-title]:before, .filter-div:focus[homit-title]:after,
+.sort-div:focus[homit-title]:before, .sort-div:focus[homit-title]:after{
+    opacity: 0;
+    visibility: hidden;
+}
+
+.category-div, .filter-div, .sort-div{
+    --header-border-top-clr: transparent;
+    --header-border-bottom-clr: #141414;
+    --header-border-right-clr: transparent;
+    --header-position-bottom: -0.2em; 
+    --body-position-bottom: -2.6em;
+}
+
 .category-div {
     padding-right: 10px;
+    --delay: 0.7s; 
+    --body-position-left: 14%; 
+    --header-position-left: 40%;
 }
 
 .category-div span {
@@ -252,6 +270,9 @@ button {
 
 .filter-div {
     padding: 0 10px;
+    --delay: 0.7s; 
+    --body-position-left: 0%; 
+    --header-position-left: 46%;
 }
 
 .filter-div span {
@@ -294,6 +315,9 @@ button {
 
 .sort-div {
     padding: 0 10px;
+    --delay: 0.7s; 
+    --body-position-left: 5%; 
+    --header-position-left: 46%;
 }
 
 .sort-div span {

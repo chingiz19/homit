@@ -68,7 +68,9 @@
         <h1 style="margin-bottom: 0px;">Cities We Serve</h1>
         <div class="who-seperation-line"></div>
         <span class="span-city">
-            <img title="View map" ng-src="/resources/images/non-catalog-image/cities/calgary.jpg" width="335" height="150" ng-click="toggleMap('calgary')">
+            <div ng-click="toggleMap('calgary')" homit-title="View map" homit-title-bottom>
+                <img ng-src="/resources/images/non-catalog-image/cities/calgary.jpg" width="335" height="150">
+            </div>
         </span>
 
         <div id="map-wrapper" ng-class="mapWrapperClass">

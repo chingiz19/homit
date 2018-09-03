@@ -1,0 +1,80 @@
+// Homit Tooltips
+[homit-title]:hover:after, [homit-title]:hover:before {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.1s ease var(--delay);
+}
+
+[homit-title]:after {
+    content: attr(homit-title);
+    position: absolute;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 6px 8px;
+    background-color: #141414;
+    color: #fff;
+    white-space: nowrap;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.1), 0 15px 35px 0 rgba(49, 49, 93, 0.1), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.1), 0 15px 35px 0 rgba(49, 49, 93, 0.1), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.1), 0 15px 35px 0 rgba(49, 49, 93, 0.1), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    z-index: 99999;
+    visibility: hidden;
+}
+
+[homit-title]:before {
+    content: "";
+    position: absolute;
+    border-bottom: 5px solid var(--header-border-bottom-clr);
+    border-top: 5px solid var(--header-border-top-clr);
+    border-left: 5px solid transparent;
+    border-right: 5px solid var(--header-border-right-clr);
+    opacity: 0;
+}
+
+[homit-title] {
+    position: relative;
+}
+
+//Text box appears at the top of parent element
+[homit-title-top]:after {
+    top: -3.2em;
+    left: var(--body-position-left);
+}
+
+[homit-title-top]:before {
+    top: -0.6em;
+    left: var(--header-position-left);
+}
+
+//Text box appears at the bottom of parent element
+[homit-title-bottom]:after {
+    bottom: var(--body-position-bottom);
+    left: var(--body-position-left);
+}
+
+[homit-title-bottom]:before {
+    bottom: var(--header-position-bottom);
+    left: var(--header-position-left);
+}
+
+//Text box appears at the right of parent element
+[homit-title-right]:after {
+    top: var(--body-position-top);
+    right: var(--body-position-right);
+}
+
+[homit-title-right]:before {
+    top: var(--header-position-top);
+    right: var(--header-position-right);
+}
+
+@media screen and (max-device-width: 768px) {
+    [homit-title]:before, [homit-title]:after {
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+}

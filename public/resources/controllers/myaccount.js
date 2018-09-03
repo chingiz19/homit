@@ -376,11 +376,20 @@ app.controller("myaccountController", function ($scope, $window, $timeout, local
     $scope.openCloseSidebar = function () {
         if (!$scope.sidebarOpen) {
             $('.sidebar-div').addClass('sidebar-div-grow');
+            window.addEventListener('click', closeSideBarOnClick, false);
         } else {
             $('.sidebar-div').removeClass('sidebar-div-grow');
+            window.removeEventListener('click', closeSideBarOnClick, false);
         }
         $scope.sidebarOpen = !$scope.sidebarOpen;
     };
+
+    function closeSideBarOnClick(evt) {
+        if (evt.target.className && evt.target.className.includes("sidebar-button") || $(evt.target).parents("#sidebar-button").length) return;
+        $timeout(function () {
+            $scope.openCloseSidebar();
+        }, 0);
+    }
 
     $scope.gotAddressResults = function () {
         var latLng = $scope.autocomplete.getLatLng();

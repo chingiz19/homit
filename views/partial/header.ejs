@@ -70,7 +70,7 @@
         </section>
 <!--googleon: snippet-->
         <section class="button-sec">
-            <button class="hub-btn" ng-click="showHubBoxFun()">
+            <button class="hub-btn" ng-click="showHubBoxFun()" homit-title="View Store List" homit-title-bottom>
                 Store-Hub
             </button>
 <!--googleoff: snippet-->
@@ -96,8 +96,7 @@
                 </span>
                 <%} else {%>
 <!--googleoff: snippet-->                    
-                    <button class="user-signed-btn fadeIn" ng-class="{'user-btn-notification': !isCouponSeen }" ng-click="showAccountBoxFun()"
-                        ng-cloak>
+                    <button class="user-signed-btn fadeIn" ng-class="{'user-btn-notification': !isCouponSeen }" ng-click="showAccountBoxFun()" homit-title="Profile and settings" homit-title-bottom ng-cloak>
                         <ng-md-icon icon="account_circle"></ng-md-icon>
                     </button>
                     <div id="hdrMyAcc" ng-if="showAccountBox" class="myAccount-box fadeIn-hdr">

@@ -158,11 +158,35 @@ nav {
     background-color: transparent;
     color: rgb(42, 81, 145);
     transition: all 0.3s ease;
+    
+    --delay: 0.5s; 
+    --body-position-left: -17%; 
+    --header-position-left: 46%;
+    --header-border-top-clr: transparent; 
+    --header-border-bottom-clr: #141414;
+    --header-border-right-clr: transparent;
+    --header-position-bottom: -0.8em; 
+    --body-position-bottom: -3.4em;
+}
+
+.hub-btn:focus[homit-title]:before, .hub-btn:focus[homit-title]:after,
+.user-signed-btn:focus[homit-title]:before, .user-signed-btn:focus[homit-title]:after{
+    opacity: 0;
+    visibility: hidden;
 }
 
 .user-signed-btn {
     background-color: transparent;
     border: none;
+
+    --delay: 0.5s; 
+    --body-position-left: -74%; 
+    --header-position-left: 40%;
+    --header-border-top-clr: transparent; 
+    --header-border-bottom-clr: #141414;
+    --header-border-right-clr: transparent;
+    --header-position-bottom: -0.8em;
+    --body-position-bottom: -3.4em;
 }
 
 .user-signed-btn ng-md-icon {

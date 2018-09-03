@@ -15,50 +15,50 @@
     <!-- Sidebar -->
     <aside class="sidebar-div hide-mobile">
         <div class="sidebar-default">
-            <div class="sidebar-button" ng-click="openCloseSidebar();">
+            <div id="sidebar-button" class="sidebar-button" ng-click="openCloseSidebar();">
                 <span>
                     <i style="transition: transform 0.6s ease;" class="material-icons icon" ng-class="{'icon-rot-y': sidebarOpen}">chevron_right</i>
                 </span>
             </div>
             <div class="vertical-lists">
-                <div class="li" ng-class="{'selected': section == 0}" ng-click="selectSection(0)">
+                <div class="overview li" ng-class="{'selected': section == 0}" ng-click="selectSection(0)" homit-title="Overview" homit-title-right>
                     <span>
                         <i class="material-icons icon">info</i>
                     </span>
                     <span class="label" ng-if="sidebarOpen">Overview</span>
                 </div>
-                <div class="li" ng-class="{'selected': section == 1}" ng-click="selectSection(1)">
+                <div class="profile li" ng-class="{'selected': section == 1}" ng-click="selectSection(1)" homit-title="Profile" homit-title-right>
                     <span>
                         <i class="material-icons icon">account_circle</i>
                     </span>
                     <span class="label" ng-if="sidebarOpen">Profile</span>
                 </div>
-                <div class="li" ng-class="{'selected': section == 2}" ng-click="selectSection(2)">
+                <div class="address li" ng-class="{'selected': section == 2}" ng-click="selectSection(2)" homit-title="Delivery Address" homit-title-right>
                     <span>
                         <i class="material-icons icon">place</i>
                     </span>
                     <span class="label" ng-if="sidebarOpen">Delivery Address</span>
                 </div>
-                <div class="li" ng-class="{'selected': section == 3}" ng-click="selectSection(3)">
+                <div class="payment li" ng-class="{'selected': section == 3}" ng-click="selectSection(3)" homit-title="Payment Methods" homit-title-right>
                     <span>
                         <i class="material-icons icon">payment</i>
                     </span>
                     <span class="label" ng-if="sidebarOpen">Payment Methods</span>
                 </div>
-                <div class="li" ng-class="{'selected': section == 4}" ng-click="selectSection(4)">
+                <div class="security li" ng-class="{'selected': section == 4}" ng-click="selectSection(4)" homit-title="Security Settings" homit-title-right>
                     <span>
                         <i class="material-icons icon">lock</i>
                     </span>
                     <span class="label" ng-if="sidebarOpen">Security Settings</span>
                 </div>
                 <span class="divider"></span>
-                <div class="li" ng-class="{'selected': section == 5}" ng-click="selectSection(5)">
+                <div class="orders li" ng-class="{'selected': section == 5}" ng-click="selectSection(5)" homit-title="Orders" homit-title-right>
                     <span>
                         <i class="material-icons icon">shopping_basket</i>
                     </span>
                     <span class="label" ng-if="sidebarOpen">Orders</span>
                 </div>
-                <div class="li" ng-class="{'selected': section == 6}" ng-click="selectSection(6)">
+                <div class="coupons li" ng-class="{'selected': section == 6}" ng-click="selectSection(6)" homit-title="Coupons" homit-title-right>
                     <span>
                         <i class="material-icons icon">loyalty</i>
                     </span>

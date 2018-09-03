@@ -33,7 +33,7 @@
                 <div class="cat-ext-box">
                     <div class="cat-ext-content" >
                         <div class="categories-div">
-                            <h2 ng-show="!(display_storeInfo.name == 'locally-made')">Store Categories</h2>
+                            <h2 ng-show="!(display_storeInfo.name == 'locally-made')">Store Aisles</h2>
                             <h2 ng-show="display_storeInfo.name == 'locally-made'">YYC Vendors</h2>
                             <a href="/hub/{{storeType}}/{{category.category_name}}" target="_self" class="hover-raise fadeIn" ng-repeat="category in categories">
                                 <img alt="{{category.category_name}}" ng-src="/resources/images/catalog-stores/categories/{{ category.category_image }}">
@@ -45,12 +45,12 @@
                 </div>
             </div>
             <div class="category-hdr-div" ng-cloak>
-                <div class="category-div align-center" ng-click="extendCatBox()">
+                <div class="category-div align-center" ng-click="extendCatBox()" homit-title="View store aisles" homit-title-bottom>
                     <span>{{userSelectedCategory}}</span>
                     <ng-md-icon ng-class="catBoxArrowClass" icon="expand_more" size="20"></ng-md-icon>
                 </div>
                 <div class="cat-hdr-sep-line"></div>
-                <div class="filter-div align-center" ng-click="extendFilterBox()">
+                <div class="filter-div align-center" ng-click="extendFilterBox()" homit-title="Filter store aisles" homit-title-bottom>
                     <span>Filter</span>
                     <ng-md-icon ng-class="filterBoxArrowClass" icon="expand_more" size="20"></ng-md-icon>
                 </div>
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="cat-hdr-sep-line"></div>
-                <div class="sort-div align-center" ng-click="extendSortBox()">
+                <div class="sort-div align-center" ng-click="extendSortBox()" homit-title="Sort products" homit-title-bottom>
                     <span>Sort</span>
                     <ng-md-icon ng-class="sortBoxArrowClass" icon="expand_more" size="20"></ng-md-icon>
                 </div>

@@ -46,6 +46,18 @@
         border-radius: 4px;
         background-color: #fff;
         z-index: 4;
+
+        --delay: 0.8s; 
+        --body-position-left: 5%; 
+        --header-position-left: 30%; 
+        --header-border-top-clr: #141414; 
+        --header-border-right-clr: transparent;
+        --header-border-left-clr: transparent;
+    }
+
+    .del-opt-btn:focus[homit-title]:before, .del-opt-btn:focus[homit-title]:after{
+        opacity: 0;
+        visibility: hidden;
     }
 
     .del-opt-btn ng-md-icon {
@@ -284,7 +296,7 @@
 
 
 <section id="{{storeType}}" class="del-options-sec">
-    <button type="button" class="del-opt-btn" ng-click="deliveryOptions()" ng-style="buttonStyle">
+    <button class="del-opt-btn" ng-click="deliveryOptions()" ng-style="buttonStyle" homit-title="View delivery options" homit-title-top>
         <ng-md-icon class="del-opt-icon" icon="arrow_drop_down"></ng-md-icon>
         <span>{{ deliveryOption}}</span>
     </button>

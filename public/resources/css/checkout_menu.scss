@@ -19,6 +19,19 @@
 .checkout-menu-btn {
     position: relative;
     border-style: none;
+
+    --delay: 0.7s;
+    --body-position-left: -75%;
+    --header-position-left: 41%;
+    --header-border-top-clr: transparent; 
+    --header-border-bottom-clr: #141414;
+    --header-position-bottom: -0.8em; 
+    --body-position-bottom: -3.25em;
+}
+
+.checkout-menu-btn:focus[homit-title]:before, .checkout-menu-btn:focus[homit-title]:after{
+    opacity: 0;
+    visibility: hidden;
 }
 
 .checkout-menu-btn:active {
