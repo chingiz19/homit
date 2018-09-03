@@ -1,28 +1,44 @@
 /**
  * @copyright Homit 2018
  */
-var pub = {};
+let pub = {};
 
 /* Building metadata for log */
-var logMeta = {
-    directory: __filename
-}
+let logMeta = { directory: __filename }
 
 pub.receiver = async function (jsonResponse) {
     if (jsonResponse.action == "chikimiki_response_to_driver") {
         let driverId = jsonResponse.details.driver_id;
-        let orderId = jsonResponse.details.order_id;
-        let storeId = jsonResponse.details.store_id;                         
+        let orderId = jsonResponse.details.order_id.split("_")[1];
+        let storeId = jsonResponse.details.store_id.split('_')[1];
         let storeAdded = jsonResponse.details.store_added;
+        let isApiOrder = jsonResponse.details.api_order;
+        let isCustomLocation = jsonResponse.details.custom_location;
 
-        Orders.updateDateAssigned(orderId, storeId, driverId);
+        if (!isApiOrder) {
+            Orders.updateDateAssigned(orderId, storeId, driverId);
 
-        let dbStore = await Store.getStoreInfo(storeId);
-        let result = await Orders.getUserWithOrderByOrderId(orderId);
+            let dbStore = await Store.getStoreInfo(storeId);
+            let result = await Orders.getUserWithOrderByOrderId(orderId);
+            let user = result.user;
 
-        let user = result.user;
+            if (dbStore.store_name.toLowerCase().includes("liquor")) {
+                Email.sendStoreAssignedEmail({
+                    store_name: dbStore.store_name,
+                    store_address: dbStore.store_address,
+                    user_name: user.first_name,
+                    user_email: user.user_email,
+                    order_id: orderId
+                });
+            }
+        } else {
+            if (isCustomLocation) {
+                //update to custom location table 
+            }
+            Orders.updateApiOrders(orderId, storeId, driverId);
+        }
 
-        let finalResult = Driver.dispatchOrder(driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded);
+        let finalResult = await Driver.dispatchOrder(driverId, storeId, orderId, jsonResponse.details.nextnodeid, storeAdded, isApiOrder, isCustomLocation);
 
         /* Finally notify stakeholders */
         if (finalResult) {
@@ -33,15 +49,6 @@ pub.receiver = async function (jsonResponse) {
             Logger.log.error("Error while placing order received from CM", logMeta);
         }
 
-        if (dbStore.store_name.toLowerCase().includes("liquor")) {
-            Email.sendStoreAssignedEmail({
-                store_name: dbStore.store_name,
-                store_address: dbStore.store_address,
-                user_name: user.first_name,
-                user_email: user.user_email,
-                order_id: orderId
-            });
-        }
     } else if (jsonResponse.action == "chikimiki_report") {
         NM.sendToCSR(jsonResponse.details);
     } else {

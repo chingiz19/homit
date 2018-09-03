@@ -77,10 +77,8 @@
                             ng-click="selectOrderId(order)">
                             <ul layout="row" class="gtDataBAA">
                                 <li class="gtDataBAAA">Order Id: {{ order.order_id }};</li>
+                                <li class="gtDataBAAA">Store Name: {{ order.store_type_display_name }};</li>
                                 <li class="gtDataBAAA">Assigned At: {{ order.date_assigned }};</li>
-                                <li class="gtDataBAAA">Driver Id: {{ order.driver_id }};</li>
-                                <li class="gtDataBAAA">Arrived Store At: {{ order.date_arrived_store }};</li>
-                                <li class="gtDataBAAA">Picked At: {{ order.date_picked }};</li>
                                 <li class="gtDataBAAA">Arrived Customer At: {{ order.date_arrived_customer }};</li>
                                 <li class="gtDataBAAA">Delivered At: {{ order.date_delivered }};</li>
                                 <li layout="row">
@@ -111,13 +109,13 @@
                                     </li>
                                 </ul>
                                 <ul class="gtDataCBAA" style="margin: 0; padding: 0;">
-                                    <img class="gtDataCBAAA" ng-src="{{'/resources/images/products/' + item.super_category_custom + '/' + item.category + '/' + item.image}}">
+                                    <img class="gtDataCBAAA" ng-src="{{'/resources/images/products/' + item.store.name + '/' + item.images.image_catalog}}">
                                 </ul>
                                 <ul layout="column" class="gtDataCBABB" style="margin: 0; padding: 0;">
-                                    <li class="gtDataStrCBABAB">{{ item.store_type }}</li>
                                     <li class="gtDataCBABAB">{{ item.brand + " " + item.name }}</li>
                                     <li class="gtDataCBABAB">{{ item.volume + " x " + item.packaging }}</li>
-                                    <li class="gtDataPrCBABAB">C${{ item.price }}</li>
+                                    <li class="gtDataPrCBABAB" ng-show="item.price">C${{ item.price }}</li>
+                                    <li class="gtDataPrCBABAB" ng-show="item.price_sold">C${{ item.price_sold }}</li>
                                     <li class="gtDataPrCBABAB">#{{ item.quantity }}</li>
                                     <li ng-if="adctrl.reqeustType == 2 || adctrl.reqeustType == 4" class="gtDataPrCBABAB" style="color: red; font-weight: 450;">#{{item.modify_number}}</li>
                                 </ul>
@@ -174,10 +172,16 @@
                         <ul>Charged Money</ul>
                         <div layout="row">
                             <ul style="margin: 0; padding: 0;">
-                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Cart Total</li>
-                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Delivery Fee</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Cart
+                                    Total
+                                </li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Delivery
+                                    Fee
+                                </li>
                                 <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Gst</li>
-                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Total Amount</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Total
+                                    Amount
+                                </li>
                             </ul>
                             <ul style="margin: 0; padding: 0;">
                                 <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{selectedOrder.cartTotal}}</li>
@@ -192,10 +196,16 @@
                         <ul ng-if="adctrl.reqeustType != 6 ">Money to be refunded</ul>
                         <div layout="row">
                             <ul style="margin: 0; padding: 0;">
-                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Cart Total</li>
-                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Delivery Fee</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Cart
+                                    Total
+                                </li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Delivery
+                                    Fee
+                                </li>
                                 <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Gst</li>
-                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Total Amount</li>
+                                <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">Total
+                                    Amount
+                                </li>
                             </ul>
                             <ul style="margin: 0; padding: 0;">
                                 <li style="font-size: 13px; color: rgba(0,0,0,0.9); display: flex; justify-content: flex-start;">{{ref_chr_Money.cartTotal}}</li>
@@ -239,7 +249,9 @@
                                     </md-radio-group>
                                 </div>
                                 <div class="slctAllBx drTblLn">
-                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('driver',online_driverList)" ng-model="ADL_SelectAll">Select All</md-checkbox>
+                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('driver',online_driverList)" ng-model="ADL_SelectAll">Select
+                                        All
+                                    </md-checkbox>
                                 </div>
                             </div>
                         </div>
@@ -272,7 +284,9 @@
                                     </md-radio-group>
                                 </div>
                                 <div class="slctAllBx cusTblLn">
-                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('order',customer_pendingList)" ng-model="POL_SelectAll">Select All</md-checkbox>
+                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('order',customer_pendingList)" ng-model="POL_SelectAll">Select
+                                        All
+                                    </md-checkbox>
                                 </div>
                             </div>
                         </div>
@@ -323,22 +337,119 @@
                     <span style="color: #ff0000;">Database connection:</span>
                     <span class="w3-center w3-animate-top" id="db_connection">N/A</span>&nbsp;
                 </h3>
+
+                <button ng-click="refreshReport()" style="outline: none; outline: none; background-color: #1bb978; border: 1px solid #679090; border-style: none; border-radius: 5px; padding: 5px 10px; color: #fff; font-weight: 600;">Refresh
+                    Report
+                </button>
+
+                <h3 style="text-align: center; color: rgb(58, 3, 90); font-weight: 600; margin-top: 100px;" ng-show="driversNumOnline > 0">Online
+                    Drivers
+                </h3>
+                <div ng-repeat="(key, value) in driverRoutes">
+                    <div style="height: 3em; display: flex; flex-direction: row; font-size: 19px;">
+                        <span style="height: 100%; display: flex; align-items: center; justify-content: center;">ID: {{key}}</span>
+                        <div ng-repeat="node in value" style="display: flex; flex-direction: column; margin-left: 30px;">
+                            <span>Node type: {{node.node_type}}</span>
+                            <span>Node id: {{node.node_id}}</span>
+                            <span>Time left: {{node.time_left}}</span>
+                        </div>
+                        <span style="height: 100%; display: flex; align-items: center; justify-content: center; padding-left: 20px;" ng-show="value.length==0">Driver
+                            root is empty</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- CM Dashboard -->
+        <!-- Start -->
+        <div ng-show="page == 5" style="background-color: rgba(253,253,253,1);">
+            <div class="container">
+                <form id="apiOrderForm">
+                    First name:<br>
+                    <input type="text" ng-model="firstname" required>
+                    <br> Last name:<br>
+                    <input type="text" ng-model="lastname" required>
+                    <br> Address:<br>
+                    <input type="text" style='width:30em' ng-model="address" required>
+                    <br>Client Order ID:<br>
+                    <input type="text" ng-model="clientId" required>
+                    <br> Phone number:<br>
+                    <input type="text" ng-model="phoneNumber" required>
+                    <br> Driver Instructions:<br>
+                    <input type="text" ng-model="driverInstructions">
+                    <br> Store type (choose one):<br>
+                    <select ng-model="storeTypeName" required>
+                        <option value="">Please select</option>
+                        <option ng-repeat="store in storesJar" [ngValue]="store">{{store.name}}</option>
+                    </select>
+                    <br><br>
+                    <input ng-click="submitApiSubmussionForm()" type="submit" value="Submit">
+                </form>
+
+                <div>
+                    <h3 style="text-align: center; color: rgb(58, 3, 90); font-weight: 600; margin-top: 100px; margin-bottom: 40px;" ng-show="apiOrdersJar.length > 0">Order History</h3>
+                    <ul style="display: grid; grid-template-columns: auto auto auto auto auto auto auto auto auto; padding: 0; margin-bottom: 20px;" ng-repeat="order in apiOrdersJar">
+                        <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
+                            <span style="font-weight: 600;">Client ID:</span>
+                            <span style="overflow-x: auto;">{{order.client_id}}</span>
+                        </li>
+                        <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
+                            <span style="font-weight: 600;">Customer:</span>
+                            <span style="overflow-x: auto;">{{order.first_name + " " + order.last_name}}</span>
+                        </li>
+                        <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
+                            <span style="font-weight: 600;">Phone:</span>
+                            <span style="overflow-x: auto;">{{order.phone_number}}</span>
+                        </li>
+                        <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
+                            <span style="font-weight: 600;">Address:</span>
+                            <span style="overflow-x: auto;">{{order.address}}</span>
+                        </li>
+                        <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
+                            <span style="font-weight: 600;">Driver Instructions:</span>
+                            <span style="overflow-x: auto;">{{order.driver_instruction}}</span>
+                        </li>
+                        <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
+                            <span style="font-weight: 600;">Date Assigned:</span>
+                            <span style="overflow-x: auto;">{{order.date_assigned}}</span>
+                        </li>
+                        <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
+                            <span style="font-weight: 600;">Date Delivered:</span>
+                            <span style="overflow-x: auto;">{{order.date_arrived_customer}}</span>
+                        </li>
+                        <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
+                            <span style="font-weight: 600;">Store Id:</span>
+                            <span style="overflow-x: auto;">{{order.store_type}}</span>
+                        </li>
+                        <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
+                            <span style="font-weight: 600;">Store Location ID:</span>
+                            <span style="overflow-x: auto;">{{order.pickup_location_id}}</span>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
         </div>
 
         <div layout="column" class="doc">
-            <md-button aria-label="OH" id="pg_1" ng-click="toPage(1)" flex="33" class="pageDocBtn">
+            <md-button aria-label="OH" id="pg_1" ng-click="toPage(1)" flex="20" class="pageDocBtn">
                 <ng-md-icon icon="history" class="pageDocHvrIcon1 pageDocIcon"></ng-md-icon>
             </md-button>
-            <md-button aria-label="DR" id="pg_2" ng-click="toPage(2)" flex="33" class="pageDocBtn">
+            <md-button aria-label="DR" id="pg_2" ng-click="toPage(2)" flex="20" class="pageDocBtn">
                 <ng-md-icon icon="person_pin_circle" class="pageDocHvrIcon2 pageDocIcon"></ng-md-icon>
             </md-button>
-            <md-button aria-label="DR" id="pg_3" ng-click="toPage(3)" flex="33" class="pageDocBtn">
+            <md-button aria-label="DR" id="pg_3" ng-click="toPage(3)" flex="20" class="pageDocBtn">
                 <ng-md-icon icon="insert_comment" class="pageDocHvrIcon3 pageDocIcon"></ng-md-icon>
             </md-button>
-            <md-button aria-label="DR" id="pg_4" ng-click="toPage(4)" flex="33" class="pageDocBtn">
-                <span ng-class="cm_icon" class="pageDocHvrIcon3 pageDocIcon">
+            <md-button aria-label="DR" id="pg_4" ng-click="toPage(4)" flex="20" class="pageDocBtn">
+                <span ng-class="cm_icon" class="pageDocHvrIcon4 pageDocIcon">
                     <i class="material-icons">favorite</i>
+                </span>
+            </md-button>
+            <md-button aria-label="DR" id="pg_5" ng-click="toPage(5)" flex="20" class="pageDocBtn">
+                <span class="pageDocHvrIcon5 pageDocIcon">
+                    <i class="material-icons">cloud_download</i>
                 </span>
             </md-button>
         </div>

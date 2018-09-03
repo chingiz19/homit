@@ -18,7 +18,7 @@ const driverStatus = {
         "details": {}
     },
 
-    online: function (driverId, latitude, longitude) {
+    online: async function (driverId, latitude, longitude) {
         let localObject = Object.assign(this.CM_OBJECT);
         localObject.details.driver_id = driverId;
         localObject.details.status = this.ONLINE;
@@ -26,10 +26,10 @@ const driverStatus = {
             "latitude": latitude,
             "longitude": longitude
         };
-        NM.sendToCM(localObject, false);
+        return await NM.sendToCM(localObject, false);
     },
 
-    offline: function (driverId, latitude, longitude) {
+    offline: async function (driverId, latitude, longitude) {
         let localObject = Object.assign(this.CM_OBJECT);
         localObject.details.driver_id = driverId;
         localObject.details.status = this.OFFLINE;
@@ -37,40 +37,40 @@ const driverStatus = {
             "latitude": latitude,
             "longitude": longitude
         };
-        NM.sendToCM(localObject, false);
+        return await NM.sendToCM(localObject, false);
     },
 
-    arrivedStore: function (driverId, storeId) {
+    arrivedStore: async function (driverId, storeId) {
         let localObject = Object.assign(this.CM_OBJECT);
         localObject.details.driver_id = driverId;
         localObject.details.status = this.ARRIVED_STORE;
         localObject.details.arrived_store = {
             "store_id": storeId
         };
-        NM.sendToCM(localObject, false);
+        return await NM.sendToCM(localObject, false);
     },
 
-    pickUp: function (driverId, storeId) {
+    pickUp: async function (driverId, storeId) {
         let localObject = Object.assign(this.CM_OBJECT);
         localObject.details.driver_id = driverId;
         localObject.details.status = this.PICK_UP;
         localObject.details.pick_up = {
             "store_id": storeId
         };
-        NM.sendToCM(localObject, false);
+        return await NM.sendToCM(localObject, false);
     },
 
-    dropOff: function (driverId, orderId) {
+    dropOff: async function (driverId, orderId) {
         let localObject = Object.assign(this.CM_OBJECT);
         localObject.details.driver_id = driverId;
         localObject.details.status = this.DROP_OFF;
         localObject.details.drop_off = {
             "order_id": orderId
         };
-        NM.sendToCM(localObject, false);
+        return await NM.sendToCM(localObject, false);
     },
 
-    locationUpdate: function (driverId, latitude, longitude) {
+    locationUpdate: async function (driverId, latitude, longitude) {
         let localObject = Object.assign(this.CM_OBJECT);
         localObject.details.driver_id = driverId;
         localObject.details.status = this.LOCATION_UPDATE;
@@ -78,7 +78,7 @@ const driverStatus = {
             "latitude": latitude,
             "longitude": longitude
         };
-        NM.sendToCM(localObject, false);
+        return await NM.sendToCM(localObject, false);
     }
 }
 
@@ -132,21 +132,29 @@ router.post('/getorders', Auth.validateDriver(), async function (req, res) {
 });
 
 /**
- * Removes order that is on user's route list 
- * Requires order ID,  driver ID
+ * Updates arrived store column with current time stamp  
+ * Requires driver ID, store ID and array of order IDs related to this store
  */
-router.post('/dropoff', Auth.validateDriver(), async function (req, res) {
-    let orderId = req.body.order_id;
+router.post('/arrivedstore', Auth.validateDriver(), async function (req, res) {
+    let orderIds = JSON.parse(req.body.order_ids);
+    let storeId = req.body.id;
     let driverId = req.body.driver_id;
-    let details = req.body;
+    let split = splitOrders(orderIds);
 
-    if (details && orderId) {
-        let removedNode = await Driver.removeOrderRouteNode(driverId, orderId);
-        let savedDropOff = await Driver.saveDropOff(details);
+    if (storeId && orderIds) {
+        let result1 = false;
+        let result2 = false;
 
-        if (removedNode && savedDropOff) {
-            driverStatus.dropOff(driverId, orderId);
-            res.send({ success: true });
+        if (split.api_orders.length > 0) {
+            result1 = await Driver.saveArrivedStore(split.api_orders, true);
+        }
+
+        if (split.regular_orders.length > 0) {
+            result2 = await Driver.saveArrivedStore(split.regular_orders, false);
+        }
+
+        if (result1 || result2) {
+            res.send({ success: await driverStatus.arrivedStore(driverId, storeId) });
         } else {
             ErrorMessages.sendErrorResponse(res);
         }
@@ -163,36 +171,30 @@ router.post('/pickup', Auth.validateDriver(), async function (req, res) {
     let orderIds = JSON.parse(req.body.order_ids);
     let storeId = req.body.store_id;
     let driverId = req.body.driver_id;
+    let isApiOrder = checkIFApiOrders(orderIds);
+    let split = splitOrders(orderIds);
 
     if (storeId && orderIds) {
-        let savedPickUp = await Driver.savePickUp(orderIds);
-        let removedNode = await Driver.removeStoreRouteNode(driverId, storeId);
-        if (savedPickUp && removedNode) {
-            Store.driverAction("s_" + storeId);
-            driverStatus.pickUp(driverId, storeId);
-            res.send({ success: true });
-        } else {
-            ErrorMessages.sendErrorResponse(res);
+        let removedNode1 = await Driver.removeStoreRouteNode(driverId, storeId.split('_')[1], isApiOrder);
+        let removedNode2 = false;
+        let savedPickUp1 = false;
+        let savedPickUp2 = false;
+
+        if (!removedNode1 && split.have_both_types) {
+            removedNode2 = await Driver.removeStoreRouteNode(driverId, storeId.split('_')[1], !isApiOrder);
         }
-    } else {
-        ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
-    }
-});
 
-/**
- * Updates arrived store column with current time stamp  
- * Requires driver ID, store ID and array of order IDs related to this store
- */
-router.post('/arrivedstore', Auth.validateDriver(), async function (req, res) {
-    let orderIds = JSON.parse(req.body.order_ids);
-    let storeId = req.body.id;
-    let driverId = req.body.driver_id;
+        if (split.api_orders.length > 0) {
+            savedPickUp1 = await Driver.savePickUp(split.api_orders, true);
+        }
 
-    if (storeId && orderIds) {
-        let result = await Driver.saveArrivedStore(orderIds);
-        if (result) {
-            driverStatus.arrivedStore(driverId, storeId);
-            res.send({ success: true });
+        if (split.regular_orders.length > 0) {
+            savedPickUp2 = await Driver.savePickUp(split.regular_orders, false);
+        }
+
+        if ((savedPickUp1 || savedPickUp2) && (removedNode1 || removedNode2)) {
+            Store.driverAction(storeId);
+            res.send({ success: await driverStatus.pickUp(driverId, storeId) });
         } else {
             ErrorMessages.sendErrorResponse(res);
         }
@@ -208,11 +210,36 @@ router.post('/arrivedstore', Auth.validateDriver(), async function (req, res) {
 router.post('/arrivedcustomer', Auth.validateDriver(), async function (req, res) {
     let customerId = req.body.customer_id;
     let driverId = req.body.driver_id;
+    let isApiOrder = checkIFApiOrders([customerId]);
 
     if (customerId) {
-        let result = await Driver.saveArrivedCustomer(customerId, driverId);
+        let result = await Driver.saveArrivedCustomer(customerId, driverId, isApiOrder);
         if (result) {
             res.send({ success: true });
+        } else {
+            ErrorMessages.sendErrorResponse(res);
+        }
+    } else {
+        ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
+    }
+});
+
+/**
+ * Removes order that is on user's route list 
+ * Requires order ID,  driver ID
+ */
+router.post('/dropoff', Auth.validateDriver(), async function (req, res) {
+    let orderId = req.body.order_id;
+    let driverId = req.body.driver_id;
+    let details = req.body;
+    let isApiOrder = checkIFApiOrders([orderId]);
+
+    if (details && orderId) {
+        let removedNode = await Driver.removeOrderRouteNode(driverId, orderId.split('_')[1], isApiOrder);
+        let savedDropOff = await Driver.saveDropOff(details, isApiOrder);
+
+        if (removedNode && savedDropOff) {
+            res.send({ success: await driverStatus.dropOff(driverId, orderId) });
         } else {
             ErrorMessages.sendErrorResponse(res);
         }
@@ -233,8 +260,7 @@ router.post('/locationupdate', Auth.validateDriver(), async function (req, res) 
     if (longitude && latitude) {
         let result = await Driver.updateLocation(driverId, latitude, longitude);
         if (result) {
-            driverStatus.locationUpdate(driverId, latitude, longitude);
-            res.send({ success: true });
+            res.send({ success: await driverStatus.locationUpdate(driverId, latitude, longitude) });
         } else {
             ErrorMessages.sendErrorResponse(res);
         }
@@ -259,8 +285,7 @@ router.post('/statusupdate', Auth.validateDriver(), async function (req, res) {
             let updatedLocation = await Driver.updateLocation(driverId, latitude, longitude);
 
             if (savedOnline && updatedLocation) {
-                driverStatus.online(driverId, latitude, longitude);
-                res.send({ success: true });
+                res.send({ success: await driverStatus.online(driverId, latitude, longitude) });
             } else {
                 ErrorMessages.sendErrorResponse(res);
             }
@@ -268,8 +293,7 @@ router.post('/statusupdate', Auth.validateDriver(), async function (req, res) {
             let savedOffline = await Driver.saveOffline(driverId);
 
             if (savedOffline) {
-                driverStatus.offline(driverId, latitude, longitude);
-                res.send({ success: true });
+                res.send({ success: await driverStatus.offline(driverId, latitude, longitude) });
             } else {
                 ErrorMessages.sendErrorResponse(res);
             }
@@ -334,5 +358,35 @@ router.post('/logout', Auth.validateDriver(), async function (req, res) {
 });
 
 router.use('/photo', Auth.driverPhotoAuth(), express.static('./non_public_photos/drivers'));
+
+function checkIFApiOrders(raw) {
+    for (let i in raw) {
+        if (raw[i].split('_')[0] == 'a') { return true; }
+    }
+    return false;
+}
+
+function splitOrders(raw) {
+    let apiOrders = [];
+    let regularOrders = [];
+    let haveRegular = false;
+    let haveApi = false;
+
+    for (let i in raw) {
+        if (raw[i].split('_')[0] == 'a') {
+            apiOrders.push(raw[i]);
+            haveApi = true;
+        } else {
+            regularOrders.push(raw[i]);
+            haveRegular = true;
+        }
+    }
+
+    return {
+        api_orders: apiOrders,
+        regular_orders: regularOrders,
+        have_both_types: (haveApi && haveRegular)
+    };
+}
 
 module.exports = router;

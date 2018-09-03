@@ -4,6 +4,51 @@
 
 let pub = {};
 
+
+pub.submitApiOrderByCsr = async function (firstN, lastN, phoneNumber, address, storeTypeName, storeTypeNumber, orderNumber, driverInstruction) {
+    let insertData = {
+        client_id: orderNumber,
+        first_name: firstN,
+        last_name: lastN,
+        phone_number: phoneNumber,
+        address: address,
+        driver_instruction: driverInstruction,
+        store_type: storeTypeNumber
+    }
+
+    let insertResult = await db.insertQuery(db.tables.api_orders_history, insertData);
+    let cmResult = await NM.sendOrderToCM(('a_' + orderNumber), address, 'a_' + insertResult.insertId, storeTypeName, true);
+
+    return insertResult && cmResult
+}
+
+pub.getApiOrders = async function (orderId, storeId, driverId) {
+    return await db.runQuery(`SELECT * FROM api_orders_history`);
+}
+
+pub.updateApiOrders = async function (orderId, storeId, driverId) {
+    let sqlQuery = `
+    UPDATE ${db.tables.api_orders_history}
+    SET 
+    driver_id = ${driverId},
+    pickup_location_id = ${storeId},
+    date_assigned = CURRENT_TIMESTAMP
+    WHERE ?
+`;
+
+    return await db.runQuery(sqlQuery, { id: orderId });
+}
+
+pub.getApiOrdersByOrderId = async function (orderId) {
+    let result = await db.selectAllWhereLimitOne(db.tables.api_orders_history, { "id": orderId });
+
+    if (result && result.length > 0) {
+        return result[0];
+    }
+
+    return false;
+}
+
 /**
  * Create transaction order in orders_transactions_history table
  * 
@@ -311,20 +356,20 @@ pub.getOrderArrayByCustomerId = async function (customerId, driverId) {
     data[userType] = numberId;
 
     let sqlQuery = `
-    SELECT 
-        history.id, info.first_name AS fName, transactions.phone_number AS phone
-    FROM
-        orders_transactions_history AS transactions
-    JOIN
-        orders_history AS history ON (transactions.id = history.order_transaction_id)
-    JOIN 
-	    ` + infoTable + ` AS info ON (info.id =` + userType + `)
-    WHERE
-        date_arrived_customer IS NULL
-    AND 
-        ?
-    AND 
-        ?`;
+        SELECT 
+            history.id, info.first_name AS fName, transactions.phone_number AS phone
+        FROM
+            orders_transactions_history AS transactions
+        JOIN
+            orders_history AS history ON (transactions.id = history.order_transaction_id)
+        JOIN 
+            ` + infoTable + ` AS info ON (info.id =` + userType + `)
+        WHERE
+            date_arrived_customer IS NULL
+        AND 
+            ?
+        AND 
+            ?`;
 
     let result = await db.runQuery(sqlQuery, [data, driverData]);
     return result;
@@ -809,12 +854,7 @@ pub.updateDateAssigned = async function (orderId, storeId, driverId) {
         WHERE ?
     `;
 
-    let key = {
-        id: orderId
-    };
-
-    // Updating orders_history table
-    let result = await db.runQuery(sqlQuery, key);
+    await db.runQuery(sqlQuery, { id: orderId });
 }
 
 module.exports = pub;

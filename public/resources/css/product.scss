@@ -337,6 +337,10 @@ footer {
     margin-bottom: 20px;
     display: flex;
     flex-direction: row;
+
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
 }
 
 @media (max-width: 991px) {

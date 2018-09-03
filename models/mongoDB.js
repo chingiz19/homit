@@ -18,7 +18,13 @@ let db_user_name = process.env.DB_USER_NAME;
 let db_password = process.env.DB_PASSWORD;
 
 mongoose.connect(`mongodb://${db_user_name}:${db_password}@localhost:27017/${db_name}`, { useNewUrlParser: true }).then(function (result) {
-    console.log("Connection to Mongo DB established");
+
+    if (process.env.n_mode != "production") {
+        console.log("Connection to Mongo DB established");
+    } else {
+        Logger.log.debug("Connection to Mongo DB established");
+    }
+
     MongoDBConnected = true;
     init();
 }, function (err) {

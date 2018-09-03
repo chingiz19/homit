@@ -4,6 +4,7 @@
 
 let pub = {};
 let externalIOServer = {};
+let ackStore = new Map();
 const fs = require("fs");
 const path = require('path');
 const redis = require('socket.io-redis');
@@ -16,6 +17,7 @@ const STORES_NAMESPACE = "/stores";
 const CSR_NAMESPACE = "/csr";
 const EXTERNAL_PORT = 3000;
 const INTERNAL_PORT = 6262;
+const CM_RESPONSE_TIMEOUT = 2000;
 const DEFAULT_EMIT = "data";
 const CSR_DEFAULT_EMIT = "cm_report";
 const CSR_CONNECTIVITY_EMIT = "cm_con_report";
@@ -105,18 +107,15 @@ pub.setSharedSessionMiddleware = function (session) {
 /**
  * Connection handler for CM
  */
-chikimiki.on('connection', function (client) {
-    let verification = {
-        "action": "verify_server",
-        "key": CM_SECRET_KEY
-    }
-    pub.sendToCM(verification);
-    Logger.log.debug("Connection to CM established", logMeta);
-    pub.sendToCSR({ "connected": true }, true);
-    refreshCMReport();
-
+chikimiki.on('connection', async function (client) {
     client.on('data', function (data) {
         CM.receiver(JSON.parse(data));
+    });
+
+    client.on('resolve', function (data) {
+        let jsonData = JSON.parse(data);
+        let cb = ackStore.get(jsonData.ack_id);
+        cb(jsonData);
     });
 
     client.on('disconnect', function () {
@@ -133,6 +132,20 @@ chikimiki.on('connection', function (client) {
     client.on('error', function (data) {
         Logger.log.error("CM connection is experiencing issues", logMeta);
     })
+
+    let verification = {
+        "action": "verify_server",
+        "key": CM_SECRET_KEY
+    }
+
+    let result = await pub.sendToCM(verification);
+    if (result && process.env.n_mode == "production") {
+        Logger.log.debug("Connection to CM established", logMeta);
+    } else if (result) {
+        console.log("Connection to CM established");
+    }
+    pub.sendToCSR({ "connected": true }, true);
+    refreshCMReport();
 });
 
 /**
@@ -177,17 +190,16 @@ stores.on('connection', function (client) {
 csr.on('connection', function (client) {
     if (Auth.validateWebSocket(client, Auth.RolesJar.CSR)) {
         refreshCMReport();
-        console.log("csr is connected!");
         client.on('disconnect', function () {
-            console.log("csr disconnected!");
+            Logger.log.warn("csr disconnected!");
         });
 
         client.on('error', function (data) {
-            console.log("csr connection is experiencing issues");
+            Logger.log.warn("csr connection is experiencing issues");
         })
 
         client.on('error', function (data) {
-            console.log("csr connection is experiencing issues");
+            Logger.log.warn("csr connection is experiencing issues");
         })
     } else {
         client.disconnect();
@@ -195,48 +207,37 @@ csr.on('connection', function (client) {
 });
 
 /**
- * Sends data to stores 
- * @param {*} id store id
- * @param {*} json data to be sent
- */
-pub.sendToStores = async function (id, json) {
-    stores.to(id).emit(DEFAULT_EMIT, JSON.stringify(json) + "\n");
-}
-
-/**
- * Sends data to CM
- * @param {*} json data to be sent
- * @param {*} isOrder if it is order or not
- */
-pub.sendToCM = async function (json, isOrder) {
-    if (isOrder) {
-        Logger.log.debug('Sending order to CM \n Store type: ' + json.details.order.store_type, logMeta);
-    }
-    chikimiki.emit(CM_DEFAULT_EMIT, json);
-}
-
-/**
  * Prepares order with given data and sends it to CM using function above
  * @param {*} customerId customer id
  * @param {*} customerAddress adress
  * @param {*} orderId order id
  * @param {*} storeType store type 
+ * @param {boolean} isApiOrder 
+ * @param {*} customPickupAddress 
+ * @param {*} pickUpId 
  */
-pub.sendOrderToCM = function (customerId, customerAddress, orderId, storeType) {
+pub.sendOrderToCM = async function (customerId, customerAddress, orderId, storeType, isApiOrder, customPickupAddress, pickUpId) {
     let newOrder = {
         "action": "neworder",
+        "api_order": isApiOrder,
+        "pick_up": {
+            "custom": (customPickupAddress != undefined),
+            "store_type": storeType,
+            "custom_pickup_id": pickUpId,
+            "address": customPickupAddress
+        },
         "details": {
             "customer": {
                 "id": customerId,
                 "address": customerAddress
             },
             "order": {
-                "id": orderId,
-                "store_type": storeType
+                "id": orderId
             }
         }
     };
-    pub.sendToCM(newOrder, true);
+
+    return await pub.sendToCM(newOrder, true);
 }
 
 /**
@@ -303,11 +304,53 @@ pub.sendToCSR = function (data, connectivity) {
     }
 }
 
-function refreshCMReport() {
-    let json = {
-        "action": "refresh_report"
-    };
-    pub.sendToCM(json);
+/**
+ * Sends data to stores 
+ * @param {*} id store id
+ * @param {*} json data to be sent
+ */
+pub.sendToStores = async function (id, json) {
+    stores.to(id).emit(DEFAULT_EMIT, JSON.stringify(json) + "\n");
+}
+
+/**
+ * Sends data to CM
+ * @param {*} json data to be sent
+ * @param {*} isOrder if it is order or not
+ */
+pub.sendToCM = async function (json, isOrder) {
+    return new Promise((resolve, reject) => {
+        if (isOrder) {
+            Logger.log.debug('Sending order to CM \n Store type: ' + json.details.order.store_type, logMeta);
+        }
+        let ackId = HelperUtils.generateAckId(Array.from(ackStore.keys()));
+        json.ack_id = ackId;
+        ackStore.set(ackId, function (response) {
+            if (response.success) {
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+            ackStore.delete(response.ack_id)
+        });
+
+        setTimeout(function () {
+            if (ackStore.has(ackId)) {
+                resolve(false);
+            }
+        }, CM_RESPONSE_TIMEOUT);
+
+        chikimiki.emit(CM_DEFAULT_EMIT, json);
+    });
+}
+
+async function refreshCMReport() {
+    let result = await pub.sendToCM({ "action": "refresh_report" });
+    if (!result) {
+        if (process.env.n_mode != "production") {
+            console.log("Could not obtain CM report for connected CSR");
+        }
+    }
 }
 
 /* Start listening to internal and external ports */

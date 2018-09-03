@@ -27,8 +27,13 @@ pub.authenticate = async function (userName, password) {
  * 
  * @param {*} storeId 
  */
-pub.getStoreInfo = async function (storeId) {
-    var sqlQuery = `
+pub.getStoreInfo = async function (storeId, isCustomPickUpLocation) {
+    let sqlQuery = '';
+
+    if (isCustomPickUpLocation) {
+                        //do some logic here, add store prefix
+    } else {
+        sqlQuery = `
         SELECT
         store.id AS store_id, store.id_prefix AS store_id_prefix, store.name AS store_name,
         store.address AS store_address, store.address_latitude AS store_address_latitude,
@@ -40,9 +45,11 @@ pub.getStoreInfo = async function (storeId) {
         catalog_stores AS store JOIN catalog_store_types AS store_type ON (store.store_type = store_type.id)
         WHERE ?`;
 
-    var data = { "store.id": storeId };
-    var storeInfo = await db.runQuery(sqlQuery, data);
-    return storeInfo[0];
+        let storeInfo = await db.runQuery(sqlQuery, { "store.id": storeId });
+        let store = storeInfo[0];    
+        store.store_id = store.store_id_prefix + store.store_id;
+        return store;
+    }
 }
 
 /**

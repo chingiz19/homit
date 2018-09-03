@@ -698,6 +698,21 @@ pub.getAllStoreTypesAndUnions = async function () {
 }
 
 /**
+ * Get all stores with name and id only
+ */
+pub.getAllStores = async function () {
+    let sqlQuery = `
+    SELECT 
+	name, id
+    FROM 
+        catalog_store_types
+    WHERE 
+        ?`;
+
+    return await db.runQuery(sqlQuery, { "available": true });
+}
+
+/**
  * Get all store type names regardless of unions
  */
 pub.getAllStoreTypeNames = async function () {

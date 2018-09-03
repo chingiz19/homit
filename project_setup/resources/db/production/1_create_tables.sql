@@ -432,6 +432,8 @@ CREATE TABLE drivers_routes (
 	store_id INT UNSIGNED,
 	order_id INT UNSIGNED,
 	position INT NOT NULL,
+	is_api_order TINYINT NOT NULL,
+	is_custom_location TINYINT NOT NULL,
 
 	PRIMARY KEY(id)
 ) ENGINE = Memory;
@@ -552,4 +554,26 @@ CREATE TABLE catalog_store_types_category_covers (
 	UNIQUE (store_type_id, category_id),
 	CONSTRAINT fk_catalog_store_types_category_covers_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_catalog_store_types_category_covers_category_id FOREIGN KEY (category_id) REFERENCES catalog_categories(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE api_orders_history (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	client_id VARCHAR(225) NOT NULL,
+	id_prefix VARCHAR(3) NOT NULL DEFAULT "a_", 
+	first_name VARCHAR(225) NOT NULL,
+	last_name VARCHAR(225) NOT NULL,
+	phone_number VARCHAR(10),
+	address VARCHAR(225),
+	address_latitude DOUBLE NULL,
+	address_longitude DOUBLE NULL,
+	driver_instruction VARCHAR(225),
+	date_assigned TIMESTAMP NULL,
+	date_arrived_store TIMESTAMP NULL,
+	date_picked TIMESTAMP NULL,
+	date_arrived_customer TIMESTAMP NULL,	
+	store_type INT UNSIGNED NOT NULL,
+	pickup_location_id INT UNSIGNED,
+	driver_id INT UNSIGNED,
+
+	PRIMARY KEY (id)
 ) ENGINE = InnoDB;

@@ -184,16 +184,23 @@ pub.insertDriverStatusTable = async function (driverId) {
     }
 }
 
-pub.saveArrivedStore = function (orderIds) {
-    return updateOrdersHistory("date_arrived_store", orderIds);
+pub.saveArrivedStore = function (orderIds, isApiOrder) {
+    return updateOrdersHistory("date_arrived_store", orderIds, isApiOrder);
 }
 
-pub.savePickUp = function (orderIds) {
-    return updateOrdersHistory("date_picked", orderIds);
+pub.savePickUp = function (orderIds, isApiOrder) {
+    return updateOrdersHistory("date_picked", orderIds, isApiOrder);
 }
 
-pub.saveDropOff = async function (dropOff) {
+pub.saveDropOff = async function (dropOff, isApiOrder, isApiOrder) {
     let orderId = dropOff.order_id;
+
+    if (isApiOrder) {
+        if (!dropOff.refused) {
+            return updateOrdersHistory("date_delivered", [orderId], isApiOrder);
+        }
+        return true;
+    }
 
     let updateData = {
         refused: dropOff.refused,
@@ -204,37 +211,40 @@ pub.saveDropOff = async function (dropOff) {
         updateData.receiver_age = dropOff.receiver_age;
     }
 
-    let key = {
-        id: orderId
-    };
-
-    let result = await db.updateQuery(db.tables.orders_history, [updateData, key]);
+    let result = await db.updateQuery(db.tables.orders_history, [updateData, { "id": orderId }]);
 
     if (result) {
-        return updateOrdersHistory("date_delivered", [orderId]);
+        return updateOrdersHistory("date_delivered", [orderId], isApiOrder);
     } else {
         return false;
     }
 }
 
-pub.saveArrivedCustomer = async function (customerId, driverId) {
-    let orderInfo = await Orders.getOrderArrayByCustomerId(customerId, driverId);
+pub.saveArrivedCustomer = async function (customerId, driverId, isApiOrder) {
     let orderIds = [];
+    let orderIndex = isApiOrder ? 'a_' : 'o_';
 
-    if (orderInfo.length == 0) {
-        return false;
+    if (!isApiOrder) {
+        let orderInfo = await Orders.getOrderArrayByCustomerId(customerId, driverId);
+
+        if (orderInfo.length == 0) {
+            return false;
+        }
+
+        for (order in orderInfo) {
+            orderIds.push(orderIndex + orderInfo[order].id);
+        }
+
+        let name = orderInfo[0].fName;
+        let phone = orderInfo[0].phone;
+
+        SMS.notifyDriverArrival(phone, name, orderIds);
+    } else {
+        let orders = await Orders.getApiOrdersByOrderId(customerId.split('_')[1]);  //customer id is same as order id
+        orderIds.push(orderIndex + orders.id);
     }
 
-    for (order in orderInfo) {
-        orderIds.push(orderInfo[order].id);
-    }
-
-    let name = orderInfo[0].fName;
-    let phone = orderInfo[0].phone;
-
-    SMS.notifyDriverArrival(phone, name, orderIds);
-
-    return updateOrdersHistory("date_arrived_customer", orderIds);
+    return updateOrdersHistory("date_arrived_customer", orderIds, isApiOrder);
 }
 
 // Routes
@@ -247,15 +257,20 @@ pub.saveArrivedCustomer = async function (customerId, driverId) {
  * @param {*} nextNodeIdString 
  * @param {*} storeAdded 
  */
-pub.dispatchOrder = async function (driverId, storeId, orderId, nextNodeIdString, storeAdded) {
-    let orderInsertAt = await insertStoreToRoutes(driverId, storeId, nextNodeIdString, storeAdded);
+pub.dispatchOrder = async function (driverId, storeId, orderId, nextNodeIdString, storeAdded, isApiOrder, isCustomLocation) {
+    let orderInsertAt = await insertStoreToRoutes(driverId, storeId, nextNodeIdString, storeAdded, isApiOrder, isCustomLocation);
+
     let orderData = {
         driver_id: driverId,
         order_id: orderId,
-        position: orderInsertAt
+        position: orderInsertAt,
+        is_api_order: isApiOrder,
+        is_custom_location: isCustomLocation
     };
 
-    await db.insertQuery(db.tables.drivers_routes, orderData);
+    let result = await db.insertQuery(db.tables.drivers_routes, orderData);
+
+    return result;
 }
 
 /**
@@ -264,10 +279,8 @@ pub.dispatchOrder = async function (driverId, storeId, orderId, nextNodeIdString
  * @param {*} driverId 
  * @param {*} storeId 
  */
-pub.removeStoreRouteNode = async function (driverId, storeId) {
-    let storeData = { store_id: storeId };
-
-    return await removeRouteNode(driverId, storeData);
+pub.removeStoreRouteNode = async function (driverId, storeId, isApiOrder) {
+    return await removeRouteNode(driverId, [{ "store_id": storeId }, { "is_api_order": isApiOrder }]);
 }
 
 /**
@@ -276,12 +289,9 @@ pub.removeStoreRouteNode = async function (driverId, storeId) {
  * @param {*} driverId 
  * @param {*} orderId 
  */
-pub.removeOrderRouteNode = async function (driverId, orderId) {
-    let orderData = { order_id: orderId };
-
-    let result = await removeRouteNode(driverId, orderData);
+pub.removeOrderRouteNode = async function (driverId, orderId, isApiOrder) {
+    let result = await removeRouteNode(driverId, [{ "order_id": orderId }, { "is_api_order": isApiOrder }]);
     await checkToEndShift(driverId);
-
     return result;
 }
 
@@ -344,17 +354,63 @@ pub.getDriversRoutes = async function (driverId) {
         WHERE ?
         ORDER BY position;`;
 
-    let data = { driver_id: driverId };
+    let routes = await db.runQuery(sqlQuery, { "driver_id": driverId });
+    let finalArray = [];
 
-    let routes = await db.runQuery(sqlQuery, data);
-
-    let result = [];
     for (let i = 0; i < routes.length; i++) {
         if (routes[i].store_id) {
-            let tmpStore = await Store.getStoreInfo(routes[i].store_id);
+            let tmpStore = await Store.getStoreInfo(routes[i].store_id, routes[i].is_custom_location);
             tmpStore.is_store = true;
-            result.push(tmpStore);
+            finalArray.push(tmpStore);
+        } else if (routes[i].is_api_order) {
+            let result = await Orders.getApiOrdersByOrderId(routes[i].order_id);
+            let storeIndex = result.store_type ? "s_" : "c_";
+
+            if (result) {
+                products = [{
+                    "depot_id": 1,
+                    "brand": "No Products Available",
+                    "name": "",
+                    "image": "",
+                    "packaging": "",
+                    "volume": "",
+                    "container": "",
+                    "price": "",
+                    "price_sold": "",
+                    "quantity": "",
+                    "type": "",
+                    "subcategory": "Custom API Order",
+                    "category": "Custom API Order",
+                    "store_type": result.store_type,
+                    "store_type_display_name": "Custom API Order",
+                    "tax": 1
+                }]
+
+                let customer = {
+                    id: result.id_prefix + result.id,
+                    first_name: result.first_name,
+                    last_name: result.last_name
+                };
+
+                let tmpOrderNode = {
+                    is_store: false,
+                    customer: customer,
+                    delivery_address: result.address,
+                    delivery_latitude: "",
+                    delivery_longitude: "",
+                    phone_number: result.phone_number,
+                    driver_instruction: result.driver_instruction,
+                    store_id: storeIndex + result.pickup_location_id,
+                    order_id: result.id_prefix + result.id,
+                    date_arrived_store: result.date_arrived_store,
+                    date_arrived_customer: result.date_arrived_customer,
+                    products: products
+                };
+
+                finalArray.push(tmpOrderNode);
+            }
         } else {
+
             let tmpUserWithOrder = await Orders.getUserWithOrderByOrderId(routes[i].order_id);
             let tmpUser = tmpUserWithOrder.user;
             let tmpTransaction = tmpUserWithOrder.transaction;
@@ -376,18 +432,18 @@ pub.getDriversRoutes = async function (driverId) {
                 delivery_longitude: tmpTransaction.delivery_longitude,
                 phone_number: tmpTransaction.phone_number,
                 driver_instruction: tmpTransaction.driver_instruction,
-                store_id: tmpOrder.store_id,
-                order_id: tmpOrder.id,
+                store_id: "s_" + tmpOrder.store_id,
+                order_id: tmpOrder.id_prefix + tmpOrder.id,
                 date_arrived_store: tmpOrder.date_arrived_store,
                 date_arrived_customer: tmpOrder.date_arrived_customer,
                 products: products
             };
 
-            result.push(tmpOrderNode);
+            finalArray.push(tmpOrderNode);
         }
     }
 
-    return result;
+    return finalArray;
 }
 
 /**
@@ -473,15 +529,18 @@ async function checkToEndShift(driverId) {
     }
 }
 
-async function updateOrdersHistory(updateColumn, receivedOrderIds) {
+async function updateOrdersHistory(updateColumn, receivedOrderIds, isApiOrder) {
+    let table = isApiOrder ? "api_orders_history" : "orders_history";
     let orderIds = [];
+
     for (let i = 0; i < receivedOrderIds.length; i++) {
-        orderIds.push(receivedOrderIds[i]);
+        orderIds.push(receivedOrderIds[i].split('_')[1]);
     }
+
     let sqlQuery = `
-        UPDATE orders_history
-        SET `+ updateColumn + ` = CURRENT_TIMESTAMP
-        WHERE id in (` + orderIds + `)`;
+        UPDATE ${table}
+        SET ${updateColumn} = CURRENT_TIMESTAMP
+        WHERE id in ( ${orderIds} )`;
 
     return await db.runQuery(sqlQuery);
 }
@@ -569,13 +628,15 @@ async function shiftRoutes(driverId, nextNodeIdString) {
  * @param {*} nextNodeIdString 
  * @param {*} storeAdded 
  */
-async function insertStoreToRoutes(driverId, storeId, nextNodeIdString, storeAdded) {
+async function insertStoreToRoutes(driverId, storeId, nextNodeIdString, storeAdded, isApiOrder, isCustomLocation) {
     if (storeAdded) {
         let positionToInsert = await shiftRoutes(driverId, nextNodeIdString);
         let storeData = {
             driver_id: driverId,
             store_id: storeId,
-            position: positionToInsert
+            position: positionToInsert,
+            is_api_order: isApiOrder,
+            is_custom_location: isCustomLocation
         };
 
         await db.insertQuery(db.tables.drivers_routes, storeData);
@@ -588,27 +649,31 @@ async function insertStoreToRoutes(driverId, storeId, nextNodeIdString, storeAdd
  * Remove route node and update positions
  * 
  * @param {*} driverId 
- * @param {*} data 
+ * @param {Array of Objects} data 
  */
 async function removeRouteNode(driverId, data) {
     let sqlQuerySelect = `
         SELECT id, position
         FROM drivers_routes
-        WHERE driver_id = `+ driverId + ` AND ?
+        WHERE driver_id = `+ driverId + ` AND ? AND ?
         LIMIT 1`;
 
     let route = await db.runQuery(sqlQuerySelect, data);
-    let deleteData = { id: route[0].id };
-    let result2 = await db.deleteQuery(db.tables.drivers_routes, deleteData);
 
-    let sqlQuery = `
-        UPDATE drivers_routes
-        SET position = position - 1
-        WHERE ? AND position >= ` + route[0].position;
-    let driverData = { driver_id: driverId };
-    let result1 = await db.runQuery(sqlQuery, driverData);
+    if (route && route.length > 0) {
+        let result2 = await db.deleteQuery(db.tables.drivers_routes, { id: route[0].id });
 
-    return (result1 && result2);
+        let sqlQuery = `
+            UPDATE drivers_routes
+            SET position = position - 1
+            WHERE ? AND position >= ` + route[0].position;
+
+        let result1 = await db.runQuery(sqlQuery, { driver_id: driverId });
+
+        return (result1 && result2);
+    }
+
+    return false;
 }
 
 function sanitizeDriverObject(driver) {

@@ -51,13 +51,15 @@ pub.scheduleDelivery = function (time, data) {
 }
 
 /* Processing orders when they finally get fired */
-Queue.process('scheduled_order', function (job, done) {
-    NM.sendOrderToCM(job.data.userId, job.data.address, job.data.orderId, job.data.storeType);
-
-    //callback after done
-    done(null, {
-        orderId: job.data.orderId
-    });
+Queue.process('scheduled_order', async function (job, done) {
+    let result = await NM.sendOrderToCM(job.data.userId, job.data.address, job.data.orderId, job.data.storeType);
+    
+    if (result) {
+        //callback after done
+        done(null, {
+            orderId: job.data.orderId
+        });
+    }
 });
 
 

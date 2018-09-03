@@ -1,395 +1,549 @@
-html{background-color: white;}
+html {
+    background-color: white;
+}
 
-body{
-    position: relative; top: 55px;
-    background-color: rgba(253,253,253,1); 
-    font-family: 'Nunito', sans-serif; 
+body {
+    position: relative;
+    top: 55px;
+    background-color: rgba(253, 253, 253, 1);
+    font-family: 'Nunito', sans-serif;
     letter-spacing: 0.025em;
-    min-height: 90%; height: 90%;
+    min-height: 90%;
+    height: 90%;
 }
 
 /*Changes default border color*/
-md-radio-button .md-off{
-    border-color: rgba(0,0,0,0.4);
+md-radio-button .md-off {
+    border-color: rgba(0, 0, 0, 0.4);
 }
+
 /*Change default radio-button colors*/
 md-radio-button:focus {
     outline: none;
 }
+
 md-radio-button .md-on {
-    background-color: rgba(63,222,17,0.77);
-}
-md-radio-button.md-checked .md-off {
-    border-color: rgba(63,222,17,0.77);
-}
-md-radio-button .md-label{
-    padding-left: 20px;
-}
-md-radio-group .gtDataAA.ng-scope.md-checked .gtDataAAAA{
-    font-size: 16px !important;
-    color: rgba(0,0,0,0.85);
-}
-md-radio-group .gtDataAA.ng-scope.md-checked .gtDataAAAB{
-    font-size: 16px !important;
-    font-weight: 650;
-    color: rgba(0,0,0,0.85);
+    background-color: rgba(63, 222, 17, 0.77);
 }
 
-md-radio-group .gtDataBA.ng-scope.md-checked .gtDataBAAA{
-    font-size: 16px !important;
-    color: rgba(0,0,0,0.85);
+md-radio-button.md-checked .md-off {
+    border-color: rgba(63, 222, 17, 0.77);
 }
-md-radio-group .gtDataBA.ng-scope.md-checked .gtDataBAAB{
+
+md-radio-button .md-label {
+    padding-left: 20px;
+}
+
+md-radio-group .gtDataAA.ng-scope.md-checked .gtDataAAAA {
+    font-size: 16px !important;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+md-radio-group .gtDataAA.ng-scope.md-checked .gtDataAAAB {
     font-size: 16px !important;
     font-weight: 650;
-    color: rgba(0,0,0,0.85);
+    color: rgba(0, 0, 0, 0.85);
 }
-md-select .md-select-value{
-    border-bottom: 1px solid gray !important; padding-bottom: 1px !important;
+
+md-radio-group .gtDataBA.ng-scope.md-checked .gtDataBAAA {
+    font-size: 16px !important;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+md-radio-group .gtDataBA.ng-scope.md-checked .gtDataBAAB {
+    font-size: 16px !important;
+    font-weight: 650;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+md-select .md-select-value {
+    border-bottom: 1px solid gray !important;
+    padding-bottom: 1px !important;
 }
 
 /* Page header and search bar */
-.adminPtop{
+.adminPtop {
     padding: 0;
 }
-.adminPtopA{
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 50px; 
-    display: flex; justify-content: center; align-items: center; 
-    background-color: rgba(42,81,145,0.9);
+
+.adminPtopA {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(42, 81, 145, 0.9);
 }
-.adminPtopAA{
-    font-size: 25px; color: rgba(255,255,255,1); font-weight: 650;
+
+.adminPtopAA {
+    font-size: 25px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 650;
     letter-spacing: 0.065em;
     -webkit-font-smoothing: antialiased;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-.adminPtopAB{
-    position: absolute; right: 0px; 
-    margin: 0; padding: 0;
+
+.adminPtopAB {
+    position: absolute;
+    right: 0px;
+    margin: 0;
+    padding: 0;
 }
-.adminPtopABA{
-    fill: rgba(255,255,255,1);
+
+.adminPtopABA {
+    fill: rgba(255, 255, 255, 1);
 }
+
 .adminPtopABA svg {
-    height: 30px; width: 30px;
+    height: 30px;
+    width: 30px;
 }
-.adminPtopB{
-    display: flex; justify-content: center; 
-    position: relative; 
+
+.adminPtopB {
+    display: flex;
+    justify-content: center;
+    position: relative;
     top: 30px;
 }
-.adminPtopBA{
-    height: 25px !important; 
-    margin: 0; padding: 0; 
-    border-bottom: 1px solid gray; border-radius: 0;
+
+.adminPtopBA {
+    height: 25px !important;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid gray;
+    border-radius: 0;
 }
-.adminPtopBAA{
-    fill: rgba(0,0,0,0.65);
+
+.adminPtopBAA {
+    fill: rgba(0, 0, 0, 0.65);
 }
-.adminPtopBAA svg{
-    height: 20px; width: 20px;
+
+.adminPtopBAA svg {
+    height: 20px;
+    width: 20px;
 }
-.adminPtopBB{
-    width: 30%; 
-    margin: 0; margin-top: 4px;
+
+.adminPtopBB {
+    width: 30%;
+    margin: 0;
+    margin-top: 4px;
 }
-.adminPtopBD{
-    width: 110px; 
-    margin: 0; margin-top: 4px;
+
+.adminPtopBD {
+    width: 110px;
+    margin: 0;
+    margin-top: 4px;
 }
-.adminPtopBBB{
-    font-size: 18px; 
-    padding-bottom: 7px !important; 
+
+.adminPtopBBB {
+    font-size: 18px;
+    padding-bottom: 7px !important;
     border-bottom: 1px solid gray !important;
 }
-.adminPtopBC{
-    height: 30px; 
-    margin: 0; padding: 0; 
-    border-bottom: 1px solid gray; border-radius: 0;
+
+.adminPtopBC {
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid gray;
+    border-radius: 0;
 }
-.adminPtopBCA{
-    fill: rgba(0,0,0,0.65);
+
+.adminPtopBCA {
+    fill: rgba(0, 0, 0, 0.65);
 }
-.adminPtopBCA svg{
-    height: 20px; width: 20px;
+
+.adminPtopBCA svg {
+    height: 20px;
+    width: 20px;
 }
-.gtDataA{
-    position: relative; top: 50px;
-    max-height: 70px; 
+
+.gtDataA {
+    position: relative;
+    top: 50px;
     overflow-y: scroll;
 }
-.gtDataAA{
-    margin: 0; margin-bottom: 5px;
+
+.gtDataAA {
+    margin: 0;
+    margin-bottom: 5px;
 }
-.gtDataAAA{
+
+.gtDataAAA {
     margin: 0;
 }
-.gtDataAAAA{
+
+.gtDataAAAA {
     font-size: 15px;
-    color: rgba(0,0,0, 0.4);
+    color: rgba(0, 0, 0, 0.4);
 }
-.gtDataAAAB{
-    font-size: 15px; font-weight: bold;
-    color: rgba(0,0,0, 0.4);
+
+.gtDataAAAB {
+    font-size: 15px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.4);
 }
-.gtDataAB{
+
+.gtDataAB {
     position: relative;
     top: 45px;
-    border-bottom: 1px solid rgba(150,150,150,0.7); 
-    margin-bottom: 5px; margin-top: 10px;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.7);
+    margin-bottom: 5px;
+    margin-top: 10px;
 }
-.gtDataB{
-    position: relative; top: 50px;
-    max-height: 130px; 
+
+.gtDataB {
+    position: relative;
+    top: 50px;
+    max-height: 130px;
     overflow-y: scroll;
 }
-.gtDataBA{
-    margin: 0; margin-bottom: 5px;
+
+.gtDataBA {
+    margin: 0;
+    margin-bottom: 5px;
 }
-.gtDataBAA{
+
+.gtDataBAA {
     margin: 0;
 }
-.gtDataBAAA{
+
+.gtDataBAAA {
     font-size: 15px;
-    color: rgba(0,0,0, 0.4);
+    color: rgba(0, 0, 0, 0.4);
 }
-.gtDataBAAB{
-    font-size: 15px; font-weight: bold;
-    color: rgba(0,0,0, 0.4);
+
+.gtDataBAAB {
+    font-size: 15px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.4);
 }
-.gtDataBB{
+
+.gtDataBB {
     position: relative;
     top: 45px;
     margin-top: 10px;
-    border-bottom: 1px solid rgba(150,150,150,0.7);
+    border-bottom: 1px solid rgba(150, 150, 150, 0.7);
 }
-.gtDataC{
-    position: relative; 
-    top: 50px; 
-    margin: 0; margin-top: 10px;
+
+.gtDataC {
+    position: relative;
+    top: 50px;
+    margin: 0;
+    margin-top: 10px;
 }
-.gtDataCA{
-    display: flex; justify-content: center;
-    font-size: 30px; font-weight: 650;
-    margin-bottom: 15px; 
+
+.gtDataCA {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 650;
+    margin-bottom: 15px;
 }
-.gtDataCBA{
+
+.gtDataCBA {
     margin-top: 10px;
     min-width: 300px;
 }
-.gtDataCBAA{
+
+.gtDataCBAA {
     /* position: relative; left: 30%; */
-    
 }
-.gtDataCBAAA{
+
+.gtDataCBAAA {
     height: 125px !important;
     width: 125px !important;
 }
-.gtDataCBAB{
-    position: relative; left: 30%;
-}
-.gtDataCBABA{
-    display: flex; justify-content: center; align-items: center; 
-    margin: 0;
-}
-.gtDataCBABAA{
-    font-size: 15px;
-}
-.gtDataCBABAB{
-    font-size: 15px; font-weight: bold;
-}
-.gtDataStrCBABAB{
-    text-transform: uppercase;
-    font-size: 15px; font-weight: 550;
-    color: rgba(126, 120, 120, 0.65);
-}
-.gtDataPrCBABAB{
-    font-size: 14px; font-weight: 550;
-    color: rgba(39, 36, 36, 0.65);
-}
-.gtDataCBABB{
-    display: flex; justify-content: center; align-items: center; 
-    margin: 0;
-}
-.gtDataCBB{
-    margin-top: 10px; 
-    width: 100%;
-    border-bottom: 1px dashed rgba(84, 151, 123, 0.7); 
+
+.gtDataCBAB {
+    position: relative;
+    left: 30%;
 }
 
-.doc{
-    position: fixed; right: 3px; top: 47%;
-    width: 50px; 
-    background-color: rgba(255,255,255,0.9);
-    display: flex; align-items: baseline;
-    border-right: 1px solid rgba(0,0,0,0.45); 
+.gtDataCBABA {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
-.pageDocIcon{
-    fill: rgba(150,150,150,0.7);
+
+.gtDataCBABAA {
+    font-size: 15px;
 }
-.pageDocIcon svg{
-    width: 20px; height: 20px;
+
+.gtDataCBABAB {
+    font-size: 15px;
+    font-weight: bold;
 }
-.pageDocSlctIcon{
-    fill: rgba(42,81,145,0.7) !important;
+
+.gtDataStrCBABAB {
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 550;
+    color: rgba(126, 120, 120, 0.65);
 }
-.pageDocSlctIcon svg{
-    width: 40px !important; height: 40px !important;
+
+.gtDataPrCBABAB {
+    font-size: 14px;
+    font-weight: 550;
+    color: rgba(39, 36, 36, 0.65);
 }
-.pageDocBtn{
-    display: flex; justify-content: center;
-    margin: 0; padding: 0; 
-    min-width: 25px; width: 25px; 
-    min-height: 35px; height: 35px; 
+
+.gtDataCBABB {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
-.pageDocSlctBtn{
-    min-width: 35px !important; width: 35px !important; 
-    min-height: 35px !important; height: 35px !important;
+
+.gtDataCBB {
+    margin-top: 10px;
+    width: 100%;
+    border-bottom: 1px dashed rgba(84, 151, 123, 0.7);
 }
-.pageDocSlctBtn svg{
-    width: 30px !important; height: 30px !important;
-    transition: height 0.2s ease; transition: width 0.2s ease;
+
+.doc {
+    position: fixed;
+    right: 3px;
+    top: 47%;
+    width: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: baseline;
+    border-right: 1px solid rgba(0, 0, 0, 0.45);
 }
-.pageDocSlctBtn ng-md-icon{
+
+.pageDocIcon {
+    fill: rgba(150, 150, 150, 0.7);
+}
+
+.pageDocIcon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.pageDocSlctIcon {
+    fill: rgba(42, 81, 145, 0.7) !important;
+}
+
+.pageDocSlctIcon svg {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.pageDocBtn {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    min-width: 25px;
+    width: 25px;
+    min-height: 35px;
+    height: 35px;
+}
+
+.pageDocSlctBtn {
+    min-width: 35px !important;
+    width: 35px !important;
+    min-height: 35px !important;
+    height: 35px !important;
+}
+
+.pageDocSlctBtn svg {
+    width: 30px !important;
+    height: 30px !important;
+    transition: height 0.2s ease;
+    transition: width 0.2s ease;
+}
+
+.pageDocSlctBtn ng-md-icon {
     fill: rgb(31, 196, 157) !important;
 }
 
-#pg_1:hover{
-    min-width: 50px !important; width: 50px !important; 
-    min-height: 50px !important; height: 50px !important;
+#pg_1:hover {
+    min-width: 50px !important;
+    width: 50px !important;
+    min-height: 50px !important;
+    height: 50px !important;
     background-color: transparent !important;
 }
-#pg_1:hover .pageDocHvrIcon1{
-    fill: rgba(42,81,145,0.35);
-}
-#pg_1:hover .pageDocHvrIcon1 svg{
-    width: 40px !important; height: 40px !important;
-    transition: height 0.2s ease; transition: width 0.2s ease;
+
+#pg_1:hover .pageDocHvrIcon1 {
+    fill: rgba(42, 81, 145, 0.35);
 }
 
-#pg_2:hover{
-    min-width: 50px !important; width: 50px !important; 
-    min-height: 50px !important; height: 50px !important;
+#pg_1:hover .pageDocHvrIcon1 svg {
+    width: 40px !important;
+    height: 40px !important;
+    transition: height 0.2s ease;
+    transition: width 0.2s ease;
+}
+
+#pg_2:hover {
+    min-width: 50px !important;
+    width: 50px !important;
+    min-height: 50px !important;
+    height: 50px !important;
     background-color: transparent !important;
 }
-#pg_2:hover .pageDocHvrIcon2{
-    fill: rgba(42,81,145,0.35);
-}
-#pg_2:hover .pageDocHvrIcon2 svg{
-    width: 40px !important; height: 40px !important;
-    transition: height 0.2s ease; transition: width 0.2s ease;
+
+#pg_2:hover .pageDocHvrIcon2 {
+    fill: rgba(42, 81, 145, 0.35);
 }
 
-#pg_3:hover{
-    min-width: 50px !important; width: 50px !important; 
-    min-height: 50px !important; height: 50px !important;
+#pg_2:hover .pageDocHvrIcon2 svg {
+    width: 40px !important;
+    height: 40px !important;
+    transition: height 0.2s ease;
+    transition: width 0.2s ease;
+}
+
+#pg_3:hover {
+    min-width: 50px !important;
+    width: 50px !important;
+    min-height: 50px !important;
+    height: 50px !important;
     background-color: transparent !important;
 }
-#pg_3:hover .pageDocHvrIcon3{
-    fill: rgba(42,81,145,0.35);
-}
-#pg_3:hover .pageDocHvrIcon3 svg{
-    width: 40px !important; height: 40px !important;
-    transition: height 0.2s ease; transition: width 0.2s ease;
+
+#pg_3:hover .pageDocHvrIcon3 {
+    fill: rgba(42, 81, 145, 0.35);
 }
 
-.disRoomMap{
-    position: relative; 
-    top: 15px; 
+#pg_3:hover .pageDocHvrIcon3 svg {
+    width: 40px !important;
+    height: 40px !important;
+    transition: height 0.2s ease;
+    transition: width 0.2s ease;
+}
+
+.disRoomMap {
+    position: relative;
+    top: 15px;
     left: 0.5%;
     height: 100%;
     width: 75%;
-    border: 1px rgba(0,0,0,0.25) solid; border-radius: 3px;
+    border: 1px rgba(0, 0, 0, 0.25) solid;
+    border-radius: 3px;
 }
-.ADL_POL_tbl{
-    width: 24%; 
+
+.ADL_POL_tbl {
+    width: 24%;
 }
-.ADL{
-    position: relative; 
-    top: 20px; 
+
+.ADL {
+    position: relative;
+    top: 20px;
     left: 1%;
     height: 49.5%;
 }
-.POL{
-    position: relative; 
-    top: 20px; 
+
+.POL {
+    position: relative;
+    top: 20px;
     left: 1%;
     height: 49.5%;
 }
-.ADL_POL_A_w{
+
+.ADL_POL_A_w {
     width: 85%;
     margin-left: 10px;
 }
 
-.srchCntr{
-    position: relative; top: 5px;
-    margin: 0; padding: 0; 
-    background-color: rgba(255, 255,255, 1);
-    border: 1px solid grey; border-radius: 3px 3px 0 0 ;
+.srchCntr {
+    position: relative;
+    top: 5px;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid grey;
+    border-radius: 3px 3px 0 0;
 }
-.srchBtn{
-    min-width: 30px; width: 30px; min-height: 30px; height: 30px;
-    margin: 0; padding: 0;
-    border-radius: 3px 0 0 0px; 
+
+.srchBtn {
+    min-width: 30px;
+    width: 30px;
+    min-height: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    border-radius: 3px 0 0 0px;
 }
-.srchBtnCus{
+
+.srchBtnCus {
     background-color: rgba(34, 138, 74, 0.301);
 }
-.srchBtnDr{
+
+.srchBtnDr {
     background-color: rgba(63, 117, 168, 0.363);
 }
-.srchInpt{
+
+.srchInpt {
     border: none !important;
 }
-.listBx{
-    position: relative; 
-    top: 5px; 
-    height: 80%; 
-    border-left: 1px solid rgba(145,145,145,0.8); border-right: 1px solid rgba(145,145,145,0.8);
+
+.listBx {
+    position: relative;
+    top: 5px;
+    height: 80%;
+    border-left: 1px solid rgba(145, 145, 145, 0.8);
+    border-right: 1px solid rgba(145, 145, 145, 0.8);
     overflow-y: scroll;
 }
-.slctAllBx{
-    position: relative; 
-    top: 5px; 
-    display: flex; justify-content: center; 
-    border: 1px solid rgba(145,145,145,0.8); 
+
+.slctAllBx {
+    position: relative;
+    top: 5px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(145, 145, 145, 0.8);
     border-radius: 0 0 3px 3px;
 }
-.slctAllCheck{
-    margin: 0; padding: 4px 0 4px 0;
+
+.slctAllCheck {
+    margin: 0;
+    padding: 4px 0 4px 0;
 }
-.cusTblLn{
+
+.cusTblLn {
     border-color: rgba(34, 138, 74, 0.753);
 }
-.drTblLn{
+
+.drTblLn {
     border-color: rgba(63, 117, 168, 0.904);
 }
 
-
-.ADL_POL md-radio-button{
+.ADL_POL md-radio-button {
     margin: 5px 0 5px 10px;
 }
-.ADL_POL md-radio-button ul{
-    margin: 0; padding: 0;
+
+.ADL_POL md-radio-button ul {
+    margin: 0;
+    padding: 0;
 }
-.ADL_POL md-radio-button .md-label{
+
+.ADL_POL md-radio-button .md-label {
     margin-left: 10px;
 }
 
-.inptErMsg{
+.inptErMsg {
     font-size: 9px;
     -webkit-font-smoothing: antialiased;
-    font-weight: 400; 
+    font-weight: 400;
 }
-.gtDataA .md-label{
+
+.gtDataA .md-label {
     width: 100% !important;
 }
 
 .cm_icon_good {
-    color: green
+    color: green;
 }
 
 .cm_icon_bad {
-    color: red
+    color: red;
 }

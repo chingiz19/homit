@@ -308,7 +308,7 @@ async function createOrders(userId, address, address_lat, address_long, driverIn
                     storeType: storeType
                 });
             } else {
-                NM.sendOrderToCM(cmUserId, address, cmOrderId, storeType);
+                NM.sendOrderToCM(cmUserId, address, "o_" + cmOrderId, storeType, false);
             }
 
             SMS.alertDirectors("Order has been placed. Processed. Order ID is: " + cmOrderId + " has scheduled delivery --> " + hasSchedDel);

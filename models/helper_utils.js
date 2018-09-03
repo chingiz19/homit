@@ -27,7 +27,6 @@ const homit_tags = {
  * Options for validParams:
  *          (OPTIONAL)  isRemovable: boolean - Allows field/column to be removed from Database. If set will convert params equal 'remove' to undefined. This is required to remove from db
  *          (OPTIONAL)  validateWith: function - Passes in function to be 
- * 
  */
 pub.validateParams = function (obj, validParams) {
     if (!obj) return false;
@@ -120,6 +119,18 @@ pub.clearHomitTags = function (string) {
     return tmpString;
 }
 
+pub.generateAckId = function (usedValues) {
+    let id = Math.random().toString(36).substr(2, 9);
+    let count = 0;
+
+    while (count < 100) {
+        if (!usedValues.includes(id)) {
+            return id;
+        }
+    }
+
+    return "unavailable";
+}
 
 function filterStoreTypeForCupon(storeType) {
     if (storeType == null) {

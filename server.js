@@ -64,7 +64,6 @@ NM.setSharedSessionMiddleware(homitSharedSessions);
 var cart_version = 5;
 
 /* make logs folder */
-var errorLog = ".logs/error_log";
 if (!fs.existsSync('.logs')) {
 	fs.mkdirSync('.logs');
 }

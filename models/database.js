@@ -40,6 +40,7 @@ mysql.createConnection({
  * Database tables
  */
 pub.tables = {
+  api_orders_history: "api_orders_history",
   catalog_store_types: "catalog_store_types",
   catalog_store_unions: "catalog_store_unions",
   catalog_stores: "catalog_stores",
@@ -97,7 +98,11 @@ pub.runQuery = function (query, data) {
         directory: __filename,
         error_message: error.message
       }
-      Logger.log.error('Could not run query', metadata);
+      if (process.env.n_mode == "production") {
+        Logger.log.error('Could not run query', metadata);
+      } else {
+        console.log(error.message);
+      }
       return false;
     });
   }

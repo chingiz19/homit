@@ -18,7 +18,8 @@ pub.UIMessageJar = {
     NOT_AUTHORIZED:         "Not Authorized",
     PASSWORD_FAILED_UPDATE: "Couldn't update payment method, please try again",
     SIGN_UP_ERROR:          "Sign up error, please refresh page and try again",
-    EMAIL_ERROR:            "Please check your email or use different one"
+    EMAIL_ERROR:            "Please check your email or use different one",
+    WRONG_FORMAT:            "Please check your entries for right formatting"
 }
 
 /**

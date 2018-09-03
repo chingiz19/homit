@@ -123,6 +123,10 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
         }
     };
 
+    /**
+     * Navigates to catalog with selected subcategory
+     * @param {object} product 
+     */
     $scope.hrefToSubcat = function(product){
         googleAnalytics.addEvent('subcat_nav_clicked', {
             "event_label": product.subcategory,
@@ -130,7 +134,7 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
         });
 
         sessionStorage.setUserSelectedSubcategory(product.subcategory);
-        $window.location.href = $window.location.origin + "/hub/" + product.store_type_name + "/" + helpers.urlReplaceSpaceWithDash(product.category);
+        $window.location.href = $window.location.origin + "/hub/" + product.store_type_name + "/" + product.category.category_name;
     };
 
     /**

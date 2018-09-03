@@ -1,4 +1,4 @@
-app.controller("adminController", function ($location, $scope, $cookies, $http, $rootScope, $window, mapServices, notification) {
+app.controller("adminController", function ($location, $scope, $cookies, $http, $rootScope, $window, mapServices, notification, helpers) {
 
     $scope.disRoomMap = undefined;
     $scope.searchCriteria = undefined;
@@ -13,6 +13,10 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     $scope.routeNodesMarkers = [];
     $scope.logStreamPrevious = "";
     $scope.logStreamNew = "";
+    $scope.driverRoutes = {};
+    $scope.storesJar = [];
+    $scope.apiOrdersJar = [];
+    $scope.driversNumOnline = 0;
     $scope.mode = $("#mode").val();
 
     /*CM dashboard variables */
@@ -20,7 +24,17 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     const ENGINE_STATUS_OFF = "idle";
     const CONNECTION_STATUS_ON = "live";
     const CONNECTION_STATUS_OFF = "disconnected";
-    const DEFAULT_VALUE = "N/A";
+
+    $scope.init = function () {
+        $scope.toPage($scope.page);
+        $scope.cm_icon = "cm_icon_good";
+        fetchStoreTypes();
+        initiateSocket();
+        getListActiveDriverCustomer();
+        getLogs();
+        setInterval(getLogs, 2000);
+        $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 2000);
+    };
 
     $scope.callSearch = function () {
         $scope.searchCriteria = "";
@@ -36,6 +50,36 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         function checkIfEnter(evt) {
             if (evt.keyCode == 13) {
                 $scope.searchUserHistory($scope.searchBy);
+            }
+        }
+    };
+
+    $scope.submitApiSubmussionForm = function () {
+        for (let i in $scope.storesJar) {
+            if ($scope.storesJar[i].name === $scope.storeTypeName) {
+                return $http({
+                    method: 'POST',
+                    url: "/api/csr/apiorder",
+                    data: {
+                        first_name: $scope.firstname,
+                        last_name: $scope.lastname,
+                        address: $scope.address,
+                        order_number: $scope.clientId,
+                        phone_number: $scope.phoneNumber,
+                        driver_instruction: $scope.driverInstructions,
+                        store_type_name: $scope.storeTypeName,
+                        store_type_number: $scope.storesJar[i].id
+                    }
+                }).then(function successCallback(response) {
+                    if (response.data.success) {
+                        document.getElementById("apiOrderForm").reset();
+                        notification.addSuccessMessage("Submitted!");
+                    } else {
+                        notification.addErrorMessage("Could not submit orders, please try again");
+                    }
+                }, function errorCallback(response) {
+                    notification.addErrorMessage("Could not submit orders, please try again");
+                });
             }
         }
     };
@@ -107,7 +151,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         }).then(function successCallback(response) {
             $scope.foundTransactions = response.data.transactions;
             for (var tmp in $scope.foundTransactions) {
-                $scope.foundTransactions[tmp].date_placed = mm_dd_yyyy($scope.foundTransactions[tmp].date_placed);
+                $scope.foundTransactions[tmp].date_placed = helpers.mm_dd_yyyy($scope.foundTransactions[tmp].date_placed);
             }
         }, function errorCallback(response) {
         });
@@ -124,11 +168,11 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         }).then(function successCallback(response) {
             $scope.foundOrders = response.data.orders;
             for (let order in $scope.foundOrders) {
-                $scope.foundOrders[order]['date_assigned'] = hh_mm($scope.foundOrders[order]['date_assigned']);
-                $scope.foundOrders[order]['date_arrived_store'] = hh_mm($scope.foundOrders[order]['date_arrived_store']);
-                $scope.foundOrders[order]['date_picked'] = hh_mm($scope.foundOrders[order]['date_picked']);
-                $scope.foundOrders[order]['date_arrived_customer'] = hh_mm($scope.foundOrders[order]['date_arrived_customer']);
-                $scope.foundOrders[order]['date_delivered'] = hh_mm($scope.foundOrders[order]['date_delivered']);
+                $scope.foundOrders[order]['date_assigned'] = helpers.hh_mm($scope.foundOrders[order]['date_assigned']);
+                $scope.foundOrders[order]['date_arrived_store'] = helpers.hh_mm($scope.foundOrders[order]['date_arrived_store']);
+                $scope.foundOrders[order]['date_picked'] = helpers.hh_mm($scope.foundOrders[order]['date_picked']);
+                $scope.foundOrders[order]['date_arrived_customer'] = helpers.hh_mm($scope.foundOrders[order]['date_arrived_customer']);
+                $scope.foundOrders[order]['date_delivered'] = helpers.hh_mm($scope.foundOrders[order]['date_delivered']);
             }
         }, function errorCallback(response) {
         });
@@ -255,29 +299,6 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         totCalculator($scope.refundList);
     };
 
-    function updateTotals() {
-        $scope.ref_chr_Money['cartTotal'] = 0;
-        $scope.ref_chr_Money['delFee'] = 0;
-        $scope.ref_chr_Money['GST'] = 0;
-        $scope.ref_chr_Money['totAmount'] = 0;
-    }
-
-    function totCalculator(list) {
-        var delFee1 = 4.99;
-        var delFee2 = 2.99;
-        updateTotals();
-        for (let item in list) {
-            $scope.ref_chr_Money['cartTotal'] = Math.round(($scope.ref_chr_Money['cartTotal'] + list[item].price * list[item].quantity) * 100) / 100;
-        }
-        if ($scope.reqeustType == 3 && $scope.reqeustType == 4) {
-            $scope.ref_chr_Money['delFee'] = (delFee1 + parseInt(($scope.selectedOrder['cartTotal']) / 100) * delFee2) - (delFee1 + parseInt(($scope.selectedOrder['cartTotal'] - $scope.ref_chr_Money['cartTotal']) / 100) * delFee2);
-        } else if ($scope.reqeustType == 5) {
-            $scope.ref_chr_Money['delFee'] = delFee1 + parseInt(($scope.ref_chr_Money['cartTotal']) / 100) * delFee2;
-        }
-        $scope.ref_chr_Money['GST'] = Math.round(($scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['delFee']) * 0.05 * 100) / 100;
-        $scope.ref_chr_Money['totAmount'] = Math.round(($scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['delFee'] + $scope.ref_chr_Money['GST']) * 100) / 100;
-    }
-
     $scope.page = 2;
     $scope.pageName = "Dispatch Room";
     $scope.disRoomMap = undefined;
@@ -315,7 +336,105 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             $scope.pageName = "CM Dashboard";
             $scope.page = 4;
         }
+        if (num == 5) {
+            $scope.pageName = "API Order Submission";
+            $scope.page = 5;
+            getApiOrders();
+        }
     };
+
+    $scope.showDriverRoute = function (driver) {
+        clearInterval($scope.setInterval_ADL_POL);
+        clearSelection();
+        $http({
+            method: 'POST',
+            url: "/api/csr/getdriverroutes",
+            data: {
+                driver_id: driver.driver_id
+            }
+        }).then(function successCallback(response) {
+            $scope.driverRouteNodes = response.data.routes;
+            $scope.routeNodesMarkers.push(buildMarker("driver", driver.driver_id, driver.driver_id_prefix, driver.first_name, driver.last_name, driver.phone_number, driver.email, driver.on_shift, driver.latitude, driver.longitude));
+            for (var node in $scope.driverRouteNodes) {
+                $scope.routeNodesMarkers.push(buildMarker($scope.driverRouteNodes[node].node_type, $scope.driverRouteNodes[node].node_id, $scope.driverRouteNodes[node].node_id_prefix, "first_name", "last_name", "phone_number", "email", "time", $scope.driverRouteNodes[node].node_latitude, $scope.driverRouteNodes[node].node_longitude));
+            }
+            mapServices.addPolylineToMap($scope.routeNodesMarkers, $scope.disRoomMap);
+        }, function errorCallback(response) {
+            console.error("error");
+        });
+    };
+
+    $scope.showOrder = function (order) {
+        clearSelection();
+        clearInterval($scope.setInterval_ADL_POL);
+        var order_marker = [];
+        order_marker.push(buildMarker("customer", order.order_id, order.user_id_prefix, order.first_name, order.last_name, order.user_phone_number, order.user_email, order.WT, order.delivery_latitude, order.delivery_longitude));
+        mapServices.addMarkerToMap(order_marker, $scope.disRoomMap);
+    };
+
+    $scope.selectAll = function (type, list) {
+        var markers = [];
+        if (!$scope.POL_SelectAll && type == 'order' || !$scope.ADL_SelectAll && type == 'driver') {
+            clearSelection();
+            var marker = {};
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].driver_id_prefix == "d_") {
+                    marker = buildMarker("driver", list[i].driver_id, list[i].driver_id_prefix, list[i].first_name, list[i].last_name, list[i].phone_number, list[i].email, list[i].on_shift, list[i].latitude, list[i].longitude);
+                } else {
+                    marker = buildMarker("customer", list[i].order_id, list[i].user_id_prefix, list[i].first_name, list[i].last_name, list[i].user_phone_number, list[i].user_email, list[i].WT, list[i].delivery_latitude, list[i].delivery_longitude);
+                }
+                markers.push(marker);
+            }
+            clearInterval($scope.setInterval_ADL_POL);
+        } else {
+            markers = []; //TODO: already empty?
+            $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 2000);
+            getListActiveDriverCustomer();
+        }
+        mapServices.addMarkerToMap(markers, $scope.disRoomMap);
+    };
+
+    $scope.refreshReport = function () {
+        $http({
+            method: 'POST',
+            url: "/api/csr/refreshreport",
+            data: {}
+        }).then(function successCallback(response) {
+            if (response.data.success) {
+                notification.addSuccessMessage("Updated");
+            } else {
+                notification.addErrorMessage("Could not update report, please try again");
+            }
+        }, function errorCallback(response) {
+            notification.addErrorMessage("Could not update report, please try again");
+        });
+    }
+
+    function buildMarker(type, order_id, id_prefix, first_name, last_name, phone_number, email, time, lat, lng) {
+        var marker = {};
+        marker.type = type;
+        marker.order_id = order_id;
+        marker.id_prefix = id_prefix;
+        marker.first_name = first_name;
+        marker.last_name = last_name;
+        marker.phone_number = phone_number;
+        marker.email = email;
+        marker.time = time;
+        marker.latLng = {
+            lat: lat,
+            lng: lng
+        };
+        return marker;
+    }
+
+    function clearSelection() {
+        $scope.POL_radioGroup = "";
+        $scope.ADL_radioGroup = "";
+        $scope.POL_SelectAll = "";
+        $scope.ADL_SelectAll = "";
+        $scope.driverRouteNodes = [];
+        $scope.routeNodesMarkers = [];
+    }
 
     function getListActiveDriverCustomer() {
         $scope.online_driverList = [];
@@ -383,93 +502,20 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         });
     }
 
-    $scope.showDriverRoute = function (driver) {
-        clearInterval($scope.setInterval_ADL_POL);
-        clearSelection();
+    function getApiOrders () {
         $http({
             method: 'POST',
-            url: "/api/csr/getdriverroutes",
-            data: {
-                driver_id: driver.driver_id
-            }
+            url: "/api/csr/apiorders",
+            data: {}
         }).then(function successCallback(response) {
-            $scope.driverRouteNodes = response.data.routes;
-            $scope.routeNodesMarkers.push(buildMarker("driver", driver.driver_id, driver.driver_id_prefix, driver.first_name, driver.last_name, driver.phone_number, driver.email, driver.on_shift, driver.latitude, driver.longitude));
-            for (var node in $scope.driverRouteNodes) {
-                $scope.routeNodesMarkers.push(buildMarker($scope.driverRouteNodes[node].node_type, $scope.driverRouteNodes[node].node_id, $scope.driverRouteNodes[node].node_id_prefix, "first_name", "last_name", "phone_number", "email", "time", $scope.driverRouteNodes[node].node_latitude, $scope.driverRouteNodes[node].node_longitude));
+            if (response.data.success) {
+                $scope.apiOrdersJar = response.data.table;
+            } else {
+                notification.addErrorMessage("Could not fetch api orders, please refresh page");
             }
-            mapServices.addPolylineToMap($scope.routeNodesMarkers, $scope.disRoomMap);
         }, function errorCallback(response) {
-            console.error("error");
+            notification.addErrorMessage("Could not fetch api orders, please refresh page");
         });
-    };
-
-    $scope.showOrder = function (order) {
-        clearSelection();
-        clearInterval($scope.setInterval_ADL_POL);
-        var order_marker = [];
-        order_marker.push(buildMarker("customer", order.order_id, order.user_id_prefix, order.first_name, order.last_name, order.user_phone_number, order.user_email, order.WT, order.delivery_latitude, order.delivery_longitude));
-        mapServices.addMarkerToMap(order_marker, $scope.disRoomMap);
-    };
-
-    $scope.selectAll = function (type, list) {
-        var markers = [];
-        if (!$scope.POL_SelectAll && type == 'order' || !$scope.ADL_SelectAll && type == 'driver') {
-            clearSelection();
-            var marker = {};
-            for (var i = 0; i < list.length; i++) {
-                if (list[i].driver_id_prefix == "d_") {
-                    marker = buildMarker("driver", list[i].driver_id, list[i].driver_id_prefix, list[i].first_name, list[i].last_name, list[i].phone_number, list[i].email, list[i].on_shift, list[i].latitude, list[i].longitude);
-                } else {
-                    marker = buildMarker("customer", list[i].order_id, list[i].user_id_prefix, list[i].first_name, list[i].last_name, list[i].user_phone_number, list[i].user_email, list[i].WT, list[i].delivery_latitude, list[i].delivery_longitude);
-                }
-                markers.push(marker);
-            }
-            clearInterval($scope.setInterval_ADL_POL);
-        } else {
-            markers = []; //TODO: already empty?
-            $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 2000);
-            getListActiveDriverCustomer();
-        }
-        mapServices.addMarkerToMap(markers, $scope.disRoomMap);
-    };
-
-    function buildMarker(type, order_id, id_prefix, first_name, last_name, phone_number, email, time, lat, lng) {
-        var marker = {};
-        marker.type = type;
-        marker.order_id = order_id;
-        marker.id_prefix = id_prefix;
-        marker.first_name = first_name;
-        marker.last_name = last_name;
-        marker.phone_number = phone_number;
-        marker.email = email;
-        marker.time = time;
-        marker.latLng = {
-            lat: lat,
-            lng: lng
-        };
-        return marker;
-    }
-
-    function clearSelection() {
-        $scope.POL_radioGroup = "";
-        $scope.ADL_radioGroup = "";
-        $scope.POL_SelectAll = "";
-        $scope.ADL_SelectAll = "";
-        $scope.driverRouteNodes = [];
-        $scope.routeNodesMarkers = [];
-    }
-
-    function mm_dd_yyyy(inDate) {
-        if (inDate) {
-            return parseInt(inDate.slice(5, 7), 10) + "/" + parseInt(inDate.slice(8, 10), 10) + "/" + parseInt(inDate.slice(0, 4), 10);
-        }
-    }
-
-    function hh_mm(inDate) {
-        if (inDate) {
-            return parseInt(inDate.slice(12, 13), 10) + ":" + parseInt(inDate.slice(15, 16), 10);
-        }
     }
 
     /* CM dahsboard functions start here */
@@ -492,8 +538,8 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 $scope.cm_icon = "cm_icon_bad";
             }
 
-            if (received_data.uptime=="") {
-                received_data.uptime="less than a minute";
+            if (received_data.uptime == "") {
+                received_data.uptime = "less than a minute";
             }
 
             $("#uptime").text(received_data.uptime);
@@ -504,6 +550,8 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             $("#connection").text(CONNECTION_STATUS_ON).addClass("cm_icon_good");
             setEngineStatus(received_data);
             setDBConnectionStatus(received_data);
+            $scope.driverRoutes = JSON.parse(received_data.driver_routes);
+            $scope.driversNumOnline = Object.keys($scope.driverRoutes).length;
         });
 
         socket.on('cm_con_report', function (data) {
@@ -534,26 +582,44 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         }
     }
 
-    function putDefaultValues() {
-        $("#uptime").text(DEFAULT_VALUE);
-        $("#exceptions").text(DEFAULT_VALUE);
-        $("#online_drivers").text(DEFAULT_VALUE);
-        $("#order_queue").text(DEFAULT_VALUE);
-        $("#dispatched_orders").text(DEFAULT_VALUE);
-        $("#running").text(DEFAULT_VALUE);
+    function updateTotals() {
+        $scope.ref_chr_Money['cartTotal'] = 0;
+        $scope.ref_chr_Money['delFee'] = 0;
+        $scope.ref_chr_Money['GST'] = 0;
+        $scope.ref_chr_Money['totAmount'] = 0;
     }
 
-    /* CM dashboard functions end here */
+    function fetchStoreTypes() {
+        $http({
+            method: 'POST',
+            url: "/api/csr/getstores",
+            data: {}
+        }).then(function successCallback(response) {
+            if (response.data.success) {
+                $scope.storesJar = response.data.array;
+            } else {
+                notification.addErrorMessage("Could not fetch store types, please refresh page");
+            }
+        }, function errorCallback(response) {
+            notification.addErrorMessage("Could not fetch store types, please refresh page");
+        });
+    }
 
-    $scope.init = function () {
-        $scope.toPage($scope.page);
-        $scope.cm_icon = "cm_icon_good";
-        initiateSocket();
-        getListActiveDriverCustomer();
-        getLogs();
-        setInterval(getLogs, 2000);
-        $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 2000);
-    };
+    function totCalculator(list) {
+        var delFee1 = 4.99;
+        var delFee2 = 2.99;
+        updateTotals();
+        for (let item in list) {
+            $scope.ref_chr_Money['cartTotal'] = Math.round(($scope.ref_chr_Money['cartTotal'] + list[item].price * list[item].quantity) * 100) / 100;
+        }
+        if ($scope.reqeustType == 3 && $scope.reqeustType == 4) {
+            $scope.ref_chr_Money['delFee'] = (delFee1 + parseInt(($scope.selectedOrder['cartTotal']) / 100) * delFee2) - (delFee1 + parseInt(($scope.selectedOrder['cartTotal'] - $scope.ref_chr_Money['cartTotal']) / 100) * delFee2);
+        } else if ($scope.reqeustType == 5) {
+            $scope.ref_chr_Money['delFee'] = delFee1 + parseInt(($scope.ref_chr_Money['cartTotal']) / 100) * delFee2;
+        }
+        $scope.ref_chr_Money['GST'] = Math.round(($scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['delFee']) * 0.05 * 100) / 100;
+        $scope.ref_chr_Money['totAmount'] = Math.round(($scope.ref_chr_Money['cartTotal'] + $scope.ref_chr_Money['delFee'] + $scope.ref_chr_Money['GST']) * 100) / 100;
+    }
 
     $(document).ready(function () {
         $scope.init();
