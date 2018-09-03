@@ -343,7 +343,7 @@ CREATE TABLE user_cart_items (
 	
 	PRIMARY KEY (id), 
 	UNIQUE (user_id, depot_id), 
-	CONSTRAINT fk_user_cart_items_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_user_cart_items_user_id FOREIGN KEY (user_id) REFERENCES users_customers(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 
@@ -476,16 +476,12 @@ CREATE TABLE catalog_store_types_banners (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	store_type_id INT UNSIGNED NOT NULL,
 	image VARCHAR(225) NOT NULL,
-	category_id INT UNSIGNED,
-	subcategory_id INT UNSIGNED,
-	product_id INT UNSIGNED,
+	category_name VARCHAR(225),
+	subcategory_name VARCHAR(225),
 	active BOOLEAN DEFAULT TRUE,
 	
 	PRIMARY KEY (id),
-	CONSTRAINT fk_catalog_store_types_banners_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_catalog_store_types_banners_category_id FOREIGN KEY (category_id) REFERENCES catalog_categories(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_catalog_store_types_banners_subcategory_id FOREIGN KEY (subcategory_id) REFERENCES catalog_subcategories(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	CONSTRAINT fk_catalog_store_types_banners_product_id FOREIGN KEY (product_id) REFERENCES catalog_products(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	CONSTRAINT fk_catalog_store_types_banners_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 

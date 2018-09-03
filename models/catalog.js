@@ -31,19 +31,12 @@ pub.getBannersByStoreType = async function (storeType) {
     let sqlQuery = `
         SELECT 
             banners.image AS image,
-            banners.category_id AS category_id,
-            banners.subcategory_id AS subcategory_id,
-            banners.product_id AS product_id,
-            subcategory.name AS subcategory_name,
-            category.name AS category_name
+            banners.category_name AS category_name,
+            banners.subcategory_name AS subcategory_name
         FROM 
             catalog_store_types_banners AS banners
         JOIN 
             catalog_store_types AS store_types ON (store_types.id = banners.store_type_id)
-        JOIN 
-            catalog_categories AS category ON (category.id = banners.category_id)
-        LEFT JOIN 
-            catalog_subcategories AS subcategory ON (subcategory.id = banners.subcategory_id)
         WHERE 
             ?
         AND 
@@ -54,8 +47,7 @@ pub.getBannersByStoreType = async function (storeType) {
         "store_types.name": storeType
     };
 
-    let dbResult = await db.runQuery(sqlQuery, data);
-    return getFormattedBanners(dbResult);
+    return await db.runQuery(sqlQuery, data);
 }
 
 /**
@@ -854,32 +846,6 @@ async function getRandomArrayOfProducts(limit) {
     }
 
     return productsArray;
-}
-
-async function getFormattedBanners(banners) {
-    let result = [];
-
-    for (let i = 0; i < banners.length; i++) {
-        let tmpProductId = banners[i].product_id;
-        delete banners[i].product_id;
-        if (tmpProductId == null) {
-            banners[i].product = undefined;
-        } else {
-            let tmpProduct = await getProductInfoById(tmpProductId);
-            if (!tmpProduct) {
-                banners[i].product = undefined;
-            } else {
-                banners[i].product = {
-                    product_id: tmpProductId,
-                    brand: tmpProduct.brand,
-                    name: tmpProduct.name
-                };
-            }
-        }
-        result.push(banners[i]);
-    }
-
-    return result;
 }
 
 async function getProductInfoById(productId) {
