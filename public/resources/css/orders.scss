@@ -12,6 +12,27 @@ body {
     height: 90%;
 }
 
+.address-input{
+    width: 418px;
+}
+
+.address-input::placeholder {
+    color: rgba(0,0,0,0);
+}
+
+.address-input-btn{
+    display: none;
+}
+
+.predictions-container{
+    top: 138px;
+    width: 418px;
+}
+
+.predictions-item{
+    padding-left: 10px !important;
+}
+
 /*Changes default border color*/
 md-radio-button .md-off {
     border-color: rgba(0, 0, 0, 0.4);

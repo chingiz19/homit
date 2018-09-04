@@ -371,7 +371,9 @@
                     <br> Last name:<br>
                     <input type="text" ng-model="lastname" required>
                     <br> Address:<br>
-                    <input type="text" style='width:30em' ng-model="address" required>
+                    <address-autocomplete input-class="address-input" icon-class="address-icon" button-class="address-input-btn" autocomplete="autocomplete"
+                            on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
+                    <span ng-show="withinCoverage == false" class="error-text">Out of coverage area</span>
                     <br>Client Order ID:<br>
                     <input type="text" ng-model="clientId" required>
                     <br> Phone number:<br>
@@ -458,6 +460,7 @@
         <script src="/resources/services/sessionStorage.js"></script>
         <script src="/resources/services/mapServices.js"></script>
         <script src="/resources/controllers/orders.js"></script>
+        <script src="/resources/directives/addressAutocomplete.js"></script>
         <% } %>
 </body>
 

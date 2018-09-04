@@ -1,4 +1,4 @@
-app.controller("adminController", function ($location, $scope, $cookies, $http, $rootScope, $window, mapServices, notification, helpers) {
+app.controller("adminController", function ($location, $scope, $cookies, $http, $rootScope, $window, mapServices, notification, helpers, $timeout) {
 
     $scope.disRoomMap = undefined;
     $scope.searchCriteria = undefined;
@@ -34,6 +34,20 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         getLogs();
         setInterval(getLogs, 2000);
         $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 2000);
+
+        $timeout(function () {
+            mapServices.createCoveragePolygon().then(function (polygon) {
+                if (polygon) {
+                    $scope.coveragePolygon = polygon;
+                    //TODO: change to dynamic
+                    $scope.bounds = new google.maps.LatLngBounds({ lat: 50.862122, lng: -114.173317 }, { lat: 51.172396, lng: -113.925171 });
+                    //Checks if address within coverage area
+                    var latLng = $scope.autocomplete.getLatLng();
+                    $scope.withinCoverage = mapServices.isPlaceInsidePolygon(latLng, polygon);
+                }
+            });
+        }, 500);
+
     };
 
     $scope.callSearch = function () {
@@ -81,6 +95,17 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                     notification.addErrorMessage("Could not submit orders, please try again");
                 });
             }
+        }
+    };
+
+    $scope.gotAddressResults = function () {
+        var place = $scope.autocomplete.getPlace();
+        var latLng = $scope.autocomplete.getLatLng();
+        $scope.address = place.formatted_address;
+        if (mapServices.isPlaceInsidePolygon(latLng, $scope.coveragePolygon)) {
+            $scope.withinCoverage = true;
+        } else {
+            $scope.withinCoverage = false;
         }
     };
 
@@ -408,7 +433,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         }, function errorCallback(response) {
             notification.addErrorMessage("Could not update report, please try again");
         });
-    }
+    };
 
     function buildMarker(type, order_id, id_prefix, first_name, last_name, phone_number, email, time, lat, lng) {
         var marker = {};
