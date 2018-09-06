@@ -12,7 +12,6 @@ CREATE TABLE catalog_store_types (
 	available BOOLEAN DEFAULT TRUE,
 	union_id INT UNSIGNED, 
 	del_fee_primary DOUBLE DEFAULT 4.99,
-	del_fee_secondary DOUBLE DEFAULT 2.99,
 	rate_id INT UNSIGNED,
 	
 	PRIMARY KEY (id),

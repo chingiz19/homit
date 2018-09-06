@@ -282,7 +282,6 @@ pub.getOrderItemsById = async function (orderId) {
         cart_item.price_sold AS price_sold,
         cart_item.tax AS tax,
         store_type.del_fee_primary,
-        store_type.del_fee_secondary
         
         FROM
         orders_cart_items AS cart_item 
