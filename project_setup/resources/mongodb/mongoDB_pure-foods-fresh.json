@@ -46,11 +46,11 @@
                         "h_value": 1,
                         "type": 1,
                         "price": 9.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -61,7 +61,8 @@
             "display_name": "Pure Foods Fresh",
             "image_url": "pure-foods-fresh.jpg"
         },
-        "namebrand": "Babu's BBQ Sauce Pure Foods Fresh"
+        "namebrand": "Babu's BBQ Sauce Pure Foods Fresh",
+        "visible": 1
     },
     {
         "_id": "9-2",
@@ -114,11 +115,11 @@
                         "type": 1,
                         "price": 9.99,
                         "h_value": 1,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -129,7 +130,8 @@
             "display_name": "Pure Foods Fresh",
             "image_url": "pure-foods-fresh.jpg"
         },
-        "namebrand": "South Western Green Pepper Sauce Pure Foods Fresh"
+        "namebrand": "South Western Green Pepper Sauce Pure Foods Fresh",
+        "visible": 1
     },
     {
         "_id": "9-3",
@@ -182,11 +184,11 @@
                         "type": 1,
                         "price": 9.99,
                         "h_value": 1,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -197,6 +199,7 @@
             "display_name": "Pure Foods Fresh",
             "image_url": "pure-foods-fresh.jpg"
         },
-        "namebrand": "Trumato Sauce Pure Foods Fresh"
+        "namebrand": "Trumato Sauce Pure Foods Fresh",
+        "visible": 1
     }
 ]

@@ -49,11 +49,11 @@
                         "_id": "10-1-1-1",
                         "h_value": 1,
                         "price": 8.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -64,7 +64,8 @@
             "display_name": "Borderland Food Co.",
             "image_url": "borderland-food-co.jpeg"
         },
-        "namebrand": "Free Range Chicken Broth Borderland Food"
+        "namebrand": "Free Range Chicken Broth Borderland Food",
+        "visible": 1
     },
     {
         "_id": "10-2",
@@ -116,11 +117,11 @@
                         "_id": "10-2-1-1",
                         "h_value": 1,
                         "price": 8.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -131,7 +132,8 @@
             "display_name": "Borderland Food Co.",
             "image_url": "borderland-food-co.jpeg"
         },
-        "namebrand": "Grass-Fed Bison Bone Broth Borderland Food"
+        "namebrand": "Grass-Fed Bison Bone Broth Borderland Food",
+        "visible": 1
     },
     {
         "_id": "10-3",
@@ -183,11 +185,11 @@
                         "_id": "10-3-1-1",
                         "h_value": 1,
                         "price": 8.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -198,7 +200,8 @@
             "display_name": "Borderland Food Co.",
             "image_url": "borderland-food-co.jpeg"
         },
-        "namebrand": "Grass-Fed Beef Bone Broth Borderland Food"
+        "namebrand": "Grass-Fed Beef Bone Broth Borderland Food",
+        "visible": 1
     },
     {
         "_id": "10-4",
@@ -250,11 +253,11 @@
                         "_id": "10-4-1-1",
                         "h_value": 1,
                         "price": 8.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -265,6 +268,7 @@
             "display_name": "Borderland Food Co.",
             "image_url": "borderland-food-co.jpeg"
         },
-        "namebrand": "Free Range Chicken Smoothie Base Bone Broth Borderland Food"
+        "namebrand": "Free Range Chicken Smoothie Base Bone Broth Borderland Food",
+        "visible": 1
     }
 ]

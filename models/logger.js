@@ -87,6 +87,13 @@ pub.streamServerLogs = function (res) {
     }
 };
 
+pub.logError = function (inText) {
+    if (inText) {
+        Logger.log.error(inText);
+        if (process.env.n_mode != "production") { console.log(inText); }
+    }
+};
+
 function getActiveLogLocation() {
     let nameDate = dateFormat(new Date().setUTCHours(13), "isoDateTime").split('T')[0];
     return process.env.LOG_FILE_PATH + nameDate + "." + process.env.LOG_FILE_NAME;

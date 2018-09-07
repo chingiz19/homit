@@ -256,7 +256,7 @@ pub.getOrderItemsById = async function (orderId) {
             let store = await db.selectColumnsWhereLimitOne('name, display_name', db.tables.catalog_store_types, { "id": idArray[0] });
             if (store && store.length > 0) {
                 let searchId = idArray[0] + '-' + idArray[1];
-                let product = await MDB.models[store[0].name].findById(searchId).exec();;
+                let product = await MDB.models[store[0].name].findById(searchId).where({available : 1}).exec();;
                 if (product) {
                     result.push(formatNewStyleProducts(depotIds[k].quantity, product.toObject(), Catalog.findNestedProductPrice(product.toObject(), [searchId, idArray[2], idArray[3]])));
                 }

@@ -51,11 +51,11 @@
                         "_id": "12-1-1-1",
                         "h_value": 1,
                         "price": 6.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -65,7 +65,8 @@
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
         },
-        "namebrand": "Tungo Mango Hot Sauce WestTaste"
+        "namebrand": "Tungo Mango Hot Sauce WestTaste",
+        "visible": 1
     },
     {
         "_id": "12-2",
@@ -119,11 +120,11 @@
                         "_id": "12-2-1-1",
                         "h_value": 1,
                         "price": 7.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -133,7 +134,8 @@
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
         },
-        "namebrand": "Honey & Beet Spread WestTaste"
+        "namebrand": "Honey & Beet Spread WestTaste",
+        "visible": 1
     },
     {
         "_id": "12-3",
@@ -187,11 +189,11 @@
                         "_id": "12-3-1-1",
                         "h_value": 1,
                         "price": 5.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -201,7 +203,8 @@
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
         },
-        "namebrand": "Jan Style Beet Spread WestTaste"
+        "namebrand": "Jan Style Beet Spread WestTaste",
+        "visible": 1
     },
     {
         "_id": "12-4",
@@ -255,11 +258,11 @@
                         "_id": "12-4-1-1",
                         "h_value": 1,
                         "price": 7.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -269,7 +272,8 @@
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
         },
-        "namebrand": "Honey & Carrot Spread WestTaste"
+        "namebrand": "Honey & Carrot Spread WestTaste",
+        "visible": 1
     },
     {
         "_id": "12-5",
@@ -323,11 +327,11 @@
                         "_id": "12-5-1-1",
                         "h_value": 1,
                         "price": 5.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -337,7 +341,8 @@
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
         },
-        "namebrand": "Jam Style Carrot Spread WestTaste"
+        "namebrand": "Jam Style Carrot Spread WestTaste",
+        "visible": 1
     },
     {
         "_id": "12-6",
@@ -391,11 +396,11 @@
                         "_id": "12-6-1-1",
                         "h_value": 1,
                         "price": 6.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -405,7 +410,8 @@
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
         },
-        "namebrand": "Balsamic & Beet Salad Dressing WestTaste"
+        "namebrand": "Balsamic & Beet Salad Dressing WestTaste",
+        "visible": 1
     },
     {
         "_id": "12-7",
@@ -459,11 +465,11 @@
                         "_id": "12-7-1-1",
                         "h_value": 1,
                         "price": 6.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -473,7 +479,8 @@
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
         },
-        "namebrand": "Chia Seed & Mint Salad Dressing WestTaste"
+        "namebrand": "Chia Seed & Mint Salad Dressing WestTaste",
+        "visible": 1
     },
     {
         "_id": "12-8",
@@ -527,11 +534,11 @@
                         "_id": "12-8-1-1",
                         "h_value": 1,
                         "price": 6.99,
-                        "available": 1,
                         "stock_quantity": 100,
                         "sold": {
                             "quantity": 0
-                        }
+                        },
+                        "visible": 1
                     }
                 ]
             }
@@ -541,6 +548,7 @@
             "display_name": "WestTaste",
             "image_url": "westtaste.jpg"
         },
-        "namebrand": "Spicy Hot Sauce WestTaste"
+        "namebrand": "Spicy Hot Sauce WestTaste",
+        "visible": 1
     }
 ]

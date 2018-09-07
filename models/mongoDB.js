@@ -18,13 +18,7 @@ let db_user_name = process.env.DB_USER_NAME;
 let db_password = process.env.DB_PASSWORD;
 
 mongoose.connect(`mongodb://${db_user_name}:${db_password}@localhost:27017/${db_name}`, { useNewUrlParser: true }).then(function (result) {
-
-    if (process.env.n_mode != "production") {
-        console.log("Connection to Mongo DB established");
-    } else {
-        Logger.log.debug("Connection to Mongo DB established");
-    }
-
+    Logger.logError("Connection to Mongo DB established");
     MongoDBConnected = true;
     init();
 }, function (err) {
@@ -55,7 +49,6 @@ let productSchema = new Schema({
     },
     brandname: {
         type: Schema.Types.String,
-        required: true,
         es_indexed: true,
         es_type: 'completion',
         es_analyzer: "standard",
@@ -63,11 +56,16 @@ let productSchema = new Schema({
     },
     namebrand: {
         type: Schema.Types.String,
-        required: true,
         es_indexed: true,
         es_type: 'completion',
         es_analyzer: "standard",
         es_search_analyzer: "standard"
+    },
+    available: {
+        type: Schema.Types.Number,
+        required: true,
+        es_indexed: true,
+        es_type: 'text',
     },
     tax: { type: Schema.Types.Number, es_indexed: false },
     container: { type: Schema.Types.String, es_indexed: false },
@@ -232,17 +230,28 @@ pub.globalSearch = async function (inText, cb) {
     let searchedFields = new Map();
 
     MDB.models['liquor-station'].search({
-        query_string: {
-            query: inText
+        "bool": {
+            "must": {
+                "query_string": {
+                    "query": inText
+                }
+            },
+            "filter": {
+                "term": {
+                    "available": 1
+                }
+            }
         }
     }, function (err, result) {
-        if (!err && result && result.hits && result.hits.hits && result.hits.hits.length > 0) {
+        if (!err && result && result.hits && result.hits.hits) {
             finalResult.push({
                 "results": result.hits.hits,
                 "highlight": undefined,
                 "score": undefined
             });
             cb(finalResult);
+        } else if (err) {
+            Logger.logError(err);
         } else {
             MDB.models['liquor-station'].esSearch({
                 "suggest": {
@@ -320,9 +329,7 @@ pub.globalSearch = async function (inText, cb) {
 
                 }
             }, async function (err, results) {
-                if (err && process.env.n_mode != "production") {
-                    return console.log(JSON.stringify(err, null, 4));
-                }
+                return Logger.logError(JSON.stringify(err, null, 4));
 
                 let suggestResults = [];
 
@@ -337,11 +344,20 @@ pub.globalSearch = async function (inText, cb) {
                     for (let key in suggestResults) {
                         searchedFields.set(suggestResults[key].text + key, false);
                         MDB.models['liquor-station'].search({
-                            query_string: {
-                                query: suggestResults[key].text
+                            "bool": {
+                                "must": {
+                                    "query_string": {
+                                        "query": suggestResults[key].text
+                                    }
+                                },
+                                "filter": {
+                                    "term": {
+                                        "available": 1
+                                    }
+                                }
                             }
                         }, function (err, result) {
-                            if (!err && result && result.hits && result.hits.hits && result.hits.hits.length > 0) {
+                            if (!err && result && result.hits && result.hits.hits) {
                                 searchedFields.set(suggestResults[key].text + key, true);
 
                                 finalResult.push({
@@ -357,6 +373,8 @@ pub.globalSearch = async function (inText, cb) {
                                 }
                                 cb(finalResult);
                                 return;
+                            } else {
+
                             }
                         });
                     }
@@ -381,7 +399,7 @@ pub.findProducts = async function (UIDs, quantityArray) {
         if (rawStore && rawStore.length > 0) {
             let selectedStore = rawStore[0];
             let searchId = IDobject.storeId + '-' + IDobject.productId;
-            let product = await MDB.models[selectedStore.name].findById(searchId).exec();
+            let product = await MDB.models[selectedStore.name].findById(searchId).where({ available: 1 }).exec();
             let cleanProduct = product.toObject();
             if (quantityArray && quantityArray[UIDs[k]]) {
                 cleanProduct.selected = {
@@ -429,8 +447,7 @@ async function init() {
                 pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
                 pub.models[storeTypeName].createMapping(function (err, mapping) {
                     if (err) {
-                        Logger.log.error('Error creating mapping (you can safely ignore this)');
-                        if (process.env.n_mode != "production") { console.log(err); }
+                        Logger.logError('Error creating mapping (you can safely ignore this)');
                     } else {
                         Logger.log.debug(`Mapping created for ${storeTypeName} and mapping is ${JSON.stringify(mapping)}`);
                     }
@@ -439,9 +456,7 @@ async function init() {
             }
         }
 
-        if (process.env.n_mode != "production") {
-            console.log('Initialized store models with Mongo DB');
-        }
+        Logger.logError('Initialized store models with Mongo DB');
     }
 }
 
@@ -464,11 +479,7 @@ function checkIfSyncIsDone() {
             return;
         }
     }
-
-    if (process.env.n_mode != "production") {
-        return console.log('All Mongo DB documents have been sync-ed');
-    }
-
+    Logger.logError('All Mongo DB documents have been sync-ed');
     return true;
 }
 
