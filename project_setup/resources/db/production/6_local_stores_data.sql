@@ -10,6 +10,9 @@ INSERT INTO `catalog_store_types`(id, name, display_name, image, available, del_
 INSERT INTO `catalog_store_types`(id, name, display_name, image, available, del_fee_primary, union_id, rate_id) VALUES(11,"honey-and-bloom", "Honey & Bloom","honey-and-bloom.jpg", TRUE, 4.99, 1, 4);
 INSERT INTO `catalog_store_types`(id, name, display_name, image, available, del_fee_primary, union_id, rate_id) VALUES(12,"westtaste", "WestTaste","westtaste.jpg", TRUE, 4.99, 1, 4);
 
+-- 09/05/2018 Added
+INSERT INTO `catalog_store_types`(id, name, display_name, image, available, del_fee_primary, union_id, rate_id) VALUES(13,"kakow", "Kakow","kakow.jpg", TRUE, 4.99, 1, 4);
+
 -- Catalog - Store
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (336, "s_", "Dwarf Stars", "10 Brentwood Common Northwest, Calgary, AB", "51.087118", "-114.128275", "4039188836", "7");
 INSERT INTO `catalog_stores` (id, id_prefix, name, address, address_latitude, address_longitude, phone_number, store_type) VALUES (338, "s_", "Pure Foods Fresh", "10 Brentwood Common Northwest, Calgary, AB", "51.087118", "-114.128275", "4033977020", "9");

@@ -14,7 +14,7 @@ pub.getCategoriesByStoreType = async function (storeType) {
         return false;
     }
 
-    return MDB.models[storeType].find({ available: 1 }).distinct('category').exec();
+    return MDB.models[storeType].find({ visible: 1 }).distinct('category').exec();
 }
 
 /**
@@ -281,7 +281,7 @@ pub.isStoreOpenForScheduled = async function (storeType, timestamp) {
  * @param {*} categoryName 
  */
 pub.getAllProductsByCategory = async function (storeType, categoryName) {
-    let result = await MDB.models[storeType].aggregate([{ $match: { "category.category_name": categoryName, available : 1 } },
+    let result = await MDB.models[storeType].aggregate([{ $match: { "category.category_name": categoryName, visible : 1 } },
     {
         $group: {
             _id: "$subcategory",
@@ -496,7 +496,7 @@ pub.prepareProductsForCalculator = async function (cartProducts) {
                 let searchId = IDobject.storeId + '-' + IDobject.productId;
                 let storeName = selectedStore.name;
                 let rateId = selectedStore.rate_id;
-                let result = await MDB.models[storeName].findById(searchId).where({ available: 1 }).exec();
+                let result = await MDB.models[storeName].findById(searchId).where({ visible: 1 }).exec();
                 let tax = result.tax;
                 let product = pub.findNestedProductPrice(result.toObject(), [searchId, IDobject.varianceId, IDobject.packId]);
                 if (product) {
@@ -568,7 +568,7 @@ pub.getProductPageItemsByProductId = async function (storeType, productId) {
 
     if (storeTypeInfo) {
         let searchId = storeTypeInfo.id + '-' + productId;
-        let product = await MDB.models[storeType].findById(searchId).where({ available: 1 }).exec();
+        let product = await MDB.models[storeType].findById(searchId).where({ visible: 1 }).exec();
 
         if (product) {
             storeObject.store_open = await pub.isStoreOpen(storeType)
@@ -671,7 +671,7 @@ pub.verifyStoreCategory = async function (storeType, receivedCategory) {
         return false;
     }
 
-    let result = await MDB.models[storeType].find({ 'category.category_name': receivedCategory, available: 1 }).exec();
+    let result = await MDB.models[storeType].find({ 'category.category_name': receivedCategory, visible: 1 }).exec();
 
     return (!result.error && result.length > 0);
 }
@@ -824,7 +824,7 @@ async function getItemsBoughtTogether(productId) {
                 if (newRegEx.test(products[k].id)) {
                     let fullIdArray = products[k].id.split('-');
                     let searchId = fullIdArray[0] + '-' + fullIdArray[1];
-                    finalResult.push(await MDB.models[products[k].name].findById(searchId).where({ available: 1 }).exec());
+                    finalResult.push(await MDB.models[products[k].name].findById(searchId).where({ visible: 1 }).exec());
                 }
             }
         }
@@ -849,7 +849,7 @@ async function getRandomArrayOfProducts(limit) {
             let randomNumber = getRandomNmber(availableStoreTypes.length - 1, knownNumbers);
             knownNumbers.push(randomNumber);
             let selectedStore = availableStoreTypes[randomNumber];
-            let product = await MDB.models[selectedStore.name].aggregate([{ $match: { available: 1 } }, { $sample: { size: 1 } }]).exec();
+            let product = await MDB.models[selectedStore.name].aggregate([{ $match: { visible: 1 } }, { $sample: { size: 1 } }]).exec();
             if (product.length > 0 && !chosenProductIds.includes(product[0]._id) && product) {
                 productsArray.push(product[0]);
                 chosenProductIds.push(product[0]._id);
@@ -860,23 +860,6 @@ async function getRandomArrayOfProducts(limit) {
     }
 
     return productsArray;
-}
-
-async function getProductInfoById(productId) {
-    let sqlQuery = `
-        SELECT *
-        FROM catalog_listings AS listing JOIN catalog_products AS product ON (listing.id = product.listing_id)
-        WHERE ?;`;
-
-    let data = { "product.id": productId };
-
-    let tmpResult = await db.runQuery(sqlQuery, data);
-
-    if (tmpResult.length > 0) {
-        return tmpResult[0];
-    } else {
-        return false;
-    }
 }
 
 /**
@@ -890,7 +873,7 @@ async function getFormattedSpecials(specials) {
     let tmpSpecialTypeDisplay = "";
 
     for (let x = 0; x < specials.length; x++) {
-        let mongoProduct = await MDB.models[specials[x]["store_type_name"]].findById(specials[x]["product_id"]).where({ available: 1 }).exec();
+        let mongoProduct = await MDB.models[specials[x]["store_type_name"]].findById(specials[x]["product_id"]).where({ visible: 1 }).exec();
         let product = mongoProduct.toObject();
 
         tmpSpecialType = specials[x].special_types_api_name;

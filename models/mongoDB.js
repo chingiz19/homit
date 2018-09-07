@@ -61,7 +61,7 @@ let productSchema = new Schema({
         es_analyzer: "standard",
         es_search_analyzer: "standard"
     },
-    available: {
+    visible: {
         type: Schema.Types.Number,
         required: true,
         es_indexed: true,
@@ -165,7 +165,7 @@ let productSchema = new Schema({
                     _id: { type: Schema.Types.Mixed, es_indexed: false },
                     h_value: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     price: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
-                    available: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
+                    visible: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     stock_quantity: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     sold: {
                         quantity: { type: Schema.Types.Number, es_indexed: false },
@@ -238,7 +238,7 @@ pub.globalSearch = async function (inText, cb) {
             },
             "filter": {
                 "term": {
-                    "available": 1
+                    "visible": 1
                 }
             }
         }
@@ -352,7 +352,7 @@ pub.globalSearch = async function (inText, cb) {
                                 },
                                 "filter": {
                                     "term": {
-                                        "available": 1
+                                        "visible": 1
                                     }
                                 }
                             }
@@ -399,7 +399,7 @@ pub.findProducts = async function (UIDs, quantityArray) {
         if (rawStore && rawStore.length > 0) {
             let selectedStore = rawStore[0];
             let searchId = IDobject.storeId + '-' + IDobject.productId;
-            let product = await MDB.models[selectedStore.name].findById(searchId).where({ available: 1 }).exec();
+            let product = await MDB.models[selectedStore.name].findById(searchId).where({ visible: 1 }).exec();
             let cleanProduct = product.toObject();
             if (quantityArray && quantityArray[UIDs[k]]) {
                 cleanProduct.selected = {
