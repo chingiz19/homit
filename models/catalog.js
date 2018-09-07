@@ -281,7 +281,7 @@ pub.isStoreOpenForScheduled = async function (storeType, timestamp) {
  * @param {*} categoryName 
  */
 pub.getAllProductsByCategory = async function (storeType, categoryName) {
-    let result = await MDB.models[storeType].aggregate([{ $match: { "category.category_name": categoryName, visible : 1 } },
+    let result = await MDB.models[storeType].aggregate([{ $match: { "category.category_name": categoryName, visible: 1 } },
     {
         $group: {
             _id: "$subcategory",
@@ -299,10 +299,9 @@ pub.getAllProductsByCategory = async function (storeType, categoryName) {
  * @param {*} categoryName 
  */
 pub.getAllSubcategoriesByCategory = async function (storeType, categoryName) {
-    let result = await MDB.models[storeType]
-        .find({ "category.category_name": categoryName, available: 1 })
+    return await MDB.models[storeType]
+        .find({ "category.category_name": categoryName, visible: 1 })
         .distinct('subcategory');
-    return result;
 }
 
 /**
