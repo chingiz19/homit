@@ -22,7 +22,7 @@ class modelFactory {
         global.JWTToken =       require("./models/jwt_token");
         global.Logger =         require("./models/logger");
         global.SMS =            require("./models/SMS");
-        global.MP =             require("./models/money-processing");
+        global.MP =             require("./models/money_processing");
         global.CSR =            require("./models/csr");
         global.Email =          require("./models/email");
         global.ErrorMessages =  require("./models/error_messages");
@@ -34,6 +34,7 @@ class modelFactory {
         global.Coupon =         require("./models/coupon");
         global.MDB=             require("./models/mongoDB");
         global.SITEMAP=         require("./models/sitemap_builder");
+        global.BatchUploader=   require("./models/batch_product_uploader");
 
         if (process.env.n_mode == "production"){
             global.machineHostname = "https://www.homit.ca";

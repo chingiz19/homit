@@ -137,7 +137,12 @@ pub.getAllMainSpecials = async function () {
 pub.getStoreTypeInfo = async function (storeType) {
     let data = { "name": storeType };
     let dbResult = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, data);
-    return dbResult[0];
+
+    if (dbResult && dbResult.length > 0) {
+        return dbResult[0];
+    } else {
+        return false;
+    }
 }
 
 /**
