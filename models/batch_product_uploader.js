@@ -1,11 +1,12 @@
 /**
  * Welcome to homit batch product uploader. 
  * Make sure you have this store_type in store types table 
+ * After runnning debugger on console of debugger enter BatchUploader.startOperation()
  * Please, edit the following constants before starting batch upload
  */
 
 /*** Adjust following constants as per your need ***/
-const COLLECTION_NAME = "foreverbee";
+const COLLECTION_NAME = "forever-bee";
 const WORKBOOK_LOCATION = "./foreverbee.xlsx";
 const IMAGE_EXTENSION = ".jpeg";
 const DEFAULT_COUNTRY_OF_ORIGIN = "Canada";
@@ -14,7 +15,7 @@ const SAVE_JSON_TO_DIRECTORY = "./project_setup/resources/mongodb";
 
 let pub = {};
 let expectedNumberOfProducts = 0;
-let productSchema = require('./product-schema');
+let productSchema = require('./product_schema');
 let mongoose = require('mongoose');
 let fs = require('fs');
 let XLSX = require('xlsx');
@@ -43,7 +44,7 @@ pub.startOperation = async function () {
             if (err) {
                 console.log(`Error uploading products, error --> ${err}`);
             } else {
-                fs.writeFileSync(`${SAVE_JSON_TO_DIRECTORY}/mongoDB_${COLLECTION_NAME}.json`, arrayOfNewProducts.toString(), 'utf8', function (err) {
+                fs.writeFileSync(`${SAVE_JSON_TO_DIRECTORY}/mongoDB_${COLLECTION_NAME}.json`, JSON.stringify(arrayOfNewProducts), 'utf8', function (err) {
                     if (err) {
                         return console.log(`Error while saving a file to ${SAVE_JSON_TO_DIRECTORY}/mongoDB_${COLLECTION_NAME}.json}`);
                     }
@@ -94,16 +95,17 @@ async function extractFromXLSX() {
                 country_of_origin: { display_name: "Country of Origin", description: (retrieveFromSheet("K", row, sheet, DEFAULT_COUNTRY_OF_ORIGIN)) },
             };
 
-            while (retrieveFromSheet("B", row, sheet) == selName && retrieveFromSheet("A", row, sheet) == selBrand) {
+            while (true) {
                 let packIdCounter = 1;
                 let varianceId = mainId + "-" + varianceIdCounter;
                 let variance = varianceObjectMaker(row, sheet, varianceId);
+                variance.packs = [];
 
-                while (size == retrieveFromSheet("G", row, sheet) && sizeUnit == retrieveFromSheet("H", row, sheet)) {
+                while (true) {
                     let packId = varianceId + "-" + packIdCounter;
-                    variance.packs = packObjectMaker(row, sheet, packId, 1);
+                    variance.packs.push(packObjectMaker(row, sheet, packId, 1));
 
-                    if (retrieveFromSheet("B", row+1, sheet) == selName && retrieveFromSheet("A", row+1, sheet) == selBrand && (size == retrieveFromSheet("G", row + 1, sheet) && sizeUnit == retrieveFromSheet("H", row + 1, sheet))) {
+                    if (retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row+1, sheet) == container && (size == retrieveFromSheet("G", row + 1, sheet) && sizeUnit == retrieveFromSheet("H", row + 1, sheet))) {
                         row++;
                     } else {
                         break;
@@ -114,8 +116,8 @@ async function extractFromXLSX() {
 
                 varianceObject.push(variance);
                 varianceIdCounter++;
-                
-                if (retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand) {
+
+                if (retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row+1, sheet) == container) {
                     row++;
                 } else {
                     break;
@@ -130,13 +132,14 @@ async function extractFromXLSX() {
                 namebrand: selName + " " + selBrand,
                 container: container,
                 tax: 1,
-                images: imageObjectBuilder(container, storeId),
+                images: imageObjectBuilder(mainId),
                 tags: [],
                 category: categoryObjectBuilder(retrieveFromSheet("D", row, sheet), storeId),
                 subcategory: retrieveFromSheet("E", row, sheet),
                 details: detailsObject,
                 variance: varianceObject,
-                store: storeObject
+                store: storeObject,
+                visible : 1
             });
 
             mainIdCounter++;
@@ -149,12 +152,16 @@ async function extractFromXLSX() {
 };
 
 function varianceObjectMaker(inRow, inSheet, inVarianceId) {
+    let unit = retrieveFromSheet("H", inRow, inSheet);
+    let size = retrieveFromSheet("G", inRow, inSheet);
+    let siUnits = fromSiUnitConverter(size, unit);
+
     return {
         _id: inVarianceId,
-        si_unit_size: "",
-        si_unit: "",
-        preffered_unit: retrieveFromSheet("G", inRow, inSheet),
-        preffered_unit_size: retrieveFromSheet("H", inRow, inSheet),
+        si_unit_size: siUnits.value,
+        si_unit: siUnits.unit,
+        preffered_unit: unit,
+        preffered_unit_size: size,
     }
 }
 
@@ -163,7 +170,7 @@ function packObjectMaker(inRow, inSheet, inPackId) {
         _id: inPackId,
         h_value: retrieveFromSheet("I", inRow, inSheet),
         price: retrieveFromSheet("J", inRow, inSheet),
-        available: 1,
+        visible: 1,
         stock_quantity: 100,
         sold: { quantity: 0 }
     }
@@ -179,7 +186,8 @@ function storeObjectMaker(inData) {
 
 function retrieveFromSheet(column, row, sheet, defaultValue) {
     if (sheet.hasOwnProperty(column + row)) {
-        return sheet[(column + row)].v
+        let localValue = sheet[(column + row)].v;
+        return isNaN(localValue) ? localValue.trim() : localValue;
     }
 
     return defaultValue || "";
@@ -187,7 +195,7 @@ function retrieveFromSheet(column, row, sheet, defaultValue) {
 
 function categoryObjectBuilder(name, storeId) {
     let formatted = escapeCategoryName(name);
-    let imageUrl = storeId + "_" + formatted + "." + IMAGE_EXTENSION;
+    let imageUrl = storeId + "_" + formatted + IMAGE_EXTENSION;
 
     return {
         category_display_name: name,
@@ -197,12 +205,12 @@ function categoryObjectBuilder(name, storeId) {
     };
 }
 
-function imageObjectBuilder(inContainer, storeId) {
-    let mainImage = inContainer.substring(0, 1) + "_" + storeId + "." + IMAGE_EXTENSION;
+function imageObjectBuilder(inProductId) {
+    let mainImage = inProductId + IMAGE_EXTENSION;
 
     return {
         image_catalog: mainImage,
-        images_all: mainImage
+        images_all: [mainImage]
     };
 }
 
@@ -222,9 +230,9 @@ function escapeCategoryName(inName) {
             }
         }
 
-        return localString;
+        return localString.toLowerCase();
     } else {
-        return inName;
+        return inName.toLowerCase();
     }
 }
 
@@ -247,26 +255,28 @@ function confirmFormatting(inSheet) {
     }
 }
 
-function unitConverter(product_variant) {
+function fromSiUnitConverter(size, unit) {
+    let inUnit = unit.trim();
+    let inSize = isNaN(size) ? size.trim() : size;
+
     let unit_list = {
-        "kg": {
-            "g": 1000,
-            "lb": 2.20462
-        },
-        "m3": {
-            "oz": 33814,
-            "ml": 1000000,
-            "L": 1000
-        },
-        "m": {
-            "in": 39.3701,
-            "ft": 3.28084,
-            "cm": 100
-        }
+        "kg": { value: 1, unit: "kg" },
+        "m3": { value: 1, unit: "m3" },
+        "m": { value: 1, unit: "m" },
+        "g": { value: 0.001, unit: "kg" },
+        "lb": { value: 0.453592, unit: "kg" },
+        "oz": { value: 0.0000295735, unit: "m3" },
+        "ml": { value: 0.001, unit: "m3" },
+        "L": { value: 0.01, unit: "m3" },
+        "in": { value: 0.0254, unit: "m" },
+        "ft": { value: 0.3048, unit: "m" },
+        "cm": { value: 0.01, unit: "m" },
     };
 
-    return (Math.round(product_variant.size * unit_list[product_variant.unit][product_variant.preffered_unit]));
-
-};
+    return {
+        value: unit_list.hasOwnProperty(inUnit) ? (inSize * unit_list[inUnit].value) : "",
+        unit: unit_list.hasOwnProperty(inUnit) ? unit_list[inUnit].unit : ""
+    }
+}
 
 module.exports = pub;

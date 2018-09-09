@@ -110,8 +110,9 @@ button {
 
 .store-open-hrs {
     height: 30px;
-    width: 280px;
-    padding: 3px 4px;
+    min-width: 280px;
+    margin-bottom: 5px;
+    padding: 3px 10px;
     background-color: transparent;
     border: 1px solid #fff;
     color: #fff;

@@ -44,7 +44,7 @@
                     <section>
 <!--googleoff: snippet-->
                         <div class="col-md-6 product-img box-center" layout="column">
-                            <section class="location-map-web a-tag-button">
+                            <section class="location-map-web a-tag-button" ng-cloak>
                                 <a href="/main" ng-cklick="navHubClicked()" target="_self">Store Hub</a>
                                 <a href="/hub/{{ product.store_type_name }}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
                                 <a href="/hub/{{ product.store_type_name }}/{{ product.category.category_name }}" ng-click="navCatClicked(product.category.category_name)" target="_self">{{ product.category.category_display_name }}</a>

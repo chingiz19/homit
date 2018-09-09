@@ -37,11 +37,12 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
 
         } while (weekDay != today);
 
-        localObject.selected = {
-            time: 0,
-            date: 0
-        };
         localObject.date_array = localArray;
+        let iSelected = chooseDefaultSelectedDate(localObject);
+        localObject.selected = {
+            time: iSelected,
+            date: iSelected
+        };
 
         return localObject;
     }
@@ -188,22 +189,6 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
         return string;
     }
 
-    function beautifulizeSingleTime(time) {
-        let string = "";
-        let hours = {};
-        hours = getHourObject(time);
-        let mins = time % 60;
-
-        if (mins === 0) {
-            mins = "00";
-            string = string + hours.value + ":" + mins + hours.tag;
-        } else {
-            string = string + hours.value + ":" + mins + hours.tag;
-        }
-
-        return string;
-    }
-
     function getHourObject(time) {
         let localObject = {};
         localObject.value = parseInt(time / 60);
@@ -232,16 +217,19 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
 
     function getOpenCloseHours(data) {
         let localObject = {};
-        let weekObject = purifyObject(data);
-        let today = new Date().getDay() + 1;
-        let closeTime = weekObject[today].close % (24 * 60);
+        let today = new Date().getDay();
+        let open24Hours = data.date_array[today].hours_array.length == 96;
+        let nextAvailableDay = findNextAvailableDay(data.date_array, today);
 
-        if (closeTime == 0) {   // for stores that are open 000 - 2400
+        if (open24Hours) {   // for stores that are open 000 - 2400
             localObject.open = undefined;
             localObject.close = "24/7";
         } else {
-            localObject.open = beautifulizeSingleTime(weekObject[today].open);
-            localObject.close = "Until: " + beautifulizeSingleTime(closeTime - 30);
+            let openDate = new Date(nextAvailableDay.openTime);
+            let closeDate = new Date(nextAvailableDay.closeTime - 30 * 60 * 1000);
+
+            localObject.open = ("0" + openDate.getHours()).slice(-2) + ":" + ("0" + openDate.getMinutes()).slice(-2) + ", " + helpers.getMonthString(openDate.getMonth()) + " " + openDate.getDate();
+            localObject.close = "Until: " + closeDate.getHours() + ":" + closeDate.getMinutes();
         }
         return localObject;
     }
@@ -251,6 +239,23 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
             return (rawText == 0 ? freeDeliveryText : "C$" + rawText + " Delivery");
         } else {
             throw "Error while fomatting delivery fee text, Scheduler.js directive";
+        }
+    }
+
+    function findNextAvailableDay(inArray, startIteration) {
+        let i = startIteration;
+
+        for (let counter = 0; counter < 7; counter++) {
+            if (inArray[i].hours_array.length > 0) {
+                return {
+                    openTime: inArray[i].hours_array[0].value - 60 * 60 * 1000,
+                    closeTime: inArray[i].hours_array[inArray[i].hours_array.length - 1].value,
+                    day: inArray[i].display_month_day,
+                    month: inArray[i].display_month_name
+                }
+            } else {
+                i = (i + 1) % 7;
+            }
         }
     }
 
@@ -272,6 +277,12 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
                 return "Sat";
             default:
                 return "Invalid Day";
+        }
+    }
+
+    function chooseDefaultSelectedDate(dates) {
+        for (let x = 0; x < dates.date_array.length; x++) {
+            if (dates.date_array[x].hours_array.length) return x;
         }
     }
 
@@ -323,7 +334,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
 
                     if (delivery_hrs && delivery_hrs.hasOwnProperty(scope.store_name)) {
                         let todays_date = new Date().getTime();
-                        if(delivery_hrs[scope.store_name] < todays_date + 3600000000){
+                        if (delivery_hrs[scope.store_name] < todays_date + 3600000000) {
                             delete delivery_hrs[scope.store_name];
                         }
                     }
@@ -335,11 +346,12 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
                     } else if (scope.storeInfo.open) {
                         scope.deliveryOption = "ASAP Delivery";
                     } else {
-                        if(delivery_hrs == null || delivery_hrs == "" || delivery_hrs == undefined) delivery_hrs = {};
+                        if (delivery_hrs == null || delivery_hrs == "" || delivery_hrs == undefined) delivery_hrs = {};
+                        let iSelected = chooseDefaultSelectedDate(scope.dates);
                         delivery_hrs[store_info.name] = {
-                            "date_selected": 0,
-                            "hrs_selected": 0,
-                            "value": scope.dates.date_array[0].hours_array[0].value
+                            "date_selected": iSelected,
+                            "hrs_selected": iSelected,
+                            "value": scope.dates.date_array[iSelected].hours_array[iSelected].value
                         };
                         scope.deliveryOption = "Scheduled Delivery";
                         localStorage.setOrderDeliveryHrs(delivery_hrs);
@@ -356,7 +368,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
                         scope.dates.date_array[scope.dates.selected.date].hours_array[scope.dates.selected.time].display_hour
                     );
 
-                    let tmp_time = getOpenCloseHours(scope.storeInfo.hours);
+                    let tmp_time = getOpenCloseHours(scope.dates);
                     scope.openTime = tmp_time.open;
                     scope.closeTime = tmp_time.close;
                     updateBtnColor();
@@ -464,13 +476,13 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
                     }
                 }
 
-                function updateBtnColor(){
-                    if(!scope.storeOpen && scope.deliveryOption == "ASAP Delivery"){
-                        scope.buttonStyle = {"background-color" : "#ff8d8d"};
-                    } else if(scope.storeOpen && scope.deliveryOption == "ASAP Delivery"){
-                        scope.buttonStyle = {"background-color" : "rgb(190, 255, 157)"};
-                    } else if(scope.deliveryOption == "Scheduled Delivery"){
-                        scope.buttonStyle = {"background-color" : "rgb(236, 251, 151)"};
+                function updateBtnColor() {
+                    if (!scope.storeOpen && scope.deliveryOption == "ASAP Delivery") {
+                        scope.buttonStyle = { "background-color": "#ff8d8d" };
+                    } else if (scope.storeOpen && scope.deliveryOption == "ASAP Delivery") {
+                        scope.buttonStyle = { "background-color": "rgb(190, 255, 157)" };
+                    } else if (scope.deliveryOption == "Scheduled Delivery") {
+                        scope.buttonStyle = { "background-color": "rgb(236, 251, 151)" };
                     }
                 }
 

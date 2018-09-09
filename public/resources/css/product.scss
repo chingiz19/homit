@@ -16,6 +16,7 @@ body {
 .description ul, .description li, .ingredients ul, .ingredients li {
     list-style-type: initial !important;
     font-size: 16px;
+    margin-bottom: 7px;
 }
 
 .bold {
@@ -308,9 +309,9 @@ button:focus {
     font-size: 12px;
     padding-top: 17px;
     span{
-        position: relative; 
-        top: -35px; 
-        right: -10;
+        position: absolute;
+        top: 1px;
+        right: 3px;
         font-size: 10px; 
     }
     .item-curency {

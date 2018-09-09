@@ -92,6 +92,7 @@ module.exports = new Schema({
             es_type: 'text'
         },
     },
+    visible: { type: Schema.Types.Mixed, es_indexed: true, es_type: 'text' },
     details: {
         ingredients: {
             display_name: { type: Schema.Types.String, es_indexed: false },
@@ -129,7 +130,7 @@ module.exports = new Schema({
                     _id: { type: Schema.Types.Mixed, es_indexed: false },
                     h_value: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     price: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
-                    available: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
+                    visible: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     stock_quantity: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     sold: {
                         quantity: { type: Schema.Types.Number, es_indexed: false },

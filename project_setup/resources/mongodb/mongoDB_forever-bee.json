@@ -1,0 +1,1438 @@
+[
+    {
+        "_id": "14-1",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Raw, Creamed, Clover Honey",
+        "name": "Raw, Creamed, Clover Honey",
+        "namebrand": "Raw, Creamed, Clover Honey Forever Bee",
+        "container": "plastic tub",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-1.jpeg",
+            "images_all": [
+                "14-1.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Honey",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liht_ulht_liPlease do not use a wet or dirty spoon in the honey.  Over time this might cause fermentation.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liFrom the Foothills of Alberta we have harvested the highest quality raw, Clover honey.ht_lid_ht_liForever Bee honey is never heated to above body temperature which ensures that all the nutrients and healthy enzymes are still active. It is also unfiltered and unprocessed to give you the highest quality, best tasting honey. d_ht_liht_liIn order to cream our honey we use a freezing method which helps to preserve all the health benefits. d_ht_liht_liForever Bee raw, creamed Clover honey will never go hard, never crystallize and never go bad. We guarantee it.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-1-1",
+                "si_unit_size": 1,
+                "si_unit": "kg",
+                "preffered_unit": "kg",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "14-1-1-1",
+                        "h_value": 1,
+                        "price": 17,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "14-1-2",
+                "si_unit_size": 3,
+                "si_unit": "kg",
+                "preffered_unit": "kg",
+                "preffered_unit_size": 3,
+                "packs": [
+                    {
+                        "_id": "14-1-2-1",
+                        "h_value": 1,
+                        "price": 40,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "14-1-3",
+                "si_unit_size": 7,
+                "si_unit": "kg",
+                "preffered_unit": "kg",
+                "preffered_unit_size": 7,
+                "packs": [
+                    {
+                        "_id": "14-1-3-1",
+                        "h_value": 1,
+                        "price": 80,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-2",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Raw, Creamed, Clover Honey",
+        "name": "Raw, Creamed, Clover Honey",
+        "namebrand": "Raw, Creamed, Clover Honey Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-2.jpeg",
+            "images_all": [
+                "14-2.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Honey",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liht_ulht_liPlease do not use a wet or dirty spoon in the honey.  Over time this might cause fermentation.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liFrom the Foothills of Alberta we have harvested the highest quality raw, Clover honey.ht_lid_ht_liForever Bee honey is never heated to above body temperature which ensures that all the nutrients and healthy enzymes are still active. It is also unfiltered and unprocessed to give you the highest quality, best tasting honey. d_ht_liht_liIn order to cream our honey we use a freezing method which helps to preserve all the health benefits. d_ht_liht_liForever Bee raw, creamed Clover honey will never go hard, never crystallize and never go bad. We guarantee it.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-2-1",
+                "si_unit_size": 0.5,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 500,
+                "packs": [
+                    {
+                        "_id": "14-2-1-1",
+                        "h_value": 1,
+                        "price": 12,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "14-2-2",
+                "si_unit_size": 1,
+                "si_unit": "kg",
+                "preffered_unit": "kg",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "14-2-2-1",
+                        "h_value": 1,
+                        "price": 20,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-3",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Chocolate Honey",
+        "name": "Chocolate Honey",
+        "namebrand": "Chocolate Honey Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-3.jpeg",
+            "images_all": [
+                "14-3.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Honey",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liht_ulht_liChocolate honey is delicious in coffee, in warm milk, over toast, ice cream and fruit salad.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liThis is quite a unique product.d_ht_liht_liForever Bee chocolate honey is made with raw, unfiltered Clover honey and then cold-infused with one of the best quality Cacao powders in the world. We love their philosphy: Happy workers = happy food = happy people!d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-3-1",
+                "si_unit_size": 0.5,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 500,
+                "packs": [
+                    {
+                        "_id": "14-3-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-4",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Cinnamon Honey",
+        "name": "Cinnamon Honey",
+        "namebrand": "Cinnamon Honey Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-4.jpeg",
+            "images_all": [
+                "14-4.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Honey",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liht_ulht_liThis treat is wonderful on toast, poured over oatmeal, with apple slices or stirred into Chai tea.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liMade with raw, unpasteurized Clover/Alfalfa honey and organically grown Cylon Cinnamon imported from Sri Lanka, one of the few remaining places in the world where true cinnamon may still be found.d_ht_liht_liWe take great pride in our flavoured honey and make sure to use only the highest quality ingredients.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-4-1",
+                "si_unit_size": 0.5,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 500,
+                "packs": [
+                    {
+                        "_id": "14-4-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 0
+    },
+    {
+        "_id": "14-5",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Maple Honey",
+        "name": "Maple Honey",
+        "namebrand": "Maple Honey Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-5.jpeg",
+            "images_all": [
+                "14-5.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Honey",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liht_ulht_liThis combination of maple and honey creates extraordinary taste and is wonderful over waffles, pancakes, yoghurt, oatmeal, cereal, etc.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee Maple Honey is a very delicate blend between our raw, unfiltered, Clover honey and Organic Canadian Maple Syrup from a small farm in Quebec.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-5-1",
+                "si_unit_size": 0.5,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 500,
+                "packs": [
+                    {
+                        "_id": "14-5-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-6",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Lavender Honey",
+        "name": "Lavender Honey",
+        "namebrand": "Lavender Honey Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-6.jpeg",
+            "images_all": [
+                "14-6.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Honey",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee Lavender honey is made by a special cold-infusion method that takes almost 7 days per batch.d_ht_liht_liWe use raw, Clover honey as well as the highest quality Organic English Lavender.d_ht_liht_liThe taste is a subtle floral with a stronger Lavender aftertaste.d_ht_liht_liIt tastes wonderful in many teas such as Earl Grey, Rooibos and Chai.  Also try it on fresh bread or drizzled over ice-cream.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-6-1",
+                "si_unit_size": 0.5,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 500,
+                "packs": [
+                    {
+                        "_id": "14-6-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-7",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Ginger Honey",
+        "name": "Ginger Honey",
+        "namebrand": "Ginger Honey Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-7.jpeg",
+            "images_all": [
+                "14-7.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Honey",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liht_ulht_liThis honey is wonderful to use in tea, on toast or just in hot water for colds.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee Ginger Honey is made by combining the highest quality raw, organic, Ginger with our raw Clover honey.d_ht_liht_liThis combination makes for a beautiful sweet and slightly spicy honey.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-7-1",
+                "si_unit_size": 0.5,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 500,
+                "packs": [
+                    {
+                        "_id": "14-7-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-8",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Orange Honey",
+        "name": "Orange Honey",
+        "namebrand": "Orange Honey Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-8.jpeg",
+            "images_all": [
+                "14-8.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Honey",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee Orange Honey is a wonderful combination of our raw Clover Honey and Organic Orange Peel imported from Seville, Spain.d_ht_liht_liThe orange peel is kosher, fair trade, and certified organic and has a beautiful - but not overpowering - citrus flavour.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-8-1",
+                "si_unit_size": 0.5,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 500,
+                "packs": [
+                    {
+                        "_id": "14-8-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-9",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Mint Honey",
+        "name": "Mint Honey",
+        "namebrand": "Mint Honey Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-9.jpeg",
+            "images_all": [
+                "14-9.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Honey",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liht_ulht_liA very satisfying flavour that is wonderful in teas, over ice cream, in certain main courses, or just by the spoonful! It also has many benefits to those struggling with a cold or sore throat too :)d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liMade with out raw, unpasteurized clover honey and organic peppermint powder.d_ht_liht_liIt has a very potent peppermint taste that reminds many people of Candy Canes.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-9-1",
+                "si_unit_size": 0.5,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 500,
+                "packs": [
+                    {
+                        "_id": "14-9-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-10",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee BeesWax",
+        "name": "BeesWax",
+        "namebrand": "BeesWax Forever Bee",
+        "container": "wrap",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-10.jpeg",
+            "images_all": [
+                "14-10.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "BeesWax & Candles",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee beeswax is a beautiful golden yellow colour and gives off a faint scent of honey and wax.ht_lid_ht_liThis beeswax is not filtered only strained to give you the experience you have come to expect from our products.d_ht_liht_liForever Bee beeswax is exceptionally clean yet still contains all the natural oils, fragrances, resins and benefits of pure beeswax.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-10-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "14-10-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-11",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Floating Flower Beeswax Candles",
+        "name": "Floating Flower Beeswax Candles",
+        "namebrand": "Floating Flower Beeswax Candles Forever Bee",
+        "container": "wrap",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-11.jpeg",
+            "images_all": [
+                "14-11.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "BeesWax & Candles",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liThese beautiful 100% beeswax candles are 2.75\" in diameter, burn for about 3-4 hrs and.......THEY FLOAT :) d_ht_liht_liThey will make your home smell wonderful, clean the air of allergens, give off a calming, natural yellow light, they don't drip and they don't smoke either.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-11-1",
+                "si_unit_size": 0.06985,
+                "si_unit": "m",
+                "preffered_unit": "in",
+                "preffered_unit_size": 2.75,
+                "packs": [
+                    {
+                        "_id": "14-11-1-1",
+                        "h_value": 1,
+                        "price": 4,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-12",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Decorated Ball Candle",
+        "name": "Decorated Ball Candle",
+        "namebrand": "Decorated Ball Candle Forever Bee",
+        "container": "wrap",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-12.jpeg",
+            "images_all": [
+                "14-12.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "BeesWax & Candles",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee 100% pure beeswax candles are handmade in Alberta, Canada with wax harvested from the Foothills of Southern Alberta.  Forever Bee wax is gently cleaned, has a golden yellow colour and light honey fragrance.d_ht_liht_liBurn time: 50 - 60 hours eachd_ht_liht_liDimensions: 3\" dia.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-12-1",
+                "si_unit_size": 0.07619999999999999,
+                "si_unit": "m",
+                "preffered_unit": "in",
+                "preffered_unit_size": 3,
+                "packs": [
+                    {
+                        "_id": "14-12-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-13",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Fern Pillar Candle",
+        "name": "Fern Pillar Candle",
+        "namebrand": "Fern Pillar Candle Forever Bee",
+        "container": "wrap",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-13.jpeg",
+            "images_all": [
+                "14-13.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "BeesWax & Candles",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee 100% pure beeswax candles are handmade in Alberta, Canada with wax harvested from the Foothills of Southern Alberta. Forever Bee wax is gently cleaned, has a golden yellow colour and light honey fragrance.d_ht_liht_liBurn time: 80 - 100 hours eachd_ht_liht_liDimensions: 6.5\" x 2.5\"d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-13-1",
+                "si_unit_size": 0.1651,
+                "si_unit": "m",
+                "preffered_unit": "in",
+                "preffered_unit_size": 6.5,
+                "packs": [
+                    {
+                        "_id": "14-13-1-1",
+                        "h_value": 1,
+                        "price": 25,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-14",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Pillar Candle",
+        "name": "Pillar Candle",
+        "namebrand": "Pillar Candle Forever Bee",
+        "container": "wrap",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-14.jpeg",
+            "images_all": [
+                "14-14.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "BeesWax & Candles",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee 100% pure beeswax candles are handmade in Alberta, Canada with wax harvested from the Foothills of Southern Alberta. Forever Bee wax is gently cleaned, has a golden yellow colour and light honey fragrance.d_ht_liht_liBurn time: 100 - 120 hours eachd_ht_liht_liDimensions: 6\" x 3\"d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-14-1",
+                "si_unit_size": 0.15239999999999998,
+                "si_unit": "m",
+                "preffered_unit": "in",
+                "preffered_unit_size": 6,
+                "packs": [
+                    {
+                        "_id": "14-14-1-1",
+                        "h_value": 1,
+                        "price": 25,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-15",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Beeswax & Honey Soap",
+        "name": "Beeswax & Honey Soap",
+        "namebrand": "Beeswax & Honey Soap Forever Bee",
+        "container": "wrap",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-15.jpeg",
+            "images_all": [
+                "14-15.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Health & Beauty",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liThis amazing soap has a beautiful and soft smell.d_ht_liht_liIts mild ingredients are very gentle on sensitive skin which makes it perfect to use on children or those with eczema.d_ht_liht_liIt is also a great way to naturally clean your face and hair.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-15-1",
+                "si_unit_size": 0.1,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "14-15-1-1",
+                        "h_value": 1,
+                        "price": 5,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-16",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Body Butter Natural",
+        "name": "Body Butter Natural",
+        "namebrand": "Body Butter Natural Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-16.jpeg",
+            "images_all": [
+                "14-16.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Health & Beauty",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee body butter is home-made with all natural ingredients that are safe enough to eat. Our ingredients are of the highest quality and are all organic, raw and crude with no added ingredients and non-GMO.d_ht_liht_liThis body butter is a wonderful moisturizer and we have had great feedback regarding it's efficacy on dry skin and eczema.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-16-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "14-16-1-1",
+                        "h_value": 1,
+                        "price": 10,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-17",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Body Butter Orange Creamsicle",
+        "name": "Body Butter Orange Creamsicle",
+        "namebrand": "Body Butter Orange Creamsicle Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-17.jpeg",
+            "images_all": [
+                "14-17.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Health & Beauty",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee body butter is home-made with all natural ingredients that are safe enough to eat. Our ingredients are of the highest quality and are all organic, raw and crude with no added ingredients and non-GMO.d_ht_liht_liThis body butter is a wonderful moisturizer and we have had great feedback regarding it's efficacy on dry skin and eczema.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-17-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "14-17-1-1",
+                        "h_value": 1,
+                        "price": 10,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-18",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Body Butter Lavender",
+        "name": "Body Butter Lavender",
+        "namebrand": "Body Butter Lavender Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-18.jpeg",
+            "images_all": [
+                "14-18.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Health & Beauty",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee body butter is home-made with all natural ingredients that are safe enough to eat. Our ingredients are of the highest quality and are all organic, raw and crude with no added ingredients and non-GMO.d_ht_liht_liThis body butter is a wonderful moisturizer and we have had great feedback regarding it's efficacy on dry skin and eczema.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-18-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "14-18-1-1",
+                        "h_value": 1,
+                        "price": 10,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-19",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Body Butter Peppermint Patty",
+        "name": "Body Butter Peppermint Patty",
+        "namebrand": "Body Butter Peppermint Patty Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-19.jpeg",
+            "images_all": [
+                "14-19.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Health & Beauty",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liForever Bee body butter is home-made with all natural ingredients that are safe enough to eat. Our ingredients are of the highest quality and are all organic, raw and crude with no added ingredients and non-GMO.d_ht_liht_liThis body butter is a wonderful moisturizer and we have had great feedback regarding it's efficacy on dry skin and eczema.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-19-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "14-19-1-1",
+                        "h_value": 1,
+                        "price": 10,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "14-20",
+        "brand": "Forever Bee",
+        "brandname": "Forever Bee Bee Pollen",
+        "name": "Bee Pollen",
+        "namebrand": "Bee Pollen Forever Bee",
+        "container": "jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "14-20.jpeg",
+            "images_all": [
+                "14-20.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Honey Bee Products",
+            "category_name": "honey-bee-products",
+            "category_image": "15_honey-bee-products.jpeg",
+            "category_cover": "15_honey-bee-products.jpeg"
+        },
+        "subcategory": "Others",
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liht_ulht_liBee Pollen is nature’s superfood. d_ht_liht_liPacked with over 90 vitamins and minerals and 35-50% protein, it is the most bio-absorbable nutrient found in nature.  It is superior to multivitamins in terms of absorption, since it comes from a food not a lab.d_ht_liht_liIt can be found in every cell of the body within 2 hours of ingestion.d_ht_liht_liIt is classed as an adaptogen, rebalancing any systems of the body that are out of balance, and is capable of repairing cell damage wherever it is found.d_ht_liht_liIt is nutty crunch and sweet, and can be eaten alone or added to smoothies, yogurt, cereals and salads.d_ht_lid_ht_uld_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "14-20-1",
+                "si_unit_size": 0.226796,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 0.5,
+                "packs": [
+                    {
+                        "_id": "14-20-1-1",
+                        "h_value": 1,
+                        "price": 25,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "14-20-2",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "14-20-2-1",
+                        "h_value": 1,
+                        "price": 45,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "forever-bee",
+            "display_name": "Forever Bee",
+            "image_url": "forever-bee.jpg"
+        },
+        "visible": 1
+    }
+]

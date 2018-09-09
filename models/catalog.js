@@ -758,15 +758,17 @@ pub.getUnionStores = async function (unionName) {
         let data = { "catalog_store_unions.name": unionName };
         let sqlQuery = `
         SELECT 
-        catalog_store_types.del_fee_primary, catalog_store_types.display_name, catalog_store_types.name, catalog_store_types.image 
+         catalog_store_types.del_fee_primary, catalog_store_types.display_name, catalog_store_types.name, catalog_store_types.image 
         FROM 
-        catalog_store_types
+         catalog_store_types
         JOIN 
-        catalog_store_unions
+         catalog_store_unions
         ON 
-        catalog_store_types.union_id=catalog_store_unions.id
+         catalog_store_types.union_id=catalog_store_unions.id
         WHERE 
-        ?;`;
+         available=true
+        AND
+         ?;`;
         let result = await db.runQuery(sqlQuery, data);
 
         if (result.length == 0) {
@@ -828,7 +830,10 @@ async function getItemsBoughtTogether(productId) {
                 if (newRegEx.test(products[k].id)) {
                     let fullIdArray = products[k].id.split('-');
                     let searchId = fullIdArray[0] + '-' + fullIdArray[1];
-                    finalResult.push(await MDB.models[products[k].name].findById(searchId).where({ visible: 1 }).exec());
+                    let result = await MDB.models[products[k].name].findById(searchId).where({ visible: 1 }).exec();
+                    if (result) {
+                        finalResult.push();
+                    }
                 }
             }
         }
