@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+  <loc>https://homit.ca/hub/product/kakow/kakow-natural-cocoa-powder/1</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://homit.ca/hub/product/kakow/kakow-dutch-processed-cocoa-powder/2</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://homit.ca/hub/product/kakow/kakow-natural-cocoa-nibs/3</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://homit.ca/hub/product/kakow/kakow-natural-cocoa-butter/4</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://homit.ca/hub/product/kakow/kakow-unpeeled-roasted-cocoa-beans/5</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+</urlset>

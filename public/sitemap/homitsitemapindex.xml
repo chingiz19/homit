@@ -43,6 +43,16 @@
 </sitemap>
 
 <sitemap>
+  <loc>https://homit.ca/sitemap/forever-bee.xml</loc>
+  <lastmod>2018-08-06</lastmod>
+</sitemap>
+
+<sitemap>
+  <loc>https://homit.ca/sitemap/kakow.xml</loc>
+  <lastmod>2018-08-06</lastmod>
+</sitemap>
+
+<sitemap>
   <loc>https://homit.ca/sitemap/general.xml</loc>
   <lastmod>2018-07-01</lastmod>
 </sitemap>
