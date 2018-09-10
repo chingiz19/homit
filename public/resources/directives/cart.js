@@ -76,6 +76,27 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
         templateUrl: '/resources/templates/cart.html',
         link: function (scope, element, attrs) {
             $timeout(function () {
+                scope.refreshCart = function(){
+                    scope.userCart = localStorage.getUserCart() || {};
+                    cartService.getCart()
+                        .then(function successCallback(response) {
+                            scope.numberOfItemsInCart = 0;
+                            scope.totalAmount = 0;
+                            if (response.data.success === true) {
+                                scope.updateUserCart(cartService.mergeCarts(scope.userCart, response.data.cart), scope.storeTypeName, true, true);
+                                localStorage.setUserCart({});
+                            } else {
+                                scope.updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {}), scope.storeTypeName, true); //REQUIRED to convert to new convention with store_type_name
+                            }
+                            if (scope.onCartLoad) {
+                                scope.onCartLoad();
+                            }
+                        }, function errorCallback(response) {
+                            scope.updateUserCart(localStorage.getUserCart());
+                            console.error("Couldn't retrieve your cart");
+                        });
+                }
+
                 // public variables
                 scope.cartCtrl = publicFunctions;
                 pScope = scope;
@@ -89,24 +110,8 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 scope.numberOfItemsInCart = 0;
                 scope.totalAmount = 0;
 
-                scope.userCart = localStorage.getUserCart() || {};
-                cartService.getCart()
-                    .then(function successCallback(response) {
-                        if (response.data.success === true) {
-                            scope.updateUserCart(cartService.mergeCarts(scope.userCart, response.data.cart), scope.storeTypeName, true, true);
-                            localStorage.setUserCart({});
-                        } else {
-                            scope.updateUserCart(cartService.mergeCarts(localStorage.getUserCart(), {}), scope.storeTypeName, true); //REQUIRED to convert to new convention with store_type_name
-                        }
-                        if (scope.onCartLoad) {
-                            scope.onCartLoad();
-                        }
-                    }, function errorCallback(response) {
-                        scope.updateUserCart(localStorage.getUserCart());
-                        console.error("Couldn't retrieve your cart");
-                    });
-
-
+                scope.refreshCart();
+                window.addEventListener('focus', scope.refreshCart);
 
                 /**
                  * Finds nested product object including size
