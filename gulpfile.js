@@ -43,7 +43,8 @@ var imgFiles = './public/**/*.+(png|svg|jpg|jpeg|ico)';
 var miscFiles = [
     './public/*.*',
     './public/**/templates/*.html',
-    './public/sitemap/**/*.xml'
+    './public/sitemap/**/*.xml',
+    './public/coverage/*.json'
 ]
 
 var nodeFiles = [

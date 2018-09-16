@@ -36,6 +36,8 @@ class modelFactory {
         global.SITEMAP=         require("./models/sitemap_builder");
         global.BatchUploader=   require("./models/batch_product_uploader");
 
+        global.ROOT_PATH = __dirname;
+
         if (process.env.n_mode == "production"){
             global.machineHostname = "https://www.homit.ca";
         } else {
