@@ -71,9 +71,17 @@ module.exports = new Schema({
         }
     },
     subcategory: {
-        type: Schema.Types.String,
-        es_indexed: true,
-        es_type: 'keyword'
+        value: {
+            type: Schema.Types.String,
+            es_indexed: true,
+            es_type: 'keyword'
+        },
+        weight: {
+            value: {
+                type: Schema.Types.Number,
+                es_indexed: true,
+            },
+        }
     },
     store: {
         name: {

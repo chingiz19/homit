@@ -20,7 +20,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Honey",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -103,7 +102,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Honey",
+            "weight": 999
+        }
     },
     {
         "_id": "14-2",
@@ -126,7 +129,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Honey",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -190,7 +192,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Honey",
+            "weight": 999
+        }
     },
     {
         "_id": "14-3",
@@ -213,7 +219,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Honey",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -258,7 +263,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Honey",
+            "weight": 999
+        }
     },
     {
         "_id": "14-4",
@@ -281,7 +290,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Honey",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -326,7 +334,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 0
+        "visible": 0,
+        "subcategory": {
+            "value": "Honey",
+            "weight": 999
+        }
     },
     {
         "_id": "14-5",
@@ -349,7 +361,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Honey",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -394,7 +405,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Honey",
+            "weight": 999
+        }
     },
     {
         "_id": "14-6",
@@ -417,7 +432,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Honey",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -462,7 +476,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Honey",
+            "weight": 999
+        }
     },
     {
         "_id": "14-7",
@@ -485,7 +503,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Honey",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -530,7 +547,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Honey",
+            "weight": 999
+        }
     },
     {
         "_id": "14-8",
@@ -553,7 +574,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Honey",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -598,7 +618,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Honey",
+            "weight": 999
+        }
     },
     {
         "_id": "14-9",
@@ -621,7 +645,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Honey",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -666,7 +689,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Honey",
+            "weight": 999
+        }
     },
     {
         "_id": "14-10",
@@ -689,7 +716,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "BeesWax & Candles",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -734,7 +760,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "BeesWax & Candles",
+            "weight": 900
+        }
     },
     {
         "_id": "14-11",
@@ -757,7 +787,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "BeesWax & Candles",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -802,7 +831,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "BeesWax & Candles",
+            "weight": 900
+        }
     },
     {
         "_id": "14-12",
@@ -825,7 +858,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "BeesWax & Candles",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -870,7 +902,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "BeesWax & Candles",
+            "weight": 900
+        }
     },
     {
         "_id": "14-13",
@@ -893,7 +929,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "BeesWax & Candles",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -938,7 +973,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "BeesWax & Candles",
+            "weight": 900
+        }
     },
     {
         "_id": "14-14",
@@ -961,7 +1000,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "BeesWax & Candles",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -1006,7 +1044,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "BeesWax & Candles",
+            "weight": 900
+        }
     },
     {
         "_id": "14-15",
@@ -1029,7 +1071,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Health & Beauty",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -1074,7 +1115,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Health & Beauty",
+            "weight": 800
+        }
     },
     {
         "_id": "14-16",
@@ -1097,7 +1142,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Health & Beauty",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -1142,7 +1186,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Health & Beauty",
+            "weight": 800
+        }
     },
     {
         "_id": "14-17",
@@ -1165,7 +1213,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Health & Beauty",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -1210,7 +1257,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Health & Beauty",
+            "weight": 800
+        }
     },
     {
         "_id": "14-18",
@@ -1233,7 +1284,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Health & Beauty",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -1278,7 +1328,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Health & Beauty",
+            "weight": 800
+        }
     },
     {
         "_id": "14-19",
@@ -1301,7 +1355,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Health & Beauty",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -1346,7 +1399,11 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Health & Beauty",
+            "weight": 800
+        }
     },
     {
         "_id": "14-20",
@@ -1369,7 +1426,6 @@
             "category_image": "15_honey-bee-products.jpeg",
             "category_cover": "15_honey-bee-products.jpeg"
         },
-        "subcategory": "Others",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -1433,6 +1489,10 @@
             "display_name": "Forever Bee",
             "image_url": "forever-bee.jpg"
         },
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Others",
+            "weight": 1
+        }
     }
 ]

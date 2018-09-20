@@ -77,7 +77,7 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
                 $scope.display_storeInfo = response.data.store_info;
                 $scope.categories = helpers.buildCategoryUrl(response.data.categories, $scope.storeType);
                 $scope.subcategories = response.data.subcategories;
-                $scope.productsBySubcat = helpers.buildProductUrl(formatReceivedProducts(response.data.products), response.data.store_info.name);                 
+                $scope.productsBySubcat = helpers.buildProductUrl(formatReceivedProducts(response.data.products), response.data.store_info.name);
                 try {
                     let category_name = $scope.selection.split("/")[3];
                     for (let i = 0; i < $scope.categories.length; i++) {
@@ -274,13 +274,21 @@ app.controller("catalogController", function ($location, $scope, $cookies, $wind
         }
         for (let i = 0; i < $scope.subcategories.length; i++) {
             for (let j = 0; j < $scope.selectedSubcats.length; j++) {
-                if ($scope.subcategories[i] == $scope.selectedSubcats[j]) {
-                    filtered_list[$scope.subcategories[i]] = $scope.productsBySubcat[$scope.subcategories[i]];
+                if ($scope.subcategories[i].value == $scope.selectedSubcats[j]) {
+                    filtered_list[$scope.subcategories[i].value] = $scope.productsBySubcat[$scope.subcategories[i].value];
                     break;
                 }
             }
         }
         return filtered_list;
+    };
+
+    $scope.orderObjectBy = function (received) {
+        let ary = [];
+        angular.forEach(received, function (val, key) {
+            ary.push({key: key, val: val});
+        });
+        return ary;
     };
 
     /**

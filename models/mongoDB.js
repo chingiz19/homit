@@ -156,7 +156,7 @@ pub.globalSearch = async function (inText, cb) {
                     },
                     "subcat-suggest": {
                         "phrase": {
-                            "field": "subcategory", "highlight": {
+                            "field": "subcategory.value", "highlight": {
                                 "pre_tag": "",
                                 "post_tag": ""
                             }

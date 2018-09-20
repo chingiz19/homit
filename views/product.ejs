@@ -48,7 +48,7 @@
                                 <a href="/main" ng-cklick="navHubClicked()" target="_self">Store Hub</a>
                                 <a href="/hub/{{ product.store_type_name }}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
                                 <a href="/hub/{{ product.store_type_name }}/{{ product.category.category_name }}" ng-click="navCatClicked(product.category.category_name)" target="_self">{{ product.category.category_display_name }}</a>
-                                <a ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
+                                <a ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory.value }}</a>
                             </section>
                             <div class="selected-img-frame box-center">
                                 <img class="product-image-selected" ng-src="/resources/images/products/{{ product.store_type_name }}/{{ selectedImage }}">
@@ -76,7 +76,7 @@
                                     <a class="web-location-a" href="/main" ng-cklick="navHubClicked()" target="_self">Store Hub</a>
                                     <a class="web-location-a" href="/hub/{{product.store_type_name}}" ng-cklick="navStoreClicked(product.store_type_name)" target="_self">{{ product.store_type_display_name }}</a>
                                     <a class="web-location-a loc-category" href="/hub/{{ product.store_type_name }}/{{ product.category.category_name }}" ng-click="navCatClicked(product.category.category_name)" target="_self">{{ product.category.category_display_name }}</a>
-                                    <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory }}</a>
+                                    <a class="web-location-a" ng-click="hrefToSubcat(product)" href="" target="_self">{{ product.subcategory.value }}</a>
                                 </div>
                             </section>
 <!--googleon: snippet-->

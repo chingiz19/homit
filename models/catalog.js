@@ -289,7 +289,7 @@ pub.getAllProductsByCategory = async function (storeType, categoryName) {
     let result = await MDB.models[storeType].aggregate([{ $match: { "category.category_name": categoryName, visible: 1 } },
     {
         $group: {
-            _id: "$subcategory",
+            _id: "$subcategory.value",
             products: { $push: "$$ROOT" }
         }
     }

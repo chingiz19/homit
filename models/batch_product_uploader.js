@@ -105,7 +105,7 @@ async function extractFromXLSX() {
                     let packId = varianceId + "-" + packIdCounter;
                     variance.packs.push(packObjectMaker(row, sheet, packId, 1));
 
-                    if (retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row+1, sheet) == container && (size == retrieveFromSheet("G", row + 1, sheet) && sizeUnit == retrieveFromSheet("H", row + 1, sheet))) {
+                    if (retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row + 1, sheet) == container && (size == retrieveFromSheet("G", row + 1, sheet) && sizeUnit == retrieveFromSheet("H", row + 1, sheet))) {
                         row++;
                     } else {
                         break;
@@ -117,7 +117,7 @@ async function extractFromXLSX() {
                 varianceObject.push(variance);
                 varianceIdCounter++;
 
-                if (retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row+1, sheet) == container) {
+                if (retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row + 1, sheet) == container) {
                     row++;
                 } else {
                     break;
@@ -135,11 +135,11 @@ async function extractFromXLSX() {
                 images: imageObjectBuilder(mainId),
                 tags: [],
                 category: categoryObjectBuilder(retrieveFromSheet("D", row, sheet), storeId),
-                subcategory: retrieveFromSheet("E", row, sheet),
+                subcategory: { value: retrieveFromSheet("E", row, sheet), weight: 1.0 },
                 details: detailsObject,
                 variance: varianceObject,
                 store: storeObject,
-                visible : 1
+                visible: 1
             });
 
             mainIdCounter++;

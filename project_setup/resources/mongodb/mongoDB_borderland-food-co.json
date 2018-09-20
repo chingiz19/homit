@@ -18,7 +18,6 @@
             "category_image": "soups-and-broths.jpeg",
             "category_cover": "10_soups-and-broths.jpg"
         },
-        "subcategory": "Bone Broth for People",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -65,7 +64,11 @@
             "image_url": "borderland-food-co.jpeg"
         },
         "namebrand": "Free Range Chicken Broth Borderland Food",
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Bone Broth for People",
+            "weight": 1
+        }
     },
     {
         "_id": "10-2",
@@ -86,7 +89,6 @@
             "category_image": "soups-and-broths.jpeg",
             "category_cover": "10_soups-and-broths.jpg"
         },
-        "subcategory": "Bone Broth for People",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -133,7 +135,11 @@
             "image_url": "borderland-food-co.jpeg"
         },
         "namebrand": "Grass-Fed Bison Bone Broth Borderland Food",
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Bone Broth for People",
+            "weight": 1
+        }
     },
     {
         "_id": "10-3",
@@ -154,7 +160,6 @@
             "category_image": "soups-and-broths.jpeg",
             "category_cover": "10_soups-and-broths.jpg"
         },
-        "subcategory": "Bone Broth for People",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -201,7 +206,11 @@
             "image_url": "borderland-food-co.jpeg"
         },
         "namebrand": "Grass-Fed Beef Bone Broth Borderland Food",
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Bone Broth for People",
+            "weight": 1
+        }
     },
     {
         "_id": "10-4",
@@ -222,7 +231,6 @@
             "category_image": "soups-and-broths.jpeg",
             "category_cover": "10_soups-and-broths.jpg"
         },
-        "subcategory": "Bone Broth for People",
         "details": {
             "ingredients": {
                 "display_name": "Ingredients",
@@ -269,6 +277,10 @@
             "image_url": "borderland-food-co.jpeg"
         },
         "namebrand": "Free Range Chicken Smoothie Base Bone Broth Borderland Food",
-        "visible": 1
+        "visible": 1,
+        "subcategory": {
+            "value": "Bone Broth for People",
+            "weight": 1
+        }
     }
 ]

@@ -61,9 +61,9 @@
                             <button class="filter-clr-btn" ng-click="deselectAllSubcats()" ng-show="selectedSubcats.length">
                                 clear
                             </button>
-                            <div class="subcat-checkboxes" flex="100" ng-repeat="subcategory in subcategories" ng-click="selectSubcat(subcategory, selectedSubcats)">
-                                <md-checkbox ng-checked="subcatSelected(subcategory, selectedSubcats)">
-                                    {{ subcategory }}
+                            <div class="subcat-checkboxes" flex="100" ng-repeat="subcategory in subcategories" ng-click="selectSubcat(subcategory.value, selectedSubcats)">
+                                <md-checkbox ng-checked="subcatSelected(subcategory.value, selectedSubcats)">
+                                    {{ subcategory.value }}
                                 </md-checkbox>
                             </div>
                         </div>
@@ -98,13 +98,13 @@
         </section>
         <div class="catalog-content" ng-cloak>
             <section id="items-section" class="items-section" ng-class="cat_content_mob_c">
-                <div ng-repeat="(key, value) in filterProductsBySubcat(selectedSubcats)">
+                <div ng-repeat="(key, value) in filterProductsBySubcat(selectedSubcats) | toArray | orderBy:value[0].subcategory.weight:true">
                     <div class="subcat-sep-line box-center">
                         <div></div>
-                        <span>{{key}}</span>
+                        <span>{{value.$key}}</span>
                     </div>
                     <div class="item-subcat-sec">
-                        <a ng-repeat="product in value | orderBy:sortBy['sorting_key']:sortBy['descending']" href="{{product.product_url}}" target="_blank">
+                        <a ng-repeat="product in value | orderBy:sortBy['sorting_key' ]:sortBy['descending']" href="{{product.product_url}}" target="_blank">
                             <div class="item-box hover-raise" id="{{ product.product_id }}">
                                 <ul class="item-box-ul fadeIn">
                                     <li class="item-pic">
@@ -154,9 +154,9 @@
                     <button class="filter-clr-btn" ng-click="deselectAllSubcats()" ng-show="selectedSubcats.length">
                         <ng-md-icon icon="clear" size="16"></ng-md-icon>
                     </button>
-                    <div class="subcat-checkboxes" flex="100" ng-repeat="subcategory in subcategories" ng-click="selectSubcat(subcategory, selectedSubcats)">
-                        <md-checkbox ng-checked="subcatSelected(subcategory, selectedSubcats)">
-                            {{ subcategory }}
+                    <div class="subcat-checkboxes" flex="100" ng-repeat="subcategory in subcategories" ng-click="selectSubcat(subcategory.value, selectedSubcats)">
+                        <md-checkbox ng-checked="subcatSelected(subcategory.value, selectedSubcats)">
+                            {{ subcategory.value }}
                         </md-checkbox>
                     </div>
                 </div>

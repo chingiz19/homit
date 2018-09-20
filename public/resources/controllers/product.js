@@ -129,11 +129,11 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
      */
     $scope.hrefToSubcat = function(product){
         googleAnalytics.addEvent('subcat_nav_clicked', {
-            "event_label": product.subcategory,
+            "event_label": product.subcategory.value,
             "event_category": googleAnalytics.eventCategories.product_actions
         });
 
-        sessionStorage.setUserSelectedSubcategory(product.subcategory);
+        sessionStorage.setUserSelectedSubcategory(product.subcategory.value);
         $window.location.href = $window.location.origin + "/hub/" + product.store_type_name + "/" + product.category.category_name;
     };
 
