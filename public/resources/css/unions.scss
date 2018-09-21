@@ -9,11 +9,16 @@ body {
 .union-controller {
     position: relative;
     min-height: calc(100vh - 270px);
+    background: linear-gradient(to top, #f5f7f9, #fefefe);
 
     .content-section {
         position: relative;
         margin: 0 auto;
         width: 1180px;
+        .stores-div{
+            margin: 0 auto 0 auto;
+            padding: 0 10% 50px 10%;
+        }
     }
 
     .header {

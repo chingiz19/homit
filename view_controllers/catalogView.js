@@ -28,37 +28,37 @@ router.get("/product/:storeName/:productName/:productId", async function (req, r
         req.options.ejs.store_type_display_name = undefined;
     }
 
-    if (product.details.country_of_origin) {
+    if (product.details.country_of_origin && product.details.country_of_origin.description) {
         req.options.ejs.country_of_origin = '<li><span class="bold">Country of Origin:</span><span itemprop="additionalProperty"> ' + product.details.country_of_origin.description + '</span></li>';
     } else {
         req.options.ejs.country_of_origin = "";
     }
 
-    if (product.details.producer) {
+    if (product.details.producer && product.details.producer.description) {
         req.options.ejs.producer = '<li><span class="bold">Made by:</span><span itemprop="manufacturer"> ' + product.details.producer.description + '</span></li>';
     } else {
         req.options.ejs.producer = "";
     }
 
-    if (product.details.alcohol_content) {
+    if (product.details.alcohol_content && product.details.alcohol_content.description) {
         req.options.ejs.alcohol_content = '<li><span class="bold">Alcohol/Vol:</span><span itemprop="additionalProperty"> ' + product.details.alcohol_content.description + '</span></li>';
     } else {
         req.options.ejs.alcohol_content = "";
     }
 
-    if (product.details.preview) {
+    if (product.details.preview && product.details.preview.description) {
         req.options.ejs.preview = '<section class="preview-sec" itemprop="description"><div class="description"><h3 class="sub-header">Product Description:</h3><p> ' + HelperUtils.convertHomitTags(product.details.preview.description) + '</p></div></section>';
     } else {
         req.options.ejs.preview = "";
     }
 
-    if (product.details.ingredients) {
+    if (product.details.ingredients && product.details.ingredients.description) {
         req.options.ejs.ingredients = '<section class="ingredients-sec" itemprop="disambiguatingDescription"><div class="ingredients"><h3 class="sub-header">Ingredients:</h3><span> ' + HelperUtils.convertHomitTags(product.details.ingredients.description) + '</span></div></section>';
     } else {
         req.options.ejs.ingredients = "";
     }
 
-    if (product.details.serving_suggestions) {
+    if (product.details.serving_suggestions && product.details.serving_suggestions.description) {
         req.options.ejs.serving_suggestions = '<section class="preview-sec" itemprop="additionalProperty"><div class="description"><h3 class="sub-header">Serving Sugestions:</h3><p> ' + HelperUtils.convertHomitTags(product.details.serving_suggestions.description) + '</p></div></section>';
     } else {
         req.options.ejs.serving_suggestions = "";

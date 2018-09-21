@@ -136,11 +136,11 @@
             },
             "serving_suggestions": {
                 "display_name": "Serving Suggestions",
-                "description": "ht_ulht_liPlease do not use a wet or dirty spoon in the honey.  Over time this might cause fermentation.d_ht_lid_ht_ul"
+                "description": "ht_ulht_liPlease do not use a wet or dirty spoon in the honey. Over time this might cause fermentation.d_ht_lid_ht_ul"
             },
             "preview": {
                 "display_name": "Preview",
-                "description": "ht_ulht_liFrom the Foothills of Alberta we have harvested the highest quality raw, Clover honey.ht_lid_ht_liForever Bee honey is never heated to above body temperature which ensures that all the nutrients and healthy enzymes are still active. It is also unfiltered and unprocessed to give you the highest quality, best tasting honey. d_ht_liht_liIn order to cream our honey we use a freezing method which helps to preserve all the health benefits. d_ht_liht_liForever Bee raw, creamed Clover honey will never go hard, never crystallize and never go bad. We guarantee it.d_ht_lid_ht_ul"
+                "description": "ht_ulht_liFrom the Foothills of Alberta we have harvested the highest quality raw, Clover honey.d_ht_liht_liForever Bee honey is never heated to above body temperature which ensures that all the nutrients and healthy enzymes are still active. It is also unfiltered and unprocessed to give you the highest quality, best tasting honey. d_ht_liht_liIn order to cream our honey we use a freezing method which helps to preserve all the health benefits. d_ht_liht_liForever Bee raw, creamed Clover honey will never go hard, never crystallize and never go bad. We guarantee it.d_ht_lid_ht_ul"
             },
             "country_of_origin": {
                 "display_name": "Country of Origin",
@@ -254,6 +254,16 @@
                         "sold": {
                             "quantity": 0
                         }
+                    },
+                    {
+                        "_id": "14-3-1-2",
+                        "h_value": 2,
+                        "price": 25,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -320,6 +330,16 @@
                         "_id": "14-4-1-1",
                         "h_value": 1,
                         "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    },
+                    {
+                        "_id": "14-4-1-2",
+                        "h_value": 2,
+                        "price": 25,
                         "visible": 1,
                         "stock_quantity": 100,
                         "sold": {
@@ -396,6 +416,16 @@
                         "sold": {
                             "quantity": 0
                         }
+                    },
+                    {
+                        "_id": "14-5-1-2",
+                        "h_value": 2,
+                        "price": 25,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -462,6 +492,16 @@
                         "_id": "14-6-1-1",
                         "h_value": 1,
                         "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    },
+                    {
+                        "_id": "14-6-1-2",
+                        "h_value": 2,
+                        "price": 25,
                         "visible": 1,
                         "stock_quantity": 100,
                         "sold": {
@@ -538,6 +578,16 @@
                         "sold": {
                             "quantity": 0
                         }
+                    },
+                    {
+                        "_id": "14-7-1-2",
+                        "h_value": 2,
+                        "price": 25,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -609,6 +659,16 @@
                         "sold": {
                             "quantity": 0
                         }
+                    },
+                    {
+                        "_id": "14-8-1-2",
+                        "h_value": 2,
+                        "price": 25,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
                     }
                 ]
             }
@@ -675,6 +735,16 @@
                         "_id": "14-9-1-1",
                         "h_value": 1,
                         "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    },
+                    {
+                        "_id": "14-9-1-2",
+                        "h_value": 2,
+                        "price": 25,
                         "visible": 1,
                         "stock_quantity": 100,
                         "sold": {
