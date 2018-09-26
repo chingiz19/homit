@@ -421,9 +421,11 @@ app.controller("checkoutController",
         $scope.onCartLoad = function () {
             let storeKeys = Object.keys($scope.cart.getCart());
             for (let i = 0; i < storeKeys.length; i++) {
-                $scope.stores.push({
-                    type: storeKeys[i]
-                });
+                if (!_.some($scope.stores, {"type": storeKeys[i]})){
+                    $scope.stores.push({
+                        type: storeKeys[i]
+                    });
+                }
             }
         };
 
