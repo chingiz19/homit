@@ -321,7 +321,7 @@ pub.sendToStores = async function (id, json) {
 pub.sendToCM = async function (json, isOrder) {
     return new Promise((resolve, reject) => {
         if (isOrder) {
-            Logger.log.debug('Sending order to CM \n Store type: ' + json.details.order.store_type, logMeta);
+            Logger.log.debug('Sending order to CM \n Store type: ' + json.pick_up.store_type, logMeta);
         }
         let ackId = HelperUtils.generateAckId(Array.from(ackStore.keys()));
         json.ack_id = ackId;
