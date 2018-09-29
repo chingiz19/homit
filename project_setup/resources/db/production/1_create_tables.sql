@@ -37,14 +37,18 @@ CREATE TABLE catalog_coupons (
 	total_price_off DECIMAL(6,2),
 	if_total_more DECIMAL(6,2),
 	store_type_id INT UNSIGNED,
+	union_id INT UNSIGNED,
 	code VARCHAR(225) NOT NULL,
 	message_invoice VARCHAR(225) NOT NULL,
 	message VARCHAR(225) NOT NULL,
 	privacy_type INT NOT NULL,
+	visible TINYINT NOT NULL,
 	date_expiry TIMESTAMP NOT NULL,
+	date_start TIMESTAMP NOT NULL,
 
 	PRIMARY KEY (id),
-	CONSTRAINT fk_catalog_coupons_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	CONSTRAINT fk_catalog_coupons_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_catalog_coupons_union_id FOREIGN KEY (union_id) REFERENCES catalog_store_unions(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE catalog_stores (

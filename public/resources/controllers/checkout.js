@@ -203,6 +203,10 @@ app.controller("checkoutController",
                         return;
                     }
 
+                    if ($scope.receipt === 0) {
+                        return $scope.HomeIt(0);
+                    }
+
                     if ($scope.useDefaultCard) {
                         $scope.HomeIt(1); // 1 for default payment option, TODO: could be better implemented
                         return;
@@ -348,7 +352,7 @@ app.controller("checkoutController",
             }, 100);
         }
 
-        $scope.updatePrices = function (products) {
+        $scope.updatePrices = function () {
             let coupon_details = localStorage.getUserCoupons();
 
             $http({
@@ -368,8 +372,13 @@ app.controller("checkoutController",
                     $scope.GST = prices.total_tax;
                     $scope.receipt = prices.total_price;
 
+
                     if (prices.coupons_used.length != 0) {
                         $scope.userAppliedCoupons = prices.coupons_used;
+
+                        if ($scope.receipt === 0) {
+                            updateCheckoutBtn("Submit Order!", "none");
+                        }
                     }
 
                 } else {
@@ -378,6 +387,51 @@ app.controller("checkoutController",
             }, function errorCallback(error) {
                 alert("Error, check your internet and refresh your page");
             });
+        };
+
+        $scope.keyedCoupon = function (code) {
+            if (code && code != "") {
+                $http({
+                    method: 'POST',
+                    url: '/api/checkout/applykeyedcoupon',
+                    data: { "code": code }
+                }).then(function successCallback(response) {
+                    if (response.data.success) {
+                        let isCouponApplied = response.data.is_coupon_applied;
+                        let isCouponOk = response.data.is_coupon_ok;
+                        let assignedBy = response.data.assigned_by;
+                        let canBeApplied = response.data.can_be_applied;
+                        let userSignedIn = response.data.is_signed_in;
+
+                        if (!isCouponOk) {
+                            notification.addErrorMessage("Coupon is not valid");
+                            return;
+                        } else if (userSignedIn) {
+                            if (isCouponApplied) {
+                                notification.addSuccessMessage("Coupon has been successfully applied!");
+                                $scope.couponCode = "";
+                                $scope.updatePrices();
+                            } else {
+                                notification.addErrorMessage("Already applied.");
+                            }
+                        } else if (canBeApplied) {
+                            let userCoupons = localStorage.getUserCoupons();
+                            userCoupons[assignedBy] = code;
+                            if (localStorage.setUserCoupons(userCoupons)) {
+                                notification.addSuccessMessage("Coupon has been successfully applied!");
+                                $scope.couponCode = "";
+                                $scope.updatePrices();
+                            }
+                        } else {
+                            notification.addErrorMessage("Coupon already acquired, check My Account");
+                        }
+                    } else {
+                        notification.addErrorMessage("Error while applying coupon");
+                    }
+                }, function errorCallback(error) {
+                    alert("Error, check your internet and refresh your page");
+                });
+            }
         };
 
         $scope.gotAddressResults = function () {

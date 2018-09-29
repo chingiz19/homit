@@ -101,10 +101,11 @@
         transition: background-color 0.3s;
         border-style: none;
         color: white;
+        overflow: hidden;
     }
 
     .log-btn:hover .CG-done-icon {
-        right: -8px;
+        right: 55px;
     }
 
     .input-width-1 {
@@ -307,6 +308,7 @@
                 <button class="log-btn" type="submit">
                     <md-progress-circular ng-class="loading_spin" md-diameter="23"></md-progress-circular>
                     <span ng-class="login_text">SIGN IN</span>
+                    <ng-md-icon icon="done" ng-class="check_mark_class" size="20"></ng-md-icon>
                 </ng-md-icon></button>
             </form>
         </section>
@@ -402,7 +404,8 @@
                 <button class="log-btn" type="submit">
                     <md-progress-circular ng-class="loading_spin" md-diameter="20"></md-progress-circular>
                     <span ng-class="signup_text">SIGN UP</span>
-                <ng-md-icon icon="done" ng-class="check_mark_class" size="20"></ng-md-icon></button>
+                    <ng-md-icon icon="done" ng-class="check_mark_class" size="20"></ng-md-icon>
+                </button>
             </form>
         </section>
         <!-- Footer -->

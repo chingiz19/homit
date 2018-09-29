@@ -2,9 +2,16 @@
 
 <head>
     <%- include('partial/imports')%>
-        <link href="/resources/css/orders.css" rel="stylesheet">
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+    <link href="/resources/css/orders.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
 </head>
 
 <body class="ng-cloak">
@@ -41,12 +48,14 @@
             <div class="container">
                 <div class="gtDataA" style="width: 100%;">
                     <md-radio-group>
-                        <md-radio-button id="usrRbtn" aria-label="selectUser" class="gtDataAA" ng-value="user" ng-repeat="user in foundUsers" ng-click="selectedUserID(user)">
+                        <md-radio-button id="usrRbtn" aria-label="selectUser" class="gtDataAA" ng-value="user"
+                            ng-repeat="user in foundUsers" ng-click="selectedUserID(user)">
                             <ul layout="row" class="gtDataAAA" style="width: 60%; display: flex; justify-content: space-between;">
                                 <li class="gtDataAAAA">First Name: {{' ' + user.first_name + '; '}}</li>
                                 <li class="gtDataAAAA">Last Name: {{' ' + user.last_name + '; '}}</li>
                                 <li class="gtDataAAAA">Email: {{' ' + user.user_email + '; '}}</li>
-                                <li ng-show="!user.is_guest" class="gtDataAAAA">Phone: {{' ' + user.phone_number + '; '}}</li>
+                                <li ng-show="!user.is_guest" class="gtDataAAAA">Phone: {{' ' + user.phone_number + ';
+                                    '}}</li>
                                 <li ng-show="user.is_guest" class="gtDataAAAA">User : Guest</li>
                             </ul>
                         </md-radio-button>
@@ -56,8 +65,8 @@
 
                 <div class="gtDataA">
                     <md-radio-group>
-                        <md-radio-button aria-label="transactions" class="gtDataAA" ng-repeat="transaction in foundTransactions" ng-value="transaction"
-                            ng-click="selectedTransactionID(transaction)">
+                        <md-radio-button aria-label="transactions" class="gtDataAA" ng-repeat="transaction in foundTransactions"
+                            ng-value="transaction" ng-click="selectedTransactionID(transaction)">
                             <ul layout="row" class="gtDataAAA">
                                 <li class="gtDataAAAA">Date Placed: {{' ' + transaction.date_placed + '; '}}</li>
                                 <li class="gtDataAAAA">Total Paid: {{' C$' + transaction.total_price + '; '}}</li>
@@ -73,8 +82,8 @@
 
                 <div class="gtDataB">
                     <md-radio-group>
-                        <md-radio-button id="{{order.order_id}}" aria-label="selectOrder" class="gtDataBA" ng-value="order" ng-repeat="order in foundOrders"
-                            ng-click="selectOrderId(order)">
+                        <md-radio-button id="{{order.order_id}}" aria-label="selectOrder" class="gtDataBA" ng-value="order"
+                            ng-repeat="order in foundOrders" ng-click="selectOrderId(order)">
                             <ul layout="row" class="gtDataBAA">
                                 <li class="gtDataBAAA">Order Id: {{ order.order_id }};</li>
                                 <li class="gtDataBAAA">Store Name: {{ order.store_type_display_name }};</li>
@@ -83,7 +92,8 @@
                                 <li class="gtDataBAAA">Delivered At: {{ order.date_delivered }};</li>
                                 <li layout="row">
                                     <span>Order Refused: </span>
-                                    <ng-md-icon ng-if="!order.refused" style="fill: rgb(31, 196, 157);" icon="highlight_off" size="17"></ng-md-icon>
+                                    <ng-md-icon ng-if="!order.refused" style="fill: rgb(31, 196, 157);" icon="highlight_off"
+                                        size="17"></ng-md-icon>
                                     <ng-md-icon ng-if="order.refused" style="fill: red;" icon="done" size="17"></ng-md-icon>
                                 </li>
                             </ul>
@@ -99,12 +109,14 @@
                                 <ul ng-show="adctrl.reqeustType == 2 || adctrl.reqeustType == 4">
                                     <li>
                                         <md-button ng-click="addItem(item)" aria-label="addItem">
-                                            <ng-md-icon icon="add_circle_outline" style="fill: rgba(5, 26, 25, 0.6);" size="20"></ng-md-icon>
+                                            <ng-md-icon icon="add_circle_outline" style="fill: rgba(5, 26, 25, 0.6);"
+                                                size="20"></ng-md-icon>
                                         </md-button>
                                     </li>
                                     <li>
                                         <md-button ng-click="minusItem(item)" aria-label="minusItem">
-                                            <ng-md-icon icon="remove_circle_outline" style="fill: rgba(5, 26, 25, 0.6);" size="20"></ng-md-icon>
+                                            <ng-md-icon icon="remove_circle_outline" style="fill: rgba(5, 26, 25, 0.6);"
+                                                size="20"></ng-md-icon>
                                         </md-button>
                                     </li>
                                 </ul>
@@ -117,7 +129,8 @@
                                     <li class="gtDataPrCBABAB" ng-show="item.price">C${{ item.price }}</li>
                                     <li class="gtDataPrCBABAB" ng-show="item.price_sold">C${{ item.price_sold }}</li>
                                     <li class="gtDataPrCBABAB">#{{ item.quantity }}</li>
-                                    <li ng-if="adctrl.reqeustType == 2 || adctrl.reqeustType == 4" class="gtDataPrCBABAB" style="color: red; font-weight: 450;">#{{item.modify_number}}</li>
+                                    <li ng-if="adctrl.reqeustType == 2 || adctrl.reqeustType == 4" class="gtDataPrCBABAB"
+                                        style="color: red; font-weight: 450;">#{{item.modify_number}}</li>
                                 </ul>
                             </div>
                             <div class="gtDataCBB"></div>
@@ -130,11 +143,16 @@
                         <div style="font-size: 14px;">
                             <md-input-container class="adminPtopBD" style="min-width: 120px; width: 150px;">
                                 <md-select ng-model="adctrl.reqeustType" placeholder="Request" ng-change="reqeustType_change(adctrl.reqeustType)">
-                                    <md-option ng-value="1" ng-disabled="!selectedOrder.date_arrived_customer">Refund Order</md-option>
-                                    <md-option ng-value="2" ng-disabled="!selectedOrder.date_arrived_customer">Refund Product</md-option>
-                                    <md-option ng-value="3" ng-disabled="selectedOrder.date_arrived_customer">Cancel Order</md-option>
-                                    <md-option ng-value="4" ng-disabled="selectedOrder.date_arrived_customer">Cancel Product</md-option>
-                                    <md-option ng-value="5" ng-disabled="selectedOrder.date_arrived_customer">Add New Item</md-option>
+                                    <md-option ng-value="1" ng-disabled="!selectedOrder.date_arrived_customer">Refund
+                                        Order</md-option>
+                                    <md-option ng-value="2" ng-disabled="!selectedOrder.date_arrived_customer">Refund
+                                        Product</md-option>
+                                    <md-option ng-value="3" ng-disabled="selectedOrder.date_arrived_customer">Cancel
+                                        Order</md-option>
+                                    <md-option ng-value="4" ng-disabled="selectedOrder.date_arrived_customer">Cancel
+                                        Product</md-option>
+                                    <md-option ng-value="5" ng-disabled="selectedOrder.date_arrived_customer">Add New
+                                        Item</md-option>
                                 </md-select>
                             </md-input-container>
                         </div>
@@ -146,7 +164,8 @@
                     <li>
                         <md-input-container class="md-block">
                             <label for="idCell" class="inptLbl">Order Comment</label>
-                            <input id="gP_number" name="orderComment" ng-model="req_1.order_comment" type="text" required/>
+                            <input id="gP_number" name="orderComment" ng-model="req_1.order_comment" type="text"
+                                required />
                         </md-input-container>
                     </li>
                     <li>
@@ -155,13 +174,14 @@
                     <li>
                         <md-input-container class="md-block bigClass" style="width: 20%;">
                             <label>Pick up Time</label>
-                            <input maxlength="4" ng-model="req_1.time" type="text" required/>
+                            <input maxlength="4" ng-model="req_1.time" type="text" required />
                         </md-input-container>
                     </li>
                     <li>
                         <md-input-container class="md-block">
                             <label for="idCell" class="inptLbl">Time Comment</label>
-                            <input id="gP_number" name="orderComment" ng-model="req_1.time_comment" type="text" required/>
+                            <input id="gP_number" name="orderComment" ng-model="req_1.time_comment" type="text"
+                                required />
                         </md-input-container>
                     </li>
                 </ul>
@@ -239,8 +259,8 @@
                                 </md-input-container>
                                 <div class="listBx drTblLn">
                                     <md-radio-group id="activeDriverList" ng-model="ADL_radioGroup" class="ADL_POL">
-                                        <md-radio-button aria-label="seeDriverRoute" id="{{driver.order_id}}" ng-value="{{driver}}" ng-click="showDriverRoute(driver)"
-                                            ng-repeat="driver in online_driverList | orderBy : '-on_shift' | filter : {driver_id : adl_Search}">
+                                        <md-radio-button aria-label="seeDriverRoute" id="{{driver.order_id}}" ng-value="{{driver}}"
+                                            ng-click="showDriverRoute(driver)" ng-repeat="driver in online_driverList | orderBy : '-on_shift' | filter : {driver_id : adl_Search}">
                                             <ul layout="row">
                                                 <li>ID: {{driver.driver_id}}&nbsp</li>
                                                 <li>On-line: {{driver.on_shift}}</li>
@@ -249,7 +269,8 @@
                                     </md-radio-group>
                                 </div>
                                 <div class="slctAllBx drTblLn">
-                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('driver',online_driverList)" ng-model="ADL_SelectAll">Select
+                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('driver',online_driverList)"
+                                        ng-model="ADL_SelectAll">Select
                                         All
                                     </md-checkbox>
                                 </div>
@@ -268,14 +289,17 @@
                                 </md-input-container>
                                 <div class="listBx cusTblLn">
                                     <md-radio-group id="pendingOrderList" class="ADL_POL" ng-model="POL_radioGroup">
-                                        <md-radio-button aria-label="selectOrder" id="{{order.order_id}}" ng-value="order" ng-click="showOrder(order)" ng-repeat="order in customer_pendingList | orderBy : '-WT' | filter : {order_id : POL_search}">
+                                        <md-radio-button aria-label="selectOrder" id="{{order.order_id}}" ng-value="order"
+                                            ng-click="showOrder(order)" ng-repeat="order in customer_pendingList | orderBy : '-WT' | filter : {order_id : POL_search}">
                                             <ul layout="row">
                                                 <li>Order ID: </li>
                                                 <li style="font-weight: 550;">&nbsp{{order.order_id}}</li>
                                                 <li>&nbsp Paired:&nbsp</li>
                                                 <li>
-                                                    <ng-md-icon ng-if="order.dispatched" style="fill: rgb(31, 196, 157);" icon="done" size="17"></ng-md-icon>
-                                                    <ng-md-icon ng-if="!order.dispatched" style="fill: red;" icon="highlight_off" size="17"></ng-md-icon>
+                                                    <ng-md-icon ng-if="order.dispatched" style="fill: rgb(31, 196, 157);"
+                                                        icon="done" size="17"></ng-md-icon>
+                                                    <ng-md-icon ng-if="!order.dispatched" style="fill: red;" icon="highlight_off"
+                                                        size="17"></ng-md-icon>
                                                 </li>
                                                 <li>&nbsp WT:&nbsp</li>
                                                 <li ng-style="(order.WT > 40) && {'color': 'red', 'font-weight':'600'}">{{order.WT}}</li>
@@ -284,7 +308,8 @@
                                     </md-radio-group>
                                 </div>
                                 <div class="slctAllBx cusTblLn">
-                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('order',customer_pendingList)" ng-model="POL_SelectAll">Select
+                                    <md-checkbox class="slctAllCheck" ng-click="selectAll('order',customer_pendingList)"
+                                        ng-model="POL_SelectAll">Select
                                         All
                                     </md-checkbox>
                                 </div>
@@ -347,13 +372,15 @@
                 </h3>
                 <div ng-repeat="(key, value) in driverRoutes">
                     <div style="height: 3em; display: flex; flex-direction: row; font-size: 19px;">
-                        <span style="height: 100%; display: flex; align-items: center; justify-content: center;">ID: {{key}}</span>
+                        <span style="height: 100%; display: flex; align-items: center; justify-content: center;">ID:
+                            {{key}}</span>
                         <div ng-repeat="node in value" style="display: flex; flex-direction: column; margin-left: 30px;">
                             <span>Node type: {{node.node_type}}</span>
                             <span>Node id: {{node.node_id}}</span>
                             <span>Time left: {{node.time_left}}</span>
                         </div>
-                        <span style="height: 100%; display: flex; align-items: center; justify-content: center; padding-left: 20px;" ng-show="value.length==0">Driver
+                        <span style="height: 100%; display: flex; align-items: center; justify-content: center; padding-left: 20px;"
+                            ng-show="value.length==0">Driver
                             root is empty</span>
                     </div>
 
@@ -361,7 +388,7 @@
             </div>
         </div>
 
-        <!-- CM Dashboard -->
+        <!-- API Order Upload -->
         <!-- Start -->
         <div ng-show="page == 5" style="background-color: rgba(253,253,253,1);">
             <div class="container">
@@ -371,8 +398,8 @@
                     <br> Last name:<br>
                     <input type="text" ng-model="lastname" required>
                     <br> Address:<br>
-                    <address-autocomplete input-class="address-input" icon-class="address-icon" button-class="address-input-btn" autocomplete="autocomplete"
-                            on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
+                    <address-autocomplete input-class="address-input" icon-class="address-icon" button-class="address-input-btn"
+                        autocomplete="autocomplete" on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
                     <span ng-show="withinCoverage == false" class="error-text">Out of coverage area</span>
                     <br>Client Order ID:<br>
                     <input type="text" ng-model="clientId" required>
@@ -390,8 +417,10 @@
                 </form>
 
                 <div>
-                    <h3 style="text-align: center; color: rgb(58, 3, 90); font-weight: 600; margin-top: 100px; margin-bottom: 40px;" ng-show="apiOrdersJar.length > 0">Order History</h3>
-                    <ul style="display: grid; grid-template-columns: auto auto auto auto auto auto auto auto auto; padding: 0; margin-bottom: 20px;" ng-repeat="order in apiOrdersJar">
+                    <h3 style="text-align: center; color: rgb(58, 3, 90); font-weight: 600; margin-top: 100px; margin-bottom: 40px;"
+                        ng-show="apiOrdersJar.length > 0">Order History</h3>
+                    <ul style="display: grid; grid-template-columns: auto auto auto auto auto auto auto auto auto; padding: 0; margin-bottom: 20px;"
+                        ng-repeat="order in apiOrdersJar">
                         <li style="margin-right: 10px; display: grid; grid-template-rows: 20px 40px;">
                             <span style="font-weight: 600;">Client ID:</span>
                             <span style="overflow-x: auto;">{{order.client_id}}</span>
@@ -434,6 +463,79 @@
             </div>
         </div>
 
+        <!-- Coupon Generator Page -->
+        <!-- Start -->
+        <div ng-show="page == 6" style="background-color: rgba(253,253,253,1);">
+            <div class="container">
+                <form id="couponForm">
+                    <br> Coupon type:<br>
+                    <select ng-model="couponType" required>
+                        <option value="">Please select</option>
+                        <option ng-repeat="coupon in couponsJar" [ngValue]="coupon">{{coupon.name}}</option>
+                    </select>
+                    <br><br>
+                    Invoice message:<br>
+                    <input type="text" ng-model="invoiceMessage" required>
+                    <br> Message:<br>
+                    <input type="text" ng-model="message" required>
+                    <br>Store Union:<br>
+                    <select ng-model="unionName">
+                        <option value="">Please select</option>
+                        <option ng-repeat="union in storeUnionsJar" [ngValue]="union">{{union.name}}</option>
+                    </select>
+                    <br>Store type:<br>
+                    <select ng-model="storeName">
+                        <option value="">Please select</option>
+                        <option ng-repeat="store in storesJar" [ngValue]="store">{{store.name}}</option>
+                    </select>
+                    <br> Activate when total more than:<br>
+                    <input type="text" ng-model="ifTotalMore" required placeholder="$">
+                    <br> Total price off:<br>
+                    <input type="text" ng-model="totalPriceOff" placeholder="$">
+                    <br> Customer Name: <font style="color: red">(Please, triple check this)</font><br>
+                    <input type="text" ng-model="cutomerName" placeholder="John Doe">
+                    <br> Customer email: <font style="color: red">(Please, triple check this)</font><br>
+                    <input type="text" ng-model="customerEmail" style="width: 300px" placeholder="example@gmail.com">
+                    <br> Coupon effective date and time:<br>
+                    <div class="container">
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <div class='input-group date' id='startdatetimepicker'>
+                                        <input type='text' class="form-control" ng-model="dateStart" required />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br> Coupon expiry date and time:<br>
+                    <div class="container">
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <div class='input-group date' id='enddatetimepicker'>
+                                        <input type='text' class="form-control" ng-model="dateExpiry" required />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span><input ng-click="generateCoupon(true)" type="submit" value="Just Coupon!"><input ng-click="generateCoupon(false)"
+                            type="submit" style="background:orangered; cursor:pointer" value="Generate and Send Email"></span>
+                </form>
+                <div>
+                    <p ng-show="showGeneratedCode">Generated code is: <font size="4" color="green">{{generatedCode}}</font>
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <div layout="column" class="doc">
             <md-button aria-label="OH" id="pg_1" ng-click="toPage(1)" flex="20" class="pageDocBtn">
                 <ng-md-icon icon="history" class="pageDocHvrIcon1 pageDocIcon"></ng-md-icon>
@@ -454,14 +556,19 @@
                     <i class="material-icons">cloud_download</i>
                 </span>
             </md-button>
+            <md-button aria-label="DR" id="pg_6" ng-click="toPage(6)" flex="20" class="pageDocBtn">
+                <span class="pageDocHvrIcon5 pageDocIcon">
+                    <i class="material-icons">loyalty</i>
+                </span>
+            </md-button>
         </div>
     </div>
     <% if (!production) { %>
-        <script src="/resources/services/sessionStorage.js"></script>
-        <script src="/resources/services/mapServices.js"></script>
-        <script src="/resources/controllers/orders.js"></script>
-        <script src="/resources/directives/addressAutocomplete.js"></script>
-        <% } %>
+    <script src="/resources/services/sessionStorage.js"></script>
+    <script src="/resources/services/mapServices.js"></script>
+    <script src="/resources/controllers/orders.js"></script>
+    <script src="/resources/directives/addressAutocomplete.js"></script>
+    <% } %>
 </body>
 
 </html>

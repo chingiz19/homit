@@ -146,6 +146,21 @@ pub.getStoreTypeInfo = async function (storeType) {
 }
 
 /**
+ * Returns store info object
+ * @param {string} storeType 
+ */
+pub.getStoreTypeInfoById = async function (id) {
+    let data = { "id": id };
+    let dbResult = await db.selectAllWhereLimitOne(db.tables.catalog_store_types, data);
+
+    if (dbResult && dbResult.length > 0) {
+        return dbResult[0];
+    } else {
+        return false;
+    }
+}
+
+/**
  * Get daily store hours by store type
  * 
  * @param {*} storeType 
@@ -369,7 +384,8 @@ pub.calculatePrice = async function (inObject, couponDetails) {
     let totalDelivery = 0;
     let totalPrice = 0;
     let totalCouponOff = 0;
-
+    let unionAmounts = {};
+    let unionNames = [];
     let couponsUsed = [];
 
     for (let storeType in products) {
@@ -377,8 +393,13 @@ pub.calculatePrice = async function (inObject, couponDetails) {
         let tmpTax = 0;
         let tmpCouponOff = 0;
         let tmpDelivery = 0;
-        let tmpCouponId = undefined;
+        let unionName = products[storeType].union_name;
+        let tmpCouponId = 0;
         let tmpCouponMessage = undefined;
+
+        if (!unionNames.includes(unionName)) {
+            unionNames.push(unionName);
+        }
 
         //*product cost calculation
         for (let item in products[storeType].products) {
@@ -394,18 +415,37 @@ pub.calculatePrice = async function (inObject, couponDetails) {
             usedRateIds.push(rateToStoreMap.get(storeType));
         }
 
+        //count unions separately too for coupon applications
+        if (unionName && unionName.length > 1) {
+            if (!unionAmounts.hasOwnProperty(unionName)) {
+                unionAmounts[unionName] = 0;
+            }
+            unionAmounts[unionName] += parseFloat(tmpAmount);
+        }
+
         tmpTax = Math.round((tmpTax + tmpDelivery * ALBERTA_GST) * 100) / 100;
         tmpTax = parseFloat(tmpTax.toFixed(2));
         tmpAmount = parseFloat(tmpAmount.toFixed(2));
         tmpDelivery = parseFloat(tmpDelivery.toFixed(2));
 
         if (couponDetails) {
-            let tmpCoupon = await Coupon.getCouponOff(storeType, couponDetails[storeType], tmpAmount, couponDetails.user_id);
+            let tmpCoupon = await Coupon.getCouponOff(false, storeType, couponDetails[storeType], tmpAmount, couponDetails.user_id);
+
             if (tmpCoupon.off > 0) {
-                tmpCouponOff = tmpCoupon.off;
-                tmpCouponId = tmpCoupon.coupon_id;
+                tmpCouponOff += tmpCoupon.off;
+                tmpCouponId += tmpCoupon.coupon_id;
                 tmpCouponMessage = tmpCoupon.message;
                 couponsUsed.push(tmpCoupon);
+            }
+
+            if (unionName && couponDetails[unionName]) {
+                let tmpUnionCoupon = await Coupon.getCoupon(couponDetails[unionName], undefined, true);
+
+                if (tmpCouponMessage && tmpCouponMessage.length > 0) {
+                    tmpCouponMessage += " and " + tmpUnionCoupon.message;
+                } else {
+                    tmpCouponMessage = tmpUnionCoupon.message;
+                }
             }
         }
 
@@ -440,20 +480,37 @@ pub.calculatePrice = async function (inObject, couponDetails) {
     }
 
     let generalCouponOff = 0;
+    let unionCouponOff = 0;
     let generalCoponId = undefined;
     let generalCoponMessage = undefined;
 
-    if (couponDetails && couponDetails[Coupon.GENERAL_COUPON_TYPE]) {
-        let generalCoupon = await Coupon.getCouponOff(Coupon.GENERAL_COUPON_TYPE, couponDetails.general, totalAmount, couponDetails.user_id);
-        if (generalCoupon.off > 0) {
-            generalCoponId = generalCoupon.coupon_id;
-            generalCouponOff = generalCoupon.off;
-            generalCoponMessage = generalCoupon.message;
-            couponsUsed.push(generalCoupon);
+    if (couponDetails) {
+        for (let unionName in unionNames) {
+            if (couponDetails[unionNames[unionName]]) {
+                let name = unionNames[unionName];
+                let tmpUnionCoupon = await Coupon.getCouponOff(true, name, couponDetails[name], unionAmounts[name], couponDetails.user_id);
+
+                if (tmpUnionCoupon.off > 0) {
+                    unionCouponOff += tmpUnionCoupon.off;
+                    totalCouponOff += tmpUnionCoupon.off;
+                    couponsUsed.push(tmpUnionCoupon);
+                }
+            }
+        }
+
+        if (couponDetails[Coupon.GENERAL_COUPON_TYPE]) {
+            let generalCoupon = await Coupon.getCouponOff(false, Coupon.GENERAL_COUPON_TYPE, couponDetails.general, totalAmount, couponDetails.user_id);
+
+            if (generalCoupon.off > 0) {
+                generalCoponId = generalCoupon.coupon_id;
+                generalCouponOff = generalCoupon.off;
+                generalCoponMessage = generalCoupon.message;
+                couponsUsed.push(generalCoupon);
+            }
         }
     }
 
-    totalPrice = totalPrice - generalCouponOff;
+    totalPrice = totalPrice - generalCouponOff - unionCouponOff;
 
     if (totalPrice < 0) {
         totalPrice = 0;
@@ -514,8 +571,13 @@ pub.prepareProductsForCalculator = async function (cartProducts) {
                         finalResult[storeName] = {
                             products: [],
                             del_fee_primary: String,
-                            rateId: Number
+                            rateId: Number,
                         };
+                    }
+
+                    if (selectedStore.union_id) {
+                        let unionInfo = await Catalog.getUnionInfoById(selectedStore.union_id);
+                        finalResult[storeName].union_name = unionInfo ? unionInfo.name : false;
                     }
 
                     finalResult[storeName].products.push({
@@ -706,6 +768,28 @@ pub.getAllStoreTypesAndUnions = async function () {
 }
 
 /**
+ * Get union by name
+ */
+pub.getUnionInfoByName = async function (unionName) {
+    let result = await db.selectAllWhereLimitOne(db.tables.catalog_store_unions, { "name": unionName });
+    if (result && result.length > 0) {
+        return result[0];
+    }
+    return false;
+}
+
+/**
+ * Get union by ID
+ */
+pub.getUnionInfoById = async function (unionId) {
+    let result = await db.selectAllWhereLimitOne(db.tables.catalog_store_unions, { "id": unionId });
+    if (result && result.length > 0) {
+        return result[0];
+    }
+    return false;
+}
+
+/**
  * Get all stores with name and id only
  */
 pub.getAllStores = async function () {
@@ -718,6 +802,19 @@ pub.getAllStores = async function () {
         ?`;
 
     return await db.runQuery(sqlQuery, { "available": true });
+}
+
+/**
+ * Get all stores with name and id only
+ */
+pub.getAllStoreUnions = async function () {
+    let sqlQuery = `
+    SELECT 
+	    name
+    FROM 
+        catalog_store_unions`;
+
+    return await db.runQuery(sqlQuery);
 }
 
 /**

@@ -96,7 +96,7 @@ pub.formatUserCoupons = function (coupons) {
     if (coupons) {
         for (let coupon in coupons) {
             let couponObject = coupons[coupon];
-            localObject[filterStoreTypeForCupon(couponObject.storeType)] = couponObject.couponCode;
+            localObject[filterStoreTypeForCupon(couponObject.storeType || couponObject.storeUnion)] = couponObject.couponCode;
         }
     }
 
@@ -120,7 +120,7 @@ pub.clearHomitTags = function (string) {
 }
 
 pub.generateAckId = function (usedValues) {
-    let id = Math.random().toString(36).substr(2, 9);
+    let id = pub.generateRandomID(9);
     let count = 0;
 
     while (count < 100) {
@@ -131,6 +131,8 @@ pub.generateAckId = function (usedValues) {
 
     return "unavailable";
 }
+
+pub.generateRandomID = function (length) { return Math.random().toString(36).substr(2, length); }
 
 function filterStoreTypeForCupon(storeType) {
     if (storeType == null) {

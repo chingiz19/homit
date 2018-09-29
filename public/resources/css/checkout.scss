@@ -215,14 +215,14 @@ md-input-container {
     color: rgb(13, 13, 13);
 }
 
-.customer-info-p1, .customer-info-p2, .customer-info-p3 {
+.customer-info-p1, .customer-info-p2, .customer-info-p3, .when-section{
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 95%;
     padding: 15px;
-    border: 2px solid rgba(175, 175, 175, 0.33);
+    border: 2px solid rgba(175, 175, 175, 0.28);
     border-radius: 15px;
 }
 
@@ -231,11 +231,11 @@ md-input-container {
 }
 
 .customer-info-p2{
-    margin: 15px auto 30px auto;
+    margin: 15px auto 40px auto;
 }
 
 .customer-info-p3{
-    margin: 30px auto 30px auto;
+    margin: 30px auto 40px auto;
 }
 
 .ci-p1-user {
@@ -294,10 +294,6 @@ md-input-container {
     width: 90%;
 }
 
-.del-options-sec{
-    flex-direction: column;
-}
-
 .del-options-div {
     position: relative;
     width: 100%;
@@ -321,6 +317,37 @@ md-input-container {
 .del-options-div-2 img {
     width: 40px;
     height: 40px;
+}
+
+.when-section{
+    margin: 15px auto 40px auto; 
+}
+
+.coupon-section{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center; 
+    padding: 0px 10%;
+
+    md-input-container{
+        padding-right: 0px;
+    }
+
+    md-input-container.md-input-focused ~ .apply-button{
+        border-color: rgba(0, 0, 0, 0.45) !important;
+    }
+    .apply-button{
+        height: 30px; 
+        width: 60px; 
+        border: none; 
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25); 
+        margin-top: 5px; 
+        outline: none; 
+        padding: 5px 10px; 
+        color: #1bb978; 
+        font-size: 15px; 
+        font-weight: 600;
+    }
 }
 
 .do-txt-box {
@@ -382,6 +409,12 @@ md-input-container {
     font-size: 16px;
     background-color: #698fcc;
     margin: 30px auto;
+}
+
+.CG-cur-button:active{
+    transform: translateY(2px);
+    -webkit-box-shadow: 0 7px 14px rgba(50,50,93,.2),0 3px 6px rgba(0,0,0,.16);
+    box-shadow: 0 7px 14px rgba(50,50,93,.2),0 3px 6px rgba(0,0,0,.16);
 }
 
 .co-view-cart-btn {

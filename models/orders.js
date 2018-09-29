@@ -628,7 +628,6 @@ function formatNewStyleProducts(quantity, raw, nestedProduct) {
     delete localObject.details;
     delete localObject.tags;
     delete localObject.variance;
-    delete localObject.subcategory;
 
     localObject.subcategory = raw.subcategory.value;
     localObject.store_type = raw.store.name;

@@ -42,13 +42,13 @@
 }
 
 .CG-cur-button:hover .CG-done-icon {
-    right: -5px;
+    right: 15px;
 }
 
 .CG-done-icon {
-    position: relative;
+    position: absolute;
     right: -100px;
-    top: -2px;
+    top: 8px;
     fill: #fff;
     transition: right 0.3s ease;
 }

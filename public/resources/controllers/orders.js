@@ -15,9 +15,16 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     $scope.logStreamNew = "";
     $scope.driverRoutes = {};
     $scope.storesJar = [];
+    $scope.storeUnionsJar = [];
     $scope.apiOrdersJar = [];
     $scope.driversNumOnline = 0;
     $scope.mode = $("#mode").val();
+
+    $scope.couponsJar = [{
+        name: "One Time Use",
+        privacyType: 2,
+        visible: false
+    }];
 
     /*CM dashboard variables */
     const ENGINE_STATUS_ON = "running";
@@ -29,9 +36,11 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         $scope.toPage($scope.page);
         $scope.cm_icon = "cm_icon_good";
         fetchStoreTypes();
+        fetchStoreUnions();
         initiateSocket();
         getListActiveDriverCustomer();
         getLogs();
+        activateDateAndTimePickers();
         setInterval(getLogs, 2000);
         $scope.setInterval_ADL_POL = setInterval(getListActiveDriverCustomer, 2000);
 
@@ -87,12 +96,68 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                 }).then(function successCallback(response) {
                     if (response.data.success) {
                         document.getElementById("apiOrderForm").reset();
-                        notification.addSuccessMessage("Submitted!");
+                        return notification.addSuccessMessage("Submitted!");
                     } else {
-                        notification.addErrorMessage("Could not submit orders, please try again");
+                        return notification.addErrorMessage("Could not submit orders, please try again");
                     }
                 }, function errorCallback(response) {
-                    notification.addErrorMessage("Could not submit orders, please try again");
+                    return notification.addErrorMessage("Could not submit orders, please try again");
+                });
+            }
+        }
+    };
+
+    $scope.generateCoupon = function (justCode) {
+
+        //union or store must be only one
+        if ($scope.unionName && $scope.storeName) {
+            return notification.addErrorMessage("Please fill in either union or store id");
+        }
+
+        //must have cutomer name and email for justCode=false cases
+        if (!justCode && !($scope.customerEmail && $scope.cutomerName)) {
+            return notification.addErrorMessage("Please enter customer name and email!");
+        }
+
+        $scope.showGeneratedCode = justCode;
+
+        for (let i in $scope.couponsJar) {
+            if ($scope.couponsJar[i].name === $scope.couponType) {
+                return $http({
+                    method: 'POST',
+                    url: "/api/csr/generateCoupon",
+                    data: {
+                        privacy_type: $scope.couponsJar[i].privacyType,
+                        visible: $scope.couponsJar[i].visible,
+                        if_total_more: $scope.ifTotalMore,
+                        total_price_off: $scope.totalPriceOff,
+                        store_type_id: $scope.storeName,
+                        union_id: $scope.unionName,
+                        message_invoice: $scope.invoiceMessage,
+                        message: $scope.message,
+                        customer_email: $scope.customerEmail,
+                        customer_name: $scope.cutomerName,
+                        just_code: justCode,
+
+                        date_start: $("#startdatetimepicker").find("input").val(),
+                        date_expiry: $("#enddatetimepicker").find("input").val()
+                    }
+                }).then(function successCallback(response) {
+                    if (response.data.success) {
+                        document.getElementById("couponForm").reset();
+                        let message;
+                        if (justCode) {
+                            message = "Generated!";
+                        } else {
+                            message = "Email sent!";
+                        }
+                        notification.addSuccessMessage(message);
+                        $scope.generatedCode = response.data.code;
+                    } else {
+                        notification.addErrorMessage("Could not generate coupon, please try again");
+                    }
+                }, function errorCallback(response) {
+                    notification.addErrorMessage("Could not generate coupon, please try again");
                 });
             }
         }
@@ -366,6 +431,10 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             $scope.page = 5;
             getApiOrders();
         }
+        if (num == 6) {
+            $scope.pageName = "Coupon Generator";
+            $scope.page = 6;
+        }
     };
 
     $scope.showDriverRoute = function (driver) {
@@ -461,6 +530,17 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         $scope.routeNodesMarkers = [];
     }
 
+    function activateDateAndTimePickers() {
+        $(function () {
+            $('#startdatetimepicker').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss'
+            });
+            $('#enddatetimepicker').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss'
+            });
+        });
+    }
+
     function getListActiveDriverCustomer() {
         $scope.online_driverList = [];
         $scope.customer_pendingList = [];
@@ -527,7 +607,7 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         });
     }
 
-    function getApiOrders () {
+    function getApiOrders() {
         $http({
             method: 'POST',
             url: "/api/csr/apiorders",
@@ -627,6 +707,22 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
             }
         }, function errorCallback(response) {
             notification.addErrorMessage("Could not fetch store types, please refresh page");
+        });
+    }
+
+    function fetchStoreUnions() {
+        $http({
+            method: 'POST',
+            url: "/api/csr/getstoreunions",
+            data: {}
+        }).then(function successCallback(response) {
+            if (response.data.success) {
+                $scope.storeUnionsJar = response.data.array;
+            } else {
+                notification.addErrorMessage("Could not fetch store unions, please refresh page");
+            }
+        }, function errorCallback(response) {
+            notification.addErrorMessage("Could not fetch store unions, please refresh page");
         });
     }
 

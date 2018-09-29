@@ -111,7 +111,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                 scope.totalAmount = 0;
 
                 scope.refreshCart();
-                window.addEventListener('focus', scope.refreshCart);
+                // window.addEventListener('focus', scope.refreshCart);
 
                 /**
                  * Finds nested product object including size

@@ -2,7 +2,8 @@
  * @copyright Homit 2018
  */
 
-var router = require("express").Router();
+const ZERO_DOLLAR_CHARGE = "zero_dollars";
+let router = require("express").Router();
 
 router.post('/placeorder', async function (req, res, next) {
     let email = req.body.user.email;
@@ -39,11 +40,11 @@ router.post('/placeorder', async function (req, res, next) {
     let userObject = {};
 
     if (signedUser) {
-        paramsMissing = !cartProducts || !phone || !address || !address_lat || !address_long || !cardToken || !scheduleDetails;
+        paramsMissing = !cartProducts || !phone || !address || !address_lat || !address_long || (cardToken == undefined) || !scheduleDetails;
         couponDetails = Object.assign({ "user_id": signedUser.id, }, HelperUtils.formatUserCoupons(await Coupon.getUserCoupons(signedUser.id, true)));
         userObject = Object.assign({ isGuest: false }, signedUser);
     } else {
-        paramsMissing = !email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts || !cardToken || !scheduleDetails || !couponDetails;
+        paramsMissing = !email || !phone || !fname || !lname || !address || !address_lat || !address_long || !cartProducts || (cardToken == undefined) || !scheduleDetails || !couponDetails;
         userObject = { isGuest: true, "first_name": fname, "last_name": lname, "user_email": email };
     }
 
@@ -54,6 +55,13 @@ router.post('/placeorder', async function (req, res, next) {
         if (allStoresOpen) {
             let allPrices = await Catalog.calculatePrice(storeProducts, couponDetails);
             let totalPrice = allPrices.total_price;
+
+            //check if amount is zero then do not charge
+            if (cardToken === 0 && totalPrice === 0) {
+                return postCharge(ZERO_DOLLAR_CHARGE, res, birth_year, birth_month, birth_day,
+                    address, address_lat, address_long, phone, unitNumber, driverInstruction,
+                    allPrices, storeProducts.products, scheduleDetails, userObject);
+            }
 
             if (cardToken == 1) {
                 let custId = Auth.getSignedUser(req).stripe_customer_id;
@@ -102,7 +110,7 @@ router.post('/calculate', async function (req, res) {
 
     let allPrices = await Catalog.calculatePrice(storeProducts, couponDetails);
 
-   return res.send({
+    return res.send({
         success: true && allPrices,
         prices: allPrices
     });
@@ -160,12 +168,39 @@ router.post('/check', async function (req, res) {
     });
 });
 
+/**
+ * Checks if customer is signed in and if coupon is valid 
+ */
+router.post('/applykeyedcoupon', async function (req, res) {
+    let allValidParams = {
+        "code": {}
+    };
+
+    req.body = HelperUtils.validateParams(req.body, allValidParams);
+
+    if (!req.body) {
+        return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
+    }
+
+    let signedUser = await Auth.getSignedUser(req);
+    let isCouponOk = await Coupon.applyKeyedCoupon(req.body.code, signedUser.id)
+
+    return res.send({
+        "success": true,
+        "is_signed_in": signedUser && true,
+        "is_coupon_applied": isCouponOk.isApplied,
+        "is_coupon_ok": isCouponOk.isOk,
+        "assigned_by": isCouponOk.assignedBy,
+        "can_be_applied": isCouponOk.canBeApplied
+    });
+});
+
 async function postCharge(chargeResult, res, birth_year, birth_month, birth_day,
     address, address_lat, address_long, phone, unitNumber, driverInstruction,
     allPrices, storeProducts, scheduleDetails, userObject) {
 
-    let cardDigits = chargeResult.source.last4;
-    let chargeId = chargeResult.id;
+    let cardDigits = chargeResult == ZERO_DOLLAR_CHARGE ? "0000" : chargeResult.source.last4;
+    let chargeId = chargeResult == ZERO_DOLLAR_CHARGE ? "zero-dollar-charge" : chargeResult.id;
     let userId = userObject.id;
     let data = {};
 
@@ -201,9 +236,9 @@ async function postCharge(chargeResult, res, birth_year, birth_month, birth_day,
     let couponsUsed = allPrices.coupons_used;
 
     for (let i = 0; i < couponsUsed.length; i++) {
-        if (couponsUsed[i].privacy_type = Coupon.privacy_types.private && !userObject.isGuest) {
+        if (couponsUsed[i].privacy_type == Coupon.privacy_types.private && !userObject.isGuest) {
             Coupon.decrementUserCoupon(couponsUsed[i].coupon_id, userId);
-        } else {
+        } else if (couponsUsed[i].privacy_type == Coupon.privacy_types.private_guest) {
             Coupon.invalidatePrivateGuestCoupon(couponsUsed[i].coupon_id);
         }
     }
@@ -211,10 +246,6 @@ async function postCharge(chargeResult, res, birth_year, birth_month, birth_day,
     // create orders
     let placedOrders = await createOrders(userId, address, address_lat, address_long, driverInstruction,
         unitNumber, phone, userObject.isGuest, chargeId, cardDigits, allPrices, storeProducts, scheduleDetails);
-    let response = {
-        success: (placedOrders && true),
-        orders: placedOrders
-    };
 
     sendOrderEmail(userObject.user_email, userObject.first_name, userObject.last_name, phone, address, cardDigits, placedOrders.orders, scheduleDetails, allPrices);
 
@@ -222,7 +253,10 @@ async function postCharge(chargeResult, res, birth_year, birth_month, birth_day,
         Email.subscribeToGuestUsers(userObject.email, userObject.fname, userObject.lname);
     }
 
-    res.send(response);
+    return res.send({
+        success: (placedOrders && true),
+        orders: placedOrders
+    });
 };
 
 function chargeFailed(error, res) {
@@ -350,7 +384,7 @@ async function sendOrderEmail(email, firstName, lastName, phone, address, cardDi
 
     for (let currentOrder in orderIds) {
         let orderId = orderIds[currentOrder].order_id;
-        let products = await Orders.getOrderItemsById(orderId);                                              
+        let products = await Orders.getOrderItemsById(orderId);
         let storeType = await Catalog.getStoreTypeInfo(orderIds[currentOrder].store_type);
 
         let tmpOrder = {

@@ -33,6 +33,61 @@ router.post('/apiorder', async function (req, res) {
     }
 });
 
+router.post('/generateCoupon', async function (req, res) {
+    let privacy_type = req.body.privacy_type;
+    let visible = req.body.visible;
+    let date_expiry = req.body.date_expiry;
+    let date_start = req.body.date_start;
+    let if_total_more = req.body.if_total_more;
+    let total_price_off = req.body.total_price_off === '' ? undefined : req.body.total_price_off;
+    let storeTypeName = req.body.store_type_id === '' ? undefined : req.body.store_type_id;
+    let unionName = req.body.union_id === '' ? undefined : req.body.union_id;
+    let message_invoice = req.body.message_invoice;
+    let message = req.body.message;
+    let customerName = req.body.customer_name;
+    let customerEmail = req.body.customer_email;
+    let justCode = req.body.just_code;
+
+    if (privacy_type && date_expiry && date_start && if_total_more && total_price_off && (storeTypeName || unionName) && visible != undefined && justCode != undefined && message_invoice && message && (justCode || (customerName && customerEmail))) {
+        let code = HelperUtils.generateRandomID(10);
+        let union_id, store_type_id;
+        let assignedBy = undefined;
+
+        if (unionName) {
+            let union = await Catalog.getUnionInfoByName(unionName);
+            union_id = union.id;
+            assignedBy = `"${union.display_name} "stores`;
+        } else if (storeTypeName) {
+            let store = await Catalog.getStoreTypeInfo(storeTypeName);
+            store_type_id = store.id;
+            assignedBy = `"${store.display_name} "store`;
+        }
+
+        let localObject = {
+            date_expiry: date_expiry,
+            date_start: date_start,
+            privacy_type: privacy_type,
+            visible: visible,
+            code: code,
+            if_total_more: if_total_more,
+            total_price_off: total_price_off,
+            store_type_id: store_type_id,
+            union_id: union_id,
+            message_invoice: message_invoice,
+            message: message
+        }
+
+        let result = await db.insertQuery(db.tables.catalog_coupons, localObject);
+
+        return res.send({
+            success: result && result.affectedRows > 0 && (justCode || await Email.sendSurveyCompletionWithCoupon(customerName, customerEmail, code, total_price_off, assignedBy)),
+            "code": code
+        });
+    }
+
+    return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
+});
+
 router.post('/bulkapiorder', async function (req, res) {
     let inArray = req.body.orders_array;
     let qualityCheckCounter = 0;
@@ -89,6 +144,14 @@ router.post('/refreshreport', async function (req, res) {
 
 router.post('/getstores', async function (req, res) {
     let result = await Catalog.getAllStores();
+    return res.send({
+        success: result && true,
+        array: result
+    });
+});
+
+router.post('/getstoreunions', async function (req, res) {
+    let result = await Catalog.getAllStoreUnions();
     return res.send({
         success: result && true,
         array: result

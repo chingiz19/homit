@@ -145,6 +145,18 @@ pub.sendAccountVerificationEmail = async function (name, email, link) {
     return await sendEmailViaNoReply(mailOptions);
 }
 
+pub.sendSurveyCompletionWithCoupon = async function (name, email, code, giftAmount, inStoreName) {
+    let html = getSurveyCompletionEmailHtml(name, code, giftAmount, inStoreName);
+    let fromValue = "Survey Results <" + process.env.NOREPLY_EMAIL_USER + ">";
+    let mailOptions = {
+        from: fromValue,
+        to: email,
+        subject: "Thank you from Homit!",
+        html: html,
+    };
+    return await sendEmailViaNoReply(mailOptions);
+}
+
 /**
  * Subscribes to Guest users list 
  * @param {*} email customer email
@@ -337,7 +349,7 @@ function getEmailHtml(orderInfo, priceObject) {
     return $.html();
 };
 
-var getAccountVerificationEmailHtml = function (name, link) {
+function getAccountVerificationEmailHtml(name, link) {
     let file = fs.readFileSync(path.join(process.cwd(), "/project_setup/resources/email_htmls/verifyEmail.ejs"), "utf8");
     return ejs.render(file, {
         userName: filterInputField(name, "Dear Customer"),
@@ -345,7 +357,17 @@ var getAccountVerificationEmailHtml = function (name, link) {
     });
 };
 
-var getStoreAssingdedEmailHtml = function (orderInfo) {
+function getSurveyCompletionEmailHtml(name, code, giftAmount, inStoreName) {
+    let file = fs.readFileSync(path.join(process.cwd(), "/project_setup/resources/email_htmls/surveyCompletion.ejs"), "utf8");
+    return ejs.render(file, {
+        userName: filterInputField(', ' + name, ""),
+        code: filterInputField(code, "UNAVAILABLE, contact us"),
+        amount: filterInputField(giftAmount, "UNAVAILABLE, contact us"),
+        storeName: filterInputField(inStoreName, "UNAVAILABLE, contact us")
+    });
+};
+
+function getStoreAssingdedEmailHtml(orderInfo) {
     let htmlSource = fs.readFileSync(process.cwd() + "/project_setup/resources/email_htmls/storeNotification.html", "utf8");
     let orderNumber = orderInfo.order_id;
     const $ = cheerio.load(htmlSource);
@@ -398,7 +420,7 @@ function getOrderSlipHtml(OI, priceObject) {
             "</tr>" +
             "<tr class='orders-details-table-tr'>" +
             "<td class='orders-details-table-td-hdr'>Store Coupons:</td>" +
-            "<td class='orders-details-table-td-input'>" + filterInputField(orders[sub_order].couponInvoiceMessage, "No coupons used") + "</td>" +               
+            "<td class='orders-details-table-td-input'>" + filterInputField(orders[sub_order].couponInvoiceMessage, "No coupons used") + "</td>" +
             "</tr>" +
             "</table>"
             ;
@@ -506,7 +528,7 @@ async function getTotalPriceForProducts(price) {
     priceObject.totalTax = "C$ " + parseFloat(Math.round(price.total_tax * 100) / 100).toFixed(2);
     priceObject.totalAmount = "C$ " + parseFloat(Math.round(price.cart_amount * 100) / 100).toFixed(2);
     priceObject.totalPrice = "C$ " + parseFloat(Math.round(price.total_price * 100) / 100).toFixed(2);
-    priceObject.savedAmount = "C$ -" + parseFloat(Math.round(price.total_coupon_off * 100) / 100).toFixed(2);
+    priceObject.savedAmount = "C$ -" + Math.min(parseFloat(Math.round(price.total_coupon_off * 100) / 100).toFixed(2), totalPrice);
     priceObject.couponsUsed = price.coupons_used;
 
     return priceObject;
