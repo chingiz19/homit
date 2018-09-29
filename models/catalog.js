@@ -288,6 +288,11 @@ pub.isStoreOpenForScheduled = async function (storeType, timestamp) {
 pub.getAllProductsByCategory = async function (storeType, categoryName) {
     let result = await MDB.models[storeType].aggregate([{ $match: { "category.category_name": categoryName, visible: 1 } },
     {
+        $addFields: {
+            "price": {$arrayElemAt: [{$arrayElemAt: ["$variance.packs.price", 0]}, 0]}
+        }
+    },
+    {
         $group: {
             _id: "$subcategory.value",
             products: { $push: "$$ROOT" }
