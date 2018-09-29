@@ -77,6 +77,7 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
             $scope.product.selectedVolume = i - 1;
         } else {
             $scope.product.selectedVolume = i;
+            product.selectedPack = 0;
         }
     };
 
@@ -91,6 +92,7 @@ app.controller("productController", function ($scope, $rootScope, $window, $http
             $scope.product.selectedVolume = i + 1;
         } else {
             $scope.product.selectedVolume = i;
+            product.selectedPack = 0;
         }
     };
 
