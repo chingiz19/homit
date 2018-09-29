@@ -23,11 +23,9 @@ jsonfile.readFile(file, function (err, obj) {
     if (err) {
         Logger.log.error("Could not read director.json file" + err.message, logMeta);
     } else if (obj) {
-        directors.push(obj.Shabnam);
-        directors.push(obj.Elnar);
-        directors.push(obj.Chingiz);
-        directors.push(obj.Jeyhun);
-        directors.push(obj.Zaman);
+        for (key in obj){
+            directors.push(obj[key]);
+        }
     } else {
         Logger.log.error("Unknown issue happened during director.json read", logMeta);
     }
