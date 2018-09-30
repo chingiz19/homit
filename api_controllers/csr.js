@@ -48,7 +48,7 @@ router.post('/generateCoupon', async function (req, res) {
     let customerEmail = req.body.customer_email;
     let justCode = req.body.just_code;
 
-    if (privacy_type && date_expiry && date_start && if_total_more && total_price_off && (storeTypeName || unionName) && visible != undefined && justCode != undefined && message_invoice && message && (justCode || (customerName && customerEmail))) {
+    if (privacy_type && date_expiry && (date_expiry != "") && date_start && (date_start != "") && if_total_more && total_price_off && (storeTypeName || unionName) && visible != undefined && justCode != undefined && message_invoice && message && (justCode || (customerName || customerEmail))) {
         let code = HelperUtils.generateRandomID(10);
         let union_id, store_type_id;
         let assignedBy = undefined;
@@ -56,11 +56,11 @@ router.post('/generateCoupon', async function (req, res) {
         if (unionName) {
             let union = await Catalog.getUnionInfoByName(unionName);
             union_id = union.id;
-            assignedBy = `"${union.display_name} "stores`;
+            assignedBy = `"${union.display_name}" stores`;
         } else if (storeTypeName) {
             let store = await Catalog.getStoreTypeInfo(storeTypeName);
             store_type_id = store.id;
-            assignedBy = `"${store.display_name} "store`;
+            assignedBy = `"${store.display_name}" store`;
         }
 
         let localObject = {

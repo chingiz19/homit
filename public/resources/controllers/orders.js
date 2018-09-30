@@ -108,6 +108,13 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
     };
 
     $scope.generateCoupon = function (justCode) {
+        let startDate = $("#startdatetimepicker").find("input").val();
+        let endDate = $("#enddatetimepicker").find("input").val();
+
+        //start and expiry time must be present 
+        if (!startDate && !endDate) {
+            return notification.addErrorMessage("Please fill in start and end time for coupon");
+        }
 
         //union or store must be only one
         if ($scope.unionName && $scope.storeName) {
@@ -115,8 +122,8 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
         }
 
         //must have cutomer name and email for justCode=false cases
-        if (!justCode && !($scope.customerEmail && $scope.cutomerName)) {
-            return notification.addErrorMessage("Please enter customer name and email!");
+        if (!justCode && !($scope.customerEmail || $scope.cutomerName)) {
+            return notification.addErrorMessage("Please enter either name or email!");
         }
 
         $scope.showGeneratedCode = justCode;
@@ -139,8 +146,8 @@ app.controller("adminController", function ($location, $scope, $cookies, $http, 
                         customer_name: $scope.cutomerName,
                         just_code: justCode,
 
-                        date_start: $("#startdatetimepicker").find("input").val(),
-                        date_expiry: $("#enddatetimepicker").find("input").val()
+                        date_start: startDate,
+                        date_expiry: endDate
                     }
                 }).then(function successCallback(response) {
                     if (response.data.success) {

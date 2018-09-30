@@ -524,11 +524,13 @@ function prepareOrderSlip(orderInfo, priceObject, callback) {
 async function getTotalPriceForProducts(price) {
     let priceObject = {};
 
+    let originalTotalPrice = Math.round(price.total_tax * 100) / 100 + Math.round(price.cart_amount * 100) / 100 + Math.round(price.delivery_fee * 100) / 100;
+
     priceObject.deliveryFee = (price.delivery_fee == 0 ? "FREE" : "C$ " + parseFloat(Math.round(price.delivery_fee * 100) / 100).toFixed(2));
     priceObject.totalTax = "C$ " + parseFloat(Math.round(price.total_tax * 100) / 100).toFixed(2);
     priceObject.totalAmount = "C$ " + parseFloat(Math.round(price.cart_amount * 100) / 100).toFixed(2);
     priceObject.totalPrice = "C$ " + parseFloat(Math.round(price.total_price * 100) / 100).toFixed(2);
-    priceObject.savedAmount = "C$ -" + Math.min(parseFloat(Math.round(price.total_coupon_off * 100) / 100).toFixed(2), totalPrice);
+    priceObject.savedAmount = "C$ -" + parseFloat(Math.min(Math.round(price.total_coupon_off * 100) / 100), originalTotalPrice).toFixed(2);
     priceObject.couponsUsed = price.coupons_used;
 
     return priceObject;

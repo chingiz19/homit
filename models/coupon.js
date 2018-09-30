@@ -379,7 +379,7 @@ async function doesUserHaveCoupon(coupon, userId) {
  * @param {*} couponCode  coupon code (e.g. signup706)
  */
 async function getCouponByCode(couponCode) {
-    if (couponCode) {
+    if (couponCode && couponCode.length < 20 && couponCode.length > 5) {
         let data = {
             "code": couponCode
         };
