@@ -47,7 +47,7 @@ app.service('helpers', function () {
 
     pub.clearProductUrl = function (path) {
         var tempPath = path;
-        tempPath = tempPath.replace(/[#&',.%/()]/g, "");
+        tempPath = tempPath.replace(/[#&',.%/()*]/g, "");
         tempPath = tempPath.replace(/---/g, "-");
         tempPath = tempPath.replace(/--/g, "-");
         return tempPath;

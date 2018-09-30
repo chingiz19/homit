@@ -126,7 +126,7 @@ router.get('/:parent/:category', async function (req, res, next) {
 
 function clearProductUrl(path) {
     let tempPath = path;
-    tempPath = tempPath.replace(/[#&',.%/()]/g, "");
+    tempPath = tempPath.replace(/[#&',.%/()*]/g, "");
     tempPath = tempPath.replace(/---/g, "-");
     tempPath = tempPath.replace(/--/g, "-");
     return tempPath;

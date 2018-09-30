@@ -18,7 +18,7 @@ body {
 
 .fadeInStore {
     visibility: visible;
-    animation: fadein 1.2s ease, scale9_to_10 0.7s ease-in-out;
+    animation: fadein 2.1s ease;
 }
 
 .user-signed-btn ng-md-icon {
@@ -837,8 +837,10 @@ body {
         width: 300px;
 
         p {
-            font-size: 20px;
-            color: #8da6be;
+            font-size: 22px;
+            color: #62799b;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.2px;
         }
     }
 
@@ -1286,6 +1288,10 @@ body {
         }
     }
 
+    .img-object {
+        animation: icon-move-x 30000ms linear infinite;
+    }
+
     .store-li img {
         width: 150px;
         height: 150px;
@@ -1366,8 +1372,6 @@ body {
     .store-li img {
         width: 115px;
         height: 115px;
-        // width: calc((100vw - 3*2*15px)/3);
-        // height: calc((100vw - 3*2*15px)/3);
         box-shadow: 0 0px 6px 3px rgba(0, 0, 0, 0.15);
         user-select: none;
     }
@@ -1505,7 +1509,7 @@ body {
     }
 
     .img-object {
-        animation: icon-move-x 30000ms linear infinite;
+        animation: icon-move-x 60000ms linear infinite;
     }
 
     .LS-move {

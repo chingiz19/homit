@@ -6,8 +6,8 @@
  */
 
 /*** Adjust following constants as per your need ***/
-const COLLECTION_NAME = "forever-bee";
-const WORKBOOK_LOCATION = "./foreverbee.xlsx";
+const COLLECTION_NAME = "wash-and-co";
+const WORKBOOK_LOCATION = "./wash-and-co.xlsx";
 const IMAGE_EXTENSION = ".jpeg";
 const DEFAULT_COUNTRY_OF_ORIGIN = "Canada";
 const SAVE_JSON_TO_DIRECTORY = "./project_setup/resources/mongodb";
@@ -77,7 +77,7 @@ async function extractFromXLSX() {
 
         let mainIdCounter = 1;
 
-        for (let row = 2; row < expectedNumberOfProducts + 2; row++) {
+        for (let row = 2; row < expectedNumberOfProducts + 1; row++) {
             let selBrand = retrieveFromSheet("A", row, sheet);
             let selName = retrieveFromSheet("B", row, sheet);
             let container = retrieveFromSheet("F", row, sheet);
@@ -143,6 +143,7 @@ async function extractFromXLSX() {
             });
 
             mainIdCounter++;
+
         }
 
         return localArray;

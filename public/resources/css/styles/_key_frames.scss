@@ -14,9 +14,10 @@
 }
 
 @keyframes scale9_to_10 {
-    0%{
+    0% {
         transform: scale3d(0.95, 0.95, 1);
     }
+
     100% {
         transform: none;
     }
@@ -40,6 +41,7 @@
     0%, 100% {
         transform: translate(0px, 0px);
     }
+
     50% {
         transform: translate(0px, 46px);
     }
@@ -63,14 +65,15 @@
     }
 }
 
-
 @keyframes fadein-sign {
     0% {
         opacity: 0;
     }
-    70%{
+
+    70% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -80,88 +83,102 @@
     0% {
         opacity: 1;
     }
-    30%{
+
+    30% {
         opacity: 0;
     }
+
     100% {
         opacity: 0;
     }
 }
 
 @keyframes shrink-sign-msg {
-    0%   {
+    0% {
         height: 134px;
     }
+
     100% {
         height: 0;
     }
 }
 
 @keyframes grow-sign-msg {
-    0%   {
+    0% {
         height: 0;
     }
+
     100% {
         height: 134px;
     }
 }
 
-@keyframes move-in-sign-msg{
-    0%   {
+@keyframes move-in-sign-msg {
+    0% {
         bottom: -20vh;
     }
+
     100% {
         bottom: 0;
     }
 }
 
-@keyframes move-out-sign-msg{
-    0%   {
+@keyframes move-out-sign-msg {
+    0% {
         bottom: 0;
     }
+
     100% {
         bottom: -20vh;
     }
 }
 
-@keyframes moveUpDown{
+@keyframes moveUpDown {
     0%, 100% {
         bottom: 0;
     }
-    50%{
+
+    50% {
         bottom: 20px;
     }
 }
 
 @keyframes couponSeenNotification {
-    0%{
+    0% {
         background-color: rgb(194, 83, 83);
     }
-    50%{
+
+    50% {
         background-color: rgb(194, 105, 83);
     }
+
     100% {
         background-color: #89c72c;
     }
 }
 
 //Main page arrow-down
-@keyframes opacityArrow{
-    0%{
+@keyframes opacityArrow {
+    0% {
         opacity: 0.95;
     }
+
     30% {
         opacity: 0.9;
     }
+
     60% {
         opacity: 0.7;
     }
+
     80% {
         opacity: 0.5;
     }
+
     90% {
         opacity: 0.25;
     }
+
     100% {
         opacity: 0;
     }
@@ -171,6 +188,7 @@
     0% {
         transform: translate(0px, -35px);
     }
+
     100% {
         transform: translate(0px, 35px);
     }
@@ -180,16 +198,38 @@
     0% {
         transform: scale3d(0.4, 0.4, 1);
     }
+
     100% {
         transform: scale3d(0.9, 0.9, 1);
     }
 }
 
-@keyframes opacity-0{
+@keyframes opacity-0 {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 0;
-    }   
+    }
+}
+
+@media screen and (max-device-width: 479px) {
+    @keyframes icon-move-x {
+        0%, 100% {
+            transform: translateX(-150px);
+        }
+
+        25% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(150px);
+        }
+
+        75% {
+            transform: translateX(0);
+        }
+    }
 }
