@@ -55,6 +55,14 @@ app.service('localStorage', ["$window", function($window){
         return pub.get("cart_version");
     };
 
+    pub.setSchedulerVersion = function(value){
+        return pub.set("scheduler_version", value);
+    };
+
+    pub.getSchedulerVersion = function(){
+        return pub.get("scheduler_version");
+    };
+
     pub.setOrderDeliveryHrs = function(value){
         return pub.set("order_delivery_hrs", value);
     };

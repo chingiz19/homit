@@ -61,7 +61,9 @@ var homitSharedSessions = session({
 
 NM.setSharedSessionMiddleware(homitSharedSessions);
 
+
 var cart_version = 6;
+var scheduler_version = 1;
 
 /* make logs folder */
 if (!fs.existsSync('.logs')) {
@@ -104,6 +106,7 @@ webServer.use(csurf());
 webServer.use(function (req, res, next) {
 	res.cookie("csrf-token", req.csrfToken());
 	res.cookie("cart-version", cart_version, { httpOnly: false });
+	res.cookie("scheduler_version", scheduler_version, { httpOnly: false });
 	res.setHeader("Keep-Alive", "timeout: 60, max: 1000");
 	return next();
 })

@@ -321,6 +321,13 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
                 });
 
                 function init(store_info) {
+                    
+                    var scheduler_version = $cookies.get("scheduler_version");
+                    if(scheduler_version != localStorage.getSchedulerVersion()){
+                        localStorage.setOrderDeliveryHrs({});
+                        localStorage.setSchedulerVersion(scheduler_version);            
+                    }
+
                     scope.buttonStyle = "";
                     scope.storeOpen = store_info.open;
                     scope.storeInfo = store_info;
