@@ -543,7 +543,7 @@ function createDeliveryOptionsText(time) {
     if (time == 0) {
         return ASAP_WORDING + createTimeText(new Date());
     } else {
-        return SCHEDULED_WORDING + createTimeText(new Date(time), new Date(time + 15 * 60 * 1000)); //show 15 minute range for scheduled orders
+        return SCHEDULED_WORDING + createTimeText(new Date(time), new Date(time + SCHEDULER_INCREMENTS * 60 * 1000));
     }
 }
 

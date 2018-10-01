@@ -2,6 +2,12 @@
  * This directive is used to add scheduled order option
  */
 app.directive("scheduler", function (localStorage, $interval, $timeout, $http, helpers) {
+
+    let INCREMENTS = 30;            //default increments are in minutes 
+    const DISPLAY_DIVIDER = `:`;    //divider between time and hours for display 
+    const TODAY = "Today";          //display variable
+    const TOMORROW = "Tomorrow";    //display variable
+
     function buildSchedulerDates(data, startDate) {
         let localObject = {};
         let localArray = [];
@@ -18,22 +24,28 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
             previousDay += 7;
         }
 
-        let todaysObject = getTodaysObject(date, weekObject[today], weekObject[previousDay], startDate);
-        if (todaysObject) {
-            localArray.push(todaysObject);
+        if (startDate === 0) {
+            localArray.push(getTodaysObject(date, weekObject[today], weekObject[previousDay], startDate));
+        } else {
+            startDate -= 1;
         }
 
         do {
-            previousDay = weekDay;                //remember today as previous day
+            previousDay = weekDay;               //remember today as previous day
             weekDay++;                           //go to the next day
-            timeStamp += oneDayInMilliseconds;   // go to the next day
+            timeStamp += oneDayInMilliseconds;   //go to the next day
 
             if (weekDay > 7) {
                 weekDay -= 7;
             }
 
+            if (startDate > 0) {
+                startDate -= 1;
+                continue;
+            }
+
             localArray.push(getOrdinaryDayObject(
-                new Date(timeStamp), weekObject[weekDay], weekObject[previousDay])); //handle it for the rest of the week
+                new Date(timeStamp), weekObject[weekDay], (weekDay - today) == 1)); //handle it for the rest of the week
 
         } while (weekDay != today);
 
@@ -47,15 +59,9 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
         return localObject;
     }
 
-    function getTodaysObject(dateObject, dayObject, prevDayObject, startDate) {
-
-        if (startDate.includes("tomorrow")) {
-            return false;
-        }
-
+    function getTodaysObject(dateObject, dayObject, prevDayObject) {
         let localObject = {};
         let localArray = [];
-        let closeTime = 0;
         let currentTimeInMinutes = dateObject.getHours() * 60 + dateObject.getMinutes();
 
         if (prevDayObject.close > 24 * 60 && (currentTimeInMinutes + 24 * 60 + 60) < prevDayObject.close) {
@@ -63,19 +69,13 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
             localArray.push.apply(localArray, (buildHoursArray(dateObject, dayObject.open, 24 * 60)));
         }
 
-        if (dayObject.close > 24 * 60) {
-            closeTime = 24 * 60;
-        } else {
-            closeTime = dayObject.close;
-        }
-
         if (currentTimeInMinutes > dayObject.open) {
-            localArray.push.apply(localArray, (buildHoursArray(dateObject, purifySingleTime(currentTimeInMinutes + 60), closeTime)));
+            localArray.push.apply(localArray, (buildHoursArray(dateObject, purifySingleTime(currentTimeInMinutes + 60), dayObject.close)));
         } else {
-            localArray.push.apply(localArray, (buildHoursArray(dateObject, purifySingleTime(dayObject.open + 60), closeTime)));
+            localArray.push.apply(localArray, (buildHoursArray(dateObject, purifySingleTime(dayObject.open + 60), dayObject.close)));
         }
 
-        localObject.display_week_day = getStringWeekDay(dateObject.getDay());
+        localObject.display_week_day = TODAY;
         localObject.display_month_day = dateObject.getDate();
         localObject.display_month_name = helpers.getMonthString(dateObject.getMonth());
         localObject.hours_array = localArray;
@@ -87,26 +87,19 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
         return localObject;
     }
 
-    function getOrdinaryDayObject(dateObject, dayObject, prevDayObject) {
+    function getOrdinaryDayObject(dateObject, dayObject, dayAfterToday) {
         let localObject = {};
         let localArray = [];
-        let dayCloseTime;
 
-        if (dayObject.close > 24 * 60) {
-            dayCloseTime = 24 * 60;
+        if (dayAfterToday) {
+            localObject.display_week_day = TOMORROW;
         } else {
-            dayCloseTime = dayObject.close;
+            localObject.display_week_day = getStringWeekDay(dateObject.getDay());
         }
 
-        localObject.display_week_day = getStringWeekDay(dateObject.getDay());
         localObject.display_month_day = dateObject.getDate();
         localObject.display_month_name = helpers.getMonthString(dateObject.getMonth());
-
-        if (prevDayObject.close > 24 * 60) {
-            localArray.push.apply(localArray, (buildHoursArray(dateObject, 0, (prevDayObject.close - 24 * 60))));  //from midnight to closure
-        }
-
-        localArray.push.apply(localArray, (buildHoursArray(dateObject, (dayObject.open + 60), dayCloseTime)));
+        localArray.push.apply(localArray, (buildHoursArray(dateObject, (dayObject.open + 60), dayObject.close)));
         localObject.hours_array = localArray;
 
         return localObject;
@@ -126,14 +119,14 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
     }
 
     function purifySingleTime(data) {
-        return (parseInt(data / 15) + Math.round((data % 15) / 15)) * 15;
+        return (parseInt(data / INCREMENTS) + Math.round((data % INCREMENTS) / INCREMENTS)) * INCREMENTS;
     }
 
     function allMinutes(dataString) {
-        let splitArray = dataString.split(":");
+        let splitArray = dataString.split(DISPLAY_DIVIDER);
         let minutesFromHour = parseInt(splitArray[0]) * 60;
-        let minutes = ((parseInt(splitArray[1]) / 15) +
-            Math.round((parseInt(splitArray[1]) % 15) / 15)) * 15;
+        let minutes = ((parseInt(splitArray[1]) / INCREMENTS) +
+            Math.round((parseInt(splitArray[1]) % INCREMENTS) / INCREMENTS)) * INCREMENTS;
 
         return minutesFromHour + minutes;
     }
@@ -145,7 +138,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
         let day = date.getDate();
         let hours = parseInt(start / 60);
         let minutes = start % 60;
-        let startWithDiff = start + 15;
+        let startWithDiff = start + INCREMENTS;
         let timeStamp = new Date(year, month, day, hours, minutes).getTime();
 
         while (startWithDiff <= end) {
@@ -154,9 +147,9 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
             localObject.value = timeStamp;
             localArray.push(localObject);
 
-            start += 15;
-            startWithDiff += 15;
-            timeStamp += 15 * 60 * 1000; //add 15 minutes to timestamp each iteration
+            start += INCREMENTS;
+            startWithDiff += INCREMENTS;
+            timeStamp += INCREMENTS * 60 * 1000; //add increments to timestamp each iteration
         }
 
         return localArray;
@@ -172,47 +165,26 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
         let mins2 = time2 % 60;
 
         if (mins1 === 0) {
-            mins1 = "00";
-            string = string + hours1.value + ":" + mins1 + hours1.tag;
+            string = string + hours1.value + hours1.tag;
         } else {
-            string = string + hours1.value + ":" + mins1 + hours1.tag;
+            string = string + hours1.value + DISPLAY_DIVIDER + mins1 + hours1.tag;
         }
 
         string = string + " - ";
 
         if (mins2 === 0) {
-            mins2 = "00";
-            string = string + hours2.value + ":" + mins2 + hours2.tag;
+            string = string + hours2.value + hours2.tag;
         } else {
-            string = string + hours2.value + ":" + mins2 + hours2.tag;
+            string = string + hours2.value + DISPLAY_DIVIDER + mins2 + hours2.tag;
         }
         return string;
     }
 
     function getHourObject(time) {
-        let localObject = {};
-        localObject.value = parseInt(time / 60);
-
-        if (localObject.value >= 12 && localObject.value != 24) {
-
-            localObject.tag = "pm";
-
-            if (localObject.value != 12) {
-                localObject.value -= 12;
-            }
-        } else {
-
-            if (localObject.value === 24) {
-                localObject.value = "00";
-                localObject.tag = "am";
-            } else {
-                localObject.tag = "am";
-            }
-
-        }
-        localObject.value = ("0" + localObject.value).slice(-2);
-
-        return localObject;
+        return {
+            tag: (parseInt(time / 720) % 2 == 0) ? "am" : "pm",
+            value: parseInt(time / 60) % 12 === 0 ? "00" : parseInt(time / 60) % 12
+        };
     }
 
     function getOpenCloseHours(data) {
@@ -228,8 +200,8 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
             let openDate = new Date(nextAvailableDay.openTime);
             let closeDate = new Date(nextAvailableDay.closeTime - 30 * 60 * 1000);
 
-            localObject.open = ("0" + openDate.getHours()).slice(-2) + ":" + ("0" + openDate.getMinutes()).slice(-2) + ", " + helpers.getMonthString(openDate.getMonth()) + " " + openDate.getDate();
-            localObject.close = "Until: " + closeDate.getHours() + ":" + closeDate.getMinutes();
+            localObject.open = ("0" + openDate.getHours()).slice(-2) + DISPLAY_DIVIDER + ("0" + openDate.getMinutes()).slice(-2) + ", " + helpers.getMonthString(openDate.getMonth()) + " " + openDate.getDate();
+            localObject.close = "Until: " + closeDate.getHours() + DISPLAY_DIVIDER + closeDate.getMinutes();
         }
         return localObject;
     }
@@ -252,7 +224,7 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
                     closeTime: inArray[i].hours_array[inArray[i].hours_array.length - 1].value,
                     day: inArray[i].display_month_day,
                     month: inArray[i].display_month_name
-                }
+                };
             } else {
                 i = (i + 1) % 7;
             }
@@ -335,7 +307,8 @@ app.directive("scheduler", function (localStorage, $interval, $timeout, $http, h
                     scope.storeName = store_info.display_name;
                     scope.delFee = formatDelFeeText(store_info.del_fee, "FREE delivery");
                     scope.storeImage = "/resources/images/catalog-stores/logo/" + store_info.image;
-                    scope.dates = buildSchedulerDates(scope.storeInfo.hours_scheduled, "start from tomorrow"); // options 'start from tomorrow/today'
+                    scope.dates = buildSchedulerDates(scope.storeInfo.hours_scheduled, store_info.scheduler_cycle);
+                    INCREMENTS = store_info.scheduler_incerements;
                     scope.deliveryOption = "ASAP Delivery";
                     let delivery_hrs = localStorage.getOrderDeliveryHrs();
 

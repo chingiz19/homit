@@ -74,7 +74,9 @@ router.use('/getstoreinfo', async function (req, res, next) {
             image: storeTypeInfo.image,
             hours: hours,
             hours_scheduled: hoursScheduled,
-            del_fee: storeTypeInfo.del_fee_primary
+            del_fee: storeTypeInfo.del_fee_primary,
+            scheduler_cycle: storeTypeInfo.notice_period,
+            scheduler_incerements : SCHEDULER_INCREMENTS
         };
         store_infos.push(storeInfo);
     }
@@ -135,7 +137,7 @@ router.post('/similarproducts', async function (req, res) {
     let productId = req.body.product_id;
 
     if (limit && !isNaN(limit)) {
-        let products = await Catalog.getSimilarProducts(limit, productId);  
+        let products = await Catalog.getSimilarProducts(limit, productId);
         if (products && products.length > 0) {
             return res.send({
                 success: true,
@@ -193,9 +195,7 @@ router.post('/search', async function (req, res, next) {
             });
         }
     } else {
-        res.send({
-            success: false
-        });
+        res.send({ success: false });
     }
 });
 

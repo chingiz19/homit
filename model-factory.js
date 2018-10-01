@@ -37,6 +37,7 @@ class modelFactory {
         global.BatchUploader=   require("./models/batch_product_uploader");
 
         global.ROOT_PATH = __dirname;
+        global.SCHEDULER_INCREMENTS = 30; //minutes
 
         if (process.env.n_mode == "production"){
             global.machineHostname = "https://www.homit.ca";

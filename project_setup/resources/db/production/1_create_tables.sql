@@ -13,6 +13,7 @@ CREATE TABLE catalog_store_types (
 	union_id INT UNSIGNED, 
 	del_fee_primary DOUBLE DEFAULT 4.99,
 	rate_id INT UNSIGNED,
+	notice_period INT UNSIGNED NOT NULL DEFAULT 0,
 	
 	PRIMARY KEY (id),
 	UNIQUE(name),
