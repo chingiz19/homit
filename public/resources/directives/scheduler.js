@@ -1,7 +1,7 @@
 /**
  * This directive is used to add scheduled order option
  */
-app.directive("scheduler", function (localStorage, $interval, $timeout, $http, helpers) {
+app.directive("scheduler", function (localStorage, $interval, $cookies, $timeout, $http, helpers) {
 
     let INCREMENTS = 30;            //default increments are in minutes 
     const DISPLAY_DIVIDER = `:`;    //divider between time and hours for display 
