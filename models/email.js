@@ -360,7 +360,7 @@ function getAccountVerificationEmailHtml(name, link) {
 function getSurveyCompletionEmailHtml(name, code, giftAmount, inStoreName) {
     let file = fs.readFileSync(path.join(process.cwd(), "/project_setup/resources/email_htmls/surveyCompletion.ejs"), "utf8");
     return ejs.render(file, {
-        userName: filterInputField(', ' + name, ""),
+        userName: filterInputField(', ' + (name || "dear customer"), ""),
         code: filterInputField(code, "UNAVAILABLE, contact us"),
         amount: filterInputField(giftAmount, "UNAVAILABLE, contact us"),
         storeName: filterInputField(inStoreName, "UNAVAILABLE, contact us")
