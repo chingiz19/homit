@@ -530,7 +530,7 @@ async function getTotalPriceForProducts(price) {
     priceObject.totalTax = "C$ " + parseFloat(Math.round(price.total_tax * 100) / 100).toFixed(2);
     priceObject.totalAmount = "C$ " + parseFloat(Math.round(price.cart_amount * 100) / 100).toFixed(2);
     priceObject.totalPrice = "C$ " + parseFloat(Math.round(price.total_price * 100) / 100).toFixed(2);
-    priceObject.savedAmount = "C$ -" + parseFloat(Math.min(Math.round(price.total_coupon_off * 100) / 100), originalTotalPrice).toFixed(2);
+    priceObject.savedAmount = "C$ -" + parseFloat(Math.min(Math.round((price.total_coupon_off * 100) / 100), originalTotalPrice)).toFixed(2);
     priceObject.couponsUsed = price.coupons_used;
 
     return priceObject;

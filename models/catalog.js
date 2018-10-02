@@ -394,7 +394,7 @@ pub.calculatePrice = async function (inObject, couponDetails) {
         let tmpCouponOff = 0;
         let tmpDelivery = 0;
         let unionName = products[storeType].union_name;
-        let tmpCouponId = 0;
+        let tmpCouponId;
         let tmpCouponMessage = undefined;
 
         if (!unionNames.includes(unionName)) {
@@ -433,7 +433,7 @@ pub.calculatePrice = async function (inObject, couponDetails) {
 
             if (tmpCoupon.off > 0) {
                 tmpCouponOff += tmpCoupon.off;
-                tmpCouponId += tmpCoupon.coupon_id;
+                tmpCouponId = tmpCoupon.coupon_id;
                 tmpCouponMessage = tmpCoupon.message;
                 couponsUsed.push(tmpCoupon);
             }

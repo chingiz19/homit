@@ -250,7 +250,7 @@ pub.invalidatePrivateGuestCoupon = async function (couponId) {
         WHERE ?;
     `;
     let data = { id: couponId };
-    db.runQuery(sqlQuery, data);
+    await db.runQuery(sqlQuery, data);
     return true;
 }
 
@@ -415,6 +415,8 @@ async function canApplyCoupon(couponCode, userId) {
         ?
     AND 
         users.applied
+    AND 
+        users.trials_limit
     AND 
 	    coupons.date_expiry>now();
 `;

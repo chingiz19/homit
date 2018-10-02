@@ -237,9 +237,9 @@ async function postCharge(chargeResult, res, birth_year, birth_month, birth_day,
 
     for (let i = 0; i < couponsUsed.length; i++) {
         if (couponsUsed[i].privacy_type == Coupon.privacy_types.private && !userObject.isGuest) {
-            Coupon.decrementUserCoupon(couponsUsed[i].coupon_id, userId);
+            await Coupon.decrementUserCoupon(couponsUsed[i].coupon_id, userId);
         } else if (couponsUsed[i].privacy_type == Coupon.privacy_types.private_guest) {
-            Coupon.invalidatePrivateGuestCoupon(couponsUsed[i].coupon_id);
+           await Coupon.invalidatePrivateGuestCoupon(couponsUsed[i].coupon_id);
         }
     }
 
