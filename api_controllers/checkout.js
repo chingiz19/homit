@@ -172,24 +172,21 @@ router.post('/check', async function (req, res) {
  * Checks if customer is signed in and if coupon is valid 
  */
 router.post('/applykeyedcoupon', async function (req, res) {
-    let allValidParams = {
-        "code": {}
-    };
-
-    req.body = HelperUtils.validateParams(req.body, allValidParams);
+    req.body = HelperUtils.validateParams(req.body, { "code": {}, "products": {} });
 
     if (!req.body) {
         return ErrorMessages.sendErrorResponse(res, ErrorMessages.UIMessageJar.MISSING_PARAMS);
     }
 
     let signedUser = await Auth.getSignedUser(req);
-    let isCouponOk = await Coupon.applyKeyedCoupon(req.body.code, signedUser.id)
+    let isCouponOk = await Coupon.applyKeyedCoupon(req.body.code, req.body.products, signedUser.id)
 
     return res.send({
         "success": true,
         "is_signed_in": signedUser && true,
         "is_coupon_applied": isCouponOk.isApplied,
         "is_coupon_ok": isCouponOk.isOk,
+        "message": isCouponOk.message,
         "assigned_by": isCouponOk.assignedBy,
         "can_be_applied": isCouponOk.canBeApplied
     });
@@ -239,7 +236,7 @@ async function postCharge(chargeResult, res, birth_year, birth_month, birth_day,
         if (couponsUsed[i].privacy_type == Coupon.privacy_types.private && !userObject.isGuest) {
             await Coupon.decrementUserCoupon(couponsUsed[i].coupon_id, userId);
         } else if (couponsUsed[i].privacy_type == Coupon.privacy_types.private_guest) {
-           await Coupon.invalidatePrivateGuestCoupon(couponsUsed[i].coupon_id);
+            await Coupon.invalidatePrivateGuestCoupon(couponsUsed[i].coupon_id);
         }
     }
 

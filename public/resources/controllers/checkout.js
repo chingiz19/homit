@@ -197,10 +197,7 @@ app.controller("checkoutController",
                     }
                 }).then(function successCallback(response) {
                     if (!response.data.success) {
-                        $scope.paymentMessage_1 = "We are sorry, ";
-                        $scope.paymentMessage_2 = response.data.ui_message;
-                        updateCheckoutModal("10");
-                        return;
+                        return updateCheckoutModal("warning", true, "We are sorry", (response.data.ui_message || "Something went wrong while processing your order, please contact us at info@homit.ca"));
                     }
 
                     if ($scope.receipt === 0) {
@@ -225,10 +222,7 @@ app.controller("checkoutController",
                 }, function errorCallback(error) {
                     // for 4xx, 5xx response calls
                     if (error) {
-                        $scope.paymentMessage_1 = "We are sorry, ";
-                        $scope.paymentMessage_2 = ("Something went wrong while processing your order, please contact us at info@homit.ca");
-                        updateCheckoutModal("10");
-                        return;
+                        return updateCheckoutModal("warning", true, "We are sorry", "Something went wrong while processing your order, please contact us at info@homit.ca");
                     }
                 });
             }
@@ -309,29 +303,20 @@ app.controller("checkoutController",
                 }
             }).then(function successCallback(response) {
                 if (!response.data.success) {
-                    $scope.paymentMessage_1 = "We are sorry, ";
-                    $scope.paymentMessage_2 = response.data.ui_message;
-                    updateCheckoutModal("10");
-                    return;
+                    return updateCheckoutModal("warning", true, "We are sorry", (response.data.ui_message || "Something went wrong while processing your order, please contact us at info@homit.ca"));
                 }
 
                 localStorage.clearAfterCheckout();
                 sessionStorage.clearAfterCheckout();
                 updateCheckoutBtn("Thank You!", "none");
+                updateCheckoutModal("success", true, "Thank You", "Homit will take care!", "ASAP orders will be delivered in 30 - 45 mins");
 
-                $scope.paymentMessage_1 = "Thank You, ";
-                $scope.paymentMessage_2 = "Homit will take care!";
-                $scope.paymentMessage_3 = "ASAP orders will be delivered in 30 - 45 mins";
-                updateCheckoutModal("1");
 
             }, function errorCallback(error) {
                 // for 4xx, 5xx response calls
                 if (error) {
                     updateCheckoutBtn("Secure Payment", "none");
-                    $scope.paymentMessage_1 = "We are sorry, ";
-                    $scope.paymentMessage_2 = "Something went wrong while processing your order, please contact us at info@homit.ca";
-                    updateCheckoutModal("10");
-                    return;
+                    return updateCheckoutModal("warning", true, "We are sorry", "Something went wrong while processing your order, please contact us at info@homit.ca");
                 }
             });
         };
@@ -341,12 +326,16 @@ app.controller("checkoutController",
             $('#checkoutModal').modal('show');
         }
 
-        function updateCheckoutModal(type) {
-            $scope.paymentResult = type;
+        function updateCheckoutModal(type, displayUserName, primaryMessage, secondaryMessage, tertiaryMessage) {
+            $scope.modalType = type;
+            $scope.primaryMessage = (primaryMessage || "") + (displayUserName ? (", " + $scope.userInfo.first_name) : "");
+            $scope.secondaryMessage = secondaryMessage || "";
+            $scope.tertiaryMessage = tertiaryMessage || "";
+
             $('#checkoutModal').modal();
-            if (type == "10") {
-                sessionStorage.setCheckoutUserInfo($scope.userInfo);
-            }
+
+            if (type === "warning") { sessionStorage.setCheckoutUserInfo($scope.userInfo); }
+
             setTimeout(function () {
                 $scope.$apply();
             }, 100);
@@ -394,7 +383,7 @@ app.controller("checkoutController",
                 $http({
                     method: 'POST',
                     url: '/api/checkout/applykeyedcoupon',
-                    data: { "code": code }
+                    data: { "code": code, "products": cartService.parseCartToSend($scope.cart.getCart()) }
                 }).then(function successCallback(response) {
                     if (response.data.success) {
                         let isCouponApplied = response.data.is_coupon_applied;
@@ -402,17 +391,19 @@ app.controller("checkoutController",
                         let assignedBy = response.data.assigned_by;
                         let canBeApplied = response.data.can_be_applied;
                         let userSignedIn = response.data.is_signed_in;
+                        let serverMessage = response.data.message;
 
                         if (!isCouponOk) {
-                            notification.addErrorMessage("Coupon is not valid");
-                            return;
-                        } else if (userSignedIn) {
+                            return updateCheckoutModal("warning", false, "We are sorry to say", (serverMessage || "Coupon is not valid or expired"));
+                        }
+
+                        if (userSignedIn) {
                             if (isCouponApplied) {
                                 notification.addSuccessMessage("Coupon has been successfully applied!");
                                 $scope.couponCode = "";
                                 $scope.updatePrices();
                             } else {
-                                notification.addErrorMessage("Already applied.");
+                                return notification.addErrorMessage("Already applied. Check MyAccount");
                             }
                         } else if (canBeApplied) {
                             let userCoupons = localStorage.getUserCoupons();
@@ -423,10 +414,10 @@ app.controller("checkoutController",
                                 $scope.updatePrices();
                             }
                         } else {
-                            notification.addErrorMessage("Coupon already acquired, check My Account");
+                            return notification.addErrorMessage("Coupon already acquired, check My Account");
                         }
                     } else {
-                        notification.addErrorMessage("Error while applying coupon");
+                        return notification.addErrorMessage("Error while applying coupon");
                     }
                 }, function errorCallback(error) {
                     alert("Error, check your internet and refresh your page");
@@ -475,7 +466,7 @@ app.controller("checkoutController",
         $scope.onCartLoad = function () {
             let storeKeys = Object.keys($scope.cart.getCart());
             for (let i = 0; i < storeKeys.length; i++) {
-                if (!_.some($scope.stores, {"type": storeKeys[i]})){
+                if (!_.some($scope.stores, { "type": storeKeys[i] })) {
                     $scope.stores.push({
                         type: storeKeys[i]
                     });
@@ -510,7 +501,7 @@ app.controller("checkoutController",
         };
 
         $scope.clearPage = function () {
-            if ($scope.paymentResult == "1") {
+            if ($scope.modalType == "success") {
                 $scope.userInfo = {};
                 $scope.cart.clear();
                 sessionStorage.setAddress("");

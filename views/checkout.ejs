@@ -2,9 +2,9 @@
 
 <head ng-cloak>
     <%- include('partial/imports')%>
-        <%- include('partial/header', {title: title}); %>
-            <link href="/resources/css/checkout.css" rel="stylesheet">
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
+    <%- include('partial/header', {title: title}); %>
+    <link href="/resources/css/checkout.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
 </head>
 <!--googleoff: snippet-->
 
@@ -77,8 +77,9 @@
                         <div class="name-lname-input ui-input">
                             <md-input-container class="md-block no-mar-bottom">
                                 <label></label>
-                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.first_name" placeholder="First name"
-                                    type="text" autocorrect="off" required />
+                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn"
+                                    ng-model="userInfo.first_name" placeholder="First name" type="text" autocorrect="off"
+                                    required />
                                 <div ng-messages="checkoutInput.fname.$error">
                                     <div ng-message="pattern" class="error-message-txt error-text">Letters only</div>
                                     <div ng-message="required" class="error-message-txt error-text">Required</div>
@@ -86,8 +87,9 @@
                             </md-input-container>
                             <md-input-container class="md-block no-mar-bottom">
                                 <label></label>
-                                <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.last_name" placeholder="Last name"
-                                    type="text" autocorrect="off" required/>
+                                <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn"
+                                    ng-model="userInfo.last_name" placeholder="Last name" type="text" autocorrect="off"
+                                    required />
                                 <div ng-messages="checkoutInput.lname.$error">
                                     <div ng-message="pattern" class="error-message-txt error-text">Letters only</div>
                                     <div ng-message="required" class="error-message-txt error-text">Required</div>
@@ -98,8 +100,8 @@
                             <label></label>
                             <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion)">Maybe
                                 <span>{{suggestion}}</span>?</div>
-                            <input id="email-input-co" name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn" ng-model="userInfo.user_email"
-                                placeholder="Email" type="email" required/>
+                            <input id="email-input-co" name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn"
+                                ng-model="userInfo.user_email" placeholder="Email" type="email" required />
                             <div ng-messages="checkoutInput.email.$error">
                                 <div ng-message="pattern" class="error-message-txt error-text">Email format only</div>
                                 <div ng-message="required" class="error-message-txt error-text">Required</div>
@@ -107,8 +109,8 @@
                         </md-input-container>
                         <md-input-container class="md-block no-mar-bottom ui-input">
                             <label></label>
-                            <input id="gP_number" name="phone" minlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" placeholder="Phone"
-                                required/>
+                            <input id="gP_number" name="phone" minlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number"
+                                placeholder="Phone" required />
                             <div ng-messages="checkoutInput.phone.$error">
                                 <div ng-message="pattern" class="error-message-txt error-text">Numbers only</div>
                                 <div ng-message="minlength" class="error-message-txt error-text">Phone format only</div>
@@ -119,18 +121,20 @@
                     <div class="customer-info-p2">
                         <md-input-container id="address" class="md-block no-mar-bottom ui-input">
                             <label></label>
-                            <address-autocomplete style="width: 300px;" input-class="address-input-checkout" icon-class="address-clear-icon" button-class="address-clear-btn"
-                                autocomplete="autocomplete" on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
+                            <address-autocomplete style="width: 300px;" input-class="address-input-checkout" icon-class="address-clear-icon"
+                                button-class="address-clear-btn" autocomplete="autocomplete" on-address-selected="gotAddressResults"
+                                autocomplete-bounds="bounds"></address-autocomplete>
                             <div ng-messages="checkoutInput.address.$error">
                                 <div ng-message="required" class="error-message-txt error-text">Required</div>
                             </div>
-                            <div ng-if="userInfo.withinCoverage == false" class="error-message-txt error-text">Sorry, we
+                            <div ng-if="userInfo.withinCoverage == false" class="error-message-txt error-text">Sorry,
+                                we
                                 do not deliver to your location at the moment</div>
                         </md-input-container>
                         <md-input-container class="md-block no-mar-bottom ui-input">
                             <label></label>
-                            <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="userInfo.drInstruction"
-                                placeholder="Driver Instruction" type="text" />
+                            <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/"
+                                ng-model="userInfo.drInstruction" placeholder="Driver Instruction" type="text" />
                             <div ng-messages="checkoutInput.drInstruction.$error">
                                 <div ng-message="pattern" class="error-message-txt error-text">Number and letter only</div>
                                 <div ng-message="maxlength" class="error-message-txt error-text">Maximum 60 characters</div>
@@ -146,10 +150,11 @@
                                 <div class="do-txt-box">
                                     <div class="line-1">
                                         <div class="sch-store-name">{{store.name}}</div>
-                                        <scheduler store-type="store.type" delivery-date="deliveryDate" store-name="store.name" store-open="storeOpen" store-img="store.img"
-                                            delivery-option="store.option"></scheduler>
+                                        <scheduler store-type="store.type" delivery-date="deliveryDate" store-name="store.name"
+                                            store-open="storeOpen" store-img="store.img" delivery-option="store.option"></scheduler>
                                     </div>
-                                    <div ng-show="store.option == 'Scheduled Delivery'" class="store-hrs-txt">{{ deliveryDate.month
+                                    <div ng-show="store.option == 'Scheduled Delivery'" class="store-hrs-txt">{{
+                                        deliveryDate.month
                                         + " " + deliveryDate.day + ", " + deliveryDate.time}}</div>
                                     <div ng-show="store.option == 'ASAP Delivery' && storeOpen == false" class="store-clsd-txt">Store
                                         Closed</div>
@@ -161,8 +166,8 @@
                     <section class="coupon-section">
                         <md-input-container class="md-block no-mar-bottom ui-input coupon-conteiner">
                             <label></label>
-                            <input id="driverInstruction" name="drInstruction" maxlength="30" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="couponCode" placeholder="Enter code here.."
-                                type="text" />
+                            <input id="driverInstruction" name="drInstruction" maxlength="30" ng-pattern="/^[a-zA-Z0-9 -]*$/"
+                                ng-model="couponCode" placeholder="Enter code here.." type="text" />
                             <div ng-messages="checkoutInput.drInstruction.$error">
                                 <div ng-message="pattern" class="error-message-txt error-text">Number and letter only</div>
                                 <div ng-message="maxlength" class="error-message-txt error-text">Maximum 30 characters</div>
@@ -175,7 +180,8 @@
                     <div class="customer-info-p3" style="align-items: flex-start;" ng-show="userSignedIn && userInfo.card">
                         <div class="seperation-line">&nbsp;Payment Options&nbsp;</div>
                         <div style="display: flex; flex-direction: column;">
-                            <label class="hmt-radio-container">{{ userInfo.card.type + " " + "**** **** **** " + userInfo.card.last4
+                            <label class="hmt-radio-container">{{ userInfo.card.type + " " + "**** **** **** " +
+                                userInfo.card.last4
                                 + " (" + userInfo.card.exp + ")"}}
                                 <input type="radio" ng-model="useDefaultCard" ng-value="true" ng-checked="useDefaultCard == true" />
                                 <div class="control_indicator"></div>
@@ -199,36 +205,36 @@
                 <div class="modal-content">
                     <div class="modal-body" id="modalBody">
                         <div class="flex-column">
-                            <div id="inProcess" ng-if="paymentResult == 'inProcess' ">
+                            <div id="inProcess" ng-if="modalType == 'inProcess' ">
                                 <div class="flex-center-row modal-header-ln1">
                                     <span class="modal-txt">Placing order...</span>
                                 </div>
                                 <div class="flex-center-row modal-header-ln2">
-                                    <md-progress-circular md-colors="{color: 'primary'}" md-diameter="76" ng-disabled="paymentResult != 'inProcess' "></md-progress-circular>
+                                    <md-progress-circular md-colors="{color: 'primary'}" md-diameter="76" ng-disabled="modalType != 'inProcess' "></md-progress-circular>
                                 </div>
                             </div>
-                            <div id="paymentResult" ng-if="!(paymentResult == 'inProcess')">
+                            <div id="paymentResult" ng-if="modalType != 'inProcess'">
                                 <div class="flex-center-row modal-content-sign">
                                     <button class="modal-cls-btn" ng-click="clearPage()">
                                         <ng-md-icon icon="close"></ng-md-icon>
                                     </button>
-                                    <div class="success-btn" ng-if="paymentResult == '1'" ng-click="clearPage()">
+                                    <div class="success-btn" ng-if="modalType == 'success'" ng-click="clearPage()">
                                         <svg class="sign-checkmark-svg" viewBox="0 0 80 80">
                                             <circle class="sign-checkmark-circle" cx="40" cy="40" r="39px" />
                                             <polyline class="sign-checkmark-line" points="16, 43 32, 63 65, 20" />
                                         </svg>
                                     </div>
-                                    <ng-md-icon class="result-icon result-10" ng-if="paymentResult == '10'" icon="warning" size="85"></ng-md-icon>
+                                    <ng-md-icon class="result-icon result-10" ng-if="modalType == 'warning'" icon="warning"
+                                        size="85"></ng-md-icon>
                                 </div>
                                 <div class="flex-column result-msg-ln1">
-                                    <span class="modal-txt result-msg-ln1-name">{{ paymentMessage_1 + " " + userInfo.first_name
-                                        }}</span>
+                                    <span class="modal-txt result-msg-ln1-name">{{primaryMessage}}</span>
                                 </div>
                                 <div class="result-msg-ln2">
-                                    <span class="modal-txt box-center" ng-bind-html="paymentMessage_2"></span>
+                                    <span class="modal-txt box-center">{{secondaryMessage}}</span>
                                 </div>
                                 <div class="result-msg-ln3">
-                                    <span class="modal-txt del-time-msg" ng-bind-html="paymentMessage_3"></span>
+                                    <span class="modal-txt del-time-msg">{{tertiaryMessage}}</span>
                                 </div>
                             </div>
                         </div>
@@ -237,16 +243,16 @@
             </div>
         </div>
         <% if (!production) { %>
-            <script src="/resources/services/localStorage.js"></script>
-            <script src="/resources/services/cartService.js"></script>
-            <script src="/resources/services/mapServices.js"></script>
-            <script src="/resources/services/date.js"></script>
-            <script src="/resources/services/userAction.js"></script>
-            <script src="/resources/directives/addressAutocomplete.js"></script>
-            <script src="/resources/directives/scheduler.js"></script>
-            <script src="/resources/directives/cart.js"></script>
-            <script src="/resources/controllers/checkout.js"></script>
-            <% } %>
+        <script src="/resources/services/localStorage.js"></script>
+        <script src="/resources/services/cartService.js"></script>
+        <script src="/resources/services/mapServices.js"></script>
+        <script src="/resources/services/date.js"></script>
+        <script src="/resources/services/userAction.js"></script>
+        <script src="/resources/directives/addressAutocomplete.js"></script>
+        <script src="/resources/directives/scheduler.js"></script>
+        <script src="/resources/directives/cart.js"></script>
+        <script src="/resources/controllers/checkout.js"></script>
+        <% } %>
     </div>
 </body>
 <!--googleon: snippet-->

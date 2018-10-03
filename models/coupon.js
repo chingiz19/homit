@@ -18,43 +18,53 @@ pub.CODES = { DEFAULT_SIGNUP: "signup706" };
 /**
  * Checks if coupon not expired and not public
  */
-pub.applyKeyedCoupon = async function (code, userId) {
+pub.applyKeyedCoupon = async function (code, products, userId) {
     let applied = false;
     let canBeApplied = true;
+    let isItUnion = false;
     let coupon = await getCouponByCode(code);
     let isOk = coupon && coupon.privacy_type != this.privacy_types.private && !coupon.visible;
-    let couponAssignedBy;
+    let couponAssignedBy, couponAssignedByDisplayName, message;
 
     if (coupon.store_type_id) {
         let storeTypeInfo = await Catalog.getStoreTypeInfoById(coupon.store_type_id);
         if (storeTypeInfo) {
             couponAssignedBy = storeTypeInfo.name;
+            couponAssignedByDisplayName = storeTypeInfo.display_name;
         }
     } else if (coupon.union_id) {
         let unionInfo = await Catalog.getUnionInfoById(coupon.union_id);
         if (unionInfo) {
             couponAssignedBy = unionInfo.name;
+            couponAssignedByDisplayName = unionInfo.display_name;
+            isItUnion = true;
         }
     }
 
-    if (userId && isOk) {
-        canBeApplied = await canApplyCoupon(code, userId);
-        let userCoupon = await db.selectAllWhere2(db.tables.user_coupons, [{ "user_id": userId }, { "coupon_id": coupon.id }]);
-        let updateResult = false;
+    if (checkStoreAndProducts(products, await getCouponStores(code))) {
+        if (userId && isOk) {
+            canBeApplied = await canApplyCoupon(code, userId);
+            let userCoupon = await db.selectAllWhere2(db.tables.user_coupons, [{ "user_id": userId }, { "coupon_id": coupon.id }]);
+            let updateResult = false;
 
-        if (canBeApplied && userCoupon && userCoupon.length > 0) {
-            updateResult = await db.runQuery('UPDATE ' + db.tables.user_coupons + ' SET trials_limit = 1, applied = true WHERE ? AND ?', [{ "user_id": userId }, { "coupon_id": coupon.id }]);
-        } else if (canBeApplied) {
-            updateResult = await db.insertQuery(db.tables.user_coupons, { "trials_limit": 1, "user_id": userId, "coupon_id": coupon.id, "applied": true });
+            if (canBeApplied && userCoupon && userCoupon.length > 0) {
+                updateResult = await db.runQuery('UPDATE ' + db.tables.user_coupons + ' SET trials_limit = 1, applied = true WHERE ? AND ?', [{ "user_id": userId }, { "coupon_id": coupon.id }]);
+            } else if (canBeApplied) {
+                updateResult = await db.insertQuery(db.tables.user_coupons, { "trials_limit": 1, "user_id": userId, "coupon_id": coupon.id, "applied": true });
+            }
+
+            applied = (updateResult && updateResult.affectedRows > 0);
         }
-
-        applied = (updateResult && updateResult.affectedRows > 0);
+    } else if (isOk) {
+        message = `This coupon applies to "${couponAssignedByDisplayName}" ` + "" + (isItUnion ? "stores" : "store");
+        isOk = false;
     }
 
     return {
         "isApplied": applied,
         "canBeApplied": canBeApplied,
         "isOk": isOk,
+        "message": message,
         "assignedBy": couponAssignedBy
     }
 }
@@ -364,14 +374,52 @@ pub.getStoreCoupons = async function (storeType) {
  */
 async function doesUserHaveCoupon(coupon, userId) {
     if (coupon) {
-        let data1 = { "coupon_id": coupon.id };
-        let data2 = { "user_id": userId };
-
-        let result = await db.selectAllWhere2(db.tables.user_coupons, [data1, data2]);
-
+        let result = await db.selectAllWhere2(db.tables.user_coupons, [{ "coupon_id": coupon.id }, { "user_id": userId }]);
         return (result.length > 0);
     }
     return true;
+}
+
+/**
+ * Checks if coupon would apply to given products  
+ * @param {*} products  array of product ids
+ * @param {*} stores  array of store ids
+ */
+function checkStoreAndProducts(products, stores) {
+    for (let store in stores) {
+        for (let product in products) {
+            let productStoreId = product.split("-")[0];
+            if (stores[store].id === parseInt(productStoreId)) { return true };
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Retrieves stores related to this coupon 
+ * @param {*} couponCode  coupon code (e.g. signup706)
+ */
+async function getCouponStores(couponCode) {
+    let coupon = await getCouponByCode(couponCode);
+    let listToReturn = [];
+
+    if (coupon && coupon.union_id == null) {
+        listToReturn.push(coupon.store_type_id);
+    } else {
+        let sqlQuery = `
+    SELECT
+        catalog_store_types.id 
+    FROM 
+        catalog_store_types
+    WHERE
+        ?;
+    `;
+
+        listToReturn = await db.runQuery(sqlQuery, { "union_id": coupon.union_id });
+    }
+
+    return listToReturn;
 }
 
 /**
@@ -379,14 +427,10 @@ async function doesUserHaveCoupon(coupon, userId) {
  * @param {*} couponCode  coupon code (e.g. signup706)
  */
 async function getCouponByCode(couponCode) {
-    if (couponCode && couponCode.length < 20 && couponCode.length > 5) {
-        let data = {
-            "code": couponCode
-        };
+    if (couponCode && couponCode.length < 20 && couponCode.length > 1) {
+        let result = await db.selectAllWhereLimitOne(db.tables.catalog_coupons, { "code": couponCode });
 
-        let result = await db.selectAllWhereLimitOne(db.tables.catalog_coupons, data);
-
-        if (result.length != 0 && result[0].date_expiry > Date.now()) {
+        if (result.length == 1 && result[0].date_expiry > Date.now()) {
             return result[0];
         }
 
