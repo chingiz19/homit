@@ -247,7 +247,9 @@
                         <ng-md-icon icon="clear"></ng-md-icon>
                     </button>
                     <span class="product-quantity">{{ product.selected.quantity }}</span>
-                    <img class="item-img" ng-src="/resources/images/products/{{ product.store.name }}/{{ product.images.image_catalog }}">
+                    <a target="_self" href="{{product.product_url}}">
+                        <img class="item-img" ng-src="/resources/images/products/{{ product.store.name }}/{{ product.images.image_catalog }}">
+                    </a>
                 </div>
                 <div class="item-right-div">
                     <div class="produc-name">{{ product.brandname }} 

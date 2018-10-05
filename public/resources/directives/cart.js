@@ -1,4 +1,4 @@
-app.directive("cart", function ($timeout, user, $window, cartService, localStorage, notification, googleAnalytics) {
+app.directive("cart", function ($timeout, user, $window, cartService, localStorage, notification, googleAnalytics, helpers) {
 
     var pScope;
     var publicFunctions = {};
@@ -6,6 +6,9 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
     publicFunctions.addItem = function (product) {
         var tmpQuantity = 1;
         var store_products = {};
+
+        product.product_url = helpers.buildProductPagePath(product);
+
         if (pScope.userCart.hasOwnProperty(product.store.name)) {
             store_products = pScope.userCart[product.store.name];
         }
