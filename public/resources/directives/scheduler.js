@@ -24,8 +24,10 @@ app.directive("scheduler", function (localStorage, $interval, $cookies, $timeout
             previousDay += 7;
         }
 
-        if (startDate === 0) {
-            localArray.push(getTodaysObject(date, weekObject[today], weekObject[previousDay], startDate));
+        let todaysObject = getTodaysObject(date, weekObject[today], weekObject[previousDay], startDate);
+
+        if (todaysObject && startDate === 0) {
+            localArray.push(todaysObject);
         } else {
             startDate -= 1;
         }

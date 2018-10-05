@@ -1,0 +1,1664 @@
+[
+    {
+        "_id": "16-1",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. King Creek Deodorant",
+        "name": "King Creek Deodorant",
+        "namebrand": "King Creek Deodorant Three Arrows Body Co.",
+        "container": "deodorant container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-1.jpeg",
+            "images_all": [
+                "16-1.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Deodorant",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>King Creek is located about one and half hours from Calgary in Kananaskis Provincial Park. This picturesque ascent is everything you would expect from a woodsy creek side hike in the Canadian Rockies. It’s not uncommon to find mountain sheep, climbers and tons of other wild life on this trail.</li><li>The one that started it all, King Creek, a mix of subtle citrus with a strong pine base note. This is everything we love about the smell of the woods. King Creek is a favourite for men and women alike.</li><li>Our deodorant formula is specifically made to help absorb sweat, smell great and leave your clothes looking the way you bought them.\r\nIt took a while to find the right blend of oils and clay to produce this smooth and creamy blend but we are confident that you will be happy with final product.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-1-1",
+                "si_unit_size": 0.012,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 12,
+                "packs": [
+                    {
+                        "_id": "16-1-1-1",
+                        "h_value": 1,
+                        "price": 4.5,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "16-1-2",
+                "si_unit_size": 0.06,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 60,
+                "packs": [
+                    {
+                        "_id": "16-1-2-1",
+                        "h_value": 1,
+                        "price": 8.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-2",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Gypsum Mine Deodorant",
+        "name": "Gypsum Mine Deodorant",
+        "namebrand": "Gypsum Mine Deodorant Three Arrows Body Co.",
+        "container": "deodorant container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-2.jpeg",
+            "images_all": [
+                "16-2.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Deodorant",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Gypsum Mine is inspired by the Gypsum Ridge hike located in Peter Lougheed Provincial Park. While the was never any mine on this site it does have a interesting past of people laying claim to the gypsum deposits there from the 1920’s into the 1980’s when the park was formed. Now the old roads leading up the ridge can be used as a ski touring or hiking route.... although some serious bushwhacking is required.</li><li>A subtle and familiar scent that is reminiscent of the dark sudsy drink served at A&W.</li><li>Our deodorant formula is specifically made to help absorb sweat, smell great and leave your clothes looking the way you bought them.It took us a while to find the right blend of oils and clay to produce this smooth and creamy blend but we are confident that you will be happy with final product.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-2-1",
+                "si_unit_size": 0.012,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 12,
+                "packs": [
+                    {
+                        "_id": "16-2-1-1",
+                        "h_value": 1,
+                        "price": 4.5,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "16-2-2",
+                "si_unit_size": 0.06,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 60,
+                "packs": [
+                    {
+                        "_id": "16-2-2-1",
+                        "h_value": 1,
+                        "price": 8.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-3",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Peyto Lake Deodorant",
+        "name": "Peyto Lake Deodorant",
+        "namebrand": "Peyto Lake Deodorant Three Arrows Body Co.",
+        "container": "deodorant container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-3.jpeg",
+            "images_all": [
+                "16-3.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Deodorant",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Peyto lake can be found in Banff National Park along the 93N highway to Jasper. This is a picturesque lake that sees thousands of visitors from around the world annually. This bright blue Glacial fed lake adds to the amazing sites of the Bow Valley which can be seen from the upper ridges of the Bow Summit area.</li><li>A unique blend of citrus with just a hint of sage makes for a very smooth, very subtle scent with just a tiny bit of spice at the end. This is a great option for people who don't like strong, bold scents.</li><li>Our deodorant formula is specifically made to help absorb sweat, smell great and leave your clothes looking the way you bought them.\r\nIt took us a while to find the right blend of oils and clay to produce this smooth and creamy blend but we are confident that you will be happy with final product.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-3-1",
+                "si_unit_size": 0.012,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 12,
+                "packs": [
+                    {
+                        "_id": "16-3-1-1",
+                        "h_value": 1,
+                        "price": 4.5,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "16-3-2",
+                "si_unit_size": 0.06,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 60,
+                "packs": [
+                    {
+                        "_id": "16-3-2-1",
+                        "h_value": 1,
+                        "price": 8.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-4",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Lip Love Lip Balm",
+        "name": "Lip Love Lip Balm",
+        "namebrand": "Lip Love Lip Balm Three Arrows Body Co.",
+        "container": "tube",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-4.jpeg",
+            "images_all": [
+                "16-4.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Others",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Lip Love was the first creation by Ellen in our kitchen. She wanted to make a lip balm that was just as good or better than what she could buy in the stores. With so many days spent out in the sun and snow she needed to make a repair/hydrating balm that felt good to apply every day. Our friends agree that their lips love it and we know that yours will too!</li><li>To be used every day or as much as you need it. Lip Love is all about treating your lips to what they deserve. Smooth to apply and crisp when its on, the Japanese Peppermint Oil brings a little something extra to help heal any broken or chapped lips while leaving a cool and refreshing feeling.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-4-1",
+                "si_unit_size": 0.015,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 15,
+                "packs": [
+                    {
+                        "_id": "16-4-1-1",
+                        "h_value": 1,
+                        "price": 3.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-5",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. King Creek Beard Balm",
+        "name": "King Creek Beard Balm",
+        "namebrand": "King Creek Beard Balm Three Arrows Body Co.",
+        "container": "tin",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-5.jpeg",
+            "images_all": [
+                "16-5.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Others",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>King Creek is located about one and half hours from Calgary down the Kananaskis highway and is everything you would expect from a woodsy creek side hike in the Canadian Rockies. It’s not uncommon to find mountain sheep, climbers and tons of other wild life on this trail.</li><li>The one that started it all, King Creek, a mix of subtle citrus with everything you love about the smell of the woods. This is a favourite for men and women alike.</li><li>Our beard balm was developed to help smooth and hydrate your beard. Like our beard oils it can tame the beast on your face, making the bristles feel more like poplar fuzz. Recommended for men with shorter beards.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-5-1",
+                "si_unit_size": 0.028,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 28,
+                "packs": [
+                    {
+                        "_id": "16-5-1-1",
+                        "h_value": 1,
+                        "price": 12.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-6",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Gypsum Mine Beard Balm",
+        "name": "Gypsum Mine Beard Balm",
+        "namebrand": "Gypsum Mine Beard Balm Three Arrows Body Co.",
+        "container": "tin",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-6.jpeg",
+            "images_all": [
+                "16-6.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Others",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Gypsum Mine is inspired by the Gypsum Ridge hike located in Peter Lougheed Provincial Park. While the was never any mine on this site it does have a interesting past of people laying claim to the gypsum deposits there from the 1920’s into the 1980’s when the park was formed. Now the old roads leading up the ridge can be used as a ski touring or hiking route.... although some serious bushwhacking is required.</li><li>A subtle and familiar scent that is reminiscent of the dark sudsy drink served at A&W.</li><li>Our beard balm was developed to help smooth and hydrate your beard. Like our beard oils it can tame the beast on your face, making the bristles feel more like poplar fuzz. Recommended for men with shorter beards.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-6-1",
+                "si_unit_size": 0.028,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 28,
+                "packs": [
+                    {
+                        "_id": "16-6-1-1",
+                        "h_value": 1,
+                        "price": 12.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-7",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. King Creek Beard Oil",
+        "name": "King Creek Beard Oil",
+        "namebrand": "King Creek Beard Oil Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-7.jpeg",
+            "images_all": [
+                "16-7.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Others",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>King Creek is located about one and half hours from Calgary down the Kananaskis highway and is everything you would expect from a woodsy creek side hike in the Canadian Rockies. It’s not uncommon to find mountain sheep, climbers and tons of other wild life on this trail.</li><li>The one that started it all, King Creek, a mix of subtle citrus with everything you love about the smell of the woods. This is a favourite for men and women alike.</li><li>Our beard oil was developed to help smooth and hydrate your beard. Living in Alberta’s dry climate can leave you and your beard looking like a sasquatch when you return to the city. Tame the beast on your face with this blend of oils.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-7-1",
+                "si_unit_size": 0.015,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 15,
+                "packs": [
+                    {
+                        "_id": "16-7-1-1",
+                        "h_value": 1,
+                        "price": 8.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-8",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Gypsum Mine Beard Oil",
+        "name": "Gypsum Mine Beard Oil",
+        "namebrand": "Gypsum Mine Beard Oil Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-8.jpeg",
+            "images_all": [
+                "16-8.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Others",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Gypsum Mine is inspired by the Gypsum Ridge hike located in Peter Lougheed Provincial Park. While the was never any mine on this site it does have a interesting past of people laying claim to the gypsum deposits there from the 1920’s into the 1980’s when the park was formed. Now the old roads leading up the ridge can be used as a ski touring or hiking route.... although some serious bushwhacking is required.</li><li>A subtle and familiar scent that is reminiscent of the dark sudsy drink served at A&W.</li><li>Our beard oil was developed to help smooth and hydrate your beard. Living in Alberta’s dry climate can leave you and your beard looking like a sasquatch when you return to the city. Tame the beast on your face with this blend of oils.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-8-1",
+                "si_unit_size": 0.015,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 15,
+                "packs": [
+                    {
+                        "_id": "16-8-1-1",
+                        "h_value": 1,
+                        "price": 8.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-9",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Peyto Lake Beard Oil",
+        "name": "Peyto Lake Beard Oil",
+        "namebrand": "Peyto Lake Beard Oil Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-9.jpeg",
+            "images_all": [
+                "16-9.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Others",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>The iconic Peyto Lake can be found in Banff National Park along highway 93N towards Jasper, Alberta. This picturesque lake sees thousands of visitors from around the world annually. Visible from the upper ridges of the Bow Summit area, this bright blue glacial-fed lake adds to the amazing sites of the Bow Valley and is a must-see in both summer and winter.</li><li>A unique blend of citrus with just a hint of sage makes for a very smooth, very subtle scent with just a tiny bit of spice at the end. This is a great option for people who don't like strong, bold scents.</li><li>Our beard oil was developed to help smooth and hydrate your beard. Living in Alberta we have a dry climate and being outside can leave your beard looking like a sasquatch when you return to the city. Tame the beast on your face with this blend of oils.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-9-1",
+                "si_unit_size": 0.015,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 15,
+                "packs": [
+                    {
+                        "_id": "16-9-1-1",
+                        "h_value": 1,
+                        "price": 8.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-10",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. King Creek Natural Conditioner",
+        "name": "King Creek Natural Conditioner",
+        "namebrand": "King Creek Natural Conditioner Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-10.jpeg",
+            "images_all": [
+                "16-10.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Conditioner",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>King Creek is located about one and half hours from Calgary in Kananaskis Provincial Park. This picturesque ascent is everything you would expect from a woodsy creek side hike in the Canadian Rockies. It’s not uncommon to find mountain sheep, climbers and tons of other wild life on this trail.</li><li>The one that started it all, King Creek, a mix of subtle citrus with everything you love about the smell of the woods. This is a favourite for men and women alike.</li><li>Our conditioner has been developed to work with most hair types. With the use of honey our conditioner will help to give hair a natural lightness and nourish your hair leaving you with a light and clean feeling. Designed together with our natural shampoo these two products will leave your hair clean and nourished.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-10-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "16-10-1-1",
+                        "h_value": 1,
+                        "price": 9.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-11",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. King Creek Natural Conditioner",
+        "name": "King Creek Natural Conditioner",
+        "namebrand": "King Creek Natural Conditioner Three Arrows Body Co.",
+        "container": "pump-bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-11.jpeg",
+            "images_all": [
+                "16-11.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Conditioner",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>King Creek is located about one and half hours from Calgary in Kananaskis Provincial Park. This picturesque ascent is everything you would expect from a woodsy creek side hike in the Canadian Rockies. It’s not uncommon to find mountain sheep, climbers and tons of other wild life on this trail.</li><li>The one that started it all, King Creek, a mix of subtle citrus with everything you love about the smell of the woods. This is a favourite for men and women alike.</li><li>Our conditioner has been developed to work with most hair types. With the use of honey our conditioner will help to give hair a natural lightness and nourish your hair leaving you with a light and clean feeling. Designed together with our natural shampoo these two products will leave your hair clean and nourished.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-11-1",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "16-11-1-1",
+                        "h_value": 1,
+                        "price": 15.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-12",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Gypsum Mine Natural Conditioner",
+        "name": "Gypsum Mine Natural Conditioner",
+        "namebrand": "Gypsum Mine Natural Conditioner Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-12.jpeg",
+            "images_all": [
+                "16-12.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Conditioner",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Gypsum Mine is inspired by the Gypsum Ridge hike located in Peter Lougheed Provincial Park. While the was never any mine on this site it does have a interesting past of people laying claim to the gypsum deposits there from the 1920’s into the 1980’s when the park was formed. Now the old roads leading up the ridge can be used as a ski touring or hiking route.... although some serious bushwhacking is required.</li><li>A subtle and familiar scent that is reminiscent of the dark sudsy drink served at A&W.</li><li>Our conditioner has been developed to work with most hair types. With the use of honey our conditioner will help to give hair a natural lightness and nourish your hair leaving you with a light and clean feeling. Designed together with our natural shampoo these two products will leave your hair clean and nourished.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-12-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "16-12-1-1",
+                        "h_value": 1,
+                        "price": 9.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-13",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Gypsum Mine Natural Conditioner",
+        "name": "Gypsum Mine Natural Conditioner",
+        "namebrand": "Gypsum Mine Natural Conditioner Three Arrows Body Co.",
+        "container": "pump-bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-13.jpeg",
+            "images_all": [
+                "16-13.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Conditioner",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Gypsum Mine is inspired by the Gypsum Ridge hike located in Peter Lougheed Provincial Park. While the was never any mine on this site it does have a interesting past of people laying claim to the gypsum deposits there from the 1920’s into the 1980’s when the park was formed. Now the old roads leading up the ridge can be used as a ski touring or hiking route.... although some serious bushwhacking is required.</li><li>A subtle and familiar scent that is reminiscent of the dark sudsy drink served at A&W.</li><li>Our conditioner has been developed to work with most hair types. With the use of honey our conditioner will help to give hair a natural lightness and nourish your hair leaving you with a light and clean feeling. Designed together with our natural shampoo these two products will leave your hair clean and nourished.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-13-1",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "16-13-1-1",
+                        "h_value": 1,
+                        "price": 15.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-14",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Peyto Lake Natural Conditioner",
+        "name": "Peyto Lake Natural Conditioner",
+        "namebrand": "Peyto Lake Natural Conditioner Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-14.jpeg",
+            "images_all": [
+                "16-14.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Conditioner",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Peyto lake can be found in Banff National Park along the 93N highway to Jasper. This is a picturesque lake that sees thousands of visitors from around the world annually. This bright blue Glacial fed lake adds to the amazing sites of the Bow Valley which can be seen from the upper ridges of the Bow Summit area.</li><li>A unique blend of citrus with just a hint of sage makes for a very smooth, very subtle scent with just a tiny bit of spice at the end. This is a great option for people who don't like strong, bold scents.</li><li>Our conditioner has been developed to work with most hair types. With the use of honey our conditioner will help to give hair a natural lightness and nourish your hair leaving you with a light and clean feeling. Designed together with our natural shampoo these two products will leave your hair clean and nourished.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-14-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "16-14-1-1",
+                        "h_value": 1,
+                        "price": 9.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-15",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Peyto Lake Natural Conditioner",
+        "name": "Peyto Lake Natural Conditioner",
+        "namebrand": "Peyto Lake Natural Conditioner Three Arrows Body Co.",
+        "container": "pump-bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-15.jpeg",
+            "images_all": [
+                "16-15.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Conditioner",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Peyto lake can be found in Banff National Park along the 93N highway to Jasper. This is a picturesque lake that sees thousands of visitors from around the world annually. This bright blue Glacial fed lake adds to the amazing sites of the Bow Valley which can be seen from the upper ridges of the Bow Summit area.</li><li>A unique blend of citrus with just a hint of sage makes for a very smooth, very subtle scent with just a tiny bit of spice at the end. This is a great option for people who don't like strong, bold scents.</li><li>Our conditioner has been developed to work with most hair types. With the use of honey our conditioner will help to give hair a natural lightness and nourish your hair leaving you with a light and clean feeling. Designed together with our natural shampoo these two products will leave your hair clean and nourished.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-15-1",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "16-15-1-1",
+                        "h_value": 1,
+                        "price": 15.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-16",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. King Creek Natural Shampoo",
+        "name": "King Creek Natural Shampoo",
+        "namebrand": "King Creek Natural Shampoo Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-16.jpeg",
+            "images_all": [
+                "16-16.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Bodywash & Shampoo",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>King Creek is located about one and half hours from Calgary down the Kananaskis highway and is everything you would expect from a woodsy creek side hike in the Canadian Rockies. It’s not uncommon to find mountain sheep, climbers and tons of other wild life on this trail.</li><li>The one that started it all, King Creek, a mix of subtle citrus with everything you love about the smell of the woods. This is a favourite for men and women alike.</li><li>Our shampoo has been developed to work with most hair types, providing a gentle clean while adding natural oils and vitamins back into the hair. Designed together with our natural conditioner these two products will leave your hair clean and nourished.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-16-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "16-16-1-1",
+                        "h_value": 1,
+                        "price": 9.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "16-16-2",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "16-16-2-1",
+                        "h_value": 1,
+                        "price": 15.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-17",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Gypsum Mine Natural Shampoo",
+        "name": "Gypsum Mine Natural Shampoo",
+        "namebrand": "Gypsum Mine Natural Shampoo Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-17.jpeg",
+            "images_all": [
+                "16-17.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Bodywash & Shampoo",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Gypsum Mine is inspired by the Gypsum Ridge hike located in Peter Lougheed Provincial Park. While the was never any mine on this site it does have a interesting past of people laying claim to the gypsum deposits there from the 1920’s into the 1980’s when the park was formed. Now the old roads leading up the ridge can be used as a ski touring or hiking route.... although some serious bushwhacking is required.</li><li>A subtle and familiar scent that is reminiscent of the dark sudsy drink served at A&W.</li><li>Our shampoo has been developed to work with most hair types, providing a gentle clean while adding natural oils and vitamins back into the hair. Designed together with our natural conditioner these two products will leave your hair clean and nourished.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-17-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "16-17-1-1",
+                        "h_value": 1,
+                        "price": 9.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "16-17-2",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "16-17-2-1",
+                        "h_value": 1,
+                        "price": 15.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-18",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Peyto Lake Natural Shampoo",
+        "name": "Peyto Lake Natural Shampoo",
+        "namebrand": "Peyto Lake Natural Shampoo Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-18.jpeg",
+            "images_all": [
+                "16-18.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Bodywash & Shampoo",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Peyto lake can be found in Banff National Park along the 93N highway to Jasper. This is a picturesque lake that sees thousands of visitors from around the world annually. This bright blue Glacial fed lake adds to the amazing sites of the Bow Valley which can be seen from the upper ridges of the Bow Summit area.</li><li>A unique blend of citrus with just a hint of sage makes for a very smooth, very subtle scent with just a tiny bit of spice at the end. This is a great option for people who don't like strong, bold scents.</li><li>Our shampoo has been developed to work with most hair types, providing a gentle clean while adding natural oils and vitamins back into the hair. Designed together with our natural conditioner these two products will leave your hair clean and nourished.</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-18-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "16-18-1-1",
+                        "h_value": 1,
+                        "price": 9.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "16-18-2",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "16-18-2-1",
+                        "h_value": 1,
+                        "price": 15.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-19",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. King Creek Natural Bodywash",
+        "name": "King Creek Natural Bodywash",
+        "namebrand": "King Creek Natural Bodywash Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-19.jpeg",
+            "images_all": [
+                "16-19.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Bodywash & Shampoo",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>King Creek is located about one and half hours from Calgary down the Kananaskis highway and is everything you would expect from a woodsy creek side hike in the Canadian Rockies. It’s not uncommon to find mountain sheep, climbers and tons of other wild life on this trail.</li><li>The one that started it all, King Creek, a mix of subtle citrus with everything you love about the smell of the woods. This is a favourite for men and women alike.</li><li>Our body wash was created to provide the same feel as commercial brands in feel and foaming-action, yet deliver it in an all natural way. The main cleansing ingredient, Castile Soap, is gentle and won’t rob your skin of its moisture. Use our body wash like any other and enjoy!</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-19-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "16-19-1-1",
+                        "h_value": 1,
+                        "price": 9.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "16-19-2",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "16-19-2-1",
+                        "h_value": 1,
+                        "price": 15.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-20",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Gypsum Mine Natural Bodywash",
+        "name": "Gypsum Mine Natural Bodywash",
+        "namebrand": "Gypsum Mine Natural Bodywash Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-20.jpeg",
+            "images_all": [
+                "16-20.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Bodywash & Shampoo",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Gypsum Mine is inspired by the Gypsum Ridge hike located in Peter Lougheed Provincial Park. While the was never any mine on this site it does have a interesting past of people laying claim to the gypsum deposits there from the 1920’s into the 1980’s when the park was formed. Now the old roads leading up the ridge can be used as a ski touring or hiking route.... although some serious bushwhacking is required.</li><li>A subtle and familiar scent that is reminiscent of the dark sudsy drink served at A&W.</li><li>Our body wash was created to provide the same feel as commercial brands in feel and foaming-action, yet deliver it in an all natural way. The main cleansing ingredient, Castile Soap, is gentle and won’t rob your skin of its moisture. Use our body wash like any other and enjoy!</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-20-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "16-20-1-1",
+                        "h_value": 1,
+                        "price": 9.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "16-20-2",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "16-20-2-1",
+                        "h_value": 1,
+                        "price": 15.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "16-21",
+        "brand": "Three Arrows Body Co.",
+        "brandname": "Three Arrows Body Co. Peyto Lake Natural Bodywash",
+        "name": "Peyto Lake Natural Bodywash",
+        "namebrand": "Peyto Lake Natural Bodywash Three Arrows Body Co.",
+        "container": "bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "16-21.jpeg",
+            "images_all": [
+                "16-21.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Health & Beauty",
+            "category_name": "health-and-beauty",
+            "category_image": "16_health-and-beauty.jpeg",
+            "category_cover": "16_health-and-beauty.jpeg"
+        },
+        "subcategory": {
+            "value": "Bodywash & Shampoo",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>Peyto lake can be found in Banff National Park along the 93N highway to Jasper. This is a picturesque lake that sees thousands of visitors from around the world annually. This bright blue Glacial fed lake adds to the amazing sites of the Bow Valley which can be seen from the upper ridges of the Bow Summit area.</li><li>A unique blend of citrus with just a hint of sage makes for a very smooth, very subtle scent with just a tiny bit of spice at the end. This is a great option for people who don't like strong, bold scents.</li><li>Our body wash was created to provide the same feel as commercial brands in feel and foaming-action, yet deliver it in an all natural way. The main cleansing ingredient, Castile Soap, is gentle and won’t rob your skin of its moisture. Use our body wash like any other and enjoy!</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "16-21-1",
+                "si_unit_size": 0.1,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 100,
+                "packs": [
+                    {
+                        "_id": "16-21-1-1",
+                        "h_value": 1,
+                        "price": 9.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "16-21-2",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "16-21-2-1",
+                        "h_value": 1,
+                        "price": 15.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "three-arrows-body-co",
+            "display_name": "Three Arrows Body Co.",
+            "image_url": "three-arrows-body-co.jpeg"
+        },
+        "visible": 1
+    }
+]

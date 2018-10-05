@@ -6,8 +6,8 @@
  */
 
 /*** Adjust following constants as per your need ***/
-const COLLECTION_NAME = "wash-and-co";
-const WORKBOOK_LOCATION = "./wash-and-co.xlsx";
+const COLLECTION_NAME = "three-arrows-body-co";
+const WORKBOOK_LOCATION = "./three-arrows-body-co.xlsx";
 const IMAGE_EXTENSION = ".jpeg";
 const DEFAULT_COUNTRY_OF_ORIGIN = "Canada";
 const SAVE_JSON_TO_DIRECTORY = "./project_setup/resources/mongodb";
