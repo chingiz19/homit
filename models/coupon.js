@@ -19,6 +19,7 @@ pub.CODES = { DEFAULT_SIGNUP: "signup706" };
  * Checks if coupon not expired and not public
  */
 pub.applyKeyedCoupon = async function (code, products, userId) {
+    Logger.log.debug("Applying keyed coupon", {function: "Coupon.applyKeyedCoupon"});
     let applied = false;
     let canBeApplied = true;
     let isItUnion = false;
@@ -60,13 +61,17 @@ pub.applyKeyedCoupon = async function (code, products, userId) {
         isOk = false;
     }
 
-    return {
+    let obj = {
         "isApplied": applied,
         "canBeApplied": canBeApplied,
         "isOk": isOk,
         "message": message,
         "assignedBy": couponAssignedBy
     }
+
+    Logger.log.debug("Keyed Coupon Details", {function: "Coupon.applyKeyedCoupon", details: obj});
+
+    return obj;
 }
 
 /**
@@ -168,6 +173,7 @@ pub.getCoupon = async function (code, storeTypeId = false, isUnion) {
         return tmpResult[0];
     }
 
+    Logger.log.debug("Couldn't get coupon with code: " + code, {function: "Coupon.getCoupon"});
     return false;
 }
 

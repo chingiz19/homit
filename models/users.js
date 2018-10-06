@@ -65,8 +65,10 @@ pub.findUserById = async function (id) {
 pub.addUser = function (userData) {
     return db.insertQuery(db.tables.users_customers, userData).then(function (dbResult) {
         if (dbResult.errno && typeof dbResult.errno === "number") {
+            Logger.log.debug("Couldn't add user to db", {function: "Users.addUser"});
             return false;
         }
+        Logger.log.debug("Successfully added user to db", {function: "Users.addUser"});
         return dbResult.insertId;
     });
 };
@@ -125,8 +127,10 @@ pub.findGuestUserById = function (id) {
 pub.addGuestUser = function (userData) {
     return db.insertQuery(db.tables.users_customers_guest, userData).then(function (dbResult) {
         if (dbResult.errno && typeof dbResult.errno === "number") {
+            Logger.log.debug("Couldn't add guest user", {function: "Users.addGuestUser"});
             return false;
         }
+        Logger.log.debug("Successfully added guest user", {function: "Users.addGuestUser"});
         return dbResult.insertId;
     });
 };
@@ -189,6 +193,7 @@ pub.updateCheckoutUser = async function (newData, key) {
  * @param {*} key 
  */
 pub.updateUser = async function (newData, key) {
+    //TODO: weird, no error path?
     let users = await db.selectColumnsWhereLimitOne(Object.keys(newData), db.tables.users_customers, key);
     if (users.length > 0) {
         let user = users[0];
@@ -204,6 +209,7 @@ pub.updateUser = async function (newData, key) {
                 delete user.address_longitude;
                 historyData = Object.assign(historyData, user);
                 await db.insertQuery(db.tables.users_customers_history, historyData);
+                Logger.log.debug("Successfully updated user", {function: "Users.updateUser"});
             }
         }
     }
@@ -305,6 +311,8 @@ pub.resetPassword = async function (email, newPassword) {
 };
 
 pub.makeStripeCustomer = async function (userEmail) {
+    Logger.log.debug("Making stripe customer", {function: "Users.makeStripeCustomer"});
+
     return await MP.createCustomer(userEmail);
 }
 
@@ -314,6 +322,7 @@ pub.makeStripeCustomer = async function (userEmail) {
  * @param {*String} email 
  */
 pub.isEmailAvailable = async function (email) {
+    Logger.log.debug("Checking email availablity", {function: "Users.isEmailAvailable"});
     let result = await db.selectAllWhere(db.tables.users_customers, { user_email: email });
     return (result.length == 0);
 }

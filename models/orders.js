@@ -92,6 +92,7 @@ pub.createTransactionOrder = async function (userId, address, address_lat, addre
     if (unitNumber) {
         data.unit_number = unitNumber;
     }
+    Logger.log.debug("Creating transaction order", {function: "Orders.createTransactionOrder"});
 
     let inserted = await db.insertQuery(db.tables.orders_transactions_history, data);
     return inserted.insertId;
@@ -120,6 +121,8 @@ pub.createOrder = async function (orderTransactionId, receivedStoreType, prices,
         data.date_scheduled = dateScheduled;
     }
 
+    Logger.log.debug("Creating order", {function: "Orders.createOrder"});
+
     let inserted = await db.insertQuery(db.tables.orders_history, data);
     return inserted.insertId;
 }
@@ -143,7 +146,10 @@ pub.insertProducts = async function (orderId, products) {
         let result = await db.insertQuery(db.tables.orders_cart_items, data);
 
         if (result == false) {
+            Logger.log.debug("Failed to insert products for order: " + orderId, {function: "Orders.insertProducts"});
             finalResult = false;
+        } else {
+            Logger.log.debug("Seccussfully inserted products for order: " + orderId, {function: "Orders.insertProducts"});
         }
     }
     return finalResult;
