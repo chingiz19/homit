@@ -63,7 +63,7 @@ NM.setSharedSessionMiddleware(homitSharedSessions);
 
 
 var cart_version = 6;
-var scheduler_version = 1;
+var scheduler_version = 3;
 
 /* make logs folder */
 if (!fs.existsSync('.logs')) {

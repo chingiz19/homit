@@ -1,4 +1,4 @@
-app.directive("cart", function ($timeout, user, $window, cartService, localStorage, notification, googleAnalytics, helpers) {
+app.directive("cart", function ($timeout, user, $window, cartService, localStorage, notification, googleAnalytics, helpers, $rootScope) {
 
     var pScope;
     var publicFunctions = {};
@@ -8,6 +8,10 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
         var store_products = {};
 
         product.product_url = helpers.buildProductPagePath(product);
+
+        if(!pScope.userCart.hasOwnProperty(product.store.name)){
+            $rootScope.$broadcast("showSchedulerModal");
+        }
 
         if (pScope.userCart.hasOwnProperty(product.store.name)) {
             store_products = pScope.userCart[product.store.name];
@@ -41,9 +45,6 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
         pScope.updateUserCart(pScope.userCart, product.store.name, false);
         pScope.prepareItemForDB(product.selected.UID, pScope.userCart[product.store.name][product.selected.UID].selected.quantity);
 
-        if (Object.getOwnPropertyNames(pScope.userCart).length > numOfStoresInCart){
-            $rootScope.$broadcast("showSchedulerModal");   
-        }
     };
 
     publicFunctions.clear = function () {
