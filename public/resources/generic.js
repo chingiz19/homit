@@ -7,12 +7,12 @@ var app = angular.module('mainModule', ["ngRoute", "ngCookies", "ngMaterial", "n
     })
 
     // Set up CSRF Header for AJAX calls
-    .run(function($http, $cookies){
+    .run(function ($http, $cookies) {
         $http.defaults.headers.post['CSRF-TOKEN'] = $cookies.get("csrf-token");
     });
 
-app.filter("capitalize", function(){
-    return function(str){
+app.filter("capitalize", function () {
+    return function (str) {
         return _.capitalize(str);
     };
 });
@@ -29,15 +29,17 @@ app.filter('totalPrice', function () {
     };
 });
 
-app.filter("kebabCase", function(){
-    return function(str){
+app.filter("kebabCase", function () {
+    return function (str) {
         return _.kebabCase(str);
     };
 });
 
-app.filter('toArray', function() { return function(obj) {
-    if (!(obj instanceof Object)) return obj;
-    return _.map(obj, function(val, key) {
-        return Object.defineProperty(val, '$key', {__proto__: null, value: key});
-    });
-}});
+app.filter('toArray', function () {
+    return function (obj) {
+        if (!(obj instanceof Object)) return obj;
+        return _.map(obj, function (val, key) {
+            return Object.defineProperty(val, '$key', { __proto__: null, value: key });
+        });
+    };
+});

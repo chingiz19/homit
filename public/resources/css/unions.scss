@@ -18,6 +18,9 @@ body {
         .stores-div{
             margin: 0 auto 0 auto;
             padding: 0 10% 50px 10%;
+            @media screen and (max-device-width: 479px) {
+                padding: 0 5% 50px 5%;
+            }
         }
     }
 

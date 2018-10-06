@@ -145,19 +145,13 @@
                     <div id="del-opt-background" class="del-opt-background"></div>
                     <section class="when-section">
                         <div ng-repeat="store in stores track by $index" class="del-options-div">
-                            <div ng-show="store.img" class="del-options-div-2">
+                            <div ng-show="store.img" class="del-options-div-2" ng-style="(stores.length > 1 && $index != (stores.length - 1) ) && {'margin-bottom': '7px'}">
                                 <img src="{{store.img}}">
                                 <div class="do-txt-box">
                                     <div class="line-1">
                                         <div class="sch-store-name">{{store.name}}</div>
-                                        <scheduler store-type="store.type" delivery-date="deliveryDate" store-name="store.name"
-                                            store-open="storeOpen" store-img="store.img" delivery-option="store.option"></scheduler>
+                                        <scheduler store-type="store.type" store-name="store.name" store-open="storeOpen" store-img="store.img" ></scheduler>
                                     </div>
-                                    <div ng-show="store.option == 'Scheduled Delivery'" class="store-hrs-txt">{{
-                                        deliveryDate.month
-                                        + " " + deliveryDate.day + ", " + deliveryDate.time}}</div>
-                                    <div ng-show="store.option == 'ASAP Delivery' && storeOpen == false" class="store-clsd-txt">Store
-                                        Closed</div>
                                 </div>
                             </div>
                         </div>
@@ -166,8 +160,8 @@
                     <section class="coupon-section">
                         <md-input-container class="md-block no-mar-bottom ui-input coupon-conteiner">
                             <label></label>
-                            <input id="driverInstruction" name="drInstruction" maxlength="30" ng-pattern="/^[a-zA-Z0-9 -]*$/"
-                                ng-model="couponCode" placeholder="Enter code here.." type="text" />
+                            <input name="drInstruction" maxlength="30" ng-pattern="/^[a-zA-Z0-9 -]*$/" ng-model="couponCode" placeholder="Enter code here.."
+                                type="text" />
                             <div ng-messages="checkoutInput.drInstruction.$error">
                                 <div ng-message="pattern" class="error-message-txt error-text">Number and letter only</div>
                                 <div ng-message="maxlength" class="error-message-txt error-text">Maximum 30 characters</div>

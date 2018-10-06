@@ -214,6 +214,17 @@
     }
 }
 
+
+@keyframes trslY-100-0 {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
 @media screen and (max-device-width: 479px) {
     @keyframes icon-move-x {
         0%, 100% {

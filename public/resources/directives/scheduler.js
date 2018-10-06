@@ -264,13 +264,11 @@ app.directive("scheduler", function (localStorage, $interval, $cookies, $timeout
         restrict: "E", // restrict to element
         scope: {
             storeType: "<storeType",
-            deliveryOption: "=?deliveryOption",
-            deliveryDate: "=?deliveryDate",
-            openTime: "=?openTime",
-            closeTime: "=?closeTime",
+            optionsLoaded: "=?optionsLoaded",
             storeName: "=?storeName",
             storeImage: "=?storeImg",
             storeOpen: "=?storeOpen",
+            screenMob: "<screenMob",
             delFee: "=?delFee"
         },
         templateUrl: '/resources/templates/scheduler.html',
@@ -286,23 +284,33 @@ app.directive("scheduler", function (localStorage, $interval, $cookies, $timeout
                     if (response.data.success) {
                         init(response.data.store_infos[0]);
                     } else {
-                        scope.deliveryOption = "ASAP Delivery";
+                        scope.selectedOption = "ASAP Delivery";
                         scope._deliveryError = true;
                     }
                 }, function errorCallback(response) {
-                    scope.deliveryOption = "ASAP Delivery";
+                    scope.selectedOption = "ASAP Delivery";
                     scope._deliveryError = true;
                 });
 
                 function init(store_info) {
-                    
+                    scope.showOptionsModal = false;
+                    scope.selectedOption = "";
+
                     var scheduler_version = $cookies.get("scheduler_version");
-                    if(scheduler_version != localStorage.getSchedulerVersion()){
+                    if (scheduler_version != localStorage.getSchedulerVersion()) {
                         localStorage.setOrderDeliveryHrs({});
-                        localStorage.setSchedulerVersion(scheduler_version);            
+                        localStorage.setSchedulerVersion(scheduler_version);
                     }
 
                     scope.buttonStyle = "";
+                    scope.selectedOption = "";
+                    scope.optionsLoaded = true;
+                    scope.setButtonTxt = "Set Delivery Time";
+                    scope.asapBtnTxt = "ASAP Delivery";
+                    scope.scheduleBtnTxt = "Schedule Delivery";
+                    scope.storeOpenOnSelectedDay = true;
+                    scope.hrsIsNotSelected = false;
+                    scope.showDayOptions = false;
                     scope.storeOpen = store_info.open;
                     scope.storeInfo = store_info;
                     scope.store_name = store_info.name;
@@ -311,169 +319,234 @@ app.directive("scheduler", function (localStorage, $interval, $cookies, $timeout
                     scope.storeImage = "/resources/images/catalog-stores/logo/" + store_info.image;
                     scope.dates = buildSchedulerDates(scope.storeInfo.hours_scheduled, store_info.scheduler_cycle);
                     INCREMENTS = store_info.scheduler_incerements;
-                    scope.deliveryOption = "ASAP Delivery";
                     let delivery_hrs = localStorage.getOrderDeliveryHrs();
 
                     if (delivery_hrs && delivery_hrs.hasOwnProperty(scope.store_name)) {
                         let todays_date = new Date().getTime();
-                        if (delivery_hrs[scope.store_name] < todays_date + 3600000000) {
+                        if (delivery_hrs[scope.store_name].value < todays_date + 3600000) {
                             delete delivery_hrs[scope.store_name];
                         }
                     }
-
-                    if (delivery_hrs && delivery_hrs.hasOwnProperty(scope.store_name)) {
-                        scope.deliveryOption = "Scheduled Delivery";
+                    if (delivery_hrs && delivery_hrs.hasOwnProperty(scope.store_name) && delivery_hrs[scope.store_name]["schedule"]) {
+                        scope.selectedOption = "schedule";
                         scope.dates.selected.date = delivery_hrs[scope.store_name].date_selected;
                         scope.dates.selected.time = delivery_hrs[scope.store_name].hrs_selected;
-                    } else if (scope.storeInfo.open) {
-                        scope.deliveryOption = "ASAP Delivery";
-                    } else {
-                        if (delivery_hrs == null || delivery_hrs == "" || delivery_hrs == undefined) delivery_hrs = {};
-                        let iSelected = chooseDefaultSelectedDate(scope.dates);
-                        delivery_hrs[store_info.name] = {
-                            "date_selected": iSelected,
-                            "hrs_selected": iSelected,
-                            "value": scope.dates.date_array[iSelected].hours_array[iSelected].value
-                        };
-                        scope.deliveryOption = "Scheduled Delivery";
-                        localStorage.setOrderDeliveryHrs(delivery_hrs);
-                        updateOrderDeliveryHrs();
+                        updateDeliveryDate(
+                            scope.dates.date_array[scope.dates.selected.date].display_month_name,
+                            scope.dates.date_array[scope.dates.selected.date].display_month_day,
+                            scope.dates.date_array[scope.dates.selected.date].hours_array[scope.dates.selected.time].display_hour
+                        );
+                    } else if (delivery_hrs && delivery_hrs.hasOwnProperty(scope.store_name) && delivery_hrs[scope.store_name]["asap"]) {
+                        scope.selectedOption = "asap";
+                        scope.asapBtnTxt = "45-60 MIN";
                     }
 
-                    scope.showDeliveryOptions = false;
-                    scope.showScheduleOptions = false;
-                    scope.choosenDay = scope.dates.selected.date;
+                    scope.choosenDay = chooseDefaultSelectedDate(scope.dates);
 
-                    updateDeliveryDate(
-                        scope.dates.date_array[scope.dates.selected.date].display_month_name,
-                        scope.dates.date_array[scope.dates.selected.date].display_month_day,
-                        scope.dates.date_array[scope.dates.selected.date].hours_array[scope.dates.selected.time].display_hour
-                    );
-
+                    //Add closes in 30 min
                     let tmp_time = getOpenCloseHours(scope.dates);
                     scope.openTime = tmp_time.open;
                     scope.closeTime = tmp_time.close;
-                    updateBtnColor();
                 }
 
-                function clickedOffOptionsBox(e) {
-                    if ((event.target.className && event.target.className.includes("del-opt-box")) || $(e.target).parents("#" + scope.storeType + " .del-opt-box").length) return;
-                    scope.deliveryOptions();
-                }
-
-                scope.deliveryOptions = function () {
-                    if (!scope.showDeliveryOptions) {
-                        $("#" + scope.storeType + " .del-opt-icon svg").removeClass('del-opt-icon-svg-2').addClass('del-opt-icon-svg-1');
-                        $("#" + scope.storeType + " .del-opt-btn").removeClass('del-opt-btn-2').addClass('del-opt-btn-1');
-                        $("#del-opt-background").removeClass('del-opt-background-2').addClass('del-opt-background-1');
-                        $("html").css('overflow-y', 'hidden');
-                        $(".items-section").addClass('catalog-content-mobile');
-                        scope.changeDelOption(scope.deliveryOption);
-                        $timeout(function () {
-                            scope.showDeliveryOptions = !scope.showDeliveryOptions;
-                            window.addEventListener('click', clickedOffOptionsBox, false);
-                        }, 200);
-                    } else {
-                        $("#" + scope.storeType + " .del-opt-icon svg").removeClass('del-opt-icon-svg-1').addClass('del-opt-icon-svg-2');
-                        $("#" + scope.storeType + " .del-opt-btn").removeClass('del-opt-btn-1').addClass('del-opt-btn-2');
-                        $("#" + scope.storeType + " .del-opt-box").addClass('del-opt-box-2');
-                        $("#" + scope.storeType + " .delivery-day_" + scope.choosenDay).removeClass('delivery-day-3').addClass('delivery-day-2');
-                        $("html").css('overflow-y', 'auto');
-                        $(".items-section").removeClass('catalog-content-mobile');
-                        scope.showDeliveryOptions = !scope.showDeliveryOptions;
-                        $timeout(function () {
-                            $("#" + scope.storeType + " .del-opt-box").removeClass('del-opt-box-3 del-opt-box-4');
-                            $("#del-opt-background").removeClass('del-opt-background-1').addClass('del-opt-background-2');
-                            scope.choosenDay = scope.dates.selected.date;
-                        }, 100);
-                        window.removeEventListener('click', clickedOffOptionsBox, false);
+                /**
+                 * Updates user selected delivery option
+                 * @param {string} type 
+                 */
+                scope.setDeliveryOption = function (type) {
+                    if (!scope.storeOpen || type == "schedule" || scope.screenMob) {
+                        scope.showOptionsModal = true;
+                        window.addEventListener('click', clickedOffOptionsModal, false);
+                        $("html").css("overflow", "hidden");
                     }
-                    updateBtnColor();
+                    if (type == "asap") {
+                        if (scope.storeOpen) {
+                            scope.asapBtnTxt = "45-60 MIN";
+                            updateOptionsInStorage("asap", false);
+                        } else {
+                            scope.setButtonTxt = "Schedule Delivery";
+                        }
+                        resetViewValues();
+                    } else if (type == "schedule") {
+                        scope.setButtonTxt = "Set Delivery Time";
+                        scope.asapBtnTxt = "ASAP Delivery";
+                    }
+                    scope.selectedOption = type;
                 };
 
-                scope.changeDelOption = function (option) {
-                    scope.deliveryOption = option;
-                    if (option == "Scheduled Delivery") {
-                        $("#" + scope.storeType + " .delivery-day_" + scope.choosenDay).removeClass('delivery-day-2').addClass('delivery-day-3');
-                        $("#" + scope.storeType + " .del-opt-box").removeClass('del-opt-box-4').addClass('del-opt-box-3');
-                        $timeout(function () {
-                            scope.showScheduleOptions = true;
-                            $("#" + scope.storeType + "schd_options").addClass('fadeIn').removeClass('fadeOut');
-                        }, 200);
-                        updateOrderDeliveryHrs("Scheduled Delivery");
-                    } else if ("ASAP Delivery") {
-                        $("#" + scope.storeType + "schd_options").addClass('fadeOut').removeClass('fadeIn');
-                        $("#" + scope.storeType + " .del-opt-box").removeClass('del-opt-box-3').addClass('del-opt-box-4');
-                        updateOrderDeliveryHrs("ASAP Delivery");
-                        $timeout(function () {
-                            scope.showScheduleOptions = false;
-                        }, 300);
-                    }
+                /**
+                 * Returns today's date in view format
+                 */
+                scope.getTodaysDate = function () {
+                    let today = new Date();
+                    return helpers.getMonthString(today.getMonth()) + " " + today.getDay();
                 };
 
+                /**
+                 * Returns user selected day for delivery
+                 */
+                scope.getSelectedDay = function () {
+                    if (!scope.dates) return;
+                    let tmp_date = scope.dates.date_array[scope.choosenDay];
+                    return tmp_date.display_week_day + ", " + tmp_date.display_month_name + " " + tmp_date.display_month_day;
+                };
+
+                /**
+                 * Return user selected hours for delivery
+                 */
+                scope.getSelectedHrs = function () {
+                    if (!scope.dates) return;
+                    return scope.dates.date_array[scope.choosenDay].hours_array[scope.dates.selected.time].display_hour;
+                };
+
+                /**
+                 * Updates user selected day for the delivery
+                 * @param {integer} num 
+                 */
                 scope.chooseDay = function (num) {
                     let day = scope.choosenDay;
                     if (day == num) return;
+                    if (!scope.dates.date_array[num].hours_array.length) {
+                        scope.storeOpenOnSelectedDay = false;
+                    } else {
+                        scope.storeOpenOnSelectedDay = true;
+                    }
                     $timeout(function () {
-                        $(".del-opt-box .delivery-day_" + day).removeClass('delivery-day-3').addClass('delivery-day-2');
-                        $(".del-opt-box .delivery-day_" + num).removeClass('delivery-day-2').addClass('delivery-day-3');
+                        scope.choosenDay = num;
+                        scope.showDayOptions = !scope.showDayOptions;
                     }, 0);
-                    scope.choosenDay = num;
                 };
 
+                /**
+                 * Updates user selected hours for the delivery
+                 * @param {integer} num 
+                 */
                 scope.chooseTime = function (num) {
                     scope.dates.selected.date = scope.choosenDay;
                     scope.dates.selected.time = num;
-                    updateOrderDeliveryHrs("Scheduled Delivery");
+                    scope.hrsIsNotSelected = false;
                 };
 
-                function updateOrderDeliveryHrs(option) {
-                    if (scope._deliveryError) return;
+                function clickedOffOptionsModal(e) {
+                    if ((event.target.className && event.target.className.includes("del-modal-body")) || $(e.target).parents(".delivery-options").length || $(e.target).parents(".del-modal-body").length) return;
+                    $timeout(function () {
+                        scope.closeModal();
+                    }, 0);
+                }
+
+                /**
+                 * Closes options modal and reverts view to previously selected option, if not selected
+                 */
+                scope.closeModal = function () {
+                    scope.showOptionsModal = false;
+                    window.removeEventListener('click', clickedOffOptionsModal, false);
+                    $("html").css("overflow", "auto");
+
                     let delivery_hrs = localStorage.getOrderDeliveryHrs();
-                    let store_name = scope.store_name;
-                    let date_hrs = scope.dates;
-                    if (option == "ASAP Delivery") {
-                        if (delivery_hrs && delivery_hrs.hasOwnProperty(store_name)) {
-                            delete delivery_hrs[store_name];
-                            localStorage.setOrderDeliveryHrs(delivery_hrs);
-                        } else return;
-                    } else if (option == "Scheduled Delivery") {
-                        if (!delivery_hrs) delivery_hrs = {};
-                        delivery_hrs[store_name] = {
-                            "date_selected": date_hrs.selected.date,
-                            "hrs_selected": date_hrs.selected.time,
-                            "value": date_hrs.date_array[date_hrs.selected.date].hours_array[date_hrs.selected.time].value
-                        };
-                        scope.deliveryDate = {
-                            month: date_hrs.date_array[date_hrs.selected.date].display_month_name,
-                            day: date_hrs.date_array[date_hrs.selected.date].display_month_day,
-                            time: date_hrs.date_array[date_hrs.selected.date].hours_array[date_hrs.selected.time].display_hour
-                        };
+                    if (!delivery_hrs.hasOwnProperty(scope.store_name)) {
+                        scope.selectedOption = "";
+                    } else if (delivery_hrs[scope.store_name]["asap"]) {
+                        scope.selectedOption = "asap";
+                        scope.asapBtnTxt = "45-60 MIN";
+                    } else if (delivery_hrs[scope.store_name]["schedule"]) {
+                        let date_hrs = scope.dates;
                         updateDeliveryDate(
                             date_hrs.date_array[date_hrs.selected.date].display_month_name,
                             date_hrs.date_array[date_hrs.selected.date].display_month_day,
                             date_hrs.date_array[date_hrs.selected.date].hours_array[date_hrs.selected.time].display_hour
                         );
-                        localStorage.setOrderDeliveryHrs(delivery_hrs);
+                        scope.selectedOption = "schedule";
                     }
+                };
+
+                /**
+                 * Final set of selected delivery option
+                 * @param {string} option 
+                 */
+                scope.updateOrderDeliveryHrs = function (option) {
+                    if (scope._deliveryError || !scope.storeOpenOnSelectedDay) return;
+                    if (scope.dates.selected.date != scope.choosenDay) {
+                        scope.hrsIsNotSelected = true;
+                        return;
+                    }
+                    let delivery_hrs = localStorage.getOrderDeliveryHrs();
+                    let date_hrs = scope.dates;
+                    if (option == "asap") {
+                        if (!scope.storeOpen) {
+                            scope.selectedOption = "schedule";
+                            return;
+                        }
+                        scope.asapBtnTxt = "45-60 MIN";
+                        delivery_hrs[scope.store_name] = {
+                            "asap": true
+                        };
+                        resetViewValues();
+                    } else if (option == "schedule") {
+                        updateOptionsInStorage("schedule", false);
+                        updateDeliveryDate(
+                            date_hrs.date_array[date_hrs.selected.date].display_month_name,
+                            date_hrs.date_array[date_hrs.selected.date].display_month_day,
+                            date_hrs.date_array[date_hrs.selected.date].hours_array[date_hrs.selected.time].display_hour
+                        );
+                    }
+                    $timeout(function () {
+                        scope.closeModal();
+                    }, 200);
+                };
+
+                /**
+                 * Used to update user selected delivery option details in local storage
+                 * @param {string} option 
+                 * @param {boolean} remove 
+                 */
+                function updateOptionsInStorage(option, remove){
+                    let delivery_hrs = localStorage.getOrderDeliveryHrs();
+                    let date_hrs = scope.dates;
+                    if (!delivery_hrs) {
+                        delivery_hrs = {};
+                    } else if (delivery_hrs && delivery_hrs.hasOwnProperty(scope.store_name)) {
+                        delete delivery_hrs[scope.store_name];
+                    }
+                    if(option == "schedule" && !remove){
+                        delivery_hrs[scope.store_name] = {
+                            "schedule": true,
+                            "date_selected": date_hrs.selected.date,
+                            "hrs_selected": date_hrs.selected.time,
+                            "value": date_hrs.date_array[date_hrs.selected.date].hours_array[date_hrs.selected.time].value
+                        };
+                    } else if(option == "asap" && !remove){
+                        delivery_hrs[scope.store_name] = {
+                            "asap": true
+                        };
+                    }
+                    localStorage.setOrderDeliveryHrs(delivery_hrs);
                 }
 
-                function updateBtnColor() {
-                    if (!scope.storeOpen && scope.deliveryOption == "ASAP Delivery") {
-                        scope.buttonStyle = { "background-color": "#ff8d8d" };
-                    } else if (scope.storeOpen && scope.deliveryOption == "ASAP Delivery") {
-                        scope.buttonStyle = { "background-color": "rgb(190, 255, 157)" };
-                    } else if (scope.deliveryOption == "Scheduled Delivery") {
-                        scope.buttonStyle = { "background-color": "rgb(236, 251, 151)" };
-                    }
+                scope.$on("showSchedulerModal", function (event) {
+                    $timeout(function () {
+                        scope.showOptionsModal = true;
+                        window.addEventListener('click', clickedOffOptionsModal, false);
+                        if (scope.storeOpen) {
+                            scope.setDeliveryOption('asap');
+                        } else {
+                            scope.setDeliveryOption('schedule');
+                        }
+                    }, 200);
+                });
+
+                function resetViewValues() {
+                    scope.choosenDay = 0;
+                    scope.dates.selected.date = 0;
+                    scope.dates.selected.time = 0;
+                    updateDeliveryDate();
                 }
 
                 function updateDeliveryDate(month, day, time) {
-                    scope.deliveryDate = {
-                        month: month,
-                        day: day,
-                        time: time
-                    };
+                    if (month && day && time) {
+                        scope.scheduleBtnTxt = month + " " + day + " From " + time;
+                    } else {
+                        scope.scheduleBtnTxt = "Schedule Delivery";
+                    }
                 }
             }, 0);
         }

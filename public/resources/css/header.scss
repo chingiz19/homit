@@ -20,7 +20,7 @@ nav {
     font-family: 'Nunito', sans-serif;
 }
 
-.logo-white{
+.logo-white {
     display: none;
 }
 
@@ -98,7 +98,7 @@ nav {
         transition: all 0.3s ease;
     }
 
-    .sign-btn:hover, .hub-btn:hover{
+    .sign-btn:hover, .hub-btn:hover {
         text-shadow: 0 3px 1px rgba(122, 122, 207, 0.1);
         color: #337ab7;
     }
@@ -125,8 +125,9 @@ nav {
     align-items: center;
     transition: width 0.3s ease;
 
-    .logo-sec{
+    .logo-sec {
         margin-bottom: 6px;
+
         .logo-img {
             width: 131px;
             height: 40px;
@@ -158,19 +159,18 @@ nav {
     background-color: transparent;
     color: rgb(42, 81, 145);
     transition: all 0.3s ease;
-    
-    --delay: 0.5s; 
-    --body-position-left: -17%; 
+    --delay: 0.5s;
+    --body-position-left: -17%;
     --header-position-left: 46%;
-    --header-border-top-clr: transparent; 
+    --header-border-top-clr: transparent;
     --header-border-bottom-clr: #141414;
     --header-border-right-clr: transparent;
-    --header-position-bottom: -0.8em; 
+    --header-position-bottom: -0.8em;
     --body-position-bottom: -3.4em;
 }
 
 .hub-btn:focus[homit-title]:before, .hub-btn:focus[homit-title]:after,
-.user-signed-btn:focus[homit-title]:before, .user-signed-btn:focus[homit-title]:after{
+.user-signed-btn:focus[homit-title]:before, .user-signed-btn:focus[homit-title]:after {
     opacity: 0;
     visibility: hidden;
 }
@@ -178,11 +178,10 @@ nav {
 .user-signed-btn {
     background-color: transparent;
     border: none;
-
-    --delay: 0.5s; 
-    --body-position-left: -74%; 
+    --delay: 0.5s;
+    --body-position-left: -74%;
     --header-position-left: 40%;
-    --header-border-top-clr: transparent; 
+    --header-border-top-clr: transparent;
     --header-border-bottom-clr: #141414;
     --header-border-right-clr: transparent;
     --header-position-bottom: -0.8em;
@@ -190,7 +189,7 @@ nav {
 }
 
 .user-signed-btn ng-md-icon {
-    fill: rgb(42,81,145);
+    fill: rgb(42, 81, 145);
 }
 
 .user-signed-btn ng-md-icon svg {
@@ -310,28 +309,33 @@ nav {
     background-color: rgb(253, 253, 253);
     box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.1), 0 15px 35px 0 rgba(49, 49, 93, 0.1), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
     z-index: 100;
-    overflow-y: auto;
-    scroll-behavior: smooth;
 
     .box-extBox {
         left: 73%;
+    }
+
+    #hdrHub2 {
+        height: 100%;
+    }
+
+    .hub-box {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: calc(400px - 58px);
+        overflow: auto;
+        scroll-behavior: smooth;
+
+        h3 {
+            color: #acb2c5;
+            font-size: 13px;
+            padding-top: 10px;
+        }
     }
 }
 
 .fadeIn-hdr {
     animation: fadein 150ms;
-}
-
-.hub-box {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.hub-box h3 {
-    color: #acb2c5;
-    font-size: 13px;
-    padding-top: 10px;
 }
 
 .store-div {
@@ -407,7 +411,7 @@ h3 {
         display: none;
     }
 
-    .hub-btn{
+    .hub-btn {
         width: 75px;
     }
 }
@@ -430,8 +434,7 @@ h3 {
 
 /* start of tablet and mobile devices */
 @media screen and (max-device-width: 776px) {
-
-    .homit-nav{
+    .homit-nav {
         border-bottom: none;
         background-color: rgb(42, 81, 145);
     }
@@ -439,7 +442,8 @@ h3 {
     .homit-nav-content {
         max-height: 80px;
         height: 55px;
-        .logo-sec{
+
+        .logo-sec {
             display: none;
         }
     }

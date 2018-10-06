@@ -160,29 +160,29 @@ app.service('helpers', function () {
     pub.getMonthString = function(data) {
         switch (data) {
             case 0:
-                return "Jan";
+                return "January";
             case 1:
-                return "Feb";
+                return "February";
             case 2:
-                return "Mar";
+                return "March";
             case 3:
-                return "Apr";
+                return "April";
             case 4:
                 return "May";
             case 5:
-                return "Jun";
+                return "June";
             case 6:
-                return "Jul";
+                return "July";
             case 7:
-                return "Aug";
+                return "August";
             case 8:
-                return "Sep";
+                return "September";
             case 9:
-                return "Oct";
+                return "October";
             case 10:
-                return "Nov";
+                return "November";
             case 11:
-                return "Dec";
+                return "December";
             default:
                 return "Invalid Month";
         }

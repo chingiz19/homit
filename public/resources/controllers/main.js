@@ -40,7 +40,9 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
             method: 'GET',
             url: "/api/hub/allstores"
         }).then(function successCallback(response) {
-            $scope.hubStores = response.data.store_types;
+            $timeout(function () {
+                $scope.hubStores = response.data.store_types;
+            }, 550);
         }, function errorCallback(response) {
             notification.addErrorMessage("Sorry. Something went wrong.");
         });
@@ -131,7 +133,7 @@ app.controller("mainController", function ($scope, $http, sessionStorage, $cooki
         var el = document.getElementById(id);
         if (el) {
             var top = document.getElementById(id).documentOffsetTop();
-            animateScrollTo(top, { speed: 1000 });
+            animateScrollTo(top, { speed: 2000 });
         }
     };
 

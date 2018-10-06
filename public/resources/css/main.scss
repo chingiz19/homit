@@ -17,8 +17,8 @@ body {
 }
 
 .fadeInStore {
-    visibility: visible;
-    animation: fadein 2.1s ease;
+    opacity: 1;
+    animation: fadein 2s;
 }
 
 .user-signed-btn ng-md-icon {
@@ -680,6 +680,8 @@ body {
 .main-down-arrow-div {
     position: absolute;
     bottom: -5px;
+    width: 50px; 
+    height: 70px;
     display: flex;
     overflow: hidden;
     flex-direction: column;
@@ -721,19 +723,19 @@ body {
     overflow: hidden;
 
     .stripes{
-        background: -webkit-gradient(linear, left top, left bottom, from(#638aa3ea), color-stop(10%, #7dabca), color-stop(38%, #82b6d8ec), color-stop(48%, #8ac7f0d5), color-stop(72%, #8ac7f042));
-        background: linear-gradient(#638aa3ea, #7dabca 10%, #82b6d8ec 38%, #8ac7f0d5 48%, #8ac7f042 72%);
+        background: -webkit-gradient(linear, left top, left bottom, from(rgba(99,138,163,0.917)), color-stop(10%, #7dabca), color-stop(38%, rgba(130,182,216,0.925)), color-stop(48%, rgba(138,199,240,0.835)), color-stop(72%, rgba(138,199,240,0.258)));
+        background: linear-gradient(rgba(99,138,163,0.917), #7dabca 10%, rgba(130,182,216,0.925) 38%, rgba(138,199,240,0.835) 48%, rgba(138,199,240,0.258) 72%);
         
         :nth-child(1) {
             grid-area: auto/8/-3/-1;
-            background: -webkit-gradient(linear,left top,right top,color-stop(40%,#a3d2f361),to(#b1beff96));
-            background: linear-gradient(100grad, #a3d2f361 44%, #b1beff96);
+            background: -webkit-gradient(linear,left top,right top,color-stop(40%,rgba(163,210,243,0.38)),to(rgba(177,190,255,0.588)));
+            background: linear-gradient(100grad, rgba(163,210,243,0.38) 44%, rgba(177,190,255,0.588));
         }
 
         :nth-child(2) {
             grid-area: auto/1/-1/-1;
-            background: -webkit-gradient(linear,left top,right top,color-stop(40%,rgba(255, 255, 255, 0)),to(#b1fffb5e));
-            background: linear-gradient(100grad,#f9f9f9 50%,#b1fffb5e);
+            background: -webkit-gradient(linear,left top,right top,color-stop(40%,rgba(255, 255, 255, 0)),to(rgba(177,255,251,0.368)));
+            background: linear-gradient(100grad,#f9f9f9 50%,rgba(177,255,251,0.368));
         }
     }
 

@@ -40,6 +40,10 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
         pScope.userCart[product.store.name] = store_products;
         pScope.updateUserCart(pScope.userCart, product.store.name, false);
         pScope.prepareItemForDB(product.selected.UID, pScope.userCart[product.store.name][product.selected.UID].selected.quantity);
+
+        if (Object.getOwnPropertyNames(pScope.userCart).length > numOfStoresInCart){
+            $rootScope.$broadcast("showSchedulerModal");   
+        }
     };
 
     publicFunctions.clear = function () {
@@ -98,7 +102,7 @@ app.directive("cart", function ($timeout, user, $window, cartService, localStora
                             scope.updateUserCart(localStorage.getUserCart());
                             console.error("Couldn't retrieve your cart");
                         });
-                }
+                };
 
                 // public variables
                 scope.cartCtrl = publicFunctions;

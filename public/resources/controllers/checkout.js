@@ -5,6 +5,7 @@ app.controller("checkoutController",
         $scope.userInfo = {};
 
         $scope.init = function () {
+            $scope.screenMob = global_screenIsMob;
             $scope.totalAmount = 0;
             $scope.delFee = 0;
             $scope.GST = 0;
@@ -289,7 +290,9 @@ app.controller("checkoutController",
             let coupon_details = localStorage.getUserCoupons();
             let order_scheduled_time = {};
             for (let store in scheduled_delivery) {
-                order_scheduled_time[store] = scheduled_delivery[store].value;
+                if(scheduled_delivery[store].value){
+                    order_scheduled_time[store] = scheduled_delivery[store].value;
+                }
             }
             $http({
                 method: 'POST',
@@ -309,7 +312,7 @@ app.controller("checkoutController",
                 localStorage.clearAfterCheckout();
                 sessionStorage.clearAfterCheckout();
                 updateCheckoutBtn("Thank You!", "none");
-                updateCheckoutModal("success", true, "Thank You", "Homit will take care!", "ASAP orders will be delivered in 30 - 45 mins");
+                updateCheckoutModal("success", true, "Thank You", "Homit will take care!", "ASAP orders will be delivered in 45 - 60 mins");
 
 
             }, function errorCallback(error) {

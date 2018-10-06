@@ -1,343 +1,401 @@
 <style>
-    .del-opt-icon {
-        fill: rgba(39, 9, 9, 0.9);
-    }
-
-    .hmt-radio-container-time {
-        font-size: 15px;
-        padding-bottom: 5px;
-        margin-top: 0px;
-        padding-top: 5px;
-    }
-
-    .control_indicator_time {
-        top: 7px;
-        width: 15px;
-        height: 15px;
-    }
-
-    .del-opt-background {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100vw;
-        background-color: black;
-        opacity: 0;
-        z-index: 4;
-    }
-
-    .del-options-sec {
-        position: relative;
-        display: flex;
-        align-items: center;
-        font-size: 17px;
-    }
-
-    .del-opt-btn {
-        position: relative;
-        height: 30px;
-        padding: 0;
-        min-width: 190px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        border: 1px solid #fff;
-        padding: 0px;
-        border-radius: 4px;
-        background-color: #fff;
-        z-index: 4;
-
-        --delay: 0.8s; 
-        --body-position-left: 5%; 
-        --header-position-left: 30%; 
-        --header-border-top-clr: #141414; 
-        --header-border-right-clr: transparent;
-        --header-border-left-clr: transparent;
-    }
-
-    .del-opt-btn:focus[homit-title]:before, .del-opt-btn:focus[homit-title]:after{
-        opacity: 0;
-        visibility: hidden;
-    }
-
-    .del-opt-btn ng-md-icon {
-        padding: 0 3px;
-    }
-
-    .del-opt-btn ng-md-icon svg {
-        width: 20px;
-        height: 20px;
-    }
-
-    .del-opt-btn span {
-        color: rgba(39, 9, 9, 0.9);
-    }
-
-    .del-opt-box {
-        position: absolute;
-        top: 30px;
-        width: 190px;
-        height: 0;
-        background-color: rgb(254, 254, 254);
-        border-radius: 0 0 5px 5px;
-        border: none;
-        box-shadow: 0 0px 10px rgba(0, 0, 0, 0.6);
-        z-index: 5;
-    }
-
-    .del-opt-box-dev {
-        height: calc(100% - 10px);
-    }
-
-    .txt-select-tm {
-        margin-top: 19px;
-        font-size: 16px;
-        padding-left: 15px;
-        margin-bottom: 5px;
-        font-weight: 600;
-    }
-
-    .sch-month {
-        display: flex;
-        flex-direction: row;
-        padding: 2px 5px;
-        justify-content: space-around;
-        border: 1px solid rgb(230, 230, 230);
-        background-color: white;
-        border-left: none;
-        border-right: none;
-    }
-
-    .delivery-day {
-        display: flex;
-        padding: 4px 5px;
-        flex-direction: column;
-        text-align: center;
-        border-radius: 2px;
-        color: rgb(126, 55, 55);
+    .options-btn:focus,
+    .day-option:focus,
+    .options-day-div h3:focus,
+    .deliveryOption:focus {
         outline: none;
     }
 
-    .delivery-day:hover {
-        cursor: pointer;
-        background-color: rgb(235, 235, 235);
-        transition: background-color 0.2s ease-in-out;
+    .hmt-radio-container {
+        font-size: 15px !important;
     }
 
-    .del-week-day {
-        font-size: 12px;
+    .font-type {
+        letter-spacing: 0.01em;
+        font-family: 'Nunito', sans-serif;
+        user-select: none;
     }
 
-    .del-month-day {
-        font-size: 20px;
+    .deliveryOption {
+        height: 100%;
+        padding: 15px;
+        border: 1px solid #fff;
+        background-color: transparent;
+        transition: all 0.2s ease;
     }
 
-    .sch-hrs {
+    .scheduledOption {
+        border-radius: 15px 0 0 15px;
+    }
+
+    .asapOption {
+        border-radius: 0 15px 15px 0;
+    }
+
+    .asap-icon{
+        margin: 0 3px 2px 0;
+        fill: #000000; 
+    }
+
+    .optionSelected {
+        background-color: #fff;
+        color: black;
+        font-size: 16px;
+    }
+
+    .delivery-options {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 28px;
+        font-size: 15px;
+        letter-spacing: 0.04em;
+        font-weight: 600;
+    }
+
+    .del-modal-section {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.63);
+        z-index: 100;
+    }
+
+    .del-modal-frame {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 1100;
+        animation: trslY-100-0 300ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .del-modal-body {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 560px;
+        height: 400px;
+        transform: translate(-50%, -50%);
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.2), 0 15px 35px 0 rgba(49, 49, 93, 0.2), 0 5px 15px 0 rgba(0, 0, 0, 0.16);
+        border-radius: 5px;
+    }
+
+    .del-modal-cls-btn {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        width: 34px;
+        height: 34px;
+        border: none;
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .del-modal-cls-btn ng-md-icon {
+        fill: rgba(12, 12, 12, 0.8);
+    }
+
+    .del-modal-cls-btn ng-md-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .modal-header {
+        margin-bottom: 20px;
+        padding: 5px 0 20px 20px;
+        border: none;
+        color: rgb(15, 15, 15);
+        font-size: 27px;
+        border-bottom: 1px solid #eff3f7;
+    }
+
+    .options-btns-div {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 45px;
+    }
+
+    .options-btn {
         display: flex;
         flex-direction: column;
-        height: 205px;
-        overflow-y: auto;
-        padding-top: 4px;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .sch-hrs div {
+        width: 50%;
+        height: 100%;
         background-color: transparent;
-        transition: background-color 0.2s ease-in-out;
+        color: #a5b2be;
+        font-size: 15px;
+        border: none;
     }
 
-    .sch-hrs div:hover {
-        cursor: pointer;
-        background-color: rgb(225, 225, 255);
-        transition: background-color 0.2s ease-in-out;
+    .options-btn div {
+        width: 0;
+        height: 2px;
     }
 
-    .del-opt-info {
+    .options-btn .txt {
+        width: 100%;
+        height: 100%;
+    }
+
+    .option-selected-line {
+        display: flex;
+        width: 100% !important;
+        background-color: rgb(42, 81, 145);
+        margin: auto;
+        transition: width 0.4s ease;
+    }
+
+    .option-selected-txt {
+        color: black !important;
+        transition: color 0.4s ease;
+    }
+
+    .asap-section,
+    .schedule-section {
+        padding: 30px 25px;
+    }
+
+    .asap-section h3,
+    .options-day-div h3 {
         display: flex;
         align-items: center;
-        height: 30px;
-        margin-top: 5px;
-        color: rgb(255, 247, 247);
+        justify-content: center;
+        width: 100%;
+        height: 50px;
+        color: black;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .schedule-section select {
+        width: 38%;
+        margin: auto;
+        background-color: transparent;
+        border: none;
+    }
+
+    .asap-section div {
+        width: 100%;
+        height: 60px;
+        border-top: 1px solid #eff3f7;
+        border-bottom: 1px solid #eff3f7;
+        color: black;
+    }
+
+    .submit-btn {
+        position: relative;
+        height: 40px;
+        width: 250px;
+        margin: auto;
+        border: none;
+        background-color: rgb(42, 81, 145);
+        color: #fff;
+        border-radius: 20px;
+        font-size: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover .CG-done-icon {
+        top: 8px;
+        right: 32px;
+    }
+
+    .options-day-div {
+        position: relative;
+        font-size: 16px;
+    }
+
+    .options-day-div h3 {
+        flex-direction: row;
+        z-index: 101;
+        position: relative;
+        background-color: #fff;
+    }
+
+    .options-day-div h3 ng-md-icon {
+        transition: all 0.4s ease-out;
+    }
+
+    .options-day-box {
+        position: absolute;
+        top: 50px;
+        left: 95px;
+        width: 300px;
+        height: 150px;
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        padding: 5px;
+        border-radius: 5px;
+        box-shadow: 0 0 0 1px rgba(136, 152, 170, 0.2), 0 15px 35px 0 rgba(49, 49, 93, 0.2), 0 5px 15px 0 rgba(0, 0, 0, 0.16);
+        color: black;
+        z-index: 100;
+        overflow-y: auto;
+    }
+
+    .day-option {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding-bottom: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .day-option ng-md-icon {
+        fill: #1bb978;
+        margin-right: 4px;
+        margin-top: 1px;
+    }
+
+    .options-hrs-div {
+        width: 100%;
+        height: 90px;
+        border-top: 1px solid #eff3f7;
+        border-bottom: 1px solid #eff3f7;
+        color: black;
+        overflow-y: auto;
+        transition: all 0.3s ease;
+    }
+
+    .store-cls-txt {
+        color: rgb(221, 44, 0) !important;
         font-size: 17px;
     }
 
-    .del-opt-info ng-md-icon {
-        margin: 0 10px 0 10px;
-        fill: white;
+    .schedule-str-cls {
+        position: relative;
+        width: 60%;
+        margin: 18px auto;
+        text-align: center;
     }
 
-    .del-opt-info ng-md-icon svg {
-        width: 7px;
-        height: 7px;
+    .asap-str-cls {
+        display: flex;
+        flex-direction: row;
     }
 
-    .del-opt-icon-svg-1 {
-        transform: rotate(180deg);
-        transition: transform 0.4s ease-out;
+    .hrs-error-msg {
+        position: absolute;
+        bottom: 16%;
+        width: calc(100% - 50px);
+        text-align: center;
+        color: rgb(221, 44, 0);
+        font-size: 15px;
     }
 
-    .del-opt-icon-svg-2 {
-        transform: rotate(0deg);
-        transition: transform 0.4s ease-out;
+    .day-option:hover,
+    .options-hrs-div div:hover {
+        background-color: #bfd0df83;
     }
 
-    .del-opt-btn-1 {
-        border-radius: 4px 4px 0 0;
-        z-index: 11;
-        transition: border-radius 0.1s ease-out;
-    }
-
-    .del-opt-btn-2 {
-        border-radius: 4px 4px 4px 4px;
-        transition: border-radius 0.7s ease-out;
-    }
-
-    .del-opt-background-1 {
-        height: 130vh;
-        opacity: 0.25;
-        transition: opacity 0.3s ease-out;
-    }
-
-    .del-opt-background-2 {
-        height: 0;
-        opacity: 0;
-        transition: opacity 0.3s ease-out;
-    }
-
-    .del-opt-box-2 {
-        height: 0;
-        border: none;
-        border-top-right-radius: 0px;
-        z-index: 4;
-        transition: all 0.4s ease-out;
-    }
-
-    .del-opt-box-3 {
-        height: 380px;
-        width: 320px;
-        border-top-right-radius: 5px;
-        z-index: 10;
-        transition: all 0.4s ease-out;
-    }
-
-    .del-opt-box-4 {
-        height: 120px;
-        width: 190px;
-        border-top-right-radius: 0px;
-        z-index: 10;
-        transition: all 0.4s ease-out;
-    }
-
-    .delivery-day-2 {
-        background-color: rgba(0, 0, 0, 0);
-        color: rgb(126, 55, 55);
-        transition: all 0.2s ease-out;
-    }
-
-    .delivery-day-3 {
-        background-color: rgba(42, 81, 145, 0.9) !important;
-        color: white;
-        transition: all 0.2s ease-out;
+    .submit-btn:active {
+        transform: translateY(2px);
+        -webkit-box-shadow: 0 7px 14px rgba(50, 50, 93, .2), 0 3px 6px rgba(0, 0, 0, .16);
+        box-shadow: 0 7px 14px rgba(50, 50, 93, .2), 0 3px 6px rgba(0, 0, 0, .16);
     }
 
     /* start of phone styles */
-
     @media screen and (max-device-width: 479px) {
-
-        .delivery-day:hover {
-            background-color: transparent;
+        .scheduledOption, .asapOption {
+            border-radius: 15px;
         }
 
-        .catalog-content-mobile{
-            height: calc(100vh - 250px);
-            overflow-y: hidden;
-        }
-
-        .del-options-sec {
-            font-size: 15px;
-        }
-
-        .del-opt-btn {
-            height: 28px;
-            min-width: 170px;
-        }
-
-        .store-name-txt {
-            margin-bottom: 5px;
-        }
-
-        .del-opt-box {
-            top: 28px;
-            left: calc(-1*(100vw - 100%)/2);
+        .del-modal-body{
+            left: 0;
+            top: 0;
+            transform: none;
             width: 100vw;
+            height: 100vh;
         }
 
-        .del-opt-background-1{
-            height: calc(100vh - 200px);
+        .options-day-box{
+            left: 4%;
         }
 
-        .del-opt-box-3 {
-            height: calc(100vh - 200px);
+        .options-hrs-div{
+            height: 180px;
         }
 
-        .del-month-day {
-            font-size: 17px;
-        }
-
-        .del-week-day {
-            font-size: 10px;
-        }
-
-        .sch-hrs {
-            height: calc(100% - 160px);
+        .hrs-error-msg{
+            bottom: 20px;
         }
     }
+
 </style>
 
-
-<section id="{{storeType}}" class="del-options-sec">
-    <button class="del-opt-btn" ng-click="deliveryOptions()" ng-style="buttonStyle" homit-title="View delivery options" homit-title-top type="button">
-        <ng-md-icon class="del-opt-icon" icon="arrow_drop_down"></ng-md-icon>
-        <span>{{ deliveryOption}}</span>
-    </button>
-    <div ng-if="_deliveryError">
-        Sorry, scheduled delivery is not available at this point
+<section id="{{storeType}}" ng-cloak>
+    <div class="delivery-options font-type">
+        <div ng-show="!screenMob || selectedOption == 'schedule' || selectedOption == ''" class="deliveryOption scheduledOption box-center" ng-class="{'optionSelected': (selectedOption == 'schedule') }" ng-click="setDeliveryOption('schedule')">{{scheduleBtnTxt}}</div>
+        <div ng-show="!screenMob || selectedOption == 'asap'" class="deliveryOption asapOption box-center" ng-class="{'optionSelected': (selectedOption == 'asap') }" ng-click="setDeliveryOption('asap')">
+            <ng-md-icon class="asap-icon" icon="schedule" size="20" ng-show="asapBtnTxt == '45-60 MIN' "></ng-md-icon>{{asapBtnTxt}}
+        </div>
     </div>
-    <div class="del-opt-box" ng-if="!_deliveryError">
-        <div ng-show="showDeliveryOptions" class="del-opt-box-dev">
-            <section>
-                <label id="{{storeType}} + opt_1" class="hmt-radio-container">ASAP Delivery
-                    <input type="radio" ng-click="changeDelOption('ASAP Delivery')" ng-model="deliveryOption" value="ASAP Delivery" ng-checked="deliveryOption == 'ASAP Delivery'"
-                    />
-                    <div class="control_indicator"></div>
-                </label>
-                <label id="{{storeType}} + opt_2" class="hmt-radio-container">Scheduled Delivery
-                    <input type="radio" ng-click="changeDelOption('Scheduled Delivery')" ng-model="deliveryOption" value="Scheduled Delivery"
-                        ng-checked="deliveryOption == 'Scheduled Delivery'" />
-                    <div class="control_indicator"></div>
-                </label>
-            </section>
-            <section id="{{storeType}}schd_options" ng-show="showScheduleOptions" class="fadeIn">
-                <div class="txt-select-tm">Select Delivery Time</div>
-                <div class="sch-month">
-                    <div class="delivery-day delivery-day_{{ $index }}" ng-repeat="day in dates.date_array track by $index" ng-click="chooseDay($index)">
-                        <span class="del-month-day">{{ day.display_month_day }}</span>
-                        <span class="del-week-day">{{ day.display_week_day }}</span>
-                    </div>
+</section>
+<section ng-show="showOptionsModal" class="del-modal-section font-type">
+    <div class="del-modal-frame">
+        <div class="del-modal-body">
+            <button class="del-modal-cls-btn" ng-click="closeModal()" type="button">
+                <ng-md-icon icon="clear"></ng-md-icon>
+            </button>
+            <h2 class="modal-header">Select delivery time</h2>
+            <div class="options-btns-div">
+                <div class="options-btn" ng-click="setDeliveryOption('schedule')">
+                    <div class="box-center txt" ng-class="{'option-selected-txt': (selectedOption == 'schedule') }">SCHEDULE</div>
+                    <div clas="under-line" ng-class="{'option-selected-line': (selectedOption == 'schedule') }"></div>
                 </div>
-                <div class="sch-hrs">
-                    <div class="delivery-time_{{ $index }}" ng-repeat="time in dates.date_array[ choosenDay ].hours_array track by $index">
-                        <label class="hmt-radio-container hmt-radio-container-time">{{ time.display_hour }}
-                            <input type="radio" ng-click="chooseTime($index)" ng-checked="dates.selected.time == $index && dates.selected.date == choosenDay"
-                                ng-model="deliveryTime" value="{{storeType}}$index" />
-                            <div class="control_indicator control_indicator_time"></div>
-                        </label>
-                    </div>
-                    <div ng-show="!dates.date_array[ choosenDay ].hours_array.length" ng-cloak>
-                        <img style="height: 200px; margin: 0 auto; display: flex;" ng-src="/resources/images/non-catalog-image/pages/homit_closed.png">
-                    </div>
+                <div class="options-btn" ng-click="setDeliveryOption('asap')">
+                    <div class="box-center txt" ng-class="{'option-selected-txt': (selectedOption == 'asap') }">ASAP</div>
+                    <div clas="under-line" ng-class="{'option-selected-line': (selectedOption == 'asap') }"></div>
                 </div>
-            </section>
+            </div>
+            <div class="options-content-div">
+                <section class="schedule-section" ng-show="selectedOption == 'schedule'">
+                    <div class="options-day-div">
+                        <h3 ng-click="showDayOptions = !showDayOptions">{{getSelectedDay()}}
+                            <ng-md-icon icon="keyboard_arrow_down" size="22" ng-class="{'icon-rot-1': (showDayOptions) }"></ng-md-icon>
+                        </h3>
+                        <div ng-show="showDayOptions" class="options-day-box fadeIn">
+                            <div class="day-option" ng-repeat="day in dates.date_array track by $index" ng-click="chooseDay($index)">
+                                <ng-md-icon icon="done" size="20" ng-show="choosenDay == $index"></ng-md-icon>
+                                {{day.display_week_day +", " + day.display_month_name + " " + day.display_month_day}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="options-hrs-div" ng-style="(hrsIsNotSelected) && {'border-top': '1px solid rgba(232, 120, 92, 0.57)', 'border-bottom':'1px solid rgba(232, 120, 92, 0.57)'}">
+                        <div ng-repeat="time in dates.date_array[ choosenDay ].hours_array track by $index">
+                            <label class="hmt-radio-container hmt-radio-container-time">{{ time.display_hour }}
+                                <input type="radio" ng-click="chooseTime($index)" ng-checked="dates.selected.time == $index && dates.selected.date == choosenDay"
+                                    value="$index" />
+                                <div class="control_indicator control_indicator_time"></div>
+                            </label>
+                        </div>
+                        <div ng-show="!storeOpenOnSelectedDay" class="schedule-str-cls store-cls-txt">Store closed on <b>{{dates.date_array[choosenDay].display_month_name
+                                + " " + dates.date_array[choosenDay].display_month_day}}</b>, please select other day.</div>
+                    </div>
+                    <div ng-show="hrsIsNotSelected" class="fadeIn hrs-error-msg">Select delivery hours..</div>
+                </section>
+                <section class="asap-section" ng-show="selectedOption == 'asap'">
+                    <h3>Today, {{getTodaysDate()}}</h3>
+                    <div class="box-center" ng-show="storeOpen">As soon as possible (45-60mins)</div>
+                    <div class="box-center asap-str-cls store-cls-txt" ng-show="!storeOpen">Store closed
+                        <span ng-show="openTime">, opens at {{openTime}}</span>
+                    </div>
+                </section>
+                <button class="submit-btn box-center" ng-click="updateOrderDeliveryHrs(selectedOption)" type="button">
+                    {{setButtonTxt}}
+                    <ng-md-icon icon="done" class="CG-done-icon" size="20"></ng-md-icon>
+                </button>
+            </div>
         </div>
     </div>
 </section>

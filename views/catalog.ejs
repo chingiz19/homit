@@ -13,19 +13,18 @@
             <div class="catalog-store-cover"></div>
             <div class="catalog-store-cover-div"></div>
             <div id="del-opt-background" class="del-opt-background"></div>
-            <div class="store-info-txt-box" ng-show="deliveryOption">
+            <div class="store-info-txt-box" ng-show="optionsLoaded">
                 <div class="store-name-txt">
                     <a href="/hub/{{display_storeInfo.name}}" target="_self">{{ display_storeInfo.display_name }}</a>
+                    <div class="varified-icon box-center">
+                        <img alt="{{category.category_name}}" ng-src="/resources/images/non-catalog-image/icons/verified.png">
+                    </div>
                 </div>
-                <scheduler store-type="storeType" delivery-option="deliveryOption" delivery-date="deliveryDate" open-time="open_time" close-time="close_time"
-                    del-fee="del_fee"></scheduler>
-                <div class="del-opt-info" ng-cloak>
-                    <div ng-show="display_storeInfo.store_open == false && deliveryOption == 'ASAP Delivery'" class="store-oval store-open-hrs">Store Closed. Opens at {{ open_time }}</div>
-                    <div ng-show="display_storeInfo.store_open == true && deliveryOption == 'ASAP Delivery'" class="store-hrs-txt">Open for Delivery {{ close_time }}</div>
-                    <div ng-show="deliveryOption == 'Scheduled Delivery'" class="store-hrs-txt">Delivery Time: {{ deliveryDate.month + " " + deliveryDate.day + ", From " + deliveryDate.time}}</div>
-                    <ng-md-icon icon="fiber_manual_record"></ng-md-icon>
+                <section class="del-opt-info" style="display: flex; align-items: center; height: 30px; margin-top: 8px; color: rgb(255, 247, 247); font-size: 17px;" ng-cloak>
+                    <scheduler store-type="storeType" options-loaded="optionsLoaded" screen-mob="screenMob" del-fee="del_fee"></scheduler>
+                    <ng-md-icon class="dot-icon" icon="fiber_manual_record" size="7"></ng-md-icon>
                     <div class="store-DF">{{del_fee}}</div>
-                </div>
+                </section>
             </div>
         </section>
         <section class="catalog-sub-hdr" ng-cloak>

@@ -1,9 +1,13 @@
-md-progress-circular svg path { 
-    stroke: rgba(226, 226, 226, 0.75); 
+md-progress-circular svg path {
+    stroke: rgba(226, 226, 226, 0.75);
 }
 
-.update-spin-co{
-    position: absolute; 
+.modal-header-ln2 md-progress-circular.md-default-theme path, .modal-header-ln2 md-progress-circular path {
+    stroke: rgb(42,81,145);
+}
+
+.update-spin-co {
+    position: absolute;
     top: 13.5px;
     left: 18px;
 }
@@ -27,7 +31,7 @@ label {
     height: 30px;
     font-size: 15px;
     color: rgba(0, 0, 0, 0.85);
-    border: 1px solid rgba(0, 0, 0, 0.25) ;
+    border: 1px solid rgba(0, 0, 0, 0.25);
     border-top-width: 0px;
     border-left-width: 0px;
     border-right-width: 0px;
@@ -91,7 +95,7 @@ label {
     height: 15px !important;
 }
 
-body, body button{
+body, body button {
     font-family: 'Nunito', sans-serif;
 }
 
@@ -129,7 +133,7 @@ md-input-container {
     margin: 70px auto;
 }
 
-.success-btn:focus{
+.success-btn:focus {
     outline: 0;
 }
 
@@ -191,12 +195,13 @@ md-input-container {
     padding-left: 28%;
 }
 
-.order-coupons{
-    width: 76%; 
-    margin: 0 auto; 
+.order-coupons {
+    width: 76%;
+    margin: 0 auto;
     font-size: 15px;
-    .coupons-tr{
-        width: 100%; 
+
+    .coupons-tr {
+        width: 100%;
         color: #da1a36;
     }
 }
@@ -215,7 +220,7 @@ md-input-container {
     color: rgb(13, 13, 13);
 }
 
-.customer-info-p1, .customer-info-p2, .customer-info-p3, .when-section{
+.customer-info-p1, .customer-info-p2, .customer-info-p3, .when-section {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -226,15 +231,15 @@ md-input-container {
     border-radius: 15px;
 }
 
-.customer-info-p1{
+.customer-info-p1 {
     margin: 15px auto 15px auto;
 }
 
-.customer-info-p2{
+.customer-info-p2 {
     margin: 15px auto 40px auto;
 }
 
-.customer-info-p3{
+.customer-info-p3 {
     margin: 30px auto 40px auto;
 }
 
@@ -245,16 +250,16 @@ md-input-container {
     cursor: pointer;
 }
 
-.ci-p1-user-edit{
-    position: absolute; 
+.ci-p1-user-edit {
+    position: absolute;
     top: 7px;
     right: 7px;
-    fill: rgb(42,81,145);
+    fill: rgb(42, 81, 145);
     opacity: 0;
     transition: opacity 0.2s ease;
 }
 
-.ci-p1-user:hover .ci-p1-user-edit{
+.ci-p1-user:hover .ci-p1-user-edit {
     opacity: 1;
     transition: opacity 0.2s ease;
 }
@@ -301,7 +306,7 @@ md-input-container {
     justify-content: center;
 }
 
-.del-opt-box{
+.del-opt-box {
     right: 0;
 }
 
@@ -312,41 +317,78 @@ md-input-container {
     width: 100%;
     height: 50px;
     padding: 0 5px 0 15px;
+
+    .delivery-options {
+        margin-bottom: 5px;
+        margin-top: 2px;
+    }
+
+    img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .deliveryOption {
+        padding: 13px;
+        color: rgba(39, 9, 9, 0.45);
+        font-size: 14px;
+        @media screen and (max-device-width: 479px) {
+            font-size: 11px;
+            padding: 8px;
+        }
+        font-weight: 400;
+        border: none;
+
+        .asap-icon {
+            fill: #828282;
+        }
+    }
+
+    .optionSelected {
+        border: 1px solid #a7c3e08a;
+        border-radius: 15px !important;
+        color: #4f575f !important;
+        background-color: #eef5fd;
+    }
+
+    .asapOption {
+        display: none;
+    }
+
+    .asapOption.optionSelected {
+        display: flex !important;
+    }
 }
 
-.del-options-div-2 img {
-    width: 40px;
-    height: 40px;
+.when-section {
+    margin: 15px auto 40px auto;
 }
 
-.when-section{
-    margin: 15px auto 40px auto; 
-}
-
-.coupon-section{
-    display: flex; 
-    flex-direction: row; 
-    justify-content: center; 
+.coupon-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     padding: 0px 10%;
 
-    md-input-container{
+    md-input-container {
         padding-right: 0px;
     }
 
-    md-input-container.md-input-focused ~ .apply-button{
+    md-input-container.md-input-focused ~ .apply-button {
         border-color: rgba(0, 0, 0, 0.45) !important;
     }
-    .apply-button{
-        height: 30px; 
-        width: 60px; 
-        border: none; 
-        border-bottom: 1px solid rgba(0, 0, 0, 0.25); 
-        margin-top: 5px; 
-        outline: none; 
-        padding: 5px 10px; 
+
+    .apply-button {
+        height: 30px;
+        width: 60px;
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        margin-top: 5px;
+        outline: none;
+        padding: 5px 10px;
         background-color: transparent;
-        color: #1bb978; 
-        font-size: 15px; 
+        color: #1bb978;
+        font-size: 15px;
         font-weight: 600;
     }
 }
@@ -355,18 +397,13 @@ md-input-container {
     display: flex;
     flex-direction: column;
     padding-left: 10px;
-}
+    margin: auto;
 
-.do-txt-box .line-1 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.store-hrs-txt {
-    color: rgba(39, 9, 9, 0.45);
-    font-size: 14px;
-    font-weight: 400;
+    .line-1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 .store-clsd-txt {
@@ -376,8 +413,7 @@ md-input-container {
 }
 
 .sch-store-name {
-    font-size: 14px !important;
-    padding-right: 5px;
+    font-size: 15px !important;
 }
 
 .del-opt-btn {
@@ -412,10 +448,10 @@ md-input-container {
     margin: 30px auto;
 }
 
-.CG-cur-button:active{
+.CG-cur-button:active {
     transform: translateY(2px);
-    -webkit-box-shadow: 0 7px 14px rgba(50,50,93,.2),0 3px 6px rgba(0,0,0,.16);
-    box-shadow: 0 7px 14px rgba(50,50,93,.2),0 3px 6px rgba(0,0,0,.16);
+    -webkit-box-shadow: 0 7px 14px rgba(50, 50, 93, 0.2), 0 3px 6px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.2), 0 3px 6px rgba(0, 0, 0, 0.16);
 }
 
 .co-view-cart-btn {
@@ -470,11 +506,11 @@ md-input-container {
     margin-bottom: 10px;
 }
 
-.result-msg-ln2{
+.result-msg-ln2 {
     text-align: center;
 }
 
-.result-msg-ln3{
+.result-msg-ln3 {
     text-align: center;
 }
 
@@ -483,7 +519,7 @@ md-input-container {
     font-size: 25px;
 }
 
-.del-time-msg{
+.del-time-msg {
     font-size: 12px;
     color: #188c5d;
 }
@@ -547,11 +583,10 @@ md-input-container {
 }
 
 @media (max-width: 884px) and (min-width: 571px) {
-    .co-cart-sec , .co-view-cart-btn{
+    .co-cart-sec, .co-view-cart-btn {
         width: 492px;
     }
 }
-
 
 /* start of medium tablet styles */
 @media screen and (min-device-width: 480px) and (max-device-width: 776px) {
@@ -565,13 +600,13 @@ md-input-container {
     }
 }
 
-@media (max-width: 884px) and (min-width: 400px){
-    .co-view-cart-btn{
+@media (max-width: 884px) and (min-width: 400px) {
+    .co-view-cart-btn {
         margin-top: 57px;
     }
 }
 
-@media (max-width: 884px) and (min-width: 400px) , screen and (max-device-width: 479px){
+@media (max-width: 884px) and (min-width: 400px), screen and (max-device-width: 479px) {
     .checkout-content {
         width: calc(100vw - 30px);
         margin: 0 auto 30px auto;
@@ -630,21 +665,20 @@ md-input-container {
 
 /* start of phone styles */
 @media screen and (max-device-width: 479px) {
-
     .checkout-content {
         width: calc( 100vw - 4px);
         margin: 0 auto;
     }
 
-    .co-view-cart-btn{
+    .co-view-cart-btn {
         margin-top: 60px;
     }
 
-    .co-userinfo-sec{
+    .co-userinfo-sec {
         width: 100%;
     }
 
-    .co-cart-sec , .co-view-cart-btn{
+    .co-cart-sec, .co-view-cart-btn {
         width: 100%;
     }
 
@@ -661,16 +695,16 @@ md-input-container {
         width: 100%;
     }
 
-    .co-subtotals-table, .order-coupons{
+    .co-subtotals-table, .order-coupons {
         width: 96%;
         font-size: 14px;
     }
 
-    form input{
+    form input {
         font-size: 16px;
     }
 
-    .sch-store-name{
+    .sch-store-name {
         font-size: 13px !important;
         padding-right: 5px;
     }
@@ -680,7 +714,7 @@ md-input-container {
         font-size: 13px;
     }
 
-    #checkoutModal .modal-dialog{
+    #checkoutModal .modal-dialog {
         top: 32%;
     }
 
@@ -688,12 +722,11 @@ md-input-container {
         width: calc(100vw - 10px) !important;
     }
 
-    #checkoutModal .modal-content{
+    #checkoutModal .modal-content {
         width: calc(100vw - 10px) !important;
     }
 
-    .modal-dialog{
+    .modal-dialog {
         margin: 5px;
     }
-
 }
