@@ -35,6 +35,7 @@ class modelFactory {
         global.MDB=             require("./models/mongoDB");
         global.SITEMAP=         require("./models/sitemap_builder");
         global.BatchUploader=   require("./models/batch_product_uploader");
+        global.Checkout=   require("./models/checkout");
 
         global.ROOT_PATH = __dirname;
         global.SCHEDULER_INCREMENTS = 30; //minutes
