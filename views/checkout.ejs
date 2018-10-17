@@ -2,9 +2,9 @@
 
 <head ng-cloak>
     <%- include('partial/imports')%>
-    <%- include('partial/header', {title: title}); %>
-    <link href="/resources/css/checkout.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
+        <%- include('partial/header', {title: title}); %>
+            <link href="/resources/css/checkout.css" rel="stylesheet">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbxP17w7jZr5QNnLQUmCJ8X3h1kl4EtFs&libraries=places,geometry"></script>
 </head>
 <!--googleoff: snippet-->
 
@@ -77,9 +77,8 @@
                         <div class="name-lname-input ui-input">
                             <md-input-container class="md-block no-mar-bottom">
                                 <label></label>
-                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn"
-                                    ng-model="userInfo.first_name" placeholder="First name" type="text" autocorrect="off"
-                                    required />
+                                <input name="fname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.first_name" placeholder="First name"
+                                    type="text" autocorrect="off" required />
                                 <div ng-messages="checkoutInput.fname.$error">
                                     <div ng-message="pattern" class="error-message-txt error-text">Letters only</div>
                                     <div ng-message="required" class="error-message-txt error-text">Required</div>
@@ -87,9 +86,8 @@
                             </md-input-container>
                             <md-input-container class="md-block no-mar-bottom">
                                 <label></label>
-                                <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn"
-                                    ng-model="userInfo.last_name" placeholder="Last name" type="text" autocorrect="off"
-                                    required />
+                                <input name="lname" maxlength="30" ng-pattern="/^[a-zA-Z]*$/" ng-disabled="userSignedIn" ng-model="userInfo.last_name" placeholder="Last name"
+                                    type="text" autocorrect="off" required />
                                 <div ng-messages="checkoutInput.lname.$error">
                                     <div ng-message="pattern" class="error-message-txt error-text">Letters only</div>
                                     <div ng-message="required" class="error-message-txt error-text">Required</div>
@@ -100,8 +98,8 @@
                             <label></label>
                             <div class="email-check-div" ng-class="email_check_message" ng-click="subEmailToSuggested(suggestion)">Maybe
                                 <span>{{suggestion}}</span>?</div>
-                            <input id="email-input-co" name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn"
-                                ng-model="userInfo.user_email" placeholder="Email" type="email" required />
+                            <input id="email-input-co" name="email" ng-pattern="/^.+@.+\..+$/" ng-disabled="userSignedIn" ng-model="userInfo.user_email"
+                                placeholder="Email" type="email" required />
                             <div ng-messages="checkoutInput.email.$error">
                                 <div ng-message="pattern" class="error-message-txt error-text">Email format only</div>
                                 <div ng-message="required" class="error-message-txt error-text">Required</div>
@@ -109,8 +107,8 @@
                         </md-input-container>
                         <md-input-container class="md-block no-mar-bottom ui-input">
                             <label></label>
-                            <input id="gP_number" name="phone" minlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number"
-                                placeholder="Phone" required />
+                            <input id="gP_number" name="phone" minlength="14" ng-pattern="/^[0-9()+ -]*$/" ng-model="userInfo.phone_number" placeholder="Phone"
+                                required />
                             <div ng-messages="checkoutInput.phone.$error">
                                 <div ng-message="pattern" class="error-message-txt error-text">Numbers only</div>
                                 <div ng-message="minlength" class="error-message-txt error-text">Phone format only</div>
@@ -121,23 +119,20 @@
                     <div class="customer-info-p2">
                         <md-input-container id="address" class="md-block no-mar-bottom ui-input">
                             <label></label>
-                            <address-autocomplete style="width: 300px;" input-class="address-input-checkout" icon-class="address-clear-icon"
-                                button-class="address-clear-btn" autocomplete="autocomplete" on-address-selected="gotAddressResults"
-                                autocomplete-bounds="bounds"></address-autocomplete>
+                            <address-autocomplete style="width: 300px;" input-class="address-input-checkout" icon-class="address-clear-icon" button-class="address-clear-btn"
+                                autocomplete="autocomplete" on-address-selected="gotAddressResults" autocomplete-bounds="bounds"></address-autocomplete>
                             <div ng-messages="checkoutInput.address.$error">
                                 <div ng-message="required" class="error-message-txt error-text">Required</div>
                             </div>
-                            <div ng-if="userInfo.withinCoverage == false" class="error-message-txt error-text">Sorry,
-                                we
+                            <div ng-if="userInfo.withinCoverage == false" class="error-message-txt error-text">Sorry, we
                                 do not deliver to your location at the moment</div>
                         </md-input-container>
                         <md-input-container class="md-block no-mar-bottom ui-input">
                             <label></label>
-                            <input id="driverInstruction" name="drInstruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 -]*$/"
-                                ng-model="userInfo.drInstruction" placeholder="Driver Instruction" type="text" />
-                            <div ng-messages="checkoutInput.drInstruction.$error">
-                                <div ng-message="pattern" class="error-message-txt error-text">Number and letter only</div>
-                                <div ng-message="maxlength" class="error-message-txt error-text">Maximum 60 characters</div>
+                            <input name="driver_instruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 :,.-]*$/" ng-model="userInfo.drInstruction" placeholder="Driver instructions"
+                                type="text" autocorrect="off" />
+                            <div ng-messages="checkoutInput.driver_instruction.$error">
+                                <div ng-message="pattern" class="error-message-txt error-text">No special characters</div>
                             </div>
                         </md-input-container>
                     </div>
@@ -150,7 +145,7 @@
                                 <div class="do-txt-box">
                                     <div class="line-1">
                                         <div class="sch-store-name">{{store.name}}</div>
-                                        <scheduler store-type="store.type" store-name="store.name" store-open="storeOpen" store-img="store.img" ></scheduler>
+                                        <scheduler store-type="store.type" store-name="store.name" store-open="storeOpen" store-img="store.img"></scheduler>
                                     </div>
                                 </div>
                             </div>
@@ -174,8 +169,7 @@
                     <div class="customer-info-p3" style="align-items: flex-start;" ng-show="userSignedIn && userInfo.card">
                         <div class="seperation-line">&nbsp;Payment Options&nbsp;</div>
                         <div style="display: flex; flex-direction: column;">
-                            <label class="hmt-radio-container">{{ userInfo.card.type + " " + "**** **** **** " +
-                                userInfo.card.last4
+                            <label class="hmt-radio-container">{{ userInfo.card.type + " " + "**** **** **** " + userInfo.card.last4
                                 + " (" + userInfo.card.exp + ")"}}
                                 <input type="radio" ng-model="useDefaultCard" ng-value="true" ng-checked="useDefaultCard == true" />
                                 <div class="control_indicator"></div>
@@ -218,8 +212,7 @@
                                             <polyline class="sign-checkmark-line" points="16, 43 32, 63 65, 20" />
                                         </svg>
                                     </div>
-                                    <ng-md-icon class="result-icon result-10" ng-if="modalType == 'warning'" icon="warning"
-                                        size="85"></ng-md-icon>
+                                    <ng-md-icon class="result-icon result-10" ng-if="modalType == 'warning'" icon="warning" size="85"></ng-md-icon>
                                 </div>
                                 <div class="flex-column result-msg-ln1">
                                     <span class="modal-txt result-msg-ln1-name">{{primaryMessage}}</span>
@@ -237,16 +230,16 @@
             </div>
         </div>
         <% if (!production) { %>
-        <script src="/resources/services/localStorage.js"></script>
-        <script src="/resources/services/cartService.js"></script>
-        <script src="/resources/services/mapServices.js"></script>
-        <script src="/resources/services/date.js"></script>
-        <script src="/resources/services/userAction.js"></script>
-        <script src="/resources/directives/addressAutocomplete.js"></script>
-        <script src="/resources/directives/scheduler.js"></script>
-        <script src="/resources/directives/cart.js"></script>
-        <script src="/resources/controllers/checkout.js"></script>
-        <% } %>
+            <script src="/resources/services/localStorage.js"></script>
+            <script src="/resources/services/cartService.js"></script>
+            <script src="/resources/services/mapServices.js"></script>
+            <script src="/resources/services/date.js"></script>
+            <script src="/resources/services/userAction.js"></script>
+            <script src="/resources/directives/addressAutocomplete.js"></script>
+            <script src="/resources/directives/scheduler.js"></script>
+            <script src="/resources/directives/cart.js"></script>
+            <script src="/resources/controllers/checkout.js"></script>
+            <% } %>
     </div>
 </body>
 <!--googleon: snippet-->
