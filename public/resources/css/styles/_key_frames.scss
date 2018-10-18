@@ -228,7 +228,7 @@
 @media screen and (max-device-width: 479px) {
     @keyframes icon-move-x {
         0%, 100% {
-            transform: translateX(-150px);
+            transform: translateX(230px);
         }
 
         25% {
@@ -236,7 +236,7 @@
         }
 
         50% {
-            transform: translateX(150px);
+            transform: translateX(-230px);
         }
 
         75% {

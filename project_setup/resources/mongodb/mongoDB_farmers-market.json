@@ -1,0 +1,3373 @@
+[
+    {
+        "_id": "17-1",
+        "brand": "BC Fresh",
+        "brandname": "BC Fresh Beets",
+        "name": "Beets",
+        "namebrand": "Beets BC Fresh",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-1.jpeg",
+            "images_all": [
+                "17-1.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Vegetables",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liFresh beets from BCd_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-1-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-1-1-1",
+                        "h_value": 6,
+                        "price": 2.88,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-1-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 2,
+                "packs": [
+                    {
+                        "_id": "17-1-2-1",
+                        "h_value": 6,
+                        "price": 5,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-2",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Romaine lettuce",
+        "name": "Romaine lettuce",
+        "namebrand": "Romaine lettuce Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-2.jpeg",
+            "images_all": [
+                "17-2.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Vegetables",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-2-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-2-1-1",
+                        "h_value": 1,
+                        "price": 1.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-3",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet Symphony Tomatoes",
+        "name": "Sweet Symphony Tomatoes",
+        "namebrand": "Sweet Symphony Tomatoes Farmers Market",
+        "container": "plastic container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-3.jpeg",
+            "images_all": [
+                "17-3.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Vegetables",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-3-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "case",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-3-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-4",
+        "brand": "Local Fresh",
+        "brandname": "Local Fresh Baby Carrots",
+        "name": "Baby Carrots",
+        "namebrand": "Baby Carrots Local Fresh",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-4.jpeg",
+            "images_all": [
+                "17-4.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Vegetables",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-4-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-4-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-5",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Broccoli",
+        "name": "Fresh Broccoli",
+        "namebrand": "Fresh Broccoli Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-5.jpeg",
+            "images_all": [
+                "17-5.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Vegetables",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-5-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-5-1-1",
+                        "h_value": 1,
+                        "price": 2.88,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-5-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 2,
+                "packs": [
+                    {
+                        "_id": "17-5-2-1",
+                        "h_value": 1,
+                        "price": 5,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-6",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Assorted Baby Potatoes",
+        "name": "Fresh Assorted Baby Potatoes",
+        "namebrand": "Fresh Assorted Baby Potatoes Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-6.jpeg",
+            "images_all": [
+                "17-6.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Vegetables",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-6-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-6-1-1",
+                        "h_value": 1,
+                        "price": 2.88,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-6-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 2,
+                "packs": [
+                    {
+                        "_id": "17-6-2-1",
+                        "h_value": 1,
+                        "price": 5,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-7",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet Orange Grape Tomatoes",
+        "name": "Sweet Orange Grape Tomatoes",
+        "namebrand": "Sweet Orange Grape Tomatoes Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-7.jpeg",
+            "images_all": [
+                "17-7.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Vegetables",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-7-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-7-1-1",
+                        "h_value": 1,
+                        "price": 2.88,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-7-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 2,
+                "packs": [
+                    {
+                        "_id": "17-7-2-1",
+                        "h_value": 1,
+                        "price": 5,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-8",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Green Beans",
+        "name": "Fresh Green Beans",
+        "namebrand": "Fresh Green Beans Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-8.jpeg",
+            "images_all": [
+                "17-8.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Vegetables",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-8-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-8-1-1",
+                        "h_value": 1,
+                        "price": 2.49,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-9",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet Honeycrisp Apples",
+        "name": "Sweet Honeycrisp Apples",
+        "namebrand": "Sweet Honeycrisp Apples Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-9.jpeg",
+            "images_all": [
+                "17-9.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-9-1",
+                "si_unit_size": 2.26796,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 5,
+                "packs": [
+                    {
+                        "_id": "17-9-1-1",
+                        "h_value": 1,
+                        "price": 3.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-10",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market BC Mcintosh Apples",
+        "name": "BC Mcintosh Apples",
+        "namebrand": "BC Mcintosh Apples Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-10.jpeg",
+            "images_all": [
+                "17-10.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-10-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-10-1-1",
+                        "h_value": 1,
+                        "price": 1.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-10-2",
+                "si_unit_size": 2.26796,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 5,
+                "packs": [
+                    {
+                        "_id": "17-10-2-1",
+                        "h_value": 1,
+                        "price": 14.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-11",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Granny Smith Apple",
+        "name": "Granny Smith Apple",
+        "namebrand": "Granny Smith Apple Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-11.jpeg",
+            "images_all": [
+                "17-11.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-11-1",
+                "si_unit_size": 2.26796,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 5,
+                "packs": [
+                    {
+                        "_id": "17-11-1-1",
+                        "h_value": 1,
+                        "price": 14.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-12",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Tacoshack Tortilla Chips",
+        "name": "Tacoshack Tortilla Chips",
+        "namebrand": "Tacoshack Tortilla Chips Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-12.jpeg",
+            "images_all": [
+                "17-12.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Snack",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-12-1",
+                "si_unit_size": "0.4",
+                "si_unit": "kg",
+                "preffered_unit": "400",
+                "preffered_unit_size": "g",
+                "packs": [
+                    {
+                        "_id": "17-12-1-1",
+                        "h_value": 1,
+                        "price": 5.49,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-13",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Pineapple",
+        "name": "Pineapple",
+        "namebrand": "Pineapple Farmers Market",
+        "container": "single",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-13.jpeg",
+            "images_all": [
+                "17-13.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-13-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-13-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-14",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Vali Pears",
+        "name": "Fresh Vali Pears",
+        "namebrand": "Fresh Vali Pears Farmers Market",
+        "container": "single",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-14.jpeg",
+            "images_all": [
+                "17-14.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-14-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-14-1-1",
+                        "h_value": 1,
+                        "price": 1.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-15",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Pomegranate",
+        "name": "Fresh Pomegranate",
+        "namebrand": "Fresh Pomegranate Farmers Market",
+        "container": "single",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-15.jpeg",
+            "images_all": [
+                "17-15.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-15-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-15-1-1",
+                        "h_value": 1,
+                        "price": 1.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-16",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet Seedless Muskot Mandarin",
+        "name": "Sweet Seedless Muskot Mandarin",
+        "namebrand": "Sweet Seedless Muskot Mandarin Farmers Market",
+        "container": "single",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-16.jpeg",
+            "images_all": [
+                "17-16.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-16-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-16-1-1",
+                        "h_value": 1,
+                        "price": 2.49,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-17",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet Peaches",
+        "name": "Sweet Peaches",
+        "namebrand": "Sweet Peaches Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-17.jpeg",
+            "images_all": [
+                "17-17.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-17-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-17-1-1",
+                        "h_value": 1,
+                        "price": 2.49,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-18",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Gold Kiwi",
+        "name": "Fresh Gold Kiwi",
+        "namebrand": "Fresh Gold Kiwi Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-18.jpeg",
+            "images_all": [
+                "17-18.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-18-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-18-1-1",
+                        "h_value": 1,
+                        "price": 0.77,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-19",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet Nectarine",
+        "name": "Sweet Nectarine",
+        "namebrand": "Sweet Nectarine Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-19.jpeg",
+            "images_all": [
+                "17-19.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-19-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-19-1-1",
+                        "h_value": 1,
+                        "price": 2.49,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-20",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market BC Barlett Pear",
+        "name": "BC Barlett Pear",
+        "namebrand": "BC Barlett Pear Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-20.jpeg",
+            "images_all": [
+                "17-20.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-20-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-20-1-1",
+                        "h_value": 1,
+                        "price": 1.49,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-21",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Mixed Nuts (unpeeled)",
+        "name": "Mixed Nuts (unpeeled)",
+        "namebrand": "Mixed Nuts (unpeeled) Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-21.jpeg",
+            "images_all": [
+                "17-21.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-21-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-21-1-1",
+                        "h_value": 1,
+                        "price": 3.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-22",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet Honeydews",
+        "name": "Sweet Honeydews",
+        "namebrand": "Sweet Honeydews Farmers Market",
+        "container": "single",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-22.jpeg",
+            "images_all": [
+                "17-22.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-22-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-22-1-1",
+                        "h_value": 1,
+                        "price": 3.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-23",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Red Grapefruit",
+        "name": "Fresh Red Grapefruit",
+        "namebrand": "Fresh Red Grapefruit Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-23.jpeg",
+            "images_all": [
+                "17-23.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-23-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-23-1-1",
+                        "h_value": 1,
+                        "price": 1.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-23-2",
+                "si_unit_size": 2.26796,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 5,
+                "packs": [
+                    {
+                        "_id": "17-23-2-1",
+                        "h_value": 1,
+                        "price": 14.95,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-24",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Bananas",
+        "name": "Fresh Bananas",
+        "namebrand": "Fresh Bananas Farmers Market",
+        "container": " ",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-24.jpeg",
+            "images_all": [
+                "17-24.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-24-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-24-1-1",
+                        "h_value": 1,
+                        "price": 0.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-24-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bunch",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-24-2-1",
+                        "h_value": 1,
+                        "price": 2.79,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-25",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet White Peaches",
+        "name": "Sweet White Peaches",
+        "namebrand": "Sweet White Peaches Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-25.jpeg",
+            "images_all": [
+                "17-25.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-25-1",
+                "si_unit_size": 0.453592,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-25-1-1",
+                        "h_value": 1,
+                        "price": 2.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-26",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Kiwi",
+        "name": "Fresh Kiwi",
+        "namebrand": "Fresh Kiwi Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-26.jpeg",
+            "images_all": [
+                "17-26.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-26-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-26-1-1",
+                        "h_value": 1,
+                        "price": 0.59,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-27",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Lemons",
+        "name": "Fresh Lemons",
+        "namebrand": "Fresh Lemons Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-27.jpeg",
+            "images_all": [
+                "17-27.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-27-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-27-1-1",
+                        "h_value": 1,
+                        "price": 0.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-28",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet Red Mangoes",
+        "name": "Sweet Red Mangoes",
+        "namebrand": "Sweet Red Mangoes Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-28.jpeg",
+            "images_all": [
+                "17-28.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-28-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-28-1-1",
+                        "h_value": 1,
+                        "price": 1.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-29",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Basil in a Bag",
+        "name": "Basil in a Bag",
+        "namebrand": "Basil in a Bag Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-29.jpeg",
+            "images_all": [
+                "17-29.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-29-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-29-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-30",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Edible Flowers",
+        "name": "Fresh Edible Flowers",
+        "namebrand": "Fresh Edible Flowers Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-30.jpeg",
+            "images_all": [
+                "17-30.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-30-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-30-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-31",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Red Peppers",
+        "name": "Fresh Red Peppers",
+        "namebrand": "Fresh Red Peppers Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-31.jpeg",
+            "images_all": [
+                "17-31.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-31-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "ea",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-31-1-1",
+                        "h_value": 1,
+                        "price": 2.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-32",
+        "brand": "Canada Martinette",
+        "brandname": "Canada Martinette Pure Maple Syrup",
+        "name": "Pure Maple Syrup",
+        "namebrand": "Pure Maple Syrup Canada Martinette",
+        "container": "plastic bottle",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-32.jpeg",
+            "images_all": [
+                "17-32.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Maple Syrup",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-32-1",
+                "si_unit_size": 0.01,
+                "si_unit": "m3",
+                "preffered_unit": "L",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-32-1-1",
+                        "h_value": 1,
+                        "price": 17,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-32-2",
+                "si_unit_size": 0.02,
+                "si_unit": "m3",
+                "preffered_unit": "L",
+                "preffered_unit_size": 2,
+                "packs": [
+                    {
+                        "_id": "17-32-2-1",
+                        "h_value": 1,
+                        "price": 30,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-33",
+        "brand": "Canada Martinette",
+        "brandname": "Canada Martinette Pure Maple Syrup",
+        "name": "Pure Maple Syrup",
+        "namebrand": "Pure Maple Syrup Canada Martinette",
+        "container": "glass jar",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-33.jpeg",
+            "images_all": [
+                "17-33.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Maple Syrup",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-33-1",
+                "si_unit_size": 0.25,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 250,
+                "packs": [
+                    {
+                        "_id": "17-33-1-1",
+                        "h_value": 1,
+                        "price": 10,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-34",
+        "brand": "Canada Martinette",
+        "brandname": "Canada Martinette Pure Maple Syrup",
+        "name": "Pure Maple Syrup",
+        "namebrand": "Pure Maple Syrup Canada Martinette",
+        "container": "can",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-34.jpeg",
+            "images_all": [
+                "17-34.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Maple Syrup",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-34-1",
+                "si_unit_size": 0.54,
+                "si_unit": "m3",
+                "preffered_unit": "ml",
+                "preffered_unit_size": 540,
+                "packs": [
+                    {
+                        "_id": "17-34-1-1",
+                        "h_value": 1,
+                        "price": 8,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-35",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Goose Meat (est. weight)",
+        "name": "Fresh Goose Meat (est. weight)",
+        "namebrand": "Fresh Goose Meat (est. weight) Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-35.jpeg",
+            "images_all": [
+                "17-35.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Meat",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-35-1",
+                "si_unit_size": 3.628736,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 8,
+                "packs": [
+                    {
+                        "_id": "17-35-1-1",
+                        "h_value": 1,
+                        "price": 48,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-36",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Free Range Chicken (est. weight)",
+        "name": "Fresh Free Range Chicken (est. weight)",
+        "namebrand": "Fresh Free Range Chicken (est. weight) Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-36.jpeg",
+            "images_all": [
+                "17-36.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Meat",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-36-1",
+                "si_unit_size": 3.175144,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 7,
+                "packs": [
+                    {
+                        "_id": "17-36-1-1",
+                        "h_value": 1,
+                        "price": 24.29,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-37",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Frozen Berries",
+        "name": "Frozen Berries",
+        "namebrand": "Frozen Berries Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-37.jpeg",
+            "images_all": [
+                "17-37.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-37-1",
+                "si_unit_size": 2.26796,
+                "si_unit": "kg",
+                "preffered_unit": "lb",
+                "preffered_unit_size": 5,
+                "packs": [
+                    {
+                        "_id": "17-37-1-1",
+                        "h_value": 1,
+                        "price": 25,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-38",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Sweet Baby Rainbow Carrots (est. 1lb)",
+        "name": "Sweet Baby Rainbow Carrots (est. 1lb)",
+        "namebrand": "Sweet Baby Rainbow Carrots (est. 1lb) Farmers Market",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-38.jpeg",
+            "images_all": [
+                "17-38.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Vegetables",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-38-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-38-1-1",
+                        "h_value": 1,
+                        "price": 2.88,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-38-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "bag",
+                "preffered_unit_size": 2,
+                "packs": [
+                    {
+                        "_id": "17-38-2-1",
+                        "h_value": 1,
+                        "price": 5,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-39",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Oragnic Sweet Seedles Green Grapes",
+        "name": "Oragnic Sweet Seedles Green Grapes",
+        "namebrand": "Oragnic Sweet Seedles Green Grapes Farmers Market",
+        "container": "clam",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-39.jpeg",
+            "images_all": [
+                "17-39.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-39-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "clam",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-39-1-1",
+                        "h_value": 1,
+                        "price": 3.49,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-40",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Oragnic Sweet Seedles Red Grapes",
+        "name": "Oragnic Sweet Seedles Red Grapes",
+        "namebrand": "Oragnic Sweet Seedles Red Grapes Farmers Market",
+        "container": "clam",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-40.jpeg",
+            "images_all": [
+                "17-40.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Fruits",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-40-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "clam",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-40-1-1",
+                        "h_value": 1,
+                        "price": 3.49,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-41",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Bruschetta",
+        "name": "Bruschetta",
+        "namebrand": "Bruschetta Farmers Market",
+        "container": "container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-41.jpeg",
+            "images_all": [
+                "17-41.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Dips",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-41-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "small",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-41-1-1",
+                        "h_value": 1,
+                        "price": 3.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-41-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "large",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-41-2-1",
+                        "h_value": 1,
+                        "price": 5.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-42",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Guacamole",
+        "name": "Fresh Guacamole",
+        "namebrand": "Fresh Guacamole Farmers Market",
+        "container": "container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-42.jpeg",
+            "images_all": [
+                "17-42.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Dips",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-42-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "small",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-42-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-42-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "large",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-42-2-1",
+                        "h_value": 1,
+                        "price": 7.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-43",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Delicious Salsa",
+        "name": "Delicious Salsa",
+        "namebrand": "Delicious Salsa Farmers Market",
+        "container": "container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-43.jpeg",
+            "images_all": [
+                "17-43.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Dips",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-43-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "small",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-43-1-1",
+                        "h_value": 1,
+                        "price": 3.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-43-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "large",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-43-2-1",
+                        "h_value": 1,
+                        "price": 5.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "17-44",
+        "brand": "Farmers Market",
+        "brandname": "Farmers Market Fresh Bean Salsa",
+        "name": "Fresh Bean Salsa",
+        "namebrand": "Fresh Bean Salsa Farmers Market",
+        "container": "container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "17-44.jpeg",
+            "images_all": [
+                "17-44.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Farm Fresh",
+            "category_name": "farm-fresh",
+            "category_image": "17_farm-fresh.jpeg",
+            "category_cover": "17_farm-fresh.jpeg"
+        },
+        "subcategory": {
+            "value": "Dips",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": ""
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": ""
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": ""
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "17-44-1",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "small",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-44-1-1",
+                        "h_value": 1,
+                        "price": 4.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            },
+            {
+                "_id": "17-44-2",
+                "si_unit_size": "",
+                "si_unit": "",
+                "preffered_unit": "large",
+                "preffered_unit_size": 1,
+                "packs": [
+                    {
+                        "_id": "17-44-2-1",
+                        "h_value": 1,
+                        "price": 8.99,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "farmers-market",
+            "display_name": "Farmers Market",
+            "image_url": "farmers-market.jpeg"
+        },
+        "visible": 1
+    }
+]
