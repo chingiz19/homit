@@ -362,13 +362,17 @@ pub.getOrderArrayByCustomerId = async function (customerId, driverId) {
 
     let sqlQuery = `
         SELECT 
-            history.id, info.first_name AS fName, transactions.phone_number AS phone
+            history.id, info.first_name AS fName, transactions.phone_number AS phone, store_types.display_name as store_name
         FROM
-            orders_transactions_history AS transactions
+            orders_transactions_history AS transactions 
         JOIN
             orders_history AS history ON (transactions.id = history.order_transaction_id)
         JOIN 
             ` + infoTable + ` AS info ON (info.id =` + userType + `)
+        JOIN
+            catalog_stores as stores ON (stores.id = history.store_id)
+        JOIN
+            catalog_store_types as store_types ON (stores.store_type = store_types.id)
         WHERE
             date_arrived_customer IS NULL
         AND 
