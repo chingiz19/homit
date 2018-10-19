@@ -49,7 +49,7 @@ app.controller("headerController", function ($scope, $window, $http, user, notif
         user.user().then(function success(res) {
             if (res.data.success) {
                 $scope.user_names = res.data.user.first_name + " " + res.data.user.last_name;
-                $scope.user_coupons = res.data.user.coupons;
+                $scope.user_coupons = res.data.user.coupons || [];
 
                 let couponsSeen = localStorage.getNumberOfCouponsSeen();
                 if (couponsSeen < $scope.user_coupons.length) {
