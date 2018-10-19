@@ -129,7 +129,7 @@
                         </md-input-container>
                         <md-input-container class="md-block no-mar-bottom ui-input">
                             <label></label>
-                            <input name="driver_instruction" maxlength="60" ng-pattern="/^[a-zA-Z0-9 :,.-]*$/" ng-model="userInfo.drInstruction" placeholder="Driver instructions"
+                            <input name="driver_instruction" maxlength="60" ng-pattern="/^[\x00-\x7F]*$/" ng-model="userInfo.drInstruction" placeholder="Driver instructions"
                                 type="text" autocorrect="off" />
                             <div ng-messages="checkoutInput.driver_instruction.$error">
                                 <div ng-message="pattern" class="error-message-txt error-text">No special characters</div>
