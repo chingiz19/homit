@@ -100,7 +100,7 @@ pub.globalSearch = async function (inText, cb) {
             }
         }
     }, function (err, result) {
-        if (!err && result && result.hits && result.hits.hits) {
+        if (!err && result && result.hits && result.hits.hits && result.hits.hits.length !=0) {
             finalResult.push({
                 "results": result.hits.hits,
                 "highlight": undefined,
@@ -186,7 +186,7 @@ pub.globalSearch = async function (inText, cb) {
 
                 }
             }, async function (err, results) {
-                return Logger.logError(JSON.stringify(err, null, 4));
+                Logger.logError(JSON.stringify(err, null, 4));
 
                 let suggestResults = [];
 
@@ -304,7 +304,7 @@ async function init() {
                 pub.models[storeTypeName] = mongoose.model(storeTypeName, productSchema, storeTypeName);
                 pub.models[storeTypeName].createMapping(function (err, mapping) {
                     if (err) {
-                        Logger.logError('Error creating mapping (you can safely ignore this)');
+                        Logger.logError('Error creating mapping ' + err.message);
                     } else {
                         Logger.log.debug(`Mapping created for ${storeTypeName} and mapping is ${JSON.stringify(mapping)}`);
                     }
