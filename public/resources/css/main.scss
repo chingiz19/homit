@@ -1491,6 +1491,7 @@ body {
         text-align: center;
         font-size: 25px;
         opacity: 0.8;
+        animation: negative-icon-move-x 60000ms linear infinite;
     }
 
     .store-li-free-delivery {
@@ -1510,7 +1511,7 @@ body {
         text-align: center;
     }
 
-    .img-object {
+    .store-list-ul {
         animation: icon-move-x 60000ms linear infinite;
     }
 

@@ -222,6 +222,7 @@ pub.saveDropOff = async function (dropOff, isApiOrder, isApiOrder) {
 
 pub.saveArrivedCustomer = async function (customerId, driverId, isApiOrder) {
     let orderIds = [];
+    let storeNames = [];
     let orderIndex = isApiOrder ? 'a_' : 'o_';
 
     if (!isApiOrder) {
@@ -233,12 +234,13 @@ pub.saveArrivedCustomer = async function (customerId, driverId, isApiOrder) {
 
         for (order in orderInfo) {
             orderIds.push(orderIndex + orderInfo[order].id);
+            storeNames.push(orderInfo[order].store_name);
         }
 
         let name = orderInfo[0].fName;
         let phone = orderInfo[0].phone;
 
-        SMS.notifyDriverArrival(phone, name, orderIds);
+        SMS.notifyDriverArrival(phone, name, storeNames);
     } else {
         let orders = await Orders.getApiOrdersByOrderId(customerId.split('_')[1]);  //customer id is same as order id
         orderIds.push(orderIndex + orders.id);

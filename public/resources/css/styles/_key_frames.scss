@@ -243,4 +243,22 @@
             transform: translateX(0);
         }
     }
+
+    @keyframes negative-icon-move-x {
+        0%, 100% {
+            transform: translateX(-230px);
+        }
+
+        25% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(230px);
+        }
+
+        75% {
+            transform: translateX(0);
+        }
+    }
 }

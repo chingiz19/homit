@@ -64,9 +64,15 @@ pub.isAddress = function(text){
  * Check if text is in expected date format (e.g yyyy-mm--dd)
  * @param {*} text 
  */
-pub.isDate= function(text){
+pub.isDate = function(text){
     var str = convertToString(text);
     return validator.matches(str, "^(19|20)[0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[01])$");
+}
+
+pub.makeDBSafe = function(text){
+    var str = convertToString(text);
+    var result = validator.blacklist(str, "'\"`"); // removes ', " and `
+    return validator.stripLow(result); // removes everything that is not between ASCII 32 and 127 (refer to ASCII table for details)
 }
 
 

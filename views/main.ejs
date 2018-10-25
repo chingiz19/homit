@@ -24,10 +24,8 @@
                     <ul class="store-list-ul" ng-cloak>
                         <li class="store-li-footer">Choose Store</li>
                         <li id="store_{{$index}}" class="store-li move-x fadeInStore" ng-repeat="store in hubStores | orderBy: 'display_name' ">
-                            <div class="img-object">
-                                <a href="/hub/{{store.name}}" target="_self">
-                                    <img alt="{{store.name}}" ng-src="/resources/images/catalog-stores/logo/{{store.image}}">
-                                </a>
+                            <div class="img-object" ng-click="hrefTo('/hub/' + store.name)">
+                                <img alt="{{store.name}}" ng-src="/resources/images/catalog-stores/logo/{{store.image}}">
                                 <span class="main-trans-prop">{{store.display_name}}</span>
                                 <ul class="store-li-free-delivery" ng-show="store.del_fee_primary == 0">
                                     <li class="free-txt">FREE</li>

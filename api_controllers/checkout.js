@@ -11,7 +11,7 @@ router.post('/placeorder', async function (req, res, next) {
     let address = req.body.user.address;
     let address_long = req.body.user.address_longitude;
     let address_lat = req.body.user.address_latitude;
-    let driverInstruction = req.body.user.driver_instruction;
+    let driverInstruction = Validator.makeDBSafe(req.body.user.driver_instruction);
     let birth_day = req.body.user.birth_day;
     let birth_month = req.body.user.birth_month;
     let birth_year = req.body.user.birth_year;

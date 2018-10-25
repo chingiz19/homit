@@ -109,7 +109,7 @@
                 "packs": [
                     {
                         "_id": "7-2-1-1",
-                        "h_value": 1,
+                        "h_value": 2,
                         "price": 4.99,
                         "stock_quantity": 100,
                         "sold": {
@@ -176,7 +176,7 @@
                 "packs": [
                     {
                         "_id": "7-3-1-1",
-                        "h_value": 1,
+                        "h_value": 2,
                         "price": 5.49,
                         "stock_quantity": 100,
                         "sold": {
@@ -197,6 +197,73 @@
         "visible": 1,
         "subcategory": {
             "value": "Nutrition & Protein Bars",
+            "weight": 1
+        }
+    },
+    {
+        "_id": "7-4",
+        "brand": "Dwarf Stars",
+        "name": "Keto Cups",
+        "container": "bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "7-4.jpeg",
+            "images_all": [
+                "7-4.jpeg",
+                "ntr_7-4.jpeg"
+            ]
+        },
+        "category": {
+            "category_display_name": "Chocolates & Bars",
+            "category_name": "chocolates-and-bars",
+            "category_image": "chocolates-and-bars.jpeg",
+            "category_cover": "7_chocolates-and-bars.jpg"
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liSugar-free, Vegan, Dairy-free, Gluten-free, Nut free, Tree-nut free, High in Fibre, No added preservatives, emulsifiers or chemicalsd_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liWe are taking our all-natural Pumpkin Seed Butter Cups to the next level. The same allergy-friendly cup, now SUGAR-FREE!d_ht_liht_liThese cups are sweetened with the best sugar alcohol, Erythritol.d_ht_liht_liWhy do we say the best? After testing other sweeteners like Stevia and Monk Fruit, we fell in love with Erythritol. It has only 6% of the calories found in sugar and doesn't cause the bloating and digestive upset like other sugar alcohols. Most of Erythritol gets directly absorbed in to the bloodstream before it even reaches the colon. This means less calories, less carbs and a happy tummy!d_ht_liht_liThese are handmade in Calgary and contain dark vegan chocolate filled with a creamy organic pumpkin seed butter filling.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "7-4-1",
+                "si_unit_size": 0.042,
+                "si_unit": "kg",
+                "preffered_unit_size": "42",
+                "preffered_unit": "g",
+                "packs": [
+                    {
+                        "_id": "7-4-1-1",
+                        "h_value": 2,
+                        "price": 4.99,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        },
+                        "visible": 1
+                    }
+                ]
+            }
+        ],
+        "brandname": "Dwarf Stars Keto Cups",
+        "store": {
+            "name": "dwarf-stars",
+            "display_name": "Dwarf Stars",
+            "image_url": "dwarf-stars.jpg"
+        },
+        "namebrand": "Keto Cups Dwarf Stars",
+        "visible": 1,
+        "subcategory": {
+            "value": "Chocolates",
             "weight": 1
         }
     }

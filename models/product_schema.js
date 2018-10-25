@@ -14,6 +14,7 @@ module.exports = new Schema({
         required: true,
         es_indexed: true,
         es_type: 'text',
+        es_analyzer: "standard"
     },
     brandname: {
         type: Schema.Types.String,
@@ -52,7 +53,8 @@ module.exports = new Schema({
         category_display_name: {
             type: Schema.Types.String,
             es_indexed: true,
-            es_type: 'keyword'
+            es_type: 'text',
+            es_analyzer: "standard"
         },
         category_name: {
             type: Schema.Types.String,
@@ -74,7 +76,8 @@ module.exports = new Schema({
         value: {
             type: Schema.Types.String,
             es_indexed: true,
-            es_type: 'keyword'
+            es_type: 'text',
+            es_analyzer: "standard"
         },
         weight: {
             value: {
@@ -92,7 +95,8 @@ module.exports = new Schema({
         display_name: {
             type: Schema.Types.String,
             es_indexed: true,
-            es_type: 'text'
+            es_type: 'text',
+            es_analyzer: "standard"
         },
         image_url: {
             type: Schema.Types.String,
@@ -104,19 +108,19 @@ module.exports = new Schema({
     details: {
         ingredients: {
             display_name: { type: Schema.Types.String, es_indexed: false },
-            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text' }
+            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text', es_analyzer: "standard" }
         },
         preview: {
             display_name: { type: Schema.Types.String, es_indexed: false },
-            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text' }
+            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text', es_analyzer: "standard" }
         },
         country_of_origin: {
             display_name: { type: Schema.Types.String, es_indexed: false },
-            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text' }
+            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text', es_analyzer: "standard" }
         },
         serving_suggestions: {
             display_name: { type: Schema.Types.String, es_indexed: false },
-            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text' }
+            description: { type: Schema.Types.String, es_indexed: true, es_type: 'text', es_analyzer: "standard" }
         }
     },
     tags: [
@@ -136,7 +140,7 @@ module.exports = new Schema({
             packs: [
                 {
                     _id: { type: Schema.Types.Mixed, es_indexed: false },
-                    h_value: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
+                    h_value: { type: Schema.Types.String, es_indexed: true, es_type: 'text' },
                     price: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     visible: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     stock_quantity: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },

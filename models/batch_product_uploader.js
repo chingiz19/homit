@@ -6,11 +6,13 @@
  */
 
 /*** Adjust following constants as per your need ***/
-const COLLECTION_NAME = "perogy-guy";
-const WORKBOOK_LOCATION = "./perogy-guy.xlsx";
+const COLLECTION_NAME = "seasonal";
+const WORKBOOK_LOCATION = "./seasonal.xlsx";
 const IMAGE_EXTENSION = ".jpeg";
 const DEFAULT_COUNTRY_OF_ORIGIN = "Canada";
 const SAVE_JSON_TO_DIRECTORY = "./project_setup/resources/mongodb";
+const UNWIND = true;
+const START_ID = 1;
 /*** End of editing ***/
 
 let pub = {};
@@ -75,9 +77,9 @@ async function extractFromXLSX() {
         confirmFormatting(sheet);
         expectedNumberOfProducts = getExpectedNumberOfProducts(sheet["!ref"]);
 
-        let mainIdCounter = 1;
+        let mainIdCounter = START_ID || 1;
 
-        for (let row = 2; row < expectedNumberOfProducts + 1; row++) {
+        for (let row = 2; row < expectedNumberOfProducts + 2; row++) {
             let selBrand = retrieveFromSheet("A", row, sheet);
             let selName = retrieveFromSheet("B", row, sheet);
             let container = retrieveFromSheet("F", row, sheet);
@@ -89,7 +91,7 @@ async function extractFromXLSX() {
             let mainId = storeId + "-" + mainIdCounter;
 
             let detailsObject = {
-                ingredients: { display_name: "Ingredients", description: formatDescription(retrieveFromSheet("c", row, sheet)) },
+                ingredients: { display_name: "Ingredients", description: formatDescription(retrieveFromSheet("C", row, sheet)) },
                 serving_suggestions: { display_name: "Serving Suggestions", description: formatDescription(retrieveFromSheet("L", row, sheet)) },
                 preview: { display_name: "Preview", description: formatDescription(retrieveFromSheet("M", row, sheet)) },
                 country_of_origin: { display_name: "Country of Origin", description: (retrieveFromSheet("K", row, sheet, DEFAULT_COUNTRY_OF_ORIGIN)) },
@@ -105,7 +107,7 @@ async function extractFromXLSX() {
                     let packId = varianceId + "-" + packIdCounter;
                     variance.packs.push(packObjectMaker(row, sheet, packId, 1));
 
-                    if (retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row + 1, sheet) == container && (size == retrieveFromSheet("G", row + 1, sheet) && sizeUnit == retrieveFromSheet("H", row + 1, sheet))) {
+                    if (!UNWIND && retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row + 1, sheet) == container && (size == retrieveFromSheet("G", row + 1, sheet) && sizeUnit == retrieveFromSheet("H", row + 1, sheet))) {
                         row++;
                     } else {
                         break;
@@ -117,7 +119,7 @@ async function extractFromXLSX() {
                 varianceObject.push(variance);
                 varianceIdCounter++;
 
-                if (retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row + 1, sheet) == container) {
+                if (!UNWIND && retrieveFromSheet("B", row + 1, sheet) == selName && retrieveFromSheet("A", row + 1, sheet) == selBrand && retrieveFromSheet("F", row + 1, sheet) == container) {
                     row++;
                 } else {
                     break;

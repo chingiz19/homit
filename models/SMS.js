@@ -7,6 +7,7 @@ const accountSid = process.env.TWILIO_SID;
 const authToken = process.env.TWILIO_TOKEN;
 const twillioNumber = process.env.TWILIO_NUMBER;   //this number owned by Homit 
 var directors = [];
+let _ = require("lodash");
 const path = require('path');
 var jsonfile = require('jsonfile');
 var file = path.normalize('directors.json');
@@ -36,13 +37,13 @@ jsonfile.readFile(file, function (err, obj) {
  * @param {*String} number -in <+1**********> format
  * @param {*String} name 
  */
-pub.notifyDriverArrival = function (number, name, orderIds) {
+pub.notifyDriverArrival = function (number, name, storeNames) {
     if (process.env.n_mode == "production") {
     client.messages
         .create({
             to: number,
             from: twillioNumber,
-            body: 'Hey ' + name + ', your Homit order ' + getInsertText(orderIds) + ' is minutes away!',
+            body: 'Hey ' + name + ', your Homit order from ' + _.map(storeNames).join(", ") + ' is minutes away!',
         })
         .then((message) => Logger.log.debug('Sent text message with ID: ' + message.sid), logMeta);
     }
@@ -81,32 +82,6 @@ pub.notifyDriver = function (message, name, number, callback) {
             body: 'Hey ' + name + ', \n' + ' It is Homit dispatch! ' + message,
         })
         .then((message) => { callback(true) });
-}
-
-/**
- * Helper function to get text to insert into sms 
- * that is sent to customer upon driver arrival
- * @param {*Array} orderIds e.g. [55,65]  
- */
-function getInsertText(orderIds) {
-    let text = "(order id is unavalable)";
-
-    if (orderIds && orderIds.length != 0) {
-        text = "(";
-
-        for (order in orderIds) {
-            text += "#" + orderIds[order];
-            if (parseInt(order) + 2 == orderIds.length) {
-                text += " and ";
-            } else if (parseInt(order) + 1 != orderIds.length) {
-                text += ", ";
-            }
-        }
-
-        text += ")";
-    }
-
-    return text;
 }
 
 module.exports = pub;
