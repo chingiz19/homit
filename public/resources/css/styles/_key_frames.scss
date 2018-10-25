@@ -225,10 +225,10 @@
     }
 }
 
-@media screen and (max-device-width: 479px) {
+@media screen and (max-device-width: 769px) {
     @keyframes icon-move-x {
         0%, 100% {
-            transform: translateX(230px);
+            transform: translateX(290px);
         }
 
         25% {
@@ -236,7 +236,7 @@
         }
 
         50% {
-            transform: translateX(-230px);
+            transform: translateX(-290px);
         }
 
         75% {
@@ -246,7 +246,7 @@
 
     @keyframes negative-icon-move-x {
         0%, 100% {
-            transform: translateX(-230px);
+            transform: translateX(-290px);
         }
 
         25% {
@@ -254,7 +254,7 @@
         }
 
         50% {
-            transform: translateX(230px);
+            transform: translateX(290px);
         }
 
         75% {
