@@ -140,7 +140,7 @@ module.exports = new Schema({
             packs: [
                 {
                     _id: { type: Schema.Types.Mixed, es_indexed: false },
-                    h_value: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
+                    h_value: { type: Schema.Types.String, es_indexed: true, es_type: 'text' },
                     price: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     visible: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
                     stock_quantity: { type: Schema.Types.Number, es_indexed: true, es_type: 'integer' },
