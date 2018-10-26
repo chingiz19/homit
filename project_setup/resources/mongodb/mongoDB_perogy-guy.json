@@ -1,0 +1,287 @@
+[
+    {
+        "_id": "20-1",
+        "brand": "The Perogy Guy",
+        "brandname": "The Perogy Guy Hand-pinched Classic Perogies",
+        "name": "Hand-pinched Classic Perogies",
+        "namebrand": "Hand-pinched Classic Perogies The Perogy Guy",
+        "container": "One dozen perogies per bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "20-1.jpeg",
+            "images_all": [
+                "20-1.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Food",
+            "category_name": "food",
+            "category_image": "food.jpeg",
+            "category_cover": "20-food.jpeg"
+        },
+        "subcategory": {
+            "value": "Comfort Food",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liLocally grown potatoes and onions, bacon and Balderson's old cheddar cheesed_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_li<ul><li>Thaw out product, saute sweet onions in some butter until tender. Place perogies in pan under low to medium heat for 12-15 minutes, turning perogies over every 3-4 minutes. Serve with sour cream and enjoy!</li></ul>d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>No need to boil, as we complete this step for you after we hand pinch every one.</li><li>You can pan fry, place in over or even BBQ.  Just 'heat 'em and eat 'em'</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "20-1-1",
+                "si_unit_size": 0.55,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 550,
+                "packs": [
+                    {
+                        "_id": "20-1-1-1",
+                        "h_value": 12,
+                        "price": 10,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "perogy-guy",
+            "display_name": "Perogy Guy",
+            "image_url": "perogy-guy.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "20-2",
+        "brand": "The Perogy Guy",
+        "brandname": "The Perogy Guy Hand pinched Sauerkraut Perogies",
+        "name": "Hand pinched Sauerkraut Perogies",
+        "namebrand": "Hand pinched Sauerkraut Perogies The Perogy Guy",
+        "container": "One dozen perogies per bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "20-2.jpeg",
+            "images_all": [
+                "20-2.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Food",
+            "category_name": "food",
+            "category_image": "food.jpeg",
+            "category_cover": "20-food.jpeg"
+        },
+        "subcategory": {
+            "value": "Comfort Food",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liLocally grown potatoes and onions and sauerkrautd_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_li<ul><li>Thaw out product, saute sweet onions in some butter until tender. Place perogies in pan under low to medium heat for 12-15 minutes, turning perogies over every 3-4 minutes. Serve with sour cream and enjoy!</li></ul>d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>No need to boil, as we complete this step for you after we hand pinch every one.</li><li>You can pan fry, place in over or even BBQ.  Just 'heat 'em and eat 'em'</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "20-2-1",
+                "si_unit_size": 0.55,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 550,
+                "packs": [
+                    {
+                        "_id": "20-2-1-1",
+                        "h_value": 12,
+                        "price": 10,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "perogy-guy",
+            "display_name": "Perogy Guy",
+            "image_url": "perogy-guy.jpeg"
+        },
+        "visible": 1
+    },
+    {
+        "_id": "20-3",
+        "brand": "The Perogy Guy",
+        "brandname": "The Perogy Guy Hand pinched Truffle Perogies",
+        "name": "Hand pinched Truffle Perogies",
+        "namebrand": "Hand pinched Truffle Perogies The Perogy Guy",
+        "container": "One dozen perogies per bag",
+        "tax": 1,
+        "images": {
+            "image_catalog": "20-3.jpeg",
+            "images_all": [
+                "20-3.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Food",
+            "category_name": "food",
+            "category_image": "food.jpeg",
+            "category_cover": "20-food.jpeg"
+        },
+        "subcategory": {
+            "value": "Comfort Food",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liLocally grown potatoes, white truffle oil, gruyere chesse and aged white Balderson's cheesed_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_li<ul><li>Thaw out product, suate onions, if desired or portabella mushrooms in butter until tender. Place perogies in pan under low to medium heat for 12-15 minutes, turning perogies over every 3-4 minutes. Serve as a side dish with your favorite glass of white wine.</li></ul>d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_li<ul><li>No need to boil, as we complete this step for you after we hand pinch every one.</li><li>You can pan fry, place in over or even BBQ.  Just 'heat 'em and eat 'em'</li></ul>d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "20-3-1",
+                "si_unit_size": 0.55,
+                "si_unit": "kg",
+                "preffered_unit": "g",
+                "preffered_unit_size": 550,
+                "packs": [
+                    {
+                        "_id": "20-3-1-1",
+                        "h_value": 12,
+                        "price": 10,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "perogy-guy",
+            "display_name": "Perogy Guy",
+            "image_url": "perogy-guy.jpeg"
+        },
+        "visible": 1
+    },
+
+    {
+        "_id": "20-4",
+        "brand": "The Perogy Guy",
+        "brandname": "The Perogy Guy Home made borscht",
+        "name": "Home Made Borscht",
+        "namebrand": "Home made borscht The Perogy Guy",
+        "container": "container",
+        "tax": 1,
+        "images": {
+            "image_catalog": "20-4.jpeg",
+            "images_all": [
+                "20-4.jpeg"
+            ]
+        },
+        "tags": [],
+        "category": {
+            "category_display_name": "Food",
+            "category_name": "food",
+            "category_image": "food.jpeg",
+            "category_cover": "20-food.jpeg"
+        },
+        "subcategory": {
+            "value": "Comfort Food",
+            "weight": 1
+        },
+        "details": {
+            "ingredients": {
+                "display_name": "Ingredients",
+                "description": "ht_ulht_liSlow roasted stock made from Canada Grade A top sirloin beef roast and pork spacre ribs, onions, celery, garlic and parsnips.  Filled with shredded locally grown beets, garlic and garden fresh dill.d_ht_lid_ht_ul"
+            },
+            "serving_suggestions": {
+                "display_name": "Serving Suggestions",
+                "description": "ht_ulht_liThaw out product, place in cooking pot, warm to desired temperature, and once served in bowl, add in a generous portion of sour cream.  Enjoy !d_ht_lid_ht_ul"
+            },
+            "preview": {
+                "display_name": "Preview",
+                "description": "ht_ulht_liHeat to sersired temperature in a pot on the stove top.d_ht_lid_ht_ul"
+            },
+            "country_of_origin": {
+                "display_name": "Country of Origin",
+                "description": "Canada"
+            }
+        },
+        "variance": [
+            {
+                "_id": "20-4-1",
+                "si_unit_size": 0.000946353,
+                "si_unit": "m3",
+                "preffered_unit": "oz",
+                "preffered_unit_size": 32,
+                "packs": [
+                    {
+                        "_id": "20-4-1-1",
+                        "h_value": 1,
+                        "price": 15,
+                        "visible": 1,
+                        "stock_quantity": 100,
+                        "sold": {
+                            "quantity": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "store": {
+            "name": "perogy-guy",
+            "display_name": "Perogy Guy",
+            "image_url": "perogy-guy.jpeg"
+        },
+        "visible": 1
+    }
+]

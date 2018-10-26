@@ -277,6 +277,26 @@ body {
     background-image: url("/resources/images/non-catalog-image/cover-image/main.jpg");
 }
 
+.banner {
+    top: 120px;
+    width: 80%;
+    min-width: 800px;
+    min-height: 70%;
+    overflow-y: scroll;
+
+    outline: none;
+}
+
+.halloween-store-section {
+    position: relative;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    overflow-y: hidden;
+    background-image: url("/resources/images/non-catalog-image/cover-image/main.jpg");
+}
+
 .predictions-container {
     width: 540px;
     z-index: 1;
