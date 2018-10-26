@@ -23,7 +23,7 @@ app.service('cartService', function ($http, localStorage, $cookies) {
         for (var i = 0; i < remoteCart.length; i++) {
             var product = remoteCart[i];
             var store_type_name = product.store.name;
-            var UID = product["variance"][0]["packs"][0]._id;
+            var UID = product.selected.UID;
 
             if (localCart.hasOwnProperty(store_type_name) && localCart[store_type_name].hasOwnProperty(UID)) {
                 // add to quantity, not exceeding 10
