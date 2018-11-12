@@ -45,7 +45,7 @@ CREATE TABLE catalog_coupons (
 	privacy_type INT NOT NULL,
 	visible TINYINT NOT NULL,
 	date_expiry TIMESTAMP NOT NULL,
-	date_start TIMESTAMP NOT NULL,
+	date_start TIMESTAMP NULL,
 
 	PRIMARY KEY (id),
 	CONSTRAINT fk_catalog_coupons_store_type_id FOREIGN KEY (store_type_id) REFERENCES catalog_store_types(id) ON DELETE RESTRICT ON UPDATE CASCADE,
