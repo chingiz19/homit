@@ -148,6 +148,22 @@ gulp.task('img', function(){
         }));
 });
 
+gulp.task('tmpImages', function(){
+    return gulp.src('./www/tmp/**/*.+(png|svg|jpg|jpeg|ico)')
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = true;
+        }))
+        .pipe(cache('imgFiles'))
+        .pipe(imagemin([
+            imagemin.jpegtran({progressive: true}),
+            imagemin.optipng({optimizationLevel: 5})
+        ]))
+        .pipe(gulp.dest("www/tmpProcessed"))
+        .pipe(gulpFn(function(file){
+            wwwChangedViaGulp = false;
+        }));
+});
+
 gulp.task('misc', function(){
     return gulp.src(miscFiles, {base: "./public"})
         .pipe(gulpFn(function(file){
@@ -263,6 +279,8 @@ gulp.task('default', function(){
     css                     |  copy css files to www folder
     
     img                     |  copy img files to www folder
+
+    tmpImages               |  processes all images under 'www/tmp' folder and copies them to 'www/tmpProcessed' folder
     
     misc                    |  copy files inside public folder (doesn't include subfolders)
 
